@@ -9,14 +9,18 @@
 #include "zephyr1.h"
 #include "config.h"
 
+#include <bas/locale/i18n.h>
 #include <bas/log/deflog.h>
+#include <bas/proc/env.h>
 
 #include <getopt.h>
 #include <libintl.h>
+#include <limits.h>
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 #define _(s) gettext(s)
 #define TEXT_DOMAIN "zephyr1"
@@ -80,10 +84,8 @@ void usage(FILE *out) {
 }
 
 int main(int argc, char **argv) {
-    const char *prog = argv[0];
-    setlocale(LC_ALL, "");
-    bindtextdomain(TEXT_DOMAIN, LOCALEDIR);
-    textdomain(TEXT_DOMAIN);
+    const char *exe = self_exe();
+    init_i18n(exe, LOCALEDIR, TEXT_DOMAIN);
 
     static const struct option long_opts[] = {
         {"verbose", no_argument, NULL, 'v'},
@@ -109,12 +111,15 @@ int main(int argc, char **argv) {
             usage(stdout);
             return 0;
         case OPT_VERSION:
-            printf("%s %s\n", PROJECT_NAME, PROJECT_VERSION);
+            printf("zephyr1 %s\n", PROJECT_VERSION);
             printf(_("Copyright (C) %d %s\n"), PROJECT_YEAR, PROJECT_AUTHOR);
-            fputs(_("License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"), stdout);
-            fputs(_("This is free software: you are free to change and redistribute it.\n"), stdout);
+            fputs(_("License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"),
+                  stdout);
+            fputs(_("This is free software: you are free to change and redistribute it.\n"),
+                  stdout);
             fputs(_("This project opposes AI exploitation and AI hegemony.\n"), stdout);
-            fputs(_("This project rejects mindless MIT-style licensing and politically naive BSD-style licensing.\n"),
+            fputs(_("This project rejects mindless MIT-style licensing and politically naive "
+                    "BSD-style licensing.\n"),
                   stdout);
             fputs(_("There is NO WARRANTY, to the extent permitted by law.\n"), stdout);
             return 0;
@@ -127,35 +132,35 @@ int main(int argc, char **argv) {
     argc -= optind;
     argv += optind;
 
-    loginfo_fmt("%s: verbose mode enabled", prog);
+    loginfo_fmt("%s: verbose mode enabled", exe);
 
     if (argc == 0) {
-        loginfo_fmt("%s: reading from standard input", prog);
+        loginfo_fmt("%s: reading from standard input", exe);
         if (copy_stream(stdin, stdout) != 0) {
-            fprintf(stderr, "%s: ", prog);
+            fprintf(stderr, "%s: ", exe);
             perror("stdin");
             return 1;
         }
-        loginfo_fmt("%s: done", prog);
+        loginfo_fmt("%s: done", exe);
         return 0;
     }
 
     for (int i = 0; i < argc; i++) {
         const char *path = argv[i];
         if (strcmp(path, "-") == 0) {
-            loginfo_fmt("%s: copying from standard input", prog);
+            loginfo_fmt("%s: copying from standard input", exe);
             if (copy_stream(stdin, stdout) != 0) {
-                fprintf(stderr, "%s: ", prog);
+                fprintf(stderr, "%s: ", exe);
                 perror("stdin");
                 return 1;
             }
-        } else if (copy_file(prog, path) != 0) {
+        } else if (copy_file(exe, path) != 0) {
             return 1;
         } else {
-            loginfo_fmt("%s: copied %s", prog, path);
+            loginfo_fmt("%s: copied %s", exe, path);
         }
     }
-    loginfo_fmt("%s: done", prog);
+    loginfo_fmt("%s: done", exe);
 
     return 0;
 }

@@ -54,6 +54,43 @@ meson test -C /build
 
 Unit tests are auto-discovered from `tests/*_unit.c` and registered in Meson.
 
+## i18n (gettext)
+
+`zephyr1` uses gettext translations under `po/` (`*.po` + generated `.mo` files).
+
+- Installed runtime loads translations from system locale dir.
+- Dev runtime (`/build/zephyr1`) prefers project-local translations from `/build/po` if present.
+
+### Sync translation catalogs
+
+Use `posync` to update catalogs from current source strings:
+
+```bash
+ninja -C /build posync
+```
+
+`posync` will:
+
+- add missing messages into each language from `po/LINGUAS`
+- remove obsolete messages no longer used in source
+
+### Build translation files
+
+```bash
+ninja -C /build
+```
+
+### Quick locale testing
+
+Prefer `LANGUAGE=<lang>` for predictable gettext selection in dev shells:
+
+```bash
+LANGUAGE=ja /build/zephyr1 -h
+LANGUAGE=zh_CN /build/zephyr1 -h
+```
+
+`LANG=<lang>.<encoding>` may depend on whether that locale is generated on your system.
+
 ## Install / symlink helpers
 
 Normal install:
