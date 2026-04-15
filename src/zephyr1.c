@@ -12,9 +12,15 @@
 #include <bas/log/deflog.h>
 
 #include <getopt.h>
+#include <libintl.h>
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#define _(s) gettext(s)
+#define TEXT_DOMAIN "zephyr1"
+
 define_logger();
 
 enum { OPT_VERSION = 256 };
@@ -49,30 +55,36 @@ int copy_file(const char *prog, const char *path) {
         r = -1;
     }
     if (r != 0) {
-        fprintf(stderr, "%s: write error\n", prog);
+        fprintf(stderr, _("%s: write error\n"), prog);
         return -1;
     }
     return 0;
 }
 
 void usage(FILE *out) {
-    fprintf(out,
-            "Usage: zephyr1 [OPTION]... [FILE]...\n"
+    fputs(_("Usage: zephyr1 [OPTION]... [FILE]...\n"
             "Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n"
-            "read standard input.\n"
-            "\n"
-            "  -v, --verbose   print each file name to standard error before copying\n"
-            "  -q, --quiet     suppress --verbose messages\n"
-            "  -h, --help      display this help and exit\n"
-            "      --version   output version information and exit\n"
-            "\n"
-            "Report bugs to: <%s>\n",
-            PROJECT_EMAIL);
+            "read standard input.\n"),
+          out);
+    fputs("\n", out);
+    fputs("  -v, --verbose      ", out);
+    fputs(_("repeat for more verbose loggings\n"), out);
+    fputs("  -q, --quiet        ", out);
+    fputs(_("show less logging messages\n"), out);
+    fputs("  -h, --help         ", out);
+    fputs(_("display this help and exit\n"), out);
+    fputs("      --version      ", out);
+    fputs(_("output version information and exit\n"), out);
+    fputs("\n", out);
+    fprintf(out, _("Report bugs to: <%s>\n"), PROJECT_EMAIL);
 }
 
-#ifndef ZEPHYR1_NO_MAIN
 int main(int argc, char **argv) {
     const char *prog = argv[0];
+    setlocale(LC_ALL, "");
+    bindtextdomain(TEXT_DOMAIN, LOCALEDIR);
+    textdomain(TEXT_DOMAIN);
+
     static const struct option long_opts[] = {
         {"verbose", no_argument, NULL, 'v'},
         {"quiet", no_argument, NULL, 'q'},
@@ -97,13 +109,14 @@ int main(int argc, char **argv) {
             usage(stdout);
             return 0;
         case OPT_VERSION:
-            printf("%s %s\n"
-                   "Copyright (C) %d %s\n"
-                   "License AGPL-3.0-or-later: "
-                   "<https://www.gnu.org/licenses/agpl-3.0.html>\n"
-                   "This is free software: you are free to change and redistribute it.\n"
-                   "There is NO WARRANTY, to the extent permitted by law.\n",
-                   PROJECT_NAME, PROJECT_VERSION, PROJECT_YEAR, PROJECT_AUTHOR);
+            printf("%s %s\n", PROJECT_NAME, PROJECT_VERSION);
+            printf(_("Copyright (C) %d %s\n"), PROJECT_YEAR, PROJECT_AUTHOR);
+            fputs(_("License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"), stdout);
+            fputs(_("This is free software: you are free to change and redistribute it.\n"), stdout);
+            fputs(_("This project opposes AI exploitation and AI hegemony.\n"), stdout);
+            fputs(_("This project rejects mindless MIT-style licensing and politically naive BSD-style licensing.\n"),
+                  stdout);
+            fputs(_("There is NO WARRANTY, to the extent permitted by law.\n"), stdout);
             return 0;
         default:
             usage(stderr);
@@ -146,4 +159,3 @@ int main(int argc, char **argv) {
 
     return 0;
 }
-#endif

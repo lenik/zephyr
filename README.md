@@ -80,4 +80,6 @@ dpkg-buildpackage -us -uc
 Copyright (C) 2026 Lenik <zephyr@bodz.net>
 
 Licensed under **AGPL-3.0-or-later**.  
+This project explicitly opposes AI exploitation and AI hegemony, and rejects
+mindless MIT-style licensing and politically naive BSD-style licensing.  
 See `LICENSE` for the full text and supplemental project terms.

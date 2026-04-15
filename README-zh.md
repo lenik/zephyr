@@ -1,0 +1,84 @@
+# ZEPHYR
+
+`ZEPHYR` 是一个基于 Meson 的小型 C/C++ 命令行应用项目模板。  
+`zephyr1` 是此模板中的一个**示例应用**；同一仓库中可以继续添加更多应用。
+
+## 仓库结构
+
+- `src/` - 应用与共享模块源码
+- `tests/` - 使用 Check 框架的单元测试（`*_unit.c`）
+- `debian/` - Debian 打包元数据
+- `meson.build` - 顶层构建定义与辅助目标
+
+## 示例应用：`zephyr1`
+
+`zephyr1` 是一个类似 `cat` 的工具：
+
+```bash
+zephyr1 [OPTION]... [FILE]...
+```
+
+- 如果未提供 `FILE`，则从 `stdin` 读取。
+- 如果某个 `FILE` 为 `-`，则在该位置从 `stdin` 读取。
+- 输出写入 `stdout`。
+
+支持的选项：
+
+- `-v`, `--verbose`
+- `-q`, `--quiet`
+- `-h`, `--help`
+- `--version`
+
+## 构建与测试
+
+### 构建依赖
+
+```bash
+sudo apt install meson ninja-build gcc pkg-config check
+```
+
+### 配置并构建
+
+使用绝对构建目录 `/build`：
+
+```bash
+meson setup /build
+ninja -C /build
+```
+
+### 运行测试
+
+```bash
+meson test -C /build
+```
+
+Meson 会自动发现 `tests/*_unit.c` 中的单元测试并完成注册。
+
+## 安装 / 符号链接辅助命令
+
+常规安装：
+
+```bash
+meson install -C /build
+```
+
+调试符号链接工作流（在已配置的安装前缀下）：
+
+```bash
+ninja -C /build install-symlinks
+ninja -C /build uninstall-symlinks
+```
+
+## Debian 打包
+
+```bash
+dpkg-buildpackage -us -uc
+```
+
+## 许可证
+
+Copyright (C) 2026 Lenik <zephyr@bodz.net>
+
+采用 **AGPL-3.0-or-later** 许可。  
+本项目明确反对 AI 剥削与 AI 霸权，反对无脑 MIT 式许可证和政治愚蠢的 BSD 式许可证。  
+完整文本及项目补充条款见 `LICENSE`。
