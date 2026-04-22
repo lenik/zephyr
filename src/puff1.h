@@ -1,5 +1,5 @@
-#ifndef ZEPHYR1_H
-#define ZEPHYR1_H
+#ifndef PUFF1_H
+#define PUFF1_H
 
 #include <stdio.h>
 

@@ -1,7 +1,7 @@
-# ZEPHYR
+# zephyr
 
-`ZEPHYR` is a Meson-based project template for small C/C++ command-line apps.
-`zephyr1` is one **example app** in this template; more apps can be added in the same repository.
+`zephyr` is a Meson-based project template for small C/C++ command-line apps.
+`puff1` is one **example app** in this template; more apps can be added in the same repository.
 
 ## Repository layout
 
@@ -10,12 +10,12 @@
 - `debian/` - Debian packaging metadata
 - `meson.build` - top-level build definition and helper targets
 
-## Example app: `zephyr1`
+## Example app: `puff1`
 
-`zephyr1` is a cat-like utility:
+`puff1` is a cat-like utility:
 
 ```bash
-zephyr1 [OPTION]... [FILE]...
+puff1 [OPTION]... [FILE]...
 ```
 
 - If no `FILE` is provided, it reads from `stdin`.
@@ -56,10 +56,10 @@ Unit tests are auto-discovered from `tests/*_unit.c` and registered in Meson.
 
 ## i18n (gettext)
 
-`zephyr1` uses gettext translations under `po/` (`*.po` + generated `.mo` files).
+`puff1` uses gettext translations under `po/` (`*.po` + generated `.mo` files).
 
 - Installed runtime loads translations from system locale dir.
-- Dev runtime (`/build/zephyr1`) prefers project-local translations from `/build/po` if present.
+- Dev runtime (`/build/puff1`) prefers project-local translations from `/build/po` if present.
 
 ### Sync translation catalogs
 
@@ -85,8 +85,8 @@ ninja -C /build
 Prefer `LANGUAGE=<lang>` for predictable gettext selection in dev shells:
 
 ```bash
-LANGUAGE=ja /build/zephyr1 -h
-LANGUAGE=zh_CN /build/zephyr1 -h
+LANGUAGE=ja /build/puff1 -h
+LANGUAGE=zh_CN /build/puff1 -h
 ```
 
 `LANG=<lang>.<encoding>` may depend on whether that locale is generated on your system.

@@ -1,7 +1,7 @@
-# ZEPHYR
+# zephyr
 
-`ZEPHYR` 是一个基于 Meson 的小型 C/C++ 命令行应用项目模板。  
-`zephyr1` 是此模板中的一个**示例应用**；同一仓库中可以继续添加更多应用。
+`zephyr` 是一个基于 Meson 的小型 C/C++ 命令行应用项目模板。  
+`puff1` 是此模板中的一个**示例应用**；同一仓库中可以继续添加更多应用。
 
 ## 仓库结构
 
@@ -10,12 +10,12 @@
 - `debian/` - Debian 打包元数据
 - `meson.build` - 顶层构建定义与辅助目标
 
-## 示例应用：`zephyr1`
+## 示例应用：`puff1`
 
-`zephyr1` 是一个类似 `cat` 的工具：
+`puff1` 是一个类似 `cat` 的工具：
 
 ```bash
-zephyr1 [OPTION]... [FILE]...
+puff1 [OPTION]... [FILE]...
 ```
 
 - 如果未提供 `FILE`，则从 `stdin` 读取。
@@ -56,10 +56,10 @@ Meson 会自动发现 `tests/*_unit.c` 中的单元测试并完成注册。
 
 ## i18n（gettext）
 
-`zephyr1` 使用 `po/` 下的 gettext 翻译文件（`*.po` 与生成的 `.mo` 文件）。
+`puff1` 使用 `po/` 下的 gettext 翻译文件（`*.po` 与生成的 `.mo` 文件）。
 
 - 安装后运行时从系统 locale 目录加载翻译。
-- 开发态运行（`/build/zephyr1`）若存在 `/build/po`，会优先使用项目内翻译资源。
+- 开发态运行（`/build/puff1`）若存在 `/build/po`，会优先使用项目内翻译资源。
 
 ### 同步翻译词条
 
@@ -85,8 +85,8 @@ ninja -C /build
 建议优先使用 `LANGUAGE=<lang>`，在开发环境中选择更稳定：
 
 ```bash
-LANGUAGE=ja /build/zephyr1 -h
-LANGUAGE=zh_CN /build/zephyr1 -h
+LANGUAGE=ja /build/puff1 -h
+LANGUAGE=zh_CN /build/puff1 -h
 ```
 
 `LANG=<lang>.<encoding>` 是否生效取决于系统是否已生成对应 locale。

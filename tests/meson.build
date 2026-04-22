@@ -4,7 +4,7 @@ c_pch = '../' + c_pch
 exe_inc = include_directories('../src', '..')
 
 test_sources = [
-    'zephyr1_test.c',
+    'puff1_test.c',
 ]
 
 foreach test_src : test_sources

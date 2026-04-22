@@ -14,7 +14,7 @@ project(
     ],
 )
 project_author = 'Lenik'
-project_email = 'ZEPHYR@bodz.net'
+project_email = 'zephyr@bodz.net'
 project_year = 2026
 
 fs = import('fs')
@@ -94,7 +94,7 @@ endif
 
 # Disable all warnings (wx 3.0 and deps are noisy)
 nowarn = cpp.get_supported_arguments(['-w', '/w'])
-bas_args = ['-DLOGGER_NAME=ZEPHYR', '-DASSETS_NAME=ZEPHYR']
+bas_args = ['-DLOGGER_NAME=zephyr', '-DASSETS_NAME=zephyr']
 
 c_pch = 'src/c_pch.h'
 c_args = nowarn + bas_args
@@ -124,8 +124,8 @@ lib_zephyr_static = static_library(
 )
 
 executable(
-    'zephyr1',
-    'src/zephyr1.c',
+    'puff1',
+    'src/puff1.c',
     c_args: c_args,
     c_pch: c_pch,
     include_directories: exe_inc,
@@ -136,9 +136,9 @@ executable(
 )
 
 install_data(
-    'zephyr1.bash',
+    'puff1.bash',
     install_dir: datadir / 'bash-completion' / 'completions',
-    rename: 'zephyr1',
+    rename: 'puff1',
 )
 
 install_data(
@@ -157,8 +157,8 @@ config_man.set('PROJECT_EMAIL', project_email)
 config_man.set('PROJECT_YEAR', project_year)
 
 configure_file(
-    input: 'zephyr1.1.in',
-    output: 'zephyr1.1',
+    input: 'puff1.1.in',
+    output: 'puff1.1',
     configuration: config_man,
     install: true,
     install_dir: mandir / 'man1',
@@ -193,9 +193,9 @@ run_target(
 
             mkdir -p "$bindir" "$compdir" "$man1dir"
 
-            sudo ln -sfn "@BUILD_ROOT@/zephyr1" "$bindir/zephyr1"
-            sudo ln -sfn "@BUILD_ROOT@/zephyr1.1" "$man1dir/zephyr1.1"
-            sudo ln -sfn "@SOURCE_ROOT@/zephyr1.bash" "$compdir/zephyr1"
+            sudo ln -sfn "@BUILD_ROOT@/puff1" "$bindir/puff1"
+            sudo ln -sfn "@BUILD_ROOT@/puff1.1" "$man1dir/puff1.1"
+            sudo ln -sfn "@SOURCE_ROOT@/puff1.bash" "$compdir/puff1"
 
             printf "Symlinks installed under %s\n" "$prefix"
         '''.format(get_option('prefix'), datadir, mandir),
@@ -213,9 +213,9 @@ run_target(
             man1dir="@2@/man1"
 
             for p in \
-                "$bindir/zephyr1" \
-                "$man1dir/zephyr1.1" \
-                "$compdir/zephyr1"
+                "$bindir/puff1" \
+                "$man1dir/puff1.1" \
+                "$compdir/puff1"
             do
                 if [ -L "$p" ]; then
                     sudo rm -f "$p"

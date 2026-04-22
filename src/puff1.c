@@ -1,12 +1,12 @@
 /*
- * Copyright (C) 2026 Lenik <ZEPHYR@bodz.net>
+ * Copyright (C) 2026 Lenik <zephyr@bodz.net>
  *
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
 #define _POSIX_C_SOURCE 200809L
 
-#include "zephyr1.h"
+#include "puff1.h"
 #include "lib.h"
 #include "config.h"
 
@@ -23,7 +23,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#define TEXT_DOMAIN "ZEPHYR"
+#define TEXT_DOMAIN "zephyr"
 #define _(s) dgettext(TEXT_DOMAIN, s)
 
 define_logger();
@@ -31,7 +31,7 @@ define_logger();
 enum { OPT_VERSION = 256 };
 
 void usage(FILE *out) {
-    fputs(_("Usage: zephyr1 [OPTION]... [FILE]...\n"
+    fputs(_("Usage: puff1 [OPTION]... [FILE]...\n"
             "Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n"
             "read standard input.\n"),
           out);
@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
             usage(stdout);
             return 0;
         case OPT_VERSION:
-            printf("zephyr1 %s\n", PROJECT_VERSION);
+            printf("puff1 %s\n", PROJECT_VERSION);
             printf(_("Copyright (C) %d %s\n"), PROJECT_YEAR, PROJECT_AUTHOR);
             fputs(_("License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"),
                   stdout);

@@ -1,6 +1,6 @@
-# bash completion for zephyr1
+# bash completion for puff1
 
-_zephyr1()
+_puff1()
 {
 	local cur prev words cword
 	_init_completion || return
@@ -13,4 +13,4 @@ _zephyr1()
 	_filedir
 }
 
-complete -F _zephyr1 zephyr1
+complete -F _puff1 puff1

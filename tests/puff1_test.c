@@ -5,7 +5,7 @@
 #include <string.h>
 
 #define main main_undertest
-#include "../src/zephyr1.c"
+#include "../src/puff1.c"
 #undef main
 
 START_TEST(test_copy_stream_success) {
@@ -31,12 +31,12 @@ START_TEST(test_copy_stream_success) {
 END_TEST
 
 START_TEST(test_copy_file_missing) {
-    ck_assert_int_eq(copy_file("zephyr1-test", "/definitely/not/found"), -1);
+    ck_assert_int_eq(copy_file("puff1-test", "/definitely/not/found"), -1);
 }
 END_TEST
 
-static Suite *zephyr1_suite(void) {
-    Suite *s = suite_create("zephyr1");
+static Suite *puff1_suite(void) {
+    Suite *s = suite_create("puff1");
     TCase *tc_core = tcase_create("core");
 
     tcase_add_test(tc_core, test_copy_stream_success);
@@ -47,7 +47,7 @@ static Suite *zephyr1_suite(void) {
 }
 
 int main(void) {
-    Suite *s = zephyr1_suite();
+    Suite *s = puff1_suite();
     SRunner *sr = srunner_create(s);
     int failed;
 

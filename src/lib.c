@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2026 Lenik <ZEPHYR@bodz.net>
+ * Copyright (C) 2026 Lenik <zephyr@bodz.net>
  *
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
@@ -13,7 +13,7 @@
 #include <libintl.h>
 #include <stdio.h>
 
-#define TEXT_DOMAIN "ZEPHYR"
+#define TEXT_DOMAIN "zephyr"
 #define _(s) dgettext(TEXT_DOMAIN, s)
 
 int copy_stream(FILE *in, FILE *out) {
