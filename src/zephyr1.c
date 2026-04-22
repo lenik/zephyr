@@ -7,6 +7,7 @@
 #define _POSIX_C_SOURCE 200809L
 
 #include "zephyr1.h"
+#include "lib.h"
 #include "config.h"
 
 #include <bas/locale/i18n.h>
@@ -22,48 +23,12 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#define _(s) gettext(s)
-#define TEXT_DOMAIN "zephyr1"
+#define TEXT_DOMAIN "ZEPHYR"
+#define _(s) dgettext(TEXT_DOMAIN, s)
 
 define_logger();
 
 enum { OPT_VERSION = 256 };
-
-int copy_stream(FILE *in, FILE *out) {
-    char buf[8192];
-    size_t n;
-
-    while ((n = fread(buf, 1, sizeof buf, in)) > 0) {
-        if (fwrite(buf, 1, n, out) != n) {
-            return -1;
-        }
-    }
-    if (ferror(in)) {
-        return -1;
-    }
-    return 0;
-}
-
-int copy_file(const char *prog, const char *path) {
-    loginfo_fmt("%s: copying from %s", prog, path);
-
-    FILE *f = fopen(path, "rb");
-    if (!f) {
-        fprintf(stderr, "%s: ", prog);
-        perror(path);
-        return -1;
-    }
-
-    int r = copy_stream(f, stdout);
-    if (fclose(f) != 0) {
-        r = -1;
-    }
-    if (r != 0) {
-        fprintf(stderr, _("%s: write error\n"), prog);
-        return -1;
-    }
-    return 0;
-}
 
 void usage(FILE *out) {
     fputs(_("Usage: zephyr1 [OPTION]... [FILE]...\n"

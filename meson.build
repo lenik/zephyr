@@ -28,21 +28,21 @@ mandir = prefix / get_option('mandir')
 pkgdatadir = datadir / meson.project_name()
 pkgdocdir = datadir / 'doc' / meson.project_name()
 
-config = configuration_data()
-config.set_quoted('PROJECT_VERSION', meson.project_version())
-config.set_quoted('PROJECT_AUTHOR', project_author)
-config.set_quoted('PROJECT_EMAIL', project_email)
-config.set('PROJECT_YEAR', project_year)
+config_h = configuration_data()
+config_h.set_quoted('PROJECT_VERSION', meson.project_version())
+config_h.set_quoted('PROJECT_AUTHOR', project_author)
+config_h.set_quoted('PROJECT_EMAIL', project_email)
+config_h.set('PROJECT_YEAR', project_year)
 
-config.set_quoted('PREFIX', prefix)
-config.set_quoted('DATADIR', datadir)
-config.set_quoted('MANDIR', mandir)
-config.set_quoted('PKGDATADIR', pkgdatadir)
-config.set_quoted('LOCALEDIR', localedir)
+config_h.set_quoted('PREFIX', prefix)
+config_h.set_quoted('DATADIR', datadir)
+config_h.set_quoted('MANDIR', mandir)
+config_h.set_quoted('PKGDATADIR', pkgdatadir)
+config_h.set_quoted('LOCALEDIR', localedir)
 
 configure_file(
     output: 'config.h',
-    configuration: config,
+    configuration: config_h,
 )
 
 bas_c_dep = dependency('bas-c', required: true)
@@ -51,7 +51,7 @@ bas_c_dep = dependency('bas-c', required: true)
 # bas_c_static_dep = dependency('bas-c-static', required: true)
 # bas_cpp_static_dep = dependency('bas-cpp-static', required: true)
 
-exe_objs = []
+objects = []
 
 # Build assets.zip every time (no file dependency)
 assets_dir = meson.current_source_dir() / 'assets'
@@ -89,7 +89,7 @@ if fs.exists(assets_dir) and fs.exists(assets_src)
         depends: assets_zip,
     )
 
-    exe_objs += [assets_o]
+    objects += [assets_o]
 endif
 
 # Disable all warnings (wx 3.0 and deps are noisy)
@@ -97,7 +97,7 @@ nowarn = cpp.get_supported_arguments(['-w', '/w'])
 bas_args = ['-DLOGGER_NAME=ZEPHYR', '-DASSETS_NAME=ZEPHYR']
 
 c_pch = 'src/c_pch.h'
-cpp_pch = 'src/cpp_pch.h'
+c_args = nowarn + bas_args
 
 exe_inc = [
     include_directories('src'),
@@ -107,40 +107,33 @@ exe_deps = [
     bas_c_dep,
 ]
 
-check_dep = dependency('check', required: true)
+subdir('po')
+
+sources = [
+    'src/lib.c',
+]
+
+lib_zephyr_static = static_library(
+    'zephyr',
+    sources,
+    objects,
+    c_args: c_args,
+    c_pch: c_pch,
+    include_directories: exe_inc,
+    dependencies: exe_deps,
+)
 
 executable(
     'zephyr1',
     'src/zephyr1.c',
-    exe_objs,
-    c_args: nowarn + bas_args,
+    c_args: c_args,
     c_pch: c_pch,
     include_directories: exe_inc,
     dependencies: exe_deps,
+    link_with: lib_zephyr_static,
     install: true,
     install_dir: get_option('prefix') / 'bin',
 )
-
-unit_sources = [
-    'tests/zephyr1_unit.c',
-]
-
-foreach unit_src : unit_sources
-    unit_base = unit_src.split('/')[-1]
-    unit_name = unit_base.replace('.c', '')
-
-    unit_exe = executable(
-        unit_name,
-        unit_src,
-        c_args: nowarn + bas_args,
-        c_pch: c_pch,
-        include_directories: exe_inc,
-        dependencies: exe_deps + [check_dep],
-        install: false,
-    )
-
-    test(unit_name, unit_exe)
-endforeach
 
 install_data(
     'zephyr1.bash',
@@ -157,10 +150,16 @@ install_data(
     install_dir: pkgdocdir,
 )
 
+config_man = configuration_data()
+config_man.set('PROJECT_VERSION', meson.project_version())
+config_man.set('PROJECT_AUTHOR', project_author)
+config_man.set('PROJECT_EMAIL', project_email)
+config_man.set('PROJECT_YEAR', project_year)
+
 configure_file(
     input: 'zephyr1.1.in',
     output: 'zephyr1.1',
-    configuration: config,
+    configuration: config_man,
     install: true,
     install_dir: mandir / 'man1',
 )
@@ -176,31 +175,6 @@ run_target(
             DESTDIR=$tmpdir meson install -C "@BUILD_ROOT@"
             tree "$tmpdir"
             rm -fr "$tmpdir"
-        ''',
-    ],
-)
-
-subdir('po')
-
-run_target(
-    'posync',
-    command: [
-        'bash',
-        '-euc', '''
-            cd "@SOURCE_ROOT@/po"
-            xgettext --from-code=UTF-8 --keyword=_ --language=C --directory=.. --output=zephyr1.pot --files-from=POTFILES
-            while IFS= read -r lang; do
-                [ -n "$lang" ] || continue
-                case "$lang" in
-                    '#'* ) continue ;;
-                esac
-                po_file="$lang.po"
-                if [ ! -f "$po_file" ]; then
-                    msginit --no-translator --input=zephyr1.pot --locale="$lang" --output-file="$po_file"
-                fi
-                msgmerge --update --backup=none "$po_file" zephyr1.pot
-                msgattrib --no-obsolete --output-file="$po_file" "$po_file"
-            done < LINGUAS
         ''',
     ],
 )
@@ -253,3 +227,5 @@ run_target(
         '''.format(get_option('prefix'), datadir, mandir),
     ],
 )
+
+subdir('tests')

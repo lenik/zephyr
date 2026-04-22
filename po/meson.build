@@ -1,7 +1,7 @@
 i18n = import('i18n')
 
 i18n.gettext(
-    'zephyr1',
+    'ZEPHYR',
     data_dirs: meson.project_source_root(),
     install: true,
 )
