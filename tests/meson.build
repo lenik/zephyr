@@ -1,7 +1,7 @@
 check_dep = dependency('check', required: true)
 
 c_pch = '../' + c_pch
-exe_inc = include_directories('../src', '..')
+lib_inc = include_directories('../src', '..')
 
 test_sources = [
     'puff1_test.c',
@@ -14,9 +14,9 @@ foreach test_src : test_sources
     stem_test = fs.stem(base)
 
     if stem_test.endswith('_test')
-        stem = stem_test.replace('_test', '')
+        name = stem_test.replace('_test', '')
     elif stem_test.endswith('_unit')
-        stem = stem_test.replace('_unit', '')
+        name = stem_test.replace('_unit', '')
     else
         continue
     endif
@@ -52,16 +52,16 @@ foreach test_src : test_sources
 
     # Create the executable (LOGGER_NAME so program.h and logger.c work in tests)
     test_exe = executable(
-        stem,
+        name,
         test_src,
         impl_deps,
         c_args: c_args,
         c_pch: c_pch,
-        include_directories: [sibling_dir, exe_inc],
+        include_directories: [sibling_dir, lib_inc],
         link_with: lib_zephyr_static,
-        dependencies: [exe_deps, check_dep],
+        dependencies: [lib_deps, check_dep],
         install: false,
     )
 
-    test(stem, test_exe)
+    test(name, test_exe)
 endforeach

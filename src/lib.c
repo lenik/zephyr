@@ -8,13 +8,13 @@
 
 #include "lib.h"
 
-#include <bas/log/uselog.h>
+#include <bas/locale/i18n.h>
+#include <bas/log/deflog.h>
 
-#include <libintl.h>
 #include <stdio.h>
 
-#define TEXT_DOMAIN "zephyr"
-#define _(s) dgettext(TEXT_DOMAIN, s)
+__attribute__((weak))
+define_logger();
 
 int copy_stream(FILE *in, FILE *out) {
     char buf[8192];

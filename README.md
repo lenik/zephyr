@@ -1,3 +1,7 @@
+THIS FILE IS GENERATED FROM A TEMPLATE.
+Except for the project and program names, all content is placeholder text.
+Please rewrite this file to reflect the specific details of the current project.
+
 # zephyr
 
 `zephyr` is a Meson-based project template for small C/C++ command-line apps.

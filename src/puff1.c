@@ -7,24 +7,22 @@
 #define _POSIX_C_SOURCE 200809L
 
 #include "puff1.h"
-#include "lib.h"
+
 #include "config.h"
+#include "lib.h"
 
 #include <bas/locale/i18n.h>
 #include <bas/log/deflog.h>
 #include <bas/proc/env.h>
 
+#include <sys/stat.h>
+
 #include <getopt.h>
-#include <libintl.h>
 #include <limits.h>
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h>
-
-#define TEXT_DOMAIN "zephyr"
-#define _(s) dgettext(TEXT_DOMAIN, s)
 
 define_logger();
 
@@ -50,7 +48,7 @@ void usage(FILE *out) {
 
 int main(int argc, char **argv) {
     const char *exe = self_exe();
-    init_i18n(exe, LOCALEDIR, TEXT_DOMAIN);
+    init_i18n(LOCALEDIR);
 
     static const struct option long_opts[] = {
         {"verbose", no_argument, NULL, 'v'},
