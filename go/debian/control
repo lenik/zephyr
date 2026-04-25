@@ -1,0 +1,19 @@
+Source: zephyr
+Section: utils
+Priority: optional
+Maintainer: Lenik <zephyr@bodz.net>
+Build-Depends: debhelper-compat (= 13), golang-go (>= 1.22~)
+Standards-Version: 4.6.0
+Homepage: https://github.com/lenik/zephyr
+Rules-Requires-Root: no
+
+Package: zephyr
+Architecture: any
+Depends:
+	${shlibs:Depends},
+	${misc:Depends}
+Description: Go-based CLI project template (example: puff1)
+ zephyr is a template for small command-line tools written in Go. It
+ currently ships the puff1 example (a cat-like utility) with Debian
+ metadata, man page, bash completion, and GNU gettext .po files embedded
+ in the published binary for offline translations.

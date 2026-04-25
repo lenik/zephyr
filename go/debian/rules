@@ -1,0 +1,47 @@
+#!/usr/bin/make -f
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+export DH_VERBOSE = 1
+export CGO_ENABLED = 0
+
+DEB_VERSION    := $(shell dpkg-parsechangelog -S Version)
+BUILD_DIR      := obj
+PUFF1_BIN      := $(BUILD_DIR)/puff1
+PROJECT_AUTHOR := Lenik
+PROJECT_EMAIL  := zephyr@bodz.net
+PROJECT_YEAR   := 2026
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	:
+
+override_dh_auto_build: debian/artifacts.stamp
+debian/artifacts.stamp:
+	mkdir -p $(BUILD_DIR)
+	go test ./...
+	go build -o $(PUFF1_BIN) \
+		-ldflags "-X main.buildVersion=$(DEB_VERSION)" \
+		./cmd/puff1
+	sed -e 's/@PROJECT_VERSION@/$(DEB_VERSION)/g' \
+		-e 's/@PROJECT_AUTHOR@/$(PROJECT_AUTHOR)/g' \
+		-e 's/@PROJECT_EMAIL@/$(PROJECT_EMAIL)/g' \
+		-e 's/@PROJECT_YEAR@/$(PROJECT_YEAR)/g' \
+		puff1.1.in > puff1.1
+	touch $@
+
+override_dh_auto_install: debian/artifacts.stamp
+	install -D -m755 $(PUFF1_BIN) debian/zephyr/usr/bin/puff1
+	install -D -m644 puff1.1 debian/zephyr/usr/share/man/man1/puff1.1
+	install -D -m644 puff1.bash debian/zephyr/usr/share/bash-completion/completions/puff1
+	install -D -m644 LICENSE debian/zephyr/usr/share/doc/zephyr/LICENSE
+	install -D -m644 README.md debian/zephyr/usr/share/doc/zephyr/README
+	install -D -m644 README-zh.md debian/zephyr/usr/share/doc/zephyr/README-zh.md
+
+override_dh_auto_clean:
+	rm -rf $(BUILD_DIR) debian/artifacts.stamp puff1.1
+	dh_auto_clean
+
+override_dh_dwz:
+	:

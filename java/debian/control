@@ -1,0 +1,18 @@
+Source: zephyr
+Section: utils
+Priority: optional
+Maintainer: Lenik <zephyr@bodz.net>
+Build-Depends: debhelper-compat (= 13), meson, ninja-build, default-jdk, gettext
+Standards-Version: 4.6.0
+Homepage: https://github.com/lenik/zephyr
+Rules-Requires-Root: no
+
+Package: zephyr
+Architecture: any
+Depends: 
+    default-jre | java-runtime,
+    ${misc:Depends}
+Description: Meson-based CLI project template with example app
+ zephyr is a template repository for small Java command-line utilities.
+ It currently ships the puff1 example application and Debian packaging
+ metadata, and includes Java-based unit-test integration.
