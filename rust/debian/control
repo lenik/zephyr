@@ -1,0 +1,18 @@
+Source: zephyr
+Section: utils
+Priority: optional
+Maintainer: Lenik <zephyr@bodz.net>
+Build-Depends: debhelper-compat (= 13), meson, ninja-build, pkgconf, cargo, rustc, gettext, libgettextpo-dev, pkg-config
+Standards-Version: 4.6.0
+Homepage: https://github.com/lenik/zephyr
+Rules-Requires-Root: no
+
+Package: zephyr
+Architecture: any
+Depends: 
+    ${shlibs:Depends}, 
+    ${misc:Depends}
+Description: Rust CLI project template with example app
+ zephyr is a template repository for small Rust command-line utilities.
+ It ships the puff1 example (Cargo + optional Meson for gettext, docs, and
+ packaging), and unit tests are run with `cargo test` (via `meson test`).
