@@ -1,18 +1,15 @@
-THIS FILE IS GENERATED FROM A TEMPLATE.
-Except for the project and program names, all content is placeholder text.
-Please rewrite this file to reflect the specific details of the current project.
-
 # zephyr
 
-`zephyr` is a Meson-based project template for small C/C++ command-line apps.
+`zephyr` is a Smalltalk template for small command-line apps, using Meson for build/test/install.
 `puff1` is one **example app** in this template; more apps can be added in the same repository.
 
 ## Repository layout
 
-- `src/` - source code for apps and shared pieces
-- `tests/` - unit tests (`*_unit.c`) using the Check framework
+- `src/` - Smalltalk source files (`*.st`)
+- `tests/` - Smalltalk smoke/unit tests
 - `debian/` - Debian packaging metadata
-- `meson.build` - top-level build definition and helper targets
+- `po/` - gettext message catalogs
+- `meson.build` - build, test, install, and helper targets
 
 ## Example app: `puff1`
 
@@ -38,7 +35,7 @@ Supported options:
 ### Build dependencies
 
 ```bash
-sudo apt install meson ninja-build gcc pkg-config check
+sudo apt install meson ninja-build gnu-smalltalk gettext
 ```
 
 ### Configure and build
@@ -56,7 +53,7 @@ ninja -C /build
 meson test -C /build
 ```
 
-Unit tests are auto-discovered from `tests/*_unit.c` and registered in Meson.
+Meson runs a Smalltalk smoke/unit test from `tests/test_common_lib.st`.
 
 ## i18n (gettext)
 

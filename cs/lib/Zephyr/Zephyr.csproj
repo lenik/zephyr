@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Zephyr</AssemblyName>
+    <RootNamespace>Puff1</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="common_lib.cs" />
+    <Compile Include="BuildInfo.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(ZEPHYR_BUILDINFO)' != ''">
+    <Compile Remove="BuildInfo.cs" />
+    <Compile Include="$(ZEPHYR_BUILDINFO)" Link="BuildInfo.cs" />
+  </ItemGroup>
+</Project>

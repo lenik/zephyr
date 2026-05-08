@@ -1,7 +1,5 @@
 project(
     'zephyr',
-    'c',
-    'cpp',
     version: run_command(
         'sh',
         '-c', '''
@@ -19,10 +17,6 @@ project(
         check: false,
     ).stdout().strip(),
     license: 'AGPL-3.0-or-later',
-    default_options: [
-        'c_std=c99',
-        'warning_level=2',
-    ],
 )
 
 project_author = 'Lenik'
@@ -30,8 +24,7 @@ project_email = 'zephyr@bodz.net'
 project_year = 2026
 
 fs = import('fs')
-c = meson.get_compiler('c')
-cpp = meson.get_compiler('cpp')
+dotnet = find_program('dotnet', required: true)
 
 prefix = get_option('prefix')
 bindir = prefix / get_option('bindir')
@@ -42,197 +35,132 @@ mandir = prefix / get_option('mandir')
 pkgdatadir = datadir / meson.project_name()
 pkgdocdir = datadir / 'doc' / meson.project_name()
 
-config_h = configuration_data()
-config_h.set_quoted('PROJECT_VERSION', meson.project_version())
-config_h.set_quoted('PROJECT_AUTHOR', project_author)
-config_h.set_quoted('PROJECT_EMAIL', project_email)
-config_h.set('PROJECT_YEAR', project_year)
-
-config_h.set_quoted('PREFIX', prefix)
-config_h.set_quoted('DATADIR', datadir)
-config_h.set_quoted('MANDIR', mandir)
-config_h.set_quoted('PKGDATADIR', pkgdatadir)
-config_h.set_quoted('LOCALEDIR', localedir)
-
-configure_file(
-    output: 'config.h',
-    configuration: config_h,
+# Zephyr: .NET class library (no native shared/static link; use ProjectReference)
+zephyr_out = meson.current_build_dir() / 'zephyr-lib'
+zephyr_csproj = meson.current_source_dir() / 'lib' / 'Zephyr' / 'Zephyr.csproj'
+zephyr_buildinfo_subst_path = meson.current_build_dir() / 'BuildInfo.meson.cs'
+zephyr_buildinfo_cfg = configuration_data()
+zephyr_buildinfo_cfg.set('PROJECT_AUTHOR', project_author)
+zephyr_buildinfo_cfg.set('PROJECT_EMAIL', project_email)
+zephyr_buildinfo_cfg.set('PROJECT_YEAR', project_year)
+zephyr_buildinfo_subst = configure_file(
+    input: 'lib/Zephyr/BuildInfo.cs.in',
+    output: 'BuildInfo.meson.cs',
+    configuration: zephyr_buildinfo_cfg,
 )
 
-bas_c_dep = dependency('bas-c', required: true)
-# bas_cpp_dep = dependency('bas-cpp', required: true)
-
-# bas_c_static_dep = dependency('bas-c-static', required: true)
-# bas_cpp_static_dep = dependency('bas-cpp-static', required: true)
-
-lib_objects = []
-
-# Build assets.zip every time (no file dependency)
-assets_dir = meson.current_source_dir() / 'assets'
-assets_src = 'src/assets.s'
-if fs.exists(assets_dir) and fs.exists(assets_src)
-    build_dir = meson.current_build_dir()
-    assets_zip = custom_target(
-        'assets_zip',
-        output: 'assets.zip',
-        input: [],
-        command: [
-            'sh',
-            '-c', 'dst=$(readlink -f "@1@"); cd "@0@" && zip -r "$dst" .'.format(assets_dir, '@OUTPUT@'),
-        ],
-        #build_always : true,
-        build_by_default: true,
-        install: false,
-    )
-
-    # Compile assembly file that embeds assets.zip using .incbin
-    # Use configure_file to copy assets.s to build directory
-    assets_s = configure_file(
-        input: 'src/assets.s',
-        output: 'assets.s',
-        copy: true,
-    )
-
-    # Compile the assembly file (assets.zip will be in the same directory)
-    as = find_program('as', required: true)
-    assets_o = custom_target(
-        'assets_o',
-        output: 'assets.o',
-        input: [assets_s, assets_zip],
-        command: [as, '-o', '@OUTPUT@', '@INPUT0@'],
-        depends: assets_zip,
-    )
-
-    lib_objects += [assets_o]
-endif
-
-# Disable all warnings (wx 3.0 and deps are noisy)
-nowarn = cpp.get_supported_arguments(['-w', '/w'])
-bas_args = ['-DLOGGER_NAME=zephyr', '-DASSETS_NAME=zephyr']
-
-c_pch = 'src/c_pch.h'
-c_args = [nowarn, bas_args, '-DTEXT_DOMAIN=zephyr']
-
-lib_inc = [
-    include_directories('src'),
-]
-
-lib_deps = [
-    bas_c_dep,
-]
-
-subdir('po')
-
-lib_sources = [
-    'src/lib.c',
-]
-
-lib_version = meson.project_version().split('-')[0]
-lib_soversion = lib_version.split('.')[0]
-
-lib_zephyr = shared_library(
-    'zephyr',
-    lib_sources,
-    lib_objects,
-    c_args: c_args,
-    c_pch: c_pch,
-    include_directories: lib_inc,
-    dependencies: lib_deps,
-    version: lib_version,
-    soversion: lib_soversion,
-    install: true,
-    install_dir: libdir,
-)
-
-lib_zephyr_static = static_library(
-    'zephyr',
-    lib_sources,
-    lib_objects,
-    c_args: c_args,
-    c_pch: c_pch,
-    include_directories: lib_inc,
-    dependencies: lib_deps,
+zephyr_lib_stamp = custom_target(
+    'zephyr_lib',
+    input: [zephyr_csproj, zephyr_buildinfo_subst, 'lib/Zephyr/common_lib.cs', 'lib/Zephyr/BuildInfo.cs', 'lib/Zephyr/BuildInfo.cs.in'],
+    output: 'Zephyr.build.stamp',
+    command: [
+        'bash',
+        '-euc', 'dotnet build "$1" -c Release -o "$2" -p:ZEPHYR_BUILDINFO="$3" && touch "$4"',
+        '_',
+        '@INPUT0@',
+        zephyr_out,
+        zephyr_buildinfo_subst_path,
+        '@OUTPUT@',
+    ],
+    build_by_default: true,
 )
 
 zephyr_dep = declare_dependency(
-    link_with: lib_zephyr,
-    include_directories: lib_inc,
+    sources: zephyr_lib_stamp,
+    variables: {
+        'ZEPHYR_CSPROJ': zephyr_csproj,
+        'ZEPHYR_DLL': zephyr_out / 'Zephyr.dll',
+    },
 )
-zephyr_static_dep = declare_dependency(
-    link_with: lib_zephyr_static,
-    include_directories: lib_inc,
-)
-
 meson.override_dependency('zephyr', zephyr_dep)
-meson.override_dependency('zephyr-static', zephyr_static_dep)
 
-# ---- pkg-config ----
-pkgconfig = import('pkgconfig')
-pkgconfig.generate(
-    lib_zephyr,
-    name: 'zephyr',
-    description: 'Zephyr shared library',
-    version: meson.project_version(),
-    subdirs: 'zephyr',
-    requires: ['bas-c'],
-)
-
-pkgconfig.generate(
-    lib_zephyr_static,
-    name: 'zephyr-static',
-    description: 'Zephyr static library',
-    version: meson.project_version(),
-    subdirs: 'zephyr',
-    requires: ['bas-c'],
-)
-
-# ---- Headers for mesonfmt package (includedir/meson) ----
-find_other_cmd = run_command(
-    'find',
-    'src',
-    '-name', '*.h',
-    '-o',
-    '-name', '*.hpp',
-    '-o',
-    '-type', 'd',
-    '-o',
-    '-print',
-    check: true,
-)
-other_files = find_other_cmd.stdout().strip().split('\n')
-
-other_list = []
-foreach f : other_files
-    other_list += f.substring(4)
-endforeach
-
-install_subdir(
-    'src',
-    install_dir: get_option('includedir'),
-    exclude_files: other_list,
-    strip_directory: true,
-)
-
-app_sources = [
-    'src/puff1.c',
+resx = [
+    'apps/puff1/Resources/Strings.de.resx',
+    'apps/puff1/Resources/Strings.eo.resx',
+    'apps/puff1/Resources/Strings.fr.resx',
+    'apps/puff1/Resources/Strings.it.resx',
+    'apps/puff1/Resources/Strings.ja.resx',
+    'apps/puff1/Resources/Strings.ko.resx',
+    'apps/puff1/Resources/Strings.resx',
+    'apps/puff1/Resources/Strings.th.resx',
+    'apps/puff1/Resources/Strings.vi.resx',
+    'apps/puff1/Resources/Strings.zh-Hans.resx',
+    'apps/puff1/Resources/Strings.zh-Hant.resx',
+    'apps/puff1/Resources/I18n.cs',
 ]
 
-foreach source : app_sources
-    split = source.split('/')
-    base = split[-1]
-    name = fs.stem(base)
-    executable(
-        name,
-        source,
-        c_args: c_args,
-        c_pch: c_pch,
-        include_directories: lib_inc,
-        dependencies: lib_deps,
-        link_with: lib_zephyr_static,
-        install: true,
-        install_dir: bindir,
-    )
-endforeach
+# pkg-config: for native toolchains Libs= would be wrong; use data-only metadata + custom vars
+pkgconfig = import('pkgconfig')
+pkgconfig.generate(
+    name: 'Zephyr',
+    description: 'Zephyr .NET class library (use dotnet/MSBuild, not -l or Libs:)',
+    version: meson.project_version(),
+    dataonly: true,
+    filebase: 'zephyr',
+    variables: {
+        'ZEPHYR_CSPROJ': zephyr_csproj,
+        'ZEPHYR_DLL': zephyr_out / 'Zephyr.dll',
+    },
+)
+
+test(
+    'cs-smoke',
+    dotnet,
+    args: [
+        'run',
+        '--project', meson.project_source_root() / 'tests/TestCommonLib.csproj',
+        '-c', 'Release',
+    ],
+    depends: [zephyr_lib_stamp],
+)
+
+# Example app: puff1 (see apps/puff1/)
+puff1_name = 'puff1'
+puff1_out = meson.current_build_dir() / puff1_name + '.p'
+puff1_build = custom_target(
+    puff1_name + '_build',
+    input: [
+        'apps/puff1/Puff1.csproj',
+        'apps/puff1/Program.cs',
+        'lib/Zephyr/Zephyr.csproj',
+        'lib/Zephyr/BuildInfo.cs',
+        'lib/Zephyr/common_lib.cs',
+    ] + resx,
+    output: puff1_name + '.stamp',
+    command: [
+        'bash',
+        '-euc', 'dotnet publish "$1" -c Release -o "$2" >/dev/null && touch "$3"',
+        '_',
+        '@INPUT0@',
+        puff1_out,
+        '@OUTPUT@',
+    ],
+    depends: zephyr_lib_stamp,
+    build_by_default: true,
+)
+
+custom_target(
+    puff1_name,
+    input: [puff1_build],
+    output: puff1_name,
+    command: [
+        'bash',
+        '-euc', '''
+        out="$1"
+        cat > "$out" <<'EOF'
+#!/usr/bin/env sh
+exec dotnet "@0@" "$@"
+EOF
+        chmod +x "$out"
+        '''.format(puff1_out / 'Puff1.dll'),
+        '_',
+        '@OUTPUT@',
+    ],
+    depends: puff1_build,
+    build_by_default: true,
+    install: true,
+    install_dir: bindir,
+)
 
 bash_files = [
     'puff1.bash',
@@ -347,5 +275,3 @@ run_target(
         ),
     ],
 )
-
-subdir('tests')

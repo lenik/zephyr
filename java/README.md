@@ -53,7 +53,7 @@ ninja -C /build
 meson test -C /build
 ```
 
-Meson runs a Java smoke/unit test (`TestPuffLib`) in `meson test`.
+Meson runs a Java smoke/unit test (`TestCommonLib`) in `meson test`.
 
 ## i18n (gettext)
 
