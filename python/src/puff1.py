@@ -8,7 +8,7 @@ import os
 import sys
 from typing import TextIO
 
-from pufflib import copy_file, copy_stream, init_i18n
+from common_lib import copy_file, copy_stream, init_i18n
 
 
 def usage(out: TextIO) -> None:

@@ -53,7 +53,7 @@ ninja -C /build
 meson test -C /build
 ```
 
-Meson 通过 Java 测试程序（`TestPuffLib`）执行冒烟/单元测试。
+Meson 通过 Java 测试程序（`TestCommonLib`）执行冒烟/单元测试。
 
 ## i18n（gettext）
 

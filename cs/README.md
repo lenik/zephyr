@@ -1,18 +1,17 @@
-THIS FILE IS GENERATED FROM A TEMPLATE.
-Except for the project and program names, all content is placeholder text.
-Please rewrite this file to reflect the specific details of the current project.
-
 # zephyr
 
-`zephyr` is a Meson-based project template for small C/C++ command-line apps.
+`zephyr` is a C# template for small command-line apps, using Meson for build/test/install.
 `puff1` is one **example app** in this template; more apps can be added in the same repository.
 
 ## Repository layout
 
-- `src/` - source code for apps and shared pieces
-- `tests/` - unit tests (`*_unit.c`) using the Check framework
+- `lib/Zephyr/` - shared class library (`.csproj` + `common_lib.cs`)
+- `apps/Puff1/` - example console app (`Puff1.csproj`, `Program.cs`, `Resources/*.resx`)
+- `tests/` - C# smoke/unit tests
 - `debian/` - Debian packaging metadata
-- `meson.build` - top-level build definition and helper targets
+- `scripts/emit-strings-resx.py` - optional helper to rewrite `apps/Puff1/Resources/Strings*.resx` from the tables in the script
+- `zephyr.sln` - Visual Studio / `dotnet build` solution (Zephyr lib + Puff1 + tests)
+- `meson.build` - build, test, install, and helper targets
 
 ## Example app: `puff1`
 
@@ -38,7 +37,7 @@ Supported options:
 ### Build dependencies
 
 ```bash
-sudo apt install meson ninja-build gcc pkg-config check
+sudo apt install meson ninja-build dotnet-sdk-8.0
 ```
 
 ### Configure and build
@@ -56,44 +55,23 @@ ninja -C /build
 meson test -C /build
 ```
 
-Unit tests are auto-discovered from `tests/*_unit.c` and registered in Meson.
+Meson runs a C# smoke/unit test from `tests/TestCommonLib.csproj`.
 
-## i18n (gettext)
+## i18n (.resx)
 
-`puff1` uses gettext translations under `po/` (`*.po` + generated `.mo` files).
+`puff1` uses embedded `.resx` under `apps/Puff1/Resources/`. Neutral strings live in `Strings.resx`; per-culture overrides use `Strings.<culture>.resx` and ship as satellite assemblies next to the main DLL.
 
-- Installed runtime loads translations from system locale dir.
-- Dev runtime (`/build/puff1`) prefers project-local translations from `/build/po` if present.
+- Selection follows `LC_ALL` / `LC_MESSAGES` / `LANG` (same idea as typical Unix tools). Example: `LANG=de_DE.UTF-8 /build/puff1 -h` or `LANG=zh-CN.UTF-8 /build/puff1 -h`.
 
-### Sync translation catalogs
+### Regenerating `.resx` from the string tables (optional)
 
-Use `posync` to update catalogs from current source strings:
-
-```bash
-ninja -C /build posync
-```
-
-`posync` will:
-
-- add missing messages into each language from `po/LINGUAS`
-- remove obsolete messages no longer used in source
-
-### Build translation files
+If you add keys to `apps/Puff1/Resources/Strings.resx`, mirror them in the emit script and run:
 
 ```bash
-ninja -C /build
+python3 scripts/emit-strings-resx.py
 ```
 
-### Quick locale testing
-
-Prefer `LANGUAGE=<lang>` for predictable gettext selection in dev shells:
-
-```bash
-LANGUAGE=ja /build/puff1 -h
-LANGUAGE=zh_CN /build/puff1 -h
-```
-
-`LANG=<lang>.<encoding>` may depend on whether that locale is generated on your system.
+Then build again so satellite assemblies are updated.
 
 ## Install / symlink helpers
 

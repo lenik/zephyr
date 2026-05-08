@@ -5,7 +5,7 @@
 
 ## Repository layout
 
-- `src/` - Python sources (`puff1.py` and shared helpers)
+- `src/` - Python sources (`puff1.py` example app and `common_lib.py` shared helpers)
 - `tests/` - Python unit tests (`unittest`)
 - `debian/` - Debian packaging metadata
 - `po/` - gettext message catalogs

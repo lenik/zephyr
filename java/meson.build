@@ -26,7 +26,7 @@ subdir('po')
 
 java_sources = [
     'src/Main.java',
-    'src/PuffLib.java',
+    'src/common_lib.java',
 ]
 
 puff1_jar = custom_target(

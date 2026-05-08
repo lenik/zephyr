@@ -1,18 +1,15 @@
-本文件由模板生成。
-除项目名称和程序名称外，其余内容均为占位符。
-请根据当前项目的具体情况重写此文档。
-
 # zephyr
 
-`zephyr` 是一个基于 Meson 的小型 C/C++ 命令行应用项目模板。  
+`zephyr` 是一个 Swift 命令行模板，使用 Meson 做构建/测试/安装。  
 `puff1` 是此模板中的一个**示例应用**；同一仓库中可以继续添加更多应用。
 
 ## 仓库结构
 
-- `src/` - 应用与共享模块源码
-- `tests/` - 使用 Check 框架的单元测试（`*_unit.c`）
+- `src/` - Swift 源码（`*.swift`）
+- `tests/` - Swift 冒烟/单元测试
 - `debian/` - Debian 打包元数据
-- `meson.build` - 顶层构建定义与辅助目标
+- `po/` - gettext 翻译目录
+- `meson.build` - 构建、测试、安装与辅助目标
 
 ## 示例应用：`puff1`
 
@@ -38,7 +35,7 @@ puff1 [OPTION]... [FILE]...
 ### 构建依赖
 
 ```bash
-sudo apt install meson ninja-build gcc pkg-config check
+sudo apt install meson ninja-build swiftlang gettext
 ```
 
 ### 配置并构建
@@ -56,7 +53,7 @@ ninja -C /build
 meson test -C /build
 ```
 
-Meson 会自动发现 `tests/*_unit.c` 中的单元测试并完成注册。
+Meson 执行 `tests/TestCommonLib.swift` 做冒烟/单元测试。
 
 ## i18n（gettext）
 

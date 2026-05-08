@@ -3,7 +3,7 @@ from __future__ import annotations
 import io
 import unittest
 
-from pufflib import copy_stream
+from common_lib import copy_stream
 
 
 class Puff1Tests(unittest.TestCase):

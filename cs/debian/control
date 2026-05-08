@@ -2,7 +2,7 @@ Source: zephyr
 Section: utils
 Priority: optional
 Maintainer: Lenik <zephyr@bodz.net>
-Build-Depends: debhelper-compat (= 13), meson, ninja-build, pkgconf, check, libbas-c-dev
+Build-Depends: debhelper-compat (= 13), meson, ninja-build, dotnet-sdk-8.0
 Standards-Version: 4.6.0
 Homepage: https://github.com/lenik/zephyr
 Rules-Requires-Root: no
@@ -10,9 +10,9 @@ Rules-Requires-Root: no
 Package: zephyr
 Architecture: any
 Depends: 
-    ${shlibs:Depends}, 
+    dotnet-runtime-8.0,
     ${misc:Depends}
 Description: Meson-based CLI project template with example app
- zephyr is a template repository for small C/C++ command-line utilities.
+ zephyr is a template repository for small C# command-line utilities.
  It currently ships the puff1 example application and Debian packaging
- metadata, and includes Check-based unit-test integration.
+ metadata, and includes C#-based smoke/unit-test integration.

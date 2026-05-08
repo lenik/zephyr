@@ -40,10 +40,10 @@ puff1_exe = custom_target(
     install_dir: bindir,
 )
 
-pufflib_mod = custom_target(
-    'pufflib',
-    input: 'src/pufflib.py',
-    output: 'pufflib.py',
+common_lib_mod = custom_target(
+    'common_lib',
+    input: 'src/common_lib.py',
+    output: 'common_lib.py',
     command: ['cp', '@INPUT@', '@OUTPUT@'],
     build_by_default: true,
     install: true,

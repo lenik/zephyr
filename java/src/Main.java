@@ -73,16 +73,16 @@ public final class Main {
         }
 
         if (files.isEmpty()) {
-            PuffLib.copyStream(System.in, System.out);
+            common_lib.copyStream(System.in, System.out);
             return;
         }
 
         for (String f : files) {
             if (f.equals("-")) {
-                PuffLib.copyStream(System.in, System.out);
+                common_lib.copyStream(System.in, System.out);
             } else {
                 try {
-                    PuffLib.copyFile(Path.of(f), System.out);
+                    common_lib.copyFile(Path.of(f), System.out);
                 } catch (IOException e) {
                     System.err.printf("%s: %s%n", "puff1", e.getMessage());
                     System.exit(1);
