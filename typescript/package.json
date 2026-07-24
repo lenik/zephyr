@@ -1,0 +1,39 @@
+{
+  "name": "zephyr",
+  "version": "1.0.0",
+  "description": "Meson-based TypeScript CLI project template with example app puff1",
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "author": "Lenik <zephyr@bodz.net>",
+  "homepage": "https://github.com/lenik/zephyr",
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "puff1": "./dist/src/puff1.js"
+  },
+  "exports": {
+    ".": "./dist/src/common_lib.js",
+    "./common_lib": "./dist/src/common_lib.js"
+  },
+  "files": [
+    "dist/src/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc && node --test dist/tests/*.test.js",
+    "docs": "scripts/build-docs.sh docs/puff1.adoc dist/docs 1.0.0 2026 Lenik zephyr@bodz.net",
+    "prepublishOnly": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "typescript": "^5.8.0"
+  },
+  "dependencies": {
+    "gettext-parser": "^9.1.1",
+    "node-gettext": "^3.0.1"
+  }
+}
