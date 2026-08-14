@@ -237,7 +237,7 @@ def _puff_source_paths(lang: str, tmpl: Path) -> list[Path]:
             tmpl / "docs" / f"{stem}.adoc",
             tmpl / "po" / f"{stem}.pot",
         ]
-    elif lang == "cs":
+    elif lang == "csharp":
         app = tmpl / "apps" / stem
         if app.is_dir():
             found.append(app)
@@ -538,7 +538,7 @@ install_data(
     elif lang == "go":
         # cmd/<name>/ is enough for `go build`; meson may still hardcode one target.
         pass
-    elif lang == "cs":
+    elif lang == "csharp":
         sln = workdir / "zephyr.sln"
         if sln.is_file():
             pascal = case_variants(name)["pascal"]
@@ -582,7 +582,7 @@ def _wire_remove(lang: str, workdir: Path, name: str) -> None:
         _strip_man_custom_target(meson, name)
     elif lang == "python" and meson.is_file():
         _strip_python_meson_puff(meson, name)
-    elif lang == "cs":
+    elif lang == "csharp":
         sln = workdir / "zephyr.sln"
         if sln.is_file():
             pascal = case_variants(name)["pascal"]

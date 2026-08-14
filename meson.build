@@ -11,7 +11,7 @@ project(
             fi
             printf "%s" "$v"
         else
-            echo "1.2.0"
+            echo "1.3.0"
         fi
         ''',
         check: false,
@@ -39,7 +39,7 @@ template_langs = [
     'bash',
     'c',
     'clib',
-    'cs',
+    'csharp',
     'erlang',
     'go',
     'haskell',

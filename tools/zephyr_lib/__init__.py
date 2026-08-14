@@ -17,7 +17,7 @@ LANGS = (
     "bash",
     "c",
     "clib",
-    "cs",
+    "csharp",
     "erlang",
     "go",
     "haskell",
@@ -338,7 +338,7 @@ def detect_lang(workdir: Path | None = None) -> str:
     if (root / "package.json").is_file() and any(root.glob("tsconfig*.json")):
         return "typescript"
     if _cs_project_markers(root):
-        return "cs"
+        return "csharp"
 
     # meson project() language list and debian/control Depends / Build-Depends
     if meson.is_file():
@@ -367,7 +367,7 @@ def detect_lang(workdir: Path | None = None) -> str:
         ("go", re.compile(r"\bgolang\b|\bgolang-go\b", re.I)),
         ("rust", re.compile(r"\bcargo\b|\brustc\b", re.I)),
         ("typescript", re.compile(r"\bnodejs\b|\bnpm\b|\bnode-typescript\b|\btypescript\b", re.I)),
-        ("cs", re.compile(r"\bdotnet(?:-sdk)?\b", re.I)),
+        ("csharp", re.compile(r"\bdotnet(?:-sdk)?\b", re.I)),
         ("java", re.compile(r"\bdefault-jdk\b|\bdefault-jre\b|\bjava-runtime\b|\bopenjdk\b", re.I)),
         ("python", re.compile(r"\bpython3?\b", re.I)),
         ("erlang", re.compile(r"\berlang\b", re.I)),
@@ -425,7 +425,7 @@ def detect_lang(workdir: Path | None = None) -> str:
     if _has_ext_shallow(root, ".ts"):
         return "typescript"
     if _has_ext_shallow(root, ".cs"):
-        return "cs"
+        return "csharp"
     if _has_ext_shallow(root, ".java"):
         return "java"
     if _has_ext_shallow(root, ".py"):

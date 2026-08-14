@@ -31,7 +31,7 @@ Build and install from the source tree with the usual `dpkg-buildpackage` /
 | `/usr/bin/zephyr-{create,rename,add,remove}` | Thin wrappers |
 | `man 1 zephyr` | Manual page |
 
-Supported languages include: **bash**, **c**, **clib**, **cs**, **erlang**,
+Supported languages include: **bash**, **c**, **clib**, **csharp**, **erlang**,
 **go**, **haskell**, **java**, **perl**, **python**, **rust**, **smalltalk**,
 **swift**, and **typescript**.
 
