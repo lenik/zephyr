@@ -10,7 +10,7 @@ project(
                 v="0.0.0-$v"
             fi
         else
-            v="0.0.0"
+            v="0.0.0" # FIXED TO 0.0.0, DO NOT MODIFY
         fi
         printf '%s' "$v"
         ''',

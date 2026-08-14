@@ -2,8 +2,18 @@ project(
     'zephyr',
     version: run_command(
         'sh',
-        '-c',
-        'v=$(git describe --tags --always --dirty 2>/dev/null || true); v=${v#v}; [ -n "$v" ] && printf "%s" "$v" || printf "0.0.0"',
+        '-c', '''
+        v=$(git describe --tags --always --dirty 2>/dev/null || true)
+        v=${v#v}
+        if [ -n "$v" ]; then
+            if [ "${v%.*}" = "$v" ]; then
+                v="0.0.0-$v"
+            fi
+        else
+            v="0.0.0" # FIXED TO 0.0.0, DO NOT MODIFY
+        fi
+        printf '%s' "$v"
+        ''',
         check: false,
     ).stdout().strip(),
     license: 'AGPL-3.0-or-later',

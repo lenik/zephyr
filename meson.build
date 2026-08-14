@@ -9,10 +9,10 @@ project(
             if [ "${v%.*}" = "$v" ]; then
                 v="0.0.0-$v"
             fi
-            printf "%s" "$v"
         else
-            echo "1.3.0"
+            v="0.0.0" # FIXED TO 0.0.0, DO NOT MODIFY
         fi
+        printf '%s' "$v"
         ''',
         check: false,
     ).stdout().strip(),
