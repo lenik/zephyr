@@ -13,6 +13,7 @@ Please rewrite this file to reflect the specific details of the current project.
 - `build-aux/cargo-build.sh` - build hook used by Meson to run `cargo build --release`
 - `po/` - gettext message catalogs
 - `debian/` - Debian packaging metadata
+- `docs/` - AsciiDoc man page sources (`docs/*.adoc`)
 - `meson.build` - data files, man page, `install-symlinks`, and Meson-registered `cargo test`
 - `Cargo.toml` / `Cargo.lock` - the canonical dependency graph and locked dependency versions
 
@@ -40,7 +41,7 @@ Supported options:
 ### Build dependencies (Debian example)
 
 ```bash
-sudo apt install build-essential meson ninja-build pkgconf cargo rustup gettext
+sudo apt install build-essential meson ninja-build pkgconf cargo rustup gettext asciidoctor
 ```
 
 (For Debian source packages, `debian/control` lists the build dependencies.)

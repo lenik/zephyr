@@ -9,6 +9,7 @@
 - `tests/` - Haskell smoke/unit tests
 - `debian/` - Debian packaging metadata
 - `po/` - gettext message catalogs
+- `docs/` - AsciiDoc man page sources (`docs/*.adoc`)
 - `meson.build` - build, test, install, and helper targets
 
 ## Example app: `some_puff1`
@@ -35,7 +36,7 @@ Supported options:
 ### Build dependencies
 
 ```bash
-sudo apt install meson ninja-build ghc gettext
+sudo apt install meson ninja-build ghc gettext asciidoctor
 ```
 
 ### Configure and build

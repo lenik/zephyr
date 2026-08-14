@@ -1,0 +1,18 @@
+Source: zephyr
+Section: utils
+Priority: optional
+Maintainer: Lenik <zephyr@bodz.net>
+Build-Depends: debhelper-compat (= 13), meson, ninja-build, perl, asciidoctor
+Standards-Version: 4.6.0
+Homepage: https://github.com/lenik/zephyr
+Rules-Requires-Root: no
+
+Package: zephyr
+Architecture: all
+Depends:
+    perl,
+    ${misc:Depends}
+Description: Perl CLI project template with example app
+ zephyr is a Meson-based template for small Perl command-line utilities.
+ It ships the some_puff1 example script (Getopt::Long), AsciiDoc man pages,
+ bash completion, and Debian packaging.

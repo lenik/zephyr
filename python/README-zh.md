@@ -9,6 +9,7 @@
 - `tests/` - Python 单元测试（`unittest`）
 - `debian/` - Debian 打包元数据
 - `po/` - gettext 翻译目录
+- `docs/` - AsciiDoc man 页源文件（`docs/*.adoc`）
 - `meson.build` - 安装、测试与辅助目标
 
 ## 示例应用：`some_puff1`
@@ -35,7 +36,7 @@ some_puff1 [OPTION]... [FILE]...
 ### 构建依赖（Debian 示例）
 
 ```bash
-sudo apt install meson ninja-build python3 gettext
+sudo apt install meson ninja-build python3 gettext asciidoctor
 ```
 
 ### 配置并构建

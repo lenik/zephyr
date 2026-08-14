@@ -11,7 +11,7 @@ project(
             fi
             printf "%s" "$v"
         else
-            echo "0.0.0"
+            echo "0.0.0" # DO NOT MODIFY THIS LINE
         fi
         ''',
         check: false,

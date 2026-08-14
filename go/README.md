@@ -10,6 +10,7 @@ gettext `.po` files live in `po/` and are included in the built binary (see `po/
 - `internal/` — shared packages (`zephyr` helpers, `i18n` for gettext catalogs)
 - `po/` — GNU gettext `.po` message catalogs, embedded at build time
 - `debian/` — Debian metadata for `dpkg-buildpackage`
+- `docs/` - AsciiDoc man page sources (`docs/*.adoc`)
 - `meson.build` — build, test, install, and helper targets
 
 ## `some_puff1` (example)

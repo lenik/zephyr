@@ -12,6 +12,7 @@
 - `internal/` — 内部分享包（`zephyr` 与 `i18n` 等）
 - `po/` — 翻译用 `.po`
 - `debian/` — `dpkg-buildpackage` 用元数据
+- `docs/` - AsciiDoc man 页源文件（`docs/*.adoc`）
 - `meson.build` — 构建、测试、安装与辅助目标
 
 ## 构建与测试

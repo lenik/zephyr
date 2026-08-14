@@ -11,7 +11,7 @@ project(
             fi
             printf "%s" "$v"
         else
-            echo "0.0.0"
+            echo "0.0.0" # DO NOT MODIFY THIS LINE
         fi
         ''',
         check: false,
@@ -25,6 +25,7 @@ project_year = 2026
 
 fs = import('fs')
 dotnet = find_program('dotnet', required: true)
+asciidoctor = find_program('asciidoctor', required: true)
 
 prefix = get_option('prefix')
 bindir = prefix / get_option('bindir')
@@ -184,16 +185,21 @@ install_data(
     install_dir: pkgdocdir,
 )
 
-config_man = configuration_data()
-config_man.set('PROJECT_VERSION', meson.project_version())
-config_man.set('PROJECT_AUTHOR', project_author)
-config_man.set('PROJECT_EMAIL', project_email)
-config_man.set('PROJECT_YEAR', project_year)
-
-configure_file(
-    input: 'some_puff1.1.in',
+custom_target(
+    'some_puff1-man',
+    input: 'docs/some_puff1.adoc',
     output: 'some_puff1.1',
-    configuration: config_man,
+    command: [
+        asciidoctor,
+        '-b', 'manpage',
+        '-a', 'project-version=' + meson.project_version(),
+        '-a', 'project-year=@0@'.format(project_year),
+        '-a', 'project-author=' + project_author,
+        '-a', 'project-email=' + project_email,
+        '-o', '@OUTPUT@',
+        '@INPUT@',
+    ],
+    build_by_default: true,
     install: true,
     install_dir: mandir / 'man1',
 )

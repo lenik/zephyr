@@ -6,49 +6,32 @@
 
 #define _POSIX_C_SOURCE 200809L
 
-#include "some_puff1.h"
-
+#include "common_lib.h"
 #include "config.h"
-#include "lib.h"
-
-#include <bas/locale/i18n.h>
-#include <bas/log/deflog.h>
-#include <bas/proc/env.h>
-
-#include <sys/stat.h>
 
 #include <getopt.h>
-#include <limits.h>
-#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-define_logger();
-
 enum { OPT_VERSION = 256 };
 
-void usage(FILE *out) {
-    fputs(_("Usage: some_puff1 [OPTION]... [FILE]...\n"
-            "Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n"
-            "read standard input.\n"),
+static int verbose;
+
+static void usage(FILE *out) {
+    fputs("Usage: some_puff1 [OPTION]... [FILE]...\n"
+          "Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n"
+          "read standard input.\n\n"
+          "  -v, --verbose      repeat for more verbose loggings\n"
+          "  -q, --quiet        show less logging messages\n"
+          "  -h, --help         display this help and exit\n"
+          "      --version      output version information and exit\n\n",
           out);
-    fputs("\n", out);
-    fputs("  -v, --verbose      ", out);
-    fputs(_("repeat for more verbose loggings\n"), out);
-    fputs("  -q, --quiet        ", out);
-    fputs(_("show less logging messages\n"), out);
-    fputs("  -h, --help         ", out);
-    fputs(_("display this help and exit\n"), out);
-    fputs("      --version      ", out);
-    fputs(_("output version information and exit\n"), out);
-    fputs("\n", out);
-    fprintf(out, _("Report bugs to: <%s>\n"), PROJECT_EMAIL);
+    fprintf(out, "Report bugs to: <%s>\n", PROJECT_EMAIL);
 }
 
 int main(int argc, char **argv) {
-    const char *exe = self_exe();
-    init_i18n(LOCALEDIR);
+    const char *prog = argv[0] ? argv[0] : "some_puff1";
 
     static const struct option long_opts[] = {
         {"verbose", no_argument, NULL, 'v'},
@@ -65,26 +48,24 @@ int main(int argc, char **argv) {
         }
         switch (c) {
         case 'v':
-            log_more();
+            verbose++;
             break;
         case 'q':
-            log_less();
+            verbose = -1;
             break;
         case 'h':
             usage(stdout);
             return 0;
         case OPT_VERSION:
             printf("some_puff1 %s\n", PROJECT_VERSION);
-            printf(_("Copyright (C) %d %s\n"), PROJECT_YEAR, PROJECT_AUTHOR);
-            fputs(_("License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"),
+            printf("Copyright (C) %d %s\n", PROJECT_YEAR, PROJECT_AUTHOR);
+            fputs("License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
+                  "This is free software: you are free to change and redistribute it.\n"
+                  "This project opposes AI exploitation and AI hegemony.\n"
+                  "This project rejects mindless MIT-style licensing and politically naive "
+                  "BSD-style licensing.\n"
+                  "There is NO WARRANTY, to the extent permitted by law.\n",
                   stdout);
-            fputs(_("This is free software: you are free to change and redistribute it.\n"),
-                  stdout);
-            fputs(_("This project opposes AI exploitation and AI hegemony.\n"), stdout);
-            fputs(_("This project rejects mindless MIT-style licensing and politically naive "
-                    "BSD-style licensing.\n"),
-                  stdout);
-            fputs(_("There is NO WARRANTY, to the extent permitted by law.\n"), stdout);
             return 0;
         default:
             usage(stderr);
@@ -95,35 +76,42 @@ int main(int argc, char **argv) {
     argc -= optind;
     argv += optind;
 
-    loginfo_fmt("%s: verbose mode enabled", exe);
+    if (verbose > 0) {
+        fprintf(stderr, "%s: verbose mode enabled\n", prog);
+    }
 
     if (argc == 0) {
-        loginfo_fmt("%s: reading from standard input", exe);
+        if (verbose > 0) {
+            fprintf(stderr, "%s: reading from standard input\n", prog);
+        }
         if (copy_stream(stdin, stdout) != 0) {
-            fprintf(stderr, "%s: ", exe);
+            fprintf(stderr, "%s: ", prog);
             perror("stdin");
             return 1;
         }
-        loginfo_fmt("%s: done", exe);
         return 0;
     }
 
     for (int i = 0; i < argc; i++) {
         const char *path = argv[i];
         if (strcmp(path, "-") == 0) {
-            loginfo_fmt("%s: copying from standard input", exe);
+            if (verbose > 0) {
+                fprintf(stderr, "%s: copying from standard input\n", prog);
+            }
             if (copy_stream(stdin, stdout) != 0) {
-                fprintf(stderr, "%s: ", exe);
+                fprintf(stderr, "%s: ", prog);
                 perror("stdin");
                 return 1;
             }
-        } else if (copy_file(exe, path) != 0) {
-            return 1;
         } else {
-            loginfo_fmt("%s: copied %s", exe, path);
+            if (verbose > 0) {
+                fprintf(stderr, "%s: copying from %s\n", prog, path);
+            }
+            if (copy_file(prog, path) != 0) {
+                return 1;
+            }
         }
     }
-    loginfo_fmt("%s: done", exe);
 
     return 0;
 }

@@ -11,7 +11,7 @@ project(
             fi
             printf "%s" "$v"
         else
-            echo "1.1.1"
+            echo "1.2.0"
         fi
         ''',
         check: false,
@@ -20,22 +20,31 @@ project(
     meson_version: '>=0.61.0',
 )
 
+project_author = 'Lenik'
+project_email = 'zephyr@bodz.net'
+project_year = 2026
+
 fs = import('fs')
 py = import('python').find_installation('python3')
+asciidoctor = find_program('asciidoctor', required: true)
 
 prefix = get_option('prefix')
 bindir = prefix / get_option('bindir')
 datadir = prefix / get_option('datadir')
+mandir = prefix / get_option('mandir')
 pkgdatadir = datadir / meson.project_name()
 pkgdocdir = datadir / 'doc' / meson.project_name()
 
 template_langs = [
+    'bash',
     'c',
+    'clib',
     'cs',
     'erlang',
     'go',
     'haskell',
     'java',
+    'perl',
     'python',
     'rust',
     'smalltalk',
@@ -82,6 +91,7 @@ endforeach
 install_data(
     [
         'tools/zephyr',
+        'tools/zephyr-create',
         'tools/zephyr-rename',
         'tools/zephyr-add',
         'tools/zephyr-remove',
@@ -113,7 +123,7 @@ tool_cfg = configuration_data()
 tool_cfg.set('PKGDATADIR', pkgdatadir)
 tool_cfg.set('PYTHON', py.full_path())
 
-foreach name : ['zephyr', 'zephyr-rename', 'zephyr-add', 'zephyr-remove']
+foreach name : ['zephyr', 'zephyr-create', 'zephyr-rename', 'zephyr-add', 'zephyr-remove']
     configure_file(
         input: 'tools' / (name + '.in'),
         output: name,
@@ -124,8 +134,41 @@ foreach name : ['zephyr', 'zephyr-rename', 'zephyr-add', 'zephyr-remove']
     )
 endforeach
 
+# Man page for zephyr tools
+custom_target(
+    'zephyr-man',
+    input: 'docs/zephyr.adoc',
+    output: 'zephyr.1',
+    command: [
+        asciidoctor,
+        '-b', 'manpage',
+        '-a', 'project-version=' + meson.project_version(),
+        '-a', 'project-year=@0@'.format(project_year),
+        '-a', 'project-author=' + project_author,
+        '-a', 'project-email=' + project_email,
+        '-o', '@OUTPUT@',
+        '@INPUT@',
+    ],
+    build_by_default: true,
+    install: true,
+    install_dir: mandir / 'man1',
+)
+
+# Bash completion (same script under several command names)
+foreach completion_name : ['zephyr', 'zephyr-create', 'zephyr-rename', 'zephyr-add', 'zephyr-remove']
+    install_data(
+        'tools/zephyr.bash',
+        install_dir: datadir / 'bash-completion' / 'completions',
+        rename: completion_name,
+    )
+endforeach
+
 install_data(
-    'LICENSE',
+    [
+        'LICENSE',
+        'README.md',
+        'README-zh.md',
+    ],
     install_dir: pkgdocdir,
 )
 

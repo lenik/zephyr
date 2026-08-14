@@ -1,0 +1,49 @@
+#!/bin/bash
+    : ${RCSID:=$Id: - @VERSION@ @DATE@ @TIME@ - $}
+    : ${PACKAGE:=@PACKAGE@}
+    : ${PROGRAM_TITLE:=Concatenate files to standard output}
+    : ${PROGRAM_SYNTAX:=[OPTIONS] [--] [FILE]...}
+
+    . shlib
+    import cliboot
+
+    option -q --quiet
+    option -v --verbose
+    option -h --help
+    option    --version
+
+function setopt() {
+    case "$1" in
+        -h|--help)
+            help $1; exit;;
+        -q|--quiet)
+            LOGLEVEL=$((LOGLEVEL - 1));;
+        -v|--verbose)
+            LOGLEVEL=$((LOGLEVEL + 1));;
+        --version)
+            show_version; exit;;
+        *)
+            quit "invalid option: $1";;
+    esac
+}
+
+function main() {
+    if [ $# -eq 0 ]; then
+        _log1 "reading from standard input"
+        cat
+        return
+    fi
+
+    local arg
+    for arg in "$@"; do
+        if [ "$arg" = "-" ]; then
+            _log1 "copying from standard input"
+            cat
+        else
+            _log1 "copying from $arg"
+            cat -- "$arg" || quit "failed to read $arg"
+        fi
+    done
+}
+
+boot "$@"

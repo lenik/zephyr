@@ -11,6 +11,7 @@
 - `debian/` - Debian packaging metadata
 - `scripts/emit-strings-resx.py` - optional helper to rewrite `apps/SomePuff1/Resources/Strings*.resx` from the tables in the script
 - `zephyr.sln` - Visual Studio / `dotnet build` solution (Zephyr lib + SomePuff1 + tests)
+- `docs/` - AsciiDoc man page sources (`docs/*.adoc`)
 - `meson.build` - build, test, install, and helper targets
 
 ## Example app: `some_puff1`
@@ -37,7 +38,7 @@ Supported options:
 ### Build dependencies
 
 ```bash
-sudo apt install meson ninja-build dotnet-sdk-8.0
+sudo apt install meson ninja-build dotnet-sdk-8.0 asciidoctor
 ```
 
 ### Configure and build

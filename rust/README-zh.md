@@ -12,6 +12,7 @@
 - `src/` - `zephyr` 库与 `some_puff1` 可执行文件代码
 - `build-aux/cargo-build.sh` - Meson 调用以执行 `cargo build --release`
 - `debian/` - Debian 打包元数据
+- `docs/` - AsciiDoc man 页源文件（`docs/*.adoc`）
 - `meson.build` - man、文档、gettext、`install-symlinks`、以及用 Meson 登记的 `cargo test`
 - `Cargo.toml` / `Cargo.lock` - 依赖与锁文件
 - `po/` - gettext 翻译
@@ -40,7 +41,7 @@ some_puff1 [OPTION]... [FILE]...
 ### 构建依赖
 
 ```bash
-sudo apt install build-essential meson ninja-build pkgconf cargo rustup gettext
+sudo apt install build-essential meson ninja-build pkgconf cargo rustup gettext asciidoctor
 ```
 
 （源码包构建依赖以 `debian/control` 为准。）

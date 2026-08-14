@@ -1,0 +1,151 @@
+= zephyr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: User Commands
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zephyr - multi-language CLI project templates and helper tools
+
+== Synopsis
+
+*zephyr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+                 [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zephyr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zephyr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zephyr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zephyr* *detect*
+
+*zephyr* *help*
+
+*zephyr-create*, *zephyr-rename*, *zephyr-add*, and *zephyr-remove* are thin
+wrappers around the same subcommands.
+
+== Description
+
+*zephyr* ships language templates for small command-line utilities and tools
+to instantiate and manage them.
+
+Typical workflow:
+
+. Create a project from a language template:
++
+----
+zephyr create -l python myproj
+----
+
+. Enter the project and add application *puffs* (example apps):
++
+----
+cd myproj
+zephyr add myapp another_app
+----
+
+. Optionally rename the project or remove puffs later with *rename* / *remove*.
+
+Templates are installed under */usr/share/zephyr/<lang>/* (or the path given by
+*ZEPHYR_PKGDATADIR*). Each template may include a sample puff named
+*some_puff1*; *create* removes that sample by default so the new project starts
+without an example app unless you pass puff names on the *create* command line.
+
+== Commands
+
+*create*::
+  Copy *pkgdatadir/<lang>/* into a new directory *./<project_name>/* (fails if
+  the directory already exists), rewrite *zephyr* → *_PROJECT_NAME_* in that
+  tree, remove the template puff *some_puff1*, then optionally *add* each
+  given *_PUFF_NAME_*.
+  Writes a fresh *debian/changelog* (template changelog is discarded) using
+  *--distribution* / *--init-version* / *--author* / *--email*, then runs
+  *git init*, an initial commit, and an annotated tag *vVER*.
+
+*rename*::
+  In the current project directory, rewrite *zephyr* → *_PROJECT_NAME_* and,
+  for each given name, rewrite the template puff *some_puff1* → that name.
+
+*add*::
+  Detect the project language and copy the template puff files into the current
+  project, renaming *some_puff1* to each given *_PUFF_NAME_*. Updates Meson
+  lists (or equivalent wiring) when possible.
+
+*remove*::
+  Remove files and Meson wiring for each given puff name from the current
+  project.
+
+*detect*::
+  Print the detected language for the current directory.
+
+*help*::
+  Show command-line help.
+
+== Options
+
+Options for *create*:
+
+*-l, --lang* _LANG_::
+  Language template to use (default: *python*).
+  Supported values include *bash*, *c*, *clib*, *cs*, *erlang*, *go*,
+  *haskell*, *java*, *perl*, *python*, *rust*, *smalltalk*, *swift*, and
+  *typescript*.
+
+*-D, --distribution* _DIST_::
+  Debian changelog distribution (default: *unstable*).
+
+*-1, --init-version* _VER_::
+  Initial package version and git tag (default: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  Changelog and git author name (default: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  Changelog and git author email (default: *lenik@bodz.net*).
+
+== Environment
+
+*ZEPHYR_PKGDATADIR*::
+  Override the templates root (normally */usr/share/zephyr*).
+
+*PYTHONPATH*::
+  Must include the directory that contains the *zephyr_lib* package when
+  running the tools from a non-default install layout.
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  Installed language templates.
+
+*/usr/share/doc/zephyr/*::
+  Package documentation (LICENSE, README).
+
+== Exit status
+
+*0*::
+  Success.
+
+*non-zero*::
+  An error occurred (unknown language, destination exists, detection failure,
+  missing puff files, and so on).
+
+== Author
+
+Written by {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+License AGPL-3.0-or-later.
+This is free software: you are free to change and redistribute it under the
+terms of the GNU Affero General Public License.
+There is NO WARRANTY, to the extent permitted by law.
+See the LICENSE file in the source distribution for the full license text,
+including supplemental terms stating this project opposes AI exploitation and
+AI hegemony, and rejects mindless MIT-style licensing and politically naive
+BSD-style licensing.

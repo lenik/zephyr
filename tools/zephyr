@@ -3,9 +3,11 @@
 """zephyr — multi-language CLI project template helper.
 
 Usage:
+  zephyr create [-l LANG] [-D DIST] [-1 VER] [-a AUTHOR] [-e EMAIL]
+                PROJECT_NAME [PUFF_NAME ...]
   zephyr rename PROJECT_NAME [PUFF_NAME ...]
-  zephyr add PUFF_NAME
-  zephyr remove PUFF_NAME
+  zephyr add PUFF_NAME [PUFF_NAME ...]
+  zephyr remove PUFF_NAME [PUFF_NAME ...]
   zephyr detect
   zephyr help
 """
@@ -21,19 +23,71 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zephyr_lib import detect_lang, pkgdatadir  # noqa: E402
-from zephyr_lib.commands import cmd_add, cmd_remove, cmd_rename  # noqa: E402
+from zephyr_lib import LANGS, detect_lang, pkgdatadir  # noqa: E402
+from zephyr_lib.commands import (  # noqa: E402
+    DEFAULT_AUTHOR,
+    DEFAULT_DISTRIBUTION,
+    DEFAULT_EMAIL,
+    DEFAULT_INIT_VERSION,
+    cmd_add,
+    cmd_create,
+    cmd_remove,
+    cmd_rename,
+)
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="zephyr",
-        description="Zephyr template helper: rename projects and manage example puffs.",
+        description="Zephyr template helper: create projects and manage example puffs.",
     )
     p.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     sub = p.add_subparsers(dest="cmd", required=True)
+
+    pc = sub.add_parser("create", help="create a new project from a language template")
+    pc.add_argument(
+        "-l",
+        "--lang",
+        default="python",
+        metavar="LANG",
+        help=f"template language (default: python; one of: {', '.join(LANGS)})",
+    )
+    pc.add_argument(
+        "-D",
+        "--distribution",
+        default=DEFAULT_DISTRIBUTION,
+        metavar="DIST",
+        help=f"debian changelog distribution (default: {DEFAULT_DISTRIBUTION})",
+    )
+    pc.add_argument(
+        "-1",
+        "--init-version",
+        default=DEFAULT_INIT_VERSION,
+        metavar="VER",
+        help=f"initial package version and git tag (default: {DEFAULT_INIT_VERSION})",
+    )
+    pc.add_argument(
+        "-a",
+        "--author",
+        default=DEFAULT_AUTHOR,
+        metavar="AUTHOR",
+        help=f"changelog/git author name (default: {DEFAULT_AUTHOR})",
+    )
+    pc.add_argument(
+        "-e",
+        "--email",
+        default=DEFAULT_EMAIL,
+        metavar="EMAIL",
+        help=f"changelog/git author email (default: {DEFAULT_EMAIL})",
+    )
+    pc.add_argument("project_name", help="new project directory name")
+    pc.add_argument(
+        "puff_names",
+        nargs="*",
+        help="optional puff names to add after creating the project",
+    )
 
     pr = sub.add_parser("rename", help="rename zephyr project and example puff names")
     pr.add_argument("project_name", help="new project name (replaces 'zephyr')")
@@ -43,11 +97,15 @@ def build_parser() -> argparse.ArgumentParser:
         help="new example names (each replaces template some_puff1)",
     )
 
-    pa = sub.add_parser("add", help="instantiate a new puff from the language template")
-    pa.add_argument("puff_name", help="new puff name (snake_case recommended)")
+    pa = sub.add_parser("add", help="instantiate puff(s) from the language template")
+    pa.add_argument(
+        "puff_names",
+        nargs="+",
+        help="new puff name(s) (snake_case recommended)",
+    )
 
-    prm = sub.add_parser("remove", help="remove a puff from the current project")
-    prm.add_argument("puff_name", help="puff name to remove")
+    prm = sub.add_parser("remove", help="remove puff(s) from the current project")
+    prm.add_argument("puff_names", nargs="+", help="puff name(s) to remove")
 
     sub.add_parser("detect", help="print detected language for the current directory")
     sub.add_parser("help", help="show this help")
@@ -71,16 +129,27 @@ def main(argv: list[str] | None = None) -> int:
         print(lang, flush=True)
         print(f"pkgdatadir: {pkgdatadir()}", file=sys.stderr)
         return 0
+    if args.cmd == "create":
+        cmd_create(
+            args.project_name,
+            lang=args.lang,
+            puff_names=list(args.puff_names),
+            distribution=args.distribution,
+            init_version=args.init_version,
+            author=args.author,
+            email=args.email,
+        )
+        return 0
     if args.cmd == "rename":
         if not args.project_name:
             parser.error("PROJECT_NAME required")
         cmd_rename(args.project_name, list(args.puff_names))
         return 0
     if args.cmd == "add":
-        cmd_add(args.puff_name)
+        cmd_add(list(args.puff_names))
         return 0
     if args.cmd == "remove":
-        cmd_remove(args.puff_name)
+        cmd_remove(list(args.puff_names))
         return 0
     parser.error(f"unknown command: {args.cmd}")
     return 2

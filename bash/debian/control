@@ -1,0 +1,19 @@
+Source: zephyr
+Section: utils
+Priority: optional
+Maintainer: Lenik <zephyr@bodz.net>
+Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor
+Standards-Version: 4.6.0
+Homepage: https://github.com/lenik/zephyr
+Rules-Requires-Root: no
+
+Package: zephyr
+Architecture: all
+Depends:
+    bash,
+    bash-shlib,
+    ${misc:Depends}
+Description: Bash CLI template using bash-shlib
+ zephyr is a Meson-based template for small Bash command-line utilities
+ built with bash-shlib (cliboot). It ships the some_puff1 example script,
+ AsciiDoc man pages, bash completion, and Debian packaging.

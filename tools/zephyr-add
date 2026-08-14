@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zephyr-add — instantiate a puff from the installed language template."""
+"""zephyr-add — instantiate puff(s) from the installed language template."""
 
 from __future__ import annotations
 
@@ -18,11 +18,15 @@ from zephyr_lib.commands import cmd_add  # noqa: E402
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
         prog="zephyr-add",
-        description="Detect language and add a new puff from pkgdatadir/<lang>.",
+        description="Detect language and add puff(s) from pkgdatadir/<lang>.",
     )
-    p.add_argument("puff_name", help="new puff name (snake_case recommended)")
+    p.add_argument(
+        "puff_names",
+        nargs="+",
+        help="new puff name(s) (snake_case recommended)",
+    )
     args = p.parse_args(argv)
-    cmd_add(args.puff_name)
+    cmd_add(list(args.puff_names))
     return 0
 
 

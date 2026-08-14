@@ -11,6 +11,7 @@
 - `debian/` - Debian 打包元数据
 - `scripts/emit-strings-resx.py` - 可选：根据脚本内词条表重生成 `apps/SomePuff1/Resources/Strings*.resx`
 - `zephyr.sln` - 解决方案（类库 + SomePuff1 + 测试），可用 Visual Studio 或 `dotnet build` 打开
+- `docs/` - AsciiDoc man 页源文件（`docs/*.adoc`）
 - `meson.build` - 构建、测试、安装与辅助目标
 
 ## 示例应用：`some_puff1`
@@ -37,7 +38,7 @@ some_puff1 [OPTION]... [FILE]...
 ### 构建依赖
 
 ```bash
-sudo apt install meson ninja-build dotnet-sdk-8.0
+sudo apt install meson ninja-build dotnet-sdk-8.0 asciidoctor
 ```
 
 ### 配置并构建

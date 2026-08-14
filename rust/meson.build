@@ -12,7 +12,7 @@ project(
             fi
             printf "%s" "$v"
         else
-            echo "0.0.0"
+            echo "0.0.0" # DO NOT MODIFY THIS LINE
         fi
         ''',
         check: false,
@@ -37,14 +37,9 @@ localedir = prefix / get_option('localedir')
 mandir = prefix / get_option('mandir')
 pkgdocdir = datadir / 'doc' / meson.project_name()
 
-config_man = configuration_data()
-config_man.set('PROJECT_VERSION', meson.project_version())
-config_man.set('PROJECT_AUTHOR', project_author)
-config_man.set('PROJECT_EMAIL', project_email)
-config_man.set('PROJECT_YEAR', project_year)
-
 # Rust binary (release) built with Cargo, installed as some_puff1
 cargo_build = find_program('build-aux/cargo-build.sh', dirs: meson.project_source_root(), required: true)
+asciidoctor = find_program('asciidoctor', required: true)
 
 some_puff1 = custom_target(
     'some_puff1',
@@ -83,10 +78,21 @@ install_data(
     install_dir: pkgdocdir,
 )
 
-configure_file(
-    input: 'some_puff1.1.in',
+custom_target(
+    'some_puff1-man',
+    input: 'docs/some_puff1.adoc',
     output: 'some_puff1.1',
-    configuration: config_man,
+    command: [
+        asciidoctor,
+        '-b', 'manpage',
+        '-a', 'project-version=' + meson.project_version(),
+        '-a', 'project-year=@0@'.format(project_year),
+        '-a', 'project-author=' + project_author,
+        '-a', 'project-email=' + project_email,
+        '-o', '@OUTPUT@',
+        '@INPUT@',
+    ],
+    build_by_default: true,
     install: true,
     install_dir: mandir / 'man1',
 )

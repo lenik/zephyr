@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import os
 import re
+import shutil
 import sys
 from pathlib import Path
 from typing import Iterable
@@ -13,12 +14,15 @@ from typing import Iterable
 TEMPLATE_PUFF = "some_puff1"
 
 LANGS = (
+    "bash",
     "c",
+    "clib",
     "cs",
     "erlang",
     "go",
     "haskell",
     "java",
+    "perl",
     "python",
     "rust",
     "smalltalk",
@@ -109,9 +113,10 @@ def pkgdatadir() -> Path:
     here = Path(__file__).resolve()
     # tools/zephyr_lib → repo root when running from the source tree
     source_root = here.parents[2] if here.parent.name == "zephyr_lib" else here.parents[1]
-    if (source_root / "c" / "meson.build").is_file() and (
-        source_root / "python" / "meson.build"
-    ).is_file():
+    has_c_family = (source_root / "clib" / "meson.build").is_file() or (
+        source_root / "c" / "meson.build"
+    ).is_file()
+    if has_c_family and (source_root / "python" / "meson.build").is_file():
         return source_root
 
     for base in (Path(sys.prefix), Path("/usr"), Path("/usr/local")):
@@ -202,7 +207,9 @@ def rewrite_tree(
 
 def _is_zephyr_meta_repo(root: Path) -> bool:
     """True if root is the multi-language zephyr template meta-repo."""
-    present = [lang for lang in ("c", "python", "rust") if (root / lang).is_dir()]
+    present = [
+        lang for lang in ("c", "clib", "python", "rust") if (root / lang).is_dir()
+    ]
     if len(present) < 2:
         return False
     meson = root / "meson.build"
@@ -225,6 +232,45 @@ def _is_zephyr_meta_repo(root: Path) -> bool:
         1 for lang in LANGS if (root / lang / "meson.build").is_file()
     ) >= 3:
         return True
+    return False
+
+
+def _is_clib_project(root: Path, meson_txt: str, control_txt: str = "") -> bool:
+    """Distinguish clib (shared/static lib template) from simple c CLI."""
+    if re.search(r"\bshared_library\s*\(", meson_txt):
+        return True
+    if re.search(r"\bpkgconfig\.generate\s*\(", meson_txt) and (
+        root / "src" / "lib.c"
+    ).is_file():
+        return True
+    if (root / "src" / "lib.c").is_file() and re.search(
+        r"\bbas-c\b|\blibbas-c(?:-dev)?\b", meson_txt + "\n" + control_txt, re.I
+    ):
+        return True
+    if re.search(r"\blibbas-c-dev\b", control_txt, re.I) and _has_ext_shallow(
+        root, ".c", ".h"
+    ):
+        return True
+    return False
+
+
+def _looks_like_bash_shlib(root: Path, control_txt: str = "") -> bool:
+    if re.search(r"\bbash-shlib\b", control_txt, re.I):
+        return True
+    for base in _shallow_source_dirs(root):
+        if base == root:
+            candidates = [p for p in root.iterdir() if p.is_file()]
+        else:
+            candidates = list(iter_files(base))
+        for path in candidates:
+            try:
+                head = path.read_text(encoding="utf-8", errors="ignore")[:4000]
+            except OSError:
+                continue
+            if re.search(r"\bimport\s+cliboot\b", head) or re.search(
+                r"(?:^|\n)\s*\. shlib(?:-import)?\b|\bshlib-import\b", head
+            ):
+                return True
     return False
 
 
@@ -272,7 +318,8 @@ def detect_lang(workdir: Path | None = None) -> str:
             f"{root} looks like the zephyr meta-repo root "
             "(multiple language templates). "
             "Run zephyr from a language project directory "
-            "(e.g. c/, python/, rust/), not the repository root."
+            "(e.g. clib/, c/, bash/, perl/, python/, rust/), "
+            "not the repository root."
         )
 
     meson = root / "meson.build"
@@ -307,7 +354,11 @@ def detect_lang(workdir: Path | None = None) -> str:
             # First string is usually the project name; rest may include languages.
             for tok in langs_in_project[1:]:
                 if tok in ("c", "cpp", "c++"):
-                    return "c"
+                    return (
+                        "clib"
+                        if _is_clib_project(root, meson_txt, control_deps)
+                        else "c"
+                    )
                 if tok == "rust":
                     return "rust"
 
@@ -323,8 +374,11 @@ def detect_lang(workdir: Path | None = None) -> str:
         ("haskell", re.compile(r"\bghc\b|\bhaskell\b", re.I)),
         ("smalltalk", re.compile(r"\bgnu-smalltalk\b|\bsmalltalk\b", re.I)),
         ("swift", re.compile(r"\bswiftlang\b|\bswift\b", re.I)),
-        # C last among deps: libbas-c / check are weak alone; prefer explicit C toolchain.
-        ("c", re.compile(r"\blibbas-c-dev\b|\bpkgconf\b.*\bcheck\b|\bcheck\b.*\bpkgconf\b", re.I)),
+        ("bash", re.compile(r"\bbash-shlib\b", re.I)),
+        ("perl", re.compile(r"(?:^Depends:\s*perl\b|Build-Depends:.*\bperl\b)", re.I | re.M)),
+        # clib before simple c: libbas-c marks the library template.
+        ("clib", re.compile(r"\blibbas-c-dev\b", re.I)),
+        ("c", re.compile(r"\bpkgconf\b.*\bcheck\b|\bcheck\b.*\bpkgconf\b", re.I)),
     ]
     if control_deps:
         for lang, pat in dep_checks:
@@ -337,10 +391,18 @@ def detect_lang(workdir: Path | None = None) -> str:
                     or "import('python')" in meson_txt
                 ):
                     continue
-                if lang == "c" and re.search(
+                if lang in ("c", "clib") and re.search(
                     r"\bcargo\b|\brustc\b|\bgolang\b|\bpython3\b|\bdotnet\b|"
                     r"\berlang\b|\bghc\b|\bswift|\bnodejs\b|\bdefault-jdk\b|"
-                    r"\bgnu-smalltalk\b",
+                    r"\bgnu-smalltalk\b|\bbash-shlib\b",
+                    control_deps,
+                    re.I,
+                ):
+                    continue
+                if lang == "perl" and re.search(
+                    r"\bcargo\b|\brustc\b|\bgolang\b|\bpython3\b|\bdotnet\b|"
+                    r"\berlang\b|\bghc\b|\bswift|\bnodejs\b|\bdefault-jdk\b|"
+                    r"\bgnu-smalltalk\b|\bbash-shlib\b|\blibbas-c",
                     control_deps,
                     re.I,
                 ):
@@ -376,13 +438,19 @@ def detect_lang(workdir: Path | None = None) -> str:
         return "smalltalk"
     if _has_ext_shallow(root, ".swift"):
         return "swift"
+    if _has_ext_shallow(root, ".pl", ".pm"):
+        return "perl"
+    if _looks_like_bash_shlib(root, control_deps):
+        return "bash"
     if meson.is_file() and re.search(
         r"project\s*\([^)]*\b(c|cpp)\b", meson_head, re.S
     ):
         if _has_ext_shallow(root, ".c", ".cpp", ".cc", ".cxx", ".h", ".hpp"):
-            return "c"
+            return (
+                "clib" if _is_clib_project(root, meson_txt, control_deps) else "c"
+            )
     if _has_ext_shallow(root, ".c", ".cpp", ".cc", ".cxx", ".h", ".hpp"):
-        return "c"
+        return "clib" if _is_clib_project(root, meson_txt, control_deps) else "c"
 
     raise SystemExit(f"could not detect language in {root}")
 

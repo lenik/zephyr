@@ -2,7 +2,7 @@ Source: zephyr
 Section: devel
 Priority: optional
 Maintainer: Lenik <zephyr@bodz.net>
-Build-Depends: debhelper-compat (= 13), meson, ninja-build, python3
+Build-Depends: debhelper-compat (= 13), meson, ninja-build, python3, asciidoctor
 Standards-Version: 4.6.0
 Homepage: https://github.com/lenik/zephyr
 Rules-Requires-Root: no
@@ -12,8 +12,11 @@ Architecture: all
 Depends:
     python3,
     ${misc:Depends}
+Recommends:
+    bash-completion
 Description: Multi-language CLI project templates and helper tools
  zephyr ships language templates for small command-line utilities under
- /usr/share/zephyr/<lang>/, each with a some_puff1 example application,
- plus cmdline tools (zephyr, zephyr-rename, zephyr-add, zephyr-remove)
- to instantiate, rename, and manage puffs.
+ /usr/share/zephyr/<lang>/ (bash, c, clib, cs, erlang, go, haskell, java,
+ perl, python, rust, smalltalk, swift, typescript), plus cmdline tools
+ (zephyr, zephyr-create, zephyr-rename, zephyr-add, zephyr-remove) to create
+ projects and manage puffs (example apps).

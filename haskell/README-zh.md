@@ -9,6 +9,7 @@
 - `tests/` - Haskell 冒烟/单元测试
 - `debian/` - Debian 打包元数据
 - `po/` - gettext 翻译目录
+- `docs/` - AsciiDoc man 页源文件（`docs/*.adoc`）
 - `meson.build` - 构建、测试、安装与辅助目标
 
 ## 示例应用：`some_puff1`
@@ -35,7 +36,7 @@ some_puff1 [OPTION]... [FILE]...
 ### 构建依赖
 
 ```bash
-sudo apt install meson ninja-build ghc gettext
+sudo apt install meson ninja-build ghc gettext asciidoctor
 ```
 
 ### 配置并构建
