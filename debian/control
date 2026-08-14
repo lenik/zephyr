@@ -1,0 +1,17 @@
+Source: zephyr
+Section: devel
+Priority: optional
+Maintainer: Lenik <zephyr@bodz.net>
+Build-Depends: debhelper-compat (= 13), meson, ninja-build, python3
+Standards-Version: 4.6.0
+Homepage: https://github.com/lenik/zephyr
+Rules-Requires-Root: no
+
+Package: zephyr
+Architecture: all
+Depends:
+    python3,
+    ${misc:Depends}
+Description: Multi-language CLI project templates and helper tools
+ zephyr ships language templates for small command-line utilities and
+ tools to instantiate, rename, and manage example applications (puffs).
