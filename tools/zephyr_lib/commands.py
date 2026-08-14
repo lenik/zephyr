@@ -220,6 +220,13 @@ def _puff_source_paths(lang: str, tmpl: Path) -> list[Path]:
             tmpl / f"{stem}.bash",
             tmpl / "docs" / f"{stem}.adoc",
         ]
+    elif lang == "ruby":
+        candidates += [
+            tmpl / "src" / f"{stem}.rb",
+            tmpl / "src" / "common_lib.rb",
+            tmpl / f"{stem}.bash",
+            tmpl / "docs" / f"{stem}.adoc",
+        ]
     elif lang == "python":
         candidates += [
             tmpl / "src" / f"{stem}.py",
@@ -479,6 +486,10 @@ def _wire_add(lang: str, workdir: Path, name: str) -> None:
         append_meson_list_entry(meson, "app_scripts", f"src/{name}.pl")
         append_meson_list_entry(meson, "bash_files", f"{name}.bash")
         _append_man_custom_target(meson, name)
+    elif lang == "ruby" and meson.is_file():
+        append_meson_list_entry(meson, "app_scripts", f"src/{name}.rb")
+        append_meson_list_entry(meson, "bash_files", f"{name}.bash")
+        _append_man_custom_target(meson, name)
     elif lang == "python" and meson.is_file():
         # Prefer documenting; python template hardcodes one custom_target.
         # Append a second custom_target block after the first if absent.
@@ -578,6 +589,10 @@ def _wire_remove(lang: str, workdir: Path, name: str) -> None:
         _strip_man_custom_target(meson, name)
     elif lang == "perl" and meson.is_file():
         remove_meson_list_entry(meson, f"src/{name}.pl")
+        remove_meson_list_entry(meson, f"{name}.bash")
+        _strip_man_custom_target(meson, name)
+    elif lang == "ruby" and meson.is_file():
+        remove_meson_list_entry(meson, f"src/{name}.rb")
         remove_meson_list_entry(meson, f"{name}.bash")
         _strip_man_custom_target(meson, name)
     elif lang == "python" and meson.is_file():

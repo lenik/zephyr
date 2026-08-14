@@ -1,7 +1,7 @@
 # bash completion for zephyr and related wrappers
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-_zephyr_langs='bash c clib csharp erlang go haskell java perl python rust smalltalk swift typescript'
+_zephyr_langs='bash c clib csharp erlang go haskell java perl python ruby rust smalltalk swift typescript'
 _zephyr_cmds='create rename add remove detect help'
 
 _zephyr()

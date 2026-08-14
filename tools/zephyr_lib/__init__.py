@@ -24,6 +24,7 @@ LANGS = (
     "java",
     "perl",
     "python",
+    "ruby",
     "rust",
     "smalltalk",
     "swift",
@@ -376,6 +377,7 @@ def detect_lang(workdir: Path | None = None) -> str:
         ("swift", re.compile(r"\bswiftlang\b|\bswift\b", re.I)),
         ("bash", re.compile(r"\bbash-shlib\b", re.I)),
         ("perl", re.compile(r"(?:^Depends:\s*perl\b|Build-Depends:.*\bperl\b)", re.I | re.M)),
+        ("ruby", re.compile(r"(?:^Depends:\s*ruby\b|Build-Depends:.*\bruby\b)", re.I | re.M)),
         # clib before simple c: libbas-c marks the library template.
         ("clib", re.compile(r"\blibbas-c-dev\b", re.I)),
         ("c", re.compile(r"\bpkgconf\b.*\bcheck\b|\bcheck\b.*\bpkgconf\b", re.I)),
@@ -402,7 +404,15 @@ def detect_lang(workdir: Path | None = None) -> str:
                 if lang == "perl" and re.search(
                     r"\bcargo\b|\brustc\b|\bgolang\b|\bpython3\b|\bdotnet\b|"
                     r"\berlang\b|\bghc\b|\bswift|\bnodejs\b|\bdefault-jdk\b|"
-                    r"\bgnu-smalltalk\b|\bbash-shlib\b|\blibbas-c",
+                    r"\bgnu-smalltalk\b|\bbash-shlib\b|\blibbas-c|\bruby\b",
+                    control_deps,
+                    re.I,
+                ):
+                    continue
+                if lang == "ruby" and re.search(
+                    r"\bcargo\b|\brustc\b|\bgolang\b|\bpython3\b|\bdotnet\b|"
+                    r"\berlang\b|\bghc\b|\bswift|\bnodejs\b|\bdefault-jdk\b|"
+                    r"\bgnu-smalltalk\b|\bbash-shlib\b|\blibbas-c|\bperl\b",
                     control_deps,
                     re.I,
                 ):
@@ -440,6 +450,8 @@ def detect_lang(workdir: Path | None = None) -> str:
         return "swift"
     if _has_ext_shallow(root, ".pl", ".pm"):
         return "perl"
+    if _has_ext_shallow(root, ".rb"):
+        return "ruby"
     if _looks_like_bash_shlib(root, control_deps):
         return "bash"
     if meson.is_file() and re.search(

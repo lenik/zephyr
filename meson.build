@@ -46,6 +46,7 @@ template_langs = [
     'java',
     'perl',
     'python',
+    'ruby',
     'rust',
     'smalltalk',
     'swift',
