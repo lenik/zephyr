@@ -28,7 +28,7 @@ beam_dir = meson.current_build_dir() / 'ebin'
 
 compile_erlang = custom_target(
     'compile_erlang',
-    input: ['src/puff1.erl', 'src/common_lib.erl'],
+    input: ['src/some_puff1.erl', 'src/common_lib.erl'],
     output: 'compile_erlang.stamp',
     command: [
         'bash',
@@ -44,14 +44,14 @@ compile_erlang = custom_target(
     build_by_default: true,
 )
 
-puff1 = custom_target(
-    'puff1',
+some_puff1 = custom_target(
+    'some_puff1',
     input: [compile_erlang],
-    output: 'puff1',
+    output: 'some_puff1',
     command: [
         'bash',
         '-euc',
-        'out="$1"; cat > "$out" <<\'EOF\'\n#!/usr/bin/env sh\nexec "@0@" -pa "@1@" -noshell -s puff1 main "$@"\nEOF\nchmod +x "$out"'.format(
+        'out="$1"; cat > "$out" <<\'EOF\'\n#!/usr/bin/env sh\nexec "@0@" -pa "@1@" -noshell -s some_puff1 main "$@"\nEOF\nchmod +x "$out"'.format(
             erl.full_path(),
             beam_dir,
         ),
@@ -90,9 +90,9 @@ test(
 )
 
 install_data(
-    'puff1.bash',
+    'some_puff1.bash',
     install_dir: datadir / 'bash-completion' / 'completions',
-    rename: 'puff1',
+    rename: 'some_puff1',
 )
 
 install_data(
@@ -110,8 +110,8 @@ config_man.set('PROJECT_AUTHOR', project_author)
 config_man.set('PROJECT_EMAIL', project_email)
 config_man.set('PROJECT_YEAR', project_year)
 configure_file(
-    input: 'puff1.1.in',
-    output: 'puff1.1',
+    input: 'some_puff1.1.in',
+    output: 'some_puff1.1',
     configuration: config_man,
     install: true,
     install_dir: mandir / 'man1',
@@ -127,7 +127,7 @@ run_target(
             rg -No 'tr\("([^"\\]|\\.)*"\)' ../src/*.erl | sed 's|^tr|void tr|; s|$|;|' > "$tmp_c"
             xgettext --from-code=UTF-8 --keyword=tr --language=C --output=zephyr.pot "$tmp_c"
             rm -f "$tmp_c"
-            cp -f zephyr.pot puff1.pot
+            cp -f zephyr.pot some_puff1.pot
             while IFS= read -r lang; do
                 [ -n "$lang" ] || continue
                 case "$lang" in

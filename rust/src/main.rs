@@ -11,13 +11,13 @@ use clap::ArgAction;
 use clap::Command;
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, gettext, setlocale, textdomain, LocaleCategory};
 
-use zephyr::{copy_stream, Puff1Error};
+use zephyr::{copy_stream, SomePuff1Error};
 
 const TEXT_DOMAIN: &str = "zephyr";
 const PROJECT_AUTHOR: &str = "Lenik";
 const PROJECT_EMAIL: &str = "zephyr@bodz.net";
 const PROJECT_YEAR: i32 = 2026;
-const PUFF1_VERSION: &str = env!("CARGO_PKG_VERSION");
+const SOME_PUFF1_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// Resolve GNU gettext "localedir" (contains `<lang>/LC_MESSAGES/<domain>.mo`).
 fn pick_localedir() -> String {
@@ -59,7 +59,7 @@ fn c_format_replace(template: &str, pairs: &[(&str, &str)]) -> String {
 
 fn usage() {
     let msg = gettext(
-        "Usage: puff1 [OPTION]... [FILE]...\n\
+        "Usage: some_puff1 [OPTION]... [FILE]...\n\
 Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n\
 read standard input.\n",
     );
@@ -79,7 +79,7 @@ read standard input.\n",
 }
 
 fn print_version() {
-    println!("puff1 {PUFF1_VERSION}");
+    println!("some_puff1 {SOME_PUFF1_VERSION}");
     let cpy = c_format_replace(
         &gettext("Copyright (C) %d %s\n"),
         &[("%d", &format!("{PROJECT_YEAR}")), ("%s", PROJECT_AUTHOR)],
@@ -125,10 +125,10 @@ fn self_exe() -> String {
                 .map(|c| c.into_owned())
                 .unwrap_or_else(|| s.clone())
         })
-        .unwrap_or_else(|| "puff1".to_string())
+        .unwrap_or_else(|| "some_puff1".to_string())
 }
 
-fn copy_stdin(prog: &str) -> Result<(), Puff1Error> {
+fn copy_stdin(prog: &str) -> Result<(), SomePuff1Error> {
     let mut stdin = io::stdin();
     let mut out = io::stdout();
     if let Err(e) = copy_stream(&mut stdin, &mut out) {
@@ -140,7 +140,7 @@ fn copy_stdin(prog: &str) -> Result<(), Puff1Error> {
 
 /// Like the C `copy_file`: `fopen` errors print `"%s: %s" prog path`; `copy_stream` uses `"%s: write
 /// error"`.
-fn copy_path_to_stdout(prog: &str, path: &str) -> Result<(), Puff1Error> {
+fn copy_path_to_stdout(prog: &str, path: &str) -> Result<(), SomePuff1Error> {
     let p = Path::new(path);
     let mut f = match File::open(p) {
         Ok(f) => f,
@@ -162,7 +162,7 @@ fn run() -> i32 {
     println!("TEXT_DOMAIN={TEXT_DOMAIN}.");
     print!("{}", gettext("hello, world!\n"));
 
-    let cmd = Command::new("puff1")
+    let cmd = Command::new("some_puff1")
         .disable_version_flag(true)
         .disable_help_flag(true)
         .arg(

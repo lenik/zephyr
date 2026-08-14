@@ -1,11 +1,11 @@
 # zephyr
 
 `zephyr` 是一个 TypeScript 命令行模板，使用 Meson 做构建/测试/安装，并同时支持 **pnpm/npm** 与 **Debian** 打包。  
-`puff1` 是此模板中的一个**示例应用**；同一仓库中可以继续添加更多应用。
+`some_puff1` 是此模板中的一个**示例应用**；同一仓库中可以继续添加更多应用。
 
 ## 仓库结构
 
-- `src/` - TypeScript 源码（`*.ts`）与 `puff1` 启动脚本模板
+- `src/` - TypeScript 源码（`*.ts`）与 `some_puff1` 启动脚本模板
 - `tests/` - 使用 Node 内置测试运行器的单元测试
 - `docs/` - AsciiDoctor 源文件（man / info）
 - `scripts/build-docs.sh` - Asciidoctor → man(1) + info
@@ -15,12 +15,12 @@
 - `package.json` / `tsconfig.json` - 包与 TypeScript 配置
 - `meson.build` - 构建、测试、安装与辅助目标
 
-## 示例应用：`puff1`
+## 示例应用：`some_puff1`
 
-`puff1` 是一个类似 `cat` 的工具：
+`some_puff1` 是一个类似 `cat` 的工具：
 
 ```bash
-puff1 [OPTION]... [FILE]...
+some_puff1 [OPTION]... [FILE]...
 ```
 
 - 如果未提供 `FILE`，则从 `stdin` 读取。
@@ -49,7 +49,7 @@ pnpm pack   # 或: pnpm publish
 
 ## Man 与 info 手册
 
-文档使用 AsciiDoctor 编写（[`docs/puff1.adoc`](docs/puff1.adoc)）：
+文档使用 AsciiDoctor 编写（[`docs/some_puff1.adoc`](docs/some_puff1.adoc)）：
 
 - man 页：`asciidoctor -b manpage`
 - info 页：AsciiDoctor HTML → Pandoc Texinfo → `makeinfo`
@@ -58,8 +58,8 @@ pnpm pack   # 或: pnpm publish
 pnpm run docs
 # 或通过 Meson：
 ninja -C /build
-man /build/puff1.1
-info -f /build/puff1.info
+man /build/some_puff1.1
+info -f /build/some_puff1.info
 ```
 
 ## Meson 构建与测试
@@ -92,10 +92,10 @@ Meson 调用 `tsc` 编译，并对生成的测试文件执行 `node --test`。
 
 ## i18n（gettext）
 
-`puff1` 使用 `po/` 下的 gettext 翻译文件（`*.po` 与生成的 `.mo` 文件）。
+`some_puff1` 使用 `po/` 下的 gettext 翻译文件（`*.po` 与生成的 `.mo` 文件）。
 
 - 安装后运行时从系统 locale 目录加载翻译。
-- 开发态运行（`/build/puff1`）若存在 `/build/po`，会优先使用项目内翻译资源。
+- 开发态运行（`/build/some_puff1`）若存在 `/build/po`，会优先使用项目内翻译资源。
 
 ### 同步翻译词条
 
@@ -121,8 +121,8 @@ ninja -C /build
 建议优先使用 `LANGUAGE=<lang>`，在开发环境中选择更稳定：
 
 ```bash
-LANGUAGE=ja /build/puff1 -h
-LANGUAGE=zh_CN /build/puff1 -h
+LANGUAGE=ja /build/some_puff1 -h
+LANGUAGE=zh_CN /build/some_puff1 -h
 ```
 
 `LANG=<lang>.<encoding>` 是否生效取决于系统是否已生成对应 locale。
@@ -137,10 +137,10 @@ meson install -C /build
 
 安装布局：
 
-- `$prefix/bin/puff1` — 启动脚本
+- `$prefix/bin/some_puff1` — 启动脚本
 - `$prefix/share/zephyr/*.js` — 编译后的 JavaScript 模块
-- `$prefix/share/man/man1/puff1.1` — man 手册
-- `$prefix/share/info/puff1.info` — info 手册
+- `$prefix/share/man/man1/some_puff1.1` — man 手册
+- `$prefix/share/info/some_puff1.info` — info 手册
 
 调试符号链接工作流（在已配置的安装前缀下）：
 

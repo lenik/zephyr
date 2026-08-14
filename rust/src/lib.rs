@@ -11,13 +11,13 @@ use thiserror::Error;
 const CHUNK: usize = 8192;
 
 #[derive(Error, Debug)]
-pub enum Puff1Error {
+pub enum SomePuff1Error {
     #[error("I/O error: {0}")]
     Io(#[from] io::Error),
 }
 
 /// Copy from `input` to `output` in fixed-size chunks. Returns `Err` on read or write failure.
-pub fn copy_stream(input: &mut impl Read, output: &mut impl Write) -> Result<(), Puff1Error> {
+pub fn copy_stream(input: &mut impl Read, output: &mut impl Write) -> Result<(), SomePuff1Error> {
     let mut buf = [0u8; CHUNK];
     loop {
         let n = input.read(&mut buf)?;
@@ -33,7 +33,7 @@ pub fn copy_file_to_writer<P: AsRef<Path>>(
     _prog: &str,
     path: P,
     output: &mut impl Write,
-) -> Result<(), Puff1Error> {
+) -> Result<(), SomePuff1Error> {
     let path = path.as_ref();
     let mut f = File::open(path)?;
     copy_stream(&mut f, output)?;
@@ -42,7 +42,7 @@ pub fn copy_file_to_writer<P: AsRef<Path>>(
 
 /// Read `path` and write the contents to `stdout` (line-buffered lock). Matches the C template’s
 /// `copy_file` behaviour, including the same I/O error surface for callers.
-pub fn copy_file_to_stdout(prog: &str, path: &Path) -> Result<(), Puff1Error> {
+pub fn copy_file_to_stdout(prog: &str, path: &Path) -> Result<(), SomePuff1Error> {
     let out = io::stdout();
     let mut out = out.lock();
     copy_file_to_writer(prog, path, &mut out)
@@ -67,13 +67,13 @@ mod tests {
     #[test]
     fn copy_file_missing() {
         let p = std::env::temp_dir().join(format!(
-            "puff1-definitely-missing-{}",
+            "some_puff1-definitely-missing-{}",
             SystemTime::now()
                 .duration_since(UNIX_EPOCH)
                 .unwrap()
                 .as_nanos()
         ));
-        let r = copy_file_to_writer("puff1-test", &p, &mut Vec::new());
+        let r = copy_file_to_writer("some_puff1-test", &p, &mut Vec::new());
         assert!(r.is_err());
     }
 }

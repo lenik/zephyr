@@ -18,7 +18,7 @@ describe("i18n", () => {
     assert.equal(_("display this help and exit\n"), "显示此帮助并退出\n");
     assert.match(
       _(
-        "Usage: puff1 [OPTION]... [FILE]...\n" +
+        "Usage: some_puff1 [OPTION]... [FILE]...\n" +
           "Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n" +
           "read standard input.\n",
       ),

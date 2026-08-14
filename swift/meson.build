@@ -33,10 +33,10 @@ pkgdocdir = datadir / 'doc' / meson.project_name()
 
 subdir('po')
 
-puff1 = custom_target(
-    'puff1',
+some_puff1 = custom_target(
+    'some_puff1',
     input: ['src/main.swift', 'src/common_lib.swift'],
-    output: 'puff1',
+    output: 'some_puff1',
     command: [
         swiftc,
         '-O',
@@ -72,9 +72,9 @@ test(
 )
 
 install_data(
-    'puff1.bash',
+    'some_puff1.bash',
     install_dir: datadir / 'bash-completion' / 'completions',
-    rename: 'puff1',
+    rename: 'some_puff1',
 )
 
 install_data(
@@ -92,8 +92,8 @@ config_man.set('PROJECT_AUTHOR', project_author)
 config_man.set('PROJECT_EMAIL', project_email)
 config_man.set('PROJECT_YEAR', project_year)
 configure_file(
-    input: 'puff1.1.in',
-    output: 'puff1.1',
+    input: 'some_puff1.1.in',
+    output: 'some_puff1.1',
     configuration: config_man,
     install: true,
     install_dir: mandir / 'man1',

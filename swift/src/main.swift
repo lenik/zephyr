@@ -7,7 +7,7 @@ let projectEmail = "zephyr@bodz.net"
 let projectYear = 2026
 
 func usage() {
-    FileHandle.standardOutput.write(Data(tr("Usage: puff1 [OPTION]... [FILE]...\n").utf8))
+    FileHandle.standardOutput.write(Data(tr("Usage: some_puff1 [OPTION]... [FILE]...\n").utf8))
     FileHandle.standardOutput.write(Data(tr("Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n").utf8))
     FileHandle.standardOutput.write(Data(tr("read standard input.\n\n").utf8))
     FileHandle.standardOutput.write(Data("  -v, --verbose      ".utf8))
@@ -23,7 +23,7 @@ func usage() {
 
 func versionInfo() {
     let lines = [
-        "puff1 dev",
+        "some_puff1 dev",
         tr("Copyright (C) \(projectYear) \(projectAuthor)"),
         tr("License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>"),
         tr("This is free software: you are free to change and redistribute it."),
@@ -49,7 +49,7 @@ if args.contains("--version") {
 let verbose = args.contains("-v") || args.contains("--verbose")
 let files = args.filter { !["-v", "--verbose", "-q", "--quiet"].contains($0) }
 if verbose {
-    FileHandle.standardError.write(Data("puff1: verbose mode enabled\n".utf8))
+    FileHandle.standardError.write(Data("some_puff1: verbose mode enabled\n".utf8))
 }
 
 do {
@@ -66,6 +66,6 @@ do {
     }
     exit(0)
 } catch {
-    FileHandle.standardError.write(Data("puff1: \(error)\n".utf8))
+    FileHandle.standardError.write(Data("some_puff1: \(error)\n".utf8))
     exit(1)
 }

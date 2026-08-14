@@ -29,10 +29,10 @@ java_sources = [
     'src/common_lib.java',
 ]
 
-puff1_jar = custom_target(
-    'puff1_jar',
+some_puff1_jar = custom_target(
+    'some_puff1_jar',
     input: java_sources,
-    output: 'puff1.jar',
+    output: 'some_puff1.jar',
     command: [
         'bash',
         '-euc',
@@ -51,10 +51,10 @@ puff1_jar = custom_target(
     install_dir: datadir / meson.project_name(),
 )
 
-puff1_exe = custom_target(
-    'puff1',
-    input: puff1_jar,
-    output: 'puff1',
+some_puff1_exe = custom_target(
+    'some_puff1',
+    input: some_puff1_jar,
+    output: 'some_puff1',
     command: [
         'bash',
         '-euc',
@@ -70,13 +70,13 @@ puff1_exe = custom_target(
 test(
     'java-smoke',
     java,
-    args: ['-cp', puff1_jar, 'Main', '--version'],
+    args: ['-cp', some_puff1_jar, 'Main', '--version'],
 )
 
 install_data(
-    'puff1.bash',
+    'some_puff1.bash',
     install_dir: datadir / 'bash-completion' / 'completions',
-    rename: 'puff1',
+    rename: 'some_puff1',
 )
 
 install_data(
@@ -94,8 +94,8 @@ config_man.set('PROJECT_AUTHOR', project_author)
 config_man.set('PROJECT_EMAIL', project_email)
 config_man.set('PROJECT_YEAR', project_year)
 configure_file(
-    input: 'puff1.1.in',
-    output: 'puff1.1',
+    input: 'some_puff1.1.in',
+    output: 'some_puff1.1',
     configuration: config_man,
     install: true,
     install_dir: mandir / 'man1',
@@ -108,7 +108,7 @@ run_target(
         '-euc', '''
             cd "@SOURCE_ROOT@/po"
             xgettext --from-code=UTF-8 --keyword=tr --language=Java --directory=.. --output=zephyr.pot --files-from=POTFILES
-            cp -f zephyr.pot puff1.pot
+            cp -f zephyr.pot some_puff1.pot
             while IFS= read -r lang; do
                 [ -n "$lang" ] || continue
                 case "$lang" in
@@ -148,9 +148,9 @@ run_target(
             datadir="@2@"
             mandir="@3@"
             mkdir -p "$bindir" "$datadir/bash-completion/completions" "$mandir/man1"
-            sudo ln -sfn "@BUILD_ROOT@/puff1" "$bindir/puff1"
-            sudo ln -sfn "@BUILD_ROOT@/puff1.1" "$mandir/man1/puff1.1"
-            sudo ln -sfn "@SOURCE_ROOT@/puff1.bash" "$datadir/bash-completion/completions/puff1"
+            sudo ln -sfn "@BUILD_ROOT@/some_puff1" "$bindir/some_puff1"
+            sudo ln -sfn "@BUILD_ROOT@/some_puff1.1" "$mandir/man1/some_puff1.1"
+            sudo ln -sfn "@SOURCE_ROOT@/some_puff1.bash" "$datadir/bash-completion/completions/some_puff1"
             printf "Symlinks installed under %s\n" "$prefix"
         '''.format(get_option('prefix'), bindir, datadir, mandir),
     ],
@@ -164,7 +164,7 @@ run_target(
             bindir="@0@"
             datadir="@1@"
             mandir="@2@"
-            for p in "$bindir/puff1" "$mandir/man1/puff1.1" "$datadir/bash-completion/completions/puff1"
+            for p in "$bindir/some_puff1" "$mandir/man1/some_puff1.1" "$datadir/bash-completion/completions/some_puff1"
             do
                 if [ -L "$p" ]; then
                     sudo rm -f "$p"

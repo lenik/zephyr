@@ -1,7 +1,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Puff1;
+namespace SomePuff1;
 
 public static class common_lib
 {

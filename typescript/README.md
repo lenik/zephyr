@@ -6,11 +6,11 @@ Please rewrite this file to reflect the specific details of the current project.
 
 `zephyr` is a TypeScript CLI project template with Meson for build/test/install
 and dual packaging for **pnpm/npm** and **Debian**.
-`puff1` is one **example app** in this template; more apps can be added in the same repository.
+`some_puff1` is one **example app** in this template; more apps can be added in the same repository.
 
 ## Repository layout
 
-- `src/` - TypeScript sources (`*.ts`) and the `puff1` launcher template
+- `src/` - TypeScript sources (`*.ts`) and the `some_puff1` launcher template
 - `tests/` - unit tests using Node's built-in test runner
 - `docs/` - AsciiDoctor sources for man and info pages
 - `scripts/build-docs.sh` - Asciidoctor → man(1) + info
@@ -20,12 +20,12 @@ and dual packaging for **pnpm/npm** and **Debian**.
 - `package.json` / `tsconfig.json` - package and TypeScript configuration
 - `meson.build` - Meson build, test, install, and helper targets
 
-## Example app: `puff1`
+## Example app: `some_puff1`
 
-`puff1` is a cat-like utility:
+`some_puff1` is a cat-like utility:
 
 ```bash
-puff1 [OPTION]... [FILE]...
+some_puff1 [OPTION]... [FILE]...
 ```
 
 - If no `FILE` is provided, it reads from `stdin`.
@@ -55,7 +55,7 @@ runtime dependencies). `typescript` and `@types/node` are development dependenci
 
 ## Man and info pages
 
-Documentation is authored in AsciiDoctor ([`docs/puff1.adoc`](docs/puff1.adoc)):
+Documentation is authored in AsciiDoctor ([`docs/some_puff1.adoc`](docs/some_puff1.adoc)):
 
 - man page: `asciidoctor -b manpage`
 - info page: AsciiDoctor HTML → Pandoc Texinfo → `makeinfo`
@@ -64,8 +64,8 @@ Documentation is authored in AsciiDoctor ([`docs/puff1.adoc`](docs/puff1.adoc)):
 pnpm run docs
 # or via Meson:
 ninja -C /build
-man /build/puff1.1
-info -f /build/puff1.info
+man /build/some_puff1.1
+info -f /build/some_puff1.info
 ```
 
 ## Meson build and test
@@ -98,10 +98,10 @@ Meson compiles with `tsc` and runs `node --test` on the emitted test files.
 
 ## i18n (gettext)
 
-`puff1` uses gettext translations under `po/` (`*.po` + generated `.mo` files).
+`some_puff1` uses gettext translations under `po/` (`*.po` + generated `.mo` files).
 
 - Installed runtime loads translations from system locale dir.
-- Dev runtime (`/build/puff1`) prefers project-local translations from `/build/po` if present.
+- Dev runtime (`/build/some_puff1`) prefers project-local translations from `/build/po` if present.
 
 ### Sync translation catalogs
 
@@ -127,8 +127,8 @@ ninja -C /build
 Prefer `LANGUAGE=<lang>` for predictable gettext selection in dev shells:
 
 ```bash
-LANGUAGE=ja /build/puff1 -h
-LANGUAGE=zh_CN /build/puff1 -h
+LANGUAGE=ja /build/some_puff1 -h
+LANGUAGE=zh_CN /build/some_puff1 -h
 ```
 
 `LANG=<lang>.<encoding>` may depend on whether that locale is generated on your system.
@@ -143,10 +143,10 @@ meson install -C /build
 
 Installed layout:
 
-- `$prefix/bin/puff1` — launcher
+- `$prefix/bin/some_puff1` — launcher
 - `$prefix/share/zephyr/*.js` — compiled JavaScript modules
-- `$prefix/share/man/man1/puff1.1` — man page
-- `$prefix/share/info/puff1.info` — info manual
+- `$prefix/share/man/man1/some_puff1.1` — man page
+- `$prefix/share/info/some_puff1.info` — info manual
 
 Debug symlink workflow (under configured prefix):
 

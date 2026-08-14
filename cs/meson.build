@@ -75,18 +75,18 @@ zephyr_dep = declare_dependency(
 meson.override_dependency('zephyr', zephyr_dep)
 
 resx = [
-    'apps/puff1/Resources/Strings.de.resx',
-    'apps/puff1/Resources/Strings.eo.resx',
-    'apps/puff1/Resources/Strings.fr.resx',
-    'apps/puff1/Resources/Strings.it.resx',
-    'apps/puff1/Resources/Strings.ja.resx',
-    'apps/puff1/Resources/Strings.ko.resx',
-    'apps/puff1/Resources/Strings.resx',
-    'apps/puff1/Resources/Strings.th.resx',
-    'apps/puff1/Resources/Strings.vi.resx',
-    'apps/puff1/Resources/Strings.zh-Hans.resx',
-    'apps/puff1/Resources/Strings.zh-Hant.resx',
-    'apps/puff1/Resources/I18n.cs',
+    'apps/some_puff1/Resources/Strings.de.resx',
+    'apps/some_puff1/Resources/Strings.eo.resx',
+    'apps/some_puff1/Resources/Strings.fr.resx',
+    'apps/some_puff1/Resources/Strings.it.resx',
+    'apps/some_puff1/Resources/Strings.ja.resx',
+    'apps/some_puff1/Resources/Strings.ko.resx',
+    'apps/some_puff1/Resources/Strings.resx',
+    'apps/some_puff1/Resources/Strings.th.resx',
+    'apps/some_puff1/Resources/Strings.vi.resx',
+    'apps/some_puff1/Resources/Strings.zh-Hans.resx',
+    'apps/some_puff1/Resources/Strings.zh-Hant.resx',
+    'apps/some_puff1/Resources/I18n.cs',
 ]
 
 # pkg-config: for native toolchains Libs= would be wrong; use data-only metadata + custom vars
@@ -114,25 +114,25 @@ test(
     depends: [zephyr_lib_stamp],
 )
 
-# Example app: puff1 (see apps/puff1/)
-puff1_name = 'puff1'
-puff1_out = meson.current_build_dir() / puff1_name + '.p'
-puff1_build = custom_target(
-    puff1_name + '_build',
+# Example app: some_puff1 (see apps/some_puff1/)
+some_puff1_name = 'some_puff1'
+some_puff1_out = meson.current_build_dir() / some_puff1_name + '.p'
+some_puff1_build = custom_target(
+    some_puff1_name + '_build',
     input: [
-        'apps/puff1/Puff1.csproj',
-        'apps/puff1/Program.cs',
+        'apps/some_puff1/SomePuff1.csproj',
+        'apps/some_puff1/Program.cs',
         'lib/Zephyr/Zephyr.csproj',
         'lib/Zephyr/BuildInfo.cs',
         'lib/Zephyr/common_lib.cs',
     ] + resx,
-    output: puff1_name + '.stamp',
+    output: some_puff1_name + '.stamp',
     command: [
         'bash',
         '-euc', 'dotnet publish "$1" -c Release -o "$2" >/dev/null && touch "$3"',
         '_',
         '@INPUT0@',
-        puff1_out,
+        some_puff1_out,
         '@OUTPUT@',
     ],
     depends: zephyr_lib_stamp,
@@ -140,9 +140,9 @@ puff1_build = custom_target(
 )
 
 custom_target(
-    puff1_name,
-    input: [puff1_build],
-    output: puff1_name,
+    some_puff1_name,
+    input: [some_puff1_build],
+    output: some_puff1_name,
     command: [
         'bash',
         '-euc', '''
@@ -152,18 +152,18 @@ custom_target(
 exec dotnet "@0@" "$@"
 EOF
         chmod +x "$out"
-        '''.format(puff1_out / 'Puff1.dll'),
+        '''.format(some_puff1_out / 'SomePuff1.dll'),
         '_',
         '@OUTPUT@',
     ],
-    depends: puff1_build,
+    depends: some_puff1_build,
     build_by_default: true,
     install: true,
     install_dir: bindir,
 )
 
 bash_files = [
-    'puff1.bash',
+    'some_puff1.bash',
 ]
 
 foreach file : bash_files
@@ -191,8 +191,8 @@ config_man.set('PROJECT_EMAIL', project_email)
 config_man.set('PROJECT_YEAR', project_year)
 
 configure_file(
-    input: 'puff1.1.in',
-    output: 'puff1.1',
+    input: 'some_puff1.1.in',
+    output: 'some_puff1.1',
     configuration: config_man,
     install: true,
     install_dir: mandir / 'man1',
@@ -228,9 +228,9 @@ run_target(
 
             mkdir -p "$bindir" "$datadir/bash-completion/completions" "$localedir" "$mandir/man1"
 
-            sudo ln -sfn "@BUILD_ROOT@/puff1" "$bindir/puff1"
-            sudo ln -sfn "@BUILD_ROOT@/puff1.1" "$mandir/man1/puff1.1"
-            sudo ln -sfn "@SOURCE_ROOT@/puff1.bash" "$datadir/bash-completion/completions/puff1"
+            sudo ln -sfn "@BUILD_ROOT@/some_puff1" "$bindir/some_puff1"
+            sudo ln -sfn "@BUILD_ROOT@/some_puff1.1" "$mandir/man1/some_puff1.1"
+            sudo ln -sfn "@SOURCE_ROOT@/some_puff1.bash" "$datadir/bash-completion/completions/some_puff1"
 
             printf "Symlinks installed under %s\n" "$prefix"
         '''.format(
@@ -255,9 +255,9 @@ run_target(
             mandir="@4@"
 
             for p in \
-                "$bindir/puff1" \
-                "$mandir/man1/puff1.1" \
-                "$datadir/bash-completion/completions/puff1"
+                "$bindir/some_puff1" \
+                "$mandir/man1/some_puff1.1" \
+                "$datadir/bash-completion/completions/some_puff1"
             do
                 if [ -L "$p" ]; then
                     sudo rm -f "$p"

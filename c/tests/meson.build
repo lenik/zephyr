@@ -4,7 +4,7 @@ c_pch = '../' + c_pch
 lib_inc = include_directories('../src', '..')
 
 test_sources = [
-    'puff1_test.c',
+    'some_puff1_test.c',
 ]
 
 foreach test_src : test_sources

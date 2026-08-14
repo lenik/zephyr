@@ -5,23 +5,23 @@ Please rewrite this file to reflect the specific details of the current project.
 # zephyr
 
 `zephyr` is a Rust + Meson project template for small command-line applications.
-`puff1` is one **example app**; more apps can be added in the same repository.
+`some_puff1` is one **example app**; more apps can be added in the same repository.
 
 ## Repository layout
 
-- `src/` - Rust code (`zephyr` library crate + `puff1` binary)
+- `src/` - Rust code (`zephyr` library crate + `some_puff1` binary)
 - `build-aux/cargo-build.sh` - build hook used by Meson to run `cargo build --release`
 - `po/` - gettext message catalogs
 - `debian/` - Debian packaging metadata
 - `meson.build` - data files, man page, `install-symlinks`, and Meson-registered `cargo test`
 - `Cargo.toml` / `Cargo.lock` - the canonical dependency graph and locked dependency versions
 
-## Example app: `puff1`
+## Example app: `some_puff1`
 
-`puff1` is a cat-like utility:
+`some_puff1` is a cat-like utility:
 
 ```bash
-puff1 [OPTION]... [FILE]...
+some_puff1 [OPTION]... [FILE]...
 ```
 
 - If no `FILE` is provided, it reads from `stdin`.
@@ -49,7 +49,7 @@ sudo apt install build-essential meson ninja-build pkgconf cargo rustup gettext
 
 ```bash
 cargo build --release
-# ./target/release/puff1
+# ./target/release/some_puff1
 ```
 
 ### Configure and build (Meson)
@@ -63,7 +63,7 @@ ninja -C /build
 ```
 
 `ninja` runs `build-aux/cargo-build.sh`, which builds with `cargo` into `{{builddir}}/cargo-target`
-and copies `puff1` to the build root.
+and copies `some_puff1` to the build root.
 
 To avoid a misbehaving `sccache` wrapper during builds, the helper script unsets
 `RUSTC_WRAPPER` by default. Set `ZEPHYR_CARGO_ENABLE_SCCACHE=1` if you need it.
@@ -80,7 +80,7 @@ meson test -C /build
 
 ## i18n (gettext)
 
-`puff1` uses gettext (GNU, via the `gettext-rs` crate) and translations under `po/`.
+`some_puff1` uses gettext (GNU, via the `gettext-rs` crate) and translations under `po/`.
 
 - At runtime, `ZEPHYR_LOCALEDIR` overrides the locale base directory. If it is not set, the
   binary also tries `build/po` (for a Meson build tree) or falls back to `/usr/local/share/locale`.
@@ -111,8 +111,8 @@ ninja -C /build
 ### Quick locale testing
 
 ```bash
-LANGUAGE=ja /path/to/puff1 -h
-LANGUAGE=zh_CN /path/to/puff1 -h
+LANGUAGE=ja /path/to/some_puff1 -h
+LANGUAGE=zh_CN /path/to/some_puff1 -h
 ```
 
 `LANG=<lang>.<encoding>` may depend on whether that locale is generated on your system.

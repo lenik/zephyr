@@ -53,11 +53,11 @@ function resolveLocaleDirs(moduleUrl: string): string[] {
   }
 
   const here = dirname(fileURLToPath(moduleUrl));
-  // Build tree: /build/puff1.js → /build/po
+  // Build tree: /build/some_puff1.js → /build/po
   dirs.push(join(here, "po"));
-  // Installed: /usr/share/zephyr/puff1.js → /usr/share/locale
+  // Installed: /usr/share/zephyr/some_puff1.js → /usr/share/locale
   dirs.push(resolve(here, "..", "locale"));
-  // pnpm/npm dist: dist/src/puff1.js → <repo>/po
+  // pnpm/npm dist: dist/src/some_puff1.js → <repo>/po
   dirs.push(resolve(here, "..", "..", "po"));
   dirs.push("/usr/share/locale");
   dirs.push("/usr/local/share/locale");

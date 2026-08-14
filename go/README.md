@@ -1,21 +1,21 @@
 # zephyr
 
-`zephyr` is a **Go** project template for small command-line tools. The `puff1` binary is
-one **example** under `cmd/puff1/`. Reusable code lives under `internal/`; embedded GNU
+`zephyr` is a **Go** project template for small command-line tools. The `some_puff1` binary is
+one **example** under `cmd/some_puff1/`. Reusable code lives under `internal/`; embedded GNU
 gettext `.po` files live in `po/` and are included in the built binary (see `po/embed.go`).
 
 ## Layout
 
-- `cmd/` — one directory per program (`puff1` is the sample “cat”-like tool)
+- `cmd/` — one directory per program (`some_puff1` is the sample “cat”-like tool)
 - `internal/` — shared packages (`zephyr` helpers, `i18n` for gettext catalogs)
 - `po/` — GNU gettext `.po` message catalogs, embedded at build time
 - `debian/` — Debian metadata for `dpkg-buildpackage`
 - `meson.build` — build, test, install, and helper targets
 
-## `puff1` (example)
+## `some_puff1` (example)
 
 ```text
-puff1 [OPTION]... [FILE]...
+some_puff1 [OPTION]... [FILE]...
 ```
 
 - With no `FILE`, reads standard input once and writes to standard output.
@@ -50,8 +50,8 @@ required to ship a translated binary, but the usual `LANGUAGE=ja` style testing 
 when the message exists in a `.po` file.
 
 ```bash
-LANGUAGE=ja ./build/puff1 -h
-LANGUAGE=zh_CN ./build/puff1 --version
+LANGUAGE=ja ./build/some_puff1 -h
+LANGUAGE=zh_CN ./build/some_puff1 --version
 ```
 
 Regenerating `.pot` from Go sources is not automated here; the existing catalogs match the

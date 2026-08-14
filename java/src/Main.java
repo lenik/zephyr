@@ -22,7 +22,7 @@ public final class Main {
     }
 
     private static void usage(PrintStream out) {
-        out.print(tr("Usage: puff1 [OPTION]... [FILE]...\n"
+        out.print(tr("Usage: some_puff1 [OPTION]... [FILE]...\n"
                   + "Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n"
                   + "read standard input.\n"));
         out.print("\n");
@@ -40,7 +40,7 @@ public final class Main {
 
     private static void version(PrintStream out) {
         String v = System.getProperty("zephyr.version", "dev");
-        out.printf("puff1 %s%n", v);
+        out.printf("some_puff1 %s%n", v);
         out.print(String.format(tr("Copyright (C) %d %s\n"), PROJECT_YEAR, PROJECT_AUTHOR));
         out.print(tr("License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"));
         out.print(tr("This is free software: you are free to change and redistribute it.\n"));
@@ -84,14 +84,14 @@ public final class Main {
                 try {
                     common_lib.copyFile(Path.of(f), System.out);
                 } catch (IOException e) {
-                    System.err.printf("%s: %s%n", "puff1", e.getMessage());
+                    System.err.printf("%s: %s%n", "some_puff1", e.getMessage());
                     System.exit(1);
                 }
             }
         }
 
         if (verbose > 0) {
-            System.err.println("puff1: done");
+            System.err.println("some_puff1: done");
         }
     }
 }

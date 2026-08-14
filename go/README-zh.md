@@ -2,7 +2,7 @@
 
 # zephyr
 
-`zephyr` 是面向**小型 Go 命令行工具**的项目模板。`puff1` 是 `cmd/puff1/` 下的
+`zephyr` 是面向**小型 Go 命令行工具**的项目模板。`some_puff1` 是 `cmd/some_puff1/` 下的
 示例（类似 `cat`）。可复用代码在 `internal/`；GNU gettext 的 `.po` 在 `po/`，
 构建时嵌入二进制（`po/embed.go`）。
 
@@ -33,7 +33,7 @@ meson test -C /build
 嵌入。示例：
 
 ```bash
-LANGUAGE=ja ./build/puff1 -h
+LANGUAGE=ja ./build/some_puff1 -h
 ```
 
 ## 许可

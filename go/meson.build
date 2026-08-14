@@ -23,14 +23,14 @@ pkgdocdir = datadir / 'doc' / meson.project_name()
 
 subdir('po')
 
-puff1_exe = custom_target(
-    'puff1',
+some_puff1_exe = custom_target(
+    'some_puff1',
     input: ['go.mod', 'go.sum'],
-    output: 'puff1',
+    output: 'some_puff1',
     command: [
         'sh',
         '-euc',
-        'cd "@SOURCE_ROOT@" && CGO_ENABLED=0 go build -o "@OUTPUT@" -ldflags "-X main.buildVersion=@0@" ./cmd/puff1'.format(
+        'cd "@SOURCE_ROOT@" && CGO_ENABLED=0 go build -o "@OUTPUT@" -ldflags "-X main.buildVersion=@0@" ./cmd/some_puff1'.format(
             meson.project_version()
         ),
     ],
@@ -46,9 +46,9 @@ test(
 )
 
 install_data(
-    'puff1.bash',
+    'some_puff1.bash',
     install_dir: datadir / 'bash-completion' / 'completions',
-    rename: 'puff1',
+    rename: 'some_puff1',
 )
 
 install_data(
@@ -66,8 +66,8 @@ config_man.set('PROJECT_AUTHOR', project_author)
 config_man.set('PROJECT_EMAIL', project_email)
 config_man.set('PROJECT_YEAR', project_year)
 configure_file(
-    input: 'puff1.1.in',
-    output: 'puff1.1',
+    input: 'some_puff1.1.in',
+    output: 'some_puff1.1',
     configuration: config_man,
     install: true,
     install_dir: mandir / 'man1',
@@ -96,9 +96,9 @@ run_target(
             datadir="@2@"
             mandir="@3@"
             mkdir -p "$bindir" "$datadir/bash-completion/completions" "$mandir/man1"
-            sudo ln -sfn "@BUILD_ROOT@/puff1" "$bindir/puff1"
-            sudo ln -sfn "@BUILD_ROOT@/puff1.1" "$mandir/man1/puff1.1"
-            sudo ln -sfn "@SOURCE_ROOT@/puff1.bash" "$datadir/bash-completion/completions/puff1"
+            sudo ln -sfn "@BUILD_ROOT@/some_puff1" "$bindir/some_puff1"
+            sudo ln -sfn "@BUILD_ROOT@/some_puff1.1" "$mandir/man1/some_puff1.1"
+            sudo ln -sfn "@SOURCE_ROOT@/some_puff1.bash" "$datadir/bash-completion/completions/some_puff1"
             printf "Symlinks installed under %s\n" "$prefix"
         '''.format(get_option('prefix'), bindir, datadir, mandir),
     ],
@@ -112,7 +112,7 @@ run_target(
             bindir="@0@"
             datadir="@1@"
             mandir="@2@"
-            for p in "$bindir/puff1" "$mandir/man1/puff1.1" "$datadir/bash-completion/completions/puff1"
+            for p in "$bindir/some_puff1" "$mandir/man1/some_puff1.1" "$datadir/bash-completion/completions/some_puff1"
             do
                 if [ -L "$p" ]; then
                     sudo rm -f "$p"

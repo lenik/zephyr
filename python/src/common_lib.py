@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 from typing import BinaryIO
 
-TEXT_DOMAIN = "puff1"
+TEXT_DOMAIN = "some_puff1"
 
 
 def init_i18n(argv0: str) -> gettext.NullTranslations:

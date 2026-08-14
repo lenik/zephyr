@@ -55,14 +55,14 @@ subdir('po')
 js_built = custom_target(
     'zephyr-js',
     input: [
-        'src/puff1.ts',
+        'src/some_puff1.ts',
         'src/common_lib.ts',
         'src/i18n.ts',
         'tests/common_lib.test.ts',
         'tsconfig.json',
         'tsconfig.meson.json',
     ],
-    output: ['puff1.js', 'common_lib.js', 'i18n.js'],
+    output: ['some_puff1.js', 'common_lib.js', 'i18n.js'],
     command: [
         'bash',
         '-euc', '''
@@ -78,11 +78,11 @@ js_built = custom_target(
                 # System TypeScript (e.g. Debian node-typescript) may lack @types/node;
                 # tsconfig.meson.json still emits JS (noEmitOnError=false).
                 "$tscbin" -p "$src/tsconfig.meson.json" --outDir "$build/ts_out" --rootDir "$src" || true
-                test -f "$build/ts_out/src/puff1.js"
+                test -f "$build/ts_out/src/some_puff1.js"
                 test -f "$build/ts_out/src/common_lib.js"
                 test -f "$build/ts_out/src/i18n.js"
             fi
-            cp "$build/ts_out/src/puff1.js" "$out0"
+            cp "$build/ts_out/src/some_puff1.js" "$out0"
             cp "$build/ts_out/src/common_lib.js" "$out1"
             cp "$build/ts_out/src/i18n.js" "$out2"
         ''',
@@ -123,11 +123,11 @@ node_modules_prod = custom_target(
     build_by_default: true,
 )
 
-# Build-tree launcher (node_modules lives next to puff1.js in the build dir).
-puff1_local = custom_target(
-    'puff1',
-    input: 'src/puff1.sh.in',
-    output: 'puff1',
+# Build-tree launcher (node_modules lives next to some_puff1.js in the build dir).
+some_puff1_local = custom_target(
+    'some_puff1',
+    input: 'src/some_puff1.sh.in',
+    output: 'some_puff1',
     command: [
         'bash',
         '-euc', '''
@@ -135,7 +135,7 @@ puff1_local = custom_target(
             chmod +x "$3"
         ''',
         '_',
-        meson.current_build_dir() / 'puff1.js',
+        meson.current_build_dir() / 'some_puff1.js',
         '@INPUT@',
         '@OUTPUT@',
     ],
@@ -143,19 +143,19 @@ puff1_local = custom_target(
     build_by_default: true,
 )
 
-# Installed launcher; node_modules is installed beside puff1.js under pkgdatadir.
-puff1_install_conf = configuration_data()
-puff1_install_conf.set('ENTRYPOINT', pkgdatadir / 'puff1.js')
-puff1_install_conf.set('NODE_PATH', '')
-puff1_install_sh = configure_file(
-    input: 'src/puff1.sh.in',
-    output: 'puff1.install.sh',
-    configuration: puff1_install_conf,
+# Installed launcher; node_modules is installed beside some_puff1.js under pkgdatadir.
+some_puff1_install_conf = configuration_data()
+some_puff1_install_conf.set('ENTRYPOINT', pkgdatadir / 'some_puff1.js')
+some_puff1_install_conf.set('NODE_PATH', '')
+some_puff1_install_sh = configure_file(
+    input: 'src/some_puff1.sh.in',
+    output: 'some_puff1.install.sh',
+    configuration: some_puff1_install_conf,
 )
 install_data(
-    puff1_install_sh,
+    some_puff1_install_sh,
     install_dir: bindir,
-    rename: 'puff1',
+    rename: 'some_puff1',
     install_mode: 'rwxr-xr-x',
 )
 
@@ -189,15 +189,15 @@ test(
 )
 
 test(
-    'puff1-i18n-zh-CN',
+    'some_puff1-i18n-zh-CN',
     find_program('bash'),
     args: [
         '-euc',
         'out="$("$1" -h)"; printf "%s\n" "$out"; printf "%s\n" "$out" | grep -q "用法"',
         '_',
-        meson.current_build_dir() / 'puff1',
+        meson.current_build_dir() / 'some_puff1',
     ],
-    depends: [js_built, puff1_local],
+    depends: [js_built, some_puff1_local],
     env: [
         'ZEPHYR_LOCALEDIR=' + (meson.project_build_root() / 'po'),
         'LANGUAGE=zh_CN',
@@ -206,9 +206,9 @@ test(
 )
 
 install_data(
-    'puff1.bash',
+    'some_puff1.bash',
     install_dir: datadir / 'bash-completion' / 'completions',
-    rename: 'puff1',
+    rename: 'some_puff1',
 )
 
 install_data(
@@ -222,12 +222,12 @@ install_data(
 
 # Man + info pages from AsciiDoctor (manpage backend + HTML→Texinfo→makeinfo).
 docs_built = custom_target(
-    'puff1-docs',
+    'some_puff1-docs',
     input: [
-        'docs/puff1.adoc',
+        'docs/some_puff1.adoc',
         'scripts/build-docs.sh',
     ],
-    output: ['puff1.1', 'puff1.info'],
+    output: ['some_puff1.1', 'some_puff1.info'],
     command: [
         meson.project_source_root() / 'scripts' / 'build-docs.sh',
         '@INPUT0@',
@@ -255,7 +255,7 @@ run_target(
         '-euc', '''
             cd "@SOURCE_ROOT@/po"
             xgettext --from-code=UTF-8 --keyword=_ --language=JavaScript --directory=.. --output=zephyr.pot --files-from=POTFILES
-            cp -f zephyr.pot puff1.pot
+            cp -f zephyr.pot some_puff1.pot
             while IFS= read -r lang; do
                 [ -n "$lang" ] || continue
                 case "$lang" in
@@ -299,13 +299,13 @@ run_target(
 
             mkdir -p "$bindir" "$datadir/bash-completion/completions" "$pkgdatadir" "$mandir/man1" "$infodir"
 
-            sudo ln -sfn "@BUILD_ROOT@/puff1" "$bindir/puff1"
-            sudo ln -sfn "@BUILD_ROOT@/puff1.js" "$pkgdatadir/puff1.js"
+            sudo ln -sfn "@BUILD_ROOT@/some_puff1" "$bindir/some_puff1"
+            sudo ln -sfn "@BUILD_ROOT@/some_puff1.js" "$pkgdatadir/some_puff1.js"
             sudo ln -sfn "@BUILD_ROOT@/common_lib.js" "$pkgdatadir/common_lib.js"
             sudo ln -sfn "@BUILD_ROOT@/i18n.js" "$pkgdatadir/i18n.js"
-            sudo ln -sfn "@BUILD_ROOT@/puff1.1" "$mandir/man1/puff1.1"
-            sudo ln -sfn "@BUILD_ROOT@/puff1.info" "$infodir/puff1.info"
-            sudo ln -sfn "@SOURCE_ROOT@/puff1.bash" "$datadir/bash-completion/completions/puff1"
+            sudo ln -sfn "@BUILD_ROOT@/some_puff1.1" "$mandir/man1/some_puff1.1"
+            sudo ln -sfn "@BUILD_ROOT@/some_puff1.info" "$infodir/some_puff1.info"
+            sudo ln -sfn "@SOURCE_ROOT@/some_puff1.bash" "$datadir/bash-completion/completions/some_puff1"
 
             printf "Symlinks installed under %s\n" "$prefix"
         '''.format(
@@ -332,13 +332,13 @@ run_target(
             infodir="@5@"
 
             for p in \
-                "$bindir/puff1" \
-                "$pkgdatadir/puff1.js" \
+                "$bindir/some_puff1" \
+                "$pkgdatadir/some_puff1.js" \
                 "$pkgdatadir/common_lib.js" \
                 "$pkgdatadir/i18n.js" \
-                "$mandir/man1/puff1.1" \
-                "$infodir/puff1.info" \
-                "$datadir/bash-completion/completions/puff1"
+                "$mandir/man1/some_puff1.1" \
+                "$infodir/some_puff1.info" \
+                "$datadir/bash-completion/completions/some_puff1"
             do
                 if [ -L "$p" ]; then
                     sudo rm -f "$p"

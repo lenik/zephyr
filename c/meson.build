@@ -219,7 +219,7 @@ install_subdir(
 )
 
 app_sources = [
-    'src/puff1.c',
+    'src/some_puff1.c',
 ]
 
 foreach source : app_sources
@@ -240,7 +240,7 @@ foreach source : app_sources
 endforeach
 
 bash_files = [
-    'puff1.bash',
+    'some_puff1.bash',
 ]
 
 foreach file : bash_files
@@ -268,8 +268,8 @@ config_man.set('PROJECT_EMAIL', project_email)
 config_man.set('PROJECT_YEAR', project_year)
 
 configure_file(
-    input: 'puff1.1.in',
-    output: 'puff1.1',
+    input: 'some_puff1.1.in',
+    output: 'some_puff1.1',
     configuration: config_man,
     install: true,
     install_dir: mandir / 'man1',
@@ -305,9 +305,9 @@ run_target(
 
             mkdir -p "$bindir" "$datadir/bash-completion/completions" "$localedir" "$mandir/man1"
 
-            sudo ln -sfn "@BUILD_ROOT@/puff1" "$bindir/puff1"
-            sudo ln -sfn "@BUILD_ROOT@/puff1.1" "$mandir/man1/puff1.1"
-            sudo ln -sfn "@SOURCE_ROOT@/puff1.bash" "$datadir/bash-completion/completions/puff1"
+            sudo ln -sfn "@BUILD_ROOT@/some_puff1" "$bindir/some_puff1"
+            sudo ln -sfn "@BUILD_ROOT@/some_puff1.1" "$mandir/man1/some_puff1.1"
+            sudo ln -sfn "@SOURCE_ROOT@/some_puff1.bash" "$datadir/bash-completion/completions/some_puff1"
 
             printf "Symlinks installed under %s\n" "$prefix"
         '''.format(
@@ -332,9 +332,9 @@ run_target(
             mandir="@4@"
 
             for p in \
-                "$bindir/puff1" \
-                "$mandir/man1/puff1.1" \
-                "$datadir/bash-completion/completions/puff1"
+                "$bindir/some_puff1" \
+                "$mandir/man1/some_puff1.1" \
+                "$datadir/bash-completion/completions/some_puff1"
             do
                 if [ -L "$p" ]; then
                     sudo rm -f "$p"

@@ -6,8 +6,8 @@ import System.IO (hClose, hFlush, hSeek, hTell, IOMode (ReadMode, WriteMode), Se
 
 main :: IO ()
 main = do
-  (inPath, inH) <- openBinaryTempFile "/tmp" "puff1-in.txt"
-  (outPath, outH) <- openBinaryTempFile "/tmp" "puff1-out.txt"
+  (inPath, inH) <- openBinaryTempFile "/tmp" "some_puff1-in.txt"
+  (outPath, outH) <- openBinaryTempFile "/tmp" "some_puff1-out.txt"
   hClose inH
   hClose outH
   writeFile inPath "alpha\nbeta\n"

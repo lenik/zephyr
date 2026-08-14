@@ -1,5 +1,5 @@
 using System.Text;
-using Puff1;
+using SomePuff1;
 
 var input = new MemoryStream(Encoding.UTF8.GetBytes("alpha\nbeta\n"));
 await using var output = new MemoryStream();

@@ -5,23 +5,23 @@
 # zephyr
 
 `zephyr` 是一个以 **Rust（Cargo）** 为主、可选 **Meson** 的中小型命令行应用项目模板。  
-`puff1` 是此模板中的一个**示例应用**；同一仓库中可以继续添加更多应用。
+`some_puff1` 是此模板中的一个**示例应用**；同一仓库中可以继续添加更多应用。
 
 ## 仓库结构
 
-- `src/` - `zephyr` 库与 `puff1` 可执行文件代码
+- `src/` - `zephyr` 库与 `some_puff1` 可执行文件代码
 - `build-aux/cargo-build.sh` - Meson 调用以执行 `cargo build --release`
 - `debian/` - Debian 打包元数据
 - `meson.build` - man、文档、gettext、`install-symlinks`、以及用 Meson 登记的 `cargo test`
 - `Cargo.toml` / `Cargo.lock` - 依赖与锁文件
 - `po/` - gettext 翻译
 
-## 示例应用：`puff1`
+## 示例应用：`some_puff1`
 
-`puff1` 是一个类似 `cat` 的工具：
+`some_puff1` 是一个类似 `cat` 的工具：
 
 ```bash
-puff1 [OPTION]... [FILE]...
+some_puff1 [OPTION]... [FILE]...
 ```
 
 - 如果未提供 `FILE`，则从 `stdin` 读取。
@@ -49,7 +49,7 @@ sudo apt install build-essential meson ninja-build pkgconf cargo rustup gettext
 
 ```bash
 cargo build --release
-# ./target/release/puff1
+# ./target/release/some_puff1
 ```
 
 ### 用 Meson 配置并构建
@@ -75,7 +75,7 @@ meson test -C /build
 
 ## i18n（gettext）
 
-`puff1` 使用 `po/` 下的 gettext 翻译文件（`*.po` 与生成的 `.mo` 文件）。
+`some_puff1` 使用 `po/` 下的 gettext 翻译文件（`*.po` 与生成的 `.mo` 文件）。
 
 - 运行时可用环境变量 `ZEPHYR_LOCALEDIR` 指定「localedir」根目录；未设置时程序会尝试 `build/po` 等开发路径，或回退到 `/usr/local/share/locale`。
 - 与常见 gettext 应用一样，从系统正确安装时也会从系统 locale 目录加载翻译。`ninja install-symlinks` 仅做二进制、man 与 bash 补全的符号链接，不负责安装 `.mo` 文件；完整安装请用 `meson install` 或发行版包。`POTFILES` 现为 `src/lib.rs`、`src/main.rs`。
@@ -104,8 +104,8 @@ ninja -C /build
 建议优先使用 `LANGUAGE=<lang>`，在开发环境中选择更稳定：
 
 ```bash
-LANGUAGE=ja /build/puff1 -h
-LANGUAGE=zh_CN /build/puff1 -h
+LANGUAGE=ja /build/some_puff1 -h
+LANGUAGE=zh_CN /build/some_puff1 -h
 ```
 
 `LANG=<lang>.<encoding>` 是否生效取决于系统是否已生成对应 locale。

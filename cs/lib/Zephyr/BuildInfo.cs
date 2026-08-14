@@ -1,4 +1,4 @@
-namespace Puff1;
+namespace SomePuff1;
 
 public static class BuildInfo
 {

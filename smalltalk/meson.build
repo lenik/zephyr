@@ -23,16 +23,16 @@ pkgdocdir = datadir / 'doc' / meson.project_name()
 
 subdir('po')
 
-puff1 = custom_target(
-    'puff1',
-    input: ['src/puff1.st', 'src/common_lib.st'],
-    output: 'puff1',
+some_puff1 = custom_target(
+    'some_puff1',
+    input: ['src/some_puff1.st', 'src/common_lib.st'],
+    output: 'some_puff1',
     command: [
         'bash',
         '-euc',
         'out="$1"; cat > "$out" <<\'EOF\'\n#!/usr/bin/env sh\nexec "@0@" -q "@1@" "$@"\nEOF\nchmod +x "$out"'.format(
             gst.full_path(),
-            meson.project_source_root() / 'src/puff1.st',
+            meson.project_source_root() / 'src/some_puff1.st',
         ),
         '_',
         '@OUTPUT@',
@@ -49,9 +49,9 @@ test(
 )
 
 install_data(
-    'puff1.bash',
+    'some_puff1.bash',
     install_dir: datadir / 'bash-completion' / 'completions',
-    rename: 'puff1',
+    rename: 'some_puff1',
 )
 
 install_data(
@@ -69,8 +69,8 @@ config_man.set('PROJECT_AUTHOR', project_author)
 config_man.set('PROJECT_EMAIL', project_email)
 config_man.set('PROJECT_YEAR', project_year)
 configure_file(
-    input: 'puff1.1.in',
-    output: 'puff1.1',
+    input: 'some_puff1.1.in',
+    output: 'some_puff1.1',
     configuration: config_man,
     install: true,
     install_dir: mandir / 'man1',
@@ -86,7 +86,7 @@ run_target(
             rg -No "tr:[[:space:]]*'([^'\\\\]|\\\\.)*'" ../src/*.st | sed "s|tr:[[:space:]]*'|void tr('|; s|'$|');|" > "$tmp_c"
             xgettext --from-code=UTF-8 --keyword=tr --language=C --output=zephyr.pot "$tmp_c"
             rm -f "$tmp_c"
-            cp -f zephyr.pot puff1.pot
+            cp -f zephyr.pot some_puff1.pot
             while IFS= read -r lang; do
                 [ -n "$lang" ] || continue
                 case "$lang" in

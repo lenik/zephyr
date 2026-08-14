@@ -20,7 +20,7 @@ tr s = s
 
 usage :: IO ()
 usage = do
-  hPutStr stdout $ tr "Usage: puff1 [OPTION]... [FILE]...\n"
+  hPutStr stdout $ tr "Usage: some_puff1 [OPTION]... [FILE]...\n"
   hPutStr stdout $ tr "Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n"
   hPutStr stdout $ tr "read standard input.\n\n"
   hPutStr stdout "  -v, --verbose      "
@@ -35,7 +35,7 @@ usage = do
 
 versionInfo :: IO ()
 versionInfo = do
-  hPutStrLn stdout "puff1 dev"
+  hPutStrLn stdout "some_puff1 dev"
   hPutStrLn stdout $ tr "Copyright (C) " ++ show projectYear ++ " " ++ projectAuthor
   hPutStrLn stdout $ tr "License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>"
   hPutStrLn stdout $ tr "This is free software: you are free to change and redistribute it."
