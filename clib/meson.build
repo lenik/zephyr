@@ -1,7 +1,6 @@
 project(
     'zephyr',
     'c',
-    'cpp',
     version: run_command(
         'sh',
         '-c', '''
@@ -32,7 +31,6 @@ project_year = 2026
 asciidoctor = find_program('asciidoctor', required: true)
 fs = import('fs')
 c = meson.get_compiler('c')
-cpp = meson.get_compiler('cpp')
 
 prefix = get_option('prefix')
 bindir = prefix / get_option('bindir')
@@ -61,10 +59,8 @@ configure_file(
 )
 
 bas_c_dep = dependency('bas-c', required: true)
-# bas_cpp_dep = dependency('bas-cpp', required: true)
 
 # bas_c_static_dep = dependency('bas-c-static', required: true)
-# bas_cpp_static_dep = dependency('bas-cpp-static', required: true)
 
 lib_objects = []
 
@@ -108,7 +104,7 @@ if fs.exists(assets_dir) and fs.exists(assets_src)
 endif
 
 # Disable all warnings (wx 3.0 and deps are noisy)
-nowarn = cpp.get_supported_arguments(['-w', '/w'])
+nowarn = c.get_supported_arguments(['-w', '/w'])
 bas_args = ['-DLOGGER_NAME=zephyr', '-DASSETS_NAME=zephyr']
 
 c_pch = 'src/c_pch.h'
@@ -193,8 +189,6 @@ find_other_cmd = run_command(
     'src',
     '-name', '*.h',
     '-o',
-    '-name', '*.hpp',
-    '-o',
     '-type', 'd',
     '-o',
     '-print',
@@ -204,9 +198,7 @@ other_files = find_other_cmd.stdout().strip().split('\n')
 
 other_list = [
     'bulk.h',
-    'bulk.hpp',
     'c_pch.h',
-    'cpp_pch.hpp',
 ]
 foreach f : other_files
     other_list += f.substring(4)
