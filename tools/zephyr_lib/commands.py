@@ -113,7 +113,12 @@ def cmd_create(
 ) -> None:
     """Copy a language template into ./<project_name>/ and rename the project."""
     root = (workdir or Path.cwd()).resolve()
-    dest = root / project_name
+    dest_arg = Path(project_name)
+    # Allow absolute or nested paths; package/rename id is always the final component.
+    dest = dest_arg if dest_arg.is_absolute() else (root / dest_arg)
+    package = dest.name
+    if not package or package in (".", ".."):
+        raise SystemExit(f"invalid project path: {project_name!r}")
     if dest.exists():
         raise SystemExit(f"destination already exists: {dest}")
 
@@ -124,7 +129,8 @@ def cmd_create(
         )
 
     tmpl = template_dir(lang)
-    print(f"create {project_name} (lang={lang}, template={tmpl})")
+    print(f"create {package} (lang={lang}, template={tmpl})")
+    dest.parent.mkdir(parents=True, exist_ok=True)
     shutil.copytree(tmpl, dest, ignore=_COPY_IGNORE)
 
     # Never keep the template changelog; regenerate below.
@@ -132,8 +138,8 @@ def cmd_create(
     if changelog.is_file():
         changelog.unlink()
 
-    print(f"rename zephyr → {project_name}")
-    pairs = replacement_pairs("zephyr", project_name)
+    print(f"rename zephyr → {package}")
+    pairs = replacement_pairs("zephyr", package)
     files, renames = rewrite_tree(dest, pairs, rename_paths=True)
     print(f"  project: {files} file(s) rewritten, {renames} path(s) renamed")
 
@@ -144,12 +150,12 @@ def cmd_create(
         cmd_add([name], workdir=dest)
 
     print(
-        f"debian/changelog ← {project_name} ({init_version}) {distribution} "
+        f"debian/changelog ← {package} ({init_version}) {distribution} "
         f"({author} <{email}>)"
     )
     _write_debian_changelog(
         dest,
-        package=project_name,
+        package=package,
         version=init_version,
         distribution=distribution,
         author=author,
@@ -207,6 +213,22 @@ def _puff_source_paths(lang: str, tmpl: Path) -> list[Path]:
             tmpl / "tests" / f"{stem}_test.c",
             tmpl / f"{stem}.bash",
             tmpl / "docs" / f"{stem}.adoc",
+        ]
+    elif lang == "cpp":
+        candidates += [
+            tmpl / "src" / f"{stem}.cpp",
+            tmpl / "tests" / f"{stem}_test.cpp",
+            tmpl / f"{stem}.bash",
+            tmpl / "docs" / f"{stem}.adoc",
+        ]
+    elif lang == "cpplib":
+        candidates += [
+            tmpl / "src" / f"{stem}.cpp",
+            tmpl / "src" / f"{stem}.hpp",
+            tmpl / "tests" / f"{stem}_test.cpp",
+            tmpl / f"{stem}.bash",
+            tmpl / "docs" / f"{stem}.adoc",
+            tmpl / "po" / f"{stem}.pot",
         ]
     elif lang == "bash":
         candidates += [
@@ -478,6 +500,20 @@ def _wire_add(lang: str, workdir: Path, name: str) -> None:
         if tests_meson.is_file():
             append_meson_list_entry(tests_meson, "test_sources", f"{name}_test.c")
         _append_man_custom_target(meson, name)
+    elif lang == "cpp" and meson.is_file():
+        append_meson_list_entry(meson, "app_sources", f"src/{name}.cpp")
+        append_meson_list_entry(meson, "bash_files", f"{name}.bash")
+        tests_meson = workdir / "tests" / "meson.build"
+        if tests_meson.is_file():
+            append_meson_list_entry(tests_meson, "test_sources", f"{name}_test.cpp")
+        _append_man_custom_target(meson, name)
+    elif lang == "cpplib" and meson.is_file():
+        append_meson_list_entry(meson, "app_sources", f"src/{name}.cpp")
+        append_meson_list_entry(meson, "bash_files", f"{name}.bash")
+        tests_meson = workdir / "tests" / "meson.build"
+        if tests_meson.is_file():
+            append_meson_list_entry(tests_meson, "test_sources", f"{name}_test.cpp")
+        _append_man_custom_target(meson, name)
     elif lang == "bash" and meson.is_file():
         append_meson_list_entry(meson, "app_scripts", f"src/{name}.in")
         append_meson_list_entry(meson, "bash_files", f"{name}.bash")
@@ -582,6 +618,20 @@ def _wire_remove(lang: str, workdir: Path, name: str) -> None:
         tests_meson = workdir / "tests" / "meson.build"
         if tests_meson.is_file():
             remove_meson_list_entry(tests_meson, f"{name}_test.c")
+        _strip_man_custom_target(meson, name)
+    elif lang == "cpp" and meson.is_file():
+        remove_meson_list_entry(meson, f"src/{name}.cpp")
+        remove_meson_list_entry(meson, f"{name}.bash")
+        tests_meson = workdir / "tests" / "meson.build"
+        if tests_meson.is_file():
+            remove_meson_list_entry(tests_meson, f"{name}_test.cpp")
+        _strip_man_custom_target(meson, name)
+    elif lang == "cpplib" and meson.is_file():
+        remove_meson_list_entry(meson, f"src/{name}.cpp")
+        remove_meson_list_entry(meson, f"{name}.bash")
+        tests_meson = workdir / "tests" / "meson.build"
+        if tests_meson.is_file():
+            remove_meson_list_entry(tests_meson, f"{name}_test.cpp")
         _strip_man_custom_target(meson, name)
     elif lang == "bash" and meson.is_file():
         remove_meson_list_entry(meson, f"src/{name}.in")

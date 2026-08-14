@@ -12,4 +12,4 @@ cd myproj
 zephyr add myapp
 ```
 
-支持语言包括 bash、c、clib、perl、python、rust 等。详见 [README.md](README.md) 与 `man 1 zephyr`。
+支持语言包括 bash、c、clib、cpp、cpplib、csharp、erlang、go、haskell、java、perl、python、ruby、rust、smalltalk、swift、typescript。详见 [README.md](README.md) 与 `man 1 zephyr`。

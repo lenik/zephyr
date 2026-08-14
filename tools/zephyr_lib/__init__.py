@@ -17,6 +17,8 @@ LANGS = (
     "bash",
     "c",
     "clib",
+    "cpp",
+    "cpplib",
     "csharp",
     "erlang",
     "go",
@@ -310,6 +312,26 @@ def _cs_project_markers(root: Path) -> bool:
     return False
 
 
+
+def _is_cpplib_project(root: Path, meson_txt: str, control_txt: str = "") -> bool:
+    """Distinguish cpplib (shared/static lib template) from simple cpp CLI."""
+    if re.search(r"\bshared_library\s*\(", meson_txt):
+        return True
+    if re.search(r"\bpkgconfig\.generate\s*\(", meson_txt) and (
+        root / "src" / "lib.cpp"
+    ).is_file():
+        return True
+    if (root / "src" / "lib.cpp").is_file() and re.search(
+        r"\bbas-cpp\b|\blibbas-cpp(?:-dev)?\b", meson_txt + "\n" + control_txt, re.I
+    ):
+        return True
+    if re.search(r"\blibbas-cpp-dev\b", control_txt, re.I) and _has_ext_shallow(
+        root, ".cpp", ".hpp", ".h"
+    ):
+        return True
+    return False
+
+
 def detect_lang(workdir: Path | None = None) -> str:
     """Detect zephyr template language from project files in workdir."""
     root = (workdir or Path.cwd()).resolve()
@@ -319,7 +341,7 @@ def detect_lang(workdir: Path | None = None) -> str:
             f"{root} looks like the zephyr meta-repo root "
             "(multiple language templates). "
             "Run zephyr from a language project directory "
-            "(e.g. clib/, c/, bash/, perl/, python/, rust/), "
+            "(e.g. clib/, cpp/, cpplib/, c/, bash/, perl/, ruby/, python/, rust/), "
             "not the repository root."
         )
 
@@ -354,11 +376,17 @@ def detect_lang(workdir: Path | None = None) -> str:
             ]
             # First string is usually the project name; rest may include languages.
             for tok in langs_in_project[1:]:
-                if tok in ("c", "cpp", "c++"):
+                if tok == "c":
                     return (
                         "clib"
                         if _is_clib_project(root, meson_txt, control_deps)
                         else "c"
+                    )
+                if tok in ("cpp", "c++"):
+                    return (
+                        "cpplib"
+                        if _is_cpplib_project(root, meson_txt, control_deps)
+                        else "cpp"
                     )
                 if tok == "rust":
                     return "rust"
@@ -378,7 +406,8 @@ def detect_lang(workdir: Path | None = None) -> str:
         ("bash", re.compile(r"\bbash-shlib\b", re.I)),
         ("perl", re.compile(r"(?:^Depends:\s*perl\b|Build-Depends:.*\bperl\b)", re.I | re.M)),
         ("ruby", re.compile(r"(?:^Depends:\s*ruby\b|Build-Depends:.*\bruby\b)", re.I | re.M)),
-        # clib before simple c: libbas-c marks the library template.
+        # library templates before simple CLI: libbas-*-dev markers.
+        ("cpplib", re.compile(r"\blibbas-cpp-dev\b", re.I)),
         ("clib", re.compile(r"\blibbas-c-dev\b", re.I)),
         ("c", re.compile(r"\bpkgconf\b.*\bcheck\b|\bcheck\b.*\bpkgconf\b", re.I)),
     ]
@@ -393,13 +422,17 @@ def detect_lang(workdir: Path | None = None) -> str:
                     or "import('python')" in meson_txt
                 ):
                     continue
-                if lang in ("c", "clib") and re.search(
+                if lang in ("c", "clib", "cpp", "cpplib") and re.search(
                     r"\bcargo\b|\brustc\b|\bgolang\b|\bpython3\b|\bdotnet\b|"
                     r"\berlang\b|\bghc\b|\bswift|\bnodejs\b|\bdefault-jdk\b|"
                     r"\bgnu-smalltalk\b|\bbash-shlib\b",
                     control_deps,
                     re.I,
                 ):
+                    continue
+                if lang in ("c", "clib") and re.search(r"\blibbas-cpp", control_deps, re.I):
+                    continue
+                if lang in ("cpp", "cpplib") and re.search(r"\blibbas-c-dev\b", control_deps, re.I):
                     continue
                 if lang == "perl" and re.search(
                     r"\bcargo\b|\brustc\b|\bgolang\b|\bpython3\b|\bdotnet\b|"
@@ -455,13 +488,28 @@ def detect_lang(workdir: Path | None = None) -> str:
     if _looks_like_bash_shlib(root, control_deps):
         return "bash"
     if meson.is_file() and re.search(
-        r"project\s*\([^)]*\b(c|cpp)\b", meson_head, re.S
+        r"project\s*\([^)]*\bcpp\b", meson_head, re.S
     ):
-        if _has_ext_shallow(root, ".c", ".cpp", ".cc", ".cxx", ".h", ".hpp"):
+        if _has_ext_shallow(root, ".cpp", ".cc", ".cxx", ".hpp", ".h"):
+            return (
+                "cpplib"
+                if _is_cpplib_project(root, meson_txt, control_deps)
+                else "cpp"
+            )
+    if meson.is_file() and re.search(
+        r"project\s*\([^)]*\bc\b", meson_head, re.S
+    ):
+        if _has_ext_shallow(root, ".c", ".h"):
             return (
                 "clib" if _is_clib_project(root, meson_txt, control_deps) else "c"
             )
-    if _has_ext_shallow(root, ".c", ".cpp", ".cc", ".cxx", ".h", ".hpp"):
+    if _has_ext_shallow(root, ".cpp", ".cc", ".cxx", ".hpp"):
+        return (
+            "cpplib"
+            if _is_cpplib_project(root, meson_txt, control_deps)
+            else "cpp"
+        )
+    if _has_ext_shallow(root, ".c", ".h"):
         return "clib" if _is_clib_project(root, meson_txt, control_deps) else "c"
 
     raise SystemExit(f"could not detect language in {root}")

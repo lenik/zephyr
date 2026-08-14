@@ -39,6 +39,8 @@ template_langs = [
     'bash',
     'c',
     'clib',
+    'cpp',
+    'cpplib',
     'csharp',
     'erlang',
     'go',
