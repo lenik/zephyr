@@ -121,21 +121,34 @@ configure_file(
     install_dir: pkgdatadir / 'tools' / 'zephyr_lib',
 )
 
-# PATH wrappers in bindir
-tool_cfg = configuration_data()
-tool_cfg.set('PKGDATADIR', pkgdatadir)
-tool_cfg.set('PYTHON', py.full_path())
+# Builddir wrappers use the source tree (so ninja && ./build/zephyr picks up
+# current templates + tools without a DESTDIR install). Bindir wrappers are
+# generated in tools/ with the installed pkgdatadir.
+wrapper_names = [
+    'zephyr',
+    'zephyr-create',
+    'zephyr-rename',
+    'zephyr-add',
+    'zephyr-remove',
+]
 
-foreach name : ['zephyr', 'zephyr-create', 'zephyr-rename', 'zephyr-add', 'zephyr-remove']
+uninst_tool_cfg = configuration_data()
+uninst_tool_cfg.set('PKGDATADIR', meson.project_source_root())
+uninst_tool_cfg.set('PYTHON', py.full_path())
+
+inst_tool_cfg = configuration_data()
+inst_tool_cfg.set('PKGDATADIR', pkgdatadir)
+inst_tool_cfg.set('PYTHON', py.full_path())
+
+foreach name : wrapper_names
     configure_file(
         input: 'tools' / (name + '.in'),
         output: name,
-        configuration: tool_cfg,
-        install: true,
-        install_dir: bindir,
-        install_mode: 'rwxr-xr-x',
+        configuration: uninst_tool_cfg,
     )
 endforeach
+
+subdir('tools')
 
 # Man page for zephyr tools
 custom_target(

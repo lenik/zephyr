@@ -51,18 +51,20 @@ zephyr add myapp another_app
 
 . Optionally rename the project or remove puffs later with *rename* / *remove*.
 
-Templates are installed under */usr/share/zephyr/<lang>/* (or the path given by
-*ZEPHYR_PKGDATADIR*). Each template may include a sample puff named
-*some_puff1*; *create* removes that sample by default so the new project starts
-without an example app unless you pass puff names on the *create* command line.
+Templates live under */usr/share/zephyr/<lang>/* when installed, or the source
+tree when running an uninstalled builddir wrapper such as *build/zephyr*
+(*ZEPHYR_PKGDATADIR* overrides). Each template may include a sample puff named
+*some_puff1*; pass puff names on the *create* command line to instantiate them,
+or omit them for an empty project.
 
 == Commands
 
 *create*::
   Copy *pkgdatadir/<lang>/* into a new directory *./<project_name>/* (fails if
-  the directory already exists), rewrite *zephyr* → *_PROJECT_NAME_* in that
-  tree, remove the template puff *some_puff1*, then optionally *add* each
-  given *_PUFF_NAME_*.
+  the directory already exists). Rewrite *zephyr* → *_PROJECT_NAME_* and, when
+  puff names are given, *some_puff1* → the first *_PUFF_NAME_* (further names
+  via *add*). With no puff names, drop the template puff files but keep the
+  *some_puff1* tokens so a later *add* can instantiate them.
   Writes a fresh *debian/changelog* (template changelog is discarded) using
   *--distribution* / *--init-version* / *--author* / *--email*, then runs
   *git init*, an initial commit, and an annotated tag *vVER*.

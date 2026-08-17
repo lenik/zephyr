@@ -1,3 +1,14 @@
+zephyr (1.3.1) testing; urgency=medium
+
+  * Fix create/add so named projects leave no puff1 or zephyr tokens
+    (rewrite debian/, strip packaging leftovers, instantiate
+    puff+project in one pass).
+  * Point uninstalled builddir wrappers (build/zephyr) at the source
+    tree so ninja picks up current tools and templates without meson
+    install.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 17 Aug 2026 15:32:52 +0800
+
 zephyr (1.3.0) testing; urgency=medium
 
   * Strip C++ from the clib template (C-only library).
