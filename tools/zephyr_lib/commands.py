@@ -18,6 +18,8 @@ from . import (
     case_variants,
     copy_renamed_file,
     detect_lang,
+    instantiation_pairs,
+    is_probably_text,
     iter_files,
     relative_to,
     remove_meson_list_entry,
@@ -51,7 +53,44 @@ _COPY_IGNORE = shutil.ignore_patterns(
     "target",
     "CLAUDE.md",
     "*.pyc",
+    "debhelper-build-stamp",
+    "*.substvars",
+    "*.debhelper",
+    "*.buildinfo",
 )
+
+
+def _copy_ignore(directory: str, names: list[str]) -> set[str]:
+    ignored = set(_COPY_IGNORE(directory, names))
+    if Path(directory).name == "debian":
+        for n in names:
+            if n in {
+                "files",
+                "debhelper-build-stamp",
+                ".debhelper",
+                "zephyr",
+            } or n.endswith((".substvars", ".debhelper.log", ".buildinfo")):
+                ignored.add(n)
+    return ignored
+
+
+def _clean_copied_debian(dest: Path) -> None:
+    """Drop packaging leftovers copied from a previously built template tree."""
+    debian = dest / "debian"
+    if not debian.is_dir():
+        return
+    for p in list(debian.rglob("*")):
+        if not p.is_file():
+            continue
+        name = p.name
+        if name in {
+            "files",
+            "debhelper-build-stamp",
+        } or name.endswith((".substvars", ".debhelper", ".debhelper.log", ".buildinfo")):
+            p.unlink(missing_ok=True)
+    for child in list(debian.iterdir()):
+        if child.is_dir() and child.name in (".debhelper", "build", "zephyr"):
+            shutil.rmtree(child, ignore_errors=True)
 
 
 def _write_debian_changelog(
@@ -131,24 +170,42 @@ def cmd_create(
     tmpl = template_dir(lang)
     print(f"create {package} (lang={lang}, template={tmpl})")
     dest.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(tmpl, dest, ignore=_COPY_IGNORE)
+    shutil.copytree(tmpl, dest, ignore=_copy_ignore)
+    _clean_copied_debian(dest)
 
     # Never keep the template changelog; regenerate below.
     changelog = dest / "debian" / "changelog"
     if changelog.is_file():
         changelog.unlink()
 
-    print(f"rename zephyr → {package}")
-    pairs = replacement_pairs("zephyr", package)
+    names = list(puff_names or [])
+    first = names[0] if names else None
+    rest = names[1:]
+    print(f"instantiate zephyr → {package}" + (f", {TEMPLATE_PUFF} → {first}" if first else ""))
+    pairs = instantiation_pairs(package, first)
     files, renames = rewrite_tree(dest, pairs, rename_paths=True)
-    print(f"  project: {files} file(s) rewritten, {renames} path(s) renamed")
+    print(f"  {files} file(s) rewritten, {renames} path(s) renamed")
 
-    # Drop the template example puff so the new project starts empty by default.
-    cmd_remove([TEMPLATE_PUFF], workdir=dest)
+    if not first:
+        # Drop template puff *files* only; leave content tokens so a later
+        # `zephyr add NAME` can rename some_puff1 → NAME in place.
+        cmd_remove([TEMPLATE_PUFF], workdir=dest)
+    else:
+        for name in rest:
+            cmd_add([name], workdir=dest)
+        # Extra `add` copies from the template; rewrite again so any leftover
+        # some_puff1 / zephyr tokens in skipped existing files are substituted.
+        rewrite_tree(dest, instantiation_pairs(package, first), rename_paths=True)
 
-    for name in puff_names or []:
-        cmd_add([name], workdir=dest)
-
+    if first:
+        leftover = _leftover_template_lines(dest)
+        if leftover:
+            preview = "\n".join(leftover[:40])
+            more = "" if len(leftover) <= 40 else f"\n  … {len(leftover) - 40} more"
+            raise SystemExit(
+                f"template identifiers remain in {dest} after create "
+                f"(puff1/zephyr):\n{preview}{more}"
+            )
     print(
         f"debian/changelog ← {package} ({init_version}) {distribution} "
         f"({author} <{email}>)"
@@ -275,10 +332,10 @@ def _puff_source_paths(lang: str, tmpl: Path) -> list[Path]:
             tmpl / "docs" / f"{stem}.adoc",
         ]
     elif lang == "rust":
-        # Single-bin crate: cloning a second bin needs Cargo.toml edits; still
-        # ship the man/bash/pot scaffolds and main.rs as a starting point.
         candidates += [
             tmpl / "src" / "main.rs",
+            tmpl / "src" / "lib.rs",
+            tmpl / "build-aux" / "cargo-build.sh",
             tmpl / f"{stem}.bash",
             tmpl / "docs" / f"{stem}.adoc",
             tmpl / "po" / f"{stem}.pot",
@@ -673,35 +730,126 @@ def _normalize_names(names: str | list[str]) -> list[str]:
     return list(names)
 
 
+_TEMPLATE_LEFTOVER_RE = re.compile(r"puff1|zephyr", re.IGNORECASE)
+
+
+def _leftover_template_lines(root: Path) -> list[str]:
+    """Paths that still match ``puff1`` or ``zephyr`` (same as grep -iE)."""
+    hits: list[str] = []
+    for path in iter_files(root):
+        rel = path.relative_to(root)
+        if _TEMPLATE_LEFTOVER_RE.search(path.name):
+            hits.append(f"{rel}")
+        if not path.is_file() or not is_probably_text(path):
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+        for i, line in enumerate(text.splitlines(), 1):
+            if _TEMPLATE_LEFTOVER_RE.search(line):
+                hits.append(f"{rel}:{i}:{line.strip()}")
+    return hits
+
+
+def _tree_mentions_puff(root: Path, stem: str) -> bool:
+    """True if any path name or text file still contains the puff stem tokens."""
+    variants = case_variants(stem)
+    keys = [k for k in (variants["lower"], variants["upper"], variants["pascal"]) if k]
+    for path in iter_files(root):
+        if any(k in path.name for k in keys):
+            return True
+        if not path.is_file():
+            continue
+        try:
+            if not is_probably_text(path):
+                continue
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+        if any(k in text for k in keys):
+            return True
+    return False
+
+
 def _add_one(name: str, workdir: Path | None = None) -> None:
     root = (workdir or Path.cwd()).resolve()
     lang = detect_lang(root)
     tmpl = template_dir(lang)
-    pairs = replacement_pairs(TEMPLATE_PUFF, name)
+    pairs = instantiation_pairs(root.name, name)
+
+    # If the template puff is still in the tree, rename it in place so all
+    # tokens are substituted (needed for rust/java/haskell single-entry apps
+    # where copying main.rs would skip an existing file).
+    if _tree_mentions_puff(root, TEMPLATE_PUFF):
+        print(f"add {name}: rename template {TEMPLATE_PUFF} → {name} (lang={lang})")
+        files, renames = rewrite_tree(root, pairs, rename_paths=True)
+        print(f"  {files} file(s) rewritten, {renames} path(s) renamed")
+        _wire_add(lang, root, name)
+        print("done")
+        return
+
     sources = _puff_source_paths(lang, tmpl)
     if not sources:
         raise SystemExit(f"no puff template files found for language {lang!r} in {tmpl}")
+
+    # Entrypoints that must be refreshed from the template (empty create may
+    # have scrubbed some_puff1 → <package> but left main.rs in place).
+    overwrite_names = {
+        "main.rs",
+        "Main.java",
+        "Main.hs",
+        "main.swift",
+        "main.go",
+    }
 
     print(f"add {name} (lang={lang}, template={tmpl})")
     for src in sources:
         if src.is_dir():
             for path in iter_files(src):
                 dest = _dest_for(path, tmpl, root, pairs)
-                if dest.exists():
+                if dest.exists() and path.name not in overwrite_names and TEMPLATE_PUFF not in path.name:
                     print(f"  skip exists: {dest.relative_to(root)}")
                     continue
                 copy_renamed_file(path, dest, pairs)
-                print(f"  + {dest.relative_to(root)}")
+                mark = "~" if dest.exists() else "+"
+                # dest always exists after copy; detect prior existence:
+                print(f"  {mark} {dest.relative_to(root)}")
         else:
             dest = _dest_for(src, tmpl, root, pairs)
-            if dest.exists():
+            existed = dest.exists()
+            if existed and src.name not in overwrite_names and TEMPLATE_PUFF not in src.name:
                 print(f"  skip exists: {dest.relative_to(root)}")
                 continue
             copy_renamed_file(src, dest, pairs)
-            print(f"  + {dest.relative_to(root)}")
+            print(f"  {'~' if existed else '+'} {dest.relative_to(root)}")
+
+    if lang == "rust":
+        _rust_set_bin_names(root, name)
+
+    files, renames = rewrite_tree(root, pairs, rename_paths=True)
+    if files or renames:
+        print(f"  rewrite remaining: {files} file(s), {renames} path(s)")
 
     _wire_add(lang, root, name)
     print("done")
+
+
+def _rust_set_bin_names(root: Path, name: str) -> None:
+    """Set [package] name and [[bin]] name in Cargo.toml to the puff name."""
+    cargo = root / "Cargo.toml"
+    if not cargo.is_file():
+        return
+    text = cargo.read_text(encoding="utf-8")
+    new = re.sub(r'(?m)^name = "[^"]+"', f'name = "{name}"', text, count=1)
+    new = re.sub(
+        r'(?ms)(\[\[bin\]\]\s*\nname = ")[^"]+(")',
+        rf"\1{name}\2",
+        new,
+    )
+    if new != text:
+        cargo.write_text(new, encoding="utf-8")
+        print(f"  ~ Cargo.toml ([package]/[[bin]] → {name})")
 
 
 def cmd_add(names: str | list[str], workdir: Path | None = None) -> None:

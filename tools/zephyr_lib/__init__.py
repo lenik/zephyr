@@ -41,7 +41,7 @@ SKIP_DIR_NAMES = {
     ".cursor",
     ".vscode",
     "build",
-    "debian",
+    # debian/ is included so create/rename rewrite Source/Package/Description
     "dist",
     "node_modules",
     "bin",
@@ -99,6 +99,27 @@ def apply_name_replacements(name: str, pairs: Iterable[tuple[str, str]]) -> str:
         if old in name:
             name = name.replace(old, new)
     return name
+
+
+def instantiation_pairs(
+    project: str, puff: str | None = None
+) -> list[tuple[str, str]]:
+    """Pairs to instantiate a template: puff tokens first, then project tokens."""
+    pairs: list[tuple[str, str]] = []
+    if puff:
+        pairs.extend(replacement_pairs(TEMPLATE_PUFF, puff))
+    if project and project != "zephyr":
+        pairs.extend(replacement_pairs("zephyr", project))
+    return pairs
+
+
+def _relative_skip_parts(path: Path, root: Path) -> bool:
+    """Skip only dirs under *root* (not e.g. a parent named bin/ or zephyr/)."""
+    try:
+        rel = path.resolve().relative_to(root.resolve())
+    except ValueError:
+        return False
+    return any(part in SKIP_DIR_NAMES for part in rel.parts)
 
 
 def pkgdatadir() -> Path:
@@ -171,6 +192,8 @@ def rewrite_tree(
     rename_paths: bool = True,
 ) -> tuple[int, int]:
     """Rewrite file contents and optionally rename paths under root."""
+    if not pairs:
+        return 0, 0
     files_changed = 0
     for path in list(iter_files(root)):
         if not is_probably_text(path):
@@ -189,7 +212,7 @@ def rewrite_tree(
         paths: list[Path] = []
         for dirpath, dirnames, filenames in os.walk(root, topdown=False):
             p = Path(dirpath)
-            if any(part in SKIP_DIR_NAMES for part in p.parts):
+            if _relative_skip_parts(p, root):
                 continue
             for fn in filenames:
                 paths.append(p / fn)
