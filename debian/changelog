@@ -30,6 +30,11 @@ zephyr (1.4.0) testing; urgency=medium
     nested language templates pack only that directory. Prints the
     archive path on stdout. rpm/Makefile `dist` and the Meson `srcdist`
     ninja target call this command.
+  * Apply the same versioning and RPM layout to the remaining language
+    templates (not only bash). meson.build uses `zephyr version`, then
+    VERSION, then 0.0.0. Each language ships rpm/zephyr.spec aligned
+    with debian/control (dynamic %{version}, Meson, AGPL) and
+    rpm/Makefile calling `zephyr dist --rpm`.
 
  -- Lenik (谢继雷) <lenik@bodz.net>  Thu, 20 Aug 2026 01:33:00 +0800
 
