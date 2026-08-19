@@ -22,12 +22,19 @@ zephyr - multi-language CLI project templates and helper tools
 
 *zephyr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
 
+*zephyr* *about* [*-d*] [*-r*]
+
+*zephyr* *version* [*-g*] [*-c*] [*-r*]
+
+*zephyr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
 *zephyr* *detect*
 
 *zephyr* *help*
 
-*zephyr-create*, *zephyr-rename*, *zephyr-add*, and *zephyr-remove* are thin
-wrappers around the same subcommands.
+*zephyr-create*, *zephyr-rename*, *zephyr-add*, *zephyr-remove*,
+*zephyr-about*, *zephyr-version*, and *zephyr-lint* are thin wrappers
+around the same subcommands.
 
 == Description
 
@@ -83,7 +90,34 @@ or omit them for an empty project.
   project.
 
 *detect*::
-  Print the detected language for the current directory.
+  Print the detected language for the current directory
+  (walks parent directories to find the project root).
+
+*about*::
+  Print information about the current project. Walks from the current
+  directory toward parents to find the project root (*meson.build* with
+  *project()* or *debian/control*). Common fields (name, version, license,
+  homepage, maintainer, summary, section, priority, distribution,
+  architecture) are parsed from Debian or RPM metadata and wrapped to the
+  terminal width. Also prints source file/line counts and an estimated
+  payload size. Interactive terminals use CSR (console SGR) colors unless
+  *NO_COLOR* is set. Use *-d* / *-r* for a full parsed Debian or RPM view
+  (not a dump of the packaging files).
+
+*version*::
+  Print the current project version (one line, for scripts). Default is
+  *git describe* when *git* and *.git* are available, otherwise the latest
+  *debian/changelog* version. Falls back to a *VERSION* file, then *0.0.0*.
+  A non-semver token (for example a git hash) is wrapped as *0.0.0-<token>*.
+
+*lint*::
+  Validate the current project against zephyr packaging and layout style
+  (walks from the current directory toward parents to find the project root).
+  Reports missing files, identity mismatches, Meson/Debian/RPM mistakes,
+  leftover *zephyr* / *some_puff1* tokens in instantiated apps, and suggested
+  fixes. Output is meant for humans and AI coders: each finding has a code,
+  path, and a concrete fix. Interactive terminals use CSR (console SGR)
+  colors unless *NO_COLOR* is set.
 
 *help*::
   Show command-line help.
@@ -110,10 +144,58 @@ Options for *create*:
 *-e, --email* _EMAIL_::
   Changelog and git author email (default: *lenik@bodz.net*).
 
+Options for *about*:
+
+*-d, --debian*::
+  Show parsed Debian packaging fields (*debian/control*, latest
+  *debian/changelog* stanza). Lists such as *Build-Depends* are wrapped to
+  the terminal width; the long description is reflowed as paragraphs.
+
+*-r, --redhat*::
+  Show parsed RPM packaging fields from *rpm/*.spec* (macros like
+  *%{version}* are shown using *zephyr version -r*). The *%description*
+  body is reflowed; spec scriptlets are not dumped.
+
+*--color* _WHEN_::
+  CSR highlighting: *auto* (default: TTY and no *NO_COLOR*), *always*, or
+  *never*.
+
+Options for *version*:
+
+*-g, --git*::
+  Use *git describe --tags --always --dirty* (default when *git* and *.git*
+  are available).
+
+*-c, --changelog*::
+  Use the latest *debian/changelog* version (default when *git* or *.git* is
+  unavailable).
+
+*-r, --rpm*::
+  Print an RPM-compatible *Version* (hyphens mapped to underscores).
+
+Options for *lint*:
+
+*-v, --verbose*::
+  Also print passing checks.
+
+*-q, --quiet*::
+  Only print errors.
+
+*--strict*::
+  Treat warnings as failures (exit status 1).
+
+*--color* _WHEN_::
+  CSR highlighting: *auto* (default: TTY and no *NO_COLOR*), *always*, or
+  *never*.
+
 == Environment
 
 *ZEPHYR_PKGDATADIR*::
   Override the templates root (normally */usr/share/zephyr*).
+
+*NO_COLOR*::
+  When set, *zephyr about* and *zephyr lint* disable CSR highlighting in
+  *--color auto* mode.
 
 *PYTHONPATH*::
   Must include the directory that contains the *zephyr_lib* package when
@@ -130,11 +212,12 @@ Options for *create*:
 == Exit status
 
 *0*::
-  Success.
+  Success. For *lint*, the project has no error-level findings
+  (warnings still print unless *--strict*).
 
 *non-zero*::
   An error occurred (unknown language, destination exists, detection failure,
-  missing puff files, and so on).
+  missing puff files, *lint* findings, and so on).
 
 == Author
 

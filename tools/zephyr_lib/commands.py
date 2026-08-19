@@ -21,6 +21,7 @@ from . import (
     instantiation_pairs,
     is_probably_text,
     iter_files,
+    project_version,
     relative_to,
     remove_meson_list_entry,
     replacement_pairs,
@@ -45,6 +46,7 @@ _COPY_IGNORE = shutil.ignore_patterns(
     "build",
     "cargo-target",
     "dist",
+    "rpmbuild",
     "meson-info",
     "meson-logs",
     "meson-private",
@@ -114,6 +116,7 @@ def _write_debian_changelog(
         f" -- {author} <{email}>  {stamp}\n"
     )
     (deb_dir / "changelog").write_text(text, encoding="utf-8")
+    (dest / "VERSION").write_text(f"{version.lstrip('v')}\n", encoding="utf-8")
 
 
 def _git_init_commit_tag(
@@ -232,6 +235,58 @@ def cmd_create(
         raise SystemExit(f"git init/commit/tag failed: {err}") from e
 
     print(f"created {dest}")
+
+
+def _parse_control_stanzas(text: str) -> list[dict[str, str]]:
+    stanzas: list[dict[str, str]] = []
+    cur: dict[str, str] = {}
+    key: str | None = None
+    for line in text.splitlines():
+        if not line.strip():
+            if cur:
+                stanzas.append(cur)
+                cur = {}
+                key = None
+            continue
+        if key and (line.startswith(" ") or line.startswith("\t")):
+            cur[key] += "\n" + line.strip()
+            continue
+        if ":" in line:
+            key, val = line.split(":", 1)
+            key = key.strip()
+            cur[key] = val.strip()
+    if cur:
+        stanzas.append(cur)
+    return stanzas
+
+
+def _meson_project_fields(root: Path) -> dict[str, str]:
+    meson = root / "meson.build"
+    out: dict[str, str] = {}
+    if not meson.is_file():
+        return out
+    text = meson.read_text(encoding="utf-8", errors="ignore")
+    m = re.search(r"project\s*\(\s*['\"]([^'\"]+)['\"]", text)
+    if m:
+        out["name"] = m.group(1)
+    m = re.search(r"license\s*:\s*['\"]([^'\"]+)['\"]", text)
+    if m:
+        out["license"] = m.group(1)
+    return out
+
+
+def cmd_version(
+    *,
+    git: bool = False,
+    changelog: bool = False,
+    rpm: bool = False,
+    workdir: Path | None = None,
+) -> None:
+    """Print the current project version (walks parents from cwd)."""
+    if git and changelog:
+        raise SystemExit("zephyr version: use only one of --git and --changelog")
+    source = "git" if git else "changelog" if changelog else None
+    print(project_version(workdir, source=source, rpm=rpm), flush=True)
 
 
 def cmd_rename(project_name: str, examples: list[str], workdir: Path | None = None) -> None:

@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""zephyr-version — print current project version."""
+
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+_TOOLS = Path(__file__).resolve().parent
+if str(_TOOLS) not in sys.path:
+    sys.path.insert(0, str(_TOOLS))
+
+from zephyr_lib.commands import cmd_version  # noqa: E402
+
+
+def main(argv: list[str] | None = None) -> int:
+    p = argparse.ArgumentParser(
+        prog="zephyr-version",
+        description="Print the current project version "
+        "(walks from cwd toward parent directories).",
+    )
+    srcg = p.add_mutually_exclusive_group()
+    srcg.add_argument(
+        "-g",
+        "--git",
+        action="store_true",
+        help="use git describe (default when git and .git are available)",
+    )
+    srcg.add_argument(
+        "-c",
+        "--changelog",
+        action="store_true",
+        help="use debian/changelog (default when git or .git is unavailable)",
+    )
+    p.add_argument(
+        "-r",
+        "--rpm",
+        action="store_true",
+        help="print an RPM-compatible Version (hyphens mapped to underscores)",
+    )
+    args = p.parse_args(argv)
+    cmd_version(git=args.git, changelog=args.changelog, rpm=args.rpm)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

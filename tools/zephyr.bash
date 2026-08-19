@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 _zephyr_langs='bash c clib cpp cpplib csharp erlang go haskell java perl python ruby rust smalltalk swift typescript'
-_zephyr_cmds='create rename add remove detect help'
+_zephyr_cmds='create rename add remove about version lint detect help'
 
 _zephyr()
 {
@@ -13,7 +13,7 @@ _zephyr()
 	local i
 	for ((i = 1; i < cword; i++)); do
 		case "${words[i]}" in
-			create|rename|add|remove|detect|help)
+			create|rename|add|remove|about|version|lint|detect|help)
 				cmd="${words[i]}"
 				break
 				;;
@@ -54,6 +54,33 @@ _zephyr()
 				return
 			fi
 			_filedir
+			;;
+		about)
+			case $prev in
+				--color)
+					COMPREPLY=($(compgen -W 'auto always never' -- "$cur"))
+					return
+					;;
+			esac
+			if [[ $cur == -* ]]; then
+				COMPREPLY=($(compgen -W '-d --debian -r --redhat --color --help' -- "$cur"))
+			fi
+			;;
+		version)
+			if [[ $cur == -* ]]; then
+				COMPREPLY=($(compgen -W '-g --git -c --changelog -r --rpm --help' -- "$cur"))
+			fi
+			;;
+		lint)
+			case $prev in
+				--color)
+					COMPREPLY=($(compgen -W 'auto always never' -- "$cur"))
+					return
+					;;
+			esac
+			if [[ $cur == -* ]]; then
+				COMPREPLY=($(compgen -W '-v --verbose -q --quiet --strict --color --help' -- "$cur"))
+			fi
 			;;
 		detect|help)
 			COMPREPLY=()
@@ -104,8 +131,50 @@ _zephyr_remove()
 	_zephyr_rename
 }
 
+_zephyr_about()
+{
+	local cur prev words cword
+	_init_completion || return
+	case $prev in
+		--color)
+			COMPREPLY=($(compgen -W 'auto always never' -- "$cur"))
+			return
+			;;
+	esac
+	if [[ $cur == -* ]]; then
+		COMPREPLY=($(compgen -W '-d --debian -r --redhat --color --help' -- "$cur"))
+	fi
+}
+
+_zephyr_version()
+{
+	local cur prev words cword
+	_init_completion || return
+	if [[ $cur == -* ]]; then
+		COMPREPLY=($(compgen -W '-g --git -c --changelog -r --rpm --help' -- "$cur"))
+	fi
+}
+
+_zephyr_lint()
+{
+	local cur prev words cword
+	_init_completion || return
+	case $prev in
+		--color)
+			COMPREPLY=($(compgen -W 'auto always never' -- "$cur"))
+			return
+			;;
+	esac
+	if [[ $cur == -* ]]; then
+		COMPREPLY=($(compgen -W '-v --verbose -q --quiet --strict --color --help' -- "$cur"))
+	fi
+}
+
 complete -F _zephyr zephyr
 complete -F _zephyr_create zephyr-create
 complete -F _zephyr_rename zephyr-rename
 complete -F _zephyr_add zephyr-add
 complete -F _zephyr_remove zephyr-remove
+complete -F _zephyr_about zephyr-about
+complete -F _zephyr_version zephyr-version
+complete -F _zephyr_lint zephyr-lint

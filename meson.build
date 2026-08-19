@@ -3,13 +3,14 @@ project(
     version: run_command(
         'sh',
         '-c', '''
-        v=$(git describe --tags --always --dirty 2>/dev/null || true)
-        v=${v#v}
-        if [ -n "$v" ]; then
-            if [ "${v%.*}" = "$v" ]; then
-                v="0.0.0-$v"
-            fi
-        else
+        v=$(
+            command -v zephyr >/dev/null 2>&1 && zephyr version 2>/dev/null || true
+        )
+        if [ -z "$v" ] && [ -f VERSION ]; then
+            v=$(head -n1 VERSION | tr -d '\r')
+            v=${v#v}
+        fi
+        if [ -z "$v" ]; then
             v="0.0.0" # FIXED TO 0.0.0, DO NOT MODIFY
         fi
         printf '%s' "$v"
@@ -67,6 +68,7 @@ exclude_dirs = [
     'build',
     'cargo-target',
     'dist',
+    'rpmbuild',
     'meson-info',
     'meson-logs',
     'meson-private',
@@ -98,6 +100,9 @@ install_data(
         'tools/zephyr-rename',
         'tools/zephyr-add',
         'tools/zephyr-remove',
+        'tools/zephyr-about',
+        'tools/zephyr-version',
+        'tools/zephyr-lint',
     ],
     install_dir: pkgdatadir / 'tools',
     install_mode: 'rwxr-xr-x',
@@ -107,6 +112,9 @@ install_data(
     [
         'tools/zephyr_lib/__init__.py',
         'tools/zephyr_lib/commands.py',
+        'tools/zephyr_lib/about.py',
+        'tools/zephyr_lib/csr.py',
+        'tools/zephyr_lib/lint.py',
     ],
     install_dir: pkgdatadir / 'tools' / 'zephyr_lib',
 )
@@ -130,6 +138,9 @@ wrapper_names = [
     'zephyr-rename',
     'zephyr-add',
     'zephyr-remove',
+    'zephyr-about',
+    'zephyr-version',
+    'zephyr-lint',
 ]
 
 uninst_tool_cfg = configuration_data()
@@ -171,7 +182,7 @@ custom_target(
 )
 
 # Bash completion (same script under several command names)
-foreach completion_name : ['zephyr', 'zephyr-create', 'zephyr-rename', 'zephyr-add', 'zephyr-remove']
+foreach completion_name : ['zephyr', 'zephyr-create', 'zephyr-rename', 'zephyr-add', 'zephyr-remove', 'zephyr-about', 'zephyr-version', 'zephyr-lint']
     install_data(
         'tools/zephyr.bash',
         install_dir: datadir / 'bash-completion' / 'completions',

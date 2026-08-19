@@ -27,8 +27,8 @@ Build and install from the source tree with the usual `dpkg-buildpackage` /
 | Path | Purpose |
 |------|---------|
 | `/usr/share/zephyr/<lang>/` | Language template tree |
-| `/usr/bin/zephyr` | Main CLI (`create`, `rename`, `add`, `remove`, `detect`) |
-| `/usr/bin/zephyr-{create,rename,add,remove}` | Thin wrappers |
+| `/usr/bin/zephyr` | Main CLI (`create`, `rename`, `add`, `remove`, `about`, `version`, `lint`, `detect`) |
+| `/usr/bin/zephyr-{create,rename,add,remove,about,version,lint}` | Thin wrappers |
 | `man 1 zephyr` | Manual page |
 
 Supported languages include: **bash**, **c**, **clib**, **cpp**, **cpplib**, **csharp**, **erlang**,
@@ -55,6 +55,9 @@ zephyr create -l c widgets hello world
 ```
 
 Then use `zephyr add` / `zephyr remove` for more puffs (multiple names allowed).
+`zephyr lint` checks the tree against zephyr packaging style (missing files,
+Meson/Debian/RPM mistakes, leftover template tokens) and prints fixes; colors
+on a TTY.
 
 ## See also
 

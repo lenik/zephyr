@@ -6,9 +6,10 @@ from __future__ import annotations
 import os
 import re
 import shutil
+import subprocess
 import sys
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Literal
 
 # Placeholder example app name shipped in templates.
 TEMPLATE_PUFF = "some_puff1"
@@ -43,6 +44,7 @@ SKIP_DIR_NAMES = {
     "build",
     # debian/ is included so create/rename rewrite Source/Package/Description
     "dist",
+    "rpmbuild",
     "node_modules",
     "bin",
     "obj",
@@ -355,9 +357,122 @@ def _is_cpplib_project(root: Path, meson_txt: str, control_txt: str = "") -> boo
     return False
 
 
+def find_project_dir(start: Path | None = None) -> Path:
+    """Walk from *start* (cwd) toward / for a Meson ``project()`` or debian/control."""
+    cur = (start or Path.cwd()).resolve()
+    for d in [cur, *cur.parents]:
+        meson = d / "meson.build"
+        if meson.is_file():
+            head = meson.read_text(encoding="utf-8", errors="ignore")[:4000]
+            if re.search(r"^\s*project\s*\(", head, re.M):
+                return d
+        if (d / "debian" / "control").is_file():
+            return d
+    raise SystemExit(
+        f"could not find a zephyr project directory at or above {cur}"
+    )
+
+
+def _git_available(root: Path) -> bool:
+    return shutil.which("git") is not None and (root / ".git").exists()
+
+
+def git_describe_version(root: Path) -> str | None:
+    if shutil.which("git") is None:
+        return None
+    proc = subprocess.run(
+        ["git", "describe", "--tags", "--always", "--dirty"],
+        cwd=root,
+        capture_output=True,
+        text=True,
+    )
+    if proc.returncode != 0:
+        return None
+    v = proc.stdout.strip()
+    return v or None
+
+
+def changelog_version(root: Path) -> str | None:
+    path = root / "debian" / "changelog"
+    if not path.is_file():
+        return None
+    if shutil.which("dpkg-parsechangelog"):
+        proc = subprocess.run(
+            ["dpkg-parsechangelog", "-l", str(path), "-S", "Version"],
+            capture_output=True,
+            text=True,
+        )
+        if proc.returncode == 0:
+            v = proc.stdout.strip()
+            if v:
+                return v.split(":", 1)[-1]
+    first = path.read_text(encoding="utf-8", errors="ignore").splitlines()[:1]
+    if not first:
+        return None
+    m = re.match(r"\S+\s+\(([^)]+)\)", first[0])
+    if not m:
+        return None
+    return m.group(1).split(":", 1)[-1]
+
+
+def version_file_version(root: Path) -> str | None:
+    path = root / "VERSION"
+    if not path.is_file():
+        return None
+    lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
+    if not lines:
+        return None
+    v = lines[0].strip()
+    return v or None
+
+
+def apply_version_modifiers(v: str) -> str:
+    """Strip a leading v; wrap a non-semver token as 0.0.0-<token>."""
+    v = v.strip()
+    if v.startswith("v") and len(v) > 1:
+        v = v[1:]
+    if not v:
+        return "0.0.0"
+    core = v[: -len("-dirty")] if v.endswith("-dirty") else v
+    if "." not in core:
+        return f"0.0.0-{v}"
+    return v
+
+
+def rpm_compatible_version(v: str) -> str:
+    """RPM Version cannot contain '-'."""
+    return v.replace("-", "_")
+
+
+def project_version(
+    root: Path | None = None,
+    *,
+    source: Literal["git", "changelog"] | None = None,
+    rpm: bool = False,
+) -> str:
+    """Project version: git describe, changelog, VERSION file, then 0.0.0."""
+    root = find_project_dir(root)
+    git_ok = _git_available(root)
+    if source is None:
+        source = "git" if git_ok else "changelog"
+    v: str | None = None
+    if source == "git":
+        v = git_describe_version(root)
+    else:
+        v = changelog_version(root)
+    if not v:
+        v = version_file_version(root)
+    if not v:
+        v = "0.0.0"
+    v = apply_version_modifiers(v)
+    if rpm:
+        v = rpm_compatible_version(v)
+    return v
+
+
 def detect_lang(workdir: Path | None = None) -> str:
     """Detect zephyr template language from project files in workdir."""
-    root = (workdir or Path.cwd()).resolve()
+    root = find_project_dir(workdir)
 
     if _is_zephyr_meta_repo(root):
         raise SystemExit(

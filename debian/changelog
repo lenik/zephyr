@@ -1,3 +1,29 @@
+zephyr (1.4.0) testing; urgency=medium
+
+  * Add `zephyr about`, `zephyr version`, and `zephyr lint` (and
+    zephyr-about / zephyr-version / zephyr-lint wrappers). Each walks
+    from the current directory to the project root (meson project() or
+    debian/control).
+  * `zephyr version` prefers git describe when git and .git exist, else
+    debian/changelog, then a VERSION file, then 0.0.0. `-r` maps hyphens
+    to underscores for RPM. Meson and rpm/Makefile call `zephyr` on PATH
+    and fall back to VERSION (not a relative tools/zephyr path).
+  * `zephyr about` prints parsed common fields from debian or RPM
+    (section, priority, distribution, architecture, and so on) wrapped
+    to the terminal, plus source file/line counts and an estimated
+    payload size. `-d`/`-r` reformat packaging metadata rather than
+    dumping files. CSR colors on a TTY.
+  * `zephyr lint` checks packaging and layout against zephyr style
+    (missing files, identity, Meson/Debian/RPM, leftover template
+    tokens) and prints coded findings with fixes. CSR colors on a TTY.
+  * Snapshot the changelog version in VERSION (allowed to differ from
+    git describe). bash/.githooks/pre-commit syncs VERSION from
+    debian/changelog (enable with git config core.hooksPath .githooks).
+  * Refactor bash RPM packaging to match debian/control (Meson, noarch,
+    AGPL-3.0-or-later, bash-shlib). Track rpm/*.spec (un-ignore).
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Thu, 20 Aug 2026 01:33:00 +0800
+
 zephyr (1.3.1) testing; urgency=medium
 
   * Fix create/add so named projects leave no puff1 or zephyr tokens
