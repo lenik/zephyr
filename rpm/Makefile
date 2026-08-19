@@ -5,10 +5,14 @@
 #   make rpm     # binary RPM
 #
 # Version comes from `zephyr version` (same as meson.build).
+# Dist reuses `zephyr dist --rpm` (meson dist at the git root, else a
+# project-only tarball for nested language templates). Extra flags:
+#   make dist DIST_FLAGS='-b /other/build'
 
 NAME    := zephyr
 SRCDIR  := $(abspath ..)
 TOPDIR  ?= $(abspath $(SRCDIR)/rpmbuild)
+DIST_FLAGS ?=
 
 # Version via `zephyr version` (git describe / changelog / VERSION / 0.0.0).
 # zephyr is expected on PATH; fall back to VERSION then 0.0.0.
@@ -25,26 +29,11 @@ ifeq ($(strip $(RPM_VERSION)),)
 RPM_VERSION := $(subst -,_,$(VERSION))
 endif
 
-TARBALL := $(NAME)-$(VERSION).tar.xz
-DISTDIR := $(TOPDIR)/tmp/$(NAME)-$(VERSION)
-
 # Debian rpmbuild cannot satisfy RPM BuildRequires from dpkg packages.
 RPMBUILD_FLAGS :=
 ifneq ($(wildcard /etc/debian_version),)
 RPMBUILD_FLAGS += --nodeps
 endif
-
-TAR_EXCLUDES := \
-	--exclude='./build' \
-	--exclude='./rpmbuild' \
-	--exclude='./.git' \
-	--exclude='./.cache' \
-	--exclude='./.cursor' \
-	--exclude='./.vscode' \
-	--exclude='./debian/build' \
-	--exclude='./debian/zephyr' \
-	--exclude='./debian/.debhelper' \
-	--exclude='./debian/files'
 
 .PHONY: all dist spec srpm rpm clean version
 
@@ -53,12 +42,19 @@ all: rpm
 version:
 	@echo $(VERSION)
 
+# Prefer source-tree tools/zephyr (meta-repo bootstrap); else zephyr on PATH.
 dist:
-	rm -rf $(TOPDIR)/tmp
-	mkdir -p $(TOPDIR)/SOURCES $(TOPDIR)/SPECS $(DISTDIR)
-	tar -C $(SRCDIR) $(TAR_EXCLUDES) -cf - . | tar -C $(DISTDIR) -xf -
-	tar -C $(TOPDIR)/tmp -cJf $(TOPDIR)/SOURCES/$(TARBALL) $(NAME)-$(VERSION)
-	rm -rf $(TOPDIR)/tmp
+	mkdir -p $(TOPDIR)/SOURCES $(TOPDIR)/SPECS
+	@set -e; \
+	cd "$(SRCDIR)"; \
+	if [ -f tools/zephyr ]; then \
+		python3 tools/zephyr dist --rpm -o "$(TOPDIR)/SOURCES" $(DIST_FLAGS); \
+	elif command -v zephyr >/dev/null 2>&1; then \
+		zephyr dist --rpm -o "$(TOPDIR)/SOURCES" $(DIST_FLAGS); \
+	else \
+		echo "zephyr dist: zephyr not found on PATH" >&2; \
+		exit 1; \
+	fi
 
 # Freeze versions into the spec so SRPM rebuilds do not fall back to 0.0.0.
 spec: dist $(NAME).spec
