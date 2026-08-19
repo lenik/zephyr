@@ -74,7 +74,9 @@ or omit them for an empty project.
   *some_puff1* tokens so a later *add* can instantiate them.
   Writes a fresh *debian/changelog* (template changelog is discarded) using
   *--distribution* / *--init-version* / *--author* / *--email*, then runs
-  *git init*, an initial commit, and an annotated tag *vVER*.
+  *git init*, sets *core.hooksPath* to *.githooks* (copies *pre-commit* so
+  *VERSION* stays in sync with *debian/changelog*), an initial commit, and an
+  annotated tag *vVER*.
 
 *rename*::
   In the current project directory, rewrite *zephyr* → *_PROJECT_NAME_* and,

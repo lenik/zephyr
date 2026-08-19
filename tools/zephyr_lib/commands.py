@@ -21,6 +21,7 @@ from . import (
     instantiation_pairs,
     is_probably_text,
     iter_files,
+    pkgdatadir,
     project_version,
     relative_to,
     remove_meson_list_entry,
@@ -119,6 +120,41 @@ def _write_debian_changelog(
     (dest / "VERSION").write_text(f"{version.lstrip('v')}\n", encoding="utf-8")
 
 
+def _githooks_pre_commit_src() -> Path | None:
+    """Canonical pre-commit hook: installed pkgdatadir/githooks, else source tree."""
+    candidates = [
+        pkgdatadir() / "githooks" / "pre-commit",
+        pkgdatadir() / ".githooks" / "pre-commit",
+    ]
+    here = Path(__file__).resolve()
+    if here.parent.name == "zephyr_lib":
+        repo = here.parents[2]
+        candidates.extend(
+            [
+                repo / ".githooks" / "pre-commit",
+                repo / "bash" / ".githooks" / "pre-commit",
+            ]
+        )
+    for path in candidates:
+        if path.is_file():
+            return path
+    return None
+
+
+def _install_githooks(dest: Path) -> None:
+    """Copy .githooks/pre-commit into *dest* (chmod +x) if a source hook exists."""
+    src = _githooks_pre_commit_src()
+    hook_dir = dest / ".githooks"
+    dest_hook = hook_dir / "pre-commit"
+    if src is None:
+        if dest_hook.is_file():
+            dest_hook.chmod(dest_hook.stat().st_mode | 0o111)
+        return
+    hook_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(src, dest_hook)
+    dest_hook.chmod(dest_hook.stat().st_mode | 0o111)
+
+
 def _git_init_commit_tag(
     dest: Path,
     *,
@@ -130,10 +166,12 @@ def _git_init_commit_tag(
     def run(args: list[str]) -> None:
         subprocess.run(args, cwd=dest, check=True, capture_output=True, text=True)
 
-    # Identity via -c only (do not write git config).
+    # Author identity via -c only (do not write user.name in git config).
+    # core.hooksPath is local to this repo so .githooks/pre-commit runs.
     ident = ["-c", f"user.name={author}", "-c", f"user.email={email}"]
 
     run(["git", "init"])
+    run(["git", "config", "core.hooksPath", ".githooks"])
     run(["git", "add", "-A"])
     ver = version.lstrip("v")
     msg = f"Initial release {ver}\n"
@@ -221,8 +259,10 @@ def cmd_create(
         author=author,
         email=email,
     )
+    _install_githooks(dest)
 
     print(f"git init + commit + tag v{init_version.lstrip('v')}")
+    print("git config core.hooksPath .githooks")
     try:
         _git_init_commit_tag(
             dest,

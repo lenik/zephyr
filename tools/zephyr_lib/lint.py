@@ -185,8 +185,8 @@ def check_layout(root: Path, lang: str, role: str) -> list[Finding]:
                 "layout.pre-commit",
                 "no .githooks/pre-commit to sync VERSION from debian/changelog",
                 ".githooks/pre-commit",
-                fix="Copy bash/.githooks/pre-commit from the zephyr tree and run: "
-                "git config core.hooksPath .githooks",
+                fix="Copy .githooks/pre-commit from the zephyr tree; "
+                "`zephyr create` sets git config core.hooksPath .githooks.",
             )
         )
     return out
@@ -553,8 +553,8 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                 "rpm.missing",
                 "no rpm/*.spec (optional, but zephyr style includes RPM next to debian/)",
                 "rpm/",
-                fix="Copy bash/rpm/ (zephyr.spec + Makefile using `zephyr version`) and rewrite names. "
-                "Align Name/Summary/Requires/URL with debian/control.",
+                fix="Copy rpm/ (zephyr.spec + Makefile using `zephyr version`) from the "
+                "zephyr tree and rewrite names. Align Name/Summary/Requires/URL with debian/control.",
             )
         )
         return out

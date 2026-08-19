@@ -17,10 +17,14 @@ zephyr (1.4.0) testing; urgency=medium
     (missing files, identity, Meson/Debian/RPM, leftover template
     tokens) and prints coded findings with fixes. CSR colors on a TTY.
   * Snapshot the changelog version in VERSION (allowed to differ from
-    git describe). bash/.githooks/pre-commit syncs VERSION from
-    debian/changelog (enable with git config core.hooksPath .githooks).
+    git describe). .githooks/pre-commit syncs VERSION from
+    debian/changelog; `zephyr create` sets git core.hooksPath to
+    .githooks.
+  * Add parent rpm/ packaging (Meson, noarch, aligned with
+    debian/control). Track rpm/*.spec. `zephyr create` copies the
+    VERSION pre-commit hook into new projects.
   * Refactor bash RPM packaging to match debian/control (Meson, noarch,
-    AGPL-3.0-or-later, bash-shlib). Track rpm/*.spec (un-ignore).
+    AGPL-3.0-or-later, bash-shlib).
 
  -- Lenik (谢继雷) <lenik@bodz.net>  Thu, 20 Aug 2026 01:33:00 +0800
 

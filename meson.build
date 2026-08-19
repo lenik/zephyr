@@ -191,6 +191,12 @@ foreach completion_name : ['zephyr', 'zephyr-create', 'zephyr-rename', 'zephyr-a
 endforeach
 
 install_data(
+    '.githooks/pre-commit',
+    install_dir: pkgdatadir / 'githooks',
+    install_mode: 'rwxr-xr-x',
+)
+
+install_data(
     [
         'LICENSE',
         'README.md',
