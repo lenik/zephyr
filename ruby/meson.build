@@ -3,13 +3,14 @@ project(
     version: run_command(
         'sh',
         '-c', '''
-        v=$(git describe --tags --always --dirty 2>/dev/null || true)
-        v=${v#v}
-        if [ -n "$v" ]; then
-            if [ "${v%.*}" = "$v" ]; then
-                v="0.0.0-$v"
-            fi
-        else
+        v=$(
+            command -v zephyr >/dev/null 2>&1 && zephyr version 2>/dev/null || true
+        )
+        if [ -z "$v" ] && [ -f VERSION ]; then
+            v=$(head -n1 VERSION | tr -d '\r')
+            v=${v#v}
+        fi
+        if [ -z "$v" ]; then
             v="0.0.0" # FIXED TO 0.0.0, DO NOT MODIFY
         fi
         printf '%s' "$v"
