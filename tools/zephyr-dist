@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""zephyr-dist — build a source tarball (meson dist or project-only)."""
+
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+_TOOLS = Path(__file__).resolve().parent
+if str(_TOOLS) not in sys.path:
+    sys.path.insert(0, str(_TOOLS))
+
+from zephyr_lib.dist import add_dist_arguments, cmd_dist  # noqa: E402
+
+
+def main(argv: list[str] | None = None) -> int:
+    p = argparse.ArgumentParser(
+        prog="zephyr-dist",
+        description="Build a source archive of the current zephyr project "
+        "(walks from cwd toward parent directories). Uses meson dist when "
+        "this directory is the git project root; otherwise packs this "
+        "project only so nested language templates do not ship the parent "
+        "meta-repo. Prints the archive path on stdout.",
+    )
+    add_dist_arguments(p)
+    args = p.parse_args(argv)
+    return cmd_dist(
+        output=args.output,
+        builddir=args.builddir,
+        fmt=args.fmt,
+        rpm=args.rpm,
+        allow_dirty=args.allow_dirty,
+        tests=args.tests,
+    )
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

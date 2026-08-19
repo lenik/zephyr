@@ -28,13 +28,16 @@ zephyr - multi-language CLI project templates and helper tools
 
 *zephyr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
 
+*zephyr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+               [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
 *zephyr* *detect*
 
 *zephyr* *help*
 
 *zephyr-create*, *zephyr-rename*, *zephyr-add*, *zephyr-remove*,
-*zephyr-about*, *zephyr-version*, and *zephyr-lint* are thin wrappers
-around the same subcommands.
+*zephyr-about*, *zephyr-version*, *zephyr-lint*, and *zephyr-dist* are thin
+wrappers around the same subcommands.
 
 == Description
 
@@ -121,6 +124,16 @@ or omit them for an empty project.
   path, and a concrete fix. Interactive terminals use CSR (console SGR)
   colors unless *NO_COLOR* is set.
 
+*dist*::
+  Build a source archive of the current project (walks from the current
+  directory toward parents to find the project root). When this directory
+  is the git project root, run *meson dist* (after *meson setup*, default
+  *--allow-dirty* and *--no-tests*). Nested language templates have no
+  *.git* of their own, so *meson dist* would pack the parent meta-repo;
+  those trees get a directory tarball of this project only. Prints the
+  archive path on stdout. *rpm/Makefile* *dist* and the Meson *srcdist*
+  ninja target reuse this command.
+
 *help*::
   Show command-line help.
 
@@ -189,6 +202,29 @@ Options for *lint*:
 *--color* _WHEN_::
   CSR highlighting: *auto* (default: TTY and no *NO_COLOR*), *always*, or
   *never*.
+
+Options for *dist*:
+
+*-o, --output* _DIR_::
+  Write the archive into *_DIR_* (default: the Meson *meson-dist*
+  directory, or *rpmbuild/SOURCES* with *--rpm*).
+
+*-b, --builddir* _DIR_::
+  Meson build directory. Default is */build* when that builddir was
+  configured for this source tree, otherwise *<project>/build*.
+
+*-f, --format* _FMT_::
+  Archive format: *xz* (default), *gz*, or *zip*.
+
+*--rpm*::
+  Name the archive *_NAME_*-*_VERSION_*.tar.xz and write it to
+  *rpmbuild/SOURCES* unless *-o* is given. Used by *rpm/Makefile*.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  Pass *--allow-dirty* to *meson dist* (default: allow).
+
+*--tests*::
+  Run tests during *meson dist* (default is *--no-tests*).
 
 == Environment
 

@@ -14,4 +14,4 @@ zephyr add myapp
 
 支持语言包括 bash、c、clib、cpp、cpplib、csharp、erlang、go、haskell、java、perl、python、ruby、rust、smalltalk、swift、typescript。详见 [README.md](README.md) 与 `man 1 zephyr`。
 
-`zephyr lint` 按 zephyr 打包风格检查工程（缺文件、Meson/Debian/RPM 用法、残留模板名），并给出可执行的修改建议；终端下用 CSR 着色。
+`zephyr lint` 按 zephyr 打包风格检查工程（缺文件、Meson/Debian/RPM 用法、残留模板名），并给出可执行的修改建议；终端下用 CSR 着色。`zephyr dist` 生成源码包（git 根目录用 `meson dist`，嵌套语言模板只打包当前工程），供 `rpm/Makefile` 与 `ninja srcdist` 复用。

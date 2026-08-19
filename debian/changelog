@@ -25,6 +25,11 @@ zephyr (1.4.0) testing; urgency=medium
     VERSION pre-commit hook into new projects.
   * Refactor bash RPM packaging to match debian/control (Meson, noarch,
     AGPL-3.0-or-later, bash-shlib).
+  * Add `zephyr dist` (and zephyr-dist). Uses `meson dist` when the
+    project is the git root (`--allow-dirty`, `--no-tests` by default);
+    nested language templates pack only that directory. Prints the
+    archive path on stdout. rpm/Makefile `dist` and the Meson `srcdist`
+    ninja target call this command.
 
  -- Lenik (谢继雷) <lenik@bodz.net>  Thu, 20 Aug 2026 01:33:00 +0800
 

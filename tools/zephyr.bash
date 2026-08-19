@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 _zephyr_langs='bash c clib cpp cpplib csharp erlang go haskell java perl python ruby rust smalltalk swift typescript'
-_zephyr_cmds='create rename add remove about version lint detect help'
+_zephyr_cmds='create rename add remove about version lint dist detect help'
 
 _zephyr()
 {
@@ -13,7 +13,7 @@ _zephyr()
 	local i
 	for ((i = 1; i < cword; i++)); do
 		case "${words[i]}" in
-			create|rename|add|remove|about|version|lint|detect|help)
+			create|rename|add|remove|about|version|lint|dist|detect|help)
 				cmd="${words[i]}"
 				break
 				;;
@@ -80,6 +80,21 @@ _zephyr()
 			esac
 			if [[ $cur == -* ]]; then
 				COMPREPLY=($(compgen -W '-v --verbose -q --quiet --strict --color --help' -- "$cur"))
+			fi
+			;;
+		dist)
+			case $prev in
+				-o|--output|-b|--builddir)
+					_filedir -d
+					return
+					;;
+				-f|--format)
+					COMPREPLY=($(compgen -W 'xz gz zip' -- "$cur"))
+					return
+					;;
+			esac
+			if [[ $cur == -* ]]; then
+				COMPREPLY=($(compgen -W '-o --output -b --builddir -f --format --rpm --allow-dirty --no-allow-dirty --tests --help' -- "$cur"))
 			fi
 			;;
 		detect|help)
@@ -170,6 +185,25 @@ _zephyr_lint()
 	fi
 }
 
+_zephyr_dist()
+{
+	local cur prev words cword
+	_init_completion || return
+	case $prev in
+		-o|--output|-b|--builddir)
+			_filedir -d
+			return
+			;;
+		-f|--format)
+			COMPREPLY=($(compgen -W 'xz gz zip' -- "$cur"))
+			return
+			;;
+	esac
+	if [[ $cur == -* ]]; then
+		COMPREPLY=($(compgen -W '-o --output -b --builddir -f --format --rpm --allow-dirty --no-allow-dirty --tests --help' -- "$cur"))
+	fi
+}
+
 complete -F _zephyr zephyr
 complete -F _zephyr_create zephyr-create
 complete -F _zephyr_rename zephyr-rename
@@ -178,3 +212,4 @@ complete -F _zephyr_remove zephyr-remove
 complete -F _zephyr_about zephyr-about
 complete -F _zephyr_version zephyr-version
 complete -F _zephyr_lint zephyr-lint
+complete -F _zephyr_dist zephyr-dist

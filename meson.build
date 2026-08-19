@@ -103,6 +103,7 @@ install_data(
         'tools/zephyr-about',
         'tools/zephyr-version',
         'tools/zephyr-lint',
+        'tools/zephyr-dist',
     ],
     install_dir: pkgdatadir / 'tools',
     install_mode: 'rwxr-xr-x',
@@ -115,6 +116,7 @@ install_data(
         'tools/zephyr_lib/about.py',
         'tools/zephyr_lib/csr.py',
         'tools/zephyr_lib/lint.py',
+        'tools/zephyr_lib/dist.py',
     ],
     install_dir: pkgdatadir / 'tools' / 'zephyr_lib',
 )
@@ -141,6 +143,7 @@ wrapper_names = [
     'zephyr-about',
     'zephyr-version',
     'zephyr-lint',
+    'zephyr-dist',
 ]
 
 uninst_tool_cfg = configuration_data()
@@ -182,7 +185,7 @@ custom_target(
 )
 
 # Bash completion (same script under several command names)
-foreach completion_name : ['zephyr', 'zephyr-create', 'zephyr-rename', 'zephyr-add', 'zephyr-remove', 'zephyr-about', 'zephyr-version', 'zephyr-lint']
+foreach completion_name : ['zephyr', 'zephyr-create', 'zephyr-rename', 'zephyr-add', 'zephyr-remove', 'zephyr-about', 'zephyr-version', 'zephyr-lint', 'zephyr-dist']
     install_data(
         'tools/zephyr.bash',
         install_dir: datadir / 'bash-completion' / 'completions',
@@ -214,5 +217,16 @@ run_target(
             DESTDIR=$tmpdir meson install -C "@BUILD_ROOT@"
             tree -L 6 -I po "$tmpdir" 2>/dev/null || (cd "$tmpdir" && find -maxdepth 6 -name po -prune -o -print)
         ''',
+    ],
+)
+
+# Meson reserves the ninja target name `dist`; srcdist reuses `zephyr dist`.
+run_target(
+    'srcdist',
+    command: [
+        py,
+        files('tools/zephyr'),
+        'dist',
+        '-b', meson.project_build_root(),
     ],
 )
