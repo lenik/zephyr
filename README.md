@@ -63,6 +63,21 @@ root, otherwise this project only) and is what `rpm/Makefile` and
 zephyr style (missing debian/rpm files, meson targets, AsciiDoc man
 pages, Meson version substitutions).
 
+## Tests
+
+The parent tree ships `tests/` (not installed). From the source root:
+
+```bash
+meson setup /build
+meson test -C /build
+```
+
+Meson runs `python3 -m unittest discover` on `tests/test_*.py`. The suite
+creates temporary example projects and exercises the CLI (`create`, `add`,
+`remove`, `rename`, `about`, `version`, `lint`, `dist`, `ize`, `detect`).
+Set `ZEPHYR_PKGDATADIR` to the source root and `PYTHONPATH` to `tools/`
+when running the tests without Meson.
+
 ## See also
 
 - `man 1 zephyr`

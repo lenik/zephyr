@@ -59,6 +59,20 @@ zephyr create -l c widgets hello world
 `ninja srcdist` 复用。`zephyr ize` 把已有工程升级到当前 zephyr 风格（补
 debian/rpm、Meson 目标、AsciiDoc 手册、Meson 版本替换）。
 
+## 测试
+
+父仓库提供 `tests/`（不安装）。在源码根目录：
+
+```bash
+meson setup /build
+meson test -C /build
+```
+
+Meson 对 `tests/test_*.py` 执行 `python3 -m unittest discover`。测试套件会
+建立临时示例工程，并覆盖 CLI（`create`、`add`、`remove`、`rename`、`about`、
+`version`、`lint`、`dist`、`ize`、`detect`）。不经 Meson 直接跑时，把
+`ZEPHYR_PKGDATADIR` 设为源码根目录，把 `PYTHONPATH` 设为 `tools/`。
+
 ## 另见
 
 - `man 1 zephyr`

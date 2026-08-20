@@ -1,3 +1,16 @@
+zephyr (1.5.0) testing; urgency=medium
+
+  * Add parent tests/ covering zephyr subcommands with temporary
+    example projects (create, add, remove, rename, about, version,
+    lint, dist, ize, detect). meson test runs unittest discover;
+    tests are not installed.
+  * Refresh language gettext catalogs (xgettext / msgmerge) for
+    templates that extract from real sources (python, java,
+    typescript, clib, cpplib, rust). Expand the Chinese README to
+    match the English install/layout/tests sections.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Thu, 20 Aug 2026 09:15:00 +0800
+
 zephyr (1.4.0) testing; urgency=medium
 
   * Add `zephyr about`, `zephyr version`, and `zephyr lint` (and

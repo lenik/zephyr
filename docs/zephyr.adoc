@@ -276,6 +276,16 @@ Options for *ize*:
   Must include the directory that contains the *zephyr_lib* package when
   running the tools from a non-default install layout.
 
+== Tests
+
+The source tree (not the installed package) includes *tests/* with
+Python *unittest* coverage of the CLI. *meson test* (build directory
+*/build*) discovers *tests/test_\*.py*. Tests create temporary example
+projects and exercise *create*, *add*, *remove*, *rename*, *about*,
+*version*, *lint*, *dist*, *ize*, and *detect*. When running without
+Meson, set *ZEPHYR_PKGDATADIR* to the source root and *PYTHONPATH* to
+*tools/*.
+
 == Files
 
 */usr/share/zephyr/<lang>/*::

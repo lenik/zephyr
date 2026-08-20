@@ -166,6 +166,7 @@ foreach name : wrapper_names
 endforeach
 
 subdir('tools')
+subdir('tests')
 
 # Man page for zephyr tools
 custom_target(
