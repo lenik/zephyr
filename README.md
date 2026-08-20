@@ -27,8 +27,8 @@ Build and install from the source tree with the usual `dpkg-buildpackage` /
 | Path | Purpose |
 |------|---------|
 | `/usr/share/zephyr/<lang>/` | Language template tree |
-| `/usr/bin/zephyr` | Main CLI (`create`, `rename`, `add`, `remove`, `about`, `version`, `lint`, `dist`, `detect`) |
-| `/usr/bin/zephyr-{create,rename,add,remove,about,version,lint,dist}` | Thin wrappers |
+| `/usr/bin/zephyr` | Main CLI (`create`, `rename`, `add`, `remove`, `about`, `version`, `lint`, `dist`, `ize`, `detect`) |
+| `/usr/bin/zephyr-{create,rename,add,remove,about,version,lint,dist,ize}` | Thin wrappers |
 | `man 1 zephyr` | Manual page |
 
 Supported languages include: **bash**, **c**, **clib**, **cpp**, **cpplib**, **csharp**, **erlang**,
@@ -59,7 +59,9 @@ Then use `zephyr add` / `zephyr remove` for more puffs (multiple names allowed).
 Meson/Debian/RPM mistakes, leftover template tokens) and prints fixes; colors
 on a TTY. `zephyr dist` builds a source tarball (`meson dist` at the git
 root, otherwise this project only) and is what `rpm/Makefile` and
-`ninja srcdist` use.
+`ninja srcdist` use. `zephyr ize` upgrades an existing tree to current
+zephyr style (missing debian/rpm files, meson targets, AsciiDoc man
+pages, Meson version substitutions).
 
 ## See also
 

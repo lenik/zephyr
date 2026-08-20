@@ -104,6 +104,7 @@ install_data(
         'tools/zephyr-version',
         'tools/zephyr-lint',
         'tools/zephyr-dist',
+        'tools/zephyr-ize',
     ],
     install_dir: pkgdatadir / 'tools',
     install_mode: 'rwxr-xr-x',
@@ -117,6 +118,7 @@ install_data(
         'tools/zephyr_lib/csr.py',
         'tools/zephyr_lib/lint.py',
         'tools/zephyr_lib/dist.py',
+        'tools/zephyr_lib/ize.py',
     ],
     install_dir: pkgdatadir / 'tools' / 'zephyr_lib',
 )
@@ -144,6 +146,7 @@ wrapper_names = [
     'zephyr-version',
     'zephyr-lint',
     'zephyr-dist',
+    'zephyr-ize',
 ]
 
 uninst_tool_cfg = configuration_data()
@@ -185,7 +188,7 @@ custom_target(
 )
 
 # Bash completion (same script under several command names)
-foreach completion_name : ['zephyr', 'zephyr-create', 'zephyr-rename', 'zephyr-add', 'zephyr-remove', 'zephyr-about', 'zephyr-version', 'zephyr-lint', 'zephyr-dist']
+foreach completion_name : ['zephyr', 'zephyr-create', 'zephyr-rename', 'zephyr-add', 'zephyr-remove', 'zephyr-about', 'zephyr-version', 'zephyr-lint', 'zephyr-dist', 'zephyr-ize']
     install_data(
         'tools/zephyr.bash',
         install_dir: datadir / 'bash-completion' / 'completions',

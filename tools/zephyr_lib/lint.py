@@ -1005,7 +1005,8 @@ def format_report(
         lines.append(
             csr.wrap(
                 "Hint: after edits, re-run `zephyr lint` from the project (or a subdirectory). "
-                "`zephyr about -d -r` dumps packaging fields. Version for Meson/RPM is `zephyr version`.",
+                "`zephyr about -d -r` dumps packaging fields. Version for Meson/RPM is `zephyr version`. "
+                "`zephyr ize` applies missing debian/rpm/meson/man/version-subst upgrades.",
                 csr.dim,
             )
         )

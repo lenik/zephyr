@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 _zephyr_langs='bash c clib cpp cpplib csharp erlang go haskell java perl python ruby rust smalltalk swift typescript'
-_zephyr_cmds='create rename add remove about version lint dist detect help'
+_zephyr_cmds='create rename add remove about version lint dist ize detect help'
 
 _zephyr()
 {
@@ -13,7 +13,7 @@ _zephyr()
 	local i
 	for ((i = 1; i < cword; i++)); do
 		case "${words[i]}" in
-			create|rename|add|remove|about|version|lint|dist|detect|help)
+			create|rename|add|remove|about|version|lint|dist|ize|detect|help)
 				cmd="${words[i]}"
 				break
 				;;
@@ -95,6 +95,21 @@ _zephyr()
 			esac
 			if [[ $cur == -* ]]; then
 				COMPREPLY=($(compgen -W '-o --output -b --builddir -f --format --rpm --allow-dirty --no-allow-dirty --tests --help' -- "$cur"))
+			fi
+			;;
+		ize)
+			case $prev in
+				-l|--lang)
+					COMPREPLY=($(compgen -W "$_zephyr_langs" -- "$cur"))
+					return
+					;;
+				--color)
+					COMPREPLY=($(compgen -W 'auto always never' -- "$cur"))
+					return
+					;;
+			esac
+			if [[ $cur == -* ]]; then
+				COMPREPLY=($(compgen -W '-l --lang -n --dry-run -v --verbose --no-man --no-subst --color --help' -- "$cur"))
 			fi
 			;;
 		detect|help)
@@ -213,3 +228,24 @@ complete -F _zephyr_about zephyr-about
 complete -F _zephyr_version zephyr-version
 complete -F _zephyr_lint zephyr-lint
 complete -F _zephyr_dist zephyr-dist
+
+_zephyr_ize()
+{
+	local cur prev words cword
+	_init_completion || return
+	case $prev in
+		-l|--lang)
+			COMPREPLY=($(compgen -W "$_zephyr_langs" -- "$cur"))
+			return
+			;;
+		--color)
+			COMPREPLY=($(compgen -W 'auto always never' -- "$cur"))
+			return
+			;;
+	esac
+	if [[ $cur == -* ]]; then
+		COMPREPLY=($(compgen -W '-l --lang -n --dry-run -v --verbose --no-man --no-subst --color --help' -- "$cur"))
+	fi
+}
+
+complete -F _zephyr_ize zephyr-ize

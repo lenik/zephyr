@@ -35,6 +35,12 @@ zephyr (1.4.0) testing; urgency=medium
     VERSION, then 0.0.0. Each language ships rpm/zephyr.spec aligned
     with debian/control (dynamic %{version}, Meson, AGPL) and
     rpm/Makefile calling `zephyr dist --rpm`.
+  * Add `zephyr ize` (and zephyr-ize). In-place upgrade of an existing
+    project to current zephyr style: missing debian/rpm files from the
+    language template, VERSION and pre-commit hook, meson.build patches
+    (`zephyr version`, asciidoctor man targets, `look`, completions),
+    groff `.1` → `docs/*.adoc`, and hardcoded src versions → `@VERSION@`
+    / `config.h`. `-n` dry-run. Then `zephyr lint`.
 
  -- Lenik (谢继雷) <lenik@bodz.net>  Thu, 20 Aug 2026 01:33:00 +0800
 

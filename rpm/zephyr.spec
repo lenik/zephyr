@@ -28,9 +28,9 @@ zephyr ships language templates for small command-line utilities under
 /usr/share/zephyr/<lang>/ (bash, c, clib, cpp, cpplib, csharp, erlang, go,
 haskell, java, perl, python, ruby, rust, smalltalk, swift, typescript), plus
 cmdline tools (zephyr, zephyr-create, zephyr-rename, zephyr-add, zephyr-remove,
-zephyr-about, zephyr-version, zephyr-lint, zephyr-dist) to create projects,
-manage puffs (example apps), validate packaging against zephyr style, and
-build source tarballs for Meson and RPM.
+zephyr-about, zephyr-version, zephyr-lint, zephyr-dist, zephyr-ize) to create
+projects, manage puffs (example apps), validate packaging against zephyr style,
+build source tarballs, and upgrade existing trees (`zephyr ize`).
 
 %prep
 %setup -q -n %{name}-%{srcversion}

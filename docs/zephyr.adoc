@@ -31,13 +31,16 @@ zephyr - multi-language CLI project templates and helper tools
 *zephyr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
                [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
 
+*zephyr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+              [*--color* _WHEN_]
+
 *zephyr* *detect*
 
 *zephyr* *help*
 
 *zephyr-create*, *zephyr-rename*, *zephyr-add*, *zephyr-remove*,
-*zephyr-about*, *zephyr-version*, *zephyr-lint*, and *zephyr-dist* are thin
-wrappers around the same subcommands.
+*zephyr-about*, *zephyr-version*, *zephyr-lint*, *zephyr-dist*, and
+*zephyr-ize* are thin wrappers around the same subcommands.
 
 == Description
 
@@ -134,6 +137,19 @@ or omit them for an empty project.
   archive path on stdout. *rpm/Makefile* *dist* and the Meson *srcdist*
   ninja target reuse this command.
 
+*ize*::
+  Refactor the current project in place so it matches current zephyr
+  style (walks from the current directory toward parents). Copies missing
+  *debian/* and *rpm/* scaffolding from the language template (names
+  rewritten to this project), writes *VERSION* and *.githooks/pre-commit*,
+  patches *meson.build* (*zephyr version*, *asciidoctor* man targets,
+  *run_target look*, bash-completion install). Converts groff *\*.1* man
+  pages under the project (not *debian/*) into *docs/\*.adoc* with Meson
+  rules, and turns hardcoded changelog versions in *src/* into *\*.in*
+  *@VERSION@* substitutions or *PROJECT_VERSION* via *config.h* for C
+  family languages. *\-n* / *--dry-run* prints the plan without writing.
+  Afterward run *zephyr lint*.
+
 *help*::
   Show command-line help.
 
@@ -226,14 +242,35 @@ Options for *dist*:
 *--tests*::
   Run tests during *meson dist* (default is *--no-tests*).
 
+Options for *ize*:
+
+*-l, --lang* _LANG_::
+  Language template to copy scaffolding from (default: detect).
+
+*-n, --dry-run*::
+  Print planned adds/updates/conversions without writing files.
+
+*-v, --verbose*::
+  Also print skipped paths that are already present.
+
+*--no-man*::
+  Do not convert groff *\*.1* sources to *docs/\*.adoc*.
+
+*--no-subst*::
+  Do not rewrite hardcoded versions in *src/* to *@VERSION@* / *config.h*.
+
+*--color* _WHEN_::
+  CSR highlighting: *auto* (default: TTY and no *NO_COLOR*), *always*, or
+  *never*.
+
 == Environment
 
 *ZEPHYR_PKGDATADIR*::
   Override the templates root (normally */usr/share/zephyr*).
 
 *NO_COLOR*::
-  When set, *zephyr about* and *zephyr lint* disable CSR highlighting in
-  *--color auto* mode.
+  When set, *zephyr about*, *zephyr lint*, and *zephyr ize* disable CSR
+  highlighting in *--color auto* mode.
 
 *PYTHONPATH*::
   Must include the directory that contains the *zephyr_lib* package when
