@@ -11,6 +11,7 @@ Usage:
   zfr about [-d] [-r] [--color WHEN]
   zfr version [-g] [-c] [-r]
   zfr lint [-v] [-q] [--strict] [--color WHEN]
+  zfr shape [-b] [-v] [--threshold N]
   zfr dist [-o DIR] [-b DIR] [-f FMT] [--rpm] [--allow-dirty|--no-allow-dirty]
               [--tests]
   zfr ize [-l LANG] [-n] [-v] [--no-man] [--no-subst] [--color WHEN]
@@ -18,8 +19,11 @@ Usage:
   zfr help
 
 The CLI is named zfr. Instantiated projects should keep calling zfr
-(version/lint/dist/ize). zfr is not rewritten by create/rename; the
+(version/lint/dist/ize/shape). zfr is not rewritten by create/rename; the
 template placeholder remains zephyr (and some_puff1 for sample puffs).
+
+In a monorepo, *packagedir* is the package tree (e.g. repo/bash) and
+*repodir* is the git/meta root; tools resolve packagedir via shape score.
 """
 
 from __future__ import annotations
@@ -36,6 +40,7 @@ if str(_TOOLS) not in sys.path:
 from zfr_lib import LANGS, detect_lang, pkgdatadir  # noqa: E402
 from zfr_lib.about import cmd_about  # noqa: E402
 from zfr_lib.dist import add_dist_arguments, cmd_dist  # noqa: E402
+from zfr_lib.i18n import _, init_i18n  # noqa: E402
 from zfr_lib.ize import cmd_ize  # noqa: E402
 from zfr_lib.commands import (  # noqa: E402
     DEFAULT_AUTHOR,
@@ -49,14 +54,16 @@ from zfr_lib.commands import (  # noqa: E402
     cmd_version,
 )
 from zfr_lib.lint import cmd_lint  # noqa: E402
+from zfr_lib.shape import SHAPE_BOOL_THRESHOLD, cmd_shape, resolve_layout, shape_score  # noqa: E402
 
 __version__ = "1.7.0"
 
 
 def build_parser() -> argparse.ArgumentParser:
+    init_i18n()
     p = argparse.ArgumentParser(
         prog="zfr",
-        description=(
+        description=_(
             "Zephyr template helper (CLI name: zfr). "
             "Create projects and manage example puffs. "
             "Instantiated trees keep calling zfr; zfr is not a rename token."
@@ -201,6 +208,37 @@ def build_parser() -> argparse.ArgumentParser:
         help="CSR (console SGR) highlighting (default: auto)",
     )
 
+    pshape = sub.add_parser(
+        "shape",
+        help=_(
+            "print zephyr package shape score 0-100 "
+            "(packagedir vs repodir in monorepos)"
+        ),
+    )
+    pshape.add_argument(
+        "-b",
+        "--bool",
+        action="store_true",
+        dest="as_bool",
+        help=_(
+            "print 1 if score >= threshold, else 0 "
+            "(predicate instead of numeric score)"
+        ),
+    )
+    pshape.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help=_("print packagedir/repodir/role on stderr"),
+    )
+    pshape.add_argument(
+        "--threshold",
+        type=int,
+        default=SHAPE_BOOL_THRESHOLD,
+        metavar="N",
+        help=_("bool threshold 0-100 (default: %s)") % SHAPE_BOOL_THRESHOLD,
+    )
+
     pdist = sub.add_parser(
         "dist",
         help="build a source tarball (meson dist, or this project only)",
@@ -264,10 +302,24 @@ def main(argv: list[str] | None = None) -> int:
         parser.print_help()
         return 0
     if args.cmd == "detect":
-        lang = detect_lang()
+        layout = resolve_layout()
+        lang = detect_lang(layout.packagedir)
         print(lang, flush=True)
-        print(f"pkgdatadir: {pkgdatadir()}", file=sys.stderr)
+        print(
+            f"packagedir: {layout.packagedir}\n"
+            f"repodir: {layout.repodir}\n"
+            f"role: {layout.role}\n"
+            f"shape: {shape_score(layout.packagedir)}\n"
+            f"pkgdatadir: {pkgdatadir()}",
+            file=sys.stderr,
+        )
         return 0
+    if args.cmd == "shape":
+        return cmd_shape(
+            as_bool=args.as_bool,
+            threshold=args.threshold,
+            verbose=args.verbose,
+        )
     if args.cmd == "create":
         cmd_create(
             args.project_name,

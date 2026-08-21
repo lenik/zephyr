@@ -56,6 +56,7 @@ zfr create -l c widgets hello world
 ```
 
 之后用 `zfr add` / `zfr remove` 继续增删 puff（可一次多个名字）。
+`zfr shape` 输出 0–100 的 package-shape 分数（`-b` 输出 0/1）；单体仓中对 *packagedir*（如 `repo/bash`）评分。
 `zfr lint` 按 zephyr 打包风格检查工程（缺文件、Meson/Debian/RPM 用法、
 残留模板名、推荐 gettext 语言覆盖），并给出可执行的修改建议；终端下着色。
 若工程有 `po/`，风格建议 `LINGUAS` 至少包含 **ar bn de es fr hi id it ja ko

@@ -105,6 +105,7 @@ install_data(
         'tools/zfr-lint',
         'tools/zfr-dist',
         'tools/zfr-ize',
+        'tools/zfr-shape',
     ],
     install_dir: pkgdatadir / 'tools',
     install_mode: 'rwxr-xr-x',
@@ -119,6 +120,8 @@ install_data(
         'tools/zfr_lib/lint.py',
         'tools/zfr_lib/dist.py',
         'tools/zfr_lib/ize.py',
+        'tools/zfr_lib/shape.py',
+        'tools/zfr_lib/i18n.py',
     ],
     install_dir: pkgdatadir / 'tools' / 'zfr_lib',
 )
@@ -147,6 +150,7 @@ wrapper_names = [
     'zfr-lint',
     'zfr-dist',
     'zfr-ize',
+    'zfr-shape',
 ]
 
 uninst_tool_cfg = configuration_data()
@@ -167,6 +171,9 @@ endforeach
 
 subdir('tools')
 subdir('tests')
+
+# gettext catalogs for the zfr CLI (domain: zfr)
+subdir('tools/po')
 
 # Man page for zephyr tools
 custom_target(
@@ -189,7 +196,7 @@ custom_target(
 )
 
 # Bash completion (same script under several command names)
-foreach completion_name : ['zfr', 'zfr-create', 'zfr-rename', 'zfr-add', 'zfr-remove', 'zfr-about', 'zfr-version', 'zfr-lint', 'zfr-dist', 'zfr-ize']
+foreach completion_name : ['zfr', 'zfr-create', 'zfr-rename', 'zfr-add', 'zfr-remove', 'zfr-about', 'zfr-version', 'zfr-lint', 'zfr-dist', 'zfr-ize', 'zfr-shape']
     install_data(
         'tools/zfr.bash',
         install_dir: datadir / 'bash-completion' / 'completions',

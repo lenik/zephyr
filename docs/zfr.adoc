@@ -28,6 +28,8 @@ zfr - multi-language CLI project templates and helper tools
 
 *zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
 
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
 *zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
             [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
 
@@ -39,8 +41,8 @@ zfr - multi-language CLI project templates and helper tools
 *zfr* *help*
 
 *zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
-*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, and
-*zfr-ize* are thin wrappers around the same subcommands.
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*, and
+*zfr-shape* are thin wrappers around the same subcommands.
 
 == Description
 
@@ -76,6 +78,10 @@ tree when running an uninstalled builddir wrapper such as *build/zfr*
 (*ZFR_PKGDATADIR* overrides). Each template may include a sample puff named
 *some_puff1*; pass puff names on the *create* command line to instantiate them,
 or omit them for an empty project.
+
+In a monorepo, *repodir* is the git (or meta) checkout root and *packagedir*
+is the package tree that has zephyr shape (for example *repodir/bash*).
+Commands that walk from the current directory resolve *packagedir* first.
 
 *i18n*::
   Zephyr style recommends gettext coverage for at least:
@@ -145,6 +151,14 @@ or omit them for an empty project.
   Output is meant for humans and AI coders: each finding has a code,
   path, and a concrete fix. Interactive terminals use CSR (console SGR)
   colors unless *NO_COLOR* is set.
+
+*shape*::
+  Print a 0–100 *zephyr shape* score for the current *packagedir* (how
+  completely the tree matches zephyr packaging style). In a monorepo the
+  *packagedir* may differ from the *repodir* (git / meta root); tools use
+  shape to prefer the package directory over the repository root.
+  *\-b* / *--bool* prints *1* if the score is at least the threshold
+  (default *50*), otherwise *0*.
 
 *dist*::
   Build a source archive of the current project (walks from the current
@@ -237,6 +251,17 @@ Options for *lint*:
 *--color* _WHEN_::
   CSR highlighting: *auto* (default: TTY and no *NO_COLOR*), *always*, or
   *never*.
+
+Options for *shape*:
+
+*-b, --bool*::
+  Print *1* if the shape score is at least *--threshold*, otherwise *0*.
+
+*-v, --verbose*::
+  Print *packagedir*, *repodir*, *role*, and *threshold* on standard error.
+
+*--threshold* _N_::
+  Threshold for *--bool* (default: *50*).
 
 Options for *dist*:
 

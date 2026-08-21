@@ -30,8 +30,8 @@ Build and install from the source tree with the usual `dpkg-buildpackage` /
 | Path | Purpose |
 |------|---------|
 | `/usr/share/zephyr/<lang>/` | Language template tree |
-| `/usr/bin/zfr` | Main CLI (`create`, `rename`, `add`, `remove`, `about`, `version`, `lint`, `dist`, `ize`, `detect`) |
-| `/usr/bin/zfr-{create,rename,add,remove,about,version,lint,dist,ize}` | Thin wrappers |
+| `/usr/bin/zfr` | Main CLI (`create`, `rename`, `add`, `remove`, `about`, `version`, `lint`, `shape`, `dist`, `ize`, `detect`) |
+| `/usr/bin/zfr-{create,rename,add,remove,about,version,lint,shape,dist,ize}` | Thin wrappers |
 | `man 1 zfr` | Manual page |
 
 Supported languages include: **bash**, **c**, **clib**, **cpp**, **cpplib**, **csharp**, **erlang**,
@@ -60,7 +60,10 @@ zfr create -l c widgets hello world
 Then use `zfr add` / `zfr remove` for more puffs (multiple names allowed).
 `zfr lint` checks the tree against zephyr packaging style (missing files,
 Meson/Debian/RPM mistakes, leftover template tokens, and recommended
-gettext locale coverage) and prints fixes; colors on a TTY. `zfr dist` builds a source tarball (`meson dist` at the git
+gettext locale coverage) and prints fixes; colors on a TTY. `zfr shape`
+prints a 0–100 package-shape score (`-b` prints 0/1); in a monorepo it
+scores the *packagedir* (e.g. `repo/bash`), not only the git *repodir*.
+`zfr dist` builds a source tarball (`meson dist` at the git
 root, otherwise this project only) and is what `rpm/Makefile` and
 `ninja srcdist` use. `zfr ize` upgrades an existing tree to current
 zephyr style (missing debian/rpm files, meson targets, AsciiDoc man
@@ -68,7 +71,9 @@ pages, Meson version substitutions).
 
 When a project has `po/`, zephyr style recommends `LINGUAS` include at least
 **ar bn de es fr hi id it ja ko pt ru sv ta te th tr ur vi zh_CN zh_TW**
-(English source; `zh-cn`→`zh_CN`, `zh-tw`→`zh_TW`).
+(English source; `zh-cn`→`zh_CN`, `zh-tw`→`zh_TW`). The `zfr` CLI itself
+ships gettext catalogs under `tools/po/` (domain `zfr`).
+
 
 ## Tests
 

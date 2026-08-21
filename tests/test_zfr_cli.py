@@ -58,6 +58,7 @@ class ZephyrHelpTests(unittest.TestCase):
             "about",
             "version",
             "lint",
+            "shape",
             "dist",
             "ize",
             "detect",
@@ -78,7 +79,8 @@ class ZephyrHelpTests(unittest.TestCase):
 class ZephyrDetectTests(unittest.TestCase):
     def test_detect_python_template(self) -> None:
         proc = run_zephyr("detect", cwd=ROOT / "python")
-        self.assertEqual(proc.stdout.strip(), "python")
+        self.assertIn("packagedir:", proc.stderr)
+        self.assertIn("repodir:", proc.stderr)
 
     def test_detect_bash_template(self) -> None:
         proc = run_zephyr("detect", cwd=ROOT / "bash")
@@ -88,6 +90,16 @@ class ZephyrDetectTests(unittest.TestCase):
         proc = run_zephyr("detect", cwd=ROOT, check=False)
         self.assertNotEqual(proc.returncode, 0)
         self.assertIn("meta-repo", proc.stderr)
+
+    def test_shape_score_and_bool(self) -> None:
+        proc = run_zephyr("shape", cwd=ROOT / "python")
+        score = int(proc.stdout.strip())
+        self.assertGreaterEqual(score, 50)
+        self.assertLessEqual(score, 100)
+        b = run_zephyr("shape", "-b", "-v", cwd=ROOT / "python")
+        self.assertEqual(b.stdout.strip(), "1")
+        self.assertIn("# packagedir=", b.stderr)
+        self.assertIn("# repodir=", b.stderr)
 
 
 class ZephyrCreateProjectTests(unittest.TestCase):

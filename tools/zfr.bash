@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 _zfr_langs='bash c clib cpp cpplib csharp erlang go haskell java perl python ruby rust smalltalk swift typescript'
-_zfr_cmds='create rename add remove about version lint dist ize detect help'
+_zfr_cmds='create rename add remove about version lint shape dist ize detect help'
 
 _zfr()
 {
@@ -13,7 +13,7 @@ _zfr()
 	local i
 	for ((i = 1; i < cword; i++)); do
 		case "${words[i]}" in
-			create|rename|add|remove|about|version|lint|dist|ize|detect|help)
+			create|rename|add|remove|about|version|lint|shape|dist|ize|detect|help)
 				cmd="${words[i]}"
 				break
 				;;
@@ -80,6 +80,11 @@ _zfr()
 			esac
 			if [[ $cur == -* ]]; then
 				COMPREPLY=($(compgen -W '-v --verbose -q --quiet --strict --color --help' -- "$cur"))
+			fi
+			;;
+		shape)
+			if [[ $cur == -* ]]; then
+				COMPREPLY=($(compgen -W '-b --bool -v --verbose --threshold --help' -- "$cur"))
 			fi
 			;;
 		dist)
@@ -228,6 +233,17 @@ complete -F _zfr_about zfr-about
 complete -F _zfr_version zfr-version
 complete -F _zfr_lint zfr-lint
 complete -F _zfr_dist zfr-dist
+
+_zfr_shape()
+{
+	local cur prev words cword
+	_init_completion || return
+	if [[ $cur == -* ]]; then
+		COMPREPLY=($(compgen -W '-b --bool -v --verbose --threshold --help' -- "$cur"))
+	fi
+}
+
+complete -F _zfr_shape zfr-shape
 
 _zfr_ize()
 {
