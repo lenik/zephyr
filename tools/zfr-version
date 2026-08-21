@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zephyr-version — print current project version."""
+"""zfr-version — print current project version."""
 
 from __future__ import annotations
 
@@ -12,12 +12,12 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zephyr_lib.commands import cmd_version  # noqa: E402
+from zfr_lib.commands import cmd_version  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
-        prog="zephyr-version",
+        prog="zfr-version",
         description="Print the current project version "
         "(walks from cwd toward parent directories).",
     )

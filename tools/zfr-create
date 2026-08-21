@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zephyr-create — create a new project from an installed language template."""
+"""zfr-create — create a new project from an installed language template."""
 
 from __future__ import annotations
 
@@ -12,8 +12,8 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zephyr_lib import LANGS  # noqa: E402
-from zephyr_lib.commands import (  # noqa: E402
+from zfr_lib import LANGS  # noqa: E402
+from zfr_lib.commands import (  # noqa: E402
     DEFAULT_AUTHOR,
     DEFAULT_DISTRIBUTION,
     DEFAULT_EMAIL,
@@ -24,7 +24,7 @@ from zephyr_lib.commands import (  # noqa: E402
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
-        prog="zephyr-create",
+        prog="zfr-create",
         description="Create a new project directory from pkgdatadir/<lang>.",
     )
     p.add_argument(

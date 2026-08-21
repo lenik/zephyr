@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / "tools"
-ZEPHYR = TOOLS / "zephyr"
+ZEPHYR = TOOLS / "zfr"
 
 
 def _env() -> dict[str, str]:
@@ -22,7 +22,7 @@ def _env() -> dict[str, str]:
     extra = str(TOOLS)
     prev = env.get("PYTHONPATH", "")
     env["PYTHONPATH"] = extra if not prev else extra + os.pathsep + prev
-    env["ZEPHYR_PKGDATADIR"] = str(ROOT)
+    env["ZFR_PKGDATADIR"] = str(ROOT)
     env["NO_COLOR"] = "1"
     env["GIT_AUTHOR_NAME"] = "Zephyr Tests"
     env["GIT_AUTHOR_EMAIL"] = "zephyr-tests@example.com"
@@ -41,7 +41,7 @@ def run_zephyr(*args: str, cwd: Path | None = None, check: bool = True) -> subpr
     )
     if check and proc.returncode != 0:
         raise AssertionError(
-            f"zephyr {' '.join(args)} failed ({proc.returncode})\n"
+            f"zfr {' '.join(args)} failed ({proc.returncode})\n"
             f"stdout:\n{proc.stdout}\nstderr:\n{proc.stderr}"
         )
     return proc
@@ -66,7 +66,7 @@ class ZephyrHelpTests(unittest.TestCase):
 
     def test_ize_wrapper_help(self) -> None:
         proc = subprocess.run(
-            [sys.executable, str(TOOLS / "zephyr-ize"), "--help"],
+            [sys.executable, str(TOOLS / "zfr-ize"), "--help"],
             env=_env(),
             capture_output=True,
             text=True,
@@ -143,7 +143,7 @@ class ZephyrCreateProjectTests(unittest.TestCase):
 
     def test_lint(self) -> None:
         proc = run_zephyr("lint", cwd=self.project, check=False)
-        self.assertIn("zephyr lint", proc.stdout)
+        self.assertIn("zfr lint", proc.stdout)
         self.assertRegex(proc.stdout, r"status:.*(PASS|FAIL)")
 
     def test_add_and_remove(self) -> None:
@@ -155,7 +155,7 @@ class ZephyrCreateProjectTests(unittest.TestCase):
 
 class ZephyrRenameTests(unittest.TestCase):
     def test_rename_template_copy(self) -> None:
-        with tempfile.TemporaryDirectory(prefix="zephyr-rename-") as tmp:
+        with tempfile.TemporaryDirectory(prefix="zfr-rename-") as tmp:
             dest = Path(tmp) / "scratch"
             shutil.copytree(
                 ROOT / "bash",
@@ -175,7 +175,7 @@ class ZephyrRenameTests(unittest.TestCase):
 
 class ZephyrDistTests(unittest.TestCase):
     def test_nested_template_packs_only_that_tree(self) -> None:
-        with tempfile.TemporaryDirectory(prefix="zephyr-dist-") as tmp:
+        with tempfile.TemporaryDirectory(prefix="zfr-dist-") as tmp:
             out = Path(tmp)
             proc = run_zephyr("dist", "-o", str(out), cwd=ROOT / "bash")
             path = Path(proc.stdout.strip())
@@ -195,12 +195,12 @@ class ZephyrDistTests(unittest.TestCase):
 class ZephyrIzeTests(unittest.TestCase):
     def test_dry_run_on_aligned_bash_template(self) -> None:
         proc = run_zephyr("ize", "-n", cwd=ROOT / "bash")
-        self.assertIn("zephyr ize", proc.stdout)
+        self.assertIn("zfr ize", proc.stdout)
         self.assertIn("0 added", proc.stdout)
         self.assertIn("dry-run", proc.stdout)
 
     def test_ize_synthetic_c_project(self) -> None:
-        with tempfile.TemporaryDirectory(prefix="zephyr-ize-") as tmp:
+        with tempfile.TemporaryDirectory(prefix="zfr-ize-") as tmp:
             root = Path(tmp)
             (root / "src").mkdir()
             (root / "docs").mkdir()
@@ -238,9 +238,9 @@ class ZephyrIzeTests(unittest.TestCase):
                 encoding="utf-8",
             )
             proc = run_zephyr("ize", "-l", "c", cwd=root)
-            self.assertIn("zephyr ize", proc.stdout)
+            self.assertIn("zfr ize", proc.stdout)
             meson = (root / "meson.build").read_text(encoding="utf-8")
-            self.assertIn("zephyr version", meson)
+            self.assertIn("zfr version", meson)
             self.assertIn("run_target", meson)
             self.assertTrue((root / "docs" / "oldpuff.adoc").is_file())
             self.assertFalse((root / "docs" / "oldpuff.1").exists())

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zephyr-ize — refactor a project to current zephyr style."""
+"""zfr-ize — refactor a project to current zephyr style."""
 
 from __future__ import annotations
 
@@ -12,12 +12,12 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zephyr_lib.ize import cmd_ize  # noqa: E402
+from zfr_lib.ize import cmd_ize  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
-        prog="zephyr-ize",
+        prog="zfr-ize",
         description="Refactor the current project to match current zephyr "
         "style: missing debian/rpm files, meson targets, AsciiDoc man pages, "
         "and Meson version substitutions. Walks from cwd toward parents.",

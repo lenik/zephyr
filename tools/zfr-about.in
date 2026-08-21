@@ -1,5 +1,5 @@
 #!/bin/sh
 # SPDX-License-Identifier: AGPL-3.0-or-later
 export PYTHONPATH="@PKGDATADIR@/tools${PYTHONPATH:+:$PYTHONPATH}"
-export ZEPHYR_PKGDATADIR="@PKGDATADIR@"
-exec @PYTHON@ "@PKGDATADIR@/tools/zephyr-remove" "$@"
+export ZFR_PKGDATADIR="@PKGDATADIR@"
+exec @PYTHON@ "@PKGDATADIR@/tools/zfr-about" "$@"

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zephyr ize — bring an existing project up to current zephyr style."""
+"""zfr ize — bring an existing project up to current zephyr style."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ from . import (
     LANGS,
     SKIP_DIR_NAMES,
     TEMPLATE_PUFF,
-    _is_zephyr_meta_repo,
+    _is_zfr_meta_repo,
     append_meson_list_entry,
     changelog_version,
     copy_renamed_file,
@@ -44,7 +44,7 @@ _AGPL = "AGPL-3.0-or-later"
 
 VERSION_SHELL = """\
         v=$(
-            command -v zephyr >/dev/null 2>&1 && zephyr version 2>/dev/null || true
+            command -v zfr >/dev/null 2>&1 && zfr version 2>/dev/null || true
         )
         if [ -z "$v" ] && [ -f VERSION ]; then
             v=$(head -n1 VERSION | tr -d '\\r')
@@ -62,7 +62,7 @@ run_command(
         'sh',
         '-c', '''
         v=$(
-            command -v zephyr >/dev/null 2>&1 && zephyr version 2>/dev/null || true
+            command -v zfr >/dev/null 2>&1 && zfr version 2>/dev/null || true
         )
         if [ -z "$v" ] && [ -f VERSION ]; then
             v=$(head -n1 VERSION | tr -d '\\r')
@@ -261,8 +261,8 @@ def render_spec(root: Path, lang: str, name: str) -> str:
         req_block = req_block + "\n"
     files = "\n".join(_spec_files(root, lang, name))
     return (
-        "# Version is injected by rpm/Makefile via `zephyr version`.\n"
-        "# RPM Version cannot contain '-'; use `zephyr version -r` "
+        "# Version is injected by rpm/Makefile via `zfr version`.\n"
+        "# RPM Version cannot contain '-'; use `zfr version -r` "
         "(hyphens → '_').\n"
         "# srcversion is the unsanitized Meson/git version and names the tarball.\n"
         "%{!?version:%global version 0.0.0}\n"
@@ -299,7 +299,7 @@ def render_spec(root: Path, lang: str, name: str) -> str:
         "\n%changelog\n"
         f"* Thu Aug 20 2026 {author} <{email}>\n"
         "- Align spec with debian/control (Meson, AGPL-3.0-or-later).\n"
-        "- Version comes from `zephyr version`, the same method meson.build uses.\n"
+        "- Version comes from `zfr version`, the same method meson.build uses.\n"
     )
 
 
@@ -554,8 +554,8 @@ class Ize:
 
         if _GIT_DESCRIBE_RE.search(text):
             text = _GIT_DESCRIBE_RE.sub(lambda _m: VERSION_SHELL, text, count=1)
-            details.append("version via zephyr version")
-        elif "zephyr version" not in text:
+            details.append("version via zfr version")
+        elif "zfr version" not in text:
             proj_end = _project_call_end(text)
             proj = text[text.find("project(") : proj_end] if proj_end else ""
             if re.search(r"version:\s*'[^']+'", proj or text):
@@ -577,7 +577,7 @@ class Ize:
                 )
                 if n:
                     text = text2
-                    details.append("inject zephyr version")
+                    details.append("inject zfr version")
 
         end = _project_call_end(text)
         if end is not None:
@@ -795,7 +795,7 @@ endforeach
                 new = re.sub(r"^License:\s*.*$", f"License:        {_AGPL}", new, count=1, flags=re.M)
                 details.append("License AGPL")
             if "%configure" in new or "autoreconf" in new:
-                details.append("left autotools %build (not auto-rewritten; see zephyr lint)")
+                details.append("left autotools %build (not auto-rewritten; see zfr lint)")
             if new != text:
                 self.write_text(specs[0], new, ", ".join(details) or "spec touch-up")
 
@@ -924,7 +924,7 @@ endforeach
         updates = sum(1 for c in self.changes if c.kind == "update")
         converts = sum(1 for c in self.changes if c.kind == "convert")
         skips = sum(1 for c in self.changes if c.kind == "skip")
-        head = csr.wrap("zephyr ize", csr.bold)
+        head = csr.wrap("zfr ize", csr.bold)
         dry = "  dry-run" if self.dry_run else ""
         print(
             f"{head}: {self.root}  name={self.name}  lang={self.lang}{dry}",
@@ -947,7 +947,7 @@ endforeach
             flush=True,
         )
         if not self.dry_run:
-            print("re-run `zephyr lint` to check remaining style gaps.", flush=True)
+            print("re-run `zfr lint` to check remaining style gaps.", flush=True)
 
 
 def cmd_ize(
@@ -961,10 +961,10 @@ def cmd_ize(
     workdir: Path | None = None,
 ) -> int:
     root = find_project_dir(workdir)
-    if _is_zephyr_meta_repo(root):
+    if _is_zfr_meta_repo(root):
         raise SystemExit(
             f"{root} looks like the zephyr meta-repo. "
-            "Run zephyr ize from a language project, not the repository root."
+            "Run zfr ize from a language project, not the repository root."
         )
     role = _role(root)
     if lang:
@@ -979,7 +979,7 @@ def cmd_ize(
             print("pass -l LANG to ize a project whose language could not be detected", file=sys.stderr)
             return 2
     if role == "meta":
-        raise SystemExit("zephyr ize does not operate on the meta-repo root")
+        raise SystemExit("zfr ize does not operate on the meta-repo root")
     Ize(
         root,
         lang=detected,

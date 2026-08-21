@@ -1,10 +1,10 @@
-# bash completion for zephyr and related wrappers
+# bash completion for zfr and related wrappers
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-_zephyr_langs='bash c clib cpp cpplib csharp erlang go haskell java perl python ruby rust smalltalk swift typescript'
-_zephyr_cmds='create rename add remove about version lint dist ize detect help'
+_zfr_langs='bash c clib cpp cpplib csharp erlang go haskell java perl python ruby rust smalltalk swift typescript'
+_zfr_cmds='create rename add remove about version lint dist ize detect help'
 
-_zephyr()
+_zfr()
 {
 	local cur prev words cword
 	_init_completion || return
@@ -24,7 +24,7 @@ _zephyr()
 		if [[ $cur == -* ]]; then
 			COMPREPLY=($(compgen -W '--help --version' -- "$cur"))
 		else
-			COMPREPLY=($(compgen -W "$_zephyr_cmds" -- "$cur"))
+			COMPREPLY=($(compgen -W "$_zfr_cmds" -- "$cur"))
 		fi
 		return
 	fi
@@ -33,7 +33,7 @@ _zephyr()
 		create)
 			case $prev in
 				-l|--lang)
-					COMPREPLY=($(compgen -W "$_zephyr_langs" -- "$cur"))
+					COMPREPLY=($(compgen -W "$_zfr_langs" -- "$cur"))
 					return
 					;;
 				-D|--distribution|-1|--init-version|-a|--author|-e|--email)
@@ -100,7 +100,7 @@ _zephyr()
 		ize)
 			case $prev in
 				-l|--lang)
-					COMPREPLY=($(compgen -W "$_zephyr_langs" -- "$cur"))
+					COMPREPLY=($(compgen -W "$_zfr_langs" -- "$cur"))
 					return
 					;;
 				--color)
@@ -118,14 +118,14 @@ _zephyr()
 	esac
 }
 
-_zephyr_create()
+_zfr_create()
 {
 	local cur prev words cword
 	_init_completion || return
 
 	case $prev in
 		-l|--lang)
-			COMPREPLY=($(compgen -W "$_zephyr_langs" -- "$cur"))
+			COMPREPLY=($(compgen -W "$_zfr_langs" -- "$cur"))
 			return
 			;;
 		-D|--distribution|-1|--init-version|-a|--author|-e|--email)
@@ -140,7 +140,7 @@ _zephyr_create()
 	_filedir -d
 }
 
-_zephyr_rename()
+_zfr_rename()
 {
 	local cur prev words cword
 	_init_completion || return
@@ -151,17 +151,17 @@ _zephyr_rename()
 	_filedir
 }
 
-_zephyr_add()
+_zfr_add()
 {
-	_zephyr_rename
+	_zfr_rename
 }
 
-_zephyr_remove()
+_zfr_remove()
 {
-	_zephyr_rename
+	_zfr_rename
 }
 
-_zephyr_about()
+_zfr_about()
 {
 	local cur prev words cword
 	_init_completion || return
@@ -176,7 +176,7 @@ _zephyr_about()
 	fi
 }
 
-_zephyr_version()
+_zfr_version()
 {
 	local cur prev words cword
 	_init_completion || return
@@ -185,7 +185,7 @@ _zephyr_version()
 	fi
 }
 
-_zephyr_lint()
+_zfr_lint()
 {
 	local cur prev words cword
 	_init_completion || return
@@ -200,7 +200,7 @@ _zephyr_lint()
 	fi
 }
 
-_zephyr_dist()
+_zfr_dist()
 {
 	local cur prev words cword
 	_init_completion || return
@@ -219,23 +219,23 @@ _zephyr_dist()
 	fi
 }
 
-complete -F _zephyr zephyr
-complete -F _zephyr_create zephyr-create
-complete -F _zephyr_rename zephyr-rename
-complete -F _zephyr_add zephyr-add
-complete -F _zephyr_remove zephyr-remove
-complete -F _zephyr_about zephyr-about
-complete -F _zephyr_version zephyr-version
-complete -F _zephyr_lint zephyr-lint
-complete -F _zephyr_dist zephyr-dist
+complete -F _zfr zfr
+complete -F _zfr_create zfr-create
+complete -F _zfr_rename zfr-rename
+complete -F _zfr_add zfr-add
+complete -F _zfr_remove zfr-remove
+complete -F _zfr_about zfr-about
+complete -F _zfr_version zfr-version
+complete -F _zfr_lint zfr-lint
+complete -F _zfr_dist zfr-dist
 
-_zephyr_ize()
+_zfr_ize()
 {
 	local cur prev words cword
 	_init_completion || return
 	case $prev in
 		-l|--lang)
-			COMPREPLY=($(compgen -W "$_zephyr_langs" -- "$cur"))
+			COMPREPLY=($(compgen -W "$_zfr_langs" -- "$cur"))
 			return
 			;;
 		--color)
@@ -248,4 +248,4 @@ _zephyr_ize()
 	fi
 }
 
-complete -F _zephyr_ize zephyr-ize
+complete -F _zfr_ize zfr-ize

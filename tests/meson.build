@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 test(
-    'zephyr-cli',
+    'zfr-cli',
     py,
     args: [
         '-m',
@@ -15,7 +15,7 @@ test(
     workdir: meson.project_source_root(),
     env: [
         'PYTHONPATH=' + (meson.project_source_root() / 'tools'),
-        'ZEPHYR_PKGDATADIR=' + meson.project_source_root(),
+        'ZFR_PKGDATADIR=' + meson.project_source_root(),
         'NO_COLOR=1',
     ],
     timeout: 180,

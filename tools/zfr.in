@@ -3,5 +3,5 @@
 # Uninstalled (builddir) wrappers set PKGDATADIR to the source root;
 # installed wrappers set it to $prefix/share/zephyr.
 export PYTHONPATH="@PKGDATADIR@/tools${PYTHONPATH:+:$PYTHONPATH}"
-export ZEPHYR_PKGDATADIR="@PKGDATADIR@"
-exec @PYTHON@ "@PKGDATADIR@/tools/zephyr" "$@"
+export ZFR_PKGDATADIR="@PKGDATADIR@"
+exec @PYTHON@ "@PKGDATADIR@/tools/zfr" "$@"

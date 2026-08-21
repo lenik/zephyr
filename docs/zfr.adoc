@@ -1,4 +1,4 @@
-= zephyr(1)
+= zfr(1)
 Lenik <zephyr@bodz.net>
 v{project-version}, {project-year}
 :doctype: manpage
@@ -9,64 +9,71 @@ v{project-version}, {project-year}
 
 == Name
 
-zephyr - multi-language CLI project templates and helper tools
+zfr - multi-language CLI project templates and helper tools
 
 == Synopsis
 
-*zephyr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
-                 [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
 
-*zephyr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
 
-*zephyr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
 
-*zephyr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
 
-*zephyr* *about* [*-d*] [*-r*]
+*zfr* *about* [*-d*] [*-r*]
 
-*zephyr* *version* [*-g*] [*-c*] [*-r*]
+*zfr* *version* [*-g*] [*-c*] [*-r*]
 
-*zephyr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
 
-*zephyr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
-               [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
 
-*zephyr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
-              [*--color* _WHEN_]
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
 
-*zephyr* *detect*
+*zfr* *detect*
 
-*zephyr* *help*
+*zfr* *help*
 
-*zephyr-create*, *zephyr-rename*, *zephyr-add*, *zephyr-remove*,
-*zephyr-about*, *zephyr-version*, *zephyr-lint*, *zephyr-dist*, and
-*zephyr-ize* are thin wrappers around the same subcommands.
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, and
+*zfr-ize* are thin wrappers around the same subcommands.
 
 == Description
 
-*zephyr* ships language templates for small command-line utilities and tools
+*zfr* is the command-line tool for the *zephyr* template collection.
+It ships language templates for small command-line utilities and helpers
 to instantiate and manage them.
+
+*Important:* instantiated projects are expected to keep calling *zfr*
+(for example *zfr version* in *meson.build* and *rpm/Makefile*).
+The string *zfr* is *not* a create/rename magic token and is never
+rewritten to the project name. The template placeholder that *is*
+rewritten remains *zephyr* (and *some_puff1* for sample puffs).
 
 Typical workflow:
 
 . Create a project from a language template:
 +
 ----
-zephyr create -l python myproj
+zfr create -l python myproj
 ----
 
 . Enter the project and add application *puffs* (example apps):
 +
 ----
 cd myproj
-zephyr add myapp another_app
+zfr add myapp another_app
 ----
 
 . Optionally rename the project or remove puffs later with *rename* / *remove*.
 
 Templates live under */usr/share/zephyr/<lang>/* when installed, or the source
-tree when running an uninstalled builddir wrapper such as *build/zephyr*
-(*ZEPHYR_PKGDATADIR* overrides). Each template may include a sample puff named
+tree when running an uninstalled builddir wrapper such as *build/zfr*
+(*ZFR_PKGDATADIR* overrides). Each template may include a sample puff named
 *some_puff1*; pass puff names on the *create* command line to instantiate them,
 or omit them for an empty project.
 
@@ -87,6 +94,7 @@ or omit them for an empty project.
 *rename*::
   In the current project directory, rewrite *zephyr* → *_PROJECT_NAME_* and,
   for each given name, rewrite the template puff *some_puff1* → that name.
+  Does not rewrite *zfr*.
 
 *add*::
   Detect the project language and copy the template puff files into the current
@@ -123,7 +131,8 @@ or omit them for an empty project.
   (walks from the current directory toward parents to find the project root).
   Reports missing files, identity mismatches, Meson/Debian/RPM mistakes,
   leftover *zephyr* / *some_puff1* tokens in instantiated apps, and suggested
-  fixes. Output is meant for humans and AI coders: each finding has a code,
+  fixes. Mentions of *zfr* are expected and are not treated as leftovers.
+  Output is meant for humans and AI coders: each finding has a code,
   path, and a concrete fix. Interactive terminals use CSR (console SGR)
   colors unless *NO_COLOR* is set.
 
@@ -142,13 +151,13 @@ or omit them for an empty project.
   style (walks from the current directory toward parents). Copies missing
   *debian/* and *rpm/* scaffolding from the language template (names
   rewritten to this project), writes *VERSION* and *.githooks/pre-commit*,
-  patches *meson.build* (*zephyr version*, *asciidoctor* man targets,
+  patches *meson.build* (*zfr version*, *asciidoctor* man targets,
   *run_target look*, bash-completion install). Converts groff *\*.1* man
   pages under the project (not *debian/*) into *docs/\*.adoc* with Meson
   rules, and turns hardcoded changelog versions in *src/* into *\*.in*
   *@VERSION@* substitutions or *PROJECT_VERSION* via *config.h* for C
   family languages. *\-n* / *--dry-run* prints the plan without writing.
-  Afterward run *zephyr lint*.
+  Afterward run *zfr lint*.
 
 *help*::
   Show command-line help.
@@ -184,7 +193,7 @@ Options for *about*:
 
 *-r, --redhat*::
   Show parsed RPM packaging fields from *rpm/*.spec* (macros like
-  *%{version}* are shown using *zephyr version -r*). The *%description*
+  *%{version}* are shown using *zfr version -r*). The *%description*
   body is reflowed; spec scriptlets are not dumped.
 
 *--color* _WHEN_::
@@ -265,15 +274,15 @@ Options for *ize*:
 
 == Environment
 
-*ZEPHYR_PKGDATADIR*::
+*ZFR_PKGDATADIR*::
   Override the templates root (normally */usr/share/zephyr*).
 
 *NO_COLOR*::
-  When set, *zephyr about*, *zephyr lint*, and *zephyr ize* disable CSR
+  When set, *zfr about*, *zfr lint*, and *zfr ize* disable CSR
   highlighting in *--color auto* mode.
 
 *PYTHONPATH*::
-  Must include the directory that contains the *zephyr_lib* package when
+  Must include the directory that contains the *zfr_lib* package when
   running the tools from a non-default install layout.
 
 == Tests
@@ -283,13 +292,16 @@ Python *unittest* coverage of the CLI. *meson test* (build directory
 */build*) discovers *tests/test_\*.py*. Tests create temporary example
 projects and exercise *create*, *add*, *remove*, *rename*, *about*,
 *version*, *lint*, *dist*, *ize*, and *detect*. When running without
-Meson, set *ZEPHYR_PKGDATADIR* to the source root and *PYTHONPATH* to
+Meson, set *ZFR_PKGDATADIR* to the source root and *PYTHONPATH* to
 *tools/*.
 
 == Files
 
 */usr/share/zephyr/<lang>/*::
   Installed language templates.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI and thin wrappers.
 
 */usr/share/doc/zephyr/*::
   Package documentation (LICENSE, README).

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zephyr-remove — remove puff(s) from the current project."""
+"""zfr-rename — rename zephyr project and example puff names."""
 
 from __future__ import annotations
 
@@ -12,17 +12,18 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zephyr_lib.commands import cmd_remove  # noqa: E402
+from zfr_lib.commands import cmd_rename  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
-        prog="zephyr-remove",
-        description="Remove puff files for NAME(s) from the current project.",
+        prog="zfr-rename",
+        description="Rename zephyr → ProjectName and some_puff1 → Example names.",
     )
-    p.add_argument("puff_names", nargs="+", help="puff name(s) to remove")
+    p.add_argument("project_name", help="new project name")
+    p.add_argument("puff_names", nargs="*", help="example puff names to rename to")
     args = p.parse_args(argv)
-    cmd_remove(list(args.puff_names))
+    cmd_rename(args.project_name, list(args.puff_names))
     return 0
 
 

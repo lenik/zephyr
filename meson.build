@@ -4,7 +4,7 @@ project(
         'sh',
         '-c', '''
         v=$(
-            command -v zephyr >/dev/null 2>&1 && zephyr version 2>/dev/null || true
+            command -v zfr >/dev/null 2>&1 && zfr version 2>/dev/null || true
         )
         if [ -z "$v" ] && [ -f VERSION ]; then
             v=$(head -n1 VERSION | tr -d '\r')
@@ -95,16 +95,16 @@ endforeach
 # Python implementation under <pkgdatadir>/tools/
 install_data(
     [
-        'tools/zephyr',
-        'tools/zephyr-create',
-        'tools/zephyr-rename',
-        'tools/zephyr-add',
-        'tools/zephyr-remove',
-        'tools/zephyr-about',
-        'tools/zephyr-version',
-        'tools/zephyr-lint',
-        'tools/zephyr-dist',
-        'tools/zephyr-ize',
+        'tools/zfr',
+        'tools/zfr-create',
+        'tools/zfr-rename',
+        'tools/zfr-add',
+        'tools/zfr-remove',
+        'tools/zfr-about',
+        'tools/zfr-version',
+        'tools/zfr-lint',
+        'tools/zfr-dist',
+        'tools/zfr-ize',
     ],
     install_dir: pkgdatadir / 'tools',
     install_mode: 'rwxr-xr-x',
@@ -112,41 +112,41 @@ install_data(
 
 install_data(
     [
-        'tools/zephyr_lib/__init__.py',
-        'tools/zephyr_lib/commands.py',
-        'tools/zephyr_lib/about.py',
-        'tools/zephyr_lib/csr.py',
-        'tools/zephyr_lib/lint.py',
-        'tools/zephyr_lib/dist.py',
-        'tools/zephyr_lib/ize.py',
+        'tools/zfr_lib/__init__.py',
+        'tools/zfr_lib/commands.py',
+        'tools/zfr_lib/about.py',
+        'tools/zfr_lib/csr.py',
+        'tools/zfr_lib/lint.py',
+        'tools/zfr_lib/dist.py',
+        'tools/zfr_lib/ize.py',
     ],
-    install_dir: pkgdatadir / 'tools' / 'zephyr_lib',
+    install_dir: pkgdatadir / 'tools' / 'zfr_lib',
 )
 
 paths_cfg = configuration_data()
 paths_cfg.set_quoted('PKGDATADIR', pkgdatadir)
 configure_file(
-    input: 'tools/zephyr_lib/paths_config.py.in',
+    input: 'tools/zfr_lib/paths_config.py.in',
     output: 'paths_config.py',
     configuration: paths_cfg,
     install: true,
-    install_dir: pkgdatadir / 'tools' / 'zephyr_lib',
+    install_dir: pkgdatadir / 'tools' / 'zfr_lib',
 )
 
-# Builddir wrappers use the source tree (so ninja && ./build/zephyr picks up
+# Builddir wrappers use the source tree (so ninja && ./build/zfr picks up
 # current templates + tools without a DESTDIR install). Bindir wrappers are
 # generated in tools/ with the installed pkgdatadir.
 wrapper_names = [
-    'zephyr',
-    'zephyr-create',
-    'zephyr-rename',
-    'zephyr-add',
-    'zephyr-remove',
-    'zephyr-about',
-    'zephyr-version',
-    'zephyr-lint',
-    'zephyr-dist',
-    'zephyr-ize',
+    'zfr',
+    'zfr-create',
+    'zfr-rename',
+    'zfr-add',
+    'zfr-remove',
+    'zfr-about',
+    'zfr-version',
+    'zfr-lint',
+    'zfr-dist',
+    'zfr-ize',
 ]
 
 uninst_tool_cfg = configuration_data()
@@ -170,9 +170,9 @@ subdir('tests')
 
 # Man page for zephyr tools
 custom_target(
-    'zephyr-man',
-    input: 'docs/zephyr.adoc',
-    output: 'zephyr.1',
+    'zfr-man',
+    input: 'docs/zfr.adoc',
+    output: 'zfr.1',
     command: [
         asciidoctor,
         '-b', 'manpage',
@@ -189,9 +189,9 @@ custom_target(
 )
 
 # Bash completion (same script under several command names)
-foreach completion_name : ['zephyr', 'zephyr-create', 'zephyr-rename', 'zephyr-add', 'zephyr-remove', 'zephyr-about', 'zephyr-version', 'zephyr-lint', 'zephyr-dist', 'zephyr-ize']
+foreach completion_name : ['zfr', 'zfr-create', 'zfr-rename', 'zfr-add', 'zfr-remove', 'zfr-about', 'zfr-version', 'zfr-lint', 'zfr-dist', 'zfr-ize']
     install_data(
-        'tools/zephyr.bash',
+        'tools/zfr.bash',
         install_dir: datadir / 'bash-completion' / 'completions',
         rename: completion_name,
     )
@@ -224,12 +224,12 @@ run_target(
     ],
 )
 
-# Meson reserves the ninja target name `dist`; srcdist reuses `zephyr dist`.
+# Meson reserves the ninja target name `dist`; srcdist reuses `zfr dist`.
 run_target(
     'srcdist',
     command: [
         py,
-        files('tools/zephyr'),
+        files('tools/zfr'),
         'dist',
         '-b', meson.project_build_root(),
     ],

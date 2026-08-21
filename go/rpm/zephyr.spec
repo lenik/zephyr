@@ -1,5 +1,5 @@
-# Version is injected by rpm/Makefile via `zephyr version`.
-# RPM Version cannot contain '-'; use `zephyr version -r` (hyphens → '_').
+# Version is injected by rpm/Makefile via `zfr version`.
+# RPM Version cannot contain '-'; use `zfr version -r` (hyphens → '_').
 # srcversion is the unsanitized Meson/git version and names the tarball.
 %{!?version:%global version 0.0.0}
 %{!?srcversion:%global srcversion %{version}}
@@ -52,4 +52,4 @@ meson install -C build --destdir=%{buildroot}
 %changelog
 * Thu Aug 20 2026 Lenik <zephyr@bodz.net>
 - Align spec with debian/control (Meson, AGPL-3.0-or-later).
-- Version comes from `zephyr version`, the same method meson.build uses.
+- Version comes from `zfr version`, the same method meson.build uses.

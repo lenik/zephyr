@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zephyr-about — print current project information."""
+"""zfr-lint — validate a project against zephyr packaging style."""
 
 from __future__ import annotations
 
@@ -12,27 +12,32 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zephyr_lib.about import cmd_about  # noqa: E402
+from zfr_lib.lint import cmd_lint  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
-        prog="zephyr-about",
-        description="Print information about the current zephyr project "
-        "(walks from cwd toward parent directories). CSR colors when stdout "
-        "is a TTY. Common packaging fields are parsed from debian or RPM.",
+        prog="zfr-lint",
+        description="Check the current zephyr project for missing files and "
+        "packaging/style mistakes. Walks from cwd toward parent directories. "
+        "CSR colors when stdout is a TTY.",
     )
     p.add_argument(
-        "-d",
-        "--debian",
+        "-v",
+        "--verbose",
         action="store_true",
-        help="show parsed Debian packaging fields",
+        help="show passing checks too",
     )
     p.add_argument(
-        "-r",
-        "--redhat",
+        "-q",
+        "--quiet",
         action="store_true",
-        help="show parsed RPM packaging fields",
+        help="only print errors",
+    )
+    p.add_argument(
+        "--strict",
+        action="store_true",
+        help="treat warnings as failures (exit 1)",
     )
     p.add_argument(
         "--color",
@@ -41,8 +46,12 @@ def main(argv: list[str] | None = None) -> int:
         help="CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)",
     )
     args = p.parse_args(argv)
-    cmd_about(debian=args.debian, redhat=args.redhat, color=args.color)
-    return 0
+    return cmd_lint(
+        verbose=args.verbose,
+        quiet=args.quiet,
+        color=args.color,
+        strict=args.strict,
+    )
 
 
 if __name__ == "__main__":

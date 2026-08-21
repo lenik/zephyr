@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zephyr lint — validate a project against zephyr packaging and layout style.
+"""zfr lint — validate a project against zephyr packaging and layout style.
 
 Output is meant for humans and AI coders: each finding has a code, location,
 and a concrete fix. Interactive TTYs get CSR (console SGR) colors.
@@ -15,7 +15,7 @@ from pathlib import Path
 from . import (
     LANGS,
     TEMPLATE_PUFF,
-    _is_zephyr_meta_repo,
+    _is_zfr_meta_repo,
     changelog_version,
     detect_lang,
     find_project_dir,
@@ -57,9 +57,9 @@ def _read(path: Path) -> str:
 
 
 def _role(root: Path) -> str:
-    if _is_zephyr_meta_repo(root):
+    if _is_zfr_meta_repo(root):
         return "meta"
-    if _is_zephyr_meta_repo(root.parent):
+    if _is_zfr_meta_repo(root.parent):
         return "template"
     return "app"
 
@@ -109,7 +109,7 @@ def check_layout(root: Path, lang: str, role: str) -> list[Finding]:
         ("README.md", "README.md", "Add README.md describing this project."),
         ("README-zh.md", "README-zh.md", "Add README-zh.md (Chinese summary), matching other zephyr templates."),
         ("debian/control", "debian/control", "Add debian/ packaging (copy debian/ from the language template)."),
-        ("debian/changelog", "debian/changelog", "Add debian/changelog (zephyr create writes one; or use dch)."),
+        ("debian/changelog", "debian/changelog", "Add debian/changelog (zfr create writes one; or use dch)."),
         ("debian/copyright", "debian/copyright", "Add debian/copyright in machine-readable format, License: AGPL-3+."),
         ("debian/rules", "debian/rules", "Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."),
         ("debian/source/format", "debian/source/format", "Add debian/source/format (typically '3.0 (native)')."),
@@ -186,7 +186,7 @@ def check_layout(root: Path, lang: str, role: str) -> list[Finding]:
                 "no .githooks/pre-commit to sync VERSION from debian/changelog",
                 ".githooks/pre-commit",
                 fix="Copy .githooks/pre-commit from the zephyr tree; "
-                "`zephyr create` sets git config core.hooksPath .githooks.",
+                "`zfr create` sets git config core.hooksPath .githooks.",
             )
         )
     return out
@@ -220,7 +220,7 @@ def check_identity(root: Path, lang: str, role: str) -> list[Finding]:
                         f"{label} is {val!r}, expected {expected!r} (directory name)",
                         "meson.build" if label.startswith("meson") else "debian/control",
                         fix=f"Set {label} to {expected!r}, or rename the directory. "
-                        "Use `zephyr rename {expected}` if leftover template names remain.",
+                        "Use `zfr rename {expected}` if leftover template names remain.",
                     )
                 )
             else:
@@ -312,18 +312,18 @@ def check_meson(root: Path, lang: str) -> list[Finding]:
                 )
             )
 
-    if "zephyr version" in text:
-        out.append(Finding("ok", "meson.version_source", "version uses `zephyr version`", rel))
+    if "zfr version" in text:
+        out.append(Finding("ok", "meson.version_source", "version uses `zfr version`", rel))
     elif "git describe" in text:
         out.append(
             Finding(
                 "warn",
                 "meson.version_source",
-                "version still uses inline git describe; zephyr style is `zephyr version`",
+                "version still uses inline git describe; zephyr style is `zfr version`",
                 rel,
                 line=_line_of(text, "git describe"),
                 fix="In project(version: run_command(...)), prefer:\n"
-                "  v=$(zephyr version 2>/dev/null || true)\n"
+                "  v=$(zfr version 2>/dev/null || true)\n"
                 "  with fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY\n"
                 "See bash/meson.build in the zephyr tree.",
             )
@@ -333,9 +333,9 @@ def check_meson(root: Path, lang: str) -> list[Finding]:
             Finding(
                 "warn",
                 "meson.version_source",
-                "could not find `zephyr version` or git describe in project version",
+                "could not find `zfr version` or git describe in project version",
                 rel,
-                fix="Use `zephyr version` for project() version (see bash/meson.build).",
+                fix="Use `zfr version` for project() version (see bash/meson.build).",
             )
         )
 
@@ -553,7 +553,7 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                 "rpm.missing",
                 "no rpm/*.spec (optional, but zephyr style includes RPM next to debian/)",
                 "rpm/",
-                fix="Copy rpm/ (zephyr.spec + Makefile using `zephyr version`) from the "
+                fix="Copy rpm/ (zephyr.spec + Makefile using `zfr version`) from the "
                 "zephyr tree and rewrite names. Align Name/Summary/Requires/URL with debian/control.",
             )
         )
@@ -572,11 +572,11 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
             Finding(
                 "error",
                 "rpm.dynamic_version",
-                "spec Version is hardcoded; zephyr style injects `zephyr version`",
+                "spec Version is hardcoded; zephyr style injects `zfr version`",
                 rel,
                 line=_line_of(text, "Version:"),
                 fix="Use Version: %{version} with %{!?version:%global version 0.0.0} "
-                "and freeze via rpm/Makefile (`zephyr version` / `zephyr version -r`).",
+                "and freeze via rpm/Makefile (`zfr version` / `zfr version -r`).",
             )
         )
 
@@ -637,19 +637,19 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
         )
 
     if makefile.is_file():
-        if "zephyr version" in mk:
+        if "zfr version" in mk:
             out.append(
-                Finding("ok", "rpm.makefile.version", "Makefile uses `zephyr version`", "rpm/Makefile")
+                Finding("ok", "rpm.makefile.version", "Makefile uses `zfr version`", "rpm/Makefile")
             )
         else:
             out.append(
                 Finding(
                     "warn",
                     "rpm.makefile.version",
-                    "rpm/Makefile does not call `zephyr version`",
+                    "rpm/Makefile does not call `zfr version`",
                     "rpm/Makefile",
-                    fix="VERSION := $(shell cd \"$(SRCDIR)\" && zephyr version)\n"
-                    "RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zephyr version -r)",
+                    fix="VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
+                    "RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)",
                 )
             )
     else:
@@ -659,7 +659,7 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                 "rpm.makefile",
                 "no rpm/Makefile convenience targets",
                 "rpm/Makefile",
-                fix="Copy bash/rpm/Makefile (srpm/rpm via zephyr version).",
+                fix="Copy bash/rpm/Makefile (srpm/rpm via zfr version).",
             )
         )
 
@@ -694,7 +694,7 @@ def check_readme(root: Path, role: str) -> list[Finding]:
                         f"{name} keeps the template placeholder banner (apps must rewrite it)",
                         name,
                         line=1,
-                        fix="After `zephyr create`/`zephyr rename`, rewrite this README and remove "
+                        fix="After `zfr create`/`zfr rename`, rewrite this README and remove "
                         "the generated-from-template banner. Templates should keep this banner.",
                     )
                 )
@@ -715,8 +715,9 @@ def check_readme(root: Path, role: str) -> list[Finding]:
     return out
 
 
-# Instantiated apps still call the zephyr CLI for version/dist; those lines
-# are not leftover template names.
+# Instantiated apps call the zfr CLI for version/dist. The tool name "zfr"
+# is never a leftover template token. Legacy lines that still say
+# "zephyr version" contain the placeholder word and are exempted here.
 _ZEPHYR_CLI_LINE = re.compile(
     r"zephyr\s+version"
     r"|zephyr\s+dist"
@@ -751,7 +752,7 @@ def check_leftovers(root: Path, role: str) -> list[Finding]:
     for path in iter_files(root):
         rel = path.relative_to(root)
         parts = {rel.as_posix(), path.name}
-        if any(token.search(p) for p in parts) and "tools/zephyr" not in rel.as_posix():
+        if any(token.search(p) for p in parts) and "tools/zfr" not in rel.as_posix():
             hits += 1
             if len(samples) < 8:
                 samples.append(str(rel))
@@ -772,7 +773,7 @@ def check_leftovers(root: Path, role: str) -> list[Finding]:
                 "error",
                 "tokens.leftover",
                 f"found {hits} leftover template token(s) (zephyr/{TEMPLATE_PUFF}): {preview}{more}",
-                fix="Run `zephyr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 "
+                fix="Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 "
                 "identifiers. After create, leftover tokens mean instantiation failed.",
             )
         ]
@@ -890,7 +891,7 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
             "template.coverage",
             f"language template {lang} has extra scaffolding not in this tree: {preview}{more}",
             fix=f"Compare with the {lang} template under pkgdatadir. Copy missing debian/docs/src/rpm "
-            "files, or `zephyr add` puffs. Do not copy build/ or debian leftover stamp files.",
+            "files, or `zfr add` puffs. Do not copy build/ or debian leftover stamp files.",
         )
     ]
 
@@ -964,7 +965,7 @@ def format_report(
     status_s = csr.sev("error" if failed else "ok", status)
 
     lines: list[str] = []
-    head = csr.wrap("zephyr lint", csr.bold)
+    head = csr.wrap("zfr lint", csr.bold)
     lines.append(
         f"{head}: {root}  name={name}  lang={lang}  role={role}"
     )
@@ -986,10 +987,10 @@ def format_report(
         for item in (
             "License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License).",
             "Build with Meson; debian/rules uses dh --buildsystem=meson --builddirectory=debian/build.",
-            "project() version from `zephyr version`; keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY.",
+            "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY.",
             "Man pages: docs/*.adoc + asciidoctor -b manpage; install bash-completion.",
             "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional rpm/ aligned with debian.",
-            "Apps: `zephyr rename <dir>` then `zephyr add <puff>`; VERSION matches debian/changelog (git describe may differ).",
+            "Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ).",
         ):
             lines.append(f"  - {item}")
     lines.append("")
@@ -1025,9 +1026,9 @@ def format_report(
             lines.append("")
         lines.append(
             csr.wrap(
-                "Hint: after edits, re-run `zephyr lint` from the project (or a subdirectory). "
-                "`zephyr about -d -r` dumps packaging fields. Version for Meson/RPM is `zephyr version`. "
-                "`zephyr ize` applies missing debian/rpm/meson/man/version-subst upgrades.",
+                "Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). "
+                "`zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. "
+                "`zfr ize` applies missing debian/rpm/meson/man/version-subst upgrades.",
                 csr.dim,
             )
         )

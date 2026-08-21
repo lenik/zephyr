@@ -5,7 +5,7 @@ project(
         'sh',
         '-c', '''
         v=$(
-            command -v zephyr >/dev/null 2>&1 && zephyr version 2>/dev/null || true
+            command -v zfr >/dev/null 2>&1 && zfr version 2>/dev/null || true
         )
         if [ -z "$v" ] && [ -f VERSION ]; then
             v=$(head -n1 VERSION | tr -d '\r')

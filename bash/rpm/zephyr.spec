@@ -1,5 +1,5 @@
-# Version is injected by rpm/Makefile via `zephyr version`.
-# RPM Version cannot contain '-'; use `zephyr version -r` (hyphens → '_').
+# Version is injected by rpm/Makefile via `zfr version`.
+# RPM Version cannot contain '-'; use `zfr version -r` (hyphens → '_').
 # srcversion is the unsanitized Meson/git version and names the tarball.
 %{!?version:%global version 0.0.0}
 %{!?srcversion:%global srcversion %{version}}

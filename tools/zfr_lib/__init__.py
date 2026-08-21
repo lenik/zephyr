@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""Shared helpers for the zephyr CLI tools."""
+"""Shared helpers for the zfr CLI tools (zephyr template collection)."""
 
 from __future__ import annotations
 
@@ -111,6 +111,7 @@ def instantiation_pairs(
     if puff:
         pairs.extend(replacement_pairs(TEMPLATE_PUFF, puff))
     if project and project != "zephyr":
+        # Template placeholder is still "zephyr"; CLI name "zfr" is never rewritten.
         pairs.extend(replacement_pairs("zephyr", project))
     return pairs
 
@@ -125,7 +126,7 @@ def _relative_skip_parts(path: Path, root: Path) -> bool:
 
 
 def pkgdatadir() -> Path:
-    env = os.environ.get("ZEPHYR_PKGDATADIR")
+    env = os.environ.get("ZFR_PKGDATADIR") or os.environ.get("ZEPHYR_PKGDATADIR")
     if env:
         return Path(env)
 
@@ -137,8 +138,8 @@ def pkgdatadir() -> Path:
         pass
 
     here = Path(__file__).resolve()
-    # tools/zephyr_lib → repo root when running from the source tree
-    source_root = here.parents[2] if here.parent.name == "zephyr_lib" else here.parents[1]
+    # tools/zfr_lib → repo root when running from the source tree
+    source_root = here.parents[2] if here.parent.name == "zfr_lib" else here.parents[1]
     has_c_family = (source_root / "clib" / "meson.build").is_file() or (
         source_root / "c" / "meson.build"
     ).is_file()
@@ -233,7 +234,7 @@ def rewrite_tree(
     return files_changed, renamed
 
 
-def _is_zephyr_meta_repo(root: Path) -> bool:
+def _is_zfr_meta_repo(root: Path) -> bool:
     """True if root is the multi-language zephyr template meta-repo."""
     present = [
         lang for lang in ("c", "clib", "python", "rust") if (root / lang).is_dir()
@@ -255,8 +256,8 @@ def _is_zephyr_meta_repo(root: Path) -> bool:
         # Heuristic: foreach lang : template_langs / install_subdir(lang, ...)
         if "foreach lang" in txt or "pkgdatadir" in txt:
             return True
-    # Multiple language template dirs plus tools/zephyr CLI.
-    if (root / "tools" / "zephyr").is_file() and sum(
+    # Multiple language template dirs plus tools/zfr CLI.
+    if (root / "tools" / "zfr").is_file() and sum(
         1 for lang in LANGS if (root / lang / "meson.build").is_file()
     ) >= 3:
         return True
@@ -474,11 +475,11 @@ def detect_lang(workdir: Path | None = None) -> str:
     """Detect zephyr template language from project files in workdir."""
     root = find_project_dir(workdir)
 
-    if _is_zephyr_meta_repo(root):
+    if _is_zfr_meta_repo(root):
         raise SystemExit(
             f"{root} looks like the zephyr meta-repo root "
             "(multiple language templates). "
-            "Run zephyr from a language project directory "
+            "Run zfr from a language project directory "
             "(e.g. clib/, cpp/, cpplib/, c/, bash/, perl/, ruby/, python/, rust/), "
             "not the repository root."
         )

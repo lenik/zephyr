@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zephyr about — project summary for the console (and AI coders)."""
+"""zfr about — project summary for the console (and AI coders)."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 from . import (
-    _is_zephyr_meta_repo,
+    _is_zfr_meta_repo,
     detect_lang,
     find_project_dir,
     is_probably_text,
@@ -260,7 +260,7 @@ def _project_stats(root: Path, lang: str) -> dict[str, str]:
             payload = True
         elif rel.suffix == ".bash" and len(rel.parts) == 1:
             payload = True
-        elif _is_zephyr_meta_repo(root) and rel.parts and rel.parts[0] not in {"debian", "rpm"}:
+        elif _is_zfr_meta_repo(root) and rel.parts and rel.parts[0] not in {"debian", "rpm"}:
             payload = True
         if payload:
             payload_bytes += size
@@ -362,7 +362,7 @@ def _rpm_rows(root: Path, spec_path: Path, spec: dict[str, str], version: str) -
         rel = str(spec_path)
     ver = spec.get("Version") or ""
     if "%{" in ver or not ver:
-        ver = f"{rpm_compatible_version(version)}  (from zephyr version)"
+        ver = f"{rpm_compatible_version(version)}  (from zfr version)"
     return [
         ("Spec", rel),
         ("Name", spec.get("Name") or ""),
@@ -410,7 +410,7 @@ def cmd_about(
     spec = _parse_spec(_read(spec_path)) if spec_path else {}
 
     name = src.get("Source") or spec.get("Name") or meson.get("name") or root.name
-    if _is_zephyr_meta_repo(root):
+    if _is_zfr_meta_repo(root):
         lang = "meta"
     else:
         try:
@@ -426,7 +426,7 @@ def cmd_about(
 
     csr = Csr(color)
     cols = term_columns()
-    head = csr.wrap("zephyr about", csr.bold)
+    head = csr.wrap("zfr about", csr.bold)
     sys.stdout.write(f"{head}  {csr.wrap(str(root), csr.dim)}\n")
 
     common = _common_rows(

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zephyr dist — source tarball for meson and RPM."""
+"""zfr dist — source tarball for meson and RPM."""
 
 from __future__ import annotations
 
@@ -166,7 +166,7 @@ def resolve_builddir(root: Path, explicit: Path | None) -> Path:
 
 def ensure_meson_setup(root: Path, builddir: Path) -> None:
     if shutil.which("meson") is None:
-        raise SystemExit("zephyr dist: meson not found on PATH")
+        raise SystemExit("zfr dist: meson not found on PATH")
     info = builddir / "meson-info" / "meson-info.json"
     cmd = ["meson", "setup"]
     if info.is_file():
@@ -175,7 +175,7 @@ def ensure_meson_setup(root: Path, builddir: Path) -> None:
     print(f"meson setup {builddir}", file=sys.stderr)
     proc = subprocess.run(cmd)
     if proc.returncode != 0:
-        raise SystemExit(f"zephyr dist: meson setup failed ({proc.returncode})")
+        raise SystemExit(f"zfr dist: meson setup failed ({proc.returncode})")
 
 
 def _meson_dist(
@@ -194,17 +194,17 @@ def _meson_dist(
     print(" ".join(cmd), file=sys.stderr)
     proc = subprocess.run(cmd)
     if proc.returncode != 0:
-        raise SystemExit(f"zephyr dist: meson dist failed ({proc.returncode})")
+        raise SystemExit(f"zfr dist: meson dist failed ({proc.returncode})")
     dist_dir = builddir / "meson-dist"
     if not dist_dir.is_dir():
-        raise SystemExit(f"zephyr dist: missing {dist_dir}")
+        raise SystemExit(f"zfr dist: missing {dist_dir}")
     matches = sorted(
         [p for p in dist_dir.iterdir() if p.is_file() and p.name.endswith(suffix)],
         key=lambda p: p.stat().st_mtime,
         reverse=True,
     )
     if not matches:
-        raise SystemExit(f"zephyr dist: no {suffix} in {dist_dir}")
+        raise SystemExit(f"zfr dist: no {suffix} in {dist_dir}")
     return matches[0]
 
 
@@ -225,7 +225,7 @@ def _directory_archive(
     dest.parent.mkdir(parents=True, exist_ok=True)
     if dest.exists():
         dest.unlink()
-    with tempfile.TemporaryDirectory(prefix="zephyr-dist-") as tmp:
+    with tempfile.TemporaryDirectory(prefix="zfr-dist-") as tmp:
         inner = Path(tmp) / inner_dir
         shutil.copytree(
             root,
@@ -250,7 +250,7 @@ def _directory_archive(
             check=False,
         )
         if proc.returncode != 0:
-            raise SystemExit("zephyr dist: tar (write archive) failed")
+            raise SystemExit("zfr dist: tar (write archive) failed")
 
 
 def _place_archive(produced: Path, dest: Path) -> Path:
@@ -272,7 +272,7 @@ def cmd_dist(
 ) -> int:
     """Build a source tarball (meson dist, or a project-only archive)."""
     if fmt not in _FORMATS:
-        raise SystemExit(f"zephyr dist: unknown format {fmt!r} (xz, gz, zip)")
+        raise SystemExit(f"zfr dist: unknown format {fmt!r} (xz, gz, zip)")
     root = resolve_root(workdir, builddir)
     name = _project_name(root)
     version = project_version(root)

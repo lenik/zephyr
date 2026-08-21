@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zephyr create / rename / add / remove command implementations."""
+"""zfr create / rename / add / remove command implementations."""
 
 from __future__ import annotations
 
@@ -127,7 +127,7 @@ def _githooks_pre_commit_src() -> Path | None:
         pkgdatadir() / ".githooks" / "pre-commit",
     ]
     here = Path(__file__).resolve()
-    if here.parent.name == "zephyr_lib":
+    if here.parent.name == "zfr_lib":
         repo = here.parents[2]
         candidates.extend(
             [
@@ -229,7 +229,7 @@ def cmd_create(
 
     if not first:
         # Drop template puff *files* only; leave content tokens so a later
-        # `zephyr add NAME` can rename some_puff1 → NAME in place.
+        # `zfr add NAME` can rename some_puff1 → NAME in place.
         cmd_remove([TEMPLATE_PUFF], workdir=dest)
     else:
         for name in rest:
@@ -324,7 +324,7 @@ def cmd_version(
 ) -> None:
     """Print the current project version (walks parents from cwd)."""
     if git and changelog:
-        raise SystemExit("zephyr version: use only one of --git and --changelog")
+        raise SystemExit("zfr version: use only one of --git and --changelog")
     source = "git" if git else "changelog" if changelog else None
     print(project_version(workdir, source=source, rpm=rpm), flush=True)
 

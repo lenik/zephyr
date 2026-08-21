@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zephyr — multi-language CLI project template helper.
+"""zfr — multi-language CLI project template helper.
 
 Usage:
-  zephyr create [-l LANG] [-D DIST] [-1 VER] [-a AUTHOR] [-e EMAIL]
+  zfr create [-l LANG] [-D DIST] [-1 VER] [-a AUTHOR] [-e EMAIL]
                 PROJECT_NAME [PUFF_NAME ...]
-  zephyr rename PROJECT_NAME [PUFF_NAME ...]
-  zephyr add PUFF_NAME [PUFF_NAME ...]
-  zephyr remove PUFF_NAME [PUFF_NAME ...]
-  zephyr about [-d] [-r] [--color WHEN]
-  zephyr version [-g] [-c] [-r]
-  zephyr lint [-v] [-q] [--strict] [--color WHEN]
-  zephyr dist [-o DIR] [-b DIR] [-f FMT] [--rpm] [--allow-dirty|--no-allow-dirty]
+  zfr rename PROJECT_NAME [PUFF_NAME ...]
+  zfr add PUFF_NAME [PUFF_NAME ...]
+  zfr remove PUFF_NAME [PUFF_NAME ...]
+  zfr about [-d] [-r] [--color WHEN]
+  zfr version [-g] [-c] [-r]
+  zfr lint [-v] [-q] [--strict] [--color WHEN]
+  zfr dist [-o DIR] [-b DIR] [-f FMT] [--rpm] [--allow-dirty|--no-allow-dirty]
               [--tests]
-  zephyr ize [-l LANG] [-n] [-v] [--no-man] [--no-subst] [--color WHEN]
-  zephyr detect
-  zephyr help
+  zfr ize [-l LANG] [-n] [-v] [--no-man] [--no-subst] [--color WHEN]
+  zfr detect
+  zfr help
+
+The CLI is named zfr. Instantiated projects should keep calling zfr
+(version/lint/dist/ize). zfr is not rewritten by create/rename; the
+template placeholder remains zephyr (and some_puff1 for sample puffs).
 """
 
 from __future__ import annotations
@@ -29,11 +33,11 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zephyr_lib import LANGS, detect_lang, pkgdatadir  # noqa: E402
-from zephyr_lib.about import cmd_about  # noqa: E402
-from zephyr_lib.dist import add_dist_arguments, cmd_dist  # noqa: E402
-from zephyr_lib.ize import cmd_ize  # noqa: E402
-from zephyr_lib.commands import (  # noqa: E402
+from zfr_lib import LANGS, detect_lang, pkgdatadir  # noqa: E402
+from zfr_lib.about import cmd_about  # noqa: E402
+from zfr_lib.dist import add_dist_arguments, cmd_dist  # noqa: E402
+from zfr_lib.ize import cmd_ize  # noqa: E402
+from zfr_lib.commands import (  # noqa: E402
     DEFAULT_AUTHOR,
     DEFAULT_DISTRIBUTION,
     DEFAULT_EMAIL,
@@ -44,15 +48,19 @@ from zephyr_lib.commands import (  # noqa: E402
     cmd_rename,
     cmd_version,
 )
-from zephyr_lib.lint import cmd_lint  # noqa: E402
+from zfr_lib.lint import cmd_lint  # noqa: E402
 
-__version__ = "1.5.0"
+__version__ = "1.6.0"
 
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
-        prog="zephyr",
-        description="Zephyr template helper: create projects and manage example puffs.",
+        prog="zfr",
+        description=(
+            "Zephyr template helper (CLI name: zfr). "
+            "Create projects and manage example puffs. "
+            "Instantiated trees keep calling zfr; zfr is not a rename token."
+        ),
     )
     p.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     sub = p.add_subparsers(dest="cmd", required=True)

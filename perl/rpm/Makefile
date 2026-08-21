@@ -4,8 +4,8 @@
 #   make srpm    # source RPM
 #   make rpm     # binary RPM
 #
-# Version comes from `zephyr version` (same as meson.build).
-# Dist reuses `zephyr dist --rpm` (meson dist at the git root, else a
+# Version comes from `zfr version` (same as meson.build).
+# Dist reuses `zfr dist --rpm` (meson dist at the git root, else a
 # project-only tarball for nested language templates). Extra flags:
 #   make dist DIST_FLAGS='-b /other/build'
 
@@ -14,9 +14,9 @@ SRCDIR  := $(abspath ..)
 TOPDIR  ?= $(abspath $(SRCDIR)/rpmbuild)
 DIST_FLAGS ?=
 
-# Version via `zephyr version` (git describe / changelog / VERSION / 0.0.0).
-# zephyr is expected on PATH; fall back to VERSION then 0.0.0.
-VERSION := $(shell cd "$(SRCDIR)" && { zephyr version 2>/dev/null || true; })
+# Version via `zfr version` (git describe / changelog / VERSION / 0.0.0).
+# zfr is expected on PATH; fall back to VERSION then 0.0.0.
+VERSION := $(shell cd "$(SRCDIR)" && { zfr version 2>/dev/null || true; })
 ifeq ($(strip $(VERSION)),)
 VERSION := $(shell head -n1 "$(SRCDIR)/VERSION" 2>/dev/null)
 endif
@@ -24,7 +24,7 @@ VERSION := $(patsubst v%,%,$(strip $(VERSION)))
 ifeq ($(strip $(VERSION)),)
 VERSION := 0.0.0
 endif
-RPM_VERSION := $(shell cd "$(SRCDIR)" && { zephyr version -r 2>/dev/null || true; })
+RPM_VERSION := $(shell cd "$(SRCDIR)" && { zfr version -r 2>/dev/null || true; })
 ifeq ($(strip $(RPM_VERSION)),)
 RPM_VERSION := $(subst -,_,$(VERSION))
 endif
@@ -42,17 +42,17 @@ all: rpm
 version:
 	@echo $(VERSION)
 
-# Prefer source-tree tools/zephyr (meta-repo bootstrap); else zephyr on PATH.
+# Prefer source-tree tools/zephyr (meta-repo bootstrap); else zfr on PATH.
 dist:
 	mkdir -p $(TOPDIR)/SOURCES $(TOPDIR)/SPECS
 	@set -e; \
 	cd "$(SRCDIR)"; \
 	if [ -f tools/zephyr ]; then \
-		python3 tools/zephyr dist --rpm -o "$(TOPDIR)/SOURCES" $(DIST_FLAGS); \
-	elif command -v zephyr >/dev/null 2>&1; then \
-		zephyr dist --rpm -o "$(TOPDIR)/SOURCES" $(DIST_FLAGS); \
+		python3 tools/zfr dist --rpm -o "$(TOPDIR)/SOURCES" $(DIST_FLAGS); \
+	elif command -v zfr >/dev/null 2>&1; then \
+		zfr dist --rpm -o "$(TOPDIR)/SOURCES" $(DIST_FLAGS); \
 	else \
-		echo "zephyr dist: zephyr not found on PATH" >&2; \
+		echo "zfr dist: zfr not found on PATH" >&2; \
 		exit 1; \
 	fi
 

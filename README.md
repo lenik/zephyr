@@ -2,9 +2,12 @@
 
 Multi-language CLI project templates and helper tools.
 
-`zephyr` installs language templates under `/usr/share/zephyr/<lang>/` and
+`zfr` installs language templates under `/usr/share/zephyr/<lang>/` and
 ships cmdline tools to create projects and manage example applications
-(**puffs**).
+(**puffs**). Instantiated projects should keep using **`zfr`** on PATH
+(`zfr version`, `zfr lint`, …). The tool name **`zfr` is not** a
+create/rename magic token; the placeholder that *is* rewritten remains
+**`zephyr`** (and **`some_puff1`** for sample puffs).
 
 ## Install
 
@@ -27,9 +30,9 @@ Build and install from the source tree with the usual `dpkg-buildpackage` /
 | Path | Purpose |
 |------|---------|
 | `/usr/share/zephyr/<lang>/` | Language template tree |
-| `/usr/bin/zephyr` | Main CLI (`create`, `rename`, `add`, `remove`, `about`, `version`, `lint`, `dist`, `ize`, `detect`) |
-| `/usr/bin/zephyr-{create,rename,add,remove,about,version,lint,dist,ize}` | Thin wrappers |
-| `man 1 zephyr` | Manual page |
+| `/usr/bin/zfr` | Main CLI (`create`, `rename`, `add`, `remove`, `about`, `version`, `lint`, `dist`, `ize`, `detect`) |
+| `/usr/bin/zfr-{create,rename,add,remove,about,version,lint,dist,ize}` | Thin wrappers |
+| `man 1 zfr` | Manual page |
 
 Supported languages include: **bash**, **c**, **clib**, **cpp**, **cpplib**, **csharp**, **erlang**,
 **go**, **haskell**, **java**, **perl**, **python**, **ruby**, **rust**, **smalltalk**,
@@ -38,9 +41,9 @@ Supported languages include: **bash**, **c**, **clib**, **cpp**, **cpplib**, **c
 ## Quick start
 
 ```bash
-zephyr create -l python myproj
+zfr create -l python myproj
 cd myproj
-zephyr add myapp
+zfr add myapp
 ```
 
 `create` copies the template into `./myproj/`, renames the project from
@@ -51,15 +54,15 @@ It also writes `debian/changelog` and an initial git commit/tag using defaults
 immediately:
 
 ```bash
-zephyr create -l c widgets hello world
+zfr create -l c widgets hello world
 ```
 
-Then use `zephyr add` / `zephyr remove` for more puffs (multiple names allowed).
-`zephyr lint` checks the tree against zephyr packaging style (missing files,
+Then use `zfr add` / `zfr remove` for more puffs (multiple names allowed).
+`zfr lint` checks the tree against zephyr packaging style (missing files,
 Meson/Debian/RPM mistakes, leftover template tokens) and prints fixes; colors
-on a TTY. `zephyr dist` builds a source tarball (`meson dist` at the git
+on a TTY. `zfr dist` builds a source tarball (`meson dist` at the git
 root, otherwise this project only) and is what `rpm/Makefile` and
-`ninja srcdist` use. `zephyr ize` upgrades an existing tree to current
+`ninja srcdist` use. `zfr ize` upgrades an existing tree to current
 zephyr style (missing debian/rpm files, meson targets, AsciiDoc man
 pages, Meson version substitutions).
 
@@ -75,11 +78,11 @@ meson test -C /build
 Meson runs `python3 -m unittest discover` on `tests/test_*.py`. The suite
 creates temporary example projects and exercises the CLI (`create`, `add`,
 `remove`, `rename`, `about`, `version`, `lint`, `dist`, `ize`, `detect`).
-Set `ZEPHYR_PKGDATADIR` to the source root and `PYTHONPATH` to `tools/`
+Set `ZFR_PKGDATADIR` to the source root and `PYTHONPATH` to `tools/`
 when running the tests without Meson.
 
 ## See also
 
-- `man 1 zephyr`
+- `man 1 zfr`
 - Per-language `README.md` inside each template directory
 - Chinese summary: [README-zh.md](README-zh.md)
