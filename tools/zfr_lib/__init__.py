@@ -387,19 +387,16 @@ def _is_cpplib_project(root: Path, meson_txt: str, control_txt: str = "") -> boo
 
 
 def find_project_dir(start: Path | None = None) -> Path:
-    """Walk from *start* (cwd) toward / for a Meson ``project()`` or debian/control."""
-    cur = (start or Path.cwd()).resolve()
-    for d in [cur, *cur.parents]:
-        meson = d / "meson.build"
-        if meson.is_file():
-            head = meson.read_text(encoding="utf-8", errors="ignore")[:4000]
-            if re.search(r"^\s*project\s*\(", head, re.M):
-                return d
-        if (d / "debian" / "control").is_file():
-            return d
-    raise SystemExit(
-        f"could not find a zephyr project directory at or above {cur}"
-    )
+    """Resolve the package directory (monorepo-aware).
+
+    Prefer the nearest *packagedir* with zephyr shape over climbing to a
+    multi-language *repodir* (meta-repo root). Standalone repos return the
+    same path for package and repo.
+    """
+    from .shape import find_packagedir
+
+    return find_packagedir(start)
+
 
 
 def _git_available(root: Path) -> bool:

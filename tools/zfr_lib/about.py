@@ -428,6 +428,18 @@ def cmd_about(
     cols = term_columns()
     head = csr.wrap("zfr about", csr.bold)
     sys.stdout.write(f"{head}  {csr.wrap(str(root), csr.dim)}\n")
+    try:
+        from .shape import resolve_layout, shape_score
+
+        layout = resolve_layout(root)
+        if layout.is_monorepo:
+            sys.stdout.write(
+                f"  packagedir: {layout.packagedir}\n"
+                f"  repodir:    {layout.repodir}\n"
+                f"  shape:      {shape_score(layout.packagedir)}\n"
+            )
+    except SystemExit:
+        pass
 
     common = _common_rows(
         name=name,

@@ -59,11 +59,16 @@ def _read(path: Path) -> str:
 
 
 def _role(root: Path) -> str:
-    if _is_zfr_meta_repo(root):
-        return "meta"
-    if _is_zfr_meta_repo(root.parent):
-        return "template"
-    return "app"
+    from .shape import resolve_layout
+
+    try:
+        return resolve_layout(root).role
+    except SystemExit:
+        if _is_zfr_meta_repo(root):
+            return "meta"
+        if _is_zfr_meta_repo(root.parent):
+            return "template"
+        return "app"
 
 
 def _control(root: Path) -> tuple[dict[str, str], dict[str, str], str]:
