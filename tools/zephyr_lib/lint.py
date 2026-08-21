@@ -715,6 +715,27 @@ def check_readme(root: Path, role: str) -> list[Finding]:
     return out
 
 
+# Instantiated apps still call the zephyr CLI for version/dist; those lines
+# are not leftover template names.
+_ZEPHYR_CLI_LINE = re.compile(
+    r"zephyr\s+version"
+    r"|zephyr\s+dist"
+    r"|zephyr\s+is expected"
+    r"|zephyr\s+on PATH"
+    r"|zephyr not found"
+    r"|command\s+-v\s+zephyr"
+    r"|tools/zephyr"
+    r"|`zephyr\s+",
+    re.I,
+)
+
+
+def _leftover_line(line: str, token: re.Pattern[str]) -> bool:
+    if not token.search(line):
+        return False
+    return not _ZEPHYR_CLI_LINE.search(line)
+
+
 def check_leftovers(root: Path, role: str) -> list[Finding]:
     if role != "app":
         return [
@@ -730,7 +751,7 @@ def check_leftovers(root: Path, role: str) -> list[Finding]:
     for path in iter_files(root):
         rel = path.relative_to(root)
         parts = {rel.as_posix(), path.name}
-        if any(token.search(p) for p in parts):
+        if any(token.search(p) for p in parts) and "tools/zephyr" not in rel.as_posix():
             hits += 1
             if len(samples) < 8:
                 samples.append(str(rel))
@@ -738,7 +759,7 @@ def check_leftovers(root: Path, role: str) -> list[Finding]:
             continue
         text = _read(path)
         for i, line in enumerate(text.splitlines(), 1):
-            if token.search(line):
+            if _leftover_line(line, token):
                 hits += 1
                 if len(samples) < 8:
                     samples.append(f"{rel}:{i}")
