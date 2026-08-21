@@ -77,6 +77,14 @@ tree when running an uninstalled builddir wrapper such as *build/zfr*
 *some_puff1*; pass puff names on the *create* command line to instantiate them,
 or omit them for an empty project.
 
+*i18n*::
+  Zephyr style recommends gettext coverage for at least:
+  *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
+  *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
+  (aliases *zh-cn* / *zh-tw*). English (*en*) is the source *msgid* language
+  and is not listed in *po/LINGUAS*. List those locales in *po/LINGUAS* and
+  ship matching *po/<locale>.po* files.
+
 == Commands
 
 *create*::
@@ -132,6 +140,8 @@ or omit them for an empty project.
   Reports missing files, identity mismatches, Meson/Debian/RPM mistakes,
   leftover *zephyr* / *some_puff1* tokens in instantiated apps, and suggested
   fixes. Mentions of *zfr* are expected and are not treated as leftovers.
+  When *po/* is present, warns if *LINGUAS* does not cover the recommended
+  gettext locale set (see *i18n* under Description).
   Output is meant for humans and AI coders: each finding has a code,
   path, and a concrete fix. Interactive terminals use CSR (console SGR)
   colors unless *NO_COLOR* is set.

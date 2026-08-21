@@ -60,6 +60,10 @@ Meson runs a Java smoke/unit test (`TestCommonLib`) in `meson test`.
 
 `some_puff1` uses gettext catalogs under `po/` (`*.po` + generated `.mo` files).
 
+Zephyr style recommends `po/LINGUAS` cover at least: **ar bn de es fr hi id it
+ja ko pt ru sv ta te th tr ur vi zh_CN zh_TW** (English is the msgid source;
+`zh-cn`/`zh-tw` map to `zh_CN`/`zh_TW`).
+
 - Installed runtime loads translations from system locale dir.
 - Dev runtime (`/build/some_puff1`) prefers project-local translations from `/build/po` if present.
 

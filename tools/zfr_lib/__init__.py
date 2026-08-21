@@ -34,6 +34,34 @@ LANGS = (
     "typescript",
 )
 
+# Zephyr style: gettext catalogs should cover at least these locales.
+# English (en) is the source msgid language and is not listed in LINGUAS.
+# User-facing aliases zh-cn / zh-tw map to gettext zh_CN / zh_TW.
+RECOMMENDED_I18N_SOURCE = "en"
+RECOMMENDED_I18N_LINGUAS = (
+    "ar",
+    "bn",
+    "de",
+    "es",
+    "fr",
+    "hi",
+    "id",
+    "it",
+    "ja",
+    "ko",
+    "pt",
+    "ru",
+    "sv",
+    "ta",
+    "te",
+    "th",
+    "tr",
+    "ur",
+    "vi",
+    "zh_CN",
+    "zh_TW",
+)
+
 SKIP_DIR_NAMES = {
     ".git",
     ".hg",

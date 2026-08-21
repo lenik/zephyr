@@ -83,6 +83,10 @@ meson test -C /build
 
 `some_puff1` uses gettext (GNU, via the `gettext-rs` crate) and translations under `po/`.
 
+Zephyr style recommends `po/LINGUAS` cover at least: **ar bn de es fr hi id it
+ja ko pt ru sv ta te th tr ur vi zh_CN zh_TW** (English is the msgid source;
+`zh-cn`/`zh-tw` map to `zh_CN`/`zh_TW`).
+
 - At runtime, `ZEPHYR_LOCALEDIR` overrides the locale base directory. If it is not set, the
   binary also tries `build/po` (for a Meson build tree) or falls back to `/usr/local/share/locale`.
 - Installed systems load translations from the system locale path like other gettext apps.

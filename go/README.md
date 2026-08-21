@@ -45,6 +45,10 @@ meson test -C /build
 
 ## i18n (GNU gettext .po)
 
+Zephyr style recommends `po/LINGUAS` cover at least: **ar bn de es fr hi id it
+ja ko pt ru sv ta te th tr ur vi zh_CN zh_TW** (English is the msgid source;
+`zh-cn`/`zh-tw` map to `zh_CN`/`zh_TW`).
+
 Runtime loads the catalog named `LANGUAGE` / `LC_*` (see `internal/i18n/locale.go`) and picks
 `po/<lang>.po` from the **embedded** copy in the `po` package. No system locale path is
 required to ship a translated binary, but the usual `LANGUAGE=ja` style testing still works

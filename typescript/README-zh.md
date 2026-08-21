@@ -94,6 +94,10 @@ Meson 调用 `tsc` 编译，并对生成的测试文件执行 `node --test`。
 
 `some_puff1` 使用 `po/` 下的 gettext 翻译文件（`*.po` 与生成的 `.mo` 文件）。
 
+Zephyr 风格建议 `po/LINGUAS` 至少包含：**ar bn de es fr hi id it ja ko pt ru sv
+ta te th tr ur vi zh_CN zh_TW**（英文为 msgid 源语言；`zh-cn`/`zh-tw` 对应
+`zh_CN`/`zh_TW`）。
+
 - 安装后运行时从系统 locale 目录加载翻译。
 - 开发态运行（`/build/some_puff1`）若存在 `/build/po`，会优先使用项目内翻译资源。
 

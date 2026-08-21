@@ -78,6 +78,10 @@ meson test -C /build
 
 `some_puff1` 使用 `po/` 下的 gettext 翻译文件（`*.po` 与生成的 `.mo` 文件）。
 
+Zephyr 风格建议 `po/LINGUAS` 至少包含：**ar bn de es fr hi id it ja ko pt ru sv
+ta te th tr ur vi zh_CN zh_TW**（英文为 msgid 源语言；`zh-cn`/`zh-tw` 对应
+`zh_CN`/`zh_TW`）。
+
 - 运行时可用环境变量 `ZEPHYR_LOCALEDIR` 指定「localedir」根目录；未设置时程序会尝试 `build/po` 等开发路径，或回退到 `/usr/local/share/locale`。
 - 与常见 gettext 应用一样，从系统正确安装时也会从系统 locale 目录加载翻译。`ninja install-symlinks` 仅做二进制、man 与 bash 补全的符号链接，不负责安装 `.mo` 文件；完整安装请用 `meson install` 或发行版包。`POTFILES` 现为 `src/lib.rs`、`src/main.rs`。
 

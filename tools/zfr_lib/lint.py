@@ -14,6 +14,8 @@ from pathlib import Path
 
 from . import (
     LANGS,
+    RECOMMENDED_I18N_LINGUAS,
+    RECOMMENDED_I18N_SOURCE,
     TEMPLATE_PUFF,
     _is_zfr_meta_repo,
     changelog_version,
@@ -915,10 +917,112 @@ def collect_findings(root: Path) -> tuple[str, str, str, list[Finding]]:
     findings.extend(check_debian(root, lang, role))
     findings.extend(check_rpm(root, lang))
     findings.extend(check_readme(root, role))
+    findings.extend(check_i18n(root, role))
     findings.extend(check_leftovers(root, role))
     findings.extend(check_lang_bits(root, lang))
     findings.extend(check_template_gaps(root, lang, role))
     return name, lang, role, findings
+
+
+def _parse_linguas(path: Path) -> list[str]:
+    if not path.is_file():
+        return []
+    out: list[str] = []
+    for line in _read(path).splitlines():
+        line = line.split("#", 1)[0].strip()
+        if line:
+            out.append(line)
+    return out
+
+
+def check_i18n(root: Path, role: str) -> list[Finding]:
+    """Zephyr style: po/LINGUAS should cover the recommended locale set."""
+    po = root / "po"
+    if not po.is_dir():
+        if role == "meta":
+            return []
+        return [
+            Finding(
+                "note",
+                "i18n.po",
+                "no po/ directory (optional unless the project uses gettext)",
+                fix="If the app is translated, add po/ with LINGUAS + *.po and "
+                "i18n.gettext() in meson.build. Recommended locales: "
+                + ", ".join(RECOMMENDED_I18N_LINGUAS)
+                + f" (source language {RECOMMENDED_I18N_SOURCE}).",
+            )
+        ]
+
+    out: list[Finding] = []
+    linguas_path = po / "LINGUAS"
+    present = _parse_linguas(linguas_path)
+    if not present:
+        out.append(
+            Finding(
+                "warn",
+                "i18n.linguas",
+                "po/ exists but po/LINGUAS is missing or empty",
+                "po/LINGUAS",
+                fix="Create po/LINGUAS listing at least:\n"
+                + "\n".join(RECOMMENDED_I18N_LINGUAS)
+                + f"\n(English/{RECOMMENDED_I18N_SOURCE} is the msgid source and is not listed.)",
+            )
+        )
+        return out
+
+    missing = [loc for loc in RECOMMENDED_I18N_LINGUAS if loc not in present]
+    if missing:
+        out.append(
+            Finding(
+                "warn",
+                "i18n.linguas.coverage",
+                "po/LINGUAS missing recommended locale(s): " + ", ".join(missing),
+                "po/LINGUAS",
+                fix="Zephyr style recommends i18n at least includes: "
+                + ", ".join(RECOMMENDED_I18N_LINGUAS)
+                + f" (source {RECOMMENDED_I18N_SOURCE}; zh-cn→zh_CN, zh-tw→zh_TW). "
+                "Append the missing lines to LINGUAS and add matching po/<locale>.po "
+                "(msginit -i <domain>.pot -l <locale> --no-translator).",
+            )
+        )
+    else:
+        out.append(
+            Finding(
+                "ok",
+                "i18n.linguas.coverage",
+                "po/LINGUAS covers the recommended locale set",
+                "po/LINGUAS",
+            )
+        )
+
+    missing_po = [
+        loc
+        for loc in RECOMMENDED_I18N_LINGUAS
+        if loc in present and not (po / f"{loc}.po").is_file()
+    ]
+    if missing_po:
+        out.append(
+            Finding(
+                "warn",
+                "i18n.po.files",
+                "LINGUAS entries without po/<locale>.po: " + ", ".join(missing_po),
+                "po/",
+                fix="For each locale: msginit -i <domain>.pot -o po/<locale>.po "
+                "-l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot",
+            )
+        )
+    else:
+        covered = [loc for loc in RECOMMENDED_I18N_LINGUAS if (po / f"{loc}.po").is_file()]
+        if covered:
+            out.append(
+                Finding(
+                    "ok",
+                    "i18n.po.files",
+                    f"recommended locale .po files present ({len(covered)})",
+                    "po/",
+                )
+            )
+    return out
 
 
 def _next_steps(findings: list[Finding]) -> list[str]:
@@ -990,6 +1094,7 @@ def format_report(
             "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY.",
             "Man pages: docs/*.adoc + asciidoctor -b manpage; install bash-completion.",
             "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional rpm/ aligned with debian.",
+            "i18n: English source; po/LINGUAS at least ar bn de es fr hi id it ja ko pt ru sv ta te th tr ur vi zh_CN zh_TW.",
             "Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ).",
         ):
             lines.append(f"  - {item}")
