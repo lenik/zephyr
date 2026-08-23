@@ -134,7 +134,9 @@ zfr add myapp another_app
   *zfr* 的提及是预期行为，不视为残留。
   对于 *.githooks/pre-commit*，向上遍历至 *.git*，遵循 *core.hooksPath*，
   并检查 hook 是否从 *debian/changelog* 同步 *VERSION*。
-  存在 *po/* 时，若 *LINGUAS* 未覆盖推荐的 gettext locale 集合（见 Description 中的 *i18n*），则发出警告。
+  存在 *po/* 或 *docs/\*.adoc* 时，若未达到 *--l10n-level* 要求（见 Description 中的 *i18n*；默认 *L1*，可由 *.config/zfr/lint.options* 覆盖）则警告。
+  若存在 *src/commons.*（或旧名 *src/common_lib.*），提示该文件名仅为模板示例，表示应提取通用逻辑；实际项目请改为具体名称（*clib*/*cpplib* 使用 *lib.c*/*lib.cpp*）。不对这些示例模块做行数检查。
+  源文件超过 1000 行时警告过长、建议模块化；超过 600 行时提示及早准备拆分。
   输出面向人类与 AI 编码者：每项发现含代码、路径与具体修复。
   交互式终端使用 CSR 着色，除非设置了 *NO_COLOR*。
 

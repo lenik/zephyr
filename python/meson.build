@@ -53,10 +53,10 @@ some_puff1_exe = custom_target(
     install_dir: bindir,
 )
 
-common_lib_mod = custom_target(
-    'common_lib',
-    input: 'src/common_lib.py',
-    output: 'common_lib.py',
+commons_mod = custom_target(
+    'commons',
+    input: 'src/commons.py',
+    output: 'commons.py',
     command: ['cp', '@INPUT@', '@OUTPUT@'],
     build_by_default: true,
     install: true,

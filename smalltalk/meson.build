@@ -37,7 +37,7 @@ subdir('po')
 
 some_puff1 = custom_target(
     'some_puff1',
-    input: ['src/some_puff1.st', 'src/common_lib.st'],
+    input: ['src/some_puff1.st', 'src/commons.st'],
     output: 'some_puff1',
     command: [
         'bash',
@@ -57,7 +57,7 @@ some_puff1 = custom_target(
 test(
     'smalltalk-smoke',
     gst,
-    args: ['-q', meson.project_source_root() / 'tests/test_common_lib.st'],
+    args: ['-q', meson.project_source_root() / 'tests/test_commons.st'],
 )
 
 install_data(

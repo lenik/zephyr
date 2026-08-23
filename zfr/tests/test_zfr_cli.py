@@ -116,14 +116,14 @@ class ZephyrDetectTests(unittest.TestCase):
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
         self.assertIn("lang=python", proc.stdout)
         self.assertIn("role=package", proc.stdout)
-        self.assertRegex(proc.stdout, r"errors=0\s+warnings=0\s+notes=0")
+        self.assertRegex(proc.stdout, r"errors=0\s+warnings=0")
 
     def test_lint_zfr_cli_is_clean(self) -> None:
         proc = run_zephyr("lint", cwd=ROOT, check=False)
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
         self.assertIn("lang=python", proc.stdout)
         self.assertIn("role=package", proc.stdout)
-        self.assertRegex(proc.stdout, r"errors=0\s+warnings=0\s+notes=0")
+        self.assertRegex(proc.stdout, r"errors=0\s+warnings=0")
 
     def test_detect_zfr_cli_python(self) -> None:
         proc = run_zephyr("detect", cwd=ROOT)
@@ -425,6 +425,46 @@ class ZephyrLangAndI18nTests(unittest.TestCase):
         )
         self.assertEqual(proc.returncode, 0, proc.stderr)
         self.assertIn("模板助手", proc.stdout)
+
+
+class ZephyrLintSourceTests(unittest.TestCase):
+    def test_skips_example_commons_module(self) -> None:
+        from zfr_lib.lint.source_size import check_source_size
+        from zfr_lib.lint.util import is_example_shared_src
+
+        with tempfile.TemporaryDirectory(prefix="zfr-lint-src-") as tmp:
+            root = Path(tmp)
+            (root / "src").mkdir()
+            commons = root / "src" / "commons.py"
+            commons.write_text("\n".join(f"x = {i}" for i in range(800)), encoding="utf-8")
+            self.assertTrue(is_example_shared_src(root, commons))
+            findings = check_source_size(root, "app")
+            self.assertFalse(any(f.code == "source.long" for f in findings))
+
+    def test_warns_on_very_long_source(self) -> None:
+        from zfr_lib.lint.source_size import check_source_size
+
+        with tempfile.TemporaryDirectory(prefix="zfr-lint-long-") as tmp:
+            root = Path(tmp)
+            (root / "src").mkdir()
+            long = root / "src" / "big.py"
+            long.write_text("\n".join(f"x = {i}" for i in range(1100)), encoding="utf-8")
+            findings = check_source_size(root, "app")
+            warns = [f for f in findings if f.code == "source.long" and f.severity == "warn"]
+            self.assertTrue(warns)
+            self.assertIn("big.py", warns[0].file or "")
+
+    def test_notes_on_medium_source(self) -> None:
+        from zfr_lib.lint.source_size import check_source_size
+
+        with tempfile.TemporaryDirectory(prefix="zfr-lint-med-") as tmp:
+            root = Path(tmp)
+            (root / "src").mkdir()
+            med = root / "src" / "mid.py"
+            med.write_text("\n".join(f"x = {i}" for i in range(650)), encoding="utf-8")
+            findings = check_source_size(root, "app")
+            notes = [f for f in findings if f.code == "source.long" and f.severity == "note"]
+            self.assertTrue(notes)
 
 
 if __name__ == "__main__":

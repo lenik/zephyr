@@ -5,7 +5,7 @@
 
 ## Repository layout
 
-- `lib/Zephyr/` - shared class library (`.csproj` + `common_lib.cs`)
+- `lib/Zephyr/` - shared class library (`.csproj` + `commons.cs`)
 - `apps/SomePuff1/` - example console app (`SomePuff1.csproj`, `Program.cs`, `Resources/*.resx`)
 - `tests/` - C# smoke/unit tests
 - `debian/` - Debian packaging metadata
@@ -56,7 +56,7 @@ ninja -C /build
 meson test -C /build
 ```
 
-Meson runs a C# smoke/unit test from `tests/TestCommonLib.csproj`.
+Meson runs a C# smoke/unit test from `tests/TestCommons.csproj`.
 
 ## i18n (.resx)
 

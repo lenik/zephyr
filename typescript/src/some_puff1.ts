@@ -7,7 +7,7 @@
 
 import process from "node:process";
 import type { Writable } from "node:stream";
-import { copyFile, copyStream } from "./common_lib.js";
+import { copyFile, copyStream } from "./commons.js";
 import { _, initI18n } from "./i18n.js";
 
 const PROJECT_EMAIL = "zephyr@bodz.net";

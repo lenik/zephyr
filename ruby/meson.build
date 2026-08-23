@@ -35,10 +35,10 @@ mandir = prefix / get_option('mandir')
 pkgdocdir = datadir / 'doc' / meson.project_name()
 
 # Install helper module next to the executable so require_relative works.
-common_lib = custom_target(
-    'common_lib.rb',
-    input: 'src/common_lib.rb',
-    output: 'common_lib.rb',
+commons = custom_target(
+    'commons.rb',
+    input: 'src/commons.rb',
+    output: 'commons.rb',
     command: ['cp', '@INPUT@', '@OUTPUT@'],
     build_by_default: true,
     install: true,
@@ -66,7 +66,7 @@ foreach script : app_scripts
         build_by_default: true,
         install: true,
         install_dir: bindir,
-        depends: common_lib,
+        depends: commons,
     )
 endforeach
 

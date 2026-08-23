@@ -1,4 +1,4 @@
-FileStream fileIn: (File name: 'src/common_lib.st').
+FileStream fileIn: (File name: 'src/commons.st').
 
 Object subclass: SomePuff1 [
     SomePuff1 class >> tr: s [ ^s ]
@@ -27,12 +27,12 @@ Object subclass: SomePuff1 [
     SomePuff1 class >> run: args [
         ((args includes: '-h') or: [ args includes: '--help' ]) ifTrue: [ self usage. ObjectMemory quit: 0 ].
         (args includes: '--version') ifTrue: [ self versionInfo. ObjectMemory quit: 0 ].
-        args isEmpty ifTrue: [ common_lib copyStream: stdin to: stdout. ObjectMemory quit: 0 ].
+        args isEmpty ifTrue: [ commons copyStream: stdin to: stdout. ObjectMemory quit: 0 ].
         args do: [ :a |
             (a = '-') ifTrue: [
-                common_lib copyStream: stdin to: stdout
+                commons copyStream: stdin to: stdout
             ] ifFalse: [
-                [ common_lib copyFile: a to: stdout ]
+                [ commons copyFile: a to: stdout ]
                     on: SystemExceptions.FileError
                     do: [ :ex | stderr nextPutAll: 'some_puff1: '; nextPutAll: ex messageText; nl. ObjectMemory quit: 1 ]
             ]

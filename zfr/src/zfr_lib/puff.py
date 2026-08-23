@@ -6,14 +6,12 @@ from __future__ import annotations
 import re
 import shutil
 import subprocess
-import uuid
 from email.utils import formatdate
 from pathlib import Path
 
 from . import (
     LANGS,
     TEMPLATE_PUFF,
-    append_meson_list_entry,
     apply_name_replacements,
     case_variants,
     copy_renamed_file,
@@ -24,161 +22,20 @@ from . import (
     pkgdatadir,
     project_version,
     relative_to,
-    remove_meson_list_entry,
     replacement_pairs,
     rewrite_tree,
     template_dir,
 )
+from .lang import puff_source_paths as _puff_source_paths_impl
+from .lang import wire_add as _lang_wire_add
+from .lang import wire_remove as _lang_wire_remove
+
+
 def _puff_source_paths(lang: str, tmpl: Path) -> list[Path]:
     """Files/dirs in the template that belong to the example puff."""
     stem = TEMPLATE_PUFF
     pascal = case_variants(stem)["pascal"]
-    found: list[Path] = []
-
-    candidates: list[Path] = []
-    if lang == "clib":
-        candidates += [
-            tmpl / "src" / f"{stem}.c",
-            tmpl / "src" / f"{stem}.h",
-            tmpl / "tests" / f"{stem}_test.c",
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-            tmpl / "po" / f"{stem}.pot",
-        ]
-    elif lang == "c":
-        candidates += [
-            tmpl / "src" / f"{stem}.c",
-            tmpl / "tests" / f"{stem}_test.c",
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-        ]
-    elif lang == "cpp":
-        candidates += [
-            tmpl / "src" / f"{stem}.cpp",
-            tmpl / "tests" / f"{stem}_test.cpp",
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-        ]
-    elif lang == "cpplib":
-        candidates += [
-            tmpl / "src" / f"{stem}.cpp",
-            tmpl / "src" / f"{stem}.hpp",
-            tmpl / "tests" / f"{stem}_test.cpp",
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-            tmpl / "po" / f"{stem}.pot",
-        ]
-    elif lang == "bash":
-        candidates += [
-            tmpl / "src" / f"{stem}.in",
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-        ]
-    elif lang == "perl":
-        candidates += [
-            tmpl / "src" / f"{stem}.pl",
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-        ]
-    elif lang == "ruby":
-        candidates += [
-            tmpl / "src" / f"{stem}.rb",
-            tmpl / "src" / "common_lib.rb",
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-        ]
-    elif lang == "python":
-        candidates += [
-            tmpl / "src" / f"{stem}.py",
-            tmpl / "tests" / f"test_{stem}.py",
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-            tmpl / "po" / f"{stem}.pot",
-        ]
-    elif lang == "go":
-        cmd = tmpl / "cmd" / stem
-        if cmd.is_dir():
-            found.append(cmd)
-        candidates += [
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-            tmpl / "po" / f"{stem}.pot",
-        ]
-    elif lang == "csharp":
-        app = tmpl / "apps" / stem
-        if app.is_dir():
-            found.append(app)
-        candidates += [
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-        ]
-    elif lang == "rust":
-        candidates += [
-            tmpl / "src" / "main.rs",
-            tmpl / "src" / "lib.rs",
-            tmpl / "build-aux" / "cargo-build.sh",
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-            tmpl / "po" / f"{stem}.pot",
-        ]
-    elif lang == "java":
-        candidates += [
-            tmpl / "src" / "Main.java",
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-            tmpl / "po" / f"{stem}.pot",
-        ]
-    elif lang == "erlang":
-        candidates += [
-            tmpl / "src" / f"{stem}.erl",
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-            tmpl / "po" / f"{stem}.pot",
-        ]
-    elif lang == "smalltalk":
-        candidates += [
-            tmpl / "src" / f"{stem}.st",
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-            tmpl / "po" / f"{stem}.pot",
-        ]
-    elif lang == "typescript":
-        candidates += [
-            tmpl / "src" / f"{stem}.ts",
-            tmpl / "src" / f"{stem}.sh.in",
-            tmpl / "docs" / f"{stem}.adoc",
-            tmpl / f"{stem}.bash",
-            tmpl / "po" / f"{stem}.pot",
-        ]
-    elif lang in ("haskell", "swift"):
-        # Entry is Main.hs / main.swift — copy man/bash/pot and note meson wiring.
-        candidates += [
-            tmpl / f"{stem}.bash",
-            tmpl / "docs" / f"{stem}.adoc",
-            tmpl / "po" / f"{stem}.pot",
-        ]
-        if lang == "haskell":
-            candidates.append(tmpl / "src" / "Main.hs")
-        else:
-            candidates.append(tmpl / "src" / "main.swift")
-    else:
-        # Generic: anything named after the stem.
-        for path in iter_files(tmpl):
-            if stem in path.name or pascal in path.name:
-                candidates.append(path)
-
-    for c in candidates:
-        if c.exists():
-            found.append(c)
-    # Unique while preserving order
-    out: list[Path] = []
-    seen: set[Path] = set()
-    for p in found:
-        rp = p.resolve()
-        if rp not in seen:
-            seen.add(rp)
-            out.append(p)
-    return out
+    return _puff_source_paths_impl(lang, tmpl, stem, pascal)
 
 
 def _dest_for(src: Path, tmpl: Path, dest_root: Path, pairs: list[tuple[str, str]]) -> Path:
@@ -245,263 +102,13 @@ def _scrub_meson_hardcoded_puff(meson: Path, name: str, project_name: str | None
         meson.write_text(new, encoding="utf-8")
 
 
-
-def _strip_man_custom_target(meson: Path, name: str) -> None:
-    """Remove a hardcoded '{name}-man' custom_target block if present."""
-    if not meson.is_file():
-        return
-    text = meson.read_text(encoding="utf-8")
-    new = re.sub(
-        rf"\n?custom_target\(\n\s*'{re.escape(name)}-man',\n(?:.*?\n)*?\)\n",
-        "\n",
-        text,
-        count=1,
-    )
-    if new != text:
-        meson.write_text(new, encoding="utf-8")
-
-
-def _append_man_custom_target(meson: Path, name: str) -> None:
-    """Append a man-page custom_target for docs/{name}.adoc when missing."""
-    if not meson.is_file():
-        return
-    text = meson.read_text(encoding="utf-8")
-    if f"'{name}-man'" in text:
-        return
-    if "asciidoctor" not in text:
-        return
-    block = f"""
-custom_target(
-    '{name}-man',
-    input: 'docs/{name}.adoc',
-    output: '{name}.1',
-    command: [
-        asciidoctor,
-        '-b', 'manpage',
-        '-a', 'project-version=' + meson.project_version(),
-        '-a', 'project-year=@0@'.format(project_year),
-        '-a', 'project-author=' + project_author,
-        '-a', 'project-email=' + project_email,
-        '-o', '@OUTPUT@',
-        '@INPUT@',
-    ],
-    build_by_default: true,
-    install: true,
-    install_dir: mandir / 'man1',
-)
-"""
-    # Prefer before run_target / subdir('tests') / end of file.
-    for marker in ("\nsubdir('tests')", "\nrun_target(", "\ntest("):
-        idx = text.find(marker)
-        if idx != -1:
-            meson.write_text(text[:idx] + block + text[idx:], encoding="utf-8")
-            return
-    meson.write_text(text.rstrip() + "\n" + block, encoding="utf-8")
-
-
-def _strip_python_meson_puff(meson: Path, name: str) -> None:
-    """Remove hardcoded python custom_target / bash / man entries for a puff."""
-    if not meson.is_file():
-        return
-    text = meson.read_text(encoding="utf-8")
-    original = text
-    text = re.sub(
-        rf"\n?{re.escape(name)}_exe = custom_target\(\n(?:.*?\n)*?\)\n",
-        "\n",
-        text,
-        count=1,
-    )
-    text = re.sub(
-        rf"\n?install_data\(\n\s*'{re.escape(name)}\.bash',\n(?:.*?\n)*?\)\n",
-        "\n",
-        text,
-        count=1,
-    )
-    if text != original:
-        meson.write_text(text, encoding="utf-8")
-    _strip_man_custom_target(meson, name)
-
-
 def _wire_add(lang: str, workdir: Path, name: str) -> None:
-    meson = workdir / "meson.build"
-    if lang == "clib" and meson.is_file():
-        append_meson_list_entry(meson, "app_sources", f"src/{name}.c")
-        append_meson_list_entry(meson, "bash_files", f"{name}.bash")
-        tests_meson = workdir / "tests" / "meson.build"
-        if tests_meson.is_file():
-            append_meson_list_entry(tests_meson, "test_sources", f"{name}_test.c")
-        _append_man_custom_target(meson, name)
-    elif lang == "c" and meson.is_file():
-        append_meson_list_entry(meson, "app_sources", f"src/{name}.c")
-        append_meson_list_entry(meson, "bash_files", f"{name}.bash")
-        tests_meson = workdir / "tests" / "meson.build"
-        if tests_meson.is_file():
-            append_meson_list_entry(tests_meson, "test_sources", f"{name}_test.c")
-        _append_man_custom_target(meson, name)
-    elif lang == "cpp" and meson.is_file():
-        append_meson_list_entry(meson, "app_sources", f"src/{name}.cpp")
-        append_meson_list_entry(meson, "bash_files", f"{name}.bash")
-        tests_meson = workdir / "tests" / "meson.build"
-        if tests_meson.is_file():
-            append_meson_list_entry(tests_meson, "test_sources", f"{name}_test.cpp")
-        _append_man_custom_target(meson, name)
-    elif lang == "cpplib" and meson.is_file():
-        append_meson_list_entry(meson, "app_sources", f"src/{name}.cpp")
-        append_meson_list_entry(meson, "bash_files", f"{name}.bash")
-        tests_meson = workdir / "tests" / "meson.build"
-        if tests_meson.is_file():
-            append_meson_list_entry(tests_meson, "test_sources", f"{name}_test.cpp")
-        _append_man_custom_target(meson, name)
-    elif lang == "bash" and meson.is_file():
-        append_meson_list_entry(meson, "app_scripts", f"src/{name}.in")
-        append_meson_list_entry(meson, "bash_files", f"{name}.bash")
-        _append_man_custom_target(meson, name)
-    elif lang == "perl" and meson.is_file():
-        append_meson_list_entry(meson, "app_scripts", f"src/{name}.pl")
-        append_meson_list_entry(meson, "bash_files", f"{name}.bash")
-        _append_man_custom_target(meson, name)
-    elif lang == "ruby" and meson.is_file():
-        append_meson_list_entry(meson, "app_scripts", f"src/{name}.rb")
-        append_meson_list_entry(meson, "bash_files", f"{name}.bash")
-        _append_man_custom_target(meson, name)
-    elif lang == "python" and meson.is_file():
-        # Prefer documenting; python template hardcodes one custom_target.
-        # Append a second custom_target block after the first if absent.
-        text = meson.read_text(encoding="utf-8")
-        if f"{name}_exe" not in text:
-            block = f"""
-{name}_exe = custom_target(
-    '{name}',
-    input: 'src/{name}.py',
-    output: '{name}',
-    command: [
-        py,
-        '-c',
-        'import os, shutil, sys; shutil.copyfile(sys.argv[1], sys.argv[2]); os.chmod(sys.argv[2], 0o755)',
-        '@INPUT@',
-        '@OUTPUT@',
-    ],
-    build_by_default: true,
-    install: true,
-    install_dir: bindir,
-)
-"""
-            # Insert after first custom_target closing paren block of some_puff1/TEMPLATE
-            marker = "install_dir: bindir,\n)\n"
-            idx = text.find(marker)
-            if idx != -1:
-                idx = idx + len(marker)
-                meson.write_text(text[:idx] + block + text[idx:], encoding="utf-8")
-            else:
-                # Empty project after create/remove: insert before common_lib or at end of
-                # the early install section.
-                insert_at = text.find("common_lib_mod = custom_target(")
-                if insert_at == -1:
-                    insert_at = text.find("install_data(")
-                if insert_at == -1:
-                    insert_at = len(text)
-                meson.write_text(text[:insert_at] + block + "\n" + text[insert_at:], encoding="utf-8")
-        text = meson.read_text(encoding="utf-8")
-        if f"'{name}.bash'" not in text and f'"{name}.bash"' not in text:
-            bash_block = f"""
-install_data(
-    '{name}.bash',
-    install_dir: datadir / 'bash-completion' / 'completions',
-    rename: '{name}',
-)
-"""
-            # Insert before pkgdoc install_data if present.
-            m = re.search(
-                r"\ninstall_data\(\n\s*\[\n\s*'LICENSE'",
-                text,
-            )
-            if m:
-                meson.write_text(text[: m.start()] + bash_block + text[m.start() :], encoding="utf-8")
-            else:
-                meson.write_text(text + bash_block, encoding="utf-8")
-        _append_man_custom_target(meson, name)
-    elif lang == "go":
-        # cmd/<name>/ is enough for `go build`; meson may still hardcode one target.
-        pass
-    elif lang == "csharp":
-        sln = workdir / "zephyr.sln"
-        if sln.is_file():
-            pascal = case_variants(name)["pascal"]
-            text = sln.read_text(encoding="utf-8")
-            if pascal not in text:
-                guid = "{" + str(uuid.uuid4()).upper() + "}"
-                line = (
-                    f'Project("{{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}}") = '
-                    f'"{pascal}", "apps/{name}/{pascal}.csproj", "{guid}"\n'
-                    f"EndProject\n"
-                )
-                # Insert before Global
-                text = text.replace("\nGlobal\n", "\n" + line + "Global\n", 1)
-                sln.write_text(text, encoding="utf-8")
-        _append_man_custom_target(meson, name)
+    _lang_wire_add(lang, workdir, name)
 
 
 def _wire_remove(lang: str, workdir: Path, name: str) -> None:
+    _lang_wire_remove(lang, workdir, name)
     meson = workdir / "meson.build"
-    if lang == "clib" and meson.is_file():
-        remove_meson_list_entry(meson, f"src/{name}.c")
-        remove_meson_list_entry(meson, f"{name}.bash")
-        tests_meson = workdir / "tests" / "meson.build"
-        if tests_meson.is_file():
-            remove_meson_list_entry(tests_meson, f"{name}_test.c")
-        _strip_man_custom_target(meson, name)
-    elif lang == "c" and meson.is_file():
-        remove_meson_list_entry(meson, f"src/{name}.c")
-        remove_meson_list_entry(meson, f"{name}.bash")
-        tests_meson = workdir / "tests" / "meson.build"
-        if tests_meson.is_file():
-            remove_meson_list_entry(tests_meson, f"{name}_test.c")
-        _strip_man_custom_target(meson, name)
-    elif lang == "cpp" and meson.is_file():
-        remove_meson_list_entry(meson, f"src/{name}.cpp")
-        remove_meson_list_entry(meson, f"{name}.bash")
-        tests_meson = workdir / "tests" / "meson.build"
-        if tests_meson.is_file():
-            remove_meson_list_entry(tests_meson, f"{name}_test.cpp")
-        _strip_man_custom_target(meson, name)
-    elif lang == "cpplib" and meson.is_file():
-        remove_meson_list_entry(meson, f"src/{name}.cpp")
-        remove_meson_list_entry(meson, f"{name}.bash")
-        tests_meson = workdir / "tests" / "meson.build"
-        if tests_meson.is_file():
-            remove_meson_list_entry(tests_meson, f"{name}_test.cpp")
-        _strip_man_custom_target(meson, name)
-    elif lang == "bash" and meson.is_file():
-        remove_meson_list_entry(meson, f"src/{name}.in")
-        remove_meson_list_entry(meson, f"{name}.bash")
-        _strip_man_custom_target(meson, name)
-    elif lang == "perl" and meson.is_file():
-        remove_meson_list_entry(meson, f"src/{name}.pl")
-        remove_meson_list_entry(meson, f"{name}.bash")
-        _strip_man_custom_target(meson, name)
-    elif lang == "ruby" and meson.is_file():
-        remove_meson_list_entry(meson, f"src/{name}.rb")
-        remove_meson_list_entry(meson, f"{name}.bash")
-        _strip_man_custom_target(meson, name)
-    elif lang == "python" and meson.is_file():
-        _strip_python_meson_puff(meson, name)
-    elif lang == "csharp":
-        sln = workdir / "zephyr.sln"
-        if sln.is_file():
-            pascal = case_variants(name)["pascal"]
-            text = sln.read_text(encoding="utf-8")
-            new = re.sub(
-                rf'Project\("[^"]+"\) = "{re.escape(pascal)}".*?\nEndProject\n',
-                "",
-                text,
-                flags=re.S,
-            )
-            if new != text:
-                sln.write_text(new, encoding="utf-8")
-        _strip_man_custom_target(meson, name)
-    else:
-        _strip_man_custom_target(meson, name)
-
     _scrub_meson_hardcoded_puff(meson, name, project_name=workdir.name)
 
 

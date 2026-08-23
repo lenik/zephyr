@@ -93,6 +93,34 @@ def _has_file(root: Path, rel: str) -> bool:
     return False
 
 
+_EXAMPLE_SHARED_STEMS = frozenset({"common_lib", "commons", "Commons", "CommonLib"})
+
+
+def is_example_shared_src(root: Path, path: Path) -> bool:
+    """True for template example shared modules (src/common_lib.*, src/commons.*)."""
+    try:
+        rel = path.relative_to(root)
+    except ValueError:
+        return False
+    if len(rel.parts) != 2 or rel.parts[0] != "src":
+        return False
+    stem = path.stem
+    return stem in _EXAMPLE_SHARED_STEMS or stem.lower() in _EXAMPLE_SHARED_STEMS
+
+
+def find_example_shared_modules(root: Path) -> list[Path]:
+    src = root / "src"
+    if not src.is_dir():
+        return []
+    found: list[Path] = []
+    for path in sorted(src.iterdir()):
+        if path.is_file() and (
+            path.stem in _EXAMPLE_SHARED_STEMS or path.stem.lower() in _EXAMPLE_SHARED_STEMS
+        ):
+            found.append(path)
+    return found
+
+
 def _line_of(text: str, needle: str) -> int | None:
     for i, line in enumerate(text.splitlines(), 1):
         if needle in line:

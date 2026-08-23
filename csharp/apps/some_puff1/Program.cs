@@ -54,7 +54,7 @@ try
 {
     if (files.Count == 0)
     {
-        await common_lib.CopyStreamAsync(Console.OpenStandardInput(), Console.OpenStandardOutput());
+        await commons.CopyStreamAsync(Console.OpenStandardInput(), Console.OpenStandardOutput());
         return 0;
     }
 
@@ -62,11 +62,11 @@ try
     {
         if (f == "-")
         {
-            await common_lib.CopyStreamAsync(Console.OpenStandardInput(), Console.OpenStandardOutput());
+            await commons.CopyStreamAsync(Console.OpenStandardInput(), Console.OpenStandardOutput());
         }
         else
         {
-            await common_lib.CopyFileAsync(f, Console.OpenStandardOutput());
+            await commons.CopyFileAsync(f, Console.OpenStandardOutput());
         }
     }
 }

@@ -3,93 +3,48 @@
 
 from __future__ import annotations
 
-import re
-import shutil
-import subprocess
-import sys
 from pathlib import Path
 
-from .. import (
-    LANGS,
-    RECOMMENDED_I18N_LINGUAS,
-    RECOMMENDED_I18N_SOURCE,
-    TEMPLATE_PUFF,
-    _is_zfr_cli_package,
-    _is_zfr_meta_repo,
-    changelog_version,
-    detect_lang,
-    find_project_dir,
-    is_probably_text,
-    iter_files,
-    template_dir,
-    version_file_version,
-)
-from ..csr import Csr
-from ..packaging import _meson_project_fields, _parse_control_stanzas
+from ..lang import lint_bits, skips_shared_example
 from .finding import Finding
-from .util import *  # noqa: F403
+from .util import _rel, _role, find_example_shared_modules
+
 
 def check_lang_bits(root: Path, lang: str) -> list[Finding]:
     out: list[Finding] = []
-    if lang == "bash":
-        ins = list((root / "src").glob("*.in")) if (root / "src").is_dir() else []
-        if ins:
-            out.append(Finding("ok", "lang.bash.src", f"src scripts: {', '.join(p.name for p in ins)}"))
-        else:
+    out.extend(lint_bits(lang, root, _role(root)))
+    out.extend(_check_example_shared_modules(root, lang, _role(root)))
+    return out
+
+
+def _check_example_shared_modules(root: Path, lang: str, role: str) -> list[Finding]:
+    if role == "meta" or skips_shared_example(lang):
+        return []
+    out: list[Finding] = []
+    for path in find_example_shared_modules(root):
+        if path.stem == "common_lib" or path.name.lower().startswith("common_lib."):
             out.append(
                 Finding(
                     "warn",
-                    "lang.bash.src",
-                    "no src/*.in scripts",
-                    "src/",
-                    fix="Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ "
-                    "and meson configure_file + install_mode rwxr-xr-x.",
+                    "lang.shared.name",
+                    f"legacy example module {path.name}; use commons or a specific name",
+                    _rel(root, path),
+                    fix="Rename to src/commons.* (template convention) or a project-specific "
+                    "module name.",
                 )
             )
-    elif lang in ("c", "clib", "cpp", "cpplib"):
-        if not (root / "tests").is_dir():
-            out.append(
-                Finding(
-                    "note",
-                    "lang.tests",
-                    "no tests/ directory",
-                    "tests/",
-                    fix="Add tests/ and meson test() entries like the C family templates.",
-                )
-            )
-        else:
-            out.append(Finding("ok", "lang.tests", "tests/ present"))
-    elif lang == "python":
-        if (root / "tests").is_dir():
-            out.append(Finding("ok", "lang.python.tests", "tests/ present"))
-        else:
-            out.append(
-                Finding(
-                    "warn",
-                    "lang.python.tests",
-                    "no tests/ (python template uses unittest + meson test)",
-                    "tests/",
-                    fix="Add tests/test_*.py and meson test() with PYTHONPATH=src.",
-                )
-            )
-    elif lang == "rust" and not (root / "Cargo.toml").is_file():
+    modules = find_example_shared_modules(root)
+    if modules and not out:
+        names = ", ".join(p.name for p in modules)
         out.append(
             Finding(
-                "error",
-                "lang.rust.cargo",
-                "missing Cargo.toml",
-                "Cargo.toml",
-                fix="Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary.",
-            )
-        )
-    elif lang == "go" and not (root / "go.mod").is_file():
-        out.append(
-            Finding(
-                "error",
-                "lang.go.mod",
-                "missing go.mod",
-                "go.mod",
-                fix="Add go.mod; meson should `go build` with -X main.buildVersion from meson.project_version().",
+                "note",
+                "lang.shared.example",
+                f"{names} is only a template example for shared helpers",
+                _rel(root, modules[0]),
+                fix="common_lib / commons mean “extract reusable pieces”, but filenames should be "
+                "concrete. Rename to a specific module in real projects (e.g. stream_copy.py, "
+                "bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry.",
             )
         )
     return out

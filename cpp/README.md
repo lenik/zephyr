@@ -9,7 +9,7 @@ Please rewrite this file to reflect the specific details of the current project.
 
 ## Repository layout
 
-- `src/` - application sources (`some_puff1.cpp`) and small helpers (`common_lib.cpp`)
+- `src/` - application sources (`some_puff1.cpp`) and small helpers (`commons.cpp`)
 - `tests/` - minimal unit tests (no Check dependency)
 - `debian/` - Debian packaging metadata
 - `docs/` - AsciiDoc man page sources (`docs/*.adoc`)

@@ -1,11 +1,11 @@
 test_exe = executable(
-    'common_lib_test',
+    'commons_test',
     [
-        'common_lib_test.c',
-        '../src/common_lib.c',
+        'commons_test.c',
+        '../src/commons.c',
     ],
     include_directories: include_directories('../src'),
     install: false,
 )
 
-test('common_lib', test_exe)
+test('commons', test_exe)

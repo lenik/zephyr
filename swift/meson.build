@@ -37,7 +37,7 @@ subdir('po')
 
 some_puff1 = custom_target(
     'some_puff1',
-    input: ['src/main.swift', 'src/common_lib.swift'],
+    input: ['src/main.swift', 'src/commons.swift'],
     output: 'some_puff1',
     command: [
         swiftc,
@@ -54,7 +54,7 @@ some_puff1 = custom_target(
 
 swift_test_bin = custom_target(
     'swift-test',
-    input: ['tests/TestCommonLib.swift', 'src/common_lib.swift'],
+    input: ['tests/TestCommons.swift', 'src/commons.swift'],
     output: 'swift-test',
     command: [
         swiftc,

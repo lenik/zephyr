@@ -7,7 +7,7 @@ use warnings;
 use FindBin;
 use lib "$FindBin::RealBin", "$FindBin::RealBin/../lib";
 use Getopt::Long qw(:config bundling no_ignore_case);
-use CommonLib qw(copy_stream copy_file);
+use Commons qw(copy_stream copy_file);
 
 my $VERSION = '0.0.0';
 my $AUTHOR  = 'Lenik';

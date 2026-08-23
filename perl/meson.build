@@ -35,10 +35,10 @@ mandir = prefix / get_option('mandir')
 pkgdocdir = datadir / 'doc' / meson.project_name()
 
 # Install helper module next to the executable so FindBin + lib RealBin works.
-common_lib = custom_target(
-    'CommonLib.pm',
-    input: 'src/CommonLib.pm',
-    output: 'CommonLib.pm',
+commons = custom_target(
+    'Commons.pm',
+    input: 'src/Commons.pm',
+    output: 'Commons.pm',
     command: ['cp', '@INPUT@', '@OUTPUT@'],
     build_by_default: true,
     install: true,

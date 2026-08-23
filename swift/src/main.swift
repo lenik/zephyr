@@ -54,13 +54,13 @@ if verbose {
 
 do {
     if files.isEmpty {
-        try common_lib.copyStream(FileHandle.standardInput, FileHandle.standardOutput)
+        try commons.copyStream(FileHandle.standardInput, FileHandle.standardOutput)
     } else {
         for f in files {
             if f == "-" {
-                try common_lib.copyStream(FileHandle.standardInput, FileHandle.standardOutput)
+                try commons.copyStream(FileHandle.standardInput, FileHandle.standardOutput)
             } else {
-                try common_lib.copyFile(f, FileHandle.standardOutput)
+                try commons.copyFile(f, FileHandle.standardOutput)
             }
         }
     }

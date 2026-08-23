@@ -54,7 +54,7 @@ ninja -C /build
 meson test -C /build
 ```
 
-Meson 执行 `tests/TestCommonLib.swift` 做冒烟/单元测试。
+Meson 执行 `tests/TestCommons.swift` 做冒烟/单元测试。
 
 ## i18n（gettext）
 

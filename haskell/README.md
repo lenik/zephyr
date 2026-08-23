@@ -54,7 +54,7 @@ ninja -C /build
 meson test -C /build
 ```
 
-Meson runs a Haskell smoke/unit test from `tests/TestCommon_Lib.hs`.
+Meson runs a Haskell smoke/unit test from `tests/TestCommons.hs`.
 
 ## i18n (gettext)
 

@@ -40,7 +40,7 @@ beam_dir = meson.current_build_dir() / 'ebin'
 
 compile_erlang = custom_target(
     'compile_erlang',
-    input: ['src/some_puff1.erl', 'src/common_lib.erl'],
+    input: ['src/some_puff1.erl', 'src/commons.erl'],
     output: 'compile_erlang.stamp',
     command: [
         'bash',
@@ -82,11 +82,11 @@ test(
     args: [
         '-pa', beam_dir,
         '-noshell',
-        '-eval', 'test_common_lib:run(), halt().',
+        '-eval', 'test_commons:run(), halt().',
     ],
     depends: custom_target(
         'compile_test',
-        input: ['tests/test_common_lib.erl'],
+        input: ['tests/test_commons.erl'],
         output: 'compile_test.stamp',
         command: [
             'bash',

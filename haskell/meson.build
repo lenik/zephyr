@@ -38,7 +38,7 @@ subdir('po')
 
 some_puff1 = custom_target(
     'some_puff1',
-    input: ['src/Main.hs', 'src/Common_Lib.hs'],
+    input: ['src/Main.hs', 'src/Commons.hs'],
     output: 'some_puff1',
     command: [
         ghc,
@@ -63,7 +63,7 @@ test(
     runghc,
     args: [
         '-i' + (meson.project_source_root() / 'src'),
-        meson.project_source_root() / 'tests/TestCommon_Lib.hs',
+        meson.project_source_root() / 'tests/TestCommons.hs',
     ],
 )
 

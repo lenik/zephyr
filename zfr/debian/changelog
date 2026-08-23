@@ -1,3 +1,25 @@
+zephyr (2.1.2) testing; urgency=medium
+
+  * Extract per-language specs into zfr_lib/lang/<lang>.py; rename
+    common_lib to commons across templates; add source-size lint and
+    shared-module notes; fix circular imports (Finding module); RPM spec
+    extras via lang spec_files_fn.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 24 Aug 2026 01:03:13 +0800
+
+zephyr (2.1.2) testing; urgency=medium
+
+  * Extract per-language zfr logic into zfr_lib/lang/<lang>.py (detection,
+    puff paths, meson wiring, lint bits, RPM spec extras); remove monolithic
+    lang.py; resolve import cycles via zfr_lib/finding.py.
+  * Rename template example shared module common_lib → commons across all
+    language trees (clib/cpplib keep lib.c/lib.cpp).
+  * zfr lint: skip line-count on example commons modules; warn >1000 lines,
+    note >600; note/warn on legacy common_lib names.
+  * zfr ize: RPM spec file lists delegate to lang spec_files_fn.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 24 Aug 2026 01:05:00 +0800
+
 zephyr (2.1.1) testing; urgency=medium
 
   * Move zfr/README.md and zfr/README-zh.md to the meta-repo root; install

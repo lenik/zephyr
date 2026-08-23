@@ -11,6 +11,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+from ..lang import spec_extra_files as _lang_spec_extra_files
 from .. import (
     LANGS,
     SKIP_DIR_NAMES,
@@ -37,7 +38,7 @@ from ..create import (
     _write_debian_changelog,
 )
 from ..csr import Csr
-from ..lint import _control, _role, _specs
+from ..lint.util import _control, _role, _specs
 from ..packaging import _meson_project_fields
 
 _AGPL = "AGPL-3.0-or-later"
@@ -211,20 +212,17 @@ def _spec_files(root: Path, lang: str, name: str) -> list[str]:
         files.append(f"%{{_bindir}}/{puff}")
         files.append(f"%{{_datadir}}/bash-completion/completions/{puff}")
         files.append(f"%{{_mandir}}/man1/{puff}.1*")
-    if lang == "python":
-        files.insert(1, "%{_bindir}/common_lib.py")
-    if lang == "java":
-        files.insert(1, "%{_datadir}/%{name}/")
-    if lang == "typescript":
-        files.insert(1, "%{_datadir}/%{name}/")
-        files.append("%{_infodir}/%s.info*" % (puffs[0] if puffs else "zephyr"))
-    if lang in ("clib", "cpplib"):
-        files[1:1] = [
-            "%{_libdir}/lib%s.so*" % name,
-            "%{_libdir}/pkgconfig/%s.pc" % name,
-            "%{_libdir}/pkgconfig/%s-static.pc" % name,
-            "%{_includedir}/%s/" % name,
-        ]
+    extras = _lang_spec_extra_files(lang, puffs)
+    insert_after_bindir: list[str] = []
+    append_before_doc: list[str] = []
+    for extra in extras:
+        if extra.startswith("%{_infodir}/"):
+            append_before_doc.append(extra)
+        else:
+            insert_after_bindir.append(extra)
+    if insert_after_bindir:
+        files[1:1] = insert_after_bindir
+    files.extend(append_before_doc)
     files.append("%{_datadir}/doc/%{name}/")
     if (root / "po").is_dir():
         files.append("%{_datadir}/locale/*/LC_MESSAGES/%s.mo" % name)

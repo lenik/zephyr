@@ -5,7 +5,7 @@
 
 ## 仓库结构
 
-- `lib/Zephyr/` - 公共类库（`Zephyr.csproj`、`common_lib.cs` 等）
+- `lib/Zephyr/` - 公共类库（`Zephyr.csproj`、`commons.cs` 等）
 - `apps/SomePuff1/` - 示例命令行（`SomePuff1.csproj`、`Program.cs`、`Resources/*.resx`）
 - `tests/` - C# 冒烟/单元测试
 - `debian/` - Debian 打包元数据
@@ -56,7 +56,7 @@ ninja -C /build
 meson test -C /build
 ```
 
-Meson 执行 `tests/TestCommonLib.csproj` 做冒烟/单元测试。
+Meson 执行 `tests/TestCommons.csproj` 做冒烟/单元测试。
 
 ## 本地化（.resx）
 

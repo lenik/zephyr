@@ -54,7 +54,7 @@ ninja -C /build
 meson test -C /build
 ```
 
-Meson runs a Smalltalk smoke/unit test from `tests/test_common_lib.st`.
+Meson runs a Smalltalk smoke/unit test from `tests/test_commons.st`.
 
 ## i18n (gettext)
 

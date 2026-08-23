@@ -9,7 +9,7 @@
 
 ## 仓库结构
 
-- `src/` - 应用源码（`some_puff1.c`）与小型辅助模块（`common_lib.c`）
+- `src/` - 应用源码（`some_puff1.c`）与小型辅助模块（`commons.c`）
 - `tests/` - 最小化单元测试（不依赖 Check）
 - `debian/` - Debian 打包元数据
 - `docs/` - AsciiDoc man 页源文件

@@ -29,12 +29,12 @@ version_info() ->
 copy_files([]) ->
     ok;
 copy_files(["-" | Rest]) ->
-    case common_lib:copy_stream(standard_io, standard_io) of
+    case commons:copy_stream(standard_io, standard_io) of
         ok -> copy_files(Rest);
         {error, Reason} -> {error, Reason}
     end;
 copy_files([File | Rest]) ->
-    case common_lib:copy_file(File) of
+    case commons:copy_file(File) of
         ok -> copy_files(Rest);
         {error, Reason} -> {error, {File, Reason}}
     end.
@@ -63,7 +63,7 @@ main() ->
     end,
     case Files of
         [] ->
-            _ = common_lib:copy_stream(standard_io, standard_io),
+            _ = commons:copy_stream(standard_io, standard_io),
             erlang:halt(0);
         _ ->
             case copy_files(Files) of

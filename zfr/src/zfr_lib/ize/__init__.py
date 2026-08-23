@@ -8,9 +8,10 @@ import argparse
 import sys
 from pathlib import Path
 
-from .. import LANGS, _is_zfr_meta_repo, detect_lang, find_project_dir
+from .. import _is_zfr_meta_repo, find_project_dir
 from ..cli import register_command
 from ..i18n import _
+from ..lang import LANGS
 from .engine import Ize
 from .util import _role
 
@@ -36,6 +37,8 @@ def cmd_ize(
             raise SystemExit(f"unknown language {lang!r} (one of: {', '.join(LANGS)})")
         detected = lang
     else:
+        from .. import detect_lang
+
         try:
             detected = detect_lang(root)
         except SystemExit as e:

@@ -156,6 +156,12 @@ Commands that walk from the current directory resolve *packagedir* first.
   When *po/* or *docs/\*.adoc* is present, warns if coverage does not meet
   *--l10n-level* (see *i18n* under Description; default *L1*, project file
   *.config/zfr/lint.options* may set another level).
+  Notes when *src/commons.* (or legacy *src/common_lib.*) is present: that
+  name is only a template example for shared helpers — rename to something
+  specific in real programs (*clib*/*cpplib* use *lib.c*/*lib.cpp* instead).
+  Skips line-count checks on those example modules. Warns on source files
+  longer than 1000 lines; notes files longer than 600 lines (suggests
+  modularization).
   Output is meant for humans and AI coders: each finding has a code,
   path, and a concrete fix. Interactive terminals use CSR (console SGR)
   colors unless *NO_COLOR* is set.

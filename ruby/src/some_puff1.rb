@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 require 'optparse'
-require_relative 'common_lib'
+require_relative 'commons'
 
 VERSION = '0.0.0'
 AUTHOR = 'Lenik'
@@ -59,17 +59,17 @@ warn "#{prog}: verbose mode enabled" if verbose > 0
 
 if ARGV.empty?
   warn "#{prog}: reading from standard input" if verbose > 0
-  exit 1 unless CommonLib.copy_stream($stdin, $stdout)
+  exit 1 unless Commons.copy_stream($stdin, $stdout)
   exit 0
 end
 
 ARGV.each do |path|
   if path == '-'
     warn "#{prog}: copying from standard input" if verbose > 0
-    exit 1 unless CommonLib.copy_stream($stdin, $stdout)
+    exit 1 unless Commons.copy_stream($stdin, $stdout)
   else
     warn "#{prog}: copying from #{path}" if verbose > 0
-    exit 1 unless CommonLib.copy_file(prog, path)
+    exit 1 unless Commons.copy_file(prog, path)
   end
 end
 

@@ -53,7 +53,7 @@ zephyr_buildinfo_subst = configure_file(
 
 zephyr_lib_stamp = custom_target(
     'zephyr_lib',
-    input: [zephyr_csproj, zephyr_buildinfo_subst, 'lib/Zephyr/common_lib.cs', 'lib/Zephyr/BuildInfo.cs', 'lib/Zephyr/BuildInfo.cs.in'],
+    input: [zephyr_csproj, zephyr_buildinfo_subst, 'lib/Zephyr/commons.cs', 'lib/Zephyr/BuildInfo.cs', 'lib/Zephyr/BuildInfo.cs.in'],
     output: 'Zephyr.build.stamp',
     command: [
         'bash',
@@ -110,7 +110,7 @@ test(
     dotnet,
     args: [
         'run',
-        '--project', meson.project_source_root() / 'tests/TestCommonLib.csproj',
+        '--project', meson.project_source_root() / 'tests/TestCommons.csproj',
         '-c', 'Release',
     ],
     depends: [zephyr_lib_stamp],
@@ -126,7 +126,7 @@ some_puff1_build = custom_target(
         'apps/some_puff1/Program.cs',
         'lib/Zephyr/Zephyr.csproj',
         'lib/Zephyr/BuildInfo.cs',
-        'lib/Zephyr/common_lib.cs',
+        'lib/Zephyr/commons.cs',
     ] + resx,
     output: some_puff1_name + '.stamp',
     command: [

@@ -14,26 +14,6 @@ from typing import Iterable, Literal
 # Placeholder example app name shipped in templates.
 TEMPLATE_PUFF = "some_puff1"
 
-LANGS = (
-    "bash",
-    "c",
-    "clib",
-    "cpp",
-    "cpplib",
-    "csharp",
-    "erlang",
-    "go",
-    "haskell",
-    "java",
-    "perl",
-    "python",
-    "ruby",
-    "rust",
-    "smalltalk",
-    "swift",
-    "typescript",
-)
-
 # Zephyr style: gettext catalogs should cover at least these locales.
 # English (en) is the source msgid language and is not listed in LINGUAS.
 # User-facing aliases zh-cn / zh-tw map to gettext zh_CN / zh_TW.
@@ -540,12 +520,6 @@ def cli_version(*, rpm: bool = False) -> str:
     return v
 
 
-def detect_lang(workdir: Path | None = None) -> str:
-    """Detect zephyr template language: max confidence in the langs vector."""
-    from .lang import detect_lang as _detect
-    return _detect(workdir)
-
-
 def append_meson_list_entry(meson_path: Path, list_name: str, entry: str) -> bool:
     """Insert entry into a Meson list like app_sources = [ ... ] if missing."""
     text = meson_path.read_text(encoding="utf-8")
@@ -600,3 +574,6 @@ def copy_renamed_file(src: Path, dest: Path, pairs: list[tuple[str, str]]) -> No
 
 def relative_to(path: Path, root: Path) -> Path:
     return path.resolve().relative_to(root.resolve())
+
+
+from .lang import CANDIDATE_LANGS, LANGS, detect_lang, empty_scores, rank_langs, score_langs

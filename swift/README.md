@@ -54,7 +54,7 @@ ninja -C /build
 meson test -C /build
 ```
 
-Meson runs a Swift smoke/unit test from `tests/TestCommonLib.swift`.
+Meson runs a Swift smoke/unit test from `tests/TestCommons.swift`.
 
 ## i18n (gettext)
 

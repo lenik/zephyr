@@ -4,7 +4,7 @@ Please rewrite this file to reflect the specific details of the current project.
 
 # zephyr
 
-`zephyr` is a Meson-based **Ruby** CLI template. `src/some_puff1.rb` installs as `some_puff1`; helpers live in `src/common_lib.rb`.
+`zephyr` is a Meson-based **Ruby** CLI template. `src/some_puff1.rb` installs as `some_puff1`; helpers live in `src/commons.rb`.
 
 ## Build / install
 

@@ -57,13 +57,13 @@ js_built = custom_target(
     'zephyr-js',
     input: [
         'src/some_puff1.ts',
-        'src/common_lib.ts',
+        'src/commons.ts',
         'src/i18n.ts',
-        'tests/common_lib.test.ts',
+        'tests/commons.test.ts',
         'tsconfig.json',
         'tsconfig.meson.json',
     ],
-    output: ['some_puff1.js', 'common_lib.js', 'i18n.js'],
+    output: ['some_puff1.js', 'commons.js', 'i18n.js'],
     command: [
         'bash',
         '-euc', '''
@@ -80,11 +80,11 @@ js_built = custom_target(
                 # tsconfig.meson.json still emits JS (noEmitOnError=false).
                 "$tscbin" -p "$src/tsconfig.meson.json" --outDir "$build/ts_out" --rootDir "$src" || true
                 test -f "$build/ts_out/src/some_puff1.js"
-                test -f "$build/ts_out/src/common_lib.js"
+                test -f "$build/ts_out/src/commons.js"
                 test -f "$build/ts_out/src/i18n.js"
             fi
             cp "$build/ts_out/src/some_puff1.js" "$out0"
-            cp "$build/ts_out/src/common_lib.js" "$out1"
+            cp "$build/ts_out/src/commons.js" "$out1"
             cp "$build/ts_out/src/i18n.js" "$out2"
         ''',
         '_',
@@ -178,7 +178,7 @@ test(
     node,
     args: [
         '--test',
-        meson.current_build_dir() / 'ts_out' / 'tests' / 'common_lib.test.js',
+        meson.current_build_dir() / 'ts_out' / 'tests' / 'commons.test.js',
         meson.current_build_dir() / 'ts_out' / 'tests' / 'i18n.test.js',
     ],
     depends: [js_built],
@@ -302,7 +302,7 @@ run_target(
 
             sudo ln -sfn "@BUILD_ROOT@/some_puff1" "$bindir/some_puff1"
             sudo ln -sfn "@BUILD_ROOT@/some_puff1.js" "$pkgdatadir/some_puff1.js"
-            sudo ln -sfn "@BUILD_ROOT@/common_lib.js" "$pkgdatadir/common_lib.js"
+            sudo ln -sfn "@BUILD_ROOT@/commons.js" "$pkgdatadir/commons.js"
             sudo ln -sfn "@BUILD_ROOT@/i18n.js" "$pkgdatadir/i18n.js"
             sudo ln -sfn "@BUILD_ROOT@/some_puff1.1" "$mandir/man1/some_puff1.1"
             sudo ln -sfn "@BUILD_ROOT@/some_puff1.info" "$infodir/some_puff1.info"
@@ -335,7 +335,7 @@ run_target(
             for p in \
                 "$bindir/some_puff1" \
                 "$pkgdatadir/some_puff1.js" \
-                "$pkgdatadir/common_lib.js" \
+                "$pkgdatadir/commons.js" \
                 "$pkgdatadir/i18n.js" \
                 "$mandir/man1/some_puff1.1" \
                 "$infodir/some_puff1.info" \

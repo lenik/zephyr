@@ -56,7 +56,7 @@ app_sources = [
 ]
 
 common_sources = [
-    'src/common_lib.cpp',
+    'src/commons.cpp',
 ]
 
 foreach source : app_sources

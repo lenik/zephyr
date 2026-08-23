@@ -4,7 +4,7 @@ Please rewrite this file to reflect the specific details of the current project.
 
 # zephyr
 
-`zephyr` is a Meson-based **Perl** CLI template. `src/some_puff1.pl` installs as `some_puff1`; helpers live in `src/CommonLib.pm`.
+`zephyr` is a Meson-based **Perl** CLI template. `src/some_puff1.pl` installs as `some_puff1`; helpers live in `src/Commons.pm`.
 
 ## Build / install
 

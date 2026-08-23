@@ -1,16 +1,8 @@
-
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""A single zfr lint finding."""
+"""Re-export Finding (defined in zfr_lib.finding to avoid import cycles)."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from ..finding import Finding
 
-@dataclass
-class Finding:
-    severity: str  # error, warn, note, ok
-    code: str
-    message: str
-    file: str | None = None
-    line: int | None = None
-    fix: str | None = None
+__all__ = ["Finding"]

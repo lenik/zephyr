@@ -4,7 +4,7 @@
 
 # zephyr
 
-`zephyr` 是基于 Meson 的 **Perl** 命令行模板。`src/some_puff1.pl` 安装为 `some_puff1`；辅助模块为 `src/CommonLib.pm`。
+`zephyr` 是基于 Meson 的 **Perl** 命令行模板。`src/some_puff1.pl` 安装为 `some_puff1`；辅助模块为 `src/Commons.pm`。
 
 ## 构建 / 安装
 

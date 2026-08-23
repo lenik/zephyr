@@ -39,7 +39,7 @@ subdir('po')
 
 java_sources = [
     'src/Main.java',
-    'src/common_lib.java',
+    'src/commons.java',
 ]
 
 some_puff1_jar = custom_target(

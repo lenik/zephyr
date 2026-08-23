@@ -8,23 +8,14 @@ import argparse
 import sys
 from pathlib import Path
 
-from .. import _is_zfr_cli_package, detect_lang, find_project_dir
+from .. import _is_zfr_cli_package, find_project_dir
 from ..cli import register_command
+from ..finding import Finding
 from ..i18n import _
 from ..l10n import apply_lint_option_file, parse_l10n_level
 from ..packaging import _meson_project_fields
-from .debian import check_debian
-from .finding import Finding
-from .i18n_check import check_i18n
-from .identity import check_identity
-from .lang_bits import check_lang_bits
-from .layout import check_layout
-from .leftovers import check_leftovers, check_readme
-from .meson import check_meson
 from .report import format_report
-from .rpm import check_rpm
-from .template import check_template_gaps
-from .util import _control, _role, _specs
+from .util import _control, _role
 
 # collect_findings / cmd_lint live below if not imported from util
 def _resolve_lint_root(root: Path) -> Path:
@@ -39,12 +30,25 @@ def _resolve_lint_root(root: Path) -> Path:
 def collect_findings(
     root: Path, *, l10n_level: str = "L1"
 ) -> tuple[str, str, str, list[Finding]]:
+    from .debian import check_debian
+    from .i18n_check import check_i18n
+    from .identity import check_identity
+    from .lang_bits import check_lang_bits
+    from .layout import check_layout
+    from .leftovers import check_leftovers, check_readme
+    from .meson import check_meson
+    from .rpm import check_rpm
+    from .source_size import check_source_size
+    from .template import check_template_gaps
+
     root = _resolve_lint_root(root)
     role = _role(root)
     if role == "meta":
         lang = "meta"
     else:
         try:
+            from .. import detect_lang
+
             lang = detect_lang(root)
         except SystemExit:
             lang = "unknown"
@@ -61,6 +65,7 @@ def collect_findings(
     findings.extend(check_i18n(root, role, l10n_level=l10n_level))
     findings.extend(check_leftovers(root, role))
     findings.extend(check_lang_bits(root, lang))
+    findings.extend(check_source_size(root, role))
     findings.extend(check_template_gaps(root, lang, role))
     return name, lang, role, findings
 

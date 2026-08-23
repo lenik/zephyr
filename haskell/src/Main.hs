@@ -1,7 +1,7 @@
 module Main (main) where
 
 import Control.Exception (catch)
-import Common_Lib (copyFileTo, copyHandleTo)
+import Commons (copyFileTo, copyHandleTo)
 import System.Environment (getArgs, getProgName)
 import System.Exit (exitFailure, exitSuccess)
 import System.IO (hPutStr, hPutStrLn, stderr, stdin, stdout)

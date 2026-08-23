@@ -5,7 +5,7 @@
 
 ## 仓库结构
 
-- `src/` - Python 源码（示例 `some_puff1.py` 与共享辅助模块 `common_lib.py`）
+- `src/` - Python 源码（示例 `some_puff1.py` 与共享辅助模块 `commons.py`）
 - `tests/` - Python 单元测试（`unittest`）
 - `debian/` - Debian 打包元数据
 - `po/` - gettext 翻译目录

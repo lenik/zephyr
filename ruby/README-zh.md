@@ -4,7 +4,7 @@
 
 # zephyr
 
-`zephyr` 是基于 Meson 的 **Ruby** 命令行模板。`src/some_puff1.rb` 安装为 `some_puff1`；辅助模块为 `src/common_lib.rb`。
+`zephyr` 是基于 Meson 的 **Ruby** 命令行模板。`src/some_puff1.rb` 安装为 `some_puff1`；辅助模块为 `src/commons.rb`。
 
 ## 构建 / 安装
 

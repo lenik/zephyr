@@ -54,7 +54,7 @@ ninja -C /build
 meson test -C /build
 ```
 
-Meson runs an Erlang smoke/unit test from `tests/test_common_lib.erl`.
+Meson runs an Erlang smoke/unit test from `tests/test_commons.erl`.
 
 ## i18n (gettext)
 
