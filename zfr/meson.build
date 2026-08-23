@@ -216,7 +216,7 @@ foreach doc : ['README.md', 'README-zh.md']
         '-c',
         'install -D -m644 "$0" "${MESON_INSTALL_DESTDIR_PREFIX}/$1"',
         meson.project_source_root() / '..' / doc,
-        pkgdocdir / doc,
+        get_option('datadir') / 'doc' / meson.project_name() / doc,
     )
 endforeach
 
