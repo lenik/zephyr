@@ -88,6 +88,59 @@ class ZephyrDetectTests(unittest.TestCase):
         proc = run_zephyr("detect", cwd=REPO / "bash")
         self.assertEqual(proc.stdout.strip(), "bash")
 
+    def test_detect_new_language_templates(self) -> None:
+        for lang in (
+            "lua",
+            "zig",
+            "kotlin",
+            "elixir",
+            "nim",
+            "ocaml",
+            "antlr",
+            "bison",
+            "as",
+            "gcc",
+        ):
+            with self.subTest(lang=lang):
+                d = REPO / lang
+                if not (d / "meson.build").is_file():
+                    self.skipTest(f"missing {lang}/meson.build")
+                proc = run_zephyr("detect", cwd=d)
+                self.assertEqual(proc.stdout.strip(), lang)
+
+    def test_create_new_language_templates(self) -> None:
+        for lang in (
+            "lua",
+            "zig",
+            "kotlin",
+            "elixir",
+            "nim",
+            "ocaml",
+            "antlr",
+            "bison",
+            "as",
+            "gcc",
+        ):
+            with self.subTest(lang=lang):
+                with tempfile.TemporaryDirectory(prefix=f"zfr-{lang}-") as tmp:
+                    dest = Path(tmp) / f"{lang}_demo"
+                    run_zephyr("create", "-l", lang, "-1", "0.0.1", str(dest), "hello")
+                    self.assertTrue((dest / "meson.build").is_file())
+                    det = run_zephyr("detect", cwd=dest)
+                    self.assertEqual(det.stdout.strip(), lang)
+
+    def test_parser_templates_expose_cli_flags(self) -> None:
+        for lang, path in (
+            ("bison", REPO / "bison" / "src" / "some_puff1_main.c"),
+            ("antlr", REPO / "antlr" / "src" / "Main.java"),
+        ):
+            with self.subTest(lang=lang):
+                text = path.read_text(encoding="utf-8")
+                self.assertIn("--dump", text)
+                self.assertIn("--format", text)
+                self.assertIn("--indent-size", text)
+                self.assertIn("--color", text)
+
     def test_detect_meta_repo_fails(self) -> None:
         proc = run_zephyr("detect", cwd=REPO, check=False)
         self.assertNotEqual(proc.returncode, 0)

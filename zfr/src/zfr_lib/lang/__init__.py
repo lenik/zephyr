@@ -6,13 +6,7 @@ puff paths, meson wiring, lint bits, RPM file lists).
 
 Candidate languages for future templates (not implemented):
 
-- **lua** — lightweight scripting, single-file CLI, easy Meson custom_target
-- **zig** — systems programming, ``zig build``-friendly, growing CLI ecosystem
-- **kotlin** — JVM sibling to Java; Gradle + fat JAR or ``kotlin`` compiler
-- **elixir** — BEAM like Erlang; ``mix release`` for CLI escripts
-- **nim** — Python-like syntax, compiles to native binaries
 - **crystal** — Ruby-like syntax, static typing, native binaries
-- **ocaml** — functional systems language, ``dune`` packaging
 - **php** — widespread CLI scripts, composer + debian php-* deps
 - **dart** — AOT ``dart compile exe`` for standalone CLIs
 - **julia** — scientific CLI tools, ``PackageCompiler.jl`` for apps
@@ -30,16 +24,25 @@ from ._wire import wire_add as _wire_add
 from ._wire import wire_remove as _wire_remove
 
 _LANG_ORDER = (
+    "antlr",
+    "as",
     "bash",
+    "bison",
     "c",
     "clib",
     "cpp",
     "cpplib",
     "csharp",
     "erlang",
+    "elixir",
+    "gcc",
     "go",
     "haskell",
     "java",
+    "kotlin",
+    "lua",
+    "nim",
+    "ocaml",
     "perl",
     "python",
     "ruby",
@@ -47,16 +50,11 @@ _LANG_ORDER = (
     "smalltalk",
     "swift",
     "typescript",
+    "zig",
 )
 
 CANDIDATE_LANGS = (
-    "lua",
-    "zig",
-    "kotlin",
-    "elixir",
-    "nim",
     "crystal",
-    "ocaml",
     "php",
     "dart",
     "julia",

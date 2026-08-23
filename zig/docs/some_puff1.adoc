@@ -1,0 +1,53 @@
+= some_puff1(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: User Commands
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+some_puff1 - concatenate files to standard output
+
+== Synopsis
+
+*some_puff1* [_OPTION_]... [_FILE_]...
+
+== Description
+
+Copy each _FILE_ to standard output in order.
+If _FILE_ is a single dash (*-*), read standard input at that position.
+If no _FILE_ is given, read standard input once.
+
+== Options
+
+*-v, --verbose*::
+  Print status messages to standard error.
+
+*-q, --quiet*::
+  Suppress verbose messages.
+
+*-h, --help*::
+  Print a usage summary and exit successfully.
+
+*--version*::
+  Print version and license information and exit successfully.
+
+== Exit status
+
+*0*::
+  Success.
+
+*1*::
+  An error occurred.
+
+== Author
+
+Written by {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+License AGPL-3.0-or-later.

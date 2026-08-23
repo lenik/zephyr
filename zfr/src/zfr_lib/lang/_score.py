@@ -88,6 +88,8 @@ def score_meson(scores: dict[str, float], specs: dict[str, LangSpec], text: str)
                 _add(scores, {"cpp": 18.0, "cpplib": 18.0})
             elif tok == "rust":
                 _add(scores, {"rust": 20.0})
+            elif tok == "gcc":
+                _add(scores, {"gcc": 18.0})
             elif tok in specs:
                 spec = specs[tok]
                 if spec.meson_tokens:

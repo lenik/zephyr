@@ -1,7 +1,7 @@
 # bash completion for zfr and related wrappers
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-_zfr_langs='bash c clib cpp cpplib csharp erlang go haskell java perl python ruby rust smalltalk swift typescript'
+_zfr_langs='antlr as bash bison c clib cpp cpplib csharp elixir erlang gcc go haskell java kotlin lua nim ocaml perl python ruby rust smalltalk swift typescript zig'
 _zfr_cmds='create rename add remove about version lint shape dist ize release detect help'
 
 _zfr()

@@ -1,0 +1,59 @@
+= some_puff1(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: User Commands
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+some_puff1 - parse and format simple s-expressions
+
+== Synopsis
+
+*some_puff1* [_OPTION_]... [_FILE_]...
+
+== Description
+
+Read each _FILE_ containing s-expressions such as *(hello world)* or *(add 1 2)*.
+By default, rewrite input using pretty-printed formatting.
+With *--dump*, print an indented AST dump instead.
+
+== Options
+
+*-d, --dump*::
+  Print an AST dump.
+
+*-f, --format*::
+  Pretty-print input (default when neither *--dump* nor *--format* is given).
+
+*--indent-size* _NUM_::
+  Indentation width for formatted output (default 4).
+
+*-C, --color* _MODE_::
+  Colorize output: *auto*, *always*, or *never* (default *auto*).
+
+*-h, --help*::
+  Print usage and exit.
+
+*--version*::
+  Print version information and exit.
+
+== Exit status
+
+*0*::
+  Success.
+
+*1*::
+  Parse failure, invalid options, or I/O error.
+
+== Author
+
+Written by {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+License AGPL-3.0-or-later.
