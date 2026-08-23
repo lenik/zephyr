@@ -1,3 +1,14 @@
+zephyr (1.9.0) testing; urgency=medium
+
+  * Add zfr-release / zfr release: parse gh-makerelease options and exec
+    gh-makerelease. Treat the zfr CLI package as python/package (not a
+    typescript language template) so zfr lint is clean. Ship debian/ at
+    the git root so gh-makerelease can release the zephyr meta-package;
+    Meson source is zfr/. Dist archives the meta-repo so language
+    templates are included.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 23 Aug 2026 16:25:53 +0800
+
 zephyr (1.8.0) testing; urgency=medium
 
   * Relocate the zfr CLI from tools/ to zfr/ as its own Meson project.

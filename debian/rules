@@ -1,0 +1,6 @@
+#!/usr/bin/make -f
+
+MESON_SRC := $(if $(wildcard meson.build),.,zfr)
+
+%:
+	dh $@ --buildsystem=meson --builddirectory=debian/build --sourcedirectory=$(MESON_SRC)

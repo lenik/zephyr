@@ -29,8 +29,8 @@ sudo ninja -C /build install
 | 路径 | 用途 |
 |------|------|
 | `/usr/share/zephyr/<lang>/` | 语言模板目录 |
-| `/usr/bin/zfr` | 主命令（`create`、`rename`、`add`、`remove`、`about`、`version`、`lint`、`dist`、`ize`、`detect`） |
-| `/usr/bin/zfr-{create,rename,add,remove,about,version,lint,dist,ize}` | 薄封装 |
+| `/usr/bin/zfr` | 主命令（`create`、`rename`、`add`、`remove`、`about`、`version`、`lint`、`shape`、`dist`、`ize`、`release`、`detect`） |
+| `/usr/bin/zfr-{create,rename,add,remove,about,version,lint,shape,dist,ize,release}` | 薄封装 |
 | `man 1 zfr` | 手册页（本地化页面在 `share/man/<locale>/man1/`） |
 
 支持的语言包括：**bash**、**c**、**clib**、**cpp**、**cpplib**、**csharp**、**erlang**、
@@ -77,7 +77,7 @@ meson test -C /build
 
 Meson 对 `tests/test_*.py` 执行 `python3 -m unittest discover`。测试套件会
 建立临时示例工程，并覆盖 CLI（`create`、`add`、`remove`、`rename`、`about`、
-`version`、`lint`、`dist`、`ize`、`detect`）。不经 Meson 直接跑时，把
+`version`、`lint`、`dist`、`ize`、`release`、`detect`）。不经 Meson 直接跑时，把
 `ZFR_PKGDATADIR` 设为 zephyr 检出根目录（`zfr/` 的上一级），把 `PYTHONPATH` 设为 `src/`。
 
 ## 另见

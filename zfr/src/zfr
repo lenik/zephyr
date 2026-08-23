@@ -15,6 +15,7 @@ Usage:
   zfr dist [-o DIR] [-b DIR] [-f FMT] [--rpm] [--allow-dirty|--no-allow-dirty]
               [--tests]
   zfr ize [-l LANG] [-n] [-v] [--no-man] [--no-subst] [--color WHEN]
+  zfr release [OPTIONS]
   zfr detect
   zfr help
 
@@ -54,9 +55,10 @@ from zfr_lib.commands import (  # noqa: E402
     cmd_version,
 )
 from zfr_lib.lint import cmd_lint  # noqa: E402
+from zfr_lib.release import add_release_arguments, cmd_release  # noqa: E402
 from zfr_lib.shape import SHAPE_BOOL_THRESHOLD, cmd_shape, resolve_layout, shape_score  # noqa: E402
 
-__version__ = "1.7.0"
+__version__ = "1.9.0"
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -245,6 +247,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     add_dist_arguments(pdist)
 
+    prel = sub.add_parser(
+        "release",
+        help=_("create a GitHub release (parse options, exec gh-makerelease)"),
+    )
+    add_release_arguments(prel)
+
     pize = sub.add_parser(
         "ize",
         help="refactor this project to current zephyr style",
@@ -355,6 +363,8 @@ def main(argv: list[str] | None = None) -> int:
             color=args.color,
             strict=args.strict,
         )
+    if args.cmd == "release":
+        return cmd_release(args)
     if args.cmd == "dist":
         return cmd_dist(
             output=args.output,

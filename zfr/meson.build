@@ -66,6 +66,7 @@ install_data(
         'src/zfr-dist',
         'src/zfr-ize',
         'src/zfr-shape',
+        'src/zfr-release',
     ],
     install_dir: pkgdatadir / 'zfr',
     install_mode: 'rwxr-xr-x',
@@ -82,6 +83,7 @@ install_data(
         'src/zfr_lib/ize.py',
         'src/zfr_lib/shape.py',
         'src/zfr_lib/i18n.py',
+        'src/zfr_lib/release.py',
     ],
     install_dir: pkgdatadir / 'zfr' / 'zfr_lib',
 )
@@ -113,6 +115,7 @@ wrapper_names = [
     'zfr-dist',
     'zfr-ize',
     'zfr-shape',
+    'zfr-release',
 ]
 
 uninst_tool_cfg = configuration_data()
@@ -213,7 +216,7 @@ foreach lang : man_i18n_langs
 endforeach
 
 # Bash completion (same script under several command names)
-foreach completion_name : ['zfr', 'zfr-create', 'zfr-rename', 'zfr-add', 'zfr-remove', 'zfr-about', 'zfr-version', 'zfr-lint', 'zfr-dist', 'zfr-ize', 'zfr-shape']
+foreach completion_name : ['zfr', 'zfr-create', 'zfr-rename', 'zfr-add', 'zfr-remove', 'zfr-about', 'zfr-version', 'zfr-lint', 'zfr-dist', 'zfr-ize', 'zfr-shape', 'zfr-release']
     install_data(
         'zfr.bash',
         install_dir: datadir / 'bash-completion' / 'completions',

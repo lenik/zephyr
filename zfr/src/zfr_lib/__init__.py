@@ -300,6 +300,34 @@ def _is_zfr_meta_repo(root: Path) -> bool:
     return has_zfr
 
 
+def _is_zfr_cli_package(root: Path) -> bool:
+    """True if *root* is the zfr CLI / zephyr helper package (not a language template)."""
+    return (root / "src" / "zfr").is_file() and (root / "src" / "zfr_lib").is_dir()
+
+
+_DEP_FIELD = re.compile(
+    r"^(Build-Depends(?:-Indep|-Arch)?|Depends|Recommends|Suggests):",
+    re.I,
+)
+
+
+def _control_depends_text(control_txt: str) -> str:
+    """Keep only Depends / Build-Depends field bodies (not Description)."""
+    lines: list[str] = []
+    taking = False
+    for line in control_txt.splitlines():
+        if _DEP_FIELD.match(line):
+            taking = True
+            lines.append(line)
+            continue
+        if taking:
+            if line.startswith((" ", "\t")):
+                lines.append(line)
+            else:
+                taking = False
+    return "\n".join(lines)
+
+
 def _is_clib_project(root: Path, meson_txt: str, control_txt: str = "") -> bool:
     """Distinguish clib (shared/static lib template) from simple c CLI."""
     if re.search(r"\bshared_library\s*\(", meson_txt):
@@ -517,13 +545,16 @@ def detect_lang(workdir: Path | None = None) -> str:
             "not the repository root."
         )
 
+    if _is_zfr_cli_package(root):
+        return "python"
+
     meson = root / "meson.build"
     meson_txt = meson.read_text(encoding="utf-8", errors="ignore") if meson.is_file() else ""
     meson_head = meson_txt[:1200]
     control = root / "debian" / "control"
     control_txt = control.read_text(encoding="utf-8", errors="ignore") if control.is_file() else ""
-    # Prefer Build-Depends + Depends for language hints.
-    control_deps = control_txt
+    # Prefer Build-Depends + Depends for language hints (not Description).
+    control_deps = _control_depends_text(control_txt)
 
     # --- Root markers (no tree walk) ---
     if (root / "go.mod").is_file():

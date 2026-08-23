@@ -19,6 +19,7 @@ from . import (
     RECOMMENDED_I18N_LINGUAS,
     RECOMMENDED_I18N_SOURCE,
     TEMPLATE_PUFF,
+    _is_zfr_cli_package,
     _is_zfr_meta_repo,
     changelog_version,
     detect_lang,
@@ -964,6 +965,14 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
     """Warn about structural files the language template has that this tree lacks."""
     if role == "meta" or lang not in LANGS:
         return []
+    if _is_zfr_cli_package(root):
+        return [
+            Finding(
+                "ok",
+                "template.coverage",
+                "zfr CLI package is not a language template",
+            )
+        ]
     try:
         tmpl = template_dir(lang)
     except SystemExit:

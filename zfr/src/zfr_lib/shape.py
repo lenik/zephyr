@@ -10,6 +10,7 @@ from pathlib import Path
 from . import (
     LANGS,
     RECOMMENDED_I18N_LINGUAS,
+    _is_zfr_cli_package,
     _is_zfr_meta_repo,
 )
 
@@ -189,7 +190,11 @@ def resolve_layout(start: Path | None = None) -> ZephyrLayout:
     except ValueError:
         repodir = packagedir
 
-    if _is_zfr_meta_repo(packagedir):
+    if _is_zfr_cli_package(packagedir):
+        # The zephyr helper lives in zfr/ inside the meta-repo; it is not a
+        # language template even though Source: zephyr and the parent is meta.
+        role = "package"
+    elif _is_zfr_meta_repo(packagedir):
         role = "meta"
     elif _is_zfr_meta_repo(repodir) and packagedir != repodir:
         role = "template"

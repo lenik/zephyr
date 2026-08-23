@@ -28,16 +28,25 @@ Recommends:     bash-completion
 zephyr ships language templates for small command-line utilities under
 /usr/share/zephyr/<lang>/ (bash, c, clib, cpp, cpplib, csharp, erlang, go,
 haskell, java, perl, python, ruby, rust, smalltalk, swift, typescript), plus
-cmdline tools (zephyr, zephyr-create, zephyr-rename, zephyr-add, zephyr-remove,
-zephyr-about, zephyr-version, zephyr-lint, zephyr-dist, zephyr-ize) to create
-projects, manage puffs (example apps), validate packaging against zephyr style,
-build source tarballs, and upgrade existing trees (`zephyr ize`).
+cmdline tools (zfr, zfr-create, zfr-rename, zfr-add, zfr-remove,
+zfr-about, zfr-version, zfr-lint, zfr-shape, zfr-dist, zfr-ize,
+zfr-release) to create projects, manage puffs (example apps), validate
+packaging against zephyr style, build source tarballs, upgrade existing
+trees (`zfr ize`), and publish GitHub releases (`zfr release`).
 
 %prep
 %setup -q -n %{name}-%{srcversion}
 
 %build
-meson setup build \
+if [ -f meson.build ]; then
+    meson_src=.
+elif [ -f zfr/meson.build ]; then
+    meson_src=zfr
+else
+    echo "meson.build not found" >&2
+    exit 1
+fi
+meson setup build ${meson_src} \
     --prefix=%{_prefix} \
     --bindir=%{_bindir} \
     --datadir=%{_datadir} \
@@ -58,6 +67,7 @@ meson install -C build --destdir=%{buildroot}
 %{_datadir}/bash-completion/completions/zfr-*
 %{_mandir}/man1/zfr.1*
 %{_mandir}/*/man1/zfr.1*
+%{_datadir}/locale/*/LC_MESSAGES/zfr.mo
 %{_datadir}/doc/%{name}/
 
 %changelog

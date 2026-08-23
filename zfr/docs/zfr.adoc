@@ -36,13 +36,15 @@ zfr - multi-language CLI project templates and helper tools
 *zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
            [*--color* _WHEN_]
 
+*zfr* *release* [_OPTIONS_]
+
 *zfr* *detect*
 
 *zfr* *help*
 
 *zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
-*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*, and
-*zfr-shape* are thin wrappers around the same subcommands.
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape*, and *zfr-release* are thin wrappers around the same subcommands.
 
 == Description
 
@@ -172,6 +174,13 @@ Commands that walk from the current directory resolve *packagedir* first.
   archive path on stdout. *rpm/Makefile* *dist* and the Meson *srcdist*
   ninja target reuse this command.
 
+*release*::
+  Parse the same options as *gh-makerelease*(1), rebuild argv, and *exec*
+  *gh-makerelease* from PATH. This command does not implement tagging,
+  packaging, or GitHub uploads itself. The *zephyr* project is released
+  from the git checkout root (language templates plus *zfr/*). See
+  *Options for release* below.
+
 *ize*::
   Refactor the current project in place so it matches current zephyr
   style (walks from the current directory toward parents). Copies missing
@@ -287,6 +296,47 @@ Options for *dist*:
 
 *--tests*::
   Run tests during *meson dist* (default is *--no-tests*).
+
+Options for *release* (parsed here, passed through to *gh-makerelease*):
+
+*-b, --build-binary*::
+  Debian binary-only build (*-b*); no _.dsc_.
+*-n, --no-pre-clean*::
+  Reuse the Debian build cache.
+*-u, --upload*::
+  Reuse existing version-scoped artifacts when present.
+*--unsigned*::
+  Build unsigned Debian packages (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  *dput*(1) upload host for the _.changes_ file.
+*-d, --docker*::
+  Build the Debian package with *build4*(1) in Docker.
+*-B, --base-image* _IMAGE_::
+  *build4* target image (default: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  Run *build4* over SSH on *SERVER* (implies *-d*).
+*-l, --local*::
+  Build only; do not tag, push, or create a GitHub release.
+*-f, --force*::
+  Replace an existing tag/release.
+*-I, --no-install*::
+  Skip *sudo dpkg -i*.
+*-T, --no-tag*::
+  Skip creating and pushing the git release tag.
+*-U, --no-upload*::
+  Skip *dput* of the _.changes_ file.
+*-R, --no-release*::
+  Skip creating the GitHub release.
+*-P, --no-publish*::
+  Skip VSIX marketplace publish.
+*-Y, --no-rpm*::
+  Skip *make -C rpm rpm srpm*.
+*-D, --no-deb*::
+  Skip Debian *debuild*.
+*-v, --verbose*::
+  Verbose logging (repeatable).
+*-q, --quiet*::
+  Less output (repeatable).
 
 Options for *ize*:
 

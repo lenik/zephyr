@@ -30,8 +30,8 @@ Build and install from the source tree with the usual `dpkg-buildpackage` /
 | Path | Purpose |
 |------|---------|
 | `/usr/share/zephyr/<lang>/` | Language template tree |
-| `/usr/bin/zfr` | Main CLI (`create`, `rename`, `add`, `remove`, `about`, `version`, `lint`, `shape`, `dist`, `ize`, `detect`) |
-| `/usr/bin/zfr-{create,rename,add,remove,about,version,lint,shape,dist,ize}` | Thin wrappers |
+| `/usr/bin/zfr` | Main CLI (`create`, `rename`, `add`, `remove`, `about`, `version`, `lint`, `shape`, `dist`, `ize`, `release`, `detect`) |
+| `/usr/bin/zfr-{create,rename,add,remove,about,version,lint,shape,dist,ize,release}` | Thin wrappers |
 | `man 1 zfr` | Manual page (localized pages under `share/man/<locale>/man1/`) |
 
 Supported languages include: **bash**, **c**, **clib**, **cpp**, **cpplib**, **csharp**, **erlang**,
@@ -86,7 +86,7 @@ meson test -C /build
 
 Meson runs `python3 -m unittest discover` on `tests/test_*.py`. The suite
 creates temporary example projects and exercises the CLI (`create`, `add`,
-`remove`, `rename`, `about`, `version`, `lint`, `dist`, `ize`, `detect`).
+`remove`, `rename`, `about`, `version`, `lint`, `dist`, `ize`, `release`, `detect`).
 Set `ZFR_PKGDATADIR` to the zephyr checkout root (parent of `zfr/`) and
 `PYTHONPATH` to `src/` when running the tests without Meson.
 

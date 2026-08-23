@@ -11,7 +11,12 @@ import sys
 import tempfile
 from pathlib import Path
 
-from . import find_project_dir, project_version
+from . import (
+    _is_zfr_cli_package,
+    _is_zfr_meta_repo,
+    find_project_dir,
+    project_version,
+)
 from .commands import _meson_project_fields, _parse_control_stanzas
 
 _FORMATS = {
@@ -288,7 +293,17 @@ def cmd_dist(
         outdir = None
 
     git_root = _git_toplevel(root)
-    use_meson = git_root is not None and git_root.resolve() == root.resolve()
+    archive_root = root
+    if (
+        _is_zfr_cli_package(root)
+        and git_root is not None
+        and _is_zfr_meta_repo(git_root)
+    ):
+        # Meta-package tarball must include sibling language templates.
+        archive_root = git_root
+        use_meson = False
+    else:
+        use_meson = git_root is not None and git_root.resolve() == root.resolve()
 
     if use_meson:
         bdir = resolve_builddir(root, builddir)
@@ -304,13 +319,14 @@ def cmd_dist(
         return 0
 
     print(
-        f"meson dist would archive {git_root or '(no git)'}; packing {root} only",
+        f"meson dist would archive {git_root or '(no git)'}; "
+        f"packing {archive_root}",
         file=sys.stderr,
     )
     if outdir is None:
         bdir = resolve_builddir(root, builddir)
         outdir = bdir / "meson-dist"
     dest = outdir / tarball_name
-    _directory_archive(root, dest, f"{name}-{version}", fmt=fmt)
+    _directory_archive(archive_root, dest, f"{name}-{version}", fmt=fmt)
     print(dest, flush=True)
     return 0

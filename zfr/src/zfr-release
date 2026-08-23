@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""zfr-release — parse gh-makerelease options and exec gh-makerelease."""
+
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+_TOOLS = Path(__file__).resolve().parent
+if str(_TOOLS) not in sys.path:
+    sys.path.insert(0, str(_TOOLS))
+
+from zfr_lib.i18n import _, init_i18n  # noqa: E402
+from zfr_lib.release import add_release_arguments, cmd_release  # noqa: E402
+
+
+def main(argv: list[str] | None = None) -> int:
+    init_i18n()
+    p = argparse.ArgumentParser(
+        prog="zfr-release",
+        description=_(
+            "Parse gh-makerelease options, rebuild argv, and exec "
+            "gh-makerelease. Does not implement tagging, packaging, or uploads."
+        ),
+    )
+    add_release_arguments(p)
+    args = p.parse_args(argv)
+    return cmd_release(args)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

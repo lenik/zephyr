@@ -62,6 +62,7 @@ class ZephyrHelpTests(unittest.TestCase):
             "shape",
             "dist",
             "ize",
+            "release",
             "detect",
         ):
             self.assertIn(cmd, proc.stdout)
@@ -109,6 +110,56 @@ class ZephyrDetectTests(unittest.TestCase):
         verbose = run_zephyr("lint", "-v", cwd=ROOT, check=False)
         self.assertIn("layout.pre-commit", verbose.stdout)
         self.assertIn("syncs VERSION from debian/changelog", verbose.stdout)
+
+    def test_lint_zfr_cli_is_clean(self) -> None:
+        proc = run_zephyr("lint", cwd=ROOT, check=False)
+        self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        self.assertIn("lang=python", proc.stdout)
+        self.assertIn("role=package", proc.stdout)
+        self.assertRegex(proc.stdout, r"errors=0\s+warnings=0\s+notes=0")
+
+    def test_detect_zfr_cli_python(self) -> None:
+        proc = run_zephyr("detect", cwd=ROOT)
+        self.assertEqual(proc.stdout.strip(), "python")
+        self.assertIn("role: package", proc.stderr)
+
+    def test_release_wrapper_help(self) -> None:
+        proc = subprocess.run(
+            [sys.executable, str(TOOLS / "zfr-release"), "--help"],
+            env=_env(),
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertIn("gh-makerelease", proc.stdout)
+        self.assertIn("--local", proc.stdout)
+        self.assertIn("--unsigned", proc.stdout)
+
+    def test_release_recomposes_options(self) -> None:
+        import argparse
+
+        from zfr_lib.release import add_release_arguments, compose_makerelease_argv
+
+        p = argparse.ArgumentParser()
+        add_release_arguments(p)
+        ns = p.parse_args(
+            ["-l", "--unsigned", "-I", "-vv", "-p", "mentors", "-B", "b4f-debian:sid"]
+        )
+        argv = compose_makerelease_argv(ns)
+        self.assertEqual(
+            argv,
+            [
+                "--unsigned",
+                "--dput-host",
+                "mentors",
+                "--base-image",
+                "b4f-debian:sid",
+                "--local",
+                "--no-install",
+                "--verbose",
+                "--verbose",
+            ],
+        )
 
 
 class ZephyrCreateProjectTests(unittest.TestCase):
