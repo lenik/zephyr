@@ -1,0 +1,437 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: Felhasználói parancsok
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - többnyelvű CLI projekt-sablonok és segédprogramok
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-l* _LEVEL_] [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape* és *zfr-release* ugyanazon alpárbancsok vékony burkolatai.
+
+== Description
+
+*zfr* a *zephyr* sablon-gyűjtemény parancssori eszköze.
+Kis parancssori segédprogramokhoz nyelvi sablonokat, valamint azok
+példányosításához és kezeléséhez szükséges segédprogramokat biztosít.
+
+*Fontos:* a példányosított projektektől elvárás, hogy továbbra is *zfr*-t
+hívjanak (például *zfr version* a *meson.build*-ben és az *rpm/Makefile*-ben).
+A *zfr* karakterlánc *nem* create/rename varázstoken, és soha
+nem íródik át a projektnévre. Az átírandó sablon-helyőrző továbbra is
+*zephyr* (és *some_puff1* a minta puffokhoz).
+
+Tipikus munkafolyamat:
+
+. Projekt létrehozása nyelvi sablonból:
++
+----
+zfr create -l python myproj
+----
+
+. Belépés a projektbe és alkalmazás-*puffok* (mintaalkalmazások) hozzáadása:
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. Opcionálisan később a projekt átnevezése vagy puffok eltávolítása *rename* / *remove* használatával.
+
+A sablonok telepítéskor a */usr/share/zephyr/<lang>/* alatt vannak, vagy a forrásfában,
+ha nem telepített builddir burkolót futtat, például *build/zfr*
+(a *ZFR_PKGDATADIR* felülírja). Minden sablon tartalmazhat *some_puff1* nevű minta puffot;
+a puffneveket a *create* parancssoron adja meg a példányosításhoz,
+vagy hagyja ki üres projekthez.
+
+Monorepóban a *repodir* a git (vagy meta) checkout gyökere, a *packagedir* pedig
+a zephyr alakú csomagfa (például *repodir/bash*).
+Az aktuális könyvtárból induló parancsok először a *packagedir*-t határozzák meg.
+
+*i18n*::
+  A *zfr lint -l/--l10n-level* kiválasztja a szükséges gettext és kézikönyv-lefedettséget.
+  *L0* nem követel semmit. *L1* (alapértelmezett) megköveteli: *de*, *es*, *fr*, *it*, *ja*,
+  *ko*, *pl*, *ru*, *zh_CN*, *zh_TW*. *L2* ezeket plusz *bg*, *ca*,
+  *cs*, *el*, *hu*, *id*, *nl*, *pt*, *sv*, *tr*. *L3* hozzáadja: *da*, *et*, *fi*,
+  *gl*, *hr*, *lt*, *ms*, *pt_BR*, *sk*, *sl*. Az angol (*en*) a forrás
+  *msgid* nyelv, és nincs felsorolva a *po/LINGUAS*-ban. A szint feletti extra locale-ok
+  megengedettek. Az alapértelmezett *lint* argumentumokat a
+  *.config/zephyr/lint.options* tartalmazhatja. A kézikönyvoldalak teljes,
+  kézi fordítások legyenek a *docs/<locale>/* alatt (nem po4a töredékek).
+
+== Commands
+
+*create*::
+  A *pkgdatadir/<lang>/* tartalmát másolja egy új *./<project_name>/* könyvtárba (hiba, ha
+  a könyvtár már létezik). Átírja *zephyr* → *_PROJECT_NAME_*, és ha
+  puffnevek vannak megadva, *some_puff1* → az első *_PUFF_NAME_* (továbbiak
+  az *add*-dal). Puffnevek nélkül eldobja a sablon puff fájlokat, de megtartja
+  a *some_puff1* tokeneket, hogy későbbi *add* példányosíthassa őket.
+  Új *debian/changelog*-ot ír (*--distribution* / *--init-version* / *--author* / *--email*,
+  a sablon changelog eldobásra kerül), majd *git init*, *core.hooksPath* beállítása
+  *.githooks*-ra (*pre-commit* másolása, hogy a *VERSION* szinkronban maradjon a *debian/changelog*-gal),
+  kezdeti commit és *vVER* annotált tag.
+
+*rename*::
+  Az aktuális projektkönyvtárban átírja *zephyr* → *_PROJECT_NAME_*, és
+  minden megadott névhez a sablon puff *some_puff1* → az adott név.
+  Nem írja át a *zfr*-t.
+
+*add*::
+  Felismeri a projekt nyelvét, és a sablon puff fájlokat az aktuális
+  projektbe másolja, *some_puff1* → minden *_PUFF_NAME_* átnevezéssel. Ha lehetséges,
+  frissíti a Meson listákat (vagy egyenértékű bekötést).
+
+*remove*::
+  Eltávolítja az adott puffnevek fájljait és Meson bekötését az aktuális
+  projektből.
+
+*detect*::
+  Kiírja az aktuális könyvtár felismert nyelvét
+  (szülő könyvtárakban haladva a projektgyökérig).
+
+*about*::
+  Információt ír ki az aktuális projektről. Az aktuális
+  könyvtárból a szülők felé haladva keresi a projektgyökeret (*meson.build*
+  *project()*-tel vagy *debian/control*). A gyakori mezők (név, verzió, licenc,
+  honlap, karbantartó, összefoglaló, section, priority, distribution,
+  architecture) Debian vagy RPM metaadatokból kerülnek kiolvasásra, és a
+  terminál szélességére tördelődnek. Forrásfájl-/sorszám-statisztikát és becsült
+  payload méretet is kiír. Interaktív terminálok CSR (console SGR) színeket használnak, hacsak
+  nincs beállítva *NO_COLOR*. *-d* / *-r* a teljes feldolgozott Debian vagy RPM nézet
+  (nem a csomagolófájlok kiírása).
+
+*version*::
+  Kiírja az aktuális projektverziót (egy sor, szkriptekhez). Alapértelmezés: *git describe*,
+  ha elérhető a *git* és a *.git*, különben a legfrissebb
+  *debian/changelog* verzió. Ezután *VERSION* fájl, végül *0.0.0*.
+  Nem semver token (például git hash) *0.0.0-<token>* formában jelenik meg.
+
+*lint*::
+  Ellenőrzi az aktuális projektet a zephyr csomagolási és elrendezési stílus szerint
+  (az aktuális könyvtárból a szülők felé haladva a projektgyökérig).
+  Hiányzó fájlokat, identitás-eltéréseket, Meson/Debian/RPM hibákat,
+  maradék *zephyr* / *some_puff1* tokeneket a példányosított alkalmazásokban és javasolt
+  javításokat jelenti. A *zfr* említései várhatóak, nem maradéknak számítanak.
+  A *.githooks/pre-commit*-nál a *.git*-ig halad, tiszteletben tartja a *core.hooksPath*-ot,
+  és ellenőrzi, hogy a hook szinkronizálja-e a *VERSION*-t a *debian/changelog*-ból.
+  Ha *po/* vagy *docs/\*.adoc* jelen van, figyelmeztet, ha a lefedettség nem felel meg
+  a *--l10n-level*-nek (lásd *i18n* a Description alatt; alapértelmezett *L1*, a projektfájl
+  *.config/zephyr/lint.options* más szintet is megadhat).
+  A kimenet embereknek és AI kódolóknak szól: minden találathoz kód,
+  útvonal és konkrét javítás tartozik. Interaktív terminálok CSR (console SGR)
+  színeket használnak, hacsak nincs beállítva *NO_COLOR*.
+
+*shape*::
+  0–100 *zephyr shape* pontszámot ír ki az aktuális *packagedir*-hez (mennyire
+  illeszkedik teljesen a fa a zephyr csomagolási stílushoz). Monorepóban a
+  *packagedir* eltérhet a *repodir*-től (git / meta gyökér); az eszközök
+  a shape segítségével a csomagkönyvtárat részesítik előnyben a tároló gyökerével szemben.
+  *\-b* / *--bool* *1*-et ír ki, ha a pontszám legalább a küszöb
+  (alapértelmezett *50*), különben *0*.
+
+*dist*::
+  Forrásarchívumot készít az aktuális projektből (az aktuális
+  könyvtárból a szülők felé haladva a projektgyökérig). Ha ez a könyvtár
+  a git projektgyökere, *meson dist* fut (*meson setup* után, alapértelmezett
+  *--allow-dirty* és *--no-tests*). A beágyazott nyelvi sablonoknak nincs saját
+  *.git*-jük, ezért a *meson dist* a szülő meta-repót csomagolná;
+  ezek a fák csak ennek a projektnek a könyvtár-tarballját kapják. Az archívum
+  útvonalát stdout-ra írja. Az *rpm/Makefile* *dist* parancsa és a Meson *srcdist*
+  ninja cél újrahasználja ezt a parancsot.
+
+*release*::
+  Ugyanazokat a kapcsolókat dolgozza fel, mint a *gh-makerelease*(1), újraépíti az argv-t, és *exec*
+  *gh-makerelease*-t a PATH-ból. Ez a parancs maga nem végzi a tagelést,
+  csomagolást vagy GitHub feltöltést. A *zephyr* projekt a git checkout gyökeréből
+  jelenik meg (nyelvi sablonok plusz *zfr/*). Lásd alább: *Options for release*.
+
+*ize*::
+  Helyben refaktorálja az aktuális projektet, hogy illeszkedjen a jelenlegi zephyr
+  stílushoz (az aktuális könyvtárból a szülők felé haladva). Hiányzó
+  *debian/* és *rpm/* vázat másol a nyelvi sablonból (nevek
+  átírva erre a projektre), *VERSION* és *.githooks/pre-commit* írása,
+  *meson.build* javítása (*zfr version*, *asciidoctor* man célok,
+  *run_target look*, bash-completion telepítés). A projekt alatti groff *\*.1* man
+  oldalakat (nem *debian/*) *docs/\*.adoc*-ra alakítja Meson szabályokkal,
+  a *src/* hardkódolt changelog verzióit pedig *\*.in*
+  *@VERSION@* helyettesítésekre vagy *PROJECT_VERSION*-re *config.h*-n keresztül C családbeli nyelveknél.
+  *\-n* / *--dry-run* csak a tervet írja ki írás nélkül.
+  Ezután futtassa a *zfr lint*-et.
+
+*help*::
+  Parancssori súgó megjelenítése.
+
+== Options
+
+A *create* kapcsolói:
+
+*-l, --lang* _LANG_::
+  Használandó nyelvi sablon (alapértelmezett: *python*).
+  Támogatott értékek: *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*,
+  *haskell*, *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift* és
+  *typescript*.
+
+*-D, --distribution* _DIST_::
+  Debian changelog distribution (alapértelmezett: *unstable*).
+
+*-1, --init-version* _VER_::
+  Kezdeti csomagverzió és git tag (alapértelmezett: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  Changelog és git szerző neve (alapértelmezett: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  Changelog és git szerző e-mailje (alapértelmezett: *lenik@bodz.net*).
+
+A *about* kapcsolói:
+
+*-d, --debian*::
+  Feldolgozott Debian csomagolási mezők (*debian/control*, legfrissebb
+  *debian/changelog* bejegyzés). A *Build-Depends* típusú listák a
+  terminál szélességére tördelődnek; a hosszú leírás bekezdésekre formázódik.
+
+*-r, --redhat*::
+  Feldolgozott RPM csomagolási mezők az *rpm/*.spec*-ből (a *%{version}* típusú makrók
+  a *zfr version -r* segítségével jelennek meg). A *%description*
+  törzse újraformázódik; a spec scriptletek nem kerülnek kiírásra.
+
+*--color* _WHEN_::
+  CSR kiemelés: *auto* (alapértelmezett: TTY és nincs *NO_COLOR*), *always* vagy
+  *never*.
+
+A *version* kapcsolói:
+
+*-g, --git*::
+  *git describe --tags --always --dirty* használata (alapértelmezett, ha elérhető a *git* és a *.git*).
+
+*-c, --changelog*::
+  A legfrissebb *debian/changelog* verzió (alapértelmezett, ha a *git* vagy a *.git*
+  nem elérhető).
+
+*-r, --rpm*::
+  RPM-kompatibilis *Version* kiírása (kötőjelek aláhúzásra mapelve).
+
+A *lint* kapcsolói:
+
+*-v, --verbose*::
+  A sikeres ellenőrzéseket is kiírja.
+
+*-q, --quiet*::
+  Csak hibákat ír ki.
+
+*--strict*::
+  A figyelmeztetéseket hibának tekinti (kilépési státusz 1).
+
+*-l, --l10n-level* _LEVEL_::
+  Szükséges gettext és teljes kézikönyv-lefedettség: *L0* (nincs), *L1*
+  (10 locale, alapértelmezett), *L2* (20) vagy *L3* (30). A *LEVEL* lehet *L2* vagy
+  *2*. Az alapértelmezések a *.config/zephyr/lint.options*-ból is jöhetnek.
+
+*--color* _WHEN_::
+  CSR kiemelés: *auto* (alapértelmezett: TTY és nincs *NO_COLOR*), *always* vagy
+  *never*.
+
+A *shape* kapcsolói:
+
+*-b, --bool*::
+  *1*-et ír ki, ha a shape pontszám legalább *--threshold*, különben *0*.
+
+*-v, --verbose*::
+  Kiírja a *packagedir*, *repodir*, *role* és *threshold* értékeket standard error-ra.
+
+*--threshold* _N_::
+  Küszöb a *--bool*-hoz (alapértelmezett: *50*).
+
+A *dist* kapcsolói:
+
+*-o, --output* _DIR_::
+  Az archívumot ide írja: *_DIR_* (alapértelmezett: Meson *meson-dist*
+  könyvtár, vagy *rpmbuild/SOURCES* *--rpm*-mel).
+
+*-b, --builddir* _DIR_::
+  Meson build könyvtár. Alapértelmezett */build*, ha az ehhez a forrásfához
+  konfigurált builddir, különben *<project>/build*.
+
+*-f, --format* _FMT_::
+  Archívum formátum: *xz* (alapértelmezett), *gz* vagy *zip*.
+
+*--rpm*::
+  Az archívum neve *_NAME_*-*_VERSION_*.tar.xz, és a *rpmbuild/SOURCES*-ba kerül,
+  hacsak nincs megadva *-o*. Az *rpm/Makefile* használja.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  *--allow-dirty* átadása a *meson dist*-nek (alapértelmezett: engedélyezett).
+
+*--tests*::
+  Tesztek futtatása *meson dist* közben (alapértelmezett: *--no-tests*).
+
+A *release* kapcsolói (itt feldolgozva, továbbítva a *gh-makerelease*-nek):
+
+*-b, --build-binary*::
+  Debian csak bináris build (*-b*); nincs _.dsc_.
+*-n, --no-pre-clean*::
+  Debian build cache újrahasználata.
+*-u, --upload*::
+  Meglévő verzió-hatókörű artefaktumok újrahasználata, ha vannak.
+*--unsigned*::
+  Aláíratlan Debian csomagok buildje (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  *dput*(1) feltöltő host a _.changes_ fájlhoz.
+*-d, --docker*::
+  Debian csomag build *build4*(1)-gyel Dockerben.
+*-B, --base-image* _IMAGE_::
+  *build4* cél image (alapértelmezett: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  *build4* futtatása SSH-n a *SERVER*-en (*-d* implicit).
+*-l, --local*::
+  Csak build; nincs tag, push vagy GitHub release.
+*-f, --force*::
+  Meglévő tag/release cseréje.
+*-I, --no-install*::
+  *sudo dpkg -i* kihagyása.
+*-T, --no-tag*::
+  Git release tag létrehozásának és push-ának kihagyása.
+*-U, --no-upload*::
+  A _.changes_ fájl *dput*-jának kihagyása.
+*-R, --no-release*::
+  GitHub release létrehozásának kihagyása.
+*-P, --no-publish*::
+  VSIX marketplace közzététel kihagyása.
+*-Y, --no-rpm*::
+  *make -C rpm rpm srpm* kihagyása.
+*-D, --no-deb*::
+  Debian *debuild* kihagyása.
+*-v, --verbose*::
+  Részletes naplózás (ismételhető).
+*-q, --quiet*::
+  Kevesebb kimenet (ismételhető).
+
+A *ize* kapcsolói:
+
+*-l, --lang* _LANG_::
+  Váz másolásához használandó nyelvi sablon (alapértelmezett: felismerés).
+
+*-n, --dry-run*::
+  Tervezett hozzáadások/frissítések/konverziók kiírása fájlírás nélkül.
+
+*-v, --verbose*::
+  A már meglévő, kihagyott útvonalakat is kiírja.
+
+*--no-man*::
+  Ne alakítsa a groff *\*.1* forrásokat *docs/\*.adoc*-ra.
+
+*--no-subst*::
+  Ne írja át a *src/* hardkódolt verzióit *@VERSION@* / *config.h* formára.
+
+*--color* _WHEN_::
+  CSR kiemelés: *auto* (alapértelmezett: TTY és nincs *NO_COLOR*), *always* vagy
+  *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  Felülírja a sablonok gyökerét (általában */usr/share/zephyr*).
+
+*NO_COLOR*::
+  Beállítva a *zfr about*, *zfr lint* és *zfr ize* kikapcsolja a CSR
+  kiemelést *--color auto* módban.
+
+*PYTHONPATH*::
+  Tartalmaznia kell a *zfr_lib* csomag könyvtárát, ha
+  nem alapértelmezett telepítési elrendezésből futnak az eszközök.
+
+== Tests
+
+A forrásfa (nem a telepített csomag) *tests/* könyvtárat tartalmaz Python *unittest*
+CLI lefedettséggel. A *meson test* (build könyvtár
+*/build*) felfedi a *tests/test_*.py* fájlokat. A tesztek ideiglenes mintaprojekteket
+hoznak létre, és minden alpárbancsot kipróbálnak (*create*, *add*, *remove*,
+*rename*, *about*, *version*, *lint*, *shape*, *dist*, *ize*, *release*,
+*detect*, *help*), a *zfr-** burkolókat, nyelvi biztonsági pontszámot,
+gettext katalógusokat és a *docs/<lang>/zfr.adoc* kézikönyveket locale-onként.
+Meson nélkül állítsa a *ZFR_PKGDATADIR*-t a zephyr checkout gyökerére
+(a *zfr/* szülője), a *PYTHONPATH*-ot pedig *src/*-ra.
+
+== Files
+
+*.config/zephyr/lint.options*::
+  Alapértelmezett *zfr lint* argumentumok ehhez a projekthez (shell tokenek; *#* megjegyzések).
+  Maga a zfr CLI *-l 2*-t szállít.
+
+*/usr/share/zephyr/<lang>/*::
+  Telepített nyelvi sablonok.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI és vékony burkolók.
+
+*/usr/share/doc/zephyr/*::
+  Csomagdokumentáció (LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  Lokalizált kézikönyvoldalak, a *docs/<locale>/zfr.adoc*-ból épülve
+  (teljes dokumentum-fordítások, nem gettext/po4a töredékek).
+  A magyar kézikönyv forrásfájlja a *docs/hu/zfr.adoc*.
+
+== Exit status
+
+*0*::
+  Siker. A *lint* esetén a projektnek nincs hibaszintű találata
+  (a figyelmeztetések továbbra is megjelennek, hacsak nincs *--strict*).
+
+*non-zero*::
+  Hiba történt (ismeretlen nyelv, cél létezik, felismerési hiba,
+  hiányzó puff fájlok, *lint* találatok stb.).
+
+== Author
+
+Írta: {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+Licenc: AGPL-3.0-or-later.
+Ez szabad szoftver: módosíthatja és továbbterjesztheti a
+GNU Affero General Public License feltételei mellett.
+NINCS GARANCIA, a törvény által megengedett mértékig.
+A teljes licencszöveg a forrásterjesztés LICENSE fájljában,
+beleértve a kiegészítő feltételeket is: ez a projekt ellenzi az AI kizsákmányolást és
+az AI hegemóniát, és elutasítja a gondolkodás nélküli MIT-stílusú licencelést és a politikailag naiv
+BSD-stílusú licencelést.

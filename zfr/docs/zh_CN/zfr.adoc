@@ -26,7 +26,7 @@ zfr - 多语言 CLI 项目模板与辅助工具
 
 *zfr* *version* [*-g*] [*-c*] [*-r*]
 
-*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+*zfr* *lint* [*-l* _LEVEL_] [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
 
 *zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
 
@@ -81,11 +81,14 @@ zfr add myapp another_app
 从当前目录向上遍历的命令会先解析 *packagedir*。
 
 *i18n*::
-  Zephyr 风格建议至少覆盖以下 gettext 语言：
-  *ar*、*bn*、*de*、*es*、*fr*、*hi*、*id*、*it*、*ja*、*ko*、*pt*、*ru*、
-  *sv*、*ta*、*te*、*th*、*tr*、*ur*、*vi*、*zh_CN*、*zh_TW*
-  （别名 *zh-cn* / *zh-tw*）。英语（*en*）为源 *msgid* 语言，
-  不列入 *po/LINGUAS*。请在 *po/LINGUAS* 中列出上述 locale，并提供对应的 *po/<locale>.po* 文件。
+  *zfr lint -l/--l10n-level* 选择要求的 gettext 与手册覆盖。
+  *L0* 无要求。*L1*（默认）要求 *de*、*es*、*fr*、*it*、*ja*、*ko*、*pl*、
+  *ru*、*zh_CN*、*zh_TW*。*L2* 再加 *bg*、*ca*、*cs*、*el*、*hu*、*id*、
+  *nl*、*pt*、*sv*、*tr*。*L3* 再加 *da*、*et*、*fi*、*gl*、*hr*、*lt*、
+  *ms*、*pt_BR*、*sk*、*sl*。英语（*en*）为源 *msgid* 语言，不列入
+  *po/LINGUAS*。超出该等级的额外语言可以保留。默认 *lint* 参数写在
+  *.config/zephyr/lint.options*。手册必须是 *docs/<locale>/* 下的整篇
+  手工翻译（不是 po4a 片段）。
 
 == Commands
 
@@ -220,6 +223,11 @@ zfr add myapp another_app
 
 *--strict*::
   将警告视为失败（退出状态 1）。
+
+*-l, --l10n-level* _LEVEL_::
+  要求的 gettext 与整篇手册覆盖：*L0*（无）、*L1*（10 种，默认）、*L2*（20）
+  或 *L3*（30）。*LEVEL* 可以是 *L2* 或 *2*。默认值也可来自
+  *.config/zephyr/lint.options*。
 
 *--color* _WHEN_::
   CSR 高亮：*auto*（默认：TTY 且未设置 *NO_COLOR*）、*always* 或

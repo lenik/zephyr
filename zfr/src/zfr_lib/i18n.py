@@ -118,7 +118,7 @@ def _locale_dirs() -> list[Path]:
             Path("/build/po"),
             zfr_root / "build" / "po",
             repo / "build" / "po",
-            repo / "debian" / "build" / "po",
+            zfr_root / "debian" / "build" / "po",
         ]
     )
     try:

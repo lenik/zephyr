@@ -1,0 +1,439 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: Uživatelské příkazy
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - vícejazyčné CLI šablony projektů a pomocné nástroje
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-l* _LEVEL_] [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape* a *zfr-release* jsou tenké obaly kolem stejných podpříkazů.
+
+== Description
+
+*zfr* je příkazový nástroj pro sbírku šablon *zephyr*.
+Dodává jazykové šablony pro malé nástroje příkazové řádky a pomocníky
+pro jejich vytváření a správu.
+
+*Důležité:* u vytvořených projektů se očekává, že budou nadále volat *zfr*
+(například *zfr version* v *meson.build* a *rpm/Makefile*).
+Řetězec *zfr* *není* magický token pro create/rename a nikdy
+se nepřepisuje na název projektu. Zástupný symbol šablony, který se
+*přepisuje*, zůstává *zephyr* (a *some_puff1* pro ukázkové puffy).
+
+Typický postup:
+
+. Vytvoření projektu ze jazykové šablony:
++
+----
+zfr create -l python myproj
+----
+
+. Přechod do projektu a přidání aplikačních *puffů* (ukázkových aplikací):
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. Volitelně později přejmenování projektu nebo odstranění puffů pomocí *rename* / *remove*.
+
+Šablony jsou po instalaci v */usr/share/zephyr/<lang>/*, nebo ve zdrojovém
+stromu při spuštění neinstalovaného obalu builddir, například *build/zfr*
+(přepíše *ZFR_PKGDATADIR*). Každá šablona může obsahovat ukázkový puff
+*some_puff1*; názvy puffů zadejte na příkazové řádce *create*, abyste je
+instancovali, nebo je vynechte pro prázdný projekt.
+
+V monorepu je *repodir* kořen git (nebo meta) checkoutu a *packagedir*
+strom balíčku se zephyr tvarem (například *repodir/bash*).
+Příkazy procházející z aktuálního adresáře nejprve určí *packagedir*.
+
+*i18n*::
+  *zfr lint -l/--l10n-level* volí požadované pokrytí gettext a manuálových stránek.
+  *L0* nevyžaduje nic. *L1* (výchozí) vyžaduje *de*, *es*, *fr*, *it*, *ja*,
+  *ko*, *pl*, *ru*, *zh_CN*, *zh_TW*. *L2* vyžaduje tyto plus *bg*, *ca*,
+  *cs*, *el*, *hu*, *id*, *nl*, *pt*, *sv*, *tr*. *L3* přidává *da*, *et*, *fi*,
+  *gl*, *hr*, *lt*, *ms*, *pt_BR*, *sk*, *sl*. Angličtina (*en*) je zdrojový
+  jazyk *msgid* a není uvedena v *po/LINGUAS*. Další jazyky nad úrovní jsou
+  povoleny. Výchozí argumenty *lint* lze zadat v
+  *.config/zephyr/lint.options*. Manuálové stránky musí být celé ruční
+  překlady v *docs/<locale>/* (ne fragmenty po4a).
+
+== Commands
+
+*create*::
+  Zkopíruje *pkgdatadir/<lang>/* do nového adresáře *./<project_name>/* (selže, pokud
+  adresář již existuje). Přepíše *zephyr* → *_PROJECT_NAME_* a při
+  zadaných názvech puffů *some_puff1* → první *_PUFF_NAME_* (další
+  přes *add*). Bez názvů puffů odstraní soubory puffů ze šablony, ale ponechá
+  tokeny *some_puff1*, aby je pozdější *add* mohl instancovat.
+  Zapíše nový *debian/changelog* (changelog ze šablony se zahodí) pomocí
+  *--distribution* / *--init-version* / *--author* / *--email*, poté spustí
+  *git init*, nastaví *core.hooksPath* na *.githooks* (zkopíruje *pre-commit*, aby
+  *VERSION* zůstával synchronizovaný s *debian/changelog*), počáteční commit a
+  anotovaný tag *vVER*.
+
+*rename*::
+  V aktuálním adresáři projektu přepíše *zephyr* → *_PROJECT_NAME_* a
+  pro každý zadaný název přepíše puff ze šablony *some_puff1* → tento název.
+  Nepřepisuje *zfr*.
+
+*add*::
+  Detekuje jazyk projektu a zkopíruje soubory puffů ze šablony do aktuálního
+  projektu, přejmenuje *some_puff1* na každý zadaný *_PUFF_NAME_*. Aktualizuje
+  seznamy Meson (nebo ekvivalentní propojení), pokud je to možné.
+
+*remove*::
+  Odstraní soubory a propojení Meson pro každý zadaný název puffu z aktuálního
+  projektu.
+
+*detect*::
+  Vypíše detekovaný jazyk pro aktuální adresář
+  (prochází nadřazené adresáře, dokud nenajde kořen projektu).
+
+*about*::
+  Vypíše informace o aktuálním projektu. Prochází z aktuálního
+  adresáře směrem k rodičům, dokud nenajde kořen projektu (*meson.build* s
+  *project()* nebo *debian/control*). Běžná pole (název, verze, licence,
+  domovská stránka, správce, souhrn, section, priority, distribution,
+  architecture) se parsují z metadat Debian nebo RPM a zalamují podle
+  šířky terminálu. Také vypíše počty souborů/řádků zdrojového kódu a odhadovanou
+  velikost payloadu. Interaktivní terminály používají barvy CSR (console SGR), pokud
+  není nastaveno *NO_COLOR*. Použijte *-d* / *-r* pro úplný parsovaný pohled Debian nebo RPM
+  (ne výpis souborů balení).
+
+*version*::
+  Vypíše aktuální verzi projektu (jeden řádek, pro skripty). Výchozí je
+  *git describe*, pokud jsou k dispozici *git* a *.git*, jinak nejnovější
+  verze z *debian/changelog*. Dále se použije soubor *VERSION*, pak *0.0.0*.
+  Token mimo semver (například git hash) se obalí jako *0.0.0-<token>*.
+
+*lint*::
+  Ověří aktuální projekt vůči stylu balení a rozvržení zephyr
+  (prochází z aktuálního adresáře směrem k rodičům, dokud nenajde kořen projektu).
+  Hlásí chybějící soubory, nesoulady identity, chyby Meson/Debian/RPM,
+  zbylé tokeny *zephyr* / *some_puff1* v instancovaných aplikacích a navrhované
+  opravy. Zmínky *zfr* jsou očekávané a nejsou považovány za zbytky.
+  U *.githooks/pre-commit* prochází až k *.git*, respektuje *core.hooksPath*
+  a kontroluje, že hook synchronizuje *VERSION* z *debian/changelog*.
+  Pokud je přítomno *po/* nebo *docs/\*.adoc*, varuje, pokud pokrytí nesplňuje
+  *--l10n-level* (viz *i18n* v Description; výchozí *L1*, soubor projektu
+  *.config/zephyr/lint.options* může nastavit jinou úroveň).
+  Výstup je určen lidem a AI kodérům: každý nález má kód,
+  cestu a konkrétní opravu. Interaktivní terminály používají barvy CSR (console SGR),
+  pokud není nastaveno *NO_COLOR*.
+
+*shape*::
+  Vypíše skóre *zephyr shape* 0–100 pro aktuální *packagedir* (jak
+  úplně strom odpovídá stylu balení zephyr). V monorepu se
+  *packagedir* může lišit od *repodir* (git / meta kořen); nástroje
+  používají shape, aby upřednostnily adresář balíčku před kořenem repozitáře.
+  *\-b* / *--bool* vypíše *1*, pokud je skóre alespoň prahová hodnota
+  (výchozí *50*), jinak *0*.
+
+*dist*::
+  Sestaví zdrojový archiv aktuálního projektu (prochází z aktuálního
+  adresáře směrem k rodičům, dokud nenajde kořen projektu). Pokud je tento adresář
+  kořenem git projektu, spustí *meson dist* (po *meson setup*, výchozí
+  *--allow-dirty* a *--no-tests*). Vnořené jazykové šablony nemají vlastní
+  *.git*, takže *meson dist* by zabalil nadřazené meta-repo;
+  tyto stromy dostanou tarball adresáře pouze tohoto projektu. Vypíše
+  cestu archivu na stdout. *dist* v *rpm/Makefile* a cíl Meson *srcdist*
+  ninja znovu používají tento příkaz.
+
+*release*::
+  Parsuje stejné volby jako *gh-makerelease*(1), sestaví argv a *exec*
+  *gh-makerelease* z PATH. Tento příkaz sám neimplementuje tagování,
+  balení ani nahrávání na GitHub. Projekt *zephyr* se vydává
+  z kořene git checkoutu (jazykové šablony plus *zfr/*). Viz
+  *Options for release* níže.
+
+*ize*::
+  Refaktoruje aktuální projekt na místě tak, aby odpovídal současnému stylu zephyr
+  (prochází z aktuálního adresáře směrem k rodičům). Zkopíruje chybějící
+  kostru *debian/* a *rpm/* ze jazykové šablony (názvy
+  přepsané na tento projekt), zapíše *VERSION* a *.githooks/pre-commit*,
+  upraví *meson.build* (*zfr version*, cíle man *asciidoctor*,
+  *run_target look*, instalace bash-completion). Převede groffové manuálové stránky *\*.1*
+  v projektu (ne v *debian/*) na *docs/\*.adoc* s pravidly Meson
+  a hardcodované verze changelogu v *src/* na substituce *\*.in*
+  *@VERSION@* nebo *PROJECT_VERSION* přes *config.h* pro jazyky rodiny C.
+  *\-n* / *--dry-run* vypíše plán bez zápisu.
+  Poté spusťte *zfr lint*.
+
+*help*::
+  Zobrazí nápovědu příkazové řádky.
+
+== Options
+
+Volby pro *create*:
+
+*-l, --lang* _LANG_::
+  Jazyková šablona k použití (výchozí: *python*).
+  Podporované hodnoty zahrnují *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*,
+  *haskell*, *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift* a
+  *typescript*.
+
+*-D, --distribution* _DIST_::
+  Distribuce v Debian changelog (výchozí: *unstable*).
+
+*-1, --init-version* _VER_::
+  Počáteční verze balíčku a git tag (výchozí: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  Jméno autora changelog a git (výchozí: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  E-mail autora changelog a git (výchozí: *lenik@bodz.net*).
+
+Volby pro *about*:
+
+*-d, --debian*::
+  Zobrazí parsovaná pole Debian balení (*debian/control*, nejnovější
+  záznam *debian/changelog*). Seznamy jako *Build-Depends* se zalamují podle
+  šířky terminálu; dlouhý popis se přeformátuje do odstavců.
+
+*-r, --redhat*::
+  Zobrazí parsovaná pole RPM balení z *rpm/*.spec* (makra jako
+  *%{version}* se zobrazí pomocí *zfr version -r*). Tělo *%description*
+  se přeformátuje; scriptlety spec se nevypisují.
+
+*--color* _WHEN_::
+  CSR zvýraznění: *auto* (výchozí: TTY a bez *NO_COLOR*), *always* nebo
+  *never*.
+
+Volby pro *version*:
+
+*-g, --git*::
+  Použije *git describe --tags --always --dirty* (výchozí, pokud jsou k dispozici *git* a *.git*).
+
+*-c, --changelog*::
+  Použije nejnovější verzi z *debian/changelog* (výchozí, pokud *git* nebo *.git*
+  není k dispozici).
+
+*-r, --rpm*::
+  Vypíše RPM-kompatibilní *Version* (pomlčky mapované na podtržítka).
+
+Volby pro *lint*:
+
+*-v, --verbose*::
+  Vypíše také úspěšné kontroly.
+
+*-q, --quiet*::
+  Vypíše pouze chyby.
+
+*--strict*::
+  Považuje varování za selhání (exit status 1).
+
+*-l, --l10n-level* _LEVEL_::
+  Požadované pokrytí gettext a celých manuálových stránek: *L0* (žádné), *L1*
+  (10 jazyků, výchozí), *L2* (20) nebo *L3* (30). *LEVEL* může být *L2* nebo
+  *2*. Výchozí hodnoty také pocházejí z *.config/zephyr/lint.options*.
+
+*--color* _WHEN_::
+  CSR zvýraznění: *auto* (výchozí: TTY a bez *NO_COLOR*), *always* nebo
+  *never*.
+
+Volby pro *shape*:
+
+*-b, --bool*::
+  Vypíše *1*, pokud je skóre shape alespoň *--threshold*, jinak *0*.
+
+*-v, --verbose*::
+  Vypíše *packagedir*, *repodir*, *role* a *threshold* na standard error.
+
+*--threshold* _N_::
+  Prahová hodnota pro *--bool* (výchozí: *50*).
+
+Volby pro *dist*:
+
+*-o, --output* _DIR_::
+  Zapíše archiv do *_DIR_* (výchozí: adresář Meson *meson-dist*,
+  nebo *rpmbuild/SOURCES* s *--rpm*).
+
+*-b, --builddir* _DIR_::
+  Builddir Meson. Výchozí je */build*, pokud byl tento builddir
+  nakonfigurován pro tento zdrojový strom, jinak *<project>/build*.
+
+*-f, --format* _FMT_::
+  Formát archivu: *xz* (výchozí), *gz* nebo *zip*.
+
+*--rpm*::
+  Pojmenuje archiv *_NAME_*-*_VERSION_*.tar.xz a zapíše ho do
+  *rpmbuild/SOURCES*, pokud není zadáno *-o*. Používá *rpm/Makefile*.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  Předá *--allow-dirty* do *meson dist* (výchozí: povoleno).
+
+*--tests*::
+  Spustí testy během *meson dist* (výchozí je *--no-tests*).
+
+Volby pro *release* (parsované zde, předané do *gh-makerelease*):
+
+*-b, --build-binary*::
+  Debian build pouze binárních balíčků (*-b*); bez _.dsc_.
+*-n, --no-pre-clean*::
+  Znovu použije cache Debian buildu.
+*-u, --upload*::
+  Znovu použije existující artefakty v rozsahu verze, pokud jsou k dispozici.
+*--unsigned*::
+  Sestaví nepodepsané Debian balíčky (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  Hostitel *dput*(1) pro nahrání souboru _.changes_.
+*-d, --docker*::
+  Sestaví Debian balíček pomocí *build4*(1) v Dockeru.
+*-B, --base-image* _IMAGE_::
+  Cílový obraz *build4* (výchozí: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  Spustí *build4* přes SSH na *SERVER* (implikuje *-d*).
+*-l, --local*::
+  Pouze build; bez tagování, push ani vytvoření GitHub release.
+*-f, --force*::
+  Nahradí existující tag/release.
+*-I, --no-install*::
+  Přeskočí *sudo dpkg -i*.
+*-T, --no-tag*::
+  Přeskočí vytvoření a push git release tagu.
+*-U, --no-upload*::
+  Přeskočí *dput* souboru _.changes_.
+*-R, --no-release*::
+  Přeskočí vytvoření GitHub release.
+*-P, --no-publish*::
+  Přeskočí publikování na VSIX marketplace.
+*-Y, --no-rpm*::
+  Přeskočí *make -C rpm rpm srpm*.
+*-D, --no-deb*::
+  Přeskočí Debian *debuild*.
+*-v, --verbose*::
+  Podrobné logování (opakovatelné).
+*-q, --quiet*::
+  Méně výstupu (opakovatelné).
+
+Volby pro *ize*:
+
+*-l, --lang* _LANG_::
+  Jazyková šablona pro kopírování kostry (výchozí: detekce).
+
+*-n, --dry-run*::
+  Vypíše plánované přidání/aktualizace/konverze bez zápisu souborů.
+
+*-v, --verbose*::
+  Vypíše také přeskočené cesty, které již existují.
+
+*--no-man*::
+  Nepřevádí groffové zdroje *\*.1* na *docs/\*.adoc*.
+
+*--no-subst*::
+  Nepřepisuje hardcodované verze v *src/* na *@VERSION@* / *config.h*.
+
+*--color* _WHEN_::
+  CSR zvýraznění: *auto* (výchozí: TTY a bez *NO_COLOR*), *always* nebo
+  *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  Přepíše kořen šablon (obvykle */usr/share/zephyr*).
+
+*NO_COLOR*::
+  Pokud je nastaveno, *zfr about*, *zfr lint* a *zfr ize* vypnou CSR
+  zvýraznění v režimu *--color auto*.
+
+*PYTHONPATH*::
+  Musí obsahovat adresář s balíčkem *zfr_lib*, pokud
+  nástroje běží z ne výchozího layoutu instalace.
+
+== Tests
+
+Zdrojový strom (ne nainstalovaný balíček) obsahuje *tests/* s
+Python *unittest* pokrytím CLI. *meson test* (builddir
+*/build*) objeví *tests/test_*.py*. Testy vytvářejí dočasné ukázkové
+projekty a procvičují každý podpříkaz (*create*, *add*, *remove*,
+*rename*, *about*, *version*, *lint*, *shape*, *dist*, *ize*, *release*,
+*detect*, *help*), obaly *zfr-**, skóre jazykové jistoty,
+gettext katalogy a manuály *docs/<lang>/zfr.adoc* pro jednotlivé jazyky.
+Bez Meson nastavte *ZFR_PKGDATADIR* na kořen zephyr checkoutu
+(nadřazený *zfr/*) a *PYTHONPATH* na *src/*.
+
+== Files
+
+*.config/zephyr/lint.options*::
+  Výchozí argumenty *zfr lint* pro tento projekt (shell tokeny; komentáře *#*).
+  Samotné CLI zfr dodává *-l 2*.
+
+*/usr/share/zephyr/<lang>/*::
+  Nainstalované jazykové šablony.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI a tenké obaly.
+
+*/usr/share/doc/zephyr/*::
+  Dokumentace balíčku (LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  Lokalizované manuálové stránky, sestavené z *docs/<locale>/zfr.adoc*
+  (celé překlady dokumentu, ne fragmenty gettext/po4a).
+  Zdrojový soubor české manuálové stránky je *docs/cs/zfr.adoc*.
+
+== Exit status
+
+*0*::
+  Úspěch. U *lint* projekt nemá nálezy na úrovni chyby
+  (varování se stále vypisují, pokud není *--strict*).
+
+*non-zero*::
+  Došlo k chybě (neznámý jazyk, cíl existuje, selhání detekce,
+  chybějící soubory puffů, nálezy *lint* atd.).
+
+== Author
+
+Napsal {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+Licence AGPL-3.0-or-later.
+Toto je svobodný software: můžete ho měnit a šířit za podmínek
+GNU Affero General Public License.
+BEZ ZÁRUKY, v rozsahu povoleném zákonem.
+Úplný text licence viz soubor LICENSE ve zdrojové distribuci,
+včetně doplňkových podmínek, že tento projekt odmítá AI exploataci a
+AI hegemonii a odmítá bezmyšlenkovitou MIT-style licenci a politicky naivní
+BSD-style licenci.

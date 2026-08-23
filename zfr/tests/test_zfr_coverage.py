@@ -118,6 +118,13 @@ class ZephyrDispatcherTests(unittest.TestCase):
         self.assertIn("zfr lint", q.stdout)
         s = run_zephyr("lint", "--strict", cwd=ROOT, check=False)
         self.assertIn(s.returncode, (0, 1))
+        l0 = run_zephyr("lint", "-l", "0", "--color", "never", cwd=ROOT, check=False)
+        self.assertIn("zfr lint", l0.stdout)
+        self.assertIn("L0", l0.stdout)
+        l2 = run_zephyr("lint", "-l", "2", "--color", "never", cwd=ROOT, check=False)
+        self.assertIn("L2", l2.stdout)
+        bad = run_zephyr("lint", "-l", "9", cwd=ROOT, check=False)
+        self.assertNotEqual(bad.returncode, 0)
 
     def test_shape_threshold(self) -> None:
         b = run_zephyr("shape", "-b", "--threshold", "1", "-v", cwd=ROOT)

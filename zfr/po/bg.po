@@ -1,0 +1,425 @@
+# Bulgarian translations for zfr package.
+# Copyright (C) 2026 THE zfr'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the zfr package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: zfr\n"
+"Report-Msgid-Bugs-To: zephyr@bodz.net\n"
+"POT-Creation-Date: 2026-08-23 19:11+0800\n"
+"PO-Revision-Date: 2026-08-23\n"
+"Last-Translator: Lenik (谢继雷) <lenik@bodz.net>\n"
+"Language-Team: Bulgarian\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: src/zfr:32
+msgid ""
+"Zephyr template helper (CLI name: zfr). Create projects and manage example "
+"puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
+msgstr ""
+"Помощник за шаблони Zephyr (CLI име: zfr). Създава проекти и управлява "
+"примерни puffs. Инстанцираните дървета продължават да извикват zfr; "
+"zfr не е маркер за преименуване."
+
+#: src/zfr:45
+msgid "show this help"
+msgstr "показване на тази помощ"
+
+#: src/zfr_lib/about.py:496
+msgid "print current project information (walks parents from cwd)"
+msgstr "извеждане на информация за текущия проект (търси нагоре от cwd)"
+
+#: src/zfr_lib/about.py:498
+msgid ""
+"Print information about the current zephyr project (walks from cwd toward "
+"parent directories). CSR colors when stdout is a TTY. Common packaging "
+"fields are parsed from debian or RPM."
+msgstr ""
+"Извежда информация за текущия zephyr проект (търси нагоре от cwd). CSR "
+"цветове, когато stdout е TTY. Общите полета за пакетиране се четат от "
+"debian или RPM."
+
+#: src/zfr_lib/about.py:505
+msgid "show parsed Debian packaging fields"
+msgstr "показване на анализираните полета за Debian пакетиране"
+
+#: src/zfr_lib/about.py:506
+msgid "show parsed RPM packaging fields"
+msgstr "показване на анализираните полета за RPM пакетиране"
+
+#: src/zfr_lib/about.py:511
+msgid "CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)"
+msgstr ""
+"CSR (console SGR) подчертаване (по подразбиране: auto = TTY и без "
+"NO_COLOR)"
+
+#: src/zfr_lib/add.py:20
+msgid "instantiate puff(s) from the language template"
+msgstr "създаване на puff(ове) от езиковия шаблон"
+
+#: src/zfr_lib/add.py:21
+msgid "Detect language and add puff(s) from pkgdatadir/<lang>."
+msgstr "Разпознава езика и добавя puff(ове) от pkgdatadir/<lang>."
+
+#: src/zfr_lib/add.py:25
+msgid "new puff name(s) (snake_case recommended)"
+msgstr "нови имена на puff(ове) (препоръчително snake_case)"
+
+#: src/zfr_lib/create.py:291
+msgid "create a new project from a language template"
+msgstr "създаване на нов проект от езиков шаблон"
+
+#: src/zfr_lib/create.py:292
+msgid "Create a new project directory from pkgdatadir/<lang>."
+msgstr "Създава нов проектен каталог от pkgdatadir/<lang>."
+
+#: src/zfr_lib/create.py:298
+#, python-format
+msgid "template language (default: python; one of: %s)"
+msgstr "език на шаблона (по подразбиране: python; един от: %s)"
+
+#: src/zfr_lib/create.py:302
+#, python-format
+msgid "debian changelog distribution (default: %s)"
+msgstr "дистрибуция в debian changelog (по подразбиране: %s)"
+
+#: src/zfr_lib/create.py:306
+#, python-format
+msgid "initial package version and git tag (default: %s)"
+msgstr "начална версия на пакета и git етикет (по подразбиране: %s)"
+
+#: src/zfr_lib/create.py:310
+#, python-format
+msgid "changelog/git author name (default: %s)"
+msgstr "име на автора в changelog/git (по подразбиране: %s)"
+
+#: src/zfr_lib/create.py:314
+#, python-format
+msgid "changelog/git author email (default: %s)"
+msgstr "имейл на автора в changelog/git (по подразбиране: %s)"
+
+#: src/zfr_lib/create.py:316
+msgid "new project directory name"
+msgstr "име на новия проектен каталог"
+
+#: src/zfr_lib/create.py:319
+msgid "optional puff names to add after creating the project"
+msgstr ""
+"незадължителни имена на puff(ове) за добавяне след създаване на "
+"проекта"
+
+#: src/zfr_lib/detect.py:15
+msgid "print detected language for the current directory"
+msgstr "извеждане на разпознатия език за текущия каталог"
+
+#: src/zfr_lib/detect.py:16
+msgid ""
+"Print the detected language of the current project and layout details on "
+"stderr."
+msgstr ""
+"Извежда разпознатия език на текущия проект и подробности за "
+"оформлението на stderr."
+
+#: src/zfr_lib/dist.py:60
+msgid ""
+"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
+"rpm)"
+msgstr ""
+"запис на архива в DIR (по подразбиране: meson-dist или "
+"rpmbuild/SOURCES с --rpm)"
+
+#: src/zfr_lib/dist.py:70
+msgid ""
+"Meson build directory (default: /build when it matches this source tree, "
+"else <project>/build)"
+msgstr ""
+"Meson build каталог (по подразбиране: /build, ако съответства на това "
+"дърво с изходен код, иначе <project>/build)"
+
+#: src/zfr_lib/dist.py:80
+msgid "archive format (default: xz)"
+msgstr "формат на архива (по подразбиране: xz)"
+
+#: src/zfr_lib/dist.py:86
+msgid ""
+"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
+"-o is given"
+msgstr ""
+"именува архива NAME-VERSION.tar.xz и го записва в rpmbuild/SOURCES, "
+"освен ако е зададено -o"
+
+#: src/zfr_lib/dist.py:94
+msgid "pass --allow-dirty to meson dist (default: allow)"
+msgstr "предаване на --allow-dirty на meson dist (по подразбиране: разрешено)"
+
+#: src/zfr_lib/dist.py:99
+msgid "run tests during meson dist (default: --no-tests)"
+msgstr ""
+"изпълнение на тестове по време на meson dist (по подразбиране: "
+"--no-tests)"
+
+#: src/zfr_lib/dist.py:343
+msgid "build a source tarball (meson dist, or this project only)"
+msgstr "създаване на изходен tarball (meson dist или само този проект)"
+
+#: src/zfr_lib/dist.py:345
+msgid ""
+"Build a source archive of the current zephyr project (walks from cwd toward "
+"parent directories). Uses meson dist when this directory is the git project "
+"root; otherwise packs this project only so nested language templates do not "
+"ship the parent meta-repo. Prints the archive path on stdout."
+msgstr ""
+"Създава изходен архив на текущия zephyr проект (търси нагоре от cwd). "
+"Използва meson dist, когато този каталог е коренът на git проекта; "
+"иначе пакетира само този проект, за да не включват вложените езикови "
+"шаблони родителското meta-repo. Извежда пътя до архива на stdout."
+
+#: src/zfr_lib/ize/__init__.py:60
+msgid "refactor this project to current zephyr style"
+msgstr "рефакториране на този проект към текущия zephyr стил"
+
+#: src/zfr_lib/ize/__init__.py:61
+msgid ""
+"Refactor the current project to match current zephyr style: missing debian/"
+"rpm files, meson targets, AsciiDoc man pages, and Meson version "
+"substitutions. Walks from cwd toward parents."
+msgstr ""
+"Рефакторира текущия проект според актуалния zephyr стил: липсващи "
+"debian/rpm файлове, meson цели, AsciiDoc man страници и Meson "
+"замествания на версии. Търси нагоре от cwd."
+
+#: src/zfr_lib/ize/__init__.py:65
+#, python-format
+msgid "language template to align with (default: detect; one of: %s)"
+msgstr "езиков шаблон за съгласуване (по подразбиране: detect; един от: %s)"
+
+#: src/zfr_lib/ize/__init__.py:66
+msgid "print planned changes without writing files"
+msgstr "извеждане на планираните промени без запис на файлове"
+
+#: src/zfr_lib/ize/__init__.py:67
+msgid "also print skipped files"
+msgstr "извеждане и на пропуснатите файлове"
+
+#: src/zfr_lib/ize/__init__.py:68
+msgid "do not convert groff .1 man pages to docs/*.adoc"
+msgstr "без конвертиране на groff .1 man страници в docs/*.adoc"
+
+#: src/zfr_lib/ize/__init__.py:69
+msgid "do not turn hardcoded versions into @VERSION@ / config.h"
+msgstr "без преобразуване на твърдо кодирани версии в @VERSION@ / config.h"
+
+#: src/zfr_lib/ize/__init__.py:70 src/zfr_lib/lint/__init__.py:98
+msgid "CSR (console SGR) highlighting (default: auto)"
+msgstr "CSR (console SGR) подчертаване (по подразбиране: auto)"
+
+#: src/zfr_lib/lint/__init__.py:90
+msgid "validate project packaging and zephyr layout (walks parents from cwd)"
+msgstr "проверка на пакетирането и оформлението zephyr (търси нагоре от cwd)"
+
+#: src/zfr_lib/lint/__init__.py:91
+msgid ""
+"Check the current zephyr project for missing files and packaging/style "
+"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
+"is a TTY."
+msgstr ""
+"Проверява текущия zephyr проект за липсващи файлове и грешки в "
+"пакетирането/стила. Търси нагоре от cwd. CSR цветове, когато stdout е "
+"TTY."
+
+#: src/zfr_lib/lint/__init__.py:95
+msgid "show passing checks too"
+msgstr "показване и на успешните проверки"
+
+#: src/zfr_lib/lint/__init__.py:96
+msgid "only print errors"
+msgstr "извеждане само на грешки"
+
+#: src/zfr_lib/lint/__init__.py:97
+msgid "treat warnings as failures (exit 1)"
+msgstr "предупрежденията се третират като грешки (exit 1)"
+
+#: src/zfr_lib/lint/__init__.py:108
+msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
+msgstr ""
+"изисквано покритие на gettext/manpage локали L0–L3 (по подразбиране: "
+"L1; проектният файл може да замени)"
+
+#: src/zfr_lib/release.py:26
+msgid "Debian binary-only build (no .dsc)"
+msgstr "Debian компилация само на двоични файлове (без .dsc)"
+
+#: src/zfr_lib/release.py:32
+msgid "Reuse build cache"
+msgstr "повторно използване на build кеша"
+
+#: src/zfr_lib/release.py:38
+msgid "Reuse existing artifacts; build only if missing"
+msgstr ""
+"повторно използване на съществуващи артефакти; компилация само при "
+"липса"
+
+#: src/zfr_lib/release.py:43
+msgid "Build unsigned packages"
+msgstr "компилиране на неподписани пакети"
+
+#: src/zfr_lib/release.py:50
+msgid "dput upload host for .changes (debian)"
+msgstr "dput хост за качване на .changes (debian)"
+
+#: src/zfr_lib/release.py:56
+msgid "Build debian package with build4 (Docker)"
+msgstr "компилиране на debian пакет с build4 (Docker)"
+
+#: src/zfr_lib/release.py:63
+#, python-format
+msgid "build4 target image (default: %s)"
+msgstr "целеви образ build4 (по подразбиране: %s)"
+
+#: src/zfr_lib/release.py:70
+msgid "Run build4 over SSH on SERVER (implies -d)"
+msgstr "изпълнение на build4 през SSH на SERVER (подразбира -d)"
+
+#: src/zfr_lib/release.py:76
+msgid "Build in local, no tag/push/release"
+msgstr "локална компилация, без tag/push/release"
+
+#: src/zfr_lib/release.py:82
+msgid "Replace existing release and tag if present"
+msgstr "замяна на съществуващ release и tag, ако има такива"
+
+#: src/zfr_lib/release.py:88
+msgid "Skip sudo dpkg -i (still find debs/changes)"
+msgstr "пропускане на sudo dpkg -i (все пак намира debs/changes)"
+
+#: src/zfr_lib/release.py:94
+msgid "Skip git tag create/push"
+msgstr "пропускане на създаване/изпращане на git tag"
+
+#: src/zfr_lib/release.py:100
+msgid "Skip dput upload to deb pool (-u reuses build artifacts)"
+msgstr ""
+"пропускане на dput качване в deb pool (-u повторно използва build "
+"артефакти)"
+
+#: src/zfr_lib/release.py:106
+msgid "Skip GitHub release"
+msgstr "пропускане на GitHub release"
+
+#: src/zfr_lib/release.py:112
+msgid "Skip VSIX marketplace publish"
+msgstr "пропускане на публикуване в VSIX marketplace"
+
+#: src/zfr_lib/release.py:118
+msgid "Skip RPM build (rpm/Makefile)"
+msgstr "пропускане на RPM компилация (rpm/Makefile)"
+
+#: src/zfr_lib/release.py:124
+msgid "Skip Debian debuild"
+msgstr "пропускане на Debian debuild"
+
+#: src/zfr_lib/release.py:131
+msgid "Verbose logging"
+msgstr "подробно протоколиране"
+
+#: src/zfr_lib/release.py:138
+msgid "Less output"
+msgstr "по-малко изходни данни"
+
+#: src/zfr_lib/release.py:205
+msgid "create a GitHub release (parse options, exec gh-makerelease)"
+msgstr ""
+"създаване на GitHub release (анализ на опции, изпълнение на "
+"gh-makerelease)"
+
+#: src/zfr_lib/release.py:207
+msgid ""
+"Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
+"not implement tagging, packaging, or uploads."
+msgstr ""
+"Анализира опциите на gh-makerelease, пресъздава argv и изпълнява "
+"gh-makerelease. Не реализира етикетиране, пакетиране или качвания."
+
+#: src/zfr_lib/remove.py:20
+msgid "remove puff(s) from the current project"
+msgstr "премахване на puff(ове) от текущия проект"
+
+#: src/zfr_lib/remove.py:21
+msgid "Remove puff files for NAME(s) from the current project."
+msgstr "Премахва puff файловете за NAME(s) от текущия проект."
+
+#: src/zfr_lib/remove.py:25
+msgid "puff name(s) to remove"
+msgstr "имена на puff(ове) за премахване"
+
+#: src/zfr_lib/rename.py:51
+msgid "rename zephyr project and example puff names"
+msgstr "преименуване на zephyr проект и примерни puff имена"
+
+#: src/zfr_lib/rename.py:52
+msgid "Rename zephyr → ProjectName and some_puff1 → example names."
+msgstr "Преименува zephyr → ProjectName и some_puff1 → примерни имена."
+
+#: src/zfr_lib/rename.py:56
+msgid "new project name (replaces 'zephyr')"
+msgstr "ново име на проекта (замества 'zephyr')"
+
+#: src/zfr_lib/rename.py:57
+msgid "new example names (each replaces template some_puff1)"
+msgstr "нови примерни имена (всяко замества шаблонното some_puff1)"
+
+#: src/zfr_lib/shape.py:259
+msgid ""
+"print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
+msgstr ""
+"извеждане на zephyr оценка на формата на пакета 0-100 (packagedir "
+"срещу repodir в monorepos)"
+
+#: src/zfr_lib/shape.py:261
+msgid ""
+"Score how completely the current directory matches zephyr package style "
+"(0-100). In monorepos, scores the packagedir."
+msgstr ""
+"Оценява доколко текущият каталог отговаря на zephyr стила на пакет "
+"(0-100). В monorepos оценява packagedir."
+
+#: src/zfr_lib/shape.py:267
+msgid "print 1 if score >= threshold, else 0"
+msgstr "извежда 1 ако score >= threshold, иначе 0"
+
+#: src/zfr_lib/shape.py:268
+msgid "print packagedir/repodir/role on stderr"
+msgstr "извеждане на packagedir/repodir/role на stderr"
+
+#: src/zfr_lib/shape.py:269
+#, python-format
+msgid "bool threshold 0-100 (default: %s)"
+msgstr "bool праг 0-100 (по подразбиране: %s)"
+
+#: src/zfr_lib/version.py:51
+msgid "print current project version (walks parents from cwd)"
+msgstr "извеждане на текущата версия на проекта (търси нагоре от cwd)"
+
+#: src/zfr_lib/version.py:52
+msgid ""
+"Print the current project version (walks from cwd toward parent directories)."
+msgstr "Извежда текущата версия на проекта (търси нагоре от cwd)."
+
+#: src/zfr_lib/version.py:57
+msgid "use git describe (default when git and .git are available)"
+msgstr ""
+"използване на git describe (по подразбиране, когато git и .git са "
+"налични)"
+
+#: src/zfr_lib/version.py:58
+msgid "use debian/changelog (default when git or .git is unavailable)"
+msgstr ""
+"използване на debian/changelog (по подразбиране, когато git или .git "
+"липсват)"
+
+#: src/zfr_lib/version.py:59
+msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
+msgstr "извеждане на RPM-съвместима Version (тире се заменят с долни черти)"

@@ -1,0 +1,424 @@
+# Greek translations for zfr package.
+# Copyright (C) 2026 THE zfr'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the zfr package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: zfr\n"
+"Report-Msgid-Bugs-To: zephyr@bodz.net\n"
+"POT-Creation-Date: 2026-08-23 19:11+0800\n"
+"PO-Revision-Date: 2026-08-23\n"
+"Last-Translator: Lenik (谢继雷) <lenik@bodz.net>\n"
+"Language-Team: Greek\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: src/zfr:32
+msgid ""
+"Zephyr template helper (CLI name: zfr). Create projects and manage example "
+"puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
+msgstr ""
+"Βοηθός προτύπων Zephyr (όνομα CLI: zfr). Δημιουργεί έργα και "
+"διαχειρίζεται δείγματα puffs. Τα instantiated δέντρα συνεχίζουν να "
+"καλούν zfr· το zfr δεν είναι token μετονομασίας."
+
+#: src/zfr:45
+msgid "show this help"
+msgstr "εμφάνιση αυτής της βοήθειας"
+
+#: src/zfr_lib/about.py:496
+msgid "print current project information (walks parents from cwd)"
+msgstr "εκτύπωση πληροφοριών τρέχοντος έργου (αναζήτηση προς τα πάνω από cwd)"
+
+#: src/zfr_lib/about.py:498
+msgid ""
+"Print information about the current zephyr project (walks from cwd toward "
+"parent directories). CSR colors when stdout is a TTY. Common packaging "
+"fields are parsed from debian or RPM."
+msgstr ""
+"Εκτυπώνει πληροφορίες για το τρέχον έργο zephyr (αναζήτηση προς τα "
+"πάνω από cwd). Χρώματα CSR όταν το stdout είναι TTY. Κοινά πεδία "
+"συσκευασίας αναλύονται από debian ή RPM."
+
+#: src/zfr_lib/about.py:505
+msgid "show parsed Debian packaging fields"
+msgstr "εμφάνιση αναλυμένων πεδίων συσκευασίας Debian"
+
+#: src/zfr_lib/about.py:506
+msgid "show parsed RPM packaging fields"
+msgstr "εμφάνιση αναλυμένων πεδίων συσκευασίας RPM"
+
+#: src/zfr_lib/about.py:511
+msgid "CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)"
+msgstr ""
+"επισήμανση CSR (console SGR) (προεπιλογή: auto = TTY και χωρίς "
+"NO_COLOR)"
+
+#: src/zfr_lib/add.py:20
+msgid "instantiate puff(s) from the language template"
+msgstr "δημιουργία puff(s) από το γλωσσικό πρότυπο"
+
+#: src/zfr_lib/add.py:21
+msgid "Detect language and add puff(s) from pkgdatadir/<lang>."
+msgstr "Ανιχνεύει τη γλώσσα και προσθέτει puff(s) από pkgdatadir/<lang>."
+
+#: src/zfr_lib/add.py:25
+msgid "new puff name(s) (snake_case recommended)"
+msgstr "νέα ονόματα puff(s) (συνιστάται snake_case)"
+
+#: src/zfr_lib/create.py:291
+msgid "create a new project from a language template"
+msgstr "δημιουργία νέου έργου από γλωσσικό πρότυπο"
+
+#: src/zfr_lib/create.py:292
+msgid "Create a new project directory from pkgdatadir/<lang>."
+msgstr "Δημιουργεί νέο κατάλογο έργου από pkgdatadir/<lang>."
+
+#: src/zfr_lib/create.py:298
+#, python-format
+msgid "template language (default: python; one of: %s)"
+msgstr "γλώσσα προτύπου (προεπιλογή: python· ένα από: %s)"
+
+#: src/zfr_lib/create.py:302
+#, python-format
+msgid "debian changelog distribution (default: %s)"
+msgstr "διανομή debian changelog (προεπιλογή: %s)"
+
+#: src/zfr_lib/create.py:306
+#, python-format
+msgid "initial package version and git tag (default: %s)"
+msgstr "αρχική έκδοση πακέτου και ετικέτα git (προεπιλογή: %s)"
+
+#: src/zfr_lib/create.py:310
+#, python-format
+msgid "changelog/git author name (default: %s)"
+msgstr "όνομα συγγραφέα changelog/git (προεπιλογή: %s)"
+
+#: src/zfr_lib/create.py:314
+#, python-format
+msgid "changelog/git author email (default: %s)"
+msgstr "email συγγραφέα changelog/git (προεπιλογή: %s)"
+
+#: src/zfr_lib/create.py:316
+msgid "new project directory name"
+msgstr "όνομα νέου καταλόγου έργου"
+
+#: src/zfr_lib/create.py:319
+msgid "optional puff names to add after creating the project"
+msgstr "προαιρετικά ονόματα puff(s) για προσθήκη μετά τη δημιουργία του έργου"
+
+#: src/zfr_lib/detect.py:15
+msgid "print detected language for the current directory"
+msgstr "εκτύπωση ανιχνευμένης γλώσσας για τον τρέχοντα κατάλογο"
+
+#: src/zfr_lib/detect.py:16
+msgid ""
+"Print the detected language of the current project and layout details on "
+"stderr."
+msgstr ""
+"Εκτυπώνει την ανιχνευμένη γλώσσα του τρέχοντος έργου και λεπτομέρειες "
+"διάταξης στο stderr."
+
+#: src/zfr_lib/dist.py:60
+msgid ""
+"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
+"rpm)"
+msgstr ""
+"εγγραφή αρχείου σε DIR (προεπιλογή: meson-dist ή rpmbuild/SOURCES με "
+"--rpm)"
+
+#: src/zfr_lib/dist.py:70
+msgid ""
+"Meson build directory (default: /build when it matches this source tree, "
+"else <project>/build)"
+msgstr ""
+"Κατάλογος build Meson (προεπιλογή: /build όταν ταιριάζει με αυτό το "
+"δέντρο πηγαίου, αλλιώς <project>/build)"
+
+#: src/zfr_lib/dist.py:80
+msgid "archive format (default: xz)"
+msgstr "μορφή αρχείου (προεπιλογή: xz)"
+
+#: src/zfr_lib/dist.py:86
+msgid ""
+"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
+"-o is given"
+msgstr ""
+"ονομάζει το αρχείο NAME-VERSION.tar.xz και το γράφει σε "
+"rpmbuild/SOURCES, εκτός αν δοθεί -o"
+
+#: src/zfr_lib/dist.py:94
+msgid "pass --allow-dirty to meson dist (default: allow)"
+msgstr "περνά --allow-dirty στο meson dist (προεπιλογή: επιτρέπεται)"
+
+#: src/zfr_lib/dist.py:99
+msgid "run tests during meson dist (default: --no-tests)"
+msgstr "εκτέλεση δοκιμών κατά meson dist (προεπιλογή: --no-tests)"
+
+#: src/zfr_lib/dist.py:343
+msgid "build a source tarball (meson dist, or this project only)"
+msgstr "δημιουργία tarball πηγαίου κώδικα (meson dist ή μόνο αυτό το έργο)"
+
+#: src/zfr_lib/dist.py:345
+msgid ""
+"Build a source archive of the current zephyr project (walks from cwd toward "
+"parent directories). Uses meson dist when this directory is the git project "
+"root; otherwise packs this project only so nested language templates do not "
+"ship the parent meta-repo. Prints the archive path on stdout."
+msgstr ""
+"Δημιουργεί αρχείο πηγαίου του τρέχοντος έργου zephyr (αναζήτηση προς "
+"τα πάνω από cwd). Χρησιμοποιεί meson dist όταν αυτός ο κατάλογος είναι "
+"η ρίζα git έργου· αλλιώς πακετάρει μόνο αυτό το έργο, ώστε τα ένθετα "
+"γλωσσικά πρότυπα να μην συμπεριλαμβάνουν το γονικό meta-repo. "
+"Εκτυπώνει τη διαδρομή αρχείου στο stdout."
+
+#: src/zfr_lib/ize/__init__.py:60
+msgid "refactor this project to current zephyr style"
+msgstr "αναδιάρθρωση αυτού του έργου στο τρέχον στυλ zephyr"
+
+#: src/zfr_lib/ize/__init__.py:61
+msgid ""
+"Refactor the current project to match current zephyr style: missing debian/"
+"rpm files, meson targets, AsciiDoc man pages, and Meson version "
+"substitutions. Walks from cwd toward parents."
+msgstr ""
+"Αναδιαρθρώνει το τρέχον έργο σύμφωνα με το τρέχον στυλ zephyr: "
+"ελλείποντα αρχεία debian/rpm, στόχοι meson, σελίδες man AsciiDoc και "
+"αντικαταστάσεις έκδοσης Meson. Αναζήτηση προς τα πάνω από cwd."
+
+#: src/zfr_lib/ize/__init__.py:65
+#, python-format
+msgid "language template to align with (default: detect; one of: %s)"
+msgstr "γλωσσικό πρότυπο προς ευθυγράμμιση (προεπιλογή: detect· ένα από: %s)"
+
+#: src/zfr_lib/ize/__init__.py:66
+msgid "print planned changes without writing files"
+msgstr "εκτύπωση προγραμματισμένων αλλαγών χωρίς εγγραφή αρχείων"
+
+#: src/zfr_lib/ize/__init__.py:67
+msgid "also print skipped files"
+msgstr "εκτύπωση και των παραλειφθέντων αρχείων"
+
+#: src/zfr_lib/ize/__init__.py:68
+msgid "do not convert groff .1 man pages to docs/*.adoc"
+msgstr "μη μετατρέπεις σελίδες man groff .1 σε docs/*.adoc"
+
+#: src/zfr_lib/ize/__init__.py:69
+msgid "do not turn hardcoded versions into @VERSION@ / config.h"
+msgstr "μη μετατρέπεις σκληρά κωδικοποιημένες εκδόσεις σε @VERSION@ / config.h"
+
+#: src/zfr_lib/ize/__init__.py:70 src/zfr_lib/lint/__init__.py:98
+msgid "CSR (console SGR) highlighting (default: auto)"
+msgstr "επισήμανση CSR (console SGR) (προεπιλογή: auto)"
+
+#: src/zfr_lib/lint/__init__.py:90
+msgid "validate project packaging and zephyr layout (walks parents from cwd)"
+msgstr ""
+"επικύρωση συσκευασίας έργου και διάταξης zephyr (αναζήτηση προς τα "
+"πάνω από cwd)"
+
+#: src/zfr_lib/lint/__init__.py:91
+msgid ""
+"Check the current zephyr project for missing files and packaging/style "
+"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
+"is a TTY."
+msgstr ""
+"Ελέγχει το τρέχον έργο zephyr για ελλείποντα αρχεία και σφάλματα "
+"συσκευασίας/στυλ. Αναζήτηση προς τα πάνω από cwd. Χρώματα CSR όταν το "
+"stdout είναι TTY."
+
+#: src/zfr_lib/lint/__init__.py:95
+msgid "show passing checks too"
+msgstr "εμφάνιση και των επιτυχών ελέγχων"
+
+#: src/zfr_lib/lint/__init__.py:96
+msgid "only print errors"
+msgstr "εκτύπωση μόνο σφαλμάτων"
+
+#: src/zfr_lib/lint/__init__.py:97
+msgid "treat warnings as failures (exit 1)"
+msgstr "αντιμετώπιση προειδοποιήσεων ως σφαλμάτων (exit 1)"
+
+#: src/zfr_lib/lint/__init__.py:108
+msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
+msgstr ""
+"απαιτούμενη κάλυψη locale gettext/manpage L0–L3 (προεπιλογή: L1· το "
+"αρχείο έργου μπορεί να το αντικαταστήσει)"
+
+#: src/zfr_lib/release.py:26
+msgid "Debian binary-only build (no .dsc)"
+msgstr "μόνο δυαδική κατασκευή Debian (χωρίς .dsc)"
+
+#: src/zfr_lib/release.py:32
+msgid "Reuse build cache"
+msgstr "επαναχρησιμοποίηση cache κατασκευής"
+
+#: src/zfr_lib/release.py:38
+msgid "Reuse existing artifacts; build only if missing"
+msgstr "επαναχρησιμοποίηση υπαρχόντων artifacts· κατασκευή μόνο αν λείπουν"
+
+#: src/zfr_lib/release.py:43
+msgid "Build unsigned packages"
+msgstr "κατασκευή μη υπογεγραμμένων πακέτων"
+
+#: src/zfr_lib/release.py:50
+msgid "dput upload host for .changes (debian)"
+msgstr "διακομιστής dput για .changes (debian)"
+
+#: src/zfr_lib/release.py:56
+msgid "Build debian package with build4 (Docker)"
+msgstr "κατασκευή πακέτου debian με build4 (Docker)"
+
+#: src/zfr_lib/release.py:63
+#, python-format
+msgid "build4 target image (default: %s)"
+msgstr "εικόνα-στόχος build4 (προεπιλογή: %s)"
+
+#: src/zfr_lib/release.py:70
+msgid "Run build4 over SSH on SERVER (implies -d)"
+msgstr "εκτέλεση build4 μέσω SSH στο SERVER (συνεπάγεται -d)"
+
+#: src/zfr_lib/release.py:76
+msgid "Build in local, no tag/push/release"
+msgstr "τοπική κατασκευή, χωρίς tag/push/release"
+
+#: src/zfr_lib/release.py:82
+msgid "Replace existing release and tag if present"
+msgstr "αντικατάσταση υπάρχοντος release και tag αν υπάρχουν"
+
+#: src/zfr_lib/release.py:88
+msgid "Skip sudo dpkg -i (still find debs/changes)"
+msgstr "παράλειψη sudo dpkg -i (εξακολουθεί να βρίσκει debs/changes)"
+
+#: src/zfr_lib/release.py:94
+msgid "Skip git tag create/push"
+msgstr "παράλειψη δημιουργίας/ώθησης git tag"
+
+#: src/zfr_lib/release.py:100
+msgid "Skip dput upload to deb pool (-u reuses build artifacts)"
+msgstr ""
+"παράλειψη dput upload στο deb pool (-u επαναχρησιμοποιεί artifacts "
+"κατασκευής)"
+
+#: src/zfr_lib/release.py:106
+msgid "Skip GitHub release"
+msgstr "παράλειψη GitHub release"
+
+#: src/zfr_lib/release.py:112
+msgid "Skip VSIX marketplace publish"
+msgstr "παράλειψη δημοσίευσης στο VSIX marketplace"
+
+#: src/zfr_lib/release.py:118
+msgid "Skip RPM build (rpm/Makefile)"
+msgstr "παράλειψη κατασκευής RPM (rpm/Makefile)"
+
+#: src/zfr_lib/release.py:124
+msgid "Skip Debian debuild"
+msgstr "παράλειψη Debian debuild"
+
+#: src/zfr_lib/release.py:131
+msgid "Verbose logging"
+msgstr "λεπτομερής καταγραφή"
+
+#: src/zfr_lib/release.py:138
+msgid "Less output"
+msgstr "λιγότερη έξοδος"
+
+#: src/zfr_lib/release.py:205
+msgid "create a GitHub release (parse options, exec gh-makerelease)"
+msgstr "δημιουργία GitHub release (ανάλυση επιλογών, εκτέλεση gh-makerelease)"
+
+#: src/zfr_lib/release.py:207
+msgid ""
+"Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
+"not implement tagging, packaging, or uploads."
+msgstr ""
+"Αναλύει τις επιλογές gh-makerelease, ξαναχτίζει argv και εκτελεί "
+"gh-makerelease. Δεν υλοποιεί ετικέτες, συσκευασία ή μεταφορτώσεις."
+
+#: src/zfr_lib/remove.py:20
+msgid "remove puff(s) from the current project"
+msgstr "αφαίρεση puff(s) από το τρέχον έργο"
+
+#: src/zfr_lib/remove.py:21
+msgid "Remove puff files for NAME(s) from the current project."
+msgstr "Αφαιρεί αρχεία puff για NAME(s) από το τρέχον έργο."
+
+#: src/zfr_lib/remove.py:25
+msgid "puff name(s) to remove"
+msgstr "ονόματα puff(s) προς αφαίρεση"
+
+#: src/zfr_lib/rename.py:51
+msgid "rename zephyr project and example puff names"
+msgstr "μετονομασία έργου zephyr και ονομάτων δείγματος puff"
+
+#: src/zfr_lib/rename.py:52
+msgid "Rename zephyr → ProjectName and some_puff1 → example names."
+msgstr ""
+"Μετονομάζει zephyr → ProjectName και some_puff1 → ονόματα "
+"παραδειγμάτων."
+
+#: src/zfr_lib/rename.py:56
+msgid "new project name (replaces 'zephyr')"
+msgstr "νέο όνομα έργου (αντικαθιστά το 'zephyr')"
+
+#: src/zfr_lib/rename.py:57
+msgid "new example names (each replaces template some_puff1)"
+msgstr ""
+"νέα ονόματα παραδειγμάτων (το καθένα αντικαθιστά το πρότυπο "
+"some_puff1)"
+
+#: src/zfr_lib/shape.py:259
+msgid ""
+"print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
+msgstr ""
+"εκτύπωση βαθμολογίας μορφής πακέτου zephyr 0-100 (packagedir vs "
+"repodir σε monorepos)"
+
+#: src/zfr_lib/shape.py:261
+msgid ""
+"Score how completely the current directory matches zephyr package style "
+"(0-100). In monorepos, scores the packagedir."
+msgstr ""
+"Βαθμολογεί πόσο πλήρως ο τρέχων κατάλογος ταιριάζει στο στυλ πακέτου "
+"zephyr (0-100). Σε monorepos βαθμολογεί το packagedir."
+
+#: src/zfr_lib/shape.py:267
+msgid "print 1 if score >= threshold, else 0"
+msgstr "εκτύπωση 1 αν score >= threshold, αλλιώς 0"
+
+#: src/zfr_lib/shape.py:268
+msgid "print packagedir/repodir/role on stderr"
+msgstr "εκτύπωση packagedir/repodir/role στο stderr"
+
+#: src/zfr_lib/shape.py:269
+#, python-format
+msgid "bool threshold 0-100 (default: %s)"
+msgstr "bool κατώφλι 0-100 (προεπιλογή: %s)"
+
+#: src/zfr_lib/version.py:51
+msgid "print current project version (walks parents from cwd)"
+msgstr "εκτύπωση τρέχουσας έκδοσης έργου (αναζήτηση προς τα πάνω από cwd)"
+
+#: src/zfr_lib/version.py:52
+msgid ""
+"Print the current project version (walks from cwd toward parent directories)."
+msgstr ""
+"Εκτυπώνει την τρέχουσα έκδοση του έργου (αναζήτηση προς τα πάνω από "
+"cwd)."
+
+#: src/zfr_lib/version.py:57
+msgid "use git describe (default when git and .git are available)"
+msgstr "χρήση git describe (προεπιλογή όταν git και .git είναι διαθέσιμα)"
+
+#: src/zfr_lib/version.py:58
+msgid "use debian/changelog (default when git or .git is unavailable)"
+msgstr ""
+"χρήση debian/changelog (προεπιλογή όταν git ή .git δεν είναι "
+"διαθέσιμο)"
+
+#: src/zfr_lib/version.py:59
+msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
+msgstr "εκτύπωση RPM-συμβατής Version (παύλες σε κάτω παύλες)"

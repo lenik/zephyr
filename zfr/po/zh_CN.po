@@ -6,24 +6,24 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: zfr\n"
-"\n"
 "Report-Msgid-Bugs-To: zephyr@bodz.net\n"
-"\n"
 "POT-Creation-Date: 2026-08-23 19:11+0800\n"
-"\n"
 "PO-Revision-Date: 2026-08-23 19:30+0800\n"
-"\n"
 "Last-Translator: Cursor Agent\n"
-"\n"
 "Language-Team: Chinese (Simplified)\n"
-"\n"
 "Language: zh_CN\n"
-"\n"
 "MIME-Version: 1.0\n"
-"\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"\n"
 "Content-Transfer-Encoding: 8bit\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
 "\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "\n"
@@ -32,7 +32,9 @@ msgstr ""
 msgid ""
 "Zephyr template helper (CLI name: zfr). Create projects and manage example "
 "puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
-msgstr "Zephyr 模板助手（CLI 名称：zfr）。创建项目并管理示例 puff。实例化的目录树仍调用 zfr；zfr 不是重命名标记。"
+msgstr ""
+"Zephyr 模板助手（CLI 名称：zfr）。创建项目并管理示例 puff。实例化的目录树仍调"
+"用 zfr；zfr 不是重命名标记。"
 
 #: src/zfr:45
 msgid "show this help"
@@ -48,8 +50,8 @@ msgid ""
 "parent directories). CSR colors when stdout is a TTY. Common packaging "
 "fields are parsed from debian or RPM."
 msgstr ""
-"打印当前 zephyr 项目信息（从 cwd 向父目录遍历）。stdout 为 TTY 时使用 CSR 颜色。从 debian 或 RPM "
-"解析常见打包字段。"
+"打印当前 zephyr 项目信息（从 cwd 向父目录遍历）。stdout 为 TTY 时使用 CSR 颜"
+"色。从 debian 或 RPM 解析常见打包字段。"
 
 #: src/zfr_lib/about.py:505
 msgid "show parsed Debian packaging fields"
@@ -128,15 +130,17 @@ msgstr "将当前项目检测到的语言和布局详情打印到 stderr。"
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with "
-"--rpm)"
-msgstr "将归档写入 DIR（默认：meson-dist，或使用 --rpm 时写入 rpmbuild/SOURCES）"
+"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
+"rpm)"
+msgstr ""
+"将归档写入 DIR（默认：meson-dist，或使用 --rpm 时写入 rpmbuild/SOURCES）"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
 "Meson build directory (default: /build when it matches this source tree, "
 "else <project>/build)"
-msgstr "Meson 构建目录（默认：与此源码树匹配时为 /build，否则为 <project>/build）"
+msgstr ""
+"Meson 构建目录（默认：与此源码树匹配时为 /build，否则为 <project>/build）"
 
 #: src/zfr_lib/dist.py:80
 msgid "archive format (default: xz)"
@@ -144,9 +148,10 @@ msgstr "归档格式（默认：xz）"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless"
-" -o is given"
-msgstr "将归档命名为 NAME-VERSION.tar.xz 并写入 rpmbuild/SOURCES（除非指定 -o）"
+"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
+"-o is given"
+msgstr ""
+"将归档命名为 NAME-VERSION.tar.xz 并写入 rpmbuild/SOURCES（除非指定 -o）"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"
@@ -167,8 +172,9 @@ msgid ""
 "root; otherwise packs this project only so nested language templates do not "
 "ship the parent meta-repo. Prints the archive path on stdout."
 msgstr ""
-"构建当前 zephyr 项目的源码归档（从 cwd 向父目录遍历）。当此目录为 git 项目根时使用 meson "
-"dist；否则仅打包本项目，以免嵌套语言模板附带父 meta-repo。在 stdout 打印归档路径。"
+"构建当前 zephyr 项目的源码归档（从 cwd 向父目录遍历）。当此目录为 git 项目根"
+"时使用 meson dist；否则仅打包本项目，以免嵌套语言模板附带父 meta-repo。在 "
+"stdout 打印归档路径。"
 
 #: src/zfr_lib/ize/__init__.py:60
 msgid "refactor this project to current zephyr style"
@@ -176,12 +182,12 @@ msgstr "将此项目重构为当前 zephyr 风格"
 
 #: src/zfr_lib/ize/__init__.py:61
 msgid ""
-"Refactor the current project to match current zephyr style: missing "
-"debian/rpm files, meson targets, AsciiDoc man pages, and Meson version "
+"Refactor the current project to match current zephyr style: missing debian/"
+"rpm files, meson targets, AsciiDoc man pages, and Meson version "
 "substitutions. Walks from cwd toward parents."
 msgstr ""
-"重构当前项目以匹配当前 zephyr 风格：缺失的 debian/rpm 文件、meson 目标、AsciiDoc man 页面和 Meson "
-"版本替换。从 cwd 向父目录遍历。"
+"重构当前项目以匹配当前 zephyr 风格：缺失的 debian/rpm 文件、meson 目标、"
+"AsciiDoc man 页面和 Meson 版本替换。从 cwd 向父目录遍历。"
 
 #: src/zfr_lib/ize/__init__.py:65
 #, python-format
@@ -217,7 +223,9 @@ msgid ""
 "Check the current zephyr project for missing files and packaging/style "
 "mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
 "is a TTY."
-msgstr "检查当前 zephyr 项目的缺失文件和打包/风格错误。从 cwd 向父目录遍历。stdout 为 TTY 时使用 CSR 颜色。"
+msgstr ""
+"检查当前 zephyr 项目的缺失文件和打包/风格错误。从 cwd 向父目录遍历。stdout "
+"为 TTY 时使用 CSR 颜色。"
 
 #: src/zfr_lib/lint/__init__.py:95
 msgid "show passing checks too"
@@ -230,6 +238,12 @@ msgstr "仅打印错误"
 #: src/zfr_lib/lint/__init__.py:97
 msgid "treat warnings as failures (exit 1)"
 msgstr "将警告视为失败（exit 1）"
+
+#: src/zfr_lib/lint/__init__.py:108
+msgid ""
+"required gettext/manpage locale coverage L0–L3 (default: L1; project file "
+"may override)"
+msgstr "要求的 gettext/手册 locale 覆盖 L0–L3（默认 L1；可由项目文件覆盖）"
 
 #: src/zfr_lib/release.py:26
 msgid "Debian binary-only build (no .dsc)"
@@ -317,8 +331,8 @@ msgid ""
 "Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
 "not implement tagging, packaging, or uploads."
 msgstr ""
-"解析 gh-makerelease 选项、重建 argv 并 exec gh-makerelease。不实现 tagging、packaging 或 "
-"uploads。"
+"解析 gh-makerelease 选项、重建 argv 并 exec gh-makerelease。不实现 tagging、"
+"packaging 或 uploads。"
 
 #: src/zfr_lib/remove.py:20
 msgid "remove puff(s) from the current project"
@@ -357,7 +371,9 @@ msgstr "打印 zephyr 包形态得分 0-100（monorepos 中 packagedir vs repodi
 msgid ""
 "Score how completely the current directory matches zephyr package style "
 "(0-100). In monorepos, scores the packagedir."
-msgstr "评分当前目录与 zephyr 包风格的匹配程度（0-100）。在 monorepos 中，评分 packagedir。"
+msgstr ""
+"评分当前目录与 zephyr 包风格的匹配程度（0-100）。在 monorepos 中，评分 "
+"packagedir。"
 
 #: src/zfr_lib/shape.py:267
 msgid "print 1 if score >= threshold, else 0"
@@ -378,8 +394,7 @@ msgstr "打印当前项目版本（从 cwd 向上遍历父目录）"
 
 #: src/zfr_lib/version.py:52
 msgid ""
-"Print the current project version (walks from cwd toward parent "
-"directories)."
+"Print the current project version (walks from cwd toward parent directories)."
 msgstr "打印当前项目版本（从 cwd 向父目录遍历）。"
 
 #: src/zfr_lib/version.py:57

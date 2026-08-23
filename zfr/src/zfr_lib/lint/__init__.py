@@ -11,6 +11,7 @@ from pathlib import Path
 from .. import _is_zfr_cli_package, detect_lang, find_project_dir
 from ..cli import register_command
 from ..i18n import _
+from ..l10n import apply_lint_option_file, parse_l10n_level
 from ..packaging import _meson_project_fields
 from .debian import check_debian
 from .finding import Finding
@@ -35,7 +36,9 @@ def _resolve_lint_root(root: Path) -> Path:
     return root
 
 
-def collect_findings(root: Path) -> tuple[str, str, str, list[Finding]]:
+def collect_findings(
+    root: Path, *, l10n_level: str = "L1"
+) -> tuple[str, str, str, list[Finding]]:
     root = _resolve_lint_root(root)
     role = _role(root)
     if role == "meta":
@@ -55,7 +58,7 @@ def collect_findings(root: Path) -> tuple[str, str, str, list[Finding]]:
     findings.extend(check_debian(root, lang, role))
     findings.extend(check_rpm(root, lang))
     findings.extend(check_readme(root, role))
-    findings.extend(check_i18n(root, role))
+    findings.extend(check_i18n(root, role, l10n_level=l10n_level))
     findings.extend(check_leftovers(root, role))
     findings.extend(check_lang_bits(root, lang))
     findings.extend(check_template_gaps(root, lang, role))
@@ -67,10 +70,11 @@ def cmd_lint(
     quiet: bool = False,
     color: str = "auto",
     strict: bool = False,
+    l10n_level: str = "L1",
     workdir: Path | None = None,
 ) -> int:
     root = _resolve_lint_root(find_project_dir(workdir))
-    name, lang, role, findings = collect_findings(root)
+    name, lang, role, findings = collect_findings(root, l10n_level=l10n_level)
     sys.stdout.write(
         format_report(
             root, name, lang, role, findings, verbose=verbose, quiet=quiet, color=color
@@ -95,11 +99,29 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
     p.add_argument("-v", "--verbose", action="store_true", help=_("show passing checks too"))
     p.add_argument("-q", "--quiet", action="store_true", help=_("only print errors"))
     p.add_argument("--strict", action="store_true", help=_("treat warnings as failures (exit 1)"))
+    p.add_argument(
+        "-l",
+        "--l10n-level",
+        metavar="LEVEL",
+        type=parse_l10n_level,
+        default=None,
+        help=_("required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"),
+    )
     p.add_argument("--color", choices=("auto", "always", "never"), default="auto", help=_("CSR (console SGR) highlighting (default: auto)"))
 
 
 def run(args: argparse.Namespace) -> int:
-    return cmd_lint(verbose=args.verbose, quiet=args.quiet, color=args.color, strict=args.strict)
+    root = _resolve_lint_root(find_project_dir())
+    parser = argparse.ArgumentParser(add_help=False)
+    add_arguments(parser)
+    args = apply_lint_option_file(root, parser, args)
+    return cmd_lint(
+        verbose=args.verbose,
+        quiet=args.quiet,
+        color=args.color,
+        strict=args.strict,
+        l10n_level=args.l10n_level or "L1",
+    )
 
 
 def register(sub: argparse._SubParsersAction) -> None:

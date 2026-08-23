@@ -42,11 +42,14 @@ def _po_untranslated(path: Path) -> list[str]:
 
 
 class ZephyrGettextTests(unittest.TestCase):
-    def test_linguas_matches_recommended(self) -> None:
+    def test_linguas_covers_l2(self) -> None:
         sys.path.insert(0, str(TOOLS))
-        from zfr_lib import RECOMMENDED_I18N_LINGUAS
+        from zfr_lib.l10n import L10N_LEVELS
 
-        self.assertEqual(list(_linguas()), list(RECOMMENDED_I18N_LINGUAS))
+        self.assertTrue(
+            set(L10N_LEVELS["L2"]).issubset(set(_linguas())),
+            f"LINGUAS missing L2 locales: {sorted(set(L10N_LEVELS['L2']) - set(_linguas()))}",
+        )
 
     def test_every_catalog_complete(self) -> None:
         for loc in _linguas():
@@ -83,11 +86,12 @@ class ZephyrGettextTests(unittest.TestCase):
 class ZephyrManpageTranslationTests(unittest.TestCase):
     def test_every_locale_has_whole_document_adoc(self) -> None:
         sys.path.insert(0, str(TOOLS))
-        from zfr_lib import RECOMMENDED_I18N_LINGUAS
+        from zfr_lib.l10n import EN_MAN_NAME, L10N_LEVELS
 
         english = (DOCS / "zfr.adoc").read_text(encoding="utf-8")
         self.assertIn("== Name", english)
-        for loc in RECOMMENDED_I18N_LINGUAS:
+        required = sorted(set(_linguas()) | set(L10N_LEVELS["L2"]))
+        for loc in required:
             path = DOCS / loc / "zfr.adoc"
             with self.subTest(loc=loc):
                 self.assertTrue(path.is_file(), path)
@@ -100,6 +104,7 @@ class ZephyrManpageTranslationTests(unittest.TestCase):
                     "zfr - multi-language CLI project templates and helper tools",
                     text,
                 )
+                self.assertNotIn(EN_MAN_NAME, text)
 
     def test_zh_cn_and_de_name_translated(self) -> None:
         zh = (DOCS / "zh_CN" / "zfr.adoc").read_text(encoding="utf-8")

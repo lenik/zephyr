@@ -1,0 +1,446 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: Gebruikerscommando's
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - meertalige CLI-projectsjablonen en hulpprogramma's
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-l* _LEVEL_] [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape* en *zfr-release* zijn dunne wrappers rond dezelfde subcommando's.
+
+== Description
+
+*zfr* is het opdrachtregelprogramma voor de *zephyr*-sjablonencollectie.
+Het levert taalsjablonen voor kleine opdrachtregelhulpprogramma's en hulpmiddelen
+om die te instantiëren en te beheren.
+
+*Belangrijk:* geïnstantieerde projecten worden verwacht *zfr* te blijven aanroepen
+(bijvoorbeeld *zfr version* in *meson.build* en *rpm/Makefile*).
+De tekenreeks *zfr* is *geen* magic token voor create/rename en wordt nooit
+naar de projectnaam herschreven. De sjabloonplaceholder die *wel* wordt
+herschreven blijft *zephyr* (en *some_puff1* voor voorbeeldpuffs).
+
+Typische workflow:
+
+. Maak een project vanuit een taalsjabloon:
++
+----
+zfr create -l python myproj
+----
+
+. Ga het project in en voeg applicatie-*puffs* toe (voorbeeldapps):
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. Hernoem het project optioneel of verwijder puffs later met *rename* / *remove*.
+
+Sjablonen staan onder */usr/share/zephyr/<lang>/* na installatie, of in de
+bronboom bij een niet-geïnstalleerde builddir-wrapper zoals *build/zfr*
+(*ZFR_PKGDATADIR* overschrijft). Elke sjabloon kan een voorbeeldpuff *some_puff1*
+bevatten; geef puff-namen op de *create*-opdrachtregel om ze te instantiëren,
+of laat ze weg voor een leeg project.
+
+In een monorepo is *repodir* de git- (of meta-)checkout-wortel en *packagedir*
+de pakketboom met zephyr-vorm (bijvoorbeeld *repodir/bash*).
+Commando's die vanuit de huidige map omhoog lopen, bepalen eerst *packagedir*.
+
+*i18n*::
+  *zfr lint -l/--l10n-level* selecteert vereiste gettext- en manpage-dekking.
+  *L0* vereist geen. *L1* (standaard) vereist *de*, *es*, *fr*, *it*, *ja*,
+  *ko*, *pl*, *ru*, *zh_CN*, *zh_TW*. *L2* vereist die plus *bg*, *ca*,
+  *cs*, *el*, *hu*, *id*, *nl*, *pt*, *sv*, *tr*. *L3* voegt *da*, *et*, *fi*,
+  *gl*, *hr*, *lt*, *ms*, *pt_BR*, *sk*, *sl* toe. Engels (*en*) is de bron-
+  *msgid*-taal en staat niet in *po/LINGUAS*. Extra locales boven het niveau
+  zijn toegestaan. Zet standaard *lint*-argumenten in
+  *.config/zephyr/lint.options*. Manpages moeten volledige handmatige
+  vertalingen zijn onder *docs/<locale>/* (geen po4a-fragmenten).
+
+== Commands
+
+*create*::
+  Kopieert *pkgdatadir/<lang>/* naar een nieuwe map *./<project_name>/* (mislukt
+  als de map al bestaat). Herschrijft *zephyr* → *_PROJECT_NAME_* en, wanneer
+  puff-namen zijn opgegeven, *some_puff1* → de eerste *_PUFF_NAME_* (verdere
+  namen via *add*). Zonder puff-namen worden de sjabloonpuff-bestanden
+  verwijderd maar blijven de *some_puff1*-tokens staan zodat een later *add*
+  ze kan instantiëren.
+  Schrijft een nieuw *debian/changelog* (sjabloon-changelog wordt weggegooid)
+  met *--distribution* / *--init-version* / *--author* / *--email*, voert
+  daarna *git init* uit, zet *core.hooksPath* op *.githooks* (kopieert
+  *pre-commit* zodat *VERSION* synchroon blijft met *debian/changelog*), een
+  initiële commit en een geannoteerde tag *vVER*.
+
+*rename*::
+  In de huidige projectmap *zephyr* → *_PROJECT_NAME_* herschrijven en voor
+  elke opgegeven naam de sjabloonpuff *some_puff1* → die naam. Herschrijft
+  *zfr* niet.
+
+*add*::
+  Detecteert de projecttaal en kopieert de sjabloonpuff-bestanden naar het
+  huidige project, waarbij *some_puff1* naar elke *_PUFF_NAME_* wordt
+  hernoemd. Werkt Meson-lijsten (of equivalente wiring) bij wanneer mogelijk.
+
+*remove*::
+  Verwijdert bestanden en Meson-wiring voor elke opgegeven puff-naam uit het
+  huidige project.
+
+*detect*::
+  Drukt de gedetecteerde taal voor de huidige map af
+  (loopt oudermappen op om de projectwortel te vinden).
+
+*about*::
+  Drukt informatie over het huidige project af. Loopt vanuit de huidige map
+  naar boven om de projectwortel te vinden (*meson.build* met *project()* of
+  *debian/control*). Veelvoorkomende velden (naam, versie, licentie, homepage,
+  maintainer, summary, section, priority, distribution, architecture) worden uit
+  Debian- of RPM-metadata gelezen en aan de terminalbreedte aangepast. Drukt
+  ook bronbestand-/regeltellingen en een geschatte payload-grootte af.
+  Interactieve terminals gebruiken CSR-kleuren (console SGR), tenzij *NO_COLOR*
+  is gezet. Gebruik *-d* / *-r* voor een volledige geparste Debian- of
+  RPM-weergave (geen dump van de pakketbestanden).
+
+*version*::
+  Drukt de huidige projectversie af (één regel, voor scripts). Standaard is
+  *git describe* wanneer *git* en *.git* beschikbaar zijn, anders de nieuwste
+  *debian/changelog*-versie. Valt terug op een *VERSION*-bestand, daarna *0.0.0*.
+  Een niet-semver-token (bijvoorbeeld een git-hash) wordt als *0.0.0-<token>*
+  uitgegeven.
+
+*lint*::
+  Valideert het huidige project tegen zephyr-pakketterings- en layoutstijl
+  (loopt vanuit de huidige map naar boven om de projectwortel te vinden).
+  Rapporteert ontbrekende bestanden, identiteitsafwijkingen, Meson/Debian/RPM-
+  fouten, achtergebleven *zephyr* / *some_puff1*-tokens in geïnstantieerde apps
+  en voorgestelde fixes. Vermeldingen van *zfr* zijn verwacht en worden niet
+  als achtergebleven tokens behandeld.
+  Voor *.githooks/pre-commit* loopt het op naar *.git*, respecteert
+  *core.hooksPath* en controleert dat de hook *VERSION* synchroniseert vanuit
+  *debian/changelog*.
+  Wanneer *po/* of *docs/\*.adoc* aanwezig is, waarschuwt het als de dekking
+  niet voldoet aan *--l10n-level* (zie *i18n* onder Description; standaard
+  *L1*, projectbestand *.config/zephyr/lint.options* kan een ander niveau
+  instellen).
+  Uitvoer is bedoeld voor mensen en AI-coders: elke bevinding heeft een code,
+  pad en een concrete fix. Interactieve terminals gebruiken CSR-kleuren, tenzij
+  *NO_COLOR* is gezet.
+
+*shape*::
+  Drukt een *zephyr shape*-score van 0–100 af voor het huidige *packagedir*
+  (hoe volledig de boom overeenkomt met zephyr-pakketteringsstijl). In een
+  monorepo kan *packagedir* verschillen van *repodir* (git / meta-wortel);
+  tools gebruiken shape om de pakketmap boven de repository-wortel te prefereren.
+  *\-b* / *--bool* drukt *1* af als de score minstens de drempel (standaard
+  *50*) is, anders *0*.
+
+*dist*::
+  Bouwt een bronarchief van het huidige project (loopt vanuit de huidige map
+  naar boven om de projectwortel te vinden). Wanneer deze map de git-
+  projectwortel is, voert het *meson dist* uit (na *meson setup*, standaard
+  *--allow-dirty* en *--no-tests*). Geneste taalsjablonen hebben geen eigen
+  *.git*, dus *meson dist* zou de bovenliggende meta-repo inpakken; die bomen
+  krijgen een directory-tarball van alleen dit project. Drukt het archiefpad
+  af op stdout. *rpm/Makefile* *dist* en het Meson-*srcdist*-ninja-doel
+  hergebruiken dit commando.
+
+*release*::
+  Parseert dezelfde opties als *gh-makerelease*(1), bouwt argv opnieuw op en
+  *exec* *gh-makerelease* uit PATH. Dit commando implementeert zelf geen
+  taggen, pakketteren of GitHub-uploads. Het *zephyr*-project wordt
+  vrijgegeven vanuit de git-checkout-wortel (taalsjablonen plus *zfr/*). Zie
+  *Options for release* hieronder.
+
+*ize*::
+  Refactort het huidige project ter plaatse zodat het overeenkomt met de
+  huidige zephyr-stijl (loopt vanuit de huidige map naar boven). Kopieert
+  ontbrekend *debian/*- en *rpm/*-scaffolding uit de taalsjabloon (namen
+  herschreven naar dit project), schrijft *VERSION* en *.githooks/pre-commit*,
+  patcht *meson.build* (*zfr version*, *asciidoctor*-man-doelen,
+  *run_target look*, bash-completion-installatie). Converteert groff *\*.1*-
+  manpages onder het project (niet *debian/*) naar *docs/\*.adoc* met Meson-
+  regels, en hardgecodeerde changelog-versies in *src/* naar *\*.in*
+  *@VERSION@*-substituties of *PROJECT_VERSION* via *config.h* voor C-
+  familie-talen. *\-n* / *--dry-run* drukt het plan af zonder te schrijven.
+  Voer daarna *zfr lint* uit.
+
+*help*::
+  Toont opdrachtregelhulp.
+
+== Options
+
+Opties voor *create*:
+
+*-l, --lang* _LANG_::
+  Te gebruiken taalsjabloon (standaard: *python*).
+  Ondersteunde waarden zijn onder andere *bash*, *c*, *clib*, *cpp*, *cpplib*,
+  *csharp*, *erlang*, *go*, *haskell*, *java*, *perl*, *python*, *ruby*,
+  *rust*, *smalltalk*, *swift* en *typescript*.
+
+*-D, --distribution* _DIST_::
+  Debian-changelog-distribution (standaard: *unstable*).
+
+*-1, --init-version* _VER_::
+  Initiële pakketversie en git-tag (standaard: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  Changelog- en git-auteursnaam (standaard: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  Changelog- en git-auteur-e-mail (standaard: *lenik@bodz.net*).
+
+Opties voor *about*:
+
+*-d, --debian*::
+  Toon geparste Debian-pakketteringsvelden (*debian/control*, nieuwste
+  *debian/changelog*-stanza). Lijsten zoals *Build-Depends* worden aan de
+  terminalbreedte aangepast; de lange beschrijving wordt als alinea's
+  herverdeeld.
+
+*-r, --redhat*::
+  Toon geparste RPM-pakketteringsvelden uit *rpm/*.spec* (macro's zoals
+  *%{version}* worden getoond met *zfr version -r*). De *%description*-tekst
+  wordt herverdeeld; spec-scriptlets worden niet gedumpt.
+
+*--color* _WHEN_::
+  CSR-markering: *auto* (standaard: TTY en geen *NO_COLOR*), *always* of
+  *never*.
+
+Opties voor *version*:
+
+*-g, --git*::
+  Gebruik *git describe --tags --always --dirty* (standaard wanneer *git* en
+  *.git* beschikbaar zijn).
+
+*-c, --changelog*::
+  Gebruik de nieuwste *debian/changelog*-versie (standaard wanneer *git* of
+  *.git* niet beschikbaar is).
+
+*-r, --rpm*::
+  Druk een RPM-compatibele *Version* af (koppeltekens als underscores).
+
+Opties voor *lint*:
+
+*-v, --verbose*::
+  Druk ook geslaagde controles af.
+
+*-q, --quiet*::
+  Druk alleen fouten af.
+
+*--strict*::
+  Behandel waarschuwingen als fouten (exitstatus 1).
+
+*-l, --l10n-level* _LEVEL_::
+  Vereiste gettext- en volledige manpage-dekking: *L0* (geen), *L1* (10 locales,
+  standaard), *L2* (20) of *L3* (30). *LEVEL* kan *L2* of *2* zijn. Standaarden
+  komen ook uit *.config/zephyr/lint.options*.
+
+*--color* _WHEN_::
+  CSR-markering: *auto* (standaard: TTY en geen *NO_COLOR*), *always* of
+  *never*.
+
+Opties voor *shape*:
+
+*-b, --bool*::
+  Druk *1* af als de shape-score minstens *--threshold* is, anders *0*.
+
+*-v, --verbose*::
+  Druk *packagedir*, *repodir*, *role* en *threshold* af op stderr.
+
+*--threshold* _N_::
+  Drempel voor *--bool* (standaard: *50*).
+
+Opties voor *dist*:
+
+*-o, --output* _DIR_::
+  Schrijf het archief naar *_DIR_* (standaard: de Meson-*meson-dist*-map, of
+  *rpmbuild/SOURCES* met *--rpm*).
+
+*-b, --builddir* _DIR_::
+  Meson-buildmap. Standaard is */build* wanneer die builddir voor deze
+  bronboom is geconfigureerd, anders *<project>/build*.
+
+*-f, --format* _FMT_::
+  Archiefformaat: *xz* (standaard), *gz* of *zip*.
+
+*--rpm*::
+  Noem het archief *_NAME_*-*_VERSION_*.tar.xz en schrijf het naar
+  *rpmbuild/SOURCES* tenzij *-o* is opgegeven. Gebruikt door *rpm/Makefile*.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  Geef *--allow-dirty* door aan *meson dist* (standaard: toestaan).
+
+*--tests*::
+  Voer tests uit tijdens *meson dist* (standaard is *--no-tests*).
+
+Opties voor *release* (hier geparst, doorgestuurd naar *gh-makerelease*):
+
+*-b, --build-binary*::
+  Alleen Debian-binairpakket (*-b*); geen _.dsc_.
+*-n, --no-pre-clean*::
+  Hergebruik de Debian-buildcache.
+*-u, --upload*::
+  Hergebruik bestaande versiegebonden artefacten wanneer aanwezig.
+*--unsigned*::
+  Bouw ongetekende Debian-pakketten (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  *dput*(1)-uploadhost voor het _.changes_-bestand.
+*-d, --docker*::
+  Bouw het Debian-pakket met *build4*(1) in Docker.
+*-B, --base-image* _IMAGE_::
+  *build4*-doelimage (standaard: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  Voer *build4* via SSH uit op *SERVER* (impliceert *-d*).
+*-l, --local*::
+  Alleen bouwen; geen tag, push of GitHub-release.
+*-f, --force*::
+  Vervang een bestaande tag/release.
+*-I, --no-install*::
+  Sla *sudo dpkg -i* over.
+*-T, --no-tag*::
+  Maak en push geen git-releasetag.
+*-U, --no-upload*::
+  Sla *dput* van het _.changes_-bestand over.
+*-R, --no-release*::
+  Maak geen GitHub-release.
+*-P, --no-publish*::
+  Sla VSIX-marketplace-publicatie over.
+*-Y, --no-rpm*::
+  Sla *make -C rpm rpm srpm* over.
+*-D, --no-deb*::
+  Sla Debian *debuild* over.
+*-v, --verbose*::
+  Uitgebreide logging (herhaalbaar).
+*-q, --quiet*::
+  Minder uitvoer (herhaalbaar).
+
+Opties voor *ize*:
+
+*-l, --lang* _LANG_::
+  Taalsjabloon om scaffolding van te kopiëren (standaard: detecteren).
+
+*-n, --dry-run*::
+  Druk geplande toevoegingen/updates/conversies af zonder bestanden te
+  schrijven.
+
+*-v, --verbose*::
+  Druk ook overgeslagen paden af die al aanwezig zijn.
+
+*--no-man*::
+  Converteer groff *\*.1*-bronnen niet naar *docs/\*.adoc*.
+
+*--no-subst*::
+  Herschrijf hardgecodeerde versies in *src/* niet naar *@VERSION@* /
+  *config.h*.
+
+*--color* _WHEN_::
+  CSR-markering: *auto* (standaard: TTY en geen *NO_COLOR*), *always* of
+  *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  Overschrijf de sjablonenwortel (normaal */usr/share/zephyr*).
+
+*NO_COLOR*::
+  Wanneer gezet, schakelen *zfr about*, *zfr lint* en *zfr ize* CSR-markering
+  uit in de modus *--color auto*.
+
+*PYTHONPATH*::
+  Moet de map bevatten met het pakket *zfr_lib* wanneer de tools vanuit een
+  niet-standaard installatielayout worden uitgevoerd.
+
+== Tests
+
+De bronboom (niet het geïnstalleerde pakket) bevat *tests/* met Python-
+*unittest*-dekking van de CLI. *meson test* (buildmap */build*) ontdekt
+*tests/test_*.py*. Tests maken tijdelijke voorbeeldprojecten en oefenen elk
+subcommando (*create*, *add*, *remove*, *rename*, *about*, *version*, *lint*,
+*shape*, *dist*, *ize*, *release*, *detect*, *help*), de *zfr-**-wrappers,
+taalvertrouwensscores, gettext-catalogi en de per-locale *docs/<lang>/zfr.adoc*-
+handleidingen. Zonder Meson: zet *ZFR_PKGDATADIR* op de zephyr-checkout-
+wortel (ouder van *zfr/*) en *PYTHONPATH* op *src/*.
+
+== Files
+
+*.config/zephyr/lint.options*::
+  Standaard *zfr lint*-argumenten voor dit project (shell-tokens; *#*-commentaar).
+  De zfr-CLI zelf levert *-l 2* mee.
+
+*/usr/share/zephyr/<lang>/*::
+  Geïnstalleerde taalsjablonen.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI en dunne wrappers.
+
+*/usr/share/doc/zephyr/*::
+  Pakketdocumentatie (LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  Gelokaliseerde handleidingen, gebouwd vanuit *docs/<locale>/zfr.adoc*
+  (volledige documentvertalingen, geen gettext/po4a-fragmenten).
+
+== Exit status
+
+*0*::
+  Succes. Voor *lint* heeft het project geen bevindingen op foutniveau
+  (waarschuwingen worden nog steeds afgedrukt, tenzij *--strict*).
+
+*non-zero*::
+  Er is een fout opgetreden (onbekende taal, bestemming bestaat al,
+  detectiefout, ontbrekende puff-bestanden, *lint*-bevindingen, enz.).
+
+== Author
+
+Geschreven door {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+Licentie AGPL-3.0-or-later.
+Dit is vrije software: u mag deze wijzigen en herdistribueren onder de
+voorwaarden van de GNU Affero General Public License.
+Er is GEEN GARANTIE, voor zover wettelijk toegestaan.
+Zie het LICENSE-bestand in de brondistributie voor de volledige licentietekst,
+inclusief aanvullende bepalingen dat dit project AI-uitbuiting en AI-hegemonie
+afwijst, en onnadenkende MIT-achtige en politiek naïeve BSD-achtige
+licentiëring verwerpt.

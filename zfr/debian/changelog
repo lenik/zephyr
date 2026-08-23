@@ -1,3 +1,19 @@
+zephyr (2.1.0) testing; urgency=medium
+
+  * Consolidate Debian packaging under zfr/debian/ only (drop repo-root
+    debian/ and the zfr/debian symlink); keep meta-repo hooks in
+    /.githooks only (remove zfr/githooks).
+  * Add zfr lint -l/--l10n-level L0–L3 (default L1): whole-document
+    docs/<locale>/zfr.adoc and complete .po catalogs per tier; zfr itself
+    requires L2 via .config/zephyr/lint.options.
+  * Add L2 locale content: bg, ca, cs, el, hu, nl, pl (AsciiDoc manpages
+    and gettext catalogs); expand LINGUAS and meson man_i18n_langs.
+  * zfr create: default --author/--email from git config user.name and
+    user.email (fallback to package defaults).
+  * Refresh README and manpage docs for l10n-level; extend tests (44).
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 23 Aug 2026 20:47:47 +0800
+
 zephyr (2.0.1) testing; urgency=medium
 
   * Checkpoint: rewrite Tamil, Urdu, Bengali, and Telugu CLI/man

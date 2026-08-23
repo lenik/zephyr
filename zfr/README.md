@@ -69,10 +69,12 @@ root, otherwise this project only) and is what `rpm/Makefile` and
 zephyr style (missing debian/rpm files, meson targets, AsciiDoc man
 pages, Meson version substitutions).
 
-When a project has `po/`, zephyr style recommends `LINGUAS` include at least
-**ar bn de es fr hi id it ja ko pt ru sv ta te th tr ur vi zh_CN zh_TW**
-(English source; `zh-cn`→`zh_CN`, `zh-tw`→`zh_TW`). The `zfr` CLI itself
-ships gettext catalogs under `po/` (domain `zfr`).
+When a project has `po/` or `docs/*.adoc`, `zfr lint -l/--l10n-level`
+checks coverage. Default is **L1** (10 locales). **L0** requires nothing;
+**L2** is 20 locales; **L3** is 30. Project default arguments live in
+`.config/zephyr/lint.options` (the zfr CLI itself sets `-l 2`). Man pages
+are whole-document hand translations under `docs/<locale>/`, not po4a
+fragments. Extra locales beyond the level are allowed.
 
 
 ## Tests

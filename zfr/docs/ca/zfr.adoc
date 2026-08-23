@@ -1,0 +1,438 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: Ordres d'usuari
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - plantilles de projectes CLI multilingües i eines auxiliars
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-l* _LEVEL_] [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape* i *zfr-release* són embolcalls prims al voltant de les mateixes subordres.
+
+== Description
+
+*zfr* és l'eina de línia d'ordres de la col·lecció de plantilles *zephyr*.
+Proporciona plantilles per idioma per a petites utilitats de línia d'ordres i
+eines per instanciar-les i gestionar-les.
+
+*Important:* s'espera que els projectes instanciats continuïn cridant *zfr*
+(per exemple *zfr version* a *meson.build* i *rpm/Makefile*).
+La cadena *zfr* *no* és un token màgic de create/rename i mai
+es reescriu al nom del projecte. El marcador de plantilla que *sí* es
+reescriu continua sent *zephyr* (i *some_puff1* per als puffs d'exemple).
+
+Flux de treball típic:
+
+. Creeu un projecte des d'una plantilla d'idioma:
++
+----
+zfr create -l python myproj
+----
+
+. Entreu al projecte i afegiu *puffs* d'aplicació (aplicacions d'exemple):
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. Opcionalment reanomena el projecte o elimina puffs més endavant amb *rename* / *remove*.
+
+Les plantilles es troben a */usr/share/zephyr/<lang>/* quan estan instal·lades, o a l'arbre
+font en executar embolcalls builddir no instal·lats com *build/zfr*
+(*ZFR_PKGDATADIR* el substitueix). Cada plantilla pot incloure un puff d'exemple anomenat
+*some_puff1*; passeu noms de puff a la línia d'ordres de *create* per instanciar-los,
+o ometeu-los per a un projecte buit.
+
+En un monorepo, *repodir* és l'arrel del checkout git (o meta) i *packagedir*
+és l'arbre del paquet amb forma zephyr (per exemple *repodir/bash*).
+Les ordres que recorren des del directori actual resolen primer *packagedir*.
+
+*i18n*::
+  *zfr lint -l/--l10n-level* selecciona la cobertura requerida de gettext i manuals.
+  *L0* no en requereix cap. *L1* (per defecte) requereix *de*, *es*, *fr*, *it*, *ja*,
+  *ko*, *pl*, *ru*, *zh_CN*, *zh_TW*. *L2* requereix aquests més *bg*, *ca*,
+  *cs*, *el*, *hu*, *id*, *nl*, *pt*, *sv*, *tr*. *L3* afegeix *da*, *et*, *fi*,
+  *gl*, *hr*, *lt*, *ms*, *pt_BR*, *sk*, *sl*. L'anglès (*en*) és l'idioma font
+  *msgid* i no es llista a *po/LINGUAS*. Es permeten locales addicionals per sobre
+  del nivell. Poseu els arguments per defecte de *lint* a
+  *.config/zephyr/lint.options*. Els manuals han de ser traduccions manuals
+  completes sota *docs/<locale>/* (no fragments po4a).
+
+== Commands
+
+*create*::
+  Copia *pkgdatadir/<lang>/* a un directori nou *./<project_name>/* (falla si
+  el directori ja existeix). Reescriu *zephyr* → *_PROJECT_NAME_* i, quan
+  es donen noms de puff, *some_puff1* → el primer *_PUFF_NAME_* (més noms
+  via *add*). Sense noms de puff, elimina els fitxers puff de la plantilla però
+  conserva els tokens *some_puff1* perquè un *add* posterior els pugui instanciar.
+  Escriu un *debian/changelog* nou (el changelog de la plantilla es descarta) amb
+  *--distribution* / *--init-version* / *--author* / *--email*, després executa
+  *git init*, estableix *core.hooksPath* a *.githooks* (copia *pre-commit* perquè
+  *VERSION* es mantingui sincronitzat amb *debian/changelog*), un commit inicial i
+  una etiqueta anotada *vVER*.
+
+*rename*::
+  Al directori del projecte actual, reescriu *zephyr* → *_PROJECT_NAME_* i,
+  per a cada nom donat, el puff de plantilla *some_puff1* → aquest nom.
+  No reescriu *zfr*.
+
+*add*::
+  Detecta l'idioma del projecte i copia els fitxers puff de la plantilla al
+  projecte actual, reanomenant *some_puff1* a cada *_PUFF_NAME_*. Actualitza
+  les llistes Meson (o el cablejat equivalent) quan és possible.
+
+*remove*::
+  Elimina fitxers i cablejat Meson per a cada nom de puff donat del projecte
+  actual.
+
+*detect*::
+  Imprimeix l'idioma detectat per al directori actual
+  (recorre directoris pare fins a trobar l'arrel del projecte).
+
+*about*::
+  Imprimeix informació sobre el projecte actual. Recorre des del directori
+  actual cap als pares per trobar l'arrel del projecte (*meson.build* amb
+  *project()* o *debian/control*). Els camps habituals (nom, versió, llicència,
+  pàgina d'inici, mantenidor, resum, section, priority, distribution,
+  architecture) s'analitzen des de metadades Debian o RPM i s'ajusten a
+  l'amplada del terminal. També imprimeix recomptes de fitxers/línies de codi
+  font i una mida estimada del payload. Els terminals interactius usen colors CSR
+  (console SGR) tret que *NO_COLOR* estigui definit. Useu *-d* / *-r* per a una
+  vista Debian o RPM analitzada completa (no un volcat dels fitxers d'empaquetat).
+
+*version*::
+  Imprimeix la versió actual del projecte (una línia, per a scripts). Per defecte és
+  *git describe* quan *git* i *.git* estan disponibles, altrament la versió més recent de
+  *debian/changelog*. Recorre a un fitxer *VERSION*, després *0.0.0*.
+  Un token no semver (per exemple un hash git) s'embolica com *0.0.0-<token>*.
+
+*lint*::
+  Valida el projecte actual contra l'estil d'empaquetat i disposició zephyr
+  (recorre des del directori actual cap als pares fins a l'arrel del projecte).
+  Informa de fitxers que falten, discrepàncies d'identitat, errors Meson/Debian/RPM,
+  tokens *zephyr* / *some_puff1* sobrants en aplicacions instanciades i correccions
+  suggerides. Les mencions de *zfr* s'esperen i no es tracten com a restes. Per a
+  *.githooks/pre-commit*, puja fins a *.git*, respecta *core.hooksPath*
+  i comprova que el hook sincronitzi *VERSION* des de *debian/changelog*.
+  Quan *po/* o *docs/\*.adoc* està present, avisa si la cobertura no compleix
+  *--l10n-level* (vegeu *i18n* a Description; per defecte *L1*, el fitxer del projecte
+  *.config/zephyr/lint.options* pot establir un altre nivell).
+  La sortida està pensada per a humans i codificadors IA: cada troball té un codi,
+  camí i una correcció concreta. Els terminals interactius usen colors CSR (console SGR)
+  tret que *NO_COLOR* estigui definit.
+
+*shape*::
+  Imprimeix una puntuació *zephyr shape* de 0–100 per al *packagedir* actual (com
+  de completament l'arbre coincideix amb l'estil d'empaquetat zephyr). En un monorepo
+  *packagedir* pot diferir de *repodir* (arrel git / meta); les eines usen
+  shape per preferir el directori del paquet sobre l'arrel del repositori.
+  *\-b* / *--bool* imprimeix *1* si la puntuació és com a mínim el llindar
+  (per defecte *50*), altrament *0*.
+
+*dist*::
+  Construeix un arxiu font del projecte actual (recorre des del directori
+  actual cap als pares fins a l'arrel del projecte). Quan aquest directori
+  és l'arrel git del projecte, executa *meson dist* (després de *meson setup*, per
+  defecte *--allow-dirty* i *--no-tests*). Les plantilles d'idioma niades no tenen
+  el seu propi *.git*, així que *meson dist* empaquetaria el meta-repo pare;
+  aquests arbres reben un tarball de directori només d'aquest projecte. Imprimeix
+  el camí de l'arxiu a stdout. *rpm/Makefile* *dist* i l'objectiu ninja Meson *srcdist*
+  reutilitzen aquesta ordre.
+
+*release*::
+  Analitza les mateixes opcions que *gh-makerelease*(1), reconstrueix argv i *exec*
+  *gh-makerelease* des de PATH. Aquesta ordre no implementa ella mateixa etiquetatge,
+  empaquetat o pujades a GitHub. El projecte *zephyr* es publica des de l'arrel del
+  checkout git (plantilles d'idioma més *zfr/*). Vegeu *Options for release* a continuació.
+
+*ize*::
+  Refactoritza el projecte actual in situ perquè coincideixi amb l'estil zephyr
+  actual (recorre des del directori actual cap als pares). Copia l'estructura
+  *debian/* i *rpm/* que falta des de la plantilla d'idioma (noms reescrits per a
+  aquest projecte), escriu *VERSION* i *.githooks/pre-commit*,
+  corregeix *meson.build* (*zfr version*, objectius man *asciidoctor*,
+  *run_target look*, instal·lació bash-completion). Converteix pàgines man groff *\*.1*
+  sota el projecte (no *debian/*) a *docs/\*.adoc* amb regles Meson,
+  i versions hardcoded del changelog a *src/* en substitucions *\*.in*
+  *@VERSION@* o *PROJECT_VERSION* via *config.h* per a llenguatges de la família C.
+  *\-n* / *--dry-run* imprimeix el pla sense escriure.
+  Després executeu *zfr lint*.
+
+*help*::
+  Mostra l'ajuda de la línia d'ordres.
+
+== Options
+
+Opcions per a *create*:
+
+*-l, --lang* _LANG_::
+  Plantilla d'idioma a usar (per defecte: *python*).
+  Els valors compatibles inclouen *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*,
+  *haskell*, *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift* i
+  *typescript*.
+
+*-D, --distribution* _DIST_::
+  Distribution del changelog Debian (per defecte: *unstable*).
+
+*-1, --init-version* _VER_::
+  Versió inicial del paquet i etiqueta git (per defecte: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  Nom d'autor del changelog i git (per defecte: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  Correu d'autor del changelog i git (per defecte: *lenik@bodz.net*).
+
+Opcions per a *about*:
+
+*-d, --debian*::
+  Mostra camps d'empaquetat Debian analitzats (*debian/control*, darrera
+  entrada de *debian/changelog*). Llistes com *Build-Depends* s'ajusten a
+  l'amplada del terminal; la descripció llarga es reformata en paràgrafs.
+
+*-r, --redhat*::
+  Mostra camps d'empaquetat RPM analitzats des de *rpm/*.spec* (macros com
+  *%{version}* es mostren amb *zfr version -r*). El cos de *%description*
+  es reformata; no es volquen els scriptlets del spec.
+
+*--color* _WHEN_::
+  Realçat CSR: *auto* (per defecte: TTY i sense *NO_COLOR*), *always* o
+  *never*.
+
+Opcions per a *version*:
+
+*-g, --git*::
+  Usa *git describe --tags --always --dirty* (per defecte quan *git* i *.git*
+  estan disponibles).
+
+*-c, --changelog*::
+  Usa la versió més recent de *debian/changelog* (per defecte quan *git* o *.git* no està disponible).
+
+*-r, --rpm*::
+  Imprimeix una *Version* compatible amb RPM (guions mapats a subratllats).
+
+Opcions per a *lint*:
+
+*-v, --verbose*::
+  També imprimeix comprovacions que passen.
+
+*-q, --quiet*::
+  Només imprimeix errors.
+
+*--strict*::
+  Tracta avisos com a errors (estat de sortida 1).
+
+*-l, --l10n-level* _LEVEL_::
+  Cobertura requerida de gettext i manuals complets: *L0* (cap), *L1*
+  (10 locales, per defecte), *L2* (20) o *L3* (30). *LEVEL* pot ser *L2* o
+  *2*. Els valors per defecte també venen de *.config/zephyr/lint.options*.
+
+*--color* _WHEN_::
+  Realçat CSR: *auto* (per defecte: TTY i sense *NO_COLOR*), *always* o
+  *never*.
+
+Opcions per a *shape*:
+
+*-b, --bool*::
+  Imprimeix *1* si la puntuació shape és com a mínim *--threshold*, altrament *0*.
+
+*-v, --verbose*::
+  Imprimeix *packagedir*, *repodir*, *role* i *threshold* a standard error.
+
+*--threshold* _N_::
+  Llindar per a *--bool* (per defecte: *50*).
+
+Opcions per a *dist*:
+
+*-o, --output* _DIR_::
+  Escriu l'arxiu a *_DIR_* (per defecte: directori Meson *meson-dist*,
+  o *rpmbuild/SOURCES* amb *--rpm*).
+
+*-b, --builddir* _DIR_::
+  Directori de build Meson. Per defecte */build* quan aquest builddir està
+  configurat per a aquest arbre font, altrament *<project>/build*.
+
+*-f, --format* _FMT_::
+  Format d'arxiu: *xz* (per defecte), *gz* o *zip*.
+
+*--rpm*::
+  Anomena l'arxiu *_NAME_*-*_VERSION_*.tar.xz i l'escriu a
+  *rpmbuild/SOURCES* tret que s'indiqui *-o*. Usat per *rpm/Makefile*.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  Passa *--allow-dirty* a *meson dist* (per defecte: permet).
+
+*--tests*::
+  Executa proves durant *meson dist* (per defecte és *--no-tests*).
+
+Opcions per a *release* (analitzades aquí, passades a *gh-makerelease*):
+
+*-b, --build-binary*::
+  Build Debian només binari (*-b*); sense _.dsc_.
+*-n, --no-pre-clean*::
+  Reutilitza la memòria cau de build Debian.
+*-u, --upload*::
+  Reutilitza artefactes existents per versió quan n'hi ha.
+*--unsigned*::
+  Construeix paquets Debian sense signar (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  Host *dput*(1) per pujar el fitxer _.changes_.
+*-d, --docker*::
+  Construeix el paquet Debian amb *build4*(1) a Docker.
+*-B, --base-image* _IMAGE_::
+  Imatge objectiu de *build4* (per defecte: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  Executa *build4* per SSH a *SERVER* (implica *-d*).
+*-l, --local*::
+  Només build; sense etiquetar, push ni crear release GitHub.
+*-f, --force*::
+  Substitueix una etiqueta/release existent.
+*-I, --no-install*::
+  Omet *sudo dpkg -i*.
+*-T, --no-tag*::
+  Omet crear i fer push de l'etiqueta git de release.
+*-U, --no-upload*::
+  Omet *dput* del fitxer _.changes_.
+*-R, --no-release*::
+  Omet crear la release GitHub.
+*-P, --no-publish*::
+  Omet publicar al marketplace VSIX.
+*-Y, --no-rpm*::
+  Omet *make -C rpm rpm srpm*.
+*-D, --no-deb*::
+  Omet Debian *debuild*.
+*-v, --verbose*::
+  Registre detallat (repetible).
+*-q, --quiet*::
+  Menys sortida (repetible).
+
+Opcions per a *ize*:
+
+*-l, --lang* _LANG_::
+  Plantilla d'idioma des de la qual copiar l'estructura (per defecte: detectar).
+
+*-n, --dry-run*::
+  Imprimeix adds/updates/conversions planificades sense escriure fitxers.
+
+*-v, --verbose*::
+  També imprimeix camins omesos que ja existeixen.
+
+*--no-man*::
+  No converteix fonts groff *\*.1* a *docs/\*.adoc*.
+
+*--no-subst*::
+  No reescriu versions hardcoded a *src/* a *@VERSION@* / *config.h*.
+
+*--color* _WHEN_::
+  Realçat CSR: *auto* (per defecte: TTY i sense *NO_COLOR*), *always* o
+  *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  Substitueix l'arrel de plantilles (normalment */usr/share/zephyr*).
+
+*NO_COLOR*::
+  Quan està definit, *zfr about*, *zfr lint* i *zfr ize* desactiven el
+  realçat CSR en mode *--color auto*.
+
+*PYTHONPATH*::
+  Ha d'incloure el directori que conté el paquet *zfr_lib* quan
+  s'executen les eines des d'un layout d'instal·lació no per defecte.
+
+== Tests
+
+L'arbre font (no el paquet instal·lat) inclou *tests/* amb cobertura
+Python *unittest* de la CLI. *meson test* (directori de build
+*/build*) descobreix *tests/test_*.py*. Les proves creen projectes d'exemple
+temporals i exerceixen cada subordre (*create*, *add*, *remove*,
+*rename*, *about*, *version*, *lint*, *shape*, *dist*, *ize*, *release*,
+*detect*, *help*), els embolcalls *zfr-**, puntuació de confiança d'idioma,
+catàlegs gettext i els manuals *docs/<lang>/zfr.adoc* per locale.
+Sense Meson, establiu *ZFR_PKGDATADIR* a l'arrel del checkout zephyr
+(pare de *zfr/*) i *PYTHONPATH* a *src/*.
+
+== Files
+
+*.config/zephyr/lint.options*::
+  Arguments per defecte de *zfr lint* per a aquest projecte (tokens shell; comentaris *#*).
+  El CLI zfr inclou *-l 2*.
+
+*/usr/share/zephyr/<lang>/*::
+  Plantilles d'idioma instal·lades.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI i embolcalls prims.
+
+*/usr/share/doc/zephyr/*::
+  Documentació del paquet (LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  Pàgines de manual localitzades, construïdes des de *docs/<locale>/zfr.adoc*
+  (traduccions de document complet, no fragments gettext/po4a).
+  La font del manual en català és *docs/ca/zfr.adoc*.
+
+== Exit status
+
+*0*::
+  Èxit. Per a *lint*, el projecte no té troballes de nivell error
+  (els avisos encara s'imprimeixen tret que sigui *--strict*).
+
+*non-zero*::
+  S'ha produït un error (idioma desconegut, destinació existent, fallada de detecció,
+  fitxers puff que falten, troballes de *lint*, etc.).
+
+== Author
+
+Escrit per {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+Llicència AGPL-3.0-or-later.
+Aquest és programari lliure: podeu canviar-lo i redistribuir-lo sota els
+termes de la GNU Affero General Public License.
+NO HI HA GARANTIA, dins el que permet la llei.
+Vegeu el fitxer LICENSE a la distribució font per al text complet de la llicència,
+incloent termes suplementaris que indiquen que aquest projecte s'oposa a l'explotació per IA i
+l'hegemonia de la IA, i rebutja llicències estil MIT sense reflexió i llicències estil BSD
+políticament ingènues.

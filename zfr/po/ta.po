@@ -22,9 +22,9 @@ msgid ""
 "Zephyr template helper (CLI name: zfr). Create projects and manage example "
 "puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
 msgstr ""
-"Zephyr வார்ப்புருத் துணை (கட்டளைவரிப் பெயர்: zfr). திட்டங்களை உருவாக்கி "
-"மாதிரி puff-களை நிர்வகிக்கும். உருவாக்கப்பட்ட திட்ட மரங்கள் zfr-ஐத் தொடர"
-"்ந்து அழைக்கும்; zfr பெயர் மாற்றச் சின்னம் அல்ல."
+"Zephyr வார்ப்புருத் துணை (கட்டளைவரிப் பெயர்: zfr). திட்டங்களை உருவாக்கி மாதிரி puff-"
+"களை நிர்வகிக்கும். உருவாக்கப்பட்ட திட்ட மரங்கள் zfr-ஐத் தொடர்ந்து அழைக்கும்; zfr பெயர் "
+"மாற்றச் சின்னம் அல்ல."
 
 #: src/zfr:45
 msgid "show this help"
@@ -40,9 +40,9 @@ msgid ""
 "parent directories). CSR colors when stdout is a TTY. Common packaging "
 "fields are parsed from debian or RPM."
 msgstr ""
-"நடப்பு zephyr திட்டத் தகவலைக் காட்டுகிறது (நடப்பு அடைவிலிருந்து மேல் அடை"
-"வுகளைத் தேடும்). stdout முனையம் என்றால் CSR நிறங்கள். பொதுவான தொகுப்புப்"
-" புலங்கள் debian அல்லது RPM-இலிருந்து படிக்கப்படும்."
+"நடப்பு zephyr திட்டத் தகவலைக் காட்டுகிறது (நடப்பு அடைவிலிருந்து மேல் அடைவுகளைத் "
+"தேடும்). stdout முனையம் என்றால் CSR நிறங்கள். பொதுவான தொகுப்புப் புலங்கள் debian அல்லது "
+"RPM-இலிருந்து படிக்கப்படும்."
 
 #: src/zfr_lib/about.py:505
 msgid "show parsed Debian packaging fields"
@@ -54,8 +54,7 @@ msgstr "RPM தொகுப்புப் புலங்களைக் கா
 
 #: src/zfr_lib/about.py:511
 msgid "CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)"
-msgstr ""
-"CSR (கன்சோல் SGR) நிறம் (இயல்பு: auto = முனையம் மற்றும் NO_COLOR இல்லை)"
+msgstr "CSR (கன்சோல் SGR) நிறம் (இயல்பு: auto = முனையம் மற்றும் NO_COLOR இல்லை)"
 
 #: src/zfr_lib/add.py:20
 msgid "instantiate puff(s) from the language template"
@@ -119,24 +118,22 @@ msgid ""
 "Print the detected language of the current project and layout details on "
 "stderr."
 msgstr ""
-"நடப்புத் திட்டத்தின் கண்டுபிடிக்கப்பட்ட மொழியையும் அமைப்பு விவரங்களையும்"
-" stderr-இல் காட்டு."
+"நடப்புத் திட்டத்தின் கண்டுபிடிக்கப்பட்ட மொழியையும் அமைப்பு விவரங்களையும் stderr-இல் காட்டு."
 
 #: src/zfr_lib/dist.py:60
 msgid ""
 "write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
 "rpm)"
 msgstr ""
-"காப்பகத்தை DIR-இல் எழுது (இயல்பு: meson-dist, அல்லது --rpm-உடன் rpmbuild"
-"/SOURCES)"
+"காப்பகத்தை DIR-இல் எழுது (இயல்பு: meson-dist, அல்லது --rpm-உடன் rpmbuild/SOURCES)"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
 "Meson build directory (default: /build when it matches this source tree, "
 "else <project>/build)"
 msgstr ""
-"Meson உருவாக்க அடைவு (இந்த மூல மரத்துக்குப் பொருந்தினால் இயல்பு /build, "
-"இல்லையெனில் <project>/build)"
+"Meson உருவாக்க அடைவு (இந்த மூல மரத்துக்குப் பொருந்தினால் இயல்பு /build, இல்லையெனில் "
+"<project>/build)"
 
 #: src/zfr_lib/dist.py:80
 msgid "archive format (default: xz)"
@@ -147,8 +144,7 @@ msgid ""
 "name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
 "-o is given"
 msgstr ""
-"காப்பகப் பெயர் NAME-VERSION.tar.xz; -o இல்லையெனில் rpmbuild/SOURCES-இல் "
-"எழுது"
+"காப்பகப் பெயர் NAME-VERSION.tar.xz; -o இல்லையெனில் rpmbuild/SOURCES-இல் எழுது"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"
@@ -169,11 +165,10 @@ msgid ""
 "root; otherwise packs this project only so nested language templates do not "
 "ship the parent meta-repo. Prints the archive path on stdout."
 msgstr ""
-"நடப்பு zephyr திட்டத்தின் மூலக் காப்பகத்தை உருவாக்கும் (நடப்பு அடைவிலிரு"
-"ந்து மேலே தேடும்). இந்த அடைவு git திட்ட வேராக இருந்தால் meson dist பயன்ப"
-"டுத்தும்; இல்லையெனில் இந்தத் திட்டத்தை மட்டும் கட்டி, உள்ளே உள்ள மொழி வா"
-"ர்ப்புருக்கள் தாய் மெட்டா-களஞ்சியத்தை அனுப்பாமல் இருக்கும். காப்பகப் பாத"
-"ையை stdout-இல் காட்டும்."
+"நடப்பு zephyr திட்டத்தின் மூலக் காப்பகத்தை உருவாக்கும் (நடப்பு அடைவிலிருந்து மேலே "
+"தேடும்). இந்த அடைவு git திட்ட வேராக இருந்தால் meson dist பயன்படுத்தும்; இல்லையெனில் "
+"இந்தத் திட்டத்தை மட்டும் கட்டி, உள்ளே உள்ள மொழி வார்ப்புருக்கள் தாய் மெட்டா-களஞ்சியத்தை "
+"அனுப்பாமல் இருக்கும். காப்பகப் பாதையை stdout-இல் காட்டும்."
 
 #: src/zfr_lib/ize/__init__.py:60
 msgid "refactor this project to current zephyr style"
@@ -185,15 +180,14 @@ msgid ""
 "rpm files, meson targets, AsciiDoc man pages, and Meson version "
 "substitutions. Walks from cwd toward parents."
 msgstr ""
-"நடப்புத் திட்டத்தை zephyr பாணிக்குப் பொருந்தும்படி மாற்றும்: இல்லாத debi"
-"an/rpm கோப்புகள், meson இலக்குகள், AsciiDoc கையேட்டுப் பக்கங்கள், Meson "
-"பதிப்புப் பதிலீடுகள். நடப்பு அடைவிலிருந்து மேலே தேடும்."
+"நடப்புத் திட்டத்தை zephyr பாணிக்குப் பொருந்தும்படி மாற்றும்: இல்லாத debian/rpm கோப்புகள், "
+"meson இலக்குகள், AsciiDoc கையேட்டுப் பக்கங்கள், Meson பதிப்புப் பதிலீடுகள். நடப்பு "
+"அடைவிலிருந்து மேலே தேடும்."
 
 #: src/zfr_lib/ize/__init__.py:65
 #, python-format
 msgid "language template to align with (default: detect; one of: %s)"
-msgstr ""
-"பொருத்த வேண்டிய மொழி வார்ப்புரு (இயல்பு: கண்டுபிடி; இவற்றில் ஒன்று: %s)"
+msgstr "பொருத்த வேண்டிய மொழி வார்ப்புரு (இயல்பு: கண்டுபிடி; இவற்றில் ஒன்று: %s)"
 
 #: src/zfr_lib/ize/__init__.py:66
 msgid "print planned changes without writing files"
@@ -218,8 +212,7 @@ msgstr "CSR (கன்சோல் SGR) நிறம் (இயல்பு: aut
 #: src/zfr_lib/lint/__init__.py:90
 msgid "validate project packaging and zephyr layout (walks parents from cwd)"
 msgstr ""
-"திட்டத் தொகுப்பையும் zephyr அமைப்பையும் சரிபார் (நடப்பு அடைவிலிருந்து மே"
-"லே தேடும்)"
+"திட்டத் தொகுப்பையும் zephyr அமைப்பையும் சரிபார் (நடப்பு அடைவிலிருந்து மேலே தேடும்)"
 
 #: src/zfr_lib/lint/__init__.py:91
 msgid ""
@@ -227,9 +220,8 @@ msgid ""
 "mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
 "is a TTY."
 msgstr ""
-"நடப்பு zephyr திட்டத்தில் இல்லாத கோப்புகளையும் தொகுப்பு/பாணிப் பிழைகளையு"
-"ம் பார்க்கும். நடப்பு அடைவிலிருந்து மேலே தேடும். stdout முனையம் என்றால் "
-"CSR நிறங்கள்."
+"நடப்பு zephyr திட்டத்தில் இல்லாத கோப்புகளையும் தொகுப்பு/பாணிப் பிழைகளையும் பார்க்கும். "
+"நடப்பு அடைவிலிருந்து மேலே தேடும். stdout முனையம் என்றால் CSR நிறங்கள்."
 
 #: src/zfr_lib/lint/__init__.py:95
 msgid "show passing checks too"
@@ -243,6 +235,12 @@ msgstr "பிழைகளை மட்டும் காட்டு"
 msgid "treat warnings as failures (exit 1)"
 msgstr "எச்சரிக்கைகளைத் தோல்வியாகக் கருது (வெளியேறும் நிலை 1)"
 
+#: src/zfr_lib/lint/__init__.py:108
+msgid ""
+"required gettext/manpage locale coverage L0–L3 (default: L1; project file "
+"may override)"
+msgstr "தேவையான gettext/கையேட்டு locale உள்ளடக்கம் L0–L3 (இயல்புநிலை L1; திட்டக் கோப்பு மேலெழுதலாம்)"
+
 #: src/zfr_lib/release.py:26
 msgid "Debian binary-only build (no .dsc)"
 msgstr "Debian இருமம் மட்டும் (.dsc இல்லை)"
@@ -253,9 +251,7 @@ msgstr "உருவாக்கத் தற்காலிக நினைவ�
 
 #: src/zfr_lib/release.py:38
 msgid "Reuse existing artifacts; build only if missing"
-msgstr ""
-"உள்ள உருவாக்க முடிவுகளை மீண்டும் பயன்படுத்து; இல்லையெனில் மட்டும் உருவாக"
-"்கு"
+msgstr "உள்ள உருவாக்க முடிவுகளை மீண்டும் பயன்படுத்து; இல்லையெனில் மட்டும் உருவாக்கு"
 
 #: src/zfr_lib/release.py:43
 msgid "Build unsigned packages"
@@ -280,9 +276,7 @@ msgstr "SERVER-இல் SSH வழியாக build4 இயக்கு (-d �
 
 #: src/zfr_lib/release.py:76
 msgid "Build in local, no tag/push/release"
-msgstr ""
-"உள்ளூரில் மட்டும் உருவாக்கு; குறிச்சொல், தள்ளுதல், GitHub வெளியீடு வேண்ட"
-"ாம்"
+msgstr "உள்ளூரில் மட்டும் உருவாக்கு; குறிச்சொல், தள்ளுதல், GitHub வெளியீடு வேண்டாம்"
 
 #: src/zfr_lib/release.py:82
 msgid "Replace existing release and tag if present"
@@ -299,8 +293,8 @@ msgstr "git குறிச்சொல் உருவாக்கம்/தள
 #: src/zfr_lib/release.py:100
 msgid "Skip dput upload to deb pool (-u reuses build artifacts)"
 msgstr ""
-"deb குளத்துக்கு dput பதிவேற்றத்தைத் தவிர் (-u உள்ள உருவாக்க முடிவுகளை மீ"
-"ண்டும் பயன்படுத்தும்)"
+"deb குளத்துக்கு dput பதிவேற்றத்தைத் தவிர் (-u உள்ள உருவாக்க முடிவுகளை மீண்டும் "
+"பயன்படுத்தும்)"
 
 #: src/zfr_lib/release.py:106
 msgid "Skip GitHub release"
@@ -328,17 +322,15 @@ msgstr "குறைந்த வெளியீடு"
 
 #: src/zfr_lib/release.py:205
 msgid "create a GitHub release (parse options, exec gh-makerelease)"
-msgstr ""
-"GitHub வெளியீடு உருவாக்கு (விருப்பங்களைப் படித்து gh-makerelease-ஐ இயக்க"
-"ு)"
+msgstr "GitHub வெளியீடு உருவாக்கு (விருப்பங்களைப் படித்து gh-makerelease-ஐ இயக்கு)"
 
 #: src/zfr_lib/release.py:207
 msgid ""
 "Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
 "not implement tagging, packaging, or uploads."
 msgstr ""
-"gh-makerelease விருப்பங்களைப் படித்து argv-ஐ மீண்டும் கட்டி gh-makerelea"
-"se-ஐ இயக்கும். குறிச்சொல், தொகுத்தல், பதிவேற்றம் இங்கு நடக்காது."
+"gh-makerelease விருப்பங்களைப் படித்து argv-ஐ மீண்டும் கட்டி gh-makerelease-ஐ இயக்கும். "
+"குறிச்சொல், தொகுத்தல், பதிவேற்றம் இங்கு நடக்காது."
 
 #: src/zfr_lib/remove.py:20
 msgid "remove puff(s) from the current project"
@@ -358,9 +350,7 @@ msgstr "zephyr திட்டத்தையும் மாதிரி puff �
 
 #: src/zfr_lib/rename.py:52
 msgid "Rename zephyr → ProjectName and some_puff1 → example names."
-msgstr ""
-"zephyr-ஐத் திட்டப் பெயராகவும் some_puff1-ஐ மாதிரிப் பெயர்களாகவும் மாற்று"
-"."
+msgstr "zephyr-ஐத் திட்டப் பெயராகவும் some_puff1-ஐ மாதிரிப் பெயர்களாகவும் மாற்று."
 
 #: src/zfr_lib/rename.py:56
 msgid "new project name (replaces 'zephyr')"
@@ -368,23 +358,22 @@ msgstr "புதிய திட்டப் பெயர் ('zephyr'-ஐ ம�
 
 #: src/zfr_lib/rename.py:57
 msgid "new example names (each replaces template some_puff1)"
-msgstr ""
-"புதிய மாதிரிப் பெயர்கள் (ஒவ்வொன்றும் வார்ப்புரு some_puff1-ஐ மாற்றும்)"
+msgstr "புதிய மாதிரிப் பெயர்கள் (ஒவ்வொன்றும் வார்ப்புரு some_puff1-ஐ மாற்றும்)"
 
 #: src/zfr_lib/shape.py:259
 msgid ""
 "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
 msgstr ""
-"zephyr தொகுப்பு வடிவ மதிப்பெண் 0–100 காட்டு (ஒரே களஞ்சியத்தில் packagedi"
-"r vs repodir)"
+"zephyr தொகுப்பு வடிவ மதிப்பெண் 0–100 காட்டு (ஒரே களஞ்சியத்தில் packagedir vs "
+"repodir)"
 
 #: src/zfr_lib/shape.py:261
 msgid ""
 "Score how completely the current directory matches zephyr package style "
 "(0-100). In monorepos, scores the packagedir."
 msgstr ""
-"நடப்பு அடைவு zephyr தொகுப்புப் பாணிக்கு எவ்வளவு நெருக்கமோ 0–100 மதிப்பெண"
-"். ஒரே களஞ்சியத்தில் packagedir-க்கு மதிப்பெண்."
+"நடப்பு அடைவு zephyr தொகுப்புப் பாணிக்கு எவ்வளவு நெருக்கமோ 0–100 மதிப்பெண். ஒரே "
+"களஞ்சியத்தில் packagedir-க்கு மதிப்பெண்."
 
 #: src/zfr_lib/shape.py:267
 msgid "print 1 if score >= threshold, else 0"
@@ -407,8 +396,7 @@ msgstr "நடப்புத் திட்டப் பதிப்பைக�
 msgid ""
 "Print the current project version (walks from cwd toward parent directories)."
 msgstr ""
-"நடப்புத் திட்டப் பதிப்பைக் காட்டுகிறது (நடப்பு அடைவிலிருந்து மேல் அடைவுக"
-"ளைத் தேடும்)."
+"நடப்புத் திட்டப் பதிப்பைக் காட்டுகிறது (நடப்பு அடைவிலிருந்து மேல் அடைவுகளைத் தேடும்)."
 
 #: src/zfr_lib/version.py:57
 msgid "use git describe (default when git and .git are available)"
@@ -421,4 +409,3 @@ msgstr "debian/changelog பயன்படுத்து (git அல்லத�
 #: src/zfr_lib/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
 msgstr "RPM-க்கு ஏற்ற Version காட்டு (ஹைபன்கள் அடிக்கோடுகள்)"
-

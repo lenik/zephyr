@@ -1,0 +1,438 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: Εντολές χρήστη
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - πολυγλωσσικά πρότυπα έργων CLI και βοηθητικά εργαλεία
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-l* _LEVEL_] [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape* και *zfr-release* είναι λεπτά περιβλήματα γύρω από τις ίδιες υποεντολές.
+
+== Description
+
+Το *zfr* είναι το εργαλείο γραμμής εντολών για τη συλλογή προτύπων *zephyr*.
+Παρέχει γλωσσικά πρότυπα για μικές βοηθητικές εφαρμογές γραμμής εντολών και
+εργαλεία για τη δημιουργία και διαχείρισή τους.
+
+*Σημαντικό:* αναμένεται τα instantiated έργα να συνεχίζουν να καλούν *zfr*
+(π.χ. *zfr version* στο *meson.build* και *rpm/Makefile*).
+Η συμβολοσειρά *zfr* *δεν* είναι μαγικό token create/rename και ποτέ
+δεν ξαναγράφεται στο όνομα του έργου. Το placeholder προτύπου που *ξαναγράφεται*
+παραμένει *zephyr* (και *some_puff1* για δείγματα puff).
+
+Τυπική ροή εργασίας:
+
+. Δημιουργήστε έργο από γλωσσικό πρότυπο:
++
+----
+zfr create -l python myproj
+----
+
+. Μπείτε στο έργο και προσθέστε εφαρμογικά *puff* (δείγματα εφαρμογών):
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. Προαιρετικά μετονομάστε το έργο ή αφαιρέστε puff αργότερα με *rename* / *remove*.
+
+Τα πρότυπα βρίσκονται κάτω από */usr/share/zephyr/<lang>/* όταν είναι εγκατεστημένα, ή στο δέντρο
+πηγαίου κώδικα κατά την εκτέλεση μη εγκατεστημένων builddir περιβλημάτων όπως *build/zfr*
+(το *ZFR_PKGDATADIR* το αντικαθιστά). Κάθε πρότυπο μπορεί να περιλαμβάνει δείγμα puff με όνομα
+*some_puff1*· περάστε ονόματα puff στη γραμμή εντολών *create* για instantiation,
+ή παραλείψτε τα για κενό έργο.
+
+Σε monorepo, το *repodir* είναι η ρίζα git (ή meta) checkout και το *packagedir*
+είναι το δέντρο πακέτου με μορφή zephyr (π.χ. *repodir/bash*).
+Εντολές που δια traversουν από τον τρέχοντα κατάλογο επιλύουν πρώτα το *packagedir*.
+
+*i18n*::
+  Το *zfr lint -l/--l10n-level* επιλέγει την απαιτούμενη κάλυψη gettext και εγχειριδίων.
+  Το *L0* δεν απαιτεί τίποτα. Το *L1* (προεπιλογή) απαιτεί *de*, *es*, *fr*, *it*, *ja*,
+  *ko*, *pl*, *ru*, *zh_CN*, *zh_TW*. Το *L2* απαιτεί αυτά συν *bg*, *ca*,
+  *cs*, *el*, *hu*, *id*, *nl*, *pt*, *sv*, *tr*. Το *L3* προσθέτει *da*, *et*, *fi*,
+  *gl*, *hr*, *lt*, *ms*, *pt_BR*, *sk*, *sl*. Τα αγγλικά (*en*) είναι η γλώσσα πηγής
+  *msgid* και δεν αναφέρονται στο *po/LINGUAS*. Επιτρέπονται επιπλέον locales πάνω από
+  το επίπεδο. Βάλτε προεπιλεγμένα ορίσματα *lint* στο
+  *.config/zephyr/lint.options*. Τα εγχειρίδια πρέπει να είναι ολόκληρες
+  χειροκίνητες μεταφράσεις κάτω από *docs/<locale>/* (όχι θραύσματα po4a).
+
+== Commands
+
+*create*::
+  Αντιγράφει *pkgdatadir/<lang>/* σε νέο κατάλογο *./<project_name>/* (αποτυγχάνει αν
+  ο κατάλογος υπάρχει ήδη). Ξαναγράφει *zephyr* → *_PROJECT_NAME_* και, όταν
+  δίνονται ονόματα puff, *some_puff1* → το πρώτο *_PUFF_NAME_* (περισσότερα
+  μέσω *add*). Χωρίς ονόματα puff, αφαιρεί τα αρχεία puff προτύπου αλλά κρατά
+  τα tokens *some_puff1* ώστε μεταγενέστερο *add* να τα instantiate.
+  Γράφει νέο *debian/changelog* (το changelog προτύπου απορρίπτεται) με
+  *--distribution* / *--init-version* / *--author* / *--email*, μετά εκτελεί
+  *git init*, ορίζει *core.hooksPath* σε *.githooks* (αντιγράφει *pre-commit* ώστε
+  το *VERSION* να συγχρονίζεται με *debian/changelog*), αρχικό commit και
+  σχολιασμένο tag *vVER*.
+
+*rename*::
+  Στον τρέχοντα κατάλογο έργου, ξαναγράφει *zephyr* → *_PROJECT_NAME_* και,
+  για κάθε δοθέν όνομα, το puff προτύπου *some_puff1* → αυτό το όνομα.
+  Δεν ξαναγράφει *zfr*.
+
+*add*::
+  Ανιχνεύει τη γλώσσα του έργου και αντιγράφει τα αρχεία puff προτύπου στο τρέχον
+  έργο, μετονομάζοντας *some_puff1* σε κάθε *_PUFF_NAME_*. Ενημερώνει
+  λίστες Meson (ή ισοδύναμο wiring) όταν είναι δυνατό.
+
+*remove*::
+  Αφαιρεί αρχεία και Meson wiring για κάθε δοθέν όνομα puff από το τρέχον
+  έργο.
+
+*detect*::
+  Εκτυπώνει την ανιχνευμένη γλώσσα για τον τρέχοντα κατάλογο
+  (δια traversa γονικούς καταλόγους μέχρι τη ρίζα έργου).
+
+*about*::
+  Εκτυπώνει πληροφορίες για το τρέχον έργο. Δια traversa από τον τρέχοντα
+  κατάλογο προς γονείς για να βρει τη ρίζα έργου (*meson.build* με
+  *project()* ή *debian/control*). Κοινά πεδία (όνομα, έκδοση, άδεια,
+  αρχική σελίδα, συντηρητής, περίληψη, section, priority, distribution,
+  architecture) αναλύονται από μεταδεδομένα Debian ή RPM και τυλίγονται στο
+  πλάτος τερματικού. Εκτυπώνει επίσης μετρήσεις αρχείων/γραμμών πηγαίου κώδικα και
+  εκτιμώμενο μέγεθος payload. Διαδραστικά τερματικά χρησιμοποιούν χρώματα CSR
+  (console SGR) εκτός αν έχει οριστεί *NO_COLOR*. Χρησιμοποιήστε *-d* / *-r* για πλήρη
+  αναλυμένη προβολή Debian ή RPM (όχι dump αρχείων συσκευασίας).
+
+*version*::
+  Εκτυπώνει την τρέχουσα έκδοση έργου (μία γραμμή, για scripts). Προεπιλογή είναι
+  *git describe* όταν *git* και *.git* είναι διαθέσιμα, αλλιώς η τελευταία έκδοση
+  *debian/changelog*. Εναλλακτικά αρχείο *VERSION*, μετά *0.0.0*.
+  Μη semver token (π.χ. git hash) τυλίγεται ως *0.0.0-<token>*.
+
+*lint*::
+  Επικυρώνει το τρέχον έργο έναντι στυλ συσκευασίας και διάταξης zephyr
+  (δια traversa από τρέχοντα κατάλογο προς γονείς μέχρι ρίζα έργου).
+  Αναφέρει λείποντα αρχεία, ασυμφωνίες ταυτότητας, σφάλματα Meson/Debian/RPM,
+  υπόλοιπα tokens *zephyr* / *some_puff1* σε instantiated εφαρμογές και
+  προτεινόμενες διορθώσεις. Οι αναφορές σε *zfr* αναμένονται και δεν θεωρούνται
+  υπόλοιπα. Για *.githooks/pre-commit*, ανεβαίνει μέχρι *.git*, σέβεται *core.hooksPath*
+  και ελέγχει αν το hook συγχρονίζει *VERSION* από *debian/changelog*.
+  Όταν υπάρχουν *po/* ή *docs/\*.adoc*, προειδοποιεί αν η κάλυψη δεν πληροί
+  *--l10n-level* (βλ. *i18n* στο Description· προεπιλογή *L1*, το αρχείο έργου
+  *.config/zephyr/lint.options* μπορεί να ορίσει άλλο επίπεδο).
+  Η έξοδος προορίζεται για ανθρώπους και AI coders: κάθε εύρημα έχει κωδικό,
+  διαδρομή και συγκεκριμένη διόρθωση. Διαδραστικά τερματικά χρησιμοποιούν CSR (console SGR)
+  χρώματα εκτός αν έχει οριστεί *NO_COLOR*.
+
+*shape*::
+  Εκτυπώνει βαθμολογία *zephyr shape* 0–100 για το τρέχον *packagedir* (πόσο
+  πλήρως το δέντρο ταιριάζει με στυλ συσκευασίας zephyr). Σε monorepo το
+  *packagedir* μπορεί να διαφέρει από *repodir* (git / meta ρίζα)· τα εργαλεία
+  χρησιμοποιούν shape για να προτιμούν κατάλογο πακέτου έναντι ρίζας αποθετηρίου.
+  *\-b* / *--bool* εκτυπώνει *1* αν η βαθμολογία είναι τουλάχιστον το κατώφλι
+  (προεπιλογή *50*), αλλιώς *0*.
+
+*dist*::
+  Δημιουργεί αρχείο πηγαίου κώδικα τρέχοντος έργου (δια traversa από τρέχοντα
+  κατάλογο προς γονείς μέχρι ρίζα έργου). Όταν αυτός ο κατάλογος είναι git ρίζα
+  έργου, εκτελεί *meson dist* (μετά *meson setup*, προεπιλογή
+  *--allow-dirty* και *--no-tests*). Τα ένθετα γλωσσικά πρότυπα δεν έχουν
+  δικό τους *.git*, οπότε *meson dist* θα έπακε γονικό meta-repo·
+  αυτά τα δέντρα παίρνουν tarball καταλόγου μόνο αυτού του έργου. Εκτυπώνει
+  διαδρομή αρχείου στο stdout. Το *rpm/Makefile* *dist* και ο στόχος ninja Meson *srcdist*
+  επαναχρησιμοποιούν αυτή την εντολή.
+
+*release*::
+  Αναλύει τις ίδιες επιλογές με *gh-makerelease*(1), ξαναχτίζει argv και *exec*
+  *gh-makerelease* από PATH. Αυτή η εντολή δεν υλοποιεί η ίδια tagging,
+  συσκευασία ή GitHub uploads. Το έργο *zephyr* κυκλοφορεί από git checkout
+  ρίζα (γλωσσικά πρότυπα συν *zfr/*). Βλ. *Options for release* παρακάτω.
+
+*ize*::
+  Refactor in situ το τρέχον έργο ώστε να ταιριάζει με τρέχον στυλ zephyr
+  (δια traversa από τρέχοντα κατάλογο προς γονείς). Αντιγράφει λείπουσα
+  δομή *debian/* και *rpm/* από γλωσσικό πρότυπο (ονόματα ξαναγραμμένα για
+  αυτό το έργο), γράφει *VERSION* και *.githooks/pre-commit*,
+  επιδιορθώνει *meson.build* (*zfr version*, στόχους man *asciidoctor*,
+  *run_target look*, εγκατάσταση bash-completion). Μετατρέπει σελίδες man groff *\*.1*
+  κάτω από έργο (όχι *debian/*) σε *docs/\*.adoc* με κανόνες Meson,
+  και hardcoded εκδόσεις changelog στο *src/* σε *\*.in*
+  αντικαταστάσεις *@VERSION@* ή *PROJECT_VERSION* μέσω *config.h* για γλώσσες οικογένειας C.
+  *\-n* / *--dry-run* εκτυπώνει το σχέδιο χωρίς εγγραφή.
+  Μετά εκτελέστε *zfr lint*.
+
+*help*::
+  Εμφανίζει βοήθεια γραμμής εντολών.
+
+== Options
+
+Επιλογές για *create*:
+
+*-l, --lang* _LANG_::
+  Γλωσσικό πρότυπο προς χρήση (προεπιλογή: *python*).
+  Υποστηριζόμενες τιμές περιλαμβάνουν *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*,
+  *haskell*, *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift* και
+  *typescript*.
+
+*-D, --distribution* _DIST_::
+  Distribution changelog Debian (προεπιλογή: *unstable*).
+
+*-1, --init-version* _VER_::
+  Αρχική έκδοση πακέτου και git tag (προεπιλογή: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  Όνομα συγγραφέα changelog και git (προεπιλογή: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  Email συγγραφέα changelog και git (προεπιλογή: *lenik@bodz.net*).
+
+Επιλογές για *about*:
+
+*-d, --debian*::
+  Εμφανίζει αναλυμένα πεδία συσκευασίας Debian (*debian/control*, τελευταία
+  εγγραφή *debian/changelog*). Λίστες όπως *Build-Depends* τυλίγονται στο
+  πλάτος τερματικού· η μακρά περιγραφή αναδιαμορφώνεται σε παραγράφους.
+
+*-r, --redhat*::
+  Εμφανίζει αναλυμένα πεδία συσκευασίας RPM από *rpm/*.spec* (μακροεντολές όπως
+  *%{version}* εμφανίζονται με *zfr version -r*). Το σώμα *%description*
+  αναδιαμορφώνεται· δεν γίνεται dump scriptlets spec.
+
+*--color* _WHEN_::
+  CSR highlighting: *auto* (προεπιλογή: TTY και χωρίς *NO_COLOR*), *always* ή
+  *never*.
+
+Επιλογές για *version*:
+
+*-g, --git*::
+  Χρησιμοποιεί *git describe --tags --always --dirty* (προεπιλογή όταν *git* και *.git*
+  είναι διαθέσιμα).
+
+*-c, --changelog*::
+  Χρησιμοποιεί τελευταία έκδοση *debian/changelog* (προεπιλογή όταν *git* ή *.git* δεν είναι διαθέσιμα).
+
+*-r, --rpm*::
+  Εκτυπώνει *Version* συμβατή με RPM (παύλες σε κάτω παύλες).
+
+Επιλογές για *lint*:
+
+*-v, --verbose*::
+  Εκτυπώνει και επιτυχημένους ελέγχους.
+
+*-q, --quiet*::
+  Εκτυπώνει μόνο σφάλματα.
+
+*--strict*::
+  Θεωρεί προειδοποιήσεις ως αποτυχίες (exit status 1).
+
+*-l, --l10n-level* _LEVEL_::
+  Απαιτούμενη κάλυψη gettext και ολόκληρων εγχειριδίων: *L0* (καμία), *L1*
+  (10 locales, προεπιλογή), *L2* (20) ή *L3* (30). Το *LEVEL* μπορεί να είναι *L2* ή
+  *2*. Προεπιλογές έρχονται και από *.config/zephyr/lint.options*.
+
+*--color* _WHEN_::
+  CSR highlighting: *auto* (προεπιλογή: TTY και χωρίς *NO_COLOR*), *always* ή
+  *never*.
+
+Επιλογές για *shape*:
+
+*-b, --bool*::
+  Εκτυπώνει *1* αν η βαθμολογία shape είναι τουλάχιστον *--threshold*, αλλιώς *0*.
+
+*-v, --verbose*::
+  Εκτυπώνει *packagedir*, *repodir*, *role* και *threshold* στο standard error.
+
+*--threshold* _N_::
+  Κατώφλι για *--bool* (προεπιλογή: *50*).
+
+Επιλογές για *dist*:
+
+*-o, --output* _DIR_::
+  Γράφει αρχείο σε *_DIR_* (προεπιλογή: κατάλογος Meson *meson-dist*,
+  ή *rpmbuild/SOURCES* με *--rpm*).
+
+*-b, --builddir* _DIR_::
+  Κατάλογος build Meson. Προεπιλογή */build* όταν αυτό το builddir έχει
+  ρυθμιστεί για αυτό το δέντρο πηγής, αλλιώς *<project>/build*.
+
+*-f, --format* _FMT_::
+  Μορφή αρχείου: *xz* (προεπιλογή), *gz* ή *zip*.
+
+*--rpm*::
+  Ονομάζει αρχείο *_NAME_*-*_VERSION_*.tar.xz και το γράφει σε
+  *rpmbuild/SOURCES* εκτός αν δοθεί *-o*. Χρησιμοποιείται από *rpm/Makefile*.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  Περνά *--allow-dirty* στο *meson dist* (προεπιλογή: επιτρέπεται).
+
+*--tests*::
+  Εκτελεί tests κατά *meson dist* (προεπιλογή είναι *--no-tests*).
+
+Επιλογές για *release* (αναλύονται εδώ, περνούν στο *gh-makerelease*):
+
+*-b, --build-binary*::
+  Debian build μόνο δυαδικά (*-b*); χωρίς _.dsc_.
+*-n, --no-pre-clean*::
+  Επαναχρησιμοποιεί cache build Debian.
+*-u, --upload*::
+  Επαναχρησιμοποιεί υπάρχοντα artifacts ανά έκδοση όταν υπάρχουν.
+*--unsigned*::
+  Κατασκευάζει unsigned πακέτα Debian (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  Host *dput*(1) για ανέβασμα αρχείου _.changes_.
+*-d, --docker*::
+  Κατασκευάζει πακέτο Debian με *build4*(1) σε Docker.
+*-B, --base-image* _IMAGE_::
+  Εικόνα-στόχος *build4* (προεπιλογή: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  Εκτελεί *build4* μέσω SSH στο *SERVER* (υπονοεί *-d*).
+*-l, --local*::
+  Μόνο build· χωρίς tag, push ή GitHub release.
+*-f, --force*::
+  Αντικαθιστά υπάρχον tag/release.
+*-I, --no-install*::
+  Παραλείπει *sudo dpkg -i*.
+*-T, --no-tag*::
+  Παραλείπει δημιουργία και push git release tag.
+*-U, --no-upload*::
+  Παραλείπει *dput* αρχείου _.changes_.
+*-R, --no-release*::
+  Παραλείπει δημιουργία GitHub release.
+*-P, --no-publish*::
+  Παραλείπει δημοσίευση VSIX marketplace.
+*-Y, --no-rpm*::
+  Παραλείπει *make -C rpm rpm srpm*.
+*-D, --no-deb*::
+  Παραλείπει Debian *debuild*.
+*-v, --verbose*::
+  Λεπτομερές logging (επαναλήψιμο).
+*-q, --quiet*::
+  Λιγότερη έξοδος (επαναλήψιμο).
+
+Επιλογές για *ize*:
+
+*-l, --lang* _LANG_::
+  Γλωσσικό πρότυπο για αντιγραφή δομής (προεπιλογή: ανίχνευση).
+
+*-n, --dry-run*::
+  Εκτυπώνει προγραμματισμένες προσθήκες/ενημερώσεις/μετατροπές χωρίς εγγραφή αρχείων.
+
+*-v, --verbose*::
+  Εκτυπώνει και παραλειφθείσες διαδρομές που υπάρχουν ήδη.
+
+*--no-man*::
+  Δεν μετατρέπει πηγές groff *\*.1* σε *docs/\*.adoc*.
+
+*--no-subst*::
+  Δεν ξαναγράφει hardcoded εκδόσεις στο *src/* σε *@VERSION@* / *config.h*.
+
+*--color* _WHEN_::
+  CSR highlighting: *auto* (προεπιλογή: TTY και χωρίς *NO_COLOR*), *always* ή
+  *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  Αντικαθιστά ρίζα προτύπων (κανονικά */usr/share/zephyr*).
+
+*NO_COLOR*::
+  Όταν οριστεί, *zfr about*, *zfr lint* και *zfr ize* απενεργοποιούν CSR
+  highlighting σε λειτουργία *--color auto*.
+
+*PYTHONPATH*::
+  Πρέπει να περιλαμβάνει κατάλογο με πακέτο *zfr_lib* όταν
+  τα εργαλεία εκτελούνται από μη προεπιλεγμένη διάταξη εγκατάστασης.
+
+== Tests
+
+Το δέντρο πηγής (όχι εγκατεστημένο πακέτο) περιλαμβάνει *tests/* με
+Python *unittest* κάλυψη CLI. Το *meson test* (κατάλογος build
+*/build*) ανακαλύπτει *tests/test_*.py*. Τα tests δημιουργούν προσωρινά δείγματα
+έργων και ασκούν κάθε υποεντολή (*create*, *add*, *remove*,
+*rename*, *about*, *version*, *lint*, *shape*, *dist*, *ize*, *release*,
+*detect*, *help*), περιβλήματα *zfr-**, βαθμολογία εμπιστοσύνης γλώσσας,
+καταλόγους gettext και εγχειρίδια *docs/<lang>/zfr.adoc* ανά locale.
+Χωρίς Meson, ορίστε *ZFR_PKGDATADIR* στη ρίζα zephyr checkout
+(γονέας *zfr/*) και *PYTHONPATH* σε *src/*.
+
+== Files
+
+*.config/zephyr/lint.options*::
+  Προεπιλεγμένα ορίσματα *zfr lint* για αυτό το έργο (shell tokens· σχόλια *#*).
+  Το ίδιο το zfr CLI περιλαμβάνει *-l 2*.
+
+*/usr/share/zephyr/<lang>/*::
+  Εγκατεστημένα γλωσσικά πρότυπα.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI και λεπτά περιβλήματα.
+
+*/usr/share/doc/zephyr/*::
+  Τεκμηρίωση πακέτου (LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  Τοπικοποιημένες σελίδες man, χτισμένες από *docs/<locale>/zfr.adoc*
+  (ολόκληρες μεταφράσεις εγγράφων, όχι θραύσματα gettext/po4a).
+  Η ελληνική πηγή εγχειριδίου είναι *docs/el/zfr.adoc*.
+
+== Exit status
+
+*0*::
+  Επιτυχία. Για *lint*, το έργο δεν έχει ευρήματα επιπέδου σφάλματος
+  (προειδοποιήσεις εκτυπώνονται ακόμα εκτός αν είναι *--strict*).
+
+*non-zero*::
+  Προέκυψε σφάλμα (άγνωστη γλώσσα, υπάρχει προορισμός, αποτυχία ανίχνευσης,
+  λείπουν αρχεία puff, ευρήματα *lint* κ.λπ.).
+
+== Author
+
+Συγγραφέας: {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+Άδεια AGPL-3.0-or-later.
+Αυτό είναι ελεύθερο λογισμικό: μπορείτε να το αλλάξετε και να το αναδιανείμετε υπό τους
+όρους της GNU Affero General Public License.
+ΧΩΡΙΣ ΕΓΓΥΗΣΗ, στο βαθμό που επιτρέπει ο νόμος.
+Δείτε το αρχείο LICENSE στην πηγαία διανομή για το πλήρες κείμενο άδειας,
+συμπεριλαμβανομένων συμπληρωματικών όρων που δηλώνουν ότι αυτό το έργο αντιτίθεται στην εκμετάλλευση από AI και
+την ηγεμονία AI, και απορρίπτει αδιακρισία MIT-style αδειοδότηση και πολιτικά αφελή
+BSD-style αδειοδότηση.

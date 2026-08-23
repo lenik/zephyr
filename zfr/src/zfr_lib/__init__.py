@@ -37,30 +37,11 @@ LANGS = (
 # Zephyr style: gettext catalogs should cover at least these locales.
 # English (en) is the source msgid language and is not listed in LINGUAS.
 # User-facing aliases zh-cn / zh-tw map to gettext zh_CN / zh_TW.
+# Default lint level is L1; see zfr_lib.l10n.L10N_LEVELS for L0–L3.
+from .l10n import L10N_LEVELS, linguas_for_level, parse_l10n_level
+
 RECOMMENDED_I18N_SOURCE = "en"
-RECOMMENDED_I18N_LINGUAS = (
-    "ar",
-    "bn",
-    "de",
-    "es",
-    "fr",
-    "hi",
-    "id",
-    "it",
-    "ja",
-    "ko",
-    "pt",
-    "ru",
-    "sv",
-    "ta",
-    "te",
-    "th",
-    "tr",
-    "ur",
-    "vi",
-    "zh_CN",
-    "zh_TW",
-)
+RECOMMENDED_I18N_LINGUAS = L10N_LEVELS["L1"]
 
 SKIP_DIR_NAMES = {
     ".git",

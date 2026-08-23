@@ -172,6 +172,13 @@ class ZephyrDetectTests(unittest.TestCase):
 class ZephyrCreateProjectTests(unittest.TestCase):
     """create / add / remove / about / version / lint on a bash example project."""
 
+    def test_packaging_under_zfr_only(self) -> None:
+        self.assertTrue((ROOT / "debian" / "control").is_file())
+        self.assertFalse((REPO / "debian" / "control").exists())
+        self.assertTrue((REPO / ".githooks" / "pre-commit").is_file())
+        self.assertFalse((ROOT / ".githooks" / "pre-commit").exists())
+        self.assertTrue((ROOT / "githooks" / "pre-commit").exists())
+
     tmp: tempfile.TemporaryDirectory[str]
     project: Path
 
@@ -209,6 +216,52 @@ class ZephyrCreateProjectTests(unittest.TestCase):
         meson = (self.project / "meson.build").read_text(encoding="utf-8")
         self.assertIn("project(", meson)
         self.assertIn("cli_demo", meson)
+
+    def test_create_uses_git_config_identity(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="zfr-gitid-") as tmp:
+            tmp_path = Path(tmp)
+            cfg = tmp_path / "gitconfig"
+            cfg.write_text(
+                "[user]\n\tname = Test Author\n\temail = test@example.com\n",
+                encoding="utf-8",
+            )
+            dest = tmp_path / "gitid_demo"
+            env = _env()
+            env["GIT_CONFIG_GLOBAL"] = str(cfg)
+            env["GIT_CONFIG_SYSTEM"] = "/dev/null"
+            for key in (
+                "GIT_AUTHOR_NAME",
+                "GIT_AUTHOR_EMAIL",
+                "GIT_COMMITTER_NAME",
+                "GIT_COMMITTER_EMAIL",
+            ):
+                env.pop(key, None)
+            proc = subprocess.run(
+                [
+                    sys.executable,
+                    str(ZEPHYR),
+                    "create",
+                    "-l",
+                    "bash",
+                    "-1",
+                    "0.0.1",
+                    str(dest),
+                    "hello",
+                ],
+                env=env,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(proc.returncode, 0, proc.stderr)
+            changelog = (dest / "debian" / "changelog").read_text(encoding="utf-8")
+            self.assertIn("Test Author <test@example.com>", changelog)
+            log = subprocess.run(
+                ["git", "-C", str(dest), "log", "-1", "--format=%an <%ae>"],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            self.assertEqual(log.stdout.strip(), "Test Author <test@example.com>")
 
     def test_detect_version_about(self) -> None:
         det = run_zephyr("detect", cwd=self.project)

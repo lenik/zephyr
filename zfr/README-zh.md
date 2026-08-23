@@ -58,10 +58,12 @@ zfr create -l c widgets hello world
 之后用 `zfr add` / `zfr remove` 继续增删 puff（可一次多个名字）。
 `zfr shape` 输出 0–100 的 package-shape 分数（`-b` 输出 0/1）；单体仓中对 *packagedir*（如 `repo/bash`）评分。
 `zfr lint` 按 zephyr 打包风格检查工程（缺文件、Meson/Debian/RPM 用法、
-残留模板名、推荐 gettext 语言覆盖），并给出可执行的修改建议；终端下着色。
-若工程有 `po/`，风格建议 `LINGUAS` 至少包含 **ar bn de es fr hi id it ja ko
-pt ru sv ta te th tr ur vi zh_CN zh_TW**（英文为源语言；`zh-cn`→`zh_CN`，
-`zh-tw`→`zh_TW`）。`zfr dist` 生成源码包
+残留模板名、gettext/手册语言覆盖），并给出可执行的修改建议；终端下着色。
+覆盖等级由 `zfr lint -l/--l10n-level` 指定（默认 **L1** 十种语言；**L0**
+无要求；**L2** 二十种；**L3** 三十种）。工程可用 `.config/zephyr/lint.options`
+给出默认参数（本工具 zfr 为 `-l 2`）。手册页是 `docs/<locale>/` 下的整篇
+手工翻译，不是 po4a 片段。等级以外的额外语言可以保留。
+`zfr dist` 生成源码包
 （git 根目录用 `meson dist`，否则只打包当前工程），供 `rpm/Makefile` 与
 `ninja srcdist` 复用。`zfr ize` 把已有工程升级到当前 zephyr 风格（补
 debian/rpm、Meson 目标、AsciiDoc 手册、Meson 版本替换）。

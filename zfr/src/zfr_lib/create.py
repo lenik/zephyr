@@ -127,8 +127,30 @@ def _write_debian_changelog(
     (dest / "VERSION").write_text(f"{version.lstrip('v')}\n", encoding="utf-8")
 
 
+def _git_config_value(key: str) -> str | None:
+    if shutil.which("git") is None:
+        return None
+    proc = subprocess.run(
+        ["git", "config", "--get", key],
+        capture_output=True,
+        text=True,
+    )
+    if proc.returncode != 0:
+        return None
+    value = proc.stdout.strip()
+    return value or None
+
+
+def _default_author_email() -> tuple[str, str]:
+    """Prefer the caller's git identity; fall back to zephyr package defaults."""
+    return (
+        _git_config_value("user.name") or DEFAULT_AUTHOR,
+        _git_config_value("user.email") or DEFAULT_EMAIL,
+    )
+
+
 def _githooks_pre_commit_src() -> Path | None:
-    """Canonical pre-commit hook: installed pkgdatadir/githooks, else source tree."""
+    """Canonical pre-commit hook: repo .githooks, pkgdatadir, or language template."""
     candidates = [
         pkgdatadir() / "githooks" / "pre-commit",
         pkgdatadir() / ".githooks" / "pre-commit",
@@ -139,8 +161,6 @@ def _githooks_pre_commit_src() -> Path | None:
         repo = zfr_root.parent
         candidates.extend(
             [
-                zfr_root / "githooks" / "pre-commit",
-                zfr_root / ".githooks" / "pre-commit",
                 repo / ".githooks" / "pre-commit",
                 repo / "bash" / ".githooks" / "pre-commit",
             ]
@@ -293,6 +313,7 @@ DESCRIPTION = _('Create a new project directory from pkgdatadir/<lang>.')
 
 
 def add_arguments(p: argparse.ArgumentParser) -> None:
+    default_author, default_email = _default_author_email()
     p.add_argument(
         "-l", "--lang", default="python", metavar="LANG",
         help=_("template language (default: python; one of: %s)") % ", ".join(LANGS),
@@ -306,12 +327,12 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         help=_("initial package version and git tag (default: %s)") % DEFAULT_INIT_VERSION,
     )
     p.add_argument(
-        "-a", "--author", default=DEFAULT_AUTHOR, metavar="AUTHOR",
-        help=_("changelog/git author name (default: %s)") % DEFAULT_AUTHOR,
+        "-a", "--author", default=default_author, metavar="AUTHOR",
+        help=_("changelog/git author name (default: %s)") % default_author,
     )
     p.add_argument(
-        "-e", "--email", default=DEFAULT_EMAIL, metavar="EMAIL",
-        help=_("changelog/git author email (default: %s)") % DEFAULT_EMAIL,
+        "-e", "--email", default=default_email, metavar="EMAIL",
+        help=_("changelog/git author email (default: %s)") % default_email,
     )
     p.add_argument("project_name", help=_("new project directory name"))
     p.add_argument(

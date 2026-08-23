@@ -97,9 +97,9 @@ def format_report(
             "License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License).",
             "Build with Meson; debian/rules uses dh --buildsystem=meson --builddirectory=debian/build.",
             "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY.",
-            "Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1.",
+            "Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a).",
             "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional rpm/ aligned with debian.",
-            "i18n: English source; po/LINGUAS at least ar bn de es fr hi id it ja ko pt ru sv ta te th tr ur vi zh_CN zh_TW.",
+            "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 locales, L2=20, L3=30. Defaults in .config/zephyr/lint.options.",
             "Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ).",
         ):
             lines.append(f"  - {item}")

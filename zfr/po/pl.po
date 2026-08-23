@@ -1,0 +1,412 @@
+# Polish translations for zfr package.
+# Copyright (C) 2026 THE zfr'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the zfr package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: zfr\n"
+"Report-Msgid-Bugs-To: zephyr@bodz.net\n"
+"POT-Creation-Date: 2026-08-23 19:11+0800\n"
+"PO-Revision-Date: 2026-08-23\n"
+"Last-Translator: Lenik (谢继雷) <lenik@bodz.net>\n"
+"Language-Team: Polish\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+#: src/zfr:32
+msgid ""
+"Zephyr template helper (CLI name: zfr). Create projects and manage example "
+"puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
+msgstr ""
+"Pomocnik szablonów Zephyr (nazwa CLI: zfr). Tworzy projekty i zarządza "
+"przykładowymi puffami. Zinstancjonowane drzewa nadal wywołują zfr; zfr "
+"nie jest tokenem zmiany nazwy."
+
+#: src/zfr:45
+msgid "show this help"
+msgstr "pokaż tę pomoc"
+
+#: src/zfr_lib/about.py:496
+msgid "print current project information (walks parents from cwd)"
+msgstr "wypisz informacje o bieżącym projekcie (szuka w górę od cwd)"
+
+#: src/zfr_lib/about.py:498
+msgid ""
+"Print information about the current zephyr project (walks from cwd toward "
+"parent directories). CSR colors when stdout is a TTY. Common packaging "
+"fields are parsed from debian or RPM."
+msgstr ""
+"Wypisuje informacje o bieżącym projekcie zephyr (szuka w górę od cwd). "
+"Kolory CSR, gdy stdout jest TTY. Wspólne pola pakietowania są "
+"odczytywane z debian lub RPM."
+
+#: src/zfr_lib/about.py:505
+msgid "show parsed Debian packaging fields"
+msgstr "pokaż przeanalizowane pola pakietowania Debian"
+
+#: src/zfr_lib/about.py:506
+msgid "show parsed RPM packaging fields"
+msgstr "pokaż przeanalizowane pola pakietowania RPM"
+
+#: src/zfr_lib/about.py:511
+msgid "CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)"
+msgstr ""
+"podświetlanie CSR (console SGR) (domyślnie: auto = TTY i brak "
+"NO_COLOR)"
+
+#: src/zfr_lib/add.py:20
+msgid "instantiate puff(s) from the language template"
+msgstr "utwórz puff(y) z szablonu językowego"
+
+#: src/zfr_lib/add.py:21
+msgid "Detect language and add puff(s) from pkgdatadir/<lang>."
+msgstr "Wykrywa język i dodaje puff(y) z pkgdatadir/<lang>."
+
+#: src/zfr_lib/add.py:25
+msgid "new puff name(s) (snake_case recommended)"
+msgstr "nowe nazwy puff(ów) (zalecane snake_case)"
+
+#: src/zfr_lib/create.py:291
+msgid "create a new project from a language template"
+msgstr "utwórz nowy projekt z szablonu językowego"
+
+#: src/zfr_lib/create.py:292
+msgid "Create a new project directory from pkgdatadir/<lang>."
+msgstr "Tworzy nowy katalog projektu z pkgdatadir/<lang>."
+
+#: src/zfr_lib/create.py:298
+#, python-format
+msgid "template language (default: python; one of: %s)"
+msgstr "język szablonu (domyślnie: python; jeden z: %s)"
+
+#: src/zfr_lib/create.py:302
+#, python-format
+msgid "debian changelog distribution (default: %s)"
+msgstr "dystrybucja debian changelog (domyślnie: %s)"
+
+#: src/zfr_lib/create.py:306
+#, python-format
+msgid "initial package version and git tag (default: %s)"
+msgstr "początkowa wersja pakietu i tag git (domyślnie: %s)"
+
+#: src/zfr_lib/create.py:310
+#, python-format
+msgid "changelog/git author name (default: %s)"
+msgstr "nazwa autora changelog/git (domyślnie: %s)"
+
+#: src/zfr_lib/create.py:314
+#, python-format
+msgid "changelog/git author email (default: %s)"
+msgstr "e-mail autora changelog/git (domyślnie: %s)"
+
+#: src/zfr_lib/create.py:316
+msgid "new project directory name"
+msgstr "nazwa nowego katalogu projektu"
+
+#: src/zfr_lib/create.py:319
+msgid "optional puff names to add after creating the project"
+msgstr "opcjonalne nazwy puff(ów) do dodania po utworzeniu projektu"
+
+#: src/zfr_lib/detect.py:15
+msgid "print detected language for the current directory"
+msgstr "wypisz wykryty język bieżącego katalogu"
+
+#: src/zfr_lib/detect.py:16
+msgid ""
+"Print the detected language of the current project and layout details on "
+"stderr."
+msgstr ""
+"Wypisuje wykryty język bieżącego projektu i szczegóły układu na "
+"stderr."
+
+#: src/zfr_lib/dist.py:60
+msgid ""
+"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
+"rpm)"
+msgstr ""
+"zapisz archiwum do DIR (domyślnie: meson-dist lub rpmbuild/SOURCES z "
+"--rpm)"
+
+#: src/zfr_lib/dist.py:70
+msgid ""
+"Meson build directory (default: /build when it matches this source tree, "
+"else <project>/build)"
+msgstr ""
+"Katalog build Meson (domyślnie: /build gdy pasuje do tego drzewa "
+"źródeł, inaczej <project>/build)"
+
+#: src/zfr_lib/dist.py:80
+msgid "archive format (default: xz)"
+msgstr "format archiwum (domyślnie: xz)"
+
+#: src/zfr_lib/dist.py:86
+msgid ""
+"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
+"-o is given"
+msgstr ""
+"nazwij archiwum NAME-VERSION.tar.xz i zapisz do rpmbuild/SOURCES, "
+"chyba że podano -o"
+
+#: src/zfr_lib/dist.py:94
+msgid "pass --allow-dirty to meson dist (default: allow)"
+msgstr "przekaż --allow-dirty do meson dist (domyślnie: zezwól)"
+
+#: src/zfr_lib/dist.py:99
+msgid "run tests during meson dist (default: --no-tests)"
+msgstr "uruchom testy podczas meson dist (domyślnie: --no-tests)"
+
+#: src/zfr_lib/dist.py:343
+msgid "build a source tarball (meson dist, or this project only)"
+msgstr "zbuduj tarball źródeł (meson dist lub tylko ten projekt)"
+
+#: src/zfr_lib/dist.py:345
+msgid ""
+"Build a source archive of the current zephyr project (walks from cwd toward "
+"parent directories). Uses meson dist when this directory is the git project "
+"root; otherwise packs this project only so nested language templates do not "
+"ship the parent meta-repo. Prints the archive path on stdout."
+msgstr ""
+"Buduje archiwum źródeł bieżącego projektu zephyr (szuka w górę od "
+"cwd). Używa meson dist, gdy ten katalog jest korzeniem projektu git; w "
+"przeciwnym razie pakuje tylko ten projekt, aby zagnieżdżone szablony "
+"językowe nie zawierały nadrzędnego meta-repo. Wypisuje ścieżkę "
+"archiwum na stdout."
+
+#: src/zfr_lib/ize/__init__.py:60
+msgid "refactor this project to current zephyr style"
+msgstr "refaktoryzuj ten projekt do bieżącego stylu zephyr"
+
+#: src/zfr_lib/ize/__init__.py:61
+msgid ""
+"Refactor the current project to match current zephyr style: missing debian/"
+"rpm files, meson targets, AsciiDoc man pages, and Meson version "
+"substitutions. Walks from cwd toward parents."
+msgstr ""
+"Refaktoryzuje bieżący projekt do aktualnego stylu zephyr: brakujące "
+"pliki debian/rpm, cele meson, strony man AsciiDoc i podstawienia "
+"wersji Meson. Szuka w górę od cwd."
+
+#: src/zfr_lib/ize/__init__.py:65
+#, python-format
+msgid "language template to align with (default: detect; one of: %s)"
+msgstr "szablon językowy do dopasowania (domyślnie: detect; jeden z: %s)"
+
+#: src/zfr_lib/ize/__init__.py:66
+msgid "print planned changes without writing files"
+msgstr "wypisz planowane zmiany bez zapisywania plików"
+
+#: src/zfr_lib/ize/__init__.py:67
+msgid "also print skipped files"
+msgstr "wypisz także pominięte pliki"
+
+#: src/zfr_lib/ize/__init__.py:68
+msgid "do not convert groff .1 man pages to docs/*.adoc"
+msgstr "nie konwertuj stron man groff .1 do docs/*.adoc"
+
+#: src/zfr_lib/ize/__init__.py:69
+msgid "do not turn hardcoded versions into @VERSION@ / config.h"
+msgstr "nie zamieniaj na sztywno zakodowanych wersji na @VERSION@ / config.h"
+
+#: src/zfr_lib/ize/__init__.py:70 src/zfr_lib/lint/__init__.py:98
+msgid "CSR (console SGR) highlighting (default: auto)"
+msgstr "podświetlanie CSR (console SGR) (domyślnie: auto)"
+
+#: src/zfr_lib/lint/__init__.py:90
+msgid "validate project packaging and zephyr layout (walks parents from cwd)"
+msgstr "sprawdź pakietowanie projektu i układ zephyr (szuka w górę od cwd)"
+
+#: src/zfr_lib/lint/__init__.py:91
+msgid ""
+"Check the current zephyr project for missing files and packaging/style "
+"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
+"is a TTY."
+msgstr ""
+"Sprawdza bieżący projekt zephyr pod kątem brakujących plików i błędów "
+"pakietowania/stylu. Szuka w górę od cwd. Kolory CSR, gdy stdout jest "
+"TTY."
+
+#: src/zfr_lib/lint/__init__.py:95
+msgid "show passing checks too"
+msgstr "pokaż także zaliczone kontrole"
+
+#: src/zfr_lib/lint/__init__.py:96
+msgid "only print errors"
+msgstr "wypisz tylko błędy"
+
+#: src/zfr_lib/lint/__init__.py:97
+msgid "treat warnings as failures (exit 1)"
+msgstr "traktuj ostrzeżenia jako błędy (exit 1)"
+
+#: src/zfr_lib/lint/__init__.py:108
+msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
+msgstr ""
+"wymagane pokrycie locale gettext/manpage L0–L3 (domyślnie: L1; plik "
+"projektu może nadpisać)"
+
+#: src/zfr_lib/release.py:26
+msgid "Debian binary-only build (no .dsc)"
+msgstr "budowa Debian tylko binarna (bez .dsc)"
+
+#: src/zfr_lib/release.py:32
+msgid "Reuse build cache"
+msgstr "użyj ponownie cache buildu"
+
+#: src/zfr_lib/release.py:38
+msgid "Reuse existing artifacts; build only if missing"
+msgstr "użyj ponownie istniejących artefaktów; buduj tylko gdy brakuje"
+
+#: src/zfr_lib/release.py:43
+msgid "Build unsigned packages"
+msgstr "buduj pakiety bez podpisu"
+
+#: src/zfr_lib/release.py:50
+msgid "dput upload host for .changes (debian)"
+msgstr "host uploadu dput dla .changes (debian)"
+
+#: src/zfr_lib/release.py:56
+msgid "Build debian package with build4 (Docker)"
+msgstr "buduj pakiet debian za pomocą build4 (Docker)"
+
+#: src/zfr_lib/release.py:63
+#, python-format
+msgid "build4 target image (default: %s)"
+msgstr "obraz docelowy build4 (domyślnie: %s)"
+
+#: src/zfr_lib/release.py:70
+msgid "Run build4 over SSH on SERVER (implies -d)"
+msgstr "uruchom build4 przez SSH na SERVER (implikuje -d)"
+
+#: src/zfr_lib/release.py:76
+msgid "Build in local, no tag/push/release"
+msgstr "buduj lokalnie, bez tag/push/release"
+
+#: src/zfr_lib/release.py:82
+msgid "Replace existing release and tag if present"
+msgstr "zastąp istniejący release i tag, jeśli są"
+
+#: src/zfr_lib/release.py:88
+msgid "Skip sudo dpkg -i (still find debs/changes)"
+msgstr "pomiń sudo dpkg -i (nadal znajdzie debs/changes)"
+
+#: src/zfr_lib/release.py:94
+msgid "Skip git tag create/push"
+msgstr "pomiń tworzenie/wysyłanie tagu git"
+
+#: src/zfr_lib/release.py:100
+msgid "Skip dput upload to deb pool (-u reuses build artifacts)"
+msgstr "pomiń upload dput do deb pool (-u ponownie używa artefaktów buildu)"
+
+#: src/zfr_lib/release.py:106
+msgid "Skip GitHub release"
+msgstr "pomiń wydanie GitHub"
+
+#: src/zfr_lib/release.py:112
+msgid "Skip VSIX marketplace publish"
+msgstr "pomiń publikację w VSIX marketplace"
+
+#: src/zfr_lib/release.py:118
+msgid "Skip RPM build (rpm/Makefile)"
+msgstr "pomiń budowę RPM (rpm/Makefile)"
+
+#: src/zfr_lib/release.py:124
+msgid "Skip Debian debuild"
+msgstr "pomiń Debian debuild"
+
+#: src/zfr_lib/release.py:131
+msgid "Verbose logging"
+msgstr "szczegółowe logowanie"
+
+#: src/zfr_lib/release.py:138
+msgid "Less output"
+msgstr "mniej wyjścia"
+
+#: src/zfr_lib/release.py:205
+msgid "create a GitHub release (parse options, exec gh-makerelease)"
+msgstr "utwórz wydanie GitHub (parsuj opcje, uruchom gh-makerelease)"
+
+#: src/zfr_lib/release.py:207
+msgid ""
+"Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
+"not implement tagging, packaging, or uploads."
+msgstr ""
+"Parsuje opcje gh-makerelease, odbudowuje argv i uruchamia "
+"gh-makerelease. Nie implementuje tagowania, pakietowania ani uploadów."
+
+#: src/zfr_lib/remove.py:20
+msgid "remove puff(s) from the current project"
+msgstr "usuń puff(y) z bieżącego projektu"
+
+#: src/zfr_lib/remove.py:21
+msgid "Remove puff files for NAME(s) from the current project."
+msgstr "Usuwa pliki puff dla NAME(s) z bieżącego projektu."
+
+#: src/zfr_lib/remove.py:25
+msgid "puff name(s) to remove"
+msgstr "nazwy puff(ów) do usunięcia"
+
+#: src/zfr_lib/rename.py:51
+msgid "rename zephyr project and example puff names"
+msgstr "zmień nazwę projektu zephyr i przykładowych puffów"
+
+#: src/zfr_lib/rename.py:52
+msgid "Rename zephyr → ProjectName and some_puff1 → example names."
+msgstr "Zmienia nazwę zephyr → ProjectName i some_puff1 → nazwy przykładowe."
+
+#: src/zfr_lib/rename.py:56
+msgid "new project name (replaces 'zephyr')"
+msgstr "nowa nazwa projektu (zastępuje 'zephyr')"
+
+#: src/zfr_lib/rename.py:57
+msgid "new example names (each replaces template some_puff1)"
+msgstr "nowe nazwy przykładowe (każda zastępuje szablon some_puff1)"
+
+#: src/zfr_lib/shape.py:259
+msgid ""
+"print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
+msgstr ""
+"wypisz wynik kształtu pakietu zephyr 0-100 (packagedir vs repodir w "
+"monorepo)"
+
+#: src/zfr_lib/shape.py:261
+msgid ""
+"Score how completely the current directory matches zephyr package style "
+"(0-100). In monorepos, scores the packagedir."
+msgstr ""
+"Ocenia, na ile bieżący katalog pasuje do stylu pakietu zephyr (0-100). "
+"W monorepo ocenia packagedir."
+
+#: src/zfr_lib/shape.py:267
+msgid "print 1 if score >= threshold, else 0"
+msgstr "wypisz 1 gdy score >= threshold, inaczej 0"
+
+#: src/zfr_lib/shape.py:268
+msgid "print packagedir/repodir/role on stderr"
+msgstr "wypisz packagedir/repodir/role na stderr"
+
+#: src/zfr_lib/shape.py:269
+#, python-format
+msgid "bool threshold 0-100 (default: %s)"
+msgstr "próg bool 0-100 (domyślnie: %s)"
+
+#: src/zfr_lib/version.py:51
+msgid "print current project version (walks parents from cwd)"
+msgstr "wypisz bieżącą wersję projektu (szuka w górę od cwd)"
+
+#: src/zfr_lib/version.py:52
+msgid ""
+"Print the current project version (walks from cwd toward parent directories)."
+msgstr "Wypisuje bieżącą wersję projektu (szuka w górę od cwd)."
+
+#: src/zfr_lib/version.py:57
+msgid "use git describe (default when git and .git are available)"
+msgstr "użyj git describe (domyślnie gdy git i .git są dostępne)"
+
+#: src/zfr_lib/version.py:58
+msgid "use debian/changelog (default when git or .git is unavailable)"
+msgstr "użyj debian/changelog (domyślnie gdy git lub .git jest niedostępny)"
+
+#: src/zfr_lib/version.py:59
+msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
+msgstr "wypisz wersję zgodną z RPM (myślniki zamienione na podkreślenia)"
