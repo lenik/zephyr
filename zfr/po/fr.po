@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 00:53+0800\n"
+"Report-Msgid-Bugs-To: zephyr@bodz.net\n"
+"POT-Creation-Date: 2026-08-23 16:29+0800\n"
 "PO-Revision-Date: 2026-08-22 00:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,37 +17,124 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../src/zfr:67
+#: src/zfr:69
 msgid ""
 "Zephyr template helper (CLI name: zfr). Create projects and manage example "
 "puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
 msgstr ""
 
-#: ../src/zfr:214
+#: src/zfr:216
 msgid ""
 "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
 msgstr ""
 
-#: ../src/zfr:224
+#: src/zfr:226
 msgid ""
 "print 1 if score >= threshold, else 0 (predicate instead of numeric score)"
 msgstr ""
 
-#: ../src/zfr:232 ../src/zfr-shape:39
+#: src/zfr:234 src/zfr-shape:39
 msgid "print packagedir/repodir/role on stderr"
 msgstr ""
 
-#: ../src/zfr:239 ../src/zfr-shape:46
+#: src/zfr:241 src/zfr-shape:46
 #, python-format
 msgid "bool threshold 0-100 (default: %s)"
 msgstr ""
 
-#: ../src/zfr-shape:24
+#: src/zfr:252
+msgid "create a GitHub release (parse options, exec gh-makerelease)"
+msgstr ""
+
+#: src/zfr-shape:24
 msgid ""
 "Score how completely the current directory matches zephyr package style "
 "(0-100). In monorepos, scores the packagedir."
 msgstr ""
 
-#: ../src/zfr-shape:33
+#: src/zfr-shape:33
 msgid "print 1 if score >= threshold, else 0"
+msgstr ""
+
+#: src/zfr-release:25
+msgid ""
+"Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
+"not implement tagging, packaging, or uploads."
+msgstr ""
+
+#: src/zfr_lib/release.py:26
+msgid "Debian binary-only build (no .dsc)"
+msgstr ""
+
+#: src/zfr_lib/release.py:32
+msgid "Reuse build cache"
+msgstr ""
+
+#: src/zfr_lib/release.py:38
+msgid "Reuse existing artifacts; build only if missing"
+msgstr ""
+
+#: src/zfr_lib/release.py:43
+msgid "Build unsigned packages"
+msgstr ""
+
+#: src/zfr_lib/release.py:50
+msgid "dput upload host for .changes (debian)"
+msgstr ""
+
+#: src/zfr_lib/release.py:56
+msgid "Build debian package with build4 (Docker)"
+msgstr ""
+
+#: src/zfr_lib/release.py:63
+#, python-format
+msgid "build4 target image (default: %s)"
+msgstr ""
+
+#: src/zfr_lib/release.py:70
+msgid "Run build4 over SSH on SERVER (implies -d)"
+msgstr ""
+
+#: src/zfr_lib/release.py:76
+msgid "Build in local, no tag/push/release"
+msgstr ""
+
+#: src/zfr_lib/release.py:82
+msgid "Replace existing release and tag if present"
+msgstr ""
+
+#: src/zfr_lib/release.py:88
+msgid "Skip sudo dpkg -i (still find debs/changes)"
+msgstr ""
+
+#: src/zfr_lib/release.py:94
+msgid "Skip git tag create/push"
+msgstr ""
+
+#: src/zfr_lib/release.py:100
+msgid "Skip dput upload to deb pool (-u reuses build artifacts)"
+msgstr ""
+
+#: src/zfr_lib/release.py:106
+msgid "Skip GitHub release"
+msgstr ""
+
+#: src/zfr_lib/release.py:112
+msgid "Skip VSIX marketplace publish"
+msgstr ""
+
+#: src/zfr_lib/release.py:118
+msgid "Skip RPM build (rpm/Makefile)"
+msgstr ""
+
+#: src/zfr_lib/release.py:124
+msgid "Skip Debian debuild"
+msgstr ""
+
+#: src/zfr_lib/release.py:131
+msgid "Verbose logging"
+msgstr ""
+
+#: src/zfr_lib/release.py:138
+msgid "Less output"
 msgstr ""

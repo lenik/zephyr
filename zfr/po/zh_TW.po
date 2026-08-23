@@ -1,5 +1,5 @@
 # Chinese translations for PACKAGE package
-# PACKAGE �M�󪺥��餤��½Ķ.
+# PACKAGE 套件的正體中文翻譯.
 # Copyright (C) 2026 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Automatically generated, 2026.
@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 00:53+0800\n"
+"Report-Msgid-Bugs-To: zephyr@bodz.net\n"
+"POT-Creation-Date: 2026-08-23 16:29+0800\n"
 "PO-Revision-Date: 2026-08-22 00:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,37 +17,124 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/zfr:67
+#: src/zfr:69
 msgid ""
 "Zephyr template helper (CLI name: zfr). Create projects and manage example "
 "puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
-msgstr ""
+msgstr "Zephyr 模板助手（命令名稱為 zfr）。用於建立專案並管理示例 puff。實體化後的專案應繼續呼叫 zfr；zfr 不是重新命名替換詞。"
 
-#: ../src/zfr:214
+#: src/zfr:216
 msgid ""
 "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
-msgstr ""
+msgstr "列印 zephyr 封裝形態得分 0–100（單體倉庫中為 packagedir 對 repodir）"
 
-#: ../src/zfr:224
+#: src/zfr:226
 msgid ""
 "print 1 if score >= threshold, else 0 (predicate instead of numeric score)"
-msgstr ""
+msgstr "得分不低於閾值時列印 1，否則列印 0（謂詞，而非數值得分）"
 
-#: ../src/zfr:232 ../src/zfr-shape:39
+#: src/zfr:234 src/zfr-shape:39
 msgid "print packagedir/repodir/role on stderr"
-msgstr ""
+msgstr "在標準錯誤輸出 packagedir/repodir/role"
 
-#: ../src/zfr:239 ../src/zfr-shape:46
+#: src/zfr:241 src/zfr-shape:46
 #, python-format
 msgid "bool threshold 0-100 (default: %s)"
-msgstr ""
+msgstr "布林閾值 0–100（預設：%s）"
 
-#: ../src/zfr-shape:24
+#: src/zfr:252
+msgid "create a GitHub release (parse options, exec gh-makerelease)"
+msgstr "建立 GitHub 發布（解析選項並執行 gh-makerelease）"
+
+#: src/zfr-shape:24
 msgid ""
 "Score how completely the current directory matches zephyr package style "
 "(0-100). In monorepos, scores the packagedir."
-msgstr ""
+msgstr "評估目前目錄與 zephyr 封裝風格的吻合程度（0–100）。在單體倉庫中評估 packagedir。"
 
-#: ../src/zfr-shape:33
+#: src/zfr-shape:33
 msgid "print 1 if score >= threshold, else 0"
-msgstr ""
+msgstr "得分不低於閾值時列印 1，否則列印 0"
+
+#: src/zfr-release:25
+msgid ""
+"Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
+"not implement tagging, packaging, or uploads."
+msgstr "解析 gh-makerelease 選項、重組參數並執行 gh-makerelease。本命令不實作打標籤、打包或上傳。"
+
+#: src/zfr_lib/release.py:26
+msgid "Debian binary-only build (no .dsc)"
+msgstr "僅建置 Debian 二進位套件（無 .dsc）"
+
+#: src/zfr_lib/release.py:32
+msgid "Reuse build cache"
+msgstr "重用建置快取"
+
+#: src/zfr_lib/release.py:38
+msgid "Reuse existing artifacts; build only if missing"
+msgstr "重用既有建置產物；僅在缺失時重新建置"
+
+#: src/zfr_lib/release.py:43
+msgid "Build unsigned packages"
+msgstr "建置未簽署的套件"
+
+#: src/zfr_lib/release.py:50
+msgid "dput upload host for .changes (debian)"
+msgstr "dput 上傳 .changes 的主機（Debian）"
+
+#: src/zfr_lib/release.py:56
+msgid "Build debian package with build4 (Docker)"
+msgstr "用 build4（Docker）建置 Debian 套件"
+
+#: src/zfr_lib/release.py:63
+#, python-format
+msgid "build4 target image (default: %s)"
+msgstr "build4 目標映像（預設：%s）"
+
+#: src/zfr_lib/release.py:70
+msgid "Run build4 over SSH on SERVER (implies -d)"
+msgstr "透過 SSH 在 SERVER 上執行 build4（隱含 -d）"
+
+#: src/zfr_lib/release.py:76
+msgid "Build in local, no tag/push/release"
+msgstr "僅本機建置，不打標籤、不推送、不發布"
+
+#: src/zfr_lib/release.py:82
+msgid "Replace existing release and tag if present"
+msgstr "若已存在則取代標籤與發布"
+
+#: src/zfr_lib/release.py:88
+msgid "Skip sudo dpkg -i (still find debs/changes)"
+msgstr "略過 sudo dpkg -i（仍尋找 deb/changes）"
+
+#: src/zfr_lib/release.py:94
+msgid "Skip git tag create/push"
+msgstr "略過建立並推送 git 標籤"
+
+#: src/zfr_lib/release.py:100
+msgid "Skip dput upload to deb pool (-u reuses build artifacts)"
+msgstr "略過 dput 上傳到套件庫（-u 用於重用建置產物）"
+
+#: src/zfr_lib/release.py:106
+msgid "Skip GitHub release"
+msgstr "略過 GitHub 發布"
+
+#: src/zfr_lib/release.py:112
+msgid "Skip VSIX marketplace publish"
+msgstr "略過 VSIX 市集發布"
+
+#: src/zfr_lib/release.py:118
+msgid "Skip RPM build (rpm/Makefile)"
+msgstr "略過 RPM 建置（rpm/Makefile）"
+
+#: src/zfr_lib/release.py:124
+msgid "Skip Debian debuild"
+msgstr "略過 Debian debuild"
+
+#: src/zfr_lib/release.py:131
+msgid "Verbose logging"
+msgstr "詳細日誌"
+
+#: src/zfr_lib/release.py:138
+msgid "Less output"
+msgstr "減少輸出"

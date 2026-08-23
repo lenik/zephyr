@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr 1.8.0\n"
 "Report-Msgid-Bugs-To: zephyr@bodz.net\n"
-"POT-Creation-Date: 2026-08-23 12:01+0800\n"
+"POT-Creation-Date: 2026-08-23 16:26+0800\n"
 "PO-Revision-Date: 2026-08-23 12:00+0800\n"
 "Last-Translator: Lenik <zephyr@bodz.net>\n"
 "Language-Team: de\n"
@@ -101,30 +101,35 @@ msgstr ""
 
 #. type: Plain text
 #: docs/zfr.adoc:40
-msgid "*zfr* *detect*"
+msgid "*zfr* *release* [_OPTIONS_]"
 msgstr ""
 
 #. type: Plain text
 #: docs/zfr.adoc:42
+msgid "*zfr* *detect*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:44
 msgid "*zfr* *help*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:46
+#: docs/zfr.adoc:48
 msgid ""
 "*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*, *zfr-about*, *zfr-"
-"version*, *zfr-lint*, *zfr-dist*, *zfr-ize*, and *zfr-shape* are thin "
-"wrappers around the same subcommands."
+"version*, *zfr-lint*, *zfr-dist*, *zfr-ize*, *zfr-shape*, and *zfr-release* "
+"are thin wrappers around the same subcommands."
 msgstr ""
 
 #. type: Title ==
-#: docs/zfr.adoc:47
+#: docs/zfr.adoc:49
 #, no-wrap
 msgid "Description"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:52
+#: docs/zfr.adoc:54
 msgid ""
 "*zfr* is the command-line tool for the *zephyr* template collection.  It "
 "ships language templates for small command-line utilities and helpers to "
@@ -132,7 +137,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:58
+#: docs/zfr.adoc:60
 msgid ""
 "*Important:* instantiated projects are expected to keep calling *zfr* (for "
 "example *zfr version* in *meson.build* and *rpm/Makefile*).  The string "
@@ -142,28 +147,28 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:60
+#: docs/zfr.adoc:62
 msgid "Typical workflow:"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:62
+#: docs/zfr.adoc:64
 msgid "Create a project from a language template:"
 msgstr ""
 
 #. type: delimited block -
-#: docs/zfr.adoc:65
+#: docs/zfr.adoc:67
 #, no-wrap
 msgid "zfr create -l python myproj\n"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:68
+#: docs/zfr.adoc:70
 msgid "Enter the project and add application *puffs* (example apps):"
 msgstr ""
 
 #. type: delimited block -
-#: docs/zfr.adoc:72
+#: docs/zfr.adoc:74
 #, no-wrap
 msgid ""
 "cd myproj\n"
@@ -171,13 +176,13 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:75
+#: docs/zfr.adoc:77
 msgid ""
 "Optionally rename the project or remove puffs later with *rename* / *remove*."
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:81
+#: docs/zfr.adoc:83
 msgid ""
 "Templates live under */usr/share/zephyr/<lang>/* when installed, or the "
 "source tree when running an uninstalled builddir wrapper such as *build/zfr* "
@@ -187,7 +192,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:85
+#: docs/zfr.adoc:87
 msgid ""
 "In a monorepo, *repodir* is the git (or meta) checkout root and *packagedir* "
 "is the package tree that has zephyr shape (for example *repodir/bash*).  "
@@ -195,13 +200,13 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:86
+#: docs/zfr.adoc:88
 #, no-wrap
 msgid "*i18n*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:93
+#: docs/zfr.adoc:95
 msgid ""
 "Zephyr style recommends gettext coverage for at least: *ar*, *bn*, *de*, "
 "*es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*, *sv*, *ta*, *te*, "
@@ -212,19 +217,19 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: docs/zfr.adoc:94
+#: docs/zfr.adoc:96
 #, no-wrap
 msgid "Commands"
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:96
+#: docs/zfr.adoc:98
 #, no-wrap
 msgid "*create*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:107
+#: docs/zfr.adoc:109
 msgid ""
 "Copy *pkgdatadir/<lang>/* into a new directory *./<project_name>/* (fails if "
 "the directory already exists). Rewrite *zephyr* → *_PROJECT_NAME_* and, when "
@@ -239,13 +244,13 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:108
+#: docs/zfr.adoc:110
 #, no-wrap
 msgid "*rename*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:112
+#: docs/zfr.adoc:114
 msgid ""
 "In the current project directory, rewrite *zephyr* → *_PROJECT_NAME_* and, "
 "for each given name, rewrite the template puff *some_puff1* → that name.  "
@@ -253,13 +258,13 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:113
+#: docs/zfr.adoc:115
 #, no-wrap
 msgid "*add*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:117
+#: docs/zfr.adoc:119
 msgid ""
 "Detect the project language and copy the template puff files into the "
 "current project, renaming *some_puff1* to each given *_PUFF_NAME_*. Updates "
@@ -267,39 +272,39 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:118
+#: docs/zfr.adoc:120
 #, no-wrap
 msgid "*remove*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:121
+#: docs/zfr.adoc:123
 msgid ""
 "Remove files and Meson wiring for each given puff name from the current "
 "project."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:122
+#: docs/zfr.adoc:124
 #, no-wrap
 msgid "*detect*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:125
+#: docs/zfr.adoc:127
 msgid ""
 "Print the detected language for the current directory (walks parent "
 "directories to find the project root)."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:126
+#: docs/zfr.adoc:128
 #, no-wrap
 msgid "*about*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:136
+#: docs/zfr.adoc:138
 msgid ""
 "Print information about the current project. Walks from the current "
 "directory toward parents to find the project root (*meson.build* with "
@@ -313,13 +318,13 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:137
+#: docs/zfr.adoc:139
 #, no-wrap
 msgid "*version*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:142
+#: docs/zfr.adoc:144
 msgid ""
 "Print the current project version (one line, for scripts). Default is *git "
 "describe* when *git* and *.git* are available, otherwise the latest *debian/"
@@ -328,13 +333,13 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:143
+#: docs/zfr.adoc:145
 #, no-wrap
 msgid "*lint*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:156
+#: docs/zfr.adoc:158
 msgid ""
 "Validate the current project against zephyr packaging and layout style "
 "(walks from the current directory toward parents to find the project root).  "
@@ -350,13 +355,13 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:157
+#: docs/zfr.adoc:159
 #, no-wrap
 msgid "*shape*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:164
+#: docs/zfr.adoc:166
 msgid ""
 "Print a 0–100 *zephyr shape* score for the current *packagedir* (how "
 "completely the tree matches zephyr packaging style). In a monorepo the "
@@ -367,13 +372,13 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:165
+#: docs/zfr.adoc:167
 #, no-wrap
 msgid "*dist*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:174
+#: docs/zfr.adoc:176
 msgid ""
 "Build a source archive of the current project (walks from the current "
 "directory toward parents to find the project root). When this directory is "
@@ -386,13 +391,29 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:175
+#: docs/zfr.adoc:177
+#, no-wrap
+msgid "*release*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:183
+msgid ""
+"Parse the same options as *gh-makerelease*(1), rebuild argv, and *exec* *gh-"
+"makerelease* from PATH. This command does not implement tagging, packaging, "
+"or GitHub uploads itself. The *zephyr* project is released from the git "
+"checkout root (language templates plus *zfr/*). See *Options for release* "
+"below."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:184
 #, no-wrap
 msgid "*ize*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:187
+#: docs/zfr.adoc:196
 msgid ""
 "Refactor the current project in place so it matches current zephyr style "
 "(walks from the current directory toward parents). Copies missing *debian/* "
@@ -407,35 +428,35 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:188
+#: docs/zfr.adoc:197
 #, no-wrap
 msgid "*help*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:190
+#: docs/zfr.adoc:199
 msgid "Show command-line help."
 msgstr ""
 
 #. type: Title ==
-#: docs/zfr.adoc:191
+#: docs/zfr.adoc:200
 #, no-wrap
 msgid "Options"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:194
+#: docs/zfr.adoc:203
 msgid "Options for *create*:"
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:195 docs/zfr.adoc:293
+#: docs/zfr.adoc:204 docs/zfr.adoc:343
 #, no-wrap
 msgid "*-l, --lang* _LANG_"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:200
+#: docs/zfr.adoc:209
 msgid ""
 "Language template to use (default: *python*).  Supported values include "
 "*bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*, *haskell*, "
@@ -444,62 +465,62 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:201
+#: docs/zfr.adoc:210
 #, no-wrap
 msgid "*-D, --distribution* _DIST_"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:203
+#: docs/zfr.adoc:212
 msgid "Debian changelog distribution (default: *unstable*)."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:204
+#: docs/zfr.adoc:213
 #, no-wrap
 msgid "*-1, --init-version* _VER_"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:206
+#: docs/zfr.adoc:215
 msgid "Initial package version and git tag (default: *0.0.1*)."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:207
+#: docs/zfr.adoc:216
 #, no-wrap
 msgid "*-a, --author* _AUTHOR_"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:209
+#: docs/zfr.adoc:218
 msgid "Changelog and git author name (default: *Lenik (谢继雷)*)."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:210
+#: docs/zfr.adoc:219
 #, no-wrap
 msgid "*-e, --email* _EMAIL_"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:212
+#: docs/zfr.adoc:221
 msgid "Changelog and git author email (default: *lenik@bodz.net*)."
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:214
+#: docs/zfr.adoc:223
 msgid "Options for *about*:"
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:215
+#: docs/zfr.adoc:224
 #, no-wrap
 msgid "*-d, --debian*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:219
+#: docs/zfr.adoc:228
 msgid ""
 "Show parsed Debian packaging fields (*debian/control*, latest *debian/"
 "changelog* stanza). Lists such as *Build-Depends* are wrapped to the "
@@ -507,13 +528,13 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:220
+#: docs/zfr.adoc:229
 #, no-wrap
 msgid "*-r, --redhat*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:224
+#: docs/zfr.adoc:233
 msgid ""
 "Show parsed RPM packaging fields from *rpm/*.spec* (macros like *%{version}* "
 "are shown using *zfr version -r*). The *%description* body is reflowed; spec "
@@ -521,308 +542,511 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:225 docs/zfr.adoc:253 docs/zfr.adoc:308
+#: docs/zfr.adoc:234 docs/zfr.adoc:262 docs/zfr.adoc:358
 #, no-wrap
 msgid "*--color* _WHEN_"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:228 docs/zfr.adoc:256 docs/zfr.adoc:311
+#: docs/zfr.adoc:237 docs/zfr.adoc:265 docs/zfr.adoc:361
 msgid ""
 "CSR highlighting: *auto* (default: TTY and no *NO_COLOR*), *always*, or "
 "*never*."
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:230
+#: docs/zfr.adoc:239
 msgid "Options for *version*:"
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:231
+#: docs/zfr.adoc:240
 #, no-wrap
 msgid "*-g, --git*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:234
+#: docs/zfr.adoc:243
 msgid ""
 "Use *git describe --tags --always --dirty* (default when *git* and *.git* "
 "are available)."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:235
+#: docs/zfr.adoc:244
 #, no-wrap
 msgid "*-c, --changelog*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:238
+#: docs/zfr.adoc:247
 msgid ""
 "Use the latest *debian/changelog* version (default when *git* or *.git* is "
 "unavailable)."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:239
+#: docs/zfr.adoc:248
 #, no-wrap
 msgid "*-r, --rpm*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:241
+#: docs/zfr.adoc:250
 msgid "Print an RPM-compatible *Version* (hyphens mapped to underscores)."
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:243
+#: docs/zfr.adoc:252
 msgid "Options for *lint*:"
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:244 docs/zfr.adoc:262 docs/zfr.adoc:299
+#: docs/zfr.adoc:253 docs/zfr.adoc:271 docs/zfr.adoc:336 docs/zfr.adoc:349
 #, no-wrap
 msgid "*-v, --verbose*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:246
+#: docs/zfr.adoc:255
 msgid "Also print passing checks."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:247
+#: docs/zfr.adoc:256 docs/zfr.adoc:338
 #, no-wrap
 msgid "*-q, --quiet*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:249
-msgid "Only print errors."
-msgstr ""
-
-#. type: Labeled list
-#: docs/zfr.adoc:250
-#, no-wrap
-msgid "*--strict*"
-msgstr ""
-
-#. type: Plain text
-#: docs/zfr.adoc:252
-msgid "Treat warnings as failures (exit status 1)."
-msgstr ""
-
-#. type: Plain text
 #: docs/zfr.adoc:258
-msgid "Options for *shape*:"
+msgid "Only print errors."
 msgstr ""
 
 #. type: Labeled list
 #: docs/zfr.adoc:259
 #, no-wrap
-msgid "*-b, --bool*"
+msgid "*--strict*"
 msgstr ""
 
 #. type: Plain text
 #: docs/zfr.adoc:261
+msgid "Treat warnings as failures (exit status 1)."
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:267
+msgid "Options for *shape*:"
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:268
+#, no-wrap
+msgid "*-b, --bool*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:270
 msgid "Print *1* if the shape score is at least *--threshold*, otherwise *0*."
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:264
+#: docs/zfr.adoc:273
 msgid ""
 "Print *packagedir*, *repodir*, *role*, and *threshold* on standard error."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:265
+#: docs/zfr.adoc:274
 #, no-wrap
 msgid "*--threshold* _N_"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:267
+#: docs/zfr.adoc:276
 msgid "Threshold for *--bool* (default: *50*)."
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:269
+#: docs/zfr.adoc:278
 msgid "Options for *dist*:"
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:270
+#: docs/zfr.adoc:279
 #, no-wrap
 msgid "*-o, --output* _DIR_"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:273
+#: docs/zfr.adoc:282
 msgid ""
 "Write the archive into *_DIR_* (default: the Meson *meson-dist* directory, "
 "or *rpmbuild/SOURCES* with *--rpm*)."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:274
+#: docs/zfr.adoc:283
 #, no-wrap
 msgid "*-b, --builddir* _DIR_"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:277
+#: docs/zfr.adoc:286
 msgid ""
 "Meson build directory. Default is */build* when that builddir was configured "
 "for this source tree, otherwise *<project>/build*."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:278
+#: docs/zfr.adoc:287
 #, no-wrap
 msgid "*-f, --format* _FMT_"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:280
+#: docs/zfr.adoc:289
 msgid "Archive format: *xz* (default), *gz*, or *zip*."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:281
+#: docs/zfr.adoc:290
 #, no-wrap
 msgid "*--rpm*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:284
+#: docs/zfr.adoc:293
 msgid ""
 "Name the archive *_NAME_*-*_VERSION_*.tar.xz and write it to *rpmbuild/"
 "SOURCES* unless *-o* is given. Used by *rpm/Makefile*."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:285
+#: docs/zfr.adoc:294
 #, no-wrap
 msgid "*--allow-dirty*, *--no-allow-dirty*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:287
+#: docs/zfr.adoc:296
 msgid "Pass *--allow-dirty* to *meson dist* (default: allow)."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:288
+#: docs/zfr.adoc:297
 #, no-wrap
 msgid "*--tests*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:290
+#: docs/zfr.adoc:299
 msgid "Run tests during *meson dist* (default is *--no-tests*)."
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:292
-msgid "Options for *ize*:"
-msgstr ""
-
-#. type: Plain text
-#: docs/zfr.adoc:295
-msgid "Language template to copy scaffolding from (default: detect)."
-msgstr ""
-
-#. type: Labeled list
-#: docs/zfr.adoc:296
-#, no-wrap
-msgid "*-n, --dry-run*"
-msgstr ""
-
-#. type: Plain text
-#: docs/zfr.adoc:298
-msgid "Print planned adds/updates/conversions without writing files."
-msgstr ""
-
-#. type: Plain text
 #: docs/zfr.adoc:301
-msgid "Also print skipped paths that are already present."
+msgid ""
+"Options for *release* (parsed here, passed through to *gh-makerelease*):"
 msgstr ""
 
 #. type: Labeled list
 #: docs/zfr.adoc:302
 #, no-wrap
-msgid "*--no-man*"
+msgid "*-b, --build-binary*"
 msgstr ""
 
 #. type: Plain text
 #: docs/zfr.adoc:304
-msgid "Do not convert groff *\\*.1* sources to *docs/\\*.adoc*."
+msgid "Debian binary-only build (*-b*); no _.dsc_."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:305
+#: docs/zfr.adoc:304
 #, no-wrap
-msgid "*--no-subst*"
+msgid "*-n, --no-pre-clean*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:307
-msgid ""
-"Do not rewrite hardcoded versions in *src/* to *@VERSION@* / *config.h*."
+#: docs/zfr.adoc:306
+msgid "Reuse the Debian build cache."
 msgstr ""
 
-#. type: Title ==
+#. type: Labeled list
+#: docs/zfr.adoc:306
+#, no-wrap
+msgid "*-u, --upload*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:308
+msgid "Reuse existing version-scoped artifacts when present."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:308
+#, no-wrap
+msgid "*--unsigned*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:310
+msgid "Build unsigned Debian packages (*-us -uc*)."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:310
+#, no-wrap
+msgid "*-p, --dput-host* _HOST_"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:312
+msgid "*dput*(1) upload host for the _.changes_ file."
+msgstr ""
+
+#. type: Labeled list
 #: docs/zfr.adoc:312
 #, no-wrap
-msgid "Environment"
+msgid "*-d, --docker*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:314
+msgid "Build the Debian package with *build4*(1) in Docker."
 msgstr ""
 
 #. type: Labeled list
 #: docs/zfr.adoc:314
 #, no-wrap
-msgid "*ZFR_PKGDATADIR*"
+msgid "*-B, --base-image* _IMAGE_"
 msgstr ""
 
 #. type: Plain text
 #: docs/zfr.adoc:316
+msgid "*build4* target image (default: *b4f-debian:trixie*)."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:316
+#, no-wrap
+msgid "*-s, --docker-server* _SERVER_"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:318
+msgid "Run *build4* over SSH on *SERVER* (implies *-d*)."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:318
+#, no-wrap
+msgid "*-l, --local*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:320
+msgid "Build only; do not tag, push, or create a GitHub release."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:320
+#, no-wrap
+msgid "*-f, --force*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:322
+msgid "Replace an existing tag/release."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:322
+#, no-wrap
+msgid "*-I, --no-install*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:324
+msgid "Skip *sudo dpkg -i*."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:324
+#, no-wrap
+msgid "*-T, --no-tag*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:326
+msgid "Skip creating and pushing the git release tag."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:326
+#, no-wrap
+msgid "*-U, --no-upload*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:328
+msgid "Skip *dput* of the _.changes_ file."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:328
+#, no-wrap
+msgid "*-R, --no-release*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:330
+msgid "Skip creating the GitHub release."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:330
+#, no-wrap
+msgid "*-P, --no-publish*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:332
+msgid "Skip VSIX marketplace publish."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:332
+#, no-wrap
+msgid "*-Y, --no-rpm*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:334
+msgid "Skip *make -C rpm rpm srpm*."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:334
+#, no-wrap
+msgid "*-D, --no-deb*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:336
+msgid "Skip Debian *debuild*."
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:338
+msgid "Verbose logging (repeatable)."
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:340
+msgid "Less output (repeatable)."
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:342
+msgid "Options for *ize*:"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:345
+msgid "Language template to copy scaffolding from (default: detect)."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:346
+#, no-wrap
+msgid "*-n, --dry-run*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:348
+msgid "Print planned adds/updates/conversions without writing files."
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:351
+msgid "Also print skipped paths that are already present."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:352
+#, no-wrap
+msgid "*--no-man*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:354
+msgid "Do not convert groff *\\*.1* sources to *docs/\\*.adoc*."
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:355
+#, no-wrap
+msgid "*--no-subst*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:357
+msgid ""
+"Do not rewrite hardcoded versions in *src/* to *@VERSION@* / *config.h*."
+msgstr ""
+
+#. type: Title ==
+#: docs/zfr.adoc:362
+#, no-wrap
+msgid "Environment"
+msgstr ""
+
+#. type: Labeled list
+#: docs/zfr.adoc:364
+#, no-wrap
+msgid "*ZFR_PKGDATADIR*"
+msgstr ""
+
+#. type: Plain text
+#: docs/zfr.adoc:366
 msgid "Override the templates root (normally */usr/share/zephyr*)."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:317
+#: docs/zfr.adoc:367
 #, no-wrap
 msgid "*NO_COLOR*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:320
+#: docs/zfr.adoc:370
 msgid ""
 "When set, *zfr about*, *zfr lint*, and *zfr ize* disable CSR highlighting in "
 "*--color auto* mode."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:321
+#: docs/zfr.adoc:371
 #, no-wrap
 msgid "*PYTHONPATH*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:324
+#: docs/zfr.adoc:374
 msgid ""
 "Must include the directory that contains the *zfr_lib* package when running "
 "the tools from a non-default install layout."
 msgstr ""
 
 #. type: Title ==
-#: docs/zfr.adoc:325
+#: docs/zfr.adoc:375
 #, no-wrap
 msgid "Tests"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:334
+#: docs/zfr.adoc:384
 msgid ""
 "The source tree (not the installed package) includes *tests/* with Python "
 "*unittest* coverage of the CLI. *meson test* (build directory */build*) "
@@ -834,106 +1058,106 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: docs/zfr.adoc:335
+#: docs/zfr.adoc:385
 #, no-wrap
 msgid "Files"
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:337
+#: docs/zfr.adoc:387
 #, no-wrap
 msgid "*/usr/share/zephyr/<lang>/*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:339
+#: docs/zfr.adoc:389
 msgid "Installed language templates."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:340
+#: docs/zfr.adoc:390
 #, no-wrap
 msgid "*/usr/bin/zfr*, */usr/bin/zfr-\\**"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:342
+#: docs/zfr.adoc:392
 msgid "CLI and thin wrappers."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:343
+#: docs/zfr.adoc:393
 #, no-wrap
 msgid "*/usr/share/doc/zephyr/*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:345
+#: docs/zfr.adoc:395
 msgid "Package documentation (LICENSE, README)."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:346
+#: docs/zfr.adoc:396
 #, no-wrap
 msgid "*/usr/share/man/<locale>/man1/zfr.1*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:348
+#: docs/zfr.adoc:398
 msgid "Localized manual pages (po4a from *docs/zfr.adoc*)."
 msgstr ""
 
 #. type: Title ==
-#: docs/zfr.adoc:349
+#: docs/zfr.adoc:399
 #, no-wrap
 msgid "Exit status"
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:351
+#: docs/zfr.adoc:401
 #, no-wrap
 msgid "*0*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:354
+#: docs/zfr.adoc:404
 msgid ""
 "Success. For *lint*, the project has no error-level findings (warnings still "
 "print unless *--strict*)."
 msgstr ""
 
 #. type: Labeled list
-#: docs/zfr.adoc:355
+#: docs/zfr.adoc:405
 #, no-wrap
 msgid "*non-zero*"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:358
+#: docs/zfr.adoc:408
 msgid ""
 "An error occurred (unknown language, destination exists, detection failure, "
 "missing puff files, *lint* findings, and so on)."
 msgstr ""
 
 #. type: Title ==
-#: docs/zfr.adoc:359
+#: docs/zfr.adoc:409
 #, no-wrap
 msgid "Author"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:362
+#: docs/zfr.adoc:412
 msgid "Written by {project-author} <{project-email}>."
 msgstr ""
 
 #. type: Title ==
-#: docs/zfr.adoc:363
+#: docs/zfr.adoc:413
 #, no-wrap
 msgid "Copyright"
 msgstr ""
 
 #. type: Plain text
-#: docs/zfr.adoc:373
+#: docs/zfr.adoc:423
 msgid ""
 "Copyright (C) {project-year}.  License AGPL-3.0-or-later.  This is free "
 "software: you are free to change and redistribute it under the terms of the "
