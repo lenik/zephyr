@@ -1,5 +1,0 @@
-#!/bin/sh
-# SPDX-License-Identifier: AGPL-3.0-or-later
-export PYTHONPATH="@PKGDATADIR@/tools${PYTHONPATH:+:$PYTHONPATH}"
-export ZFR_PKGDATADIR="@PKGDATADIR@"
-exec @PYTHON@ "@PKGDATADIR@/tools/zfr-dist" "$@"

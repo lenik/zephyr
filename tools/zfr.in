@@ -1,7 +1,0 @@
-#!/bin/sh
-# SPDX-License-Identifier: AGPL-3.0-or-later
-# Uninstalled (builddir) wrappers set PKGDATADIR to the source root;
-# installed wrappers set it to $prefix/share/zephyr.
-export PYTHONPATH="@PKGDATADIR@/tools${PYTHONPATH:+:$PYTHONPATH}"
-export ZFR_PKGDATADIR="@PKGDATADIR@"
-exec @PYTHON@ "@PKGDATADIR@/tools/zfr" "$@"

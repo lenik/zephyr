@@ -1,0 +1,26 @@
+Source: zephyr
+Section: devel
+Priority: optional
+Maintainer: Lenik <zephyr@bodz.net>
+Build-Depends: debhelper-compat (= 13), meson, ninja-build, python3, asciidoctor, po4a
+Standards-Version: 4.6.0
+Homepage: https://github.com/lenik/zephyr
+Rules-Requires-Root: no
+
+Package: zephyr
+Architecture: all
+Depends:
+    python3,
+    ${misc:Depends}
+Recommends:
+    bash-completion
+Description: Multi-language CLI project templates and helper tools
+ zephyr ships language templates for small command-line utilities under
+ /usr/share/zephyr/<lang>/ (bash, c, clib, cpp, cpplib, csharp, erlang, go, haskell, java,
+ perl, python, ruby, rust, smalltalk, swift, typescript), plus cmdline tools
+ (zfr, zfr-create, zfr-rename, zfr-add, zfr-remove, zfr-about,
+ zfr-version, zfr-lint, zfr-dist, zfr-ize) to create projects, manage puffs
+ (example apps), validate packaging against zephyr style, build source
+ tarballs, and upgrade existing trees (`zfr ize`). Instantiated projects are
+ expected to call zfr on PATH; zfr is not a create/rename magic token
+ (the template placeholder remains zephyr).
