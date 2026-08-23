@@ -1,0 +1,426 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: Benutzerbefehle
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - mehrsprachige CLI-Projektvorlagen und Hilfswerkzeuge
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape*, und *zfr-release* sind dünne Wrapper um dieselben Unterbefehle.
+
+== Description
+
+*zfr* ist das Kommandozeilenwerkzeug für die *zephyr*-Vorlagensammlung.
+Es liefert Sprachvorlagen für kleine Kommandozeilenprogramme und Hilfsmittel
+zum Instanziieren und Verwalten.
+
+*Wichtig:* Instanziierte Projekte sollen weiterhin *zfr* aufrufen
+(zum Beispiel *zfr version* in *meson.build* und *rpm/Makefile*).
+Die Zeichenkette *zfr* ist *kein* Magic-Token für create/rename und wird
+niemals in den Projektnamen umgeschrieben. Der Vorlagenplatzhalter, der
+*umgeschrieben wird*, bleibt *zephyr* (und *some_puff1* für Beispiel-Puffs).
+
+Typischer Ablauf:
+
+. Projekt aus einer Sprachvorlage erstellen:
++
+----
+zfr create -l python myproj
+----
+
+. In das Projekt wechseln und Anwendungs-*puffs* (Beispiel-Apps) hinzufügen:
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. Optional Projekt umbenennen oder Puffs später mit *rename* / *remove* entfernen.
+
+Vorlagen liegen bei Installation unter */usr/share/zephyr/<lang>/*, im Quellbaum
+bei uninstallierten Builddir-Wrappern wie *build/zfr*
+(*ZFR_PKGDATADIR* überschreibt). Jede Vorlage kann einen Beispiel-Puff
+*some_puff1* enthalten; Puff-Namen auf der *create*-Kommandozeile übergeben,
+um sie zu instanziieren, oder weglassen für ein leeres Projekt.
+
+In einem Monorepo ist *repodir* die Git- (oder Meta-)Checkout-Wurzel und
+*packagedir* der Paketbaum mit zephyr-Form (zum Beispiel *repodir/bash*).
+Befehle, die vom aktuellen Verzeichnis ausgehen, ermitteln zuerst *packagedir*.
+
+*i18n*::
+  Der Zephyr-Stil empfiehlt gettext-Abdeckung mindestens für:
+  *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
+  *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
+  (Aliase *zh-cn* / *zh-tw*). Englisch (*en*) ist die Quell-*msgid*-Sprache
+  und steht nicht in *po/LINGUAS*. Diese Locales in *po/LINGUAS* eintragen und
+  passende *po/<locale>.po*-Dateien ausliefern.
+
+== Commands
+
+*create*::
+  Kopiert *pkgdatadir/<lang>/* in ein neues Verzeichnis *./<project_name>/*
+  (schlägt fehl, wenn das Verzeichnis bereits existiert). Schreibt *zephyr*
+  → *_PROJECT_NAME_* um und bei angegebenen Puff-Namen *some_puff1* → den
+  ersten *_PUFF_NAME_* (weitere über *add*). Ohne Puff-Namen werden die
+  Vorlagen-Puff-Dateien entfernt, *some_puff1*-Token bleiben für späteres *add*.
+  Schreibt ein neues *debian/changelog* (Vorlagen-Changelog wird verworfen) mit
+  *--distribution* / *--init-version* / *--author* / *--email*, führt dann
+  *git init* aus, setzt *core.hooksPath* auf *.githooks* (kopiert *pre-commit*,
+  damit *VERSION* mit *debian/changelog* synchron bleibt), initialen Commit und
+  annotierten Tag *vVER*.
+
+*rename*::
+  Im aktuellen Projektverzeichnis *zephyr* → *_PROJECT_NAME_* umschreiben und
+  für jeden angegebenen Namen den Vorlagen-Puff *some_puff1* → diesen Namen.
+  Schreibt *zfr* nicht um.
+
+*add*::
+  Erkennt die Projektsprache und kopiert die Vorlagen-Puff-Dateien ins aktuelle
+  Projekt, benennt *some_puff1* in jeden *_PUFF_NAME_* um. Aktualisiert
+  Meson-Listen (oder gleichwertige Verdrahtung), wenn möglich.
+
+*remove*::
+  Entfernt Dateien und Meson-Verdrahtung für jeden angegebenen Puff-Namen aus
+  dem aktuellen Projekt.
+
+*detect*::
+  Gibt die erkannte Sprache für das aktuelle Verzeichnis aus
+  (sucht in Elternverzeichnissen nach der Projektroot).
+
+*about*::
+  Gibt Informationen über das aktuelle Projekt aus. Sucht vom aktuellen
+  Verzeichnis zu den Eltern nach der Projektroot (*meson.build* mit
+  *project()* oder *debian/control*). Gemeinsame Felder (Name, Version, Lizenz,
+  Homepage, Maintainer, Summary, Section, Priority, Distribution,
+  Architecture) werden aus Debian- oder RPM-Metadaten gelesen und an die
+  Terminalbreite angepasst. Gibt außerdem Quelldatei-/Zeilenzahlen und eine
+  geschätzte Nutzlastgröße aus. Interaktive Terminals nutzen CSR-Farben (SGR),
+  sofern *NO_COLOR* nicht gesetzt ist. *-d* / *-r* für vollständige geparste
+  Debian- oder RPM-Ansicht (kein Dump der Paketdateien).
+
+*version*::
+  Gibt die aktuelle Projektversion aus (eine Zeile, für Skripte). Standard ist
+  *git describe*, wenn *git* und *.git* verfügbar sind, sonst die neueste
+  *debian/changelog*-Version. Fallback: *VERSION*-Datei, dann *0.0.0*.
+  Nicht-semver-Token (z. B. Git-Hash) werden als *0.0.0-<token>* ausgegeben.
+
+*lint*::
+  Prüft das aktuelle Projekt gegen zephyr-Paketierungs- und Layout-Stil
+  (sucht vom aktuellen Verzeichnis zu den Eltern nach der Projektroot).
+  Meldet fehlende Dateien, Identitätsabweichungen, Meson/Debian/RPM-Fehler,
+  übrig gebliebene *zephyr* / *some_puff1*-Token in instanziierten Apps und
+  vorgeschlagene Korrekturen. Erwähnungen von *zfr* sind erwartet und gelten
+  nicht als Übrigbleibsel. Für *.githooks/pre-commit* wird bis *.git*
+  gesucht, *core.hooksPath* beachtet und geprüft, dass der Hook *VERSION* aus
+  *debian/changelog* synchronisiert. Bei vorhandenem *po/* wird gewarnt, wenn
+  *LINGUAS* nicht die empfohlene gettext-Locale-Menge abdeckt (siehe *i18n*
+  unter Description). Ausgabe für Menschen und KI-Coder: jeder Befund hat
+  Code, Pfad und konkrete Korrektur. Interaktive Terminals nutzen CSR-Farben,
+  sofern *NO_COLOR* nicht gesetzt ist.
+
+*shape*::
+  Gibt einen *zephyr shape*-Score von 0–100 für das aktuelle *packagedir* aus
+  (wie vollständig der Baum dem zephyr-Paketierungsstil entspricht). In einem
+  Monorepo kann *packagedir* von *repodir* (Git-/Meta-Root) abweichen; Tools
+  nutzen shape, um das Paketverzeichnis der Repository-Wurzel vorzuziehen.
+  *\-b* / *--bool* gibt *1* aus, wenn der Score mindestens dem Schwellwert
+  (Standard *50*) entspricht, sonst *0*.
+
+*dist*::
+  Erstellt ein Quellarchiv des aktuellen Projekts (sucht vom aktuellen
+  Verzeichnis zu den Eltern nach der Projektroot). Ist dieses Verzeichnis die
+  Git-Projektroot, wird *meson dist* ausgeführt (nach *meson setup*, Standard
+  *--allow-dirty* und *--no-tests*). Verschachtelte Sprachvorlagen haben kein
+  eigenes *.git*, daher würde *meson dist* das übergeordnete Meta-Repo packen;
+  diese Bäume erhalten ein Verzeichnis-Tarball nur dieses Projekts. Gibt den
+  Archivpfad auf stdout aus. *rpm/Makefile* *dist* und das Meson-*srcdist*
+  ninja-Ziel nutzen diesen Befehl wieder.
+
+*release*::
+  Parst dieselben Optionen wie *gh-makerelease*(1), baut argv neu und *exec*
+  *gh-makerelease* aus PATH. Dieser Befehl implementiert Tagging, Paketierung
+  oder GitHub-Uploads nicht selbst. Das *zephyr*-Projekt wird von der
+  Git-Checkout-Wurzel veröffentlicht (Sprachvorlagen plus *zfr/*). Siehe
+  *Options for release* unten.
+
+*ize*::
+  Refaktoriert das aktuelle Projekt vor Ort, damit es dem aktuellen zephyr-Stil
+  entspricht (sucht vom aktuellen Verzeichnis zu den Eltern). Kopiert fehlendes
+  *debian/*- und *rpm/*-Gerüst aus der Sprachvorlage (Namen auf dieses Projekt
+  umgeschrieben), schreibt *VERSION* und *.githooks/pre-commit*, patcht
+  *meson.build* (*zfr version*, *asciidoctor*-Man-Ziele, *run_target look*,
+  bash-completion-Installation). Wandelt groff *\*.1*-Manpages im Projekt (nicht
+  *debian/*) in *docs/\*.adoc* mit Meson-Regeln um und hardcodierte
+  Changelog-Versionen in *src/* in *\*.in* *@VERSION@*-Substitutionen oder
+  *PROJECT_VERSION* via *config.h* für C-Familie. *\-n* / *--dry-run* druckt
+  den Plan ohne Schreiben. Danach *zfr lint* ausführen.
+
+*help*::
+  Kommandozeilenhilfe anzeigen.
+
+== Options
+
+Optionen für *create*:
+
+*-l, --lang* _LANG_::
+  Zu verwendende Sprachvorlage (Standard: *python*).
+  Unterstützte Werte u. a. *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*,
+  *erlang*, *go*, *haskell*, *java*, *perl*, *python*, *ruby*, *rust*,
+  *smalltalk*, *swift* und *typescript*.
+
+*-D, --distribution* _DIST_::
+  Debian-Changelog-Distribution (Standard: *unstable*).
+
+*-1, --init-version* _VER_::
+  Anfangs-Paketversion und Git-Tag (Standard: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  Changelog- und Git-Autorenname (Standard: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  Changelog- und Git-Autoren-E-Mail (Standard: *lenik@bodz.net*).
+
+Optionen für *about*:
+
+*-d, --debian*::
+  Geparste Debian-Paketierungsfelder anzeigen (*debian/control*, neuester
+  *debian/changelog*-Eintrag). Listen wie *Build-Depends* werden an die
+  Terminalbreite angepasst; die lange Beschreibung als Absätze umgebrochen.
+
+*-r, --redhat*::
+  Geparste RPM-Paketierungsfelder aus *rpm/*.spec* anzeigen (Makros wie
+  *%{version}* mit *zfr version -r*). Der *%description*-Text wird umgebrochen;
+  Spec-Scriptlets werden nicht ausgegeben.
+
+*--color* _WHEN_::
+  CSR-Hervorhebung: *auto* (Standard: TTY und kein *NO_COLOR*), *always* oder
+  *never*.
+
+Optionen für *version*:
+
+*-g, --git*::
+  *git describe --tags --always --dirty* verwenden (Standard, wenn *git* und
+  *.git* verfügbar).
+
+*-c, --changelog*::
+  Neueste *debian/changelog*-Version verwenden (Standard, wenn *git* oder
+  *.git* nicht verfügbar).
+
+*-r, --rpm*::
+  RPM-kompatible *Version* ausgeben (Bindestriche als Unterstriche).
+
+Optionen für *lint*:
+
+*-v, --verbose*::
+  Auch bestandene Prüfungen ausgeben.
+
+*-q, --quiet*::
+  Nur Fehler ausgeben.
+
+*--strict*::
+  Warnungen als Fehler behandeln (Exit-Status 1).
+
+*--color* _WHEN_::
+  CSR-Hervorhebung: *auto* (Standard: TTY und kein *NO_COLOR*), *always* oder
+  *never*.
+
+Optionen für *shape*:
+
+*-b, --bool*::
+  *1* ausgeben, wenn der Shape-Score mindestens *--threshold* entspricht,
+  sonst *0*.
+
+*-v, --verbose*::
+  *packagedir*, *repodir*, *role* und *threshold* auf stderr ausgeben.
+
+*--threshold* _N_::
+  Schwellwert für *--bool* (Standard: *50*).
+
+Optionen für *dist*:
+
+*-o, --output* _DIR_::
+  Archiv nach *_DIR_* schreiben (Standard: Meson-*meson-dist*-Verzeichnis oder
+  *rpmbuild/SOURCES* mit *--rpm*).
+
+*-b, --builddir* _DIR_::
+  Meson-Build-Verzeichnis. Standard ist */build*, wenn dieses Builddir für
+  diesen Quellbaum konfiguriert wurde, sonst *<project>/build*.
+
+*-f, --format* _FMT_::
+  Archivformat: *xz* (Standard), *gz* oder *zip*.
+
+*--rpm*::
+  Archiv *_NAME_*-*_VERSION_*.tar.xz benennen und nach *rpmbuild/SOURCES*
+  schreiben, sofern *-o* nicht gesetzt. Von *rpm/Makefile* verwendet.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  *--allow-dirty* an *meson dist* übergeben (Standard: erlauben).
+
+*--tests*::
+  Tests während *meson dist* ausführen (Standard ist *--no-tests*).
+
+Optionen für *release* (hier geparst, an *gh-makerelease* durchgereicht):
+
+*-b, --build-binary*::
+  Nur Debian-Binärpaket (*-b*); kein _.dsc_.
+*-n, --no-pre-clean*::
+  Debian-Build-Cache wiederverwenden.
+*-u, --upload*::
+  Vorhandene versionsbezogene Artefakte wiederverwenden, falls vorhanden.
+*--unsigned*::
+  Unsignierte Debian-Pakete bauen (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  *dput*(1)-Upload-Host für die _.changes_-Datei.
+*-d, --docker*::
+  Debian-Paket mit *build4*(1) in Docker bauen.
+*-B, --base-image* _IMAGE_::
+  *build4*-Zielimage (Standard: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  *build4* per SSH auf *SERVER* ausführen (impliziert *-d*).
+*-l, --local*::
+  Nur bauen; kein Tag, Push oder GitHub-Release.
+*-f, --force*::
+  Vorhandenen Tag/Release ersetzen.
+*-I, --no-install*::
+  *sudo dpkg -i* überspringen.
+*-T, --no-tag*::
+  Git-Release-Tag nicht erstellen und pushen.
+*-U, --no-upload*::
+  *dput* der _.changes_-Datei überspringen.
+*-R, --no-release*::
+  GitHub-Release nicht erstellen.
+*-P, --no-publish*::
+  VSIX-Marketplace-Veröffentlichung überspringen.
+*-Y, --no-rpm*::
+  *make -C rpm rpm srpm* überspringen.
+*-D, --no-deb*::
+  Debian *debuild* überspringen.
+*-v, --verbose*::
+  Ausführliche Protokollierung (wiederholbar).
+*-q, --quiet*::
+  Weniger Ausgabe (wiederholbar).
+
+Optionen für *ize*:
+
+*-l, --lang* _LANG_::
+  Sprachvorlage für Gerüst (Standard: erkennen).
+
+*-n, --dry-run*::
+  Geplante Hinzufügungen/Aktualisierungen/Umwandlungen ohne Schreiben ausgeben.
+
+*-v, --verbose*::
+  Auch übersprungene bereits vorhandene Pfade ausgeben.
+
+*--no-man*::
+  groff *\*.1*-Quellen nicht in *docs/\*.adoc* umwandeln.
+
+*--no-subst*::
+  Hardcodierte Versionen in *src/* nicht in *@VERSION@* / *config.h* umschreiben.
+
+*--color* _WHEN_::
+  CSR-Hervorhebung: *auto* (Standard: TTY und kein *NO_COLOR*), *always* oder
+  *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  Vorlagenwurzel überschreiben (normalerweise */usr/share/zephyr*).
+
+*NO_COLOR*::
+  Wenn gesetzt, deaktivieren *zfr about*, *zfr lint* und *zfr ize* die
+  CSR-Hervorhebung im Modus *--color auto*.
+
+*PYTHONPATH*::
+  Muss das Verzeichnis mit dem Paket *zfr_lib* enthalten, wenn die Tools aus
+  einem nicht standardmäßigen Installationslayout laufen.
+
+== Tests
+
+Der Quellbaum (nicht das installierte Paket) enthält *tests/* mit Python-
+*unittest*-Abdeckung der CLI. *meson test* (Build-Verzeichnis */build*)
+findet *tests/test_*.py*. Tests erstellen temporäre Beispielprojekte und
+üben jeden Unterbefehl (*create*, *add*, *remove*, *rename*, *about*,
+*version*, *lint*, *shape*, *dist*, *ize*, *release*, *detect*, *help*), die
+*zfr-**-Wrapper, Sprach-Konfidenz-Scoring, gettext-Kataloge und die
+lokalisierten Handbücher *docs/<lang>/zfr.adoc* pro Locale. Ohne Meson
+*ZFR_PKGDATADIR* auf die zephyr-Checkout-Wurzel (Eltern von *zfr/*) und
+*PYTHONPATH* auf *src/* setzen.
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  Installierte Sprachvorlagen.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI und dünne Wrapper.
+
+*/usr/share/doc/zephyr/*::
+  Paketdokumentation (LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  Lokalisierte Handbuchseiten, erstellt aus *docs/<locale>/zfr.adoc*
+  (vollständige Dokumentübersetzungen, keine gettext/po4a-Fragmente).
+
+== Exit status
+
+*0*::
+  Erfolg. Bei *lint* hat das Projekt keine Fehlerbefunde (Warnungen werden
+  weiterhin ausgegeben, sofern nicht *--strict*).
+
+*non-zero*::
+  Ein Fehler ist aufgetreten (unbekannte Sprache, Ziel existiert bereits,
+  Erkennungsfehler, fehlende Puff-Dateien, *lint*-Befunde usw.).
+
+== Author
+
+Geschrieben von {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+Lizenz AGPL-3.0-or-later.
+Dies ist freie Software: Sie dürfen sie unter den Bedingungen der GNU Affero
+General Public License ändern und weiterverbreiten.
+Es gibt KEINE GARANTIE, soweit gesetzlich zulässig.
+Siehe die LICENSE-Datei in der Quellverteilung für den vollständigen
+Lizenztext, einschließlich ergänzender Bestimmungen, dass dieses Projekt
+KI-Ausbeutung und KI-Hegemonie ablehnt und gedankenlose MIT- sowie politisch
+naive BSD-Lizenzierung zurückweist.

@@ -1,0 +1,382 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: 用户命令
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - 多语言 CLI 项目模板与辅助工具
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*、*zfr-rename*、*zfr-add*、*zfr-remove*、
+*zfr-about*、*zfr-version*、*zfr-lint*、*zfr-dist*、*zfr-ize*、
+*zfr-shape* 与 *zfr-release* 是相同子命令的薄封装。
+
+== Description
+
+*zfr* 是 *zephyr* 模板集合的命令行工具。
+它提供用于小型命令行实用程序的语言模板，以及实例化与管理这些项目的辅助功能。
+
+*重要：* 已实例化的项目应继续调用 *zfr*
+（例如在 *meson.build* 与 *rpm/Makefile* 中使用 *zfr version*）。
+字符串 *zfr* *不是* create/rename 的魔法占位符，也*不会*被改写为项目名。
+会被改写的模板占位符仍是 *zephyr*（示例 puff 为 *some_puff1*）。
+
+典型工作流：
+
+. 从语言模板创建项目：
++
+----
+zfr create -l python myproj
+----
+
+. 进入项目并添加应用 *puff*（示例应用）：
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. 可选：稍后使用 *rename* / *remove* 重命名项目或删除 puff。
+
+安装后，模板位于 */usr/share/zephyr/<lang>/*；若使用未安装的构建目录封装（如 *build/zfr*），则位于源码树中
+（*ZFR_PKGDATADIR* 可覆盖）。每个模板可包含名为 *some_puff1* 的示例 puff；在 *create* 命令行传入 puff 名称即可实例化，或
+省略则得到空项目。
+
+在 monorepo 中，*repodir* 为 git（或 meta）检出根目录，*packagedir* 为具有 zephyr 形态的包树（例如 *repodir/bash*）。
+从当前目录向上遍历的命令会先解析 *packagedir*。
+
+*i18n*::
+  Zephyr 风格建议至少覆盖以下 gettext 语言：
+  *ar*、*bn*、*de*、*es*、*fr*、*hi*、*id*、*it*、*ja*、*ko*、*pt*、*ru*、
+  *sv*、*ta*、*te*、*th*、*tr*、*ur*、*vi*、*zh_CN*、*zh_TW*
+  （别名 *zh-cn* / *zh-tw*）。英语（*en*）为源 *msgid* 语言，
+  不列入 *po/LINGUAS*。请在 *po/LINGUAS* 中列出上述 locale，并提供对应的 *po/<locale>.po* 文件。
+
+== Commands
+
+*create*::
+  将 *pkgdatadir/<lang>/* 复制到新目录 *./<project_name>/*
+  （若目录已存在则失败）。将 *zephyr* 改写为 *_PROJECT_NAME_*；若给出 puff 名称，则将 *some_puff1* 改写为第一个
+  *_PUFF_NAME_*（其余通过 *add* 添加）。未给出 puff 名称时，删除模板 puff 文件但保留 *some_puff1* 占位符，以便后续 *add* 实例化。
+  使用 *--distribution* / *--init-version* / *--author* / *--email* 写入新的 *debian/changelog*（丢弃模板 changelog），然后执行
+  *git init*，将 *core.hooksPath* 设为 *.githooks*（复制 *pre-commit*，使 *VERSION* 与 *debian/changelog* 同步），创建初始提交，并打上注释标签 *vVER*。
+
+*rename*::
+  在当前项目目录中将 *zephyr* 改写为 *_PROJECT_NAME_*；对每个给定名称，将模板 puff *some_puff1* 改写为该名称。
+  不会改写 *zfr*。
+
+*add*::
+  检测项目语言，将模板 puff 文件复制到当前项目，并把 *some_puff1* 重命名为各 *_PUFF_NAME_*。
+  在可能时更新 Meson 列表（或等效 wiring）。
+
+*remove*::
+  从当前项目中删除各给定 puff 名称对应的文件与 Meson wiring。
+
+*detect*::
+  输出当前目录检测到的语言
+  （向上遍历父目录以找到项目根）。
+
+*about*::
+  输出当前项目信息。从当前目录向父目录遍历以找到项目根（含 *project()* 的 *meson.build* 或 *debian/control*）。
+  常见字段（名称、版本、许可证、主页、维护者、摘要、section、priority、distribution、
+  architecture）从 Debian 或 RPM 元数据解析，并按终端宽度换行。还会输出源文件/行数统计与估算的 payload 大小。
+  交互式终端使用 CSR（控制台 SGR）着色，除非设置了 *NO_COLOR*。使用 *-d* / *-r* 查看完整解析后的 Debian 或 RPM 视图
+  （非打包文件转储）。
+
+*version*::
+  输出当前项目版本（单行，供脚本使用）。默认可用 *git* 与 *.git* 时使用 *git describe*，否则使用最新
+  *debian/changelog* 版本。再回退到 *VERSION* 文件，最后为 *0.0.0*。
+  非 semver 令牌（例如 git 哈希）会包装为 *0.0.0-<token>*。
+
+*lint*::
+  对照 zephyr 打包与布局风格校验当前项目
+  （从当前目录向父目录遍历以找到项目根）。
+  报告缺失文件、身份不一致、Meson/Debian/RPM 错误、
+  已实例化应用中残留的 *zephyr* / *some_puff1* 占位符，以及建议修复。
+  *zfr* 的提及是预期行为，不视为残留。
+  对于 *.githooks/pre-commit*，向上遍历至 *.git*，遵循 *core.hooksPath*，
+  并检查 hook 是否从 *debian/changelog* 同步 *VERSION*。
+  存在 *po/* 时，若 *LINGUAS* 未覆盖推荐的 gettext locale 集合（见 Description 中的 *i18n*），则发出警告。
+  输出面向人类与 AI 编码者：每项发现含代码、路径与具体修复。
+  交互式终端使用 CSR 着色，除非设置了 *NO_COLOR*。
+
+*shape*::
+  为当前 *packagedir* 输出 0–100 的 *zephyr shape* 得分（树与 zephyr 打包风格的匹配程度）。在 monorepo 中
+  *packagedir* 可能与 *repodir*（git / meta 根）不同；工具用 shape 优先选择包目录而非仓库根。
+  *\-b* / *--bool* 在得分不低于阈值
+  （默认 *50*）时输出 *1*，否则输出 *0*。
+
+*dist*::
+  构建当前项目的源码归档（从当前目录向父目录遍历以找到项目根）。若此目录为 git 项目根，则运行 *meson dist*
+  （在 *meson setup* 之后，默认 *--allow-dirty* 与 *--no-tests*）。嵌套语言模板没有独立 *.git*，因此 *meson dist* 会打包父 meta-repo；
+  这类树改为仅打包本项目的目录 tarball。在 stdout 输出归档路径。*rpm/Makefile* 的 *dist* 与 Meson *srcdist*
+  ninja 目标复用此命令。
+
+*release*::
+  解析与 *gh-makerelease*(1) 相同的选项，重建 argv，并 *exec* PATH 中的 *gh-makerelease*。本命令不自行实现打标签、打包或 GitHub 上传。*zephyr* 项目从 git 检出根发布（语言模板加 *zfr/*）。见下文 *Options for release*。
+
+*ize*::
+  就地重构当前项目以符合当前 zephyr 风格
+  （从当前目录向父目录遍历）。从语言模板复制缺失的 *debian/* 与 *rpm/* 脚手架（名称改写为本项目），写入 *VERSION* 与 *.githooks/pre-commit*，
+  修补 *meson.build*（*zfr version*、*asciidoctor* man 目标、
+  *run_target look*、bash-completion 安装）。将项目下（非 *debian/*）的 groff *\*.1* 手册页转换为带 Meson 规则的 *docs/\*.adoc*，
+  并将 *src/* 中硬编码的 changelog 版本转为 *\*.in* 的 *@VERSION@* 替换，或对 C 系语言通过 *config.h* 使用 *PROJECT_VERSION*。
+  *\-n* / *--dry-run* 只打印计划而不写入。
+  完成后运行 *zfr lint*。
+
+*help*::
+  显示命令行帮助。
+
+== Options
+
+*create* 的选项：
+
+*-l, --lang* _LANG_::
+  使用的语言模板（默认：*python*）。
+  支持的值包括 *bash*、*c*、*clib*、*cpp*、*cpplib*、*csharp*、*erlang*、*go*、
+  *haskell*、*java*、*perl*、*python*、*ruby*、*rust*、*smalltalk*、*swift* 与
+  *typescript*。
+
+*-D, --distribution* _DIST_::
+  Debian changelog 的 distribution（默认：*unstable*）。
+
+*-1, --init-version* _VER_::
+  初始包版本与 git 标签（默认：*0.0.1*）。
+
+*-a, --author* _AUTHOR_::
+  Changelog 与 git 作者名（默认：*Lenik (谢继雷)*）。
+
+*-e, --email* _EMAIL_::
+  Changelog 与 git 作者邮箱（默认：*lenik@bodz.net*）。
+
+*about* 的选项：
+
+*-d, --debian*::
+  显示解析后的 Debian 打包字段（*debian/control*、最新
+  *debian/changelog* 条目）。*Build-Depends* 等列表按终端宽度换行；长描述按段落重排。
+
+*-r, --redhat*::
+  显示从 *rpm/*.spec* 解析的 RPM 打包字段（*%{version}* 等宏通过 *zfr version -r* 显示）。*%description*
+  正文会重排；不转储 spec scriptlet。
+
+*--color* _WHEN_::
+  CSR 高亮：*auto*（默认：TTY 且未设置 *NO_COLOR*）、*always* 或
+  *never*。
+
+*version* 的选项：
+
+*-g, --git*::
+  使用 *git describe --tags --always --dirty*（*git* 与 *.git*
+  可用时为默认）。
+
+*-c, --changelog*::
+  使用最新 *debian/changelog* 版本（*git* 或 *.git* 不可用时为默认）。
+
+*-r, --rpm*::
+  输出 RPM 兼容的 *Version*（连字符映射为下划线）。
+
+*lint* 的选项：
+
+*-v, --verbose*::
+  同时输出通过的检查。
+
+*-q, --quiet*::
+  仅输出错误。
+
+*--strict*::
+  将警告视为失败（退出状态 1）。
+
+*--color* _WHEN_::
+  CSR 高亮：*auto*（默认：TTY 且未设置 *NO_COLOR*）、*always* 或
+  *never*。
+
+*shape* 的选项：
+
+*-b, --bool*::
+  若 shape 得分不低于 *--threshold* 则输出 *1*，否则 *0*。
+
+*-v, --verbose*::
+  在 stderr 输出 *packagedir*、*repodir*、*role* 与 *threshold*。
+
+*--threshold* _N_::
+  *--bool* 的阈值（默认：*50*）。
+
+*dist* 的选项：
+
+*-o, --output* _DIR_::
+  将归档写入 *_DIR_*（默认：Meson *meson-dist*
+  目录，或使用 *--rpm* 时为 *rpmbuild/SOURCES*）。
+
+*-b, --builddir* _DIR_::
+  Meson 构建目录。若 */build* 已为此源码树配置，则默认为 */build*，否则为 *<project>/build*。
+
+*-f, --format* _FMT_::
+  归档格式：*xz*（默认）、*gz* 或 *zip*。
+
+*--rpm*::
+  将归档命名为 *_NAME_*-*_VERSION_*.tar.xz 并写入
+  *rpmbuild/SOURCES*（除非指定 *-o*）。由 *rpm/Makefile* 使用。
+
+*--allow-dirty*, *--no-allow-dirty*::
+  向 *meson dist* 传递 *--allow-dirty*（默认：允许）。
+
+*--tests*::
+  在 *meson dist* 期间运行测试（默认为 *--no-tests*）。
+
+*release* 的选项（在此解析，透传给 *gh-makerelease*）：
+
+*-b, --build-binary*::
+  仅构建 Debian 二进制包（*-b*）；无 _.dsc_。
+*-n, --no-pre-clean*::
+  复用 Debian 构建缓存。
+*-u, --upload*::
+  若存在则复用按版本划分的既有产物。
+*--unsigned*::
+  构建未签名的 Debian 包（*-us -uc*）。
+*-p, --dput-host* _HOST_::
+  上传 _.changes_ 文件的 *dput*(1) 主机。
+*-d, --docker*::
+  在 Docker 中用 *build4*(1) 构建 Debian 包。
+*-B, --base-image* _IMAGE_::
+  *build4* 目标镜像（默认：*b4f-debian:trixie*）。
+*-s, --docker-server* _SERVER_::
+  通过 SSH 在 *SERVER* 上运行 *build4*（隐含 *-d*）。
+*-l, --local*::
+  仅构建；不打标签、不推送、不创建 GitHub release。
+*-f, --force*::
+  替换既有标签/release。
+*-I, --no-install*::
+  跳过 *sudo dpkg -i*。
+*-T, --no-tag*::
+  跳过创建并推送 git release 标签。
+*-U, --no-upload*::
+  跳过 *dput* _.changes_ 文件。
+*-R, --no-release*::
+  跳过创建 GitHub release。
+*-P, --no-publish*::
+  跳过 VSIX marketplace 发布。
+*-Y, --no-rpm*::
+  跳过 *make -C rpm rpm srpm*。
+*-D, --no-deb*::
+  跳过 Debian *debuild*。
+*-v, --verbose*::
+  详细日志（可重复）。
+*-q, --quiet*::
+  减少输出（可重复）。
+
+*ize* 的选项：
+
+*-l, --lang* _LANG_::
+  复制脚手架所用的语言模板（默认：自动检测）。
+
+*-n, --dry-run*::
+  打印计划的添加/更新/转换，不写入文件。
+
+*-v, --verbose*::
+  同时输出已存在而跳过的路径。
+
+*--no-man*::
+  不将 groff *\*.1* 源转换为 *docs/\*.adoc*。
+
+*--no-subst*::
+  不将 *src/* 中硬编码版本改写为 *@VERSION@* / *config.h*。
+
+*--color* _WHEN_::
+  CSR 高亮：*auto*（默认：TTY 且未设置 *NO_COLOR*）、*always* 或
+  *never*。
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  覆盖模板根目录（通常为 */usr/share/zephyr*）。
+
+*NO_COLOR*::
+  设置后，*zfr about*、*zfr lint* 与 *zfr ize* 在 *--color auto* 模式下禁用 CSR
+  高亮。
+
+*PYTHONPATH*::
+  从非默认安装布局运行工具时，必须包含 *zfr_lib* 包所在目录。
+
+== Tests
+
+源码树（非已安装包）包含 *tests/*，以 Python *unittest* 覆盖 CLI。*meson test*（构建目录
+*/build*）发现 *tests/test_*.py*。测试创建临时示例项目并演练各子命令（*create*、*add*、*remove*、
+*rename*、*about*、*version*、*lint*、*shape*、*dist*、*ize*、*release*、
+*detect*、*help*）、*zfr-** 封装、语言置信度评分、
+gettext 目录，以及各 locale 手册 *docs/<lang>/zfr.adoc*。
+不使用 Meson 时，将 *ZFR_PKGDATADIR* 设为 zephyr 检出根（*zfr/* 的父目录），*PYTHONPATH* 设为 *src/*。
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  已安装的语言模板。
+
+*/usr/bin/zfr*、*/usr/bin/zfr-\**::
+  CLI 与薄封装。
+
+*/usr/share/doc/zephyr/*::
+  包文档（LICENSE、README）。
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  本地化手册页，由 *docs/<locale>/zfr.adoc* 构建
+  （完整文档翻译，非 gettext/po4a 片段）。简体中文手册源文件为 *docs/zh_CN/zfr.adoc*。
+
+== Exit status
+
+*0*::
+  成功。对 *lint* 而言，项目无错误级发现
+  （除非 *--strict*，否则仍会输出警告）。
+
+*non-zero*::
+  发生错误（未知语言、目标已存在、检测失败、
+  缺失 puff 文件、*lint* 发现等）。
+
+== Author
+
+作者 {project-author} <{project-email}>。
+
+== Copyright
+
+Copyright (C) {project-year}。
+许可证 AGPL-3.0-or-later。
+本软件为自由软件：您可在 GNU Affero General Public License 条款下
+修改并再分发。
+在法律允许范围内不提供任何担保。
+完整许可证文本见源码分发中的 LICENSE 文件，
+包括补充条款：本项目反对 AI 剥削与 AI 霸权，
+并拒绝盲目的 MIT 式许可与政治天真的 BSD 式许可。

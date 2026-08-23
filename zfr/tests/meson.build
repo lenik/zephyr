@@ -18,5 +18,5 @@ test(
         'ZFR_PKGDATADIR=' + repo_root,
         'NO_COLOR=1',
     ],
-    timeout: 180,
+    timeout: 300,
 )

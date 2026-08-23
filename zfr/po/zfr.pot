@@ -1,14 +1,13 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the zfr package.
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: zfr\n"
 "Report-Msgid-Bugs-To: zephyr@bodz.net\n"
-"POT-Creation-Date: 2026-08-23 18:39+0800\n"
+"POT-Creation-Date: 2026-08-23 19:11+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +16,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/zfr:30
+#: src/zfr:32
 msgid ""
 "Zephyr template helper (CLI name: zfr). Create projects and manage example "
 "puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
 msgstr ""
 
-#: src/zfr:39
+#: src/zfr:45
 msgid "show this help"
 msgstr ""
 
@@ -113,16 +112,105 @@ msgid ""
 "stderr."
 msgstr ""
 
-#: src/zfr_lib/dist.py:338
+#: src/zfr_lib/dist.py:60
+msgid ""
+"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
+"rpm)"
+msgstr ""
+
+#: src/zfr_lib/dist.py:70
+msgid ""
+"Meson build directory (default: /build when it matches this source tree, "
+"else <project>/build)"
+msgstr ""
+
+#: src/zfr_lib/dist.py:80
+msgid "archive format (default: xz)"
+msgstr ""
+
+#: src/zfr_lib/dist.py:86
+msgid ""
+"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
+"-o is given"
+msgstr ""
+
+#: src/zfr_lib/dist.py:94
+msgid "pass --allow-dirty to meson dist (default: allow)"
+msgstr ""
+
+#: src/zfr_lib/dist.py:99
+msgid "run tests during meson dist (default: --no-tests)"
+msgstr ""
+
+#: src/zfr_lib/dist.py:343
 msgid "build a source tarball (meson dist, or this project only)"
 msgstr ""
 
-#: src/zfr_lib/dist.py:340
+#: src/zfr_lib/dist.py:345
 msgid ""
 "Build a source archive of the current zephyr project (walks from cwd toward "
 "parent directories). Uses meson dist when this directory is the git project "
 "root; otherwise packs this project only so nested language templates do not "
 "ship the parent meta-repo. Prints the archive path on stdout."
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:60
+msgid "refactor this project to current zephyr style"
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:61
+msgid ""
+"Refactor the current project to match current zephyr style: missing debian/"
+"rpm files, meson targets, AsciiDoc man pages, and Meson version "
+"substitutions. Walks from cwd toward parents."
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:65
+#, python-format
+msgid "language template to align with (default: detect; one of: %s)"
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:66
+msgid "print planned changes without writing files"
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:67
+msgid "also print skipped files"
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:68
+msgid "do not convert groff .1 man pages to docs/*.adoc"
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:69
+msgid "do not turn hardcoded versions into @VERSION@ / config.h"
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:70 src/zfr_lib/lint/__init__.py:98
+msgid "CSR (console SGR) highlighting (default: auto)"
+msgstr ""
+
+#: src/zfr_lib/lint/__init__.py:90
+msgid "validate project packaging and zephyr layout (walks parents from cwd)"
+msgstr ""
+
+#: src/zfr_lib/lint/__init__.py:91
+msgid ""
+"Check the current zephyr project for missing files and packaging/style "
+"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
+"is a TTY."
+msgstr ""
+
+#: src/zfr_lib/lint/__init__.py:95
+msgid "show passing checks too"
+msgstr ""
+
+#: src/zfr_lib/lint/__init__.py:96
+msgid "only print errors"
+msgstr ""
+
+#: src/zfr_lib/lint/__init__.py:97
+msgid "treat warnings as failures (exit 1)"
 msgstr ""
 
 #: src/zfr_lib/release.py:26
@@ -283,63 +371,4 @@ msgstr ""
 
 #: src/zfr_lib/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
-msgstr ""
-
-#: src/zfr_lib/lint/__init__.py:90
-msgid "validate project packaging and zephyr layout (walks parents from cwd)"
-msgstr ""
-
-#: src/zfr_lib/lint/__init__.py:91
-msgid ""
-"Check the current zephyr project for missing files and packaging/style "
-"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
-"is a TTY."
-msgstr ""
-
-#: src/zfr_lib/lint/__init__.py:95
-msgid "show passing checks too"
-msgstr ""
-
-#: src/zfr_lib/lint/__init__.py:96
-msgid "only print errors"
-msgstr ""
-
-#: src/zfr_lib/lint/__init__.py:97
-msgid "treat warnings as failures (exit 1)"
-msgstr ""
-
-#: src/zfr_lib/lint/__init__.py:98 src/zfr_lib/ize/__init__.py:70
-msgid "CSR (console SGR) highlighting (default: auto)"
-msgstr ""
-
-#: src/zfr_lib/ize/__init__.py:60
-msgid "refactor this project to current zephyr style"
-msgstr ""
-
-#: src/zfr_lib/ize/__init__.py:61
-msgid ""
-"Refactor the current project to match current zephyr style: missing debian/"
-"rpm files, meson targets, AsciiDoc man pages, and Meson version "
-"substitutions. Walks from cwd toward parents."
-msgstr ""
-
-#: src/zfr_lib/ize/__init__.py:65
-#, python-format
-msgid "language template to align with (default: detect; one of: %s)"
-msgstr ""
-
-#: src/zfr_lib/ize/__init__.py:66
-msgid "print planned changes without writing files"
-msgstr ""
-
-#: src/zfr_lib/ize/__init__.py:67
-msgid "also print skipped files"
-msgstr ""
-
-#: src/zfr_lib/ize/__init__.py:68
-msgid "do not convert groff .1 man pages to docs/*.adoc"
-msgstr ""
-
-#: src/zfr_lib/ize/__init__.py:69
-msgid "do not turn hardcoded versions into @VERSION@ / config.h"
 msgstr ""

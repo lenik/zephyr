@@ -1,0 +1,427 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: Kullanıcı Komutları
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - çok dilli CLI proje şablonları ve yardımcı araçlar
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape* ve *zfr-release* aynı alt komutların ince sarmalayıcılarıdır.
+
+== Description
+
+*zfr*, *zephyr* şablon koleksiyonu için komut satırı aracıdır.
+Küçük komut satırı yardımcı programları için dil şablonları ve bunları
+örnekleme ile yönetme araçları sunar.
+
+*Önemli:* örneklenen projelerin *zfr* çağırmaya devam etmesi beklenir
+(örneğin *meson.build* ve *rpm/Makefile* içinde *zfr version*).
+*zfr* dizesi create/rename sihirli belirteci *değildir* ve proje adına
+asla yeniden yazılmaz. *Yeniden yazılan* şablon yer tutucusu *zephyr*
+(ve örnek puff'lar için *some_puff1*) olarak kalır.
+
+Tipik iş akışı:
+
+. Bir dil şablonundan proje oluşturun:
++
+----
+zfr create -l python myproj
+----
+
+. Projeye girin ve uygulama *puff*'ları (örnek uygulamalar) ekleyin:
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. İsteğe bağlı olarak projeyi yeniden adlandırın veya puff'ları *rename* /
+  *remove* ile daha sonra kaldırın.
+
+Şablonlar kurulumda */usr/share/zephyr/<lang>/* altında, kurulmamış
+builddir sarmalayıcıları (örneğin *build/zfr*) çalıştırılırken kaynak
+ağacında bulunur (*ZFR_PKGDATADIR* geçersiz kılar). Her şablon *some_puff1*
+adlı bir örnek puff içerebilir; örneklemek için puff adlarını *create*
+komut satırında geçirin veya boş proje için atlayın.
+
+Monorepo'da *repodir* git (veya meta) checkout köküdür ve *packagedir*
+zephyr biçimine sahip paket ağacıdır (örneğin *repodir/bash*).
+Geçerli dizinden yürüyen komutlar önce *packagedir*'i çözümler.
+
+*i18n*::
+  Zephyr stili en az şunlar için gettext kapsamı önerir:
+  *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
+  *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
+  (takma adlar *zh-cn* / *zh-tw*). İngilizce (*en*) kaynak *msgid*
+  dilidir ve *po/LINGUAS*'ta listelenmez. Bu yerelleri *po/LINGUAS*'a
+  ekleyin ve eşleşen *po/<locale>.po* dosyalarını dağıtın.
+
+== Commands
+
+*create*::
+  *pkgdatadir/<lang>/* dizinini yeni *./<project_name>/* dizinine kopyalar
+  (dizin zaten varsa başarısız olur). *zephyr* → *_PROJECT_NAME_* ve
+  puff adları verildiğinde *some_puff1* → ilk *_PUFF_NAME_* (diğerleri
+  *add* ile) olarak yeniden yazar. Puff adı yoksa şablon puff dosyalarını
+  atar ama *some_puff1* belirteçlerini korur, böylece sonradan *add*
+  örnekleyebilir. *--distribution* / *--init-version* / *--author* /
+  *--email* ile yeni *debian/changelog* yazar (şablon changelog atılır),
+  ardından *git init* çalıştırır, *core.hooksPath*'i *.githooks* yapar
+  (*pre-commit* kopyalar, *VERSION* *debian/changelog* ile senkron kalır),
+  ilk commit ve *vVER* ek açıklamalı etiketi oluşturur.
+
+*rename*::
+  Geçerli proje dizininde *zephyr* → *_PROJECT_NAME_* ve verilen her ad
+  için şablon puff *some_puff1* → o ad olarak yeniden yazar.
+  *zfr*'yi yeniden yazmaz.
+
+*add*::
+  Proje dilini algılar ve şablon puff dosyalarını geçerli projeye kopyalar,
+  *some_puff1*'i her *_PUFF_NAME_* olarak yeniden adlandırır. Mümkünse
+  Meson listelerini (veya eşdeğer bağlantıyı) günceller.
+
+*remove*::
+  Geçerli projeden verilen her puff adı için dosyaları ve Meson bağlantısını
+  kaldırır.
+
+*detect*::
+  Geçerli dizin için algılanan dili yazdırır
+  (proje kökünü bulmak için üst dizinlere yürür).
+
+*about*::
+  Geçerli proje hakkında bilgi yazdırır. Proje kökünü bulmak için geçerli
+  dizinden üstlere yürür (*meson.build* içinde *project()* veya
+  *debian/control*). Ortak alanlar (ad, sürüm, lisans, ana sayfa,
+  maintainer, özet, bölüm, öncelik, dağıtım, mimari) Debian veya RPM
+  meta verisinden okunur ve terminal genişliğine sarılır. Ayrıca kaynak
+  dosya/satır sayıları ve tahmini yük boyutu yazdırır. Etkileşimli
+  terminaller *NO_COLOR* ayarlı değilse CSR (konsol SGR) renkleri kullanır.
+  Tam ayrıştırılmış Debian veya RPM görünümü için *-d* / *-r* kullanın
+  (paketleme dosyalarının dökümü değil).
+
+*version*::
+  Geçerli proje sürümünü yazdırır (tek satır, betikler için). Varsayılan
+  *git* ve *.git* varsa *git describe*, aksi halde en son
+  *debian/changelog* sürümü. *VERSION* dosyasına, sonra *0.0.0*'a düşer.
+  Semver olmayan belirteç (örneğin git hash) *0.0.0-<token>* olarak sarılır.
+
+*lint*::
+  Geçerli projeyi zephyr paketleme ve düzen stiline karşı doğrular
+  (proje kökünü bulmak için geçerli dizinden üstlere yürür).
+  Eksik dosyalar, kimlik uyumsuzlukları, Meson/Debian/RPM hataları,
+  örneklenen uygulamalarda kalan *zephyr* / *some_puff1* belirteçleri ve
+  önerilen düzeltmeleri bildirir. *zfr* anımları beklenir ve kalıntı
+  sayılmaz. *.githooks/pre-commit* için *.git*'e kadar yürür,
+  *core.hooksPath*'e uyar ve kancanın *VERSION*'ı *debian/changelog*'dan
+  senkronladığını kontrol eder. *po/* varken *LINGUAS* önerilen gettext
+  yerel kümesini kapsamıyorsa uyarır (Description altındaki *i18n*'e
+  bakın). Çıktı insanlar ve yapay zeka kodlayıcıları içindir: her bulgu
+  kod, yol ve somut düzeltme içerir. Etkileşimli terminaller *NO_COLOR*
+  ayarlı değilse CSR renkleri kullanır.
+
+*shape*::
+  Geçerli *packagedir* için 0–100 *zephyr shape* puanı yazdırır (ağacın
+  zephyr paketleme stiline ne kadar uyduğu). Monorepo'da *packagedir*
+  *repodir*'den (git / meta kök) farklı olabilir; araçlar shape ile
+  paket dizinini depo köküne tercih eder.
+  *\-b* / *--bool*, puan eşiğe (varsayılan *50*) en az eşitse *1*,
+  aksi halde *0* yazdırır.
+
+*dist*::
+  Geçerli projenin kaynak arşivini oluşturur (proje kökünü bulmak için
+  geçerli dizinden üstlere yürür). Bu dizin git proje köküyse *meson dist*
+  çalıştırır (*meson setup* sonrası, varsayılan *--allow-dirty* ve
+  *--no-tests*). İç içe dil şablonlarının kendi *.git*'i yoktur, bu yüzden
+  *meson dist* üst meta-repo'yu paketler; bu ağaçlar yalnızca bu projenin
+  dizin tarball'ını alır. Arşiv yolunu stdout'a yazdırır. *rpm/Makefile*
+  *dist* ve Meson *srcdist* ninja hedefi bu komutu yeniden kullanır.
+
+*release*::
+  *gh-makerelease*(1) ile aynı seçenekleri ayrıştırır, argv'yi yeniden
+  oluşturur ve PATH'ten *gh-makerelease*'i *exec* eder. Bu komut etiketleme,
+  paketleme veya GitHub yüklemelerini kendisi uygulamaz. *zephyr* projesi
+  git checkout kökünden (dil şablonları ve *zfr/*) yayınlanır. Aşağıdaki
+  *Options for release*'e bakın.
+
+*ize*::
+  Geçerli projeyi yerinde mevcut zephyr stiline uyacak şekilde yeniden
+  düzenler (geçerli dizinden üstlere yürür). Dil şablonundan eksik
+  *debian/* ve *rpm/* iskeletini kopyalar (adlar bu projeye yeniden yazılır),
+  *VERSION* ve *.githooks/pre-commit* yazar, *meson.build*'i yamalar
+  (*zfr version*, *asciidoctor* man hedefleri, *run_target look*,
+  bash-completion kurulumu). Proje altındaki groff *\*.1* man sayfalarını
+  (*debian/* değil) Meson kurallarıyla *docs/\*.adoc*'a dönüştürür ve
+  *src/* içindeki sabit changelog sürümlerini C ailesi için *\*.in*
+  *@VERSION@* ikameleri veya *config.h* ile *PROJECT_VERSION*'a çevirir.
+  *\-n* / *--dry-run* planı yazmadan yazdırır. Sonrasında *zfr lint*
+  çalıştırın.
+
+*help*::
+  Komut satırı yardımını gösterir.
+
+== Options
+
+*create* seçenekleri:
+
+*-l, --lang* _LANG_::
+  Kullanılacak dil şablonu (varsayılan: *python*).
+  Desteklenen değerler arasında *bash*, *c*, *clib*, *cpp*, *cpplib*,
+  *csharp*, *erlang*, *go*, *haskell*, *java*, *perl*, *python*, *ruby*,
+  *rust*, *smalltalk*, *swift* ve *typescript* bulunur.
+
+*-D, --distribution* _DIST_::
+  Debian changelog dağıtımı (varsayılan: *unstable*).
+
+*-1, --init-version* _VER_::
+  Başlangıç paket sürümü ve git etiketi (varsayılan: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  Changelog ve git yazar adı (varsayılan: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  Changelog ve git yazar e-postası (varsayılan: *lenik@bodz.net*).
+
+*about* seçenekleri:
+
+*-d, --debian*::
+  Ayrıştırılmış Debian paketleme alanlarını göster (*debian/control*,
+  en son *debian/changelog* girişi). *Build-Depends* gibi listeler terminal
+  genişliğine sarılır; uzun açıklama paragraflar halinde yeniden akar.
+
+*-r, --redhat*::
+  *rpm/*.spec*'ten ayrıştırılmış RPM paketleme alanlarını göster
+  (*%{version}* gibi makrolar *zfr version -r* ile gösterilir).
+  *%description* gövdesi yeniden akar; spec scriptlet'leri dökülmez.
+
+*--color* _WHEN_::
+  CSR vurgulama: *auto* (varsayılan: TTY ve *NO_COLOR* yok), *always* veya
+  *never*.
+
+*version* seçenekleri:
+
+*-g, --git*::
+  *git describe --tags --always --dirty* kullan (varsayılan *git* ve
+  *.git* varken).
+
+*-c, --changelog*::
+  En son *debian/changelog* sürümünü kullan (varsayılan *git* veya *.git*
+  yokken).
+
+*-r, --rpm*::
+  RPM uyumlu *Version* yazdır (tireler alt çizgiye).
+
+*lint* seçenekleri:
+
+*-v, --verbose*::
+  Geçen kontrolleri de yazdır.
+
+*-q, --quiet*::
+  Yalnızca hataları yazdır.
+
+*--strict*::
+  Uyarıları hata say (çıkış durumu 1).
+
+*--color* _WHEN_::
+  CSR vurgulama: *auto* (varsayılan: TTY ve *NO_COLOR* yok), *always* veya
+  *never*.
+
+*shape* seçenekleri:
+
+*-b, --bool*::
+  Shape puanı *--threshold*'a en az eşitse *1*, aksi halde *0* yazdır.
+
+*-v, --verbose*::
+  *packagedir*, *repodir*, *role* ve *threshold*'u stderr'e yazdır.
+
+*--threshold* _N_::
+  *--bool* eşiği (varsayılan: *50*).
+
+*dist* seçenekleri:
+
+*-o, --output* _DIR_::
+  Arşivi *_DIR_*'ye yaz (varsayılan: Meson *meson-dist* dizini veya
+  *--rpm* ile *rpmbuild/SOURCES*).
+
+*-b, --builddir* _DIR_::
+  Meson derleme dizini. Bu kaynak ağacı için yapılandırılmışsa varsayılan
+  */build*, aksi halde *<project>/build*.
+
+*-f, --format* _FMT_::
+  Arşiv biçimi: *xz* (varsayılan), *gz* veya *zip*.
+
+*--rpm*::
+  Arşive *_NAME_*-*_VERSION_*.tar.xz adını ver ve *-o* verilmedikçe
+  *rpmbuild/SOURCES*'a yaz. *rpm/Makefile* tarafından kullanılır.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  *meson dist*'e *--allow-dirty* geçir (varsayılan: izin ver).
+
+*--tests*::
+  *meson dist* sırasında testleri çalıştır (varsayılan *--no-tests*).
+
+*release* seçenekleri (burada ayrıştırılır, *gh-makerelease*'e iletilir):
+
+*-b, --build-binary*::
+  Yalnızca Debian ikili derleme (*-b*); _.dsc_ yok.
+*-n, --no-pre-clean*::
+  Debian derleme önbelleğini yeniden kullan.
+*-u, --upload*::
+  Mevcut sürüm kapsamlı yapıtları varsa yeniden kullan.
+*--unsigned*::
+  İmzasız Debian paketleri derle (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  _.changes_ dosyası için *dput*(1) yükleme ana bilgisayarı.
+*-d, --docker*::
+  Debian paketini Docker'da *build4*(1) ile derle.
+*-B, --base-image* _IMAGE_::
+  *build4* hedef görüntüsü (varsayılan: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  *build4*'ü *SERVER* üzerinde SSH ile çalıştır (*-d* gerektirir).
+*-l, --local*::
+  Yalnızca derle; etiketleme, push veya GitHub release yok.
+*-f, --force*::
+  Mevcut etiket/release'i değiştir.
+*-I, --no-install*::
+  *sudo dpkg -i*'yi atla.
+*-T, --no-tag*::
+  Git release etiketi oluşturma ve push'u atla.
+*-U, --no-upload*::
+  _.changes_ dosyasının *dput*'unu atla.
+*-R, --no-release*::
+  GitHub release oluşturmayı atla.
+*-P, --no-publish*::
+  VSIX marketplace yayınını atla.
+*-Y, --no-rpm*::
+  *make -C rpm rpm srpm*'i atla.
+*-D, --no-deb*::
+  Debian *debuild*'i atla.
+*-v, --verbose*::
+  Ayrıntılı günlük (tekrarlanabilir).
+*-q, --quiet*::
+  Daha az çıktı (tekrarlanabilir).
+
+*ize* seçenekleri:
+
+*-l, --lang* _LANG_::
+  İskelet kopyalanacak dil şablonu (varsayılan: algıla).
+
+*-n, --dry-run*::
+  Planlanan ekleme/güncelleme/dönüşümleri dosya yazmadan yazdır.
+
+*-v, --verbose*::
+  Zaten mevcut atlanan yolları da yazdır.
+
+*--no-man*::
+  groff *\*.1* kaynaklarını *docs/\*.adoc*'a dönüştürme.
+
+*--no-subst*::
+  *src/* içindeki sabit sürümleri *@VERSION@* / *config.h*'ye yeniden
+  yazma.
+
+*--color* _WHEN_::
+  CSR vurgulama: *auto* (varsayılan: TTY ve *NO_COLOR* yok), *always* veya
+  *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  Şablon kökünü geçersiz kıl (normalde */usr/share/zephyr*).
+
+*NO_COLOR*::
+  Ayarlandığında *zfr about*, *zfr lint* ve *zfr ize*, *--color auto*
+  modunda CSR vurgulamayı devre dışı bırakır.
+
+*PYTHONPATH*::
+  Varsayılan olmayan kurulum düzeninden çalıştırırken *zfr_lib* paketini
+  içeren dizini kapsamalıdır.
+
+== Tests
+
+Kaynak ağacı (kurulu paket değil) CLI'nin Python *unittest* kapsamını
+içeren *tests/* içerir. *meson test* (derleme dizini */build*)
+*tests/test_*.py*'yi keşfeder. Testler geçici örnek projeler oluşturur ve
+her alt komutu (*create*, *add*, *remove*, *rename*, *about*, *version*,
+*lint*, *shape*, *dist*, *ize*, *release*, *detect*, *help*), *zfr-**
+sarmalayıcılarını, dil güven puanlamasını, gettext kataloglarını ve
+yerel başına *docs/<lang>/zfr.adoc* kılavuzlarını çalıştırır. Meson
+olmadan *ZFR_PKGDATADIR*'i zephyr checkout köküne (*zfr/*'nin üstü) ve
+*PYTHONPATH*'i *src/*'ye ayarlayın.
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  Kurulu dil şablonları.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI ve ince sarmalayıcılar.
+
+*/usr/share/doc/zephyr/*::
+  Paket belgeleri (LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  Yerelleştirilmiş kılavuz sayfaları, *docs/<locale>/zfr.adoc*'dan
+  oluşturulur (gettext/po4a parçaları değil, tam belge çevirileri).
+
+== Exit status
+
+*0*::
+  Başarı. *lint* için projede hata düzeyinde bulgu yok (*--strict*
+  kullanılmadıkça uyarılar yine yazdırılır).
+
+*non-zero*::
+  Hata oluştu (bilinmeyen dil, hedef zaten var, algılama hatası, eksik
+  puff dosyaları, *lint* bulguları vb.).
+
+== Author
+
+{project-author} <{project-email}> tarafından yazılmıştır.
+
+== Copyright
+
+Copyright (C) {project-year}.
+Lisans AGPL-3.0-or-later.
+Bu özgür yazılımdır: GNU Affero General Public License koşulları altında
+değiştirebilir ve yeniden dağıtabilirsiniz.
+Yasaların izin verdiği ölçüde GARANTİ YOKTUR.
+Tam lisans metni için kaynak dağıtımındaki LICENSE dosyasına bakın;
+bu projenin yapay zeka sömürüsüne ve yapay zeka hegemonyasına karşı
+olduğunu, düşüncesiz MIT tarzı ve politik açıdan naif BSD tarzı
+lisanslamayı reddettiğini belirten ek koşullar dahildir.

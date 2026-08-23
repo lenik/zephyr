@@ -1,0 +1,412 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: Lệnh người dùng
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - mẫu dự án CLI đa ngôn ngữ và công cụ hỗ trợ
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape*, và *zfr-release* là các wrapper mỏng cho cùng các lệnh con.
+
+== Description
+
+*zfr* là công cụ dòng lệnh cho bộ sưu tập mẫu *zephyr*.
+Nó cung cấp mẫu ngôn ngữ cho các tiện ích dòng lệnh nhỏ và trợ giúp
+khởi tạo cũng như quản lý chúng.
+
+*Quan trọng:* các dự án đã khởi tạo nên tiếp tục gọi *zfr*
+(ví dụ *zfr version* trong *meson.build* và *rpm/Makefile*).
+Chuỗi *zfr* *không* phải token ma thuật của create/rename và *không bao giờ*
+được viết lại thành tên dự án. Placeholder mẫu *được* viết lại vẫn là
+*zephyr* (và *some_puff1* cho các puff mẫu).
+
+Quy trình điển hình:
+
+. Tạo dự án từ mẫu ngôn ngữ:
++
+----
+zfr create -l python myproj
+----
+
+. Vào dự án và thêm *puff* ứng dụng (ứng dụng mẫu):
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. Tùy chọn: đổi tên dự án hoặc xóa puff sau này bằng *rename* / *remove*.
+
+Mẫu nằm dưới */usr/share/zephyr/<lang>/* khi cài đặt, hoặc trong cây nguồn
+khi chạy wrapper builddir chưa cài như *build/zfr*
+(*ZFR_PKGDATADIR* ghi đè). Mỗi mẫu có thể gồm puff mẫu tên *some_puff1*; truyền
+tên puff trên dòng lệnh *create* để khởi tạo, hoặc bỏ qua để có dự án trống.
+
+Trong monorepo, *repodir* là gốc checkout git (hoặc meta) và *packagedir*
+là cây gói có dạng zephyr (ví dụ *repodir/bash*).
+Các lệnh duyệt từ thư mục hiện tại sẽ xác định *packagedir* trước.
+
+*i18n*::
+  Phong cách Zephyr khuyến nghị phủ gettext ít nhất cho:
+  *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
+  *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
+  (bí danh *zh-cn* / *zh-tw*). Tiếng Anh (*en*) là ngôn ngữ *msgid* nguồn
+  và không liệt kê trong *po/LINGUAS*. Liệt kê các locale đó trong *po/LINGUAS* và
+  phát hành các tệp *po/<locale>.po* tương ứng.
+
+== Commands
+
+*create*::
+  Sao chép *pkgdatadir/<lang>/* vào thư mục mới *./<project_name>/* (thất bại nếu
+  thư mục đã tồn tại). Viết lại *zephyr* → *_PROJECT_NAME_* và, khi có tên puff,
+  *some_puff1* → *_PUFF_NAME_* đầu tiên (các tên tiếp theo qua *add*). Không có tên puff thì
+  bỏ tệp puff mẫu nhưng giữ token *some_puff1* để *add* sau có thể khởi tạo.
+  Ghi *debian/changelog* mới (bỏ changelog mẫu) dùng
+  *--distribution* / *--init-version* / *--author* / *--email*, rồi chạy
+  *git init*, đặt *core.hooksPath* thành *.githooks* (sao chép *pre-commit* để
+  *VERSION* đồng bộ với *debian/changelog*), commit ban đầu và tag chú thích *vVER*.
+
+*rename*::
+  Trong thư mục dự án hiện tại, viết lại *zephyr* → *_PROJECT_NAME_* và,
+  với mỗi tên cho trước, viết lại puff mẫu *some_puff1* → tên đó.
+  Không viết lại *zfr*.
+
+*add*::
+  Phát hiện ngôn ngữ dự án và sao chép tệp puff mẫu vào dự án hiện tại,
+  đổi tên *some_puff1* thành mỗi *_PUFF_NAME_*. Cập nhật danh sách Meson
+  (hoặc wiring tương đương) khi có thể.
+
+*remove*::
+  Xóa tệp và wiring Meson cho mỗi tên puff cho trước khỏi dự án hiện tại.
+
+*detect*::
+  In ngôn ngữ phát hiện cho thư mục hiện tại
+  (duyệt thư mục cha để tìm gốc dự án).
+
+*about*::
+  In thông tin về dự án hiện tại. Duyệt từ thư mục hiện tại lên cha để tìm gốc dự án
+  (*meson.build* có *project()* hoặc *debian/control*). Các trường thường gặp (tên, phiên bản, giấy phép,
+  trang chủ, maintainer, tóm tắt, section, priority, distribution,
+  architecture) được phân tích từ metadata Debian hoặc RPM và bọc theo
+  độ rộng terminal. Cũng in số tệp/dòng nguồn và ước lượng kích thước payload. Terminal tương tác dùng màu CSR (console SGR) trừ khi
+  đặt *NO_COLOR*. Dùng *-d* / *-r* để xem Debian hoặc RPM đã phân tích đầy đủ
+  (không dump tệp đóng gói).
+
+*version*::
+  In phiên bản dự án hiện tại (một dòng, cho script). Mặc định là
+  *git describe* khi có *git* và *.git*, nếu không thì phiên bản *debian/changelog* mới nhất.
+  Dự phòng *VERSION*, rồi *0.0.0*.
+  Token không semver (ví dụ hash git) được bọc thành *0.0.0-<token>*.
+
+*lint*::
+  Xác thực dự án hiện tại theo phong cách đóng gói và bố cục zephyr
+  (duyệt từ thư mục hiện tại lên cha để tìm gốc dự án).
+  Báo thiếu tệp, lệch danh tính, lỗi Meson/Debian/RPM,
+  token *zephyr* / *some_puff1* còn sót trong ứng dụng đã khởi tạo, và cách sửa gợi ý.
+  Đề cập *zfr* là bình thường và không coi là sót lại.
+  Với *.githooks/pre-commit*, duyệt lên *.git*, tôn trọng *core.hooksPath*,
+  và kiểm tra hook đồng bộ *VERSION* từ *debian/changelog*.
+  Khi có *po/*, cảnh báo nếu *LINGUAS* không phủ bộ locale gettext khuyến nghị
+  (xem *i18n* trong Description).
+  Đầu ra dành cho người và lập trình viên AI: mỗi phát hiện có mã,
+  đường dẫn và cách sửa cụ thể. Terminal tương tác dùng màu CSR trừ khi đặt *NO_COLOR*.
+
+*shape*::
+  In điểm *zephyr shape* 0–100 cho *packagedir* hiện tại (mức độ cây
+  khớp phong cách đóng gói zephyr). Trong monorepo
+  *packagedir* có thể khác *repodir* (gốc git / meta); công cụ dùng
+  shape để ưu tiên thư mục gói hơn gốc kho.
+  *\-b* / *--bool* in *1* nếu điểm đạt ít nhất ngưỡng
+  (mặc định *50*), nếu không *0*.
+
+*dist*::
+  Tạo kho lưu trữ nguồn của dự án hiện tại (duyệt từ thư mục hiện tại lên cha để tìm gốc dự án).
+  Khi thư mục này là gốc git, chạy *meson dist* (sau *meson setup*, mặc định
+  *--allow-dirty* và *--no-tests*). Mẫu ngôn ngữ lồng nhau không có
+  *.git* riêng, nên *meson dist* sẽ đóng gói meta-repo cha;
+  các cây đó nhận tarball thư mục chỉ của dự án này. In đường dẫn kho lưu trữ ra stdout. *dist* trong *rpm/Makefile* và mục tiêu ninja Meson *srcdist*
+  tái sử dụng lệnh này.
+
+*release*::
+  Phân tích cùng tùy chọn như *gh-makerelease*(1), dựng lại argv, và *exec*
+  *gh-makerelease* từ PATH. Lệnh này không tự gắn tag, đóng gói hay tải lên GitHub.
+  Dự án *zephyr* được phát hành từ gốc checkout git (mẫu ngôn ngữ cộng *zfr/*). Xem
+  *Options for release* bên dưới.
+
+*ize*::
+  Tái cấu trúc tại chỗ dự án hiện tại để khớp phong cách zephyr hiện tại
+  (duyệt từ thư mục hiện tại lên cha). Sao chép khung *debian/* và *rpm/* còn thiếu từ mẫu ngôn ngữ (tên
+  viết lại cho dự án này), ghi *VERSION* và *.githooks/pre-commit*,
+  vá *meson.build* (*zfr version*, mục tiêu man *asciidoctor*,
+  *run_target look*, cài bash-completion). Chuyển trang man groff *\*.1* trong dự án (không *debian/*) thành *docs/\*.adoc* với quy tắc Meson,
+  và biến phiên bản changelog cứng trong *src/* thành thay thế *\*.in*
+  *@VERSION@* hoặc *PROJECT_VERSION* qua *config.h* cho họ ngôn ngữ C.
+  *\-n* / *--dry-run* chỉ in kế hoạch, không ghi.
+  Sau đó chạy *zfr lint*.
+
+*help*::
+  Hiển thị trợ giúp dòng lệnh.
+
+== Options
+
+Tùy chọn cho *create*:
+
+*-l, --lang* _LANG_::
+  Mẫu ngôn ngữ dùng (mặc định: *python*).
+  Giá trị hỗ trợ gồm *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*,
+  *haskell*, *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift*, và
+  *typescript*.
+
+*-D, --distribution* _DIST_::
+  distribution trong Debian changelog (mặc định: *unstable*).
+
+*-1, --init-version* _VER_::
+  Phiên bản gói ban đầu và tag git (mặc định: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  Tên tác giả changelog và git (mặc định: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  Email tác giả changelog và git (mặc định: *lenik@bodz.net*).
+
+Tùy chọn cho *about*:
+
+*-d, --debian*::
+  Hiển thị trường đóng gói Debian đã phân tích (*debian/control*, mục
+  *debian/changelog* mới nhất). Danh sách như *Build-Depends* được bọc theo
+  độ rộng terminal; mô tả dài được xuống dòng thành đoạn.
+
+*-r, --redhat*::
+  Hiển thị trường đóng gói RPM đã phân tích từ *rpm/*.spec* (macro như
+  *%{version}* hiển thị bằng *zfr version -r*). Thân *%description*
+  được xuống dòng; không dump scriptlet spec.
+
+*--color* _WHEN_::
+  Tô sáng CSR: *auto* (mặc định: TTY và không *NO_COLOR*), *always*, hoặc
+  *never*.
+
+Tùy chọn cho *version*:
+
+*-g, --git*::
+  Dùng *git describe --tags --always --dirty* (mặc định khi có *git* và *.git*).
+
+*-c, --changelog*::
+  Dùng phiên bản *debian/changelog* mới nhất (mặc định khi không có *git* hoặc *.git*).
+
+*-r, --rpm*::
+  In *Version* tương thích RPM (gạch ngang thành gạch dưới).
+
+Tùy chọn cho *lint*:
+
+*-v, --verbose*::
+  Cũng in các kiểm tra đạt.
+
+*-q, --quiet*::
+  Chỉ in lỗi.
+
+*--strict*::
+  Coi cảnh báo là thất bại (mã thoát 1).
+
+*--color* _WHEN_::
+  Tô sáng CSR: *auto* (mặc định: TTY và không *NO_COLOR*), *always*, hoặc
+  *never*.
+
+Tùy chọn cho *shape*:
+
+*-b, --bool*::
+  In *1* nếu điểm shape đạt ít nhất *--threshold*, nếu không *0*.
+
+*-v, --verbose*::
+  In *packagedir*, *repodir*, *role*, và *threshold* ra stderr.
+
+*--threshold* _N_::
+  Ngưỡng cho *--bool* (mặc định: *50*).
+
+Tùy chọn cho *dist*:
+
+*-o, --output* _DIR_::
+  Ghi kho lưu trữ vào *_DIR_* (mặc định: thư mục Meson *meson-dist*,
+  hoặc *rpmbuild/SOURCES* với *--rpm*).
+
+*-b, --builddir* _DIR_::
+  Thư mục build Meson. Mặc định là */build* khi builddir đó đã
+  cấu hình cho cây nguồn này, nếu không *<project>/build*.
+
+*-f, --format* _FMT_::
+  Định dạng kho lưu trữ: *xz* (mặc định), *gz*, hoặc *zip*.
+
+*--rpm*::
+  Đặt tên kho lưu trữ *_NAME_*-*_VERSION_*.tar.xz và ghi vào
+  *rpmbuild/SOURCES* trừ khi có *-o*. Dùng bởi *rpm/Makefile*.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  Truyền *--allow-dirty* cho *meson dist* (mặc định: cho phép).
+
+*--tests*::
+  Chạy kiểm thử trong *meson dist* (mặc định là *--no-tests*).
+
+Tùy chọn cho *release* (phân tích tại đây, chuyển tiếp cho *gh-makerelease*):
+
+*-b, --build-binary*::
+  Chỉ build nhị phân Debian (*-b*); không _.dsc_.
+*-n, --no-pre-clean*::
+  Tái sử dụng bộ nhớ đệm build Debian.
+*-u, --upload*::
+  Tái sử dụng artifact theo phiên bản nếu đã có.
+*--unsigned*::
+  Build gói Debian chưa ký (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  Máy chủ tải lên *dput*(1) cho tệp _.changes_.
+*-d, --docker*::
+  Build gói Debian bằng *build4*(1) trong Docker.
+*-B, --base-image* _IMAGE_::
+  Ảnh đích *build4* (mặc định: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  Chạy *build4* qua SSH trên *SERVER* (ngụ ý *-d*).
+*-l, --local*::
+  Chỉ build; không tag, push hay tạo GitHub release.
+*-f, --force*::
+  Thay tag/release hiện có.
+*-I, --no-install*::
+  Bỏ qua *sudo dpkg -i*.
+*-T, --no-tag*::
+  Bỏ qua tạo và push tag release git.
+*-U, --no-upload*::
+  Bỏ qua *dput* tệp _.changes_.
+*-R, --no-release*::
+  Bỏ qua tạo GitHub release.
+*-P, --no-publish*::
+  Bỏ qua xuất bản VSIX marketplace.
+*-Y, --no-rpm*::
+  Bỏ qua *make -C rpm rpm srpm*.
+*-D, --no-deb*::
+  Bỏ qua Debian *debuild*.
+*-v, --verbose*::
+  Ghi log chi tiết (lặp được).
+*-q, --quiet*::
+  Ít đầu ra hơn (lặp được).
+
+Tùy chọn cho *ize*:
+
+*-l, --lang* _LANG_::
+  Mẫu ngôn ngữ để sao chép khung (mặc định: phát hiện).
+
+*-n, --dry-run*::
+  In kế hoạch thêm/cập nhật/chuyển đổi mà không ghi tệp.
+
+*-v, --verbose*::
+  Cũng in đường dẫn đã có nên bỏ qua.
+
+*--no-man*::
+  Không chuyển nguồn groff *\*.1* sang *docs/\*.adoc*.
+
+*--no-subst*::
+  Không viết lại phiên bản cứng trong *src/* thành *@VERSION@* / *config.h*.
+
+*--color* _WHEN_::
+  Tô sáng CSR: *auto* (mặc định: TTY và không *NO_COLOR*), *always*, hoặc
+  *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  Ghi đè gốc mẫu (thường là */usr/share/zephyr*).
+
+*NO_COLOR*::
+  Khi đặt, *zfr about*, *zfr lint*, và *zfr ize* tắt tô sáng CSR
+  ở chế độ *--color auto*.
+
+*PYTHONPATH*::
+  Phải gồm thư mục chứa gói *zfr_lib* khi
+  chạy công cụ từ bố cục cài đặt không mặc định.
+
+== Tests
+
+Cây nguồn (không phải gói đã cài) gồm *tests/* với
+phủ *unittest* Python cho CLI. *meson test* (thư mục build
+*/build*) tìm *tests/test_*.py*. Kiểm thử tạo dự án mẫu tạm thời
+và thử mọi lệnh con (*create*, *add*, *remove*,
+*rename*, *about*, *version*, *lint*, *shape*, *dist*, *ize*, *release*,
+*detect*, *help*), wrapper *zfr-**, chấm điểm tin cậy ngôn ngữ,
+catalog gettext, và sổ tay theo locale *docs/<lang>/zfr.adoc*.
+Khi chạy không qua Meson, đặt *ZFR_PKGDATADIR* về gốc checkout zephyr
+(thư mục cha của *zfr/*) và *PYTHONPATH* về *src/*.
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  Mẫu ngôn ngữ đã cài.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI và wrapper mỏng.
+
+*/usr/share/doc/zephyr/*::
+  Tài liệu gói (LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  Trang sổ tay bản địa hóa, build từ *docs/<locale>/zfr.adoc*
+  (bản dịch toàn văn, không phải mảnh gettext/po4a). Nguồn tiếng Việt là *docs/vi/zfr.adoc*.
+
+== Exit status
+
+*0*::
+  Thành công. Với *lint*, dự án không có phát hiện mức lỗi
+  (cảnh báo vẫn in trừ khi *--strict*).
+
+*non-zero*::
+  Có lỗi (ngôn ngữ không rõ, đích đã tồn tại, phát hiện thất bại,
+  thiếu tệp puff, phát hiện *lint*, v.v.).
+
+== Author
+
+Tác giả {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+Giấy phép AGPL-3.0-or-later.
+Đây là phần mềm tự do: bạn được phép thay đổi và phân phối lại theo
+điều khoản GNU Affero General Public License.
+KHÔNG CÓ BẢO HÀNH, trong phạm vi pháp luật cho phép.
+Xem tệp LICENSE trong bản phân phối nguồn để biết toàn văn giấy phép,
+kèm điều khoản bổ sung nêu rõ dự án này phản đối khai thác AI và
+bá quyền AI, và từ chối cấp phép kiểu MIT vô tư lẫn cấp phép kiểu BSD
+ngây thơ về chính trị.

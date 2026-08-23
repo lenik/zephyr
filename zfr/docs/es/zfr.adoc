@@ -1,0 +1,438 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: Comandos de usuario
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - plantillas de proyectos CLI multilenguaje y herramientas auxiliares
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape*, and *zfr-release* are thin wrappers around the same subcommands.
+
+== Description
+
+*zfr* es la herramienta de línea de comandos de la colección de plantillas
+*zephyr*. Incluye plantillas por lenguaje para utilidades CLI pequeñas y
+ayudas para instanciarlas y gestionarlas.
+
+*Importante:* se espera que los proyectos instanciados sigan invocando *zfr*
+(por ejemplo *zfr version* en *meson.build* y *rpm/Makefile*).
+La cadena *zfr* *no* es un token mágico de create/rename y nunca se
+reescribe al nombre del proyecto. El marcador de plantilla que *sí* se
+reescribe sigue siendo *zephyr* (y *some_puff1* para puffs de ejemplo).
+
+Flujo de trabajo típico:
+
+. Crear un proyecto a partir de una plantilla de lenguaje:
++
+----
+zfr create -l python myproj
+----
+
+. Entrar en el proyecto y añadir *puffs* de aplicación (aplicaciones de ejemplo):
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. Opcionalmente, renombrar el proyecto o eliminar puffs más adelante con
+*rename* / *remove*.
+
+Las plantillas residen en */usr/share/zephyr/<lang>/* cuando están instaladas,
+o en el árbol de fuentes al ejecutar un wrapper de builddir sin instalar como
+*build/zfr* (*ZFR_PKGDATADIR* lo anula). Cada plantilla puede incluir un puff
+de ejemplo llamado *some_puff1*; pase los nombres de puff en la línea de
+comandos de *create* para instanciarlos, u omita los nombres para un proyecto
+vacío.
+
+En un monorepo, *repodir* es la raíz del checkout git (o meta) y *packagedir*
+es el árbol del paquete con forma zephyr (por ejemplo *repodir/bash*).
+Los comandos que recorren desde el directorio actual resuelven *packagedir*
+primero.
+
+*i18n*::
+  El estilo Zephyr recomienda cobertura gettext al menos para:
+  *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
+  *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
+  (alias *zh-cn* / *zh-tw*). El inglés (*en*) es el idioma fuente de *msgid*
+  y no figura en *po/LINGUAS*. Liste esos locales en *po/LINGUAS* y distribuya
+  los archivos *po/<locale>.po* correspondientes.
+
+== Commands
+
+*create*::
+  Copia *pkgdatadir/<lang>/* en un nuevo directorio *./<project_name>/* (falla
+  si el directorio ya existe). Reescribe *zephyr* → *_PROJECT_NAME_* y, cuando
+  se indican nombres de puff, *some_puff1* → el primer *_PUFF_NAME_* (nombres
+  adicionales mediante *add*). Sin nombres de puff, elimina los archivos del
+  puff de plantilla pero conserva los tokens *some_puff1* para que un *add*
+  posterior pueda instanciarlos.
+  Escribe un *debian/changelog* nuevo (se descarta el del template) usando
+  *--distribution* / *--init-version* / *--author* / *--email*, luego ejecuta
+  *git init*, establece *core.hooksPath* en *.githooks* (copia *pre-commit*
+  para mantener *VERSION* sincronizado con *debian/changelog*), un commit
+  inicial y una etiqueta anotada *vVER*.
+
+*rename*::
+  En el directorio del proyecto actual, reescribe *zephyr* → *_PROJECT_NAME_*
+  y, para cada nombre indicado, reescribe el puff de plantilla *some_puff1* →
+  ese nombre. No reescribe *zfr*.
+
+*add*::
+  Detecta el lenguaje del proyecto y copia los archivos del puff de plantilla
+  en el proyecto actual, renombrando *some_puff1* a cada *_PUFF_NAME_* dado.
+  Actualiza las listas de Meson (o cableado equivalente) cuando es posible.
+
+*remove*::
+  Elimina archivos y cableado de Meson para cada nombre de puff indicado en el
+  proyecto actual.
+
+*detect*::
+  Imprime el lenguaje detectado para el directorio actual (recorre directorios
+  padre hasta encontrar la raíz del proyecto).
+
+*about*::
+  Imprime información sobre el proyecto actual. Recorre desde el directorio
+  actual hacia los padres para encontrar la raíz del proyecto (*meson.build*
+  con *project()* o *debian/control*). Los campos habituales (nombre,
+  versión, licencia, página web, mantenedor, resumen, sección, prioridad,
+  distribución, arquitectura) se parsean desde metadatos Debian o RPM y se
+  ajustan al ancho del terminal. También imprime recuentos de archivos/líneas
+  de código fuente y un tamaño estimado del payload. Los terminales
+  interactivos usan colores CSR (console SGR) salvo que *NO_COLOR* esté
+  definido. Use *-d* / *-r* para una vista Debian o RPM parseada completa (no
+  un volcado de los archivos de empaquetado).
+
+*version*::
+  Imprime la versión actual del proyecto (una línea, para scripts). Por
+  defecto es *git describe* cuando *git* y *.git* están disponibles; en caso
+  contrario, la versión más reciente de *debian/changelog*. Recurre a un
+  archivo *VERSION* y luego a *0.0.0*. Un token no semver (por ejemplo un hash
+  git) se envuelve como *0.0.0-<token>*.
+
+*lint*::
+  Valida el proyecto actual frente al estilo de empaquetado y disposición
+  zephyr (recorre desde el directorio actual hacia los padres para encontrar
+  la raíz del proyecto). Informa de archivos faltantes, discrepancias de
+  identidad, errores de Meson/Debian/RPM, tokens *zephyr* / *some_puff1*
+  sobrantes en aplicaciones instanciadas y correcciones sugeridas. Las
+  menciones de *zfr* son esperadas y no se tratan como restos. Para
+  *.githooks/pre-commit*, sube hasta *.git*, respeta *core.hooksPath* y
+  comprueba que el hook sincronice *VERSION* desde *debian/changelog*.
+  Cuando *po/* está presente, advierte si *LINGUAS* no cubre el conjunto de
+  locales gettext recomendado (véase *i18n* en Description).
+  La salida está pensada para humanos y codificadores IA: cada hallazgo tiene
+  un código, ruta y corrección concreta. Los terminales interactivos usan
+  colores CSR salvo que *NO_COLOR* esté definido.
+
+*shape*::
+  Imprime una puntuación *zephyr shape* de 0–100 para el *packagedir* actual
+  (qué tan completamente el árbol coincide con el estilo de empaquetado
+  zephyr). En un monorepo, *packagedir* puede diferir de *repodir* (raíz git /
+  meta); las herramientas usan shape para preferir el directorio del paquete
+  sobre la raíz del repositorio.
+  *\-b* / *--bool* imprime *1* si la puntuación alcanza al menos el umbral
+  (por defecto *50*), en caso contrario *0*.
+
+*dist*::
+  Construye un archivo fuente del proyecto actual (recorre desde el directorio
+  actual hacia los padres para encontrar la raíz del proyecto). Cuando este
+  directorio es la raíz git del proyecto, ejecuta *meson dist* (tras
+  *meson setup*, por defecto *--allow-dirty* y *--no-tests*). Las plantillas de
+  lenguaje anidadas no tienen *.git* propio, así que *meson dist* empaquetaría
+  el meta-repositorio padre; esos árboles reciben un tarball de directorio solo
+  de este proyecto. Imprime la ruta del archivo en stdout. *rpm/Makefile*
+  *dist* y el objetivo ninja Meson *srcdist* reutilizan este comando.
+
+*release*::
+  Parsea las mismas opciones que *gh-makerelease*(1), reconstruye argv y
+  *exec* *gh-makerelease* desde PATH. Este comando no implementa etiquetado,
+  empaquetado ni subidas a GitHub por sí mismo. El proyecto *zephyr* se publica
+  desde la raíz del checkout git (plantillas de lenguaje más *zfr/*). Véase
+  *Options for release* más abajo.
+
+*ize*::
+  Refactoriza el proyecto actual in situ para que coincida con el estilo
+  zephyr actual (recorre desde el directorio actual hacia los padres). Copia
+  andamiaje *debian/* y *rpm/* faltante desde la plantilla de lenguaje
+  (nombres reescritos a este proyecto), escribe *VERSION* y
+  *.githooks/pre-commit*, parchea *meson.build* (*zfr version*, objetivos man
+  *asciidoctor*, *run_target look*, instalación bash-completion). Convierte
+  páginas man groff *\*.1* bajo el proyecto (no *debian/*) en *docs/\*.adoc*
+  con reglas Meson, y convierte versiones de changelog codificadas en *src/*
+  en sustituciones *\*.in* *@VERSION@* o *PROJECT_VERSION* vía *config.h* para
+  lenguajes de la familia C. *\-n* / *--dry-run* imprime el plan sin escribir.
+  Después ejecute *zfr lint*.
+
+*help*::
+  Muestra la ayuda de línea de comandos.
+
+== Options
+
+Options for *create*:
+
+*-l, --lang* _LANG_::
+  Plantilla de lenguaje a usar (por defecto: *python*).
+  Los valores admitidos incluyen *bash*, *c*, *clib*, *cpp*, *cpplib*,
+  *csharp*, *erlang*, *go*, *haskell*, *java*, *perl*, *python*, *ruby*,
+  *rust*, *smalltalk*, *swift* y *typescript*.
+
+*-D, --distribution* _DIST_::
+  Distribución del changelog Debian (por defecto: *unstable*).
+
+*-1, --init-version* _VER_::
+  Versión inicial del paquete y etiqueta git (por defecto: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  Nombre del autor en changelog y git (por defecto: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  Correo del autor en changelog y git (por defecto: *lenik@bodz.net*).
+
+Options for *about*:
+
+*-d, --debian*::
+  Muestra campos parseados del empaquetado Debian (*debian/control*, última
+  entrada de *debian/changelog*). Las listas como *Build-Depends* se ajustan
+  al ancho del terminal; la descripción larga se reformatea en párrafos.
+
+*-r, --redhat*::
+  Muestra campos parseados del empaquetado RPM desde *rpm/*.spec* (macros como
+  *%{version}* se muestran usando *zfr version -r*). El cuerpo de
+  *%description* se reformatea; no se vuelcan los scriptlets del spec.
+
+*--color* _WHEN_::
+  Resaltado CSR: *auto* (por defecto: TTY y sin *NO_COLOR*), *always* o
+  *never*.
+
+Options for *version*:
+
+*-g, --git*::
+  Usa *git describe --tags --always --dirty* (por defecto cuando *git* y *.git*
+  están disponibles).
+
+*-c, --changelog*::
+  Usa la versión más reciente de *debian/changelog* (por defecto cuando *git*
+  o *.git* no están disponibles).
+
+*-r, --rpm*::
+  Imprime un *Version* compatible con RPM (guiones convertidos en guiones
+  bajos).
+
+Options for *lint*:
+
+*-v, --verbose*::
+  También imprime comprobaciones superadas.
+
+*-q, --quiet*::
+  Solo imprime errores.
+
+*--strict*::
+  Trata advertencias como fallos (código de salida 1).
+
+*--color* _WHEN_::
+  Resaltado CSR: *auto* (por defecto: TTY y sin *NO_COLOR*), *always* o
+  *never*.
+
+Options for *shape*:
+
+*-b, --bool*::
+  Imprime *1* si la puntuación shape alcanza al menos *--threshold*, en caso
+  contrario *0*.
+
+*-v, --verbose*::
+  Imprime *packagedir*, *repodir*, *role* y *threshold* en error estándar.
+
+*--threshold* _N_::
+  Umbral para *--bool* (por defecto: *50*).
+
+Options for *dist*:
+
+*-o, --output* _DIR_::
+  Escribe el archivo en *_DIR_* (por defecto: el directorio Meson *meson-dist*,
+  o *rpmbuild/SOURCES* con *--rpm*).
+
+*-b, --builddir* _DIR_::
+  Directorio de build Meson. Por defecto es */build* cuando ese builddir fue
+  configurado para este árbol de fuentes; en caso contrario *<project>/build*.
+
+*-f, --format* _FMT_::
+  Formato del archivo: *xz* (por defecto), *gz* o *zip*.
+
+*--rpm*::
+  Nombra el archivo *_NAME_*-*_VERSION_*.tar.xz y lo escribe en
+  *rpmbuild/SOURCES* salvo que se indique *-o*. Usado por *rpm/Makefile*.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  Pasa *--allow-dirty* a *meson dist* (por defecto: permitir).
+
+*--tests*::
+  Ejecuta pruebas durante *meson dist* (por defecto es *--no-tests*).
+
+Options for *release* (parsed here, passed through to *gh-makerelease*):
+
+*-b, --build-binary*::
+  Build Debian solo binario (*-b*); sin _.dsc_.
+*-n, --no-pre-clean*::
+  Reutiliza la caché de build Debian.
+*-u, --upload*::
+  Reutiliza artefactos existentes del ámbito de versión cuando están presentes.
+*--unsigned*::
+  Construye paquetes Debian sin firmar (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  Host de subida *dput*(1) para el archivo _.changes_.
+*-d, --docker*::
+  Construye el paquete Debian con *build4*(1) en Docker.
+*-B, --base-image* _IMAGE_::
+  Imagen objetivo de *build4* (por defecto: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  Ejecuta *build4* por SSH en *SERVER* (implica *-d*).
+*-l, --local*::
+  Solo build; no etiqueta, empuja ni crea release en GitHub.
+*-f, --force*::
+  Reemplaza una etiqueta/release existente.
+*-I, --no-install*::
+  Omite *sudo dpkg -i*.
+*-T, --no-tag*::
+  Omite crear y empujar la etiqueta git de release.
+*-U, --no-upload*::
+  Omite *dput* del archivo _.changes_.
+*-R, --no-release*::
+  Omite crear el release en GitHub.
+*-P, --no-publish*::
+  Omite publicación en el marketplace VSIX.
+*-Y, --no-rpm*::
+  Omite *make -C rpm rpm srpm*.
+*-D, --no-deb*::
+  Omite *debuild* Debian.
+*-v, --verbose*::
+  Registro detallado (repetible).
+*-q, --quiet*::
+  Menos salida (repetible).
+
+Options for *ize*:
+
+*-l, --lang* _LANG_::
+  Plantilla de lenguaje de la que copiar andamiaje (por defecto: detectar).
+
+*-n, --dry-run*::
+  Imprime adiciones/actualizaciones/conversiones planificadas sin escribir
+  archivos.
+
+*-v, --verbose*::
+  También imprime rutas omitidas que ya están presentes.
+
+*--no-man*::
+  No convierte fuentes groff *\*.1* a *docs/\*.adoc*.
+
+*--no-subst*::
+  No reescribe versiones codificadas en *src/* a *@VERSION@* / *config.h*.
+
+*--color* _WHEN_::
+  Resaltado CSR: *auto* (por defecto: TTY y sin *NO_COLOR*), *always* o
+  *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  Anula la raíz de plantillas (normalmente */usr/share/zephyr*).
+
+*NO_COLOR*::
+  Cuando está definido, *zfr about*, *zfr lint* y *zfr ize* desactivan el
+  resaltado CSR en modo *--color auto*.
+
+*PYTHONPATH*::
+  Debe incluir el directorio que contiene el paquete *zfr_lib* al ejecutar las
+  herramientas desde un layout de instalación no predeterminado.
+
+== Tests
+
+El árbol de fuentes (no el paquete instalado) incluye *tests/* con cobertura
+*unittest* de Python del CLI. *meson test* (directorio de build */build*)
+descubre *tests/test_*.py*. Las pruebas crean proyectos de ejemplo temporales
+y ejercitan cada subcomando (*create*, *add*, *remove*, *rename*, *about*,
+*version*, *lint*, *shape*, *dist*, *ize*, *release*, *detect*, *help*), los
+wrappers *zfr-**, puntuación de confianza por lenguaje, catálogos gettext y
+los manuales *docs/<lang>/zfr.adoc* por locale. Al ejecutar sin Meson,
+defina *ZFR_PKGDATADIR* en la raíz del checkout zephyr (padre de *zfr/*) y
+*PYTHONPATH* en *src/*.
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  Plantillas de lenguaje instaladas.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI y wrappers ligeros.
+
+*/usr/share/doc/zephyr/*::
+  Documentación del paquete (LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  Páginas de manual localizadas, generadas desde *docs/<locale>/zfr.adoc*
+  (traducciones completas del documento, no fragmentos gettext/po4a).
+
+== Exit status
+
+*0*::
+  Éxito. Para *lint*, el proyecto no tiene hallazgos de nivel error (las
+  advertencias siguen imprimiéndose salvo *--strict*).
+
+*non-zero*::
+  Ocurrió un error (lenguaje desconocido, destino existente, fallo de
+  detección, archivos puff faltantes, hallazgos de *lint*, etc.).
+
+== Author
+
+Escrito por {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+Licencia AGPL-3.0-or-later.
+Este es software libre: puede modificarlo y redistribuirlo bajo los términos de
+la GNU Affero General Public License.
+NO HAY GARANTÍA, en la medida permitida por la ley.
+Consulte el archivo LICENSE en la distribución de fuentes para el texto
+completo de la licencia, incluidos términos suplementarios que declaran que
+este proyecto se opone a la explotación de IA y al hegemonismo de IA, y
+rechaza licencias al estilo MIT sin criterio y licencias al estilo BSD
+políticamente ingenuas.

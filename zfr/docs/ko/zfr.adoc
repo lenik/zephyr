@@ -1,0 +1,412 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: 사용자 명령
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - 다국어 CLI 프로젝트 템플릿 및 헬퍼 도구
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape*, *zfr-release*는 동일한 하위 명령을 감싸는 얇은 래퍼이다.
+
+== Description
+
+*zfr*는 *zephyr* 템플릿 모음의 명령줄 도구이다.
+작은 명령줄 유틸리티용 언어 템플릿과 이를 인스턴스화·관리하는
+헬퍼를 제공한다.
+
+*중요:* 인스턴스화된 프로젝트는 계속 *zfr*을 호출할 것으로 기대된다
+(예: *meson.build* 및 *rpm/Makefile*의 *zfr version*).
+문자열 *zfr*은 create/rename 매직 토큰이 *아니며* 프로젝트 이름으로
+다시 쓰이지 않는다. 다시 쓰이는 템플릿 자리 표시자는 *zephyr*
+(샘플 puff용 *some_puff1*)이다.
+
+일반적인 워크플로:
+
+. 언어 템플릿에서 프로젝트 생성:
++
+----
+zfr create -l python myproj
+----
+
+. 프로젝트로 들어가 애플리케이션 *puffs*(예제 앱) 추가:
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. 필요하면 나중에 *rename* / *remove*로 프로젝트 이름 변경 또는 puff 제거.
+
+템플릿은 설치 시 */usr/share/zephyr/<lang>/*에 있으며, 미설치 builddir
+래퍼(예: *build/zfr*) 실행 시에는 소스 트리에 있다
+(*ZFR_PKGDATADIR*로 재정의). 각 템플릿에는 *some_puff1*이라는
+샘플 puff가 포함될 수 있다; *create* 명령줄에 puff 이름을 넘기면
+인스턴스화하고, 생략하면 빈 프로젝트가 된다.
+
+모노레포에서 *repodir*는 git(또는 meta) checkout 루트이고 *packagedir*는
+zephyr 형태의 패키지 트리(예: *repodir/bash*)이다.
+현재 디렉터리에서 탐색하는 명령은 먼저 *packagedir*를 해석한다.
+
+*i18n*::
+  Zephyr 스타일은 최소한 다음 locale에 대한 gettext 커버리지를 권장한다:
+  *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
+  *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
+  (별칭 *zh-cn* / *zh-tw*). 영어(*en*)는 소스 *msgid* 언어이며
+  *po/LINGUAS*에 나열하지 않는다. 해당 locale을 *po/LINGUAS*에 나열하고
+  일치하는 *po/<locale>.po* 파일을 함께 배포한다.
+
+== Commands
+
+*create*::
+  *pkgdatadir/<lang>/*를 새 디렉터리 *./<project_name>/*에 복사한다
+  (디렉터리가 이미 있으면 실패). *zephyr* → *_PROJECT_NAME_*을 다시 쓰고,
+  puff 이름이 주어지면 *some_puff1* → 첫 번째 *_PUFF_NAME_*
+  (추가 이름은 *add*로). puff 이름이 없으면 템플릿 puff 파일은 제거하되
+  *some_puff1* 토큰은 남겨 나중에 *add*로 인스턴스화할 수 있게 한다.
+  새 *debian/changelog*를 작성한다(템플릿 changelog는 폐기),
+  *--distribution* / *--init-version* / *--author* / *--email* 사용 후
+  *git init*, *core.hooksPath*를 *.githooks*로 설정(*pre-commit* 복사로
+  *VERSION*을 *debian/changelog*와 동기화), 초기 커밋, 주석 태그 *vVER*.
+
+*rename*::
+  현재 프로젝트 디렉터리에서 *zephyr* → *_PROJECT_NAME_*을 다시 쓰고,
+  각 주어진 이름에 대해 템플릿 puff *some_puff1* → 그 이름을 다시 쓴다.
+  *zfr*은 다시 쓰지 않는다.
+
+*add*::
+  프로젝트 언어를 감지하고 템플릿 puff 파일을 현재 프로젝트에 복사하며
+  *some_puff1*을 각 *_PUFF_NAME_*으로 이름을 바꾼다. 가능하면 Meson
+  목록(또는 동등한 배선)을 갱신한다.
+
+*remove*::
+  현재 프로젝트에서 각 주어진 puff 이름의 파일과 Meson 배선을 제거한다.
+
+*detect*::
+  현재 디렉터리의 감지된 언어를 출력한다
+  (부모 디렉터리를 따라 프로젝트 루트를 찾는다).
+
+*about*::
+  현재 프로젝트 정보를 출력한다. 현재 디렉터리에서 부모 방향으로
+  프로젝트 루트(*project()*가 있는 *meson.build* 또는 *debian/control*)를
+  찾는다. 공통 필드(name, version, license, homepage, maintainer,
+  summary, section, priority, distribution, architecture)는 Debian 또는
+  RPM 메타데이터에서 파싱되어 터미널 너비에 맞게 줄바꿈된다.
+  소스 파일/줄 수와 추정 페이로드 크기도 출력한다. 대화형 터미널은
+  *NO_COLOR*가 설정되지 않았으면 CSR(console SGR) 색을 사용한다.
+  *-d* / *-r*로 전체 파싱된 Debian 또는 RPM 보기(패키징 파일 덤프 아님).
+
+*version*::
+  현재 프로젝트 버전을 출력한다(한 줄, 스크립트용). 기본값은 *git*과
+  *.git*이 있으면 *git describe*, 그렇지 않으면 최신 *debian/changelog* 버전.
+  *VERSION* 파일, 그다음 *0.0.0*으로 폴백.
+  비-semver 토큰(예: git hash)은 *0.0.0-<token>*으로 감싼다.
+
+*lint*::
+  현재 프로젝트를 zephyr 패키징·레이아웃 스타일에 대해 검증한다
+  (현재 디렉터리에서 부모 방향으로 프로젝트 루트를 찾는다).
+  누락 파일, identity 불일치, Meson/Debian/RPM 오류, 인스턴스화된 앱에
+  남은 *zephyr* / *some_puff1* 토큰, 수정 제안을 보고한다. *zfr* 언급은
+  예상되며 잔여물로 취급하지 않는다. *.githooks/pre-commit*의 경우
+  *.git*까지 올라가 *core.hooksPath*를 따르고, 훅이 *debian/changelog*에서
+  *VERSION*을 동기화하는지 확인한다. *po/*가 있으면 *LINGUAS*가 권장
+  gettext locale 집합을 커버하지 않을 때 경고한다(Description의 *i18n* 참조).
+  출력은 사람과 AI 코더용: 각 발견에 코드, 경로, 구체적 수정이 있다.
+  대화형 터미널은 *NO_COLOR*가 없으면 CSR 색을 사용한다.
+
+*shape*::
+  현재 *packagedir*에 대한 0–100 *zephyr shape* 점수를 출력한다
+  (트리가 zephyr 패키징 스타일과 얼마나 일치하는지).
+  모노레포에서 *packagedir*는 *repodir*(git / meta 루트)와 다를 수 있다;
+  도구는 shape로 저장소 루트보다 패키지 디렉터리를 선호한다.
+  *\-b* / *--bool*은 점수가 임계값(기본 *50*) 이상이면 *1*, 그렇지 않으면 *0*을 출력한다.
+
+*dist*::
+  현재 프로젝트의 소스 아카이브를 만든다(현재 디렉터리에서 부모 방향으로
+  프로젝트 루트를 찾는다). 이 디렉터리가 git 프로젝트 루트이면 *meson dist*를
+  실행한다(*meson setup* 후, 기본 *--allow-dirty* 및 *--no-tests*).
+  중첩 언어 템플릿은 자체 *.git*이 없어 *meson dist*가 상위 meta-repo를
+  패킹할 것이다; 이런 트리는 이 프로젝트만의 디렉터리 tarball을 받는다.
+  아카이브 경로를 stdout에 출력한다. *rpm/Makefile* *dist*와 Meson *srcdist*
+  ninja 타깃이 이 명령을 재사용한다.
+
+*release*::
+  *gh-makerelease*(1)와 동일한 옵션을 파싱하고 argv를 재구성한 뒤 PATH에서
+  *gh-makerelease*를 *exec*한다. 이 명령 자체는 태깅, 패키징, GitHub 업로드를
+  구현하지 않는다. *zephyr* 프로젝트는 git checkout 루트(언어 템플릿 및 *zfr/*)에서
+  릴리스된다. 아래 *release* 옵션 참조.
+
+*ize*::
+  현재 프로젝트를 제자리에서 리팩터링해 현행 zephyr 스타일에 맞춘다
+  (현재 디렉터리에서 부모 방향으로 탐색). 언어 템플릿에서 누락된
+  *debian/* 및 *rpm/* 스캐폴딩을 복사(이름을 이 프로젝트에 맞게 다시 씀),
+  *VERSION* 및 *.githooks/pre-commit* 작성, *meson.build* 패치
+  (*zfr version*, *asciidoctor* man 타깃, *run_target look*,
+  bash-completion 설치). 프로젝트 내(*debian/* 제외) groff *\*.1* man 페이지를
+  Meson 규칙과 함께 *docs/\*.adoc*로 변환하고, *src/*의 하드코딩 changelog
+  버전을 *\*.in* *@VERSION@* 치환 또는 C 계열용 *config.h*의 *PROJECT_VERSION*으로
+  바꾼다.
+  *\-n* / *--dry-run*은 쓰기 없이 계획만 출력한다.
+  이후 *zfr lint*를 실행한다.
+
+*help*::
+  명령줄 도움말을 표시한다.
+
+== Options
+
+*create* 옵션:
+
+*-l, --lang* _LANG_::
+  사용할 언어 템플릿(기본값: *python*).
+  지원 값에는 *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*,
+  *haskell*, *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift*,
+  *typescript* 등이 있다.
+
+*-D, --distribution* _DIST_::
+  Debian changelog distribution(기본값: *unstable*).
+
+*-1, --init-version* _VER_::
+  초기 패키지 버전 및 git 태그(기본값: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  changelog 및 git 작성자 이름(기본값: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  changelog 및 git 작성자 이메일(기본값: *lenik@bodz.net*).
+
+*about* 옵션:
+
+*-d, --debian*::
+  파싱된 Debian 패키징 필드 표시(*debian/control*, 최신
+  *debian/changelog* 항목). *Build-Depends* 같은 목록은 터미널 너비에
+  줄바꿈; 긴 설명은 단락으로 재배치.
+
+*-r, --redhat*::
+  *rpm/*.spec*에서 파싱된 RPM 패키징 필드 표시(*%{version}* 같은 매크로는
+  *zfr version -r*로 표시). *%description* 본문은 재배치;
+  spec scriptlet은 덤프하지 않음.
+
+*--color* _WHEN_::
+  CSR 강조: *auto*(기본: TTY이고 *NO_COLOR* 없음), *always*, *never*.
+
+*version* 옵션:
+
+*-g, --git*::
+  *git describe --tags --always --dirty* 사용(*git*과 *.git* 사용 가능 시
+  기본값).
+
+*-c, --changelog*::
+  최신 *debian/changelog* 버전 사용(*git* 또는 *.git* 사용 불가 시 기본값).
+
+*-r, --rpm*::
+  RPM 호환 *Version* 출력(하이픈을 밑줄로 매핑).
+
+*lint* 옵션:
+
+*-v, --verbose*::
+  통과한 검사도 출력.
+
+*-q, --quiet*::
+  오류만 출력.
+
+*--strict*::
+  경고를 실패로 처리(종료 상태 1).
+
+*--color* _WHEN_::
+  CSR 강조: *auto*(기본: TTY이고 *NO_COLOR* 없음), *always*, *never*.
+
+*shape* 옵션:
+
+*-b, --bool*::
+  shape 점수가 *--threshold* 이상이면 *1*, 그렇지 않으면 *0* 출력.
+
+*-v, --verbose*::
+  *packagedir*, *repodir*, *role*, *threshold*를 stderr에 출력.
+
+*--threshold* _N_::
+  *--bool* 임계값(기본값: *50*).
+
+*dist* 옵션:
+
+*-o, --output* _DIR_::
+  아카이브를 *_DIR_*에 기록(기본값: Meson *meson-dist*
+  디렉터리 또는 *--rpm* 시 *rpmbuild/SOURCES*).
+
+*-b, --builddir* _DIR_::
+  Meson 빌드 디렉터리. 기본값은 이 소스 트리용으로 */build*가
+  구성되었으면 */build*, 그렇지 않으면 *<project>/build*.
+
+*-f, --format* _FMT_::
+  아카이브 형식: *xz*(기본), *gz*, *zip*.
+
+*--rpm*::
+  아카이브 이름 *_NAME_*-*_VERSION_*.tar.xz, *-o* 없으면
+  *rpmbuild/SOURCES*에 기록. *rpm/Makefile*에서 사용.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  *meson dist*에 *--allow-dirty* 전달(기본: 허용).
+
+*--tests*::
+  *meson dist* 중 테스트 실행(기본은 *--no-tests*).
+
+*release* 옵션(여기서 파싱, *gh-makerelease*로 전달):
+
+*-b, --build-binary*::
+  Debian 바이너리만 빌드(*-b*); _.dsc_ 없음.
+*-n, --no-pre-clean*::
+  Debian 빌드 캐시 재사용.
+*-u, --upload*::
+  기존 버전 범위 아티팩트가 있으면 재사용.
+*--unsigned*::
+  서명 없는 Debian 패키지 빌드(*-us -uc*).
+*-p, --dput-host* _HOST_::
+  _.changes_ 파일의 *dput*(1) 업로드 호스트.
+*-d, --docker*::
+  Docker에서 *build4*(1)로 Debian 패키지 빌드.
+*-B, --base-image* _IMAGE_::
+  *build4* 대상 이미지(기본값: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  SSH로 *SERVER*에서 *build4* 실행(*-d* 암시).
+*-l, --local*::
+  빌드만; 태그, push, GitHub release 없음.
+*-f, --force*::
+  기존 태그/release 교체.
+*-I, --no-install*::
+  *sudo dpkg -i* 건너뜀.
+*-T, --no-tag*::
+  git release 태그 생성 및 push 건너뜀.
+*-U, --no-upload*::
+  _.changes_ 파일 *dput* 건너뜀.
+*-R, --no-release*::
+  GitHub release 생성 건너뜀.
+*-P, --no-publish*::
+  VSIX marketplace 게시 건너뜀.
+*-Y, --no-rpm*::
+  *make -C rpm rpm srpm* 건너뜀.
+*-D, --no-deb*::
+  Debian *debuild* 건너뜀.
+*-v, --verbose*::
+  자세한 로깅(반복 가능).
+*-q, --quiet*::
+  출력 감소(반복 가능).
+
+*ize* 옵션:
+
+*-l, --lang* _LANG_::
+  스캐폴딩을 복사할 언어 템플릿(기본값: 감지).
+
+*-n, --dry-run*::
+  파일 쓰기 없이 예정 추가/갱신/변환 출력.
+
+*-v, --verbose*::
+  이미 있는 경로로 건너뛴 항목도 출력.
+
+*--no-man*::
+  groff *\*.1* 소스를 *docs/\*.adoc*로 변환하지 않음.
+
+*--no-subst*::
+  *src/*의 하드코딩 버전을 *@VERSION@* / *config.h*로 다시 쓰지 않음.
+
+*--color* _WHEN_::
+  CSR 강조: *auto*(기본: TTY이고 *NO_COLOR* 없음), *always*, *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  템플릿 루트 재정의(보통 */usr/share/zephyr*).
+
+*NO_COLOR*::
+  설정 시 *zfr about*, *zfr lint*, *zfr ize*가 *--color auto* 모드의
+  CSR 강조를 비활성화.
+
+*PYTHONPATH*::
+  비기본 설치 레이아웃에서 도구를 실행할 때 *zfr_lib* 패키지가 있는
+  디렉터리를 포함해야 한다.
+
+== Tests
+
+소스 트리(설치된 패키지 아님)에는 CLI를 Python *unittest*로
+커버하는 *tests/*가 있다. *meson test*(빌드 디렉터리 */build*)는
+*tests/test_*.py*를 찾는다. 테스트는 임시 예제 프로젝트를 만들고
+모든 하위 명령(*create*, *add*, *remove*, *rename*, *about*, *version*,
+*lint*, *shape*, *dist*, *ize*, *release*, *detect*, *help*), *zfr-**
+래퍼, 언어 신뢰도 점수, gettext 카탈로그, locale별 *docs/<lang>/zfr.adoc*
+로컬화 매뉴얼을 검증한다. Meson 없이 실행할 때 *ZFR_PKGDATADIR*를
+zephyr checkout 루트(*zfr/*의 부모)로, *PYTHONPATH*를 *src/*로 설정한다.
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  설치된 언어 템플릿.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI 및 얇은 래퍼.
+
+*/usr/share/doc/zephyr/*::
+  패키지 문서(LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  로컬화 man 페이지, *docs/<locale>/zfr.adoc*에서 빌드
+  (gettext/po4a 조각이 아닌 전체 문서 번역).
+
+== Exit status
+
+*0*::
+  성공. *lint*에서는 프로젝트에 오류 수준 발견이 없음
+  (*--strict*가 아니면 경고는 여전히 출력).
+
+*non-zero*::
+  오류 발생(알 수 없는 언어, 대상 이미 존재, 감지 실패,
+  puff 파일 누락, *lint* 발견 등).
+
+== Author
+
+{project-author} <{project-email}> 작성.
+
+== Copyright
+
+Copyright (C) {project-year}.
+라이선스 AGPL-3.0-or-later.
+이것은 자유 소프트웨어: GNU Affero General Public License 조건 하에서
+변경 및 재배포가 자유롭다.
+법이 허용하는 범위에서 보증 없음.
+전체 라이선스 문구는 소스 배포의 LICENSE 파일 참조,
+본 프로젝트가 AI 착취와 AI 헤게모니에 반대하며 무비판적 MIT형 및
+정치적으로 naive한 BSD형 라이선스를 거부한다는 추가 조항 포함.

@@ -1,3 +1,15 @@
+zephyr (2.0.0) testing; urgency=medium
+
+  * zfr --version reads git describe / changelog / VERSION (not a
+    hardcoded string in src/zfr).
+  * Expand tests to cover every subcommand and zfr-* wrapper, language
+    scoring, gettext completeness, and per-locale manpage sources.
+  * Ship whole-document AsciiDoc translations under docs/<lang>/zfr.adoc
+    for all recommended locales; drop po4a/po/man catalogs.
+  * Complete native gettext translations for every LINGUAS catalog.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 23 Aug 2026 19:45:00 +0800
+
 zephyr (1.10.0) testing; urgency=medium
 
   * Split zfr commands into per-command modules; argparse lives with each

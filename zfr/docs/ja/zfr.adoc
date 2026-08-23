@@ -1,0 +1,417 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: ユーザーコマンド
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - 多言語 CLI プロジェクトテンプレートとヘルパーツール
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*、*zfr-rename*、*zfr-add*、*zfr-remove*、
+*zfr-about*、*zfr-version*、*zfr-lint*、*zfr-dist*、*zfr-ize*、
+*zfr-shape*、*zfr-release* は、同じサブコマンドを呼び出す薄いラッパーである。
+
+== Description
+
+*zfr* は *zephyr* テンプレート集のコマンドラインツールである。
+小さなコマンドライン向けユーティリティ用の言語テンプレートと、
+それらをインスタンス化・管理するためのヘルパーを提供する。
+
+*重要:* インスタンス化したプロジェクトは引き続き *zfr* を呼び出すことが想定される
+（例: *meson.build* や *rpm/Makefile* 内の *zfr version*）。
+文字列 *zfr* は create/rename のマジックトークンでは*なく*、
+プロジェクト名へ書き換えられることはない。書き換え対象のテンプレート
+プレースホルダーは *zephyr*（サンプル puff 用に *some_puff1*）のままである。
+
+典型的なワークフロー:
+
+. 言語テンプレートからプロジェクトを作成する:
++
+----
+zfr create -l python myproj
+----
+
+. プロジェクトに入り、アプリケーション *puffs*（サンプルアプリ）を追加する:
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. 必要に応じて、後から *rename* / *remove* でプロジェクト名の変更や puff の削除を行う。
+
+テンプレートはインストール時 */usr/share/zephyr/<lang>/* に置かれ、
+未インストールの builddir ラッパー（例: *build/zfr*）実行時はソースツリー内にある
+（*ZFR_PKGDATADIR* で上書き可能）。各テンプレートには *some_puff1* という
+サンプル puff が含まれる場合がある。*create* コマンドラインで puff 名を渡すと
+インスタンス化され、省略すると空のプロジェクトになる。
+
+モノレポでは *repodir* が git（または meta）checkout のルート、*packagedir* が
+zephyr 形式のパッケージツリー（例: *repodir/bash*）である。
+カレントディレクトリから走査するコマンドは、まず *packagedir* を解決する。
+
+*i18n*::
+  Zephyr スタイルでは、少なくとも次の locale について gettext カバレッジを推奨する:
+  *ar*、*bn*、*de*、*es*、*fr*、*hi*、*id*、*it*、*ja*、*ko*、*pt*、*ru*、
+  *sv*、*ta*、*te*、*th*、*tr*、*ur*、*vi*、*zh_CN*、*zh_TW*
+  （エイリアス *zh-cn* / *zh-tw*）。英語（*en*）はソース *msgid* 言語であり、
+  *po/LINGUAS* には載せない。これらの locale を *po/LINGUAS* に列挙し、
+  対応する *po/<locale>.po* ファイルを同梱する。
+
+== Commands
+
+*create*::
+  *pkgdatadir/<lang>/* を新しいディレクトリ *./<project_name>/* にコピーする
+  （ディレクトリが既に存在する場合は失敗）。*zephyr* → *_PROJECT_NAME_* を
+  書き換え、puff 名が指定された場合は *some_puff1* → 最初の *_PUFF_NAME_*
+  （追加の名前は *add* 経由）。puff 名がない場合はテンプレート puff ファイルを
+  削除するが *some_puff1* トークンは残し、後から *add* でインスタンス化できる。
+  新しい *debian/changelog* を書き込む（テンプレート changelog は破棄）、
+  *--distribution* / *--init-version* / *--author* / *--email* を使用し、
+  続けて *git init*、*core.hooksPath* を *.githooks* に設定（*pre-commit* を
+  コピーし *VERSION* を *debian/changelog* と同期）、初期コミット、
+  注釈付きタグ *vVER* を行う。
+
+*rename*::
+  カレントプロジェクトディレクトリで *zephyr* → *_PROJECT_NAME_* を書き換え、
+  各指定名についてテンプレート puff *some_puff1* → その名前を書き換える。
+  *zfr* は書き換えない。
+
+*add*::
+  プロジェクト言語を検出し、テンプレート puff ファイルをカレントプロジェクトに
+  コピーし、*some_puff1* を各 *_PUFF_NAME_* にリネームする。可能なら Meson リスト
+  （または同等の配線）を更新する。
+
+*remove*::
+  カレントプロジェクトから、各指定 puff 名のファイルと Meson 配線を削除する。
+
+*detect*::
+  カレントディレクトリの検出言語を表示する
+  （親ディレクトリをたどってプロジェクトルートを探す）。
+
+*about*::
+  カレントプロジェクトの情報を表示する。カレントディレクトリから親方向に
+  たどりプロジェクトルート（*project()* を含む *meson.build* または
+  *debian/control*）を探す。共通フィールド（name、version、license、
+  homepage、maintainer、summary、section、priority、distribution、
+  architecture）は Debian または RPM メタデータから解析し、端末幅に折り返す。
+  ソースファイル数・行数と推定ペイロードサイズも表示する。対話端末では
+  *NO_COLOR* が未設定なら CSR（console SGR）色を使用する。*-d* / *-r* で
+  解析済み Debian または RPM ビュー全体（パッケージングファイルのダンプではない）。
+
+*version*::
+  カレントプロジェクトのバージョンを表示する（1 行、スクリプト用）。デフォルトは
+  *git* と *.git* が利用可能なら *git describe*、そうでなければ最新の
+  *debian/changelog* バージョン。*VERSION* ファイル、次に *0.0.0* にフォールバック。
+  非 semver トークン（例: git hash）は *0.0.0-<token>* として包む。
+
+*lint*::
+  カレントプロジェクトを zephyr のパッケージング・レイアウトスタイルに対して検証する
+  （カレントディレクトリから親方向にプロジェクトルートを探す）。
+  欠落ファイル、同一性の不一致、Meson/Debian/RPM の誤り、インスタンス化済みアプリに
+  残る *zephyr* / *some_puff1* トークン、修正提案を報告する。*zfr* の言及は
+  想定内であり残存物として扱わない。*.githooks/pre-commit* については *.git* まで
+  たどり、*core.hooksPath* を尊重し、フックが *debian/changelog* から *VERSION* を
+  同期することを確認する。*po/* がある場合、*LINGUAS* が推奨 gettext locale 集合を
+  カバーしていなければ警告する（Description の *i18n* 参照）。
+  出力は人間と AI コーダー向け: 各所見にコード、パス、具体的な修正がある。
+  対話端末では *NO_COLOR* が未設定なら CSR 色を使用する。
+
+*shape*::
+  カレント *packagedir* の 0–100 *zephyr shape* スコアを表示する
+  （ツリーが zephyr パッケージングスタイルにどれだけ一致するか）。
+  モノレポでは *packagedir* が *repodir*（git / meta ルート）と異なる場合がある;
+  ツールは shape を使いリポジトリルートよりパッケージディレクトリを優先する。
+  *\-b* / *--bool* はスコアが閾値（デフォルト *50*）以上なら *1*、それ以外は *0* を出力する。
+
+*dist*::
+  カレントプロジェクトのソースアーカイブを構築する（カレントディレクトリから
+  親方向にプロジェクトルートを探す）。このディレクトリが git プロジェクトルートなら
+  *meson dist* を実行する（*meson setup* の後、デフォルト *--allow-dirty* と
+  *--no-tests*）。ネストした言語テンプレートは独自の *.git* を持たないため
+  *meson dist* は親 meta-repo をパックしてしまう; そのようなツリーには
+  このプロジェクトのみのディレクトリ tarball を与える。アーカイブパスを stdout に
+  表示する。*rpm/Makefile* の *dist* と Meson *srcdist* ninja ターゲットは
+  このコマンドを再利用する。
+
+*release*::
+  *gh-makerelease*(1) と同じオプションを解析し、argv を再構築して PATH から
+  *gh-makerelease* を *exec* する。このコマンド自体はタグ付け、パッケージング、
+  GitHub アップロードを実装しない。*zephyr* プロジェクトは git checkout ルート
+  （言語テンプレートと *zfr/*）からリリースされる。下記 *release* のオプション参照。
+
+*ize*::
+  カレントプロジェクトをその場でリファクタし、現行 zephyr スタイルに合わせる
+  （カレントディレクトリから親方向にたどる）。言語テンプレートから不足している
+  *debian/* と *rpm/* の足場をコピー（名前をこのプロジェクト向けに書き換え）、
+  *VERSION* と *.githooks/pre-commit* を書き、*meson.build* をパッチ
+  （*zfr version*、*asciidoctor* man ターゲット、*run_target look*、
+  bash-completion インストール）。プロジェクト内（*debian/* 以外）の groff
+  *\*.1* man ページを Meson ルール付き *docs/\*.adoc* に変換し、*src/* の
+  ハードコード changelog バージョンを *\*.in* *@VERSION@* 置換または C 系言語向け
+  *config.h* 経由の *PROJECT_VERSION* に変える。
+  *\-n* / *--dry-run* は書き込みなしで計画を表示する。
+  その後 *zfr lint* を実行する。
+
+*help*::
+  コマンドラインヘルプを表示する。
+
+== Options
+
+*create* のオプション:
+
+*-l, --lang* _LANG_::
+  使用する言語テンプレート（デフォルト: *python*）。
+  サポート値には *bash*、*c*、*clib*、*cpp*、*cpplib*、*csharp*、*erlang*、*go*、
+  *haskell*、*java*、*perl*、*python*、*ruby*、*rust*、*smalltalk*、*swift*、
+  *typescript* などがある。
+
+*-D, --distribution* _DIST_::
+  Debian changelog の distribution（デフォルト: *unstable*）。
+
+*-1, --init-version* _VER_::
+  初期パッケージバージョンと git タグ（デフォルト: *0.0.1*）。
+
+*-a, --author* _AUTHOR_::
+  changelog と git の作者名（デフォルト: *Lenik (谢继雷)*）。
+
+*-e, --email* _EMAIL_::
+  changelog と git の作者メール（デフォルト: *lenik@bodz.net*）。
+
+*about* のオプション:
+
+*-d, --debian*::
+  解析済み Debian パッケージングフィールドを表示（*debian/control*、最新
+  *debian/changelog* エントリ）。*Build-Depends* などのリストは端末幅に折り返す;
+  長い説明は段落として再整形する。
+
+*-r, --redhat*::
+  *rpm/*.spec* から解析済み RPM パッケージングフィールドを表示（*%{version}* などの
+  マクロは *zfr version -r* で表示）。*%description* 本文は再整形;
+  spec scriptlet はダンプしない。
+
+*--color* _WHEN_::
+  CSR ハイライト: *auto*（デフォルト: TTY かつ *NO_COLOR* なし）、*always*、
+  *never*。
+
+*version* のオプション:
+
+*-g, --git*::
+  *git describe --tags --always --dirty* を使用（*git* と *.git* が利用可能なときの
+  デフォルト）。
+
+*-c, --changelog*::
+  最新 *debian/changelog* バージョンを使用（*git* または *.git* が利用不可のときの
+  デフォルト）。
+
+*-r, --rpm*::
+  RPM 互換 *Version* を出力（ハイフンをアンダースコアにマップ）。
+
+*lint* のオプション:
+
+*-v, --verbose*::
+  合格したチェックも表示する。
+
+*-q, --quiet*::
+  エラーのみ表示する。
+
+*--strict*::
+  警告を失敗として扱う（終了ステータス 1）。
+
+*--color* _WHEN_::
+  CSR ハイライト: *auto*（デフォルト: TTY かつ *NO_COLOR* なし）、*always*、
+  *never*。
+
+*shape* のオプション:
+
+*-b, --bool*::
+  shape スコアが *--threshold* 以上なら *1*、それ以外は *0* を出力する。
+
+*-v, --verbose*::
+  *packagedir*、*repodir*、*role*、*threshold* を stderr に出力する。
+
+*--threshold* _N_::
+  *--bool* の閾値（デフォルト: *50*）。
+
+*dist* のオプション:
+
+*-o, --output* _DIR_::
+  アーカイブを *_DIR_* に書き込む（デフォルト: Meson *meson-dist*
+  ディレクトリ、または *--rpm* 時 *rpmbuild/SOURCES*）。
+
+*-b, --builddir* _DIR_::
+  Meson ビルドディレクトリ。デフォルトは、このソースツリー向けに設定済みなら
+  */build*、そうでなければ *<project>/build*。
+
+*-f, --format* _FMT_::
+  アーカイブ形式: *xz*（デフォルト）、*gz*、*zip*。
+
+*--rpm*::
+  アーカイブ名 *_NAME_*-*_VERSION_*.tar.xz とし、*-o* 未指定なら
+  *rpmbuild/SOURCES* に書き込む。*rpm/Makefile* が使用。
+
+*--allow-dirty*, *--no-allow-dirty*::
+  *meson dist* に *--allow-dirty* を渡す（デフォルト: 許可）。
+
+*--tests*::
+  *meson dist* 中にテストを実行（デフォルトは *--no-tests*）。
+
+*release* のオプション（ここで解析し *gh-makerelease* に透過）:
+
+*-b, --build-binary*::
+  Debian バイナリのみビルド（*-b*）; _.dsc_ なし。
+*-n, --no-pre-clean*::
+  Debian ビルドキャッシュを再利用。
+*-u, --upload*::
+  既存のバージョンスコープ成果物があれば再利用。
+*--unsigned*::
+  署名なし Debian パッケージをビルド（*-us -uc*）。
+*-p, --dput-host* _HOST_::
+  _.changes_ ファイルの *dput*(1) アップロードホスト。
+*-d, --docker*::
+  Docker 内 *build4*(1) で Debian パッケージをビルド。
+*-B, --base-image* _IMAGE_::
+  *build4* ターゲットイメージ（デフォルト: *b4f-debian:trixie*）。
+*-s, --docker-server* _SERVER_::
+  SSH 経由で *SERVER* 上で *build4* を実行（*-d* を暗示）。
+*-l, --local*::
+  ビルドのみ; タグ、push、GitHub release は行わない。
+*-f, --force*::
+  既存タグ/release を置き換える。
+*-I, --no-install*::
+  *sudo dpkg -i* をスキップ。
+*-T, --no-tag*::
+  git release タグの作成と push をスキップ。
+*-U, --no-upload*::
+  _.changes_ ファイルの *dput* をスキップ。
+*-R, --no-release*::
+  GitHub release 作成をスキップ。
+*-P, --no-publish*::
+  VSIX marketplace 公開をスキップ。
+*-Y, --no-rpm*::
+  *make -C rpm rpm srpm* をスキップ。
+*-D, --no-deb*::
+  Debian *debuild* をスキップ。
+*-v, --verbose*::
+  詳細ログ（繰り返し可能）。
+*-q, --quiet*::
+  出力を減らす（繰り返し可能）。
+
+*ize* のオプション:
+
+*-l, --lang* _LANG_::
+  足場をコピーする言語テンプレート（デフォルト: 検出）。
+
+*-n, --dry-run*::
+  ファイル書き込みなしで予定の追加/更新/変換を表示。
+
+*-v, --verbose*::
+  既存でスキップしたパスも表示。
+
+*--no-man*::
+  groff *\*.1* ソースを *docs/\*.adoc* に変換しない。
+
+*--no-subst*::
+  *src/* のハードコード版を *@VERSION@* / *config.h* に書き換えない。
+
+*--color* _WHEN_::
+  CSR ハイライト: *auto*（デフォルト: TTY かつ *NO_COLOR* なし）、*always*、
+  *never*。
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  テンプレートルートを上書き（通常 */usr/share/zephyr*）。
+
+*NO_COLOR*::
+  設定時、*zfr about*、*zfr lint*、*zfr ize* は *--color auto* モードの
+  CSR ハイライトを無効化する。
+
+*PYTHONPATH*::
+  非標準インストールレイアウトからツールを実行する場合、*zfr_lib* パッケージを
+  含むディレクトリを含める必要がある。
+
+== Tests
+
+ソースツリー（インストール済みパッケージではない）には、CLI を Python *unittest*
+でカバーする *tests/* が含まれる。*meson test*（ビルドディレクトリ */build*）は
+*tests/test_*.py* を発見する。テストは一時的なサンプルプロジェクトを作成し、
+各サブコマンド（*create*、*add*、*remove*、*rename*、*about*、*version*、*lint*、
+*shape*、*dist*、*ize*、*release*、*detect*、*help*）、*zfr-** ラッパー、
+言語信頼度スコア、gettext カタログ、各 locale の *docs/<lang>/zfr.adoc*
+ローカライズマニュアルを検証する。Meson なしで実行する場合、*ZFR_PKGDATADIR* を
+zephyr checkout ルート（*zfr/* の親）に、*PYTHONPATH* を *src/* に設定する。
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  インストール済み言語テンプレート。
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI と薄いラッパー。
+
+*/usr/share/doc/zephyr/*::
+  パッケージドキュメント（LICENSE、README）。
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  ローカライズ man ページ。*docs/<locale>/zfr.adoc* からビルド
+  （gettext/po4a 断片ではなく文書全体の翻訳）。
+
+== Exit status
+
+*0*::
+  成功。*lint* ではプロジェクトにエラーレベルの所見がない
+  （*--strict* でなければ警告は依然表示）。
+
+*non-zero*::
+  エラー（未知の言語、宛先が既存、検出失敗、puff ファイル欠落、*lint* 所見など）。
+
+== Author
+
+{project-author} <{project-email}> 作。
+
+== Copyright
+
+Copyright (C) {project-year}.
+ライセンス AGPL-3.0-or-later。
+これはフリーソフトウェア: GNU Affero General Public License の条件の下で
+変更および再配布が自由である。
+法律で許される範囲において保証はない。
+完全なライセンス文はソース配布の LICENSE ファイルを参照のこと。
+本プロジェクトが AI 搾取と AI 覇権に反対し、無思考の MIT 型および
+政治的に naive な BSD 型ライセンスを拒否する追加条項を含む。

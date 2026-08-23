@@ -1,0 +1,418 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: Perintah Pengguna
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - templat proyek CLI multibahasa dan alat bantu
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape*, dan *zfr-release* adalah wrapper tipis untuk subperintah yang sama.
+
+== Description
+
+*zfr* adalah alat baris perintah untuk koleksi templat *zephyr*.
+Ia menyediakan templat bahasa untuk utilitas baris perintah kecil dan bantuan
+untuk menginstansiasi serta mengelolanya.
+
+*Penting:* proyek yang diinstansiasi diharapkan tetap memanggil *zfr*
+(misalnya *zfr version* di *meson.build* dan *rpm/Makefile*).
+String *zfr* *bukan* token ajaib create/rename dan *tidak pernah*
+ditulis ulang menjadi nama proyek. Placeholder templat yang *memang*
+ditulis ulang tetap *zephyr* (dan *some_puff1* untuk puff contoh).
+
+Alur kerja tipikal:
+
+. Buat proyek dari templat bahasa:
++
+----
+zfr create -l python myproj
+----
+
+. Masuk ke proyek dan tambahkan *puff* aplikasi (aplikasi contoh):
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. Opsional: ganti nama proyek atau hapus puff nanti dengan *rename* / *remove*.
+
+Templat berada di */usr/share/zephyr/<lang>/* saat terpasang, atau di pohon sumber
+saat menjalankan wrapper builddir yang belum terpasang seperti *build/zfr*
+(*ZFR_PKGDATADIR* menimpa). Setiap templat dapat menyertakan puff contoh bernama
+*some_puff1*; berikan nama puff di baris perintah *create* untuk menginstansiasinya,
+atau abaikan untuk proyek kosong.
+
+Dalam monorepo, *repodir* adalah akar checkout git (atau meta) dan *packagedir*
+adalah pohon paket berbentuk zephyr (misalnya *repodir/bash*).
+Perintah yang berjalan dari direktori saat ini menyelesaikan *packagedir* terlebih dahulu.
+
+*i18n*::
+  Gaya Zephyr merekomendasikan cakupan gettext setidaknya untuk:
+  *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
+  *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
+  (alias *zh-cn* / *zh-tw*). Bahasa Inggris (*en*) adalah bahasa *msgid* sumber
+  dan tidak dicantumkan di *po/LINGUAS*. Cantumkan locale tersebut di *po/LINGUAS* dan
+  sertakan berkas *po/<locale>.po* yang sesuai.
+
+== Commands
+
+*create*::
+  Salin *pkgdatadir/<lang>/* ke direktori baru *./<project_name>/* (gagal jika
+  direktori sudah ada). Tulis ulang *zephyr* → *_PROJECT_NAME_* dan, bila nama puff diberikan,
+  *some_puff1* → *_PUFF_NAME_* pertama (nama berikutnya lewat *add*). Tanpa nama puff, buang berkas puff templat tetapi pertahankan
+  token *some_puff1* agar *add* nanti dapat menginstansiasinya.
+  Menulis *debian/changelog* baru (changelog templat dibuang) memakai
+  *--distribution* / *--init-version* / *--author* / *--email*, lalu menjalankan
+  *git init*, mengatur *core.hooksPath* ke *.githooks* (menyalin *pre-commit* agar
+  *VERSION* selaras dengan *debian/changelog*), commit awal, dan tag anotasi *vVER*.
+
+*rename*::
+  Di direktori proyek saat ini, tulis ulang *zephyr* → *_PROJECT_NAME_* dan,
+  untuk setiap nama yang diberikan, tulis ulang puff templat *some_puff1* → nama itu.
+  Tidak menulis ulang *zfr*.
+
+*add*::
+  Deteksi bahasa proyek dan salin berkas puff templat ke proyek saat ini,
+  mengganti nama *some_puff1* menjadi setiap *_PUFF_NAME_*. Memperbarui daftar Meson
+  (atau wiring setara) bila memungkinkan.
+
+*remove*::
+  Hapus berkas dan wiring Meson untuk setiap nama puff yang diberikan dari proyek saat ini.
+
+*detect*::
+  Cetak bahasa terdeteksi untuk direktori saat ini
+  (menelusuri direktori induk untuk menemukan akar proyek).
+
+*about*::
+  Cetak informasi tentang proyek saat ini. Menelusuri dari direktori saat ini
+  ke induk untuk menemukan akar proyek (*meson.build* dengan
+  *project()* atau *debian/control*). Bidang umum (nama, versi, lisensi,
+  beranda, maintainer, ringkasan, section, priority, distribution,
+  architecture) diurai dari metadata Debian atau RPM dan dibungkus sesuai
+  lebar terminal. Juga mencetak jumlah berkas/baris sumber dan perkiraan
+  ukuran payload. Terminal interaktif memakai warna CSR (console SGR) kecuali
+  *NO_COLOR* disetel. Gunakan *-d* / *-r* untuk tampilan Debian atau RPM terurai penuh
+  (bukan dump berkas pengemasan).
+
+*version*::
+  Cetak versi proyek saat ini (satu baris, untuk skrip). Default adalah
+  *git describe* bila *git* dan *.git* tersedia, jika tidak versi *debian/changelog* terbaru.
+  Fallback ke berkas *VERSION*, lalu *0.0.0*.
+  Token non-semver (misalnya hash git) dibungkus sebagai *0.0.0-<token>*.
+
+*lint*::
+  Validasi proyek saat ini terhadap gaya pengemasan dan tata letak zephyr
+  (menelusuri dari direktori saat ini ke induk untuk menemukan akar proyek).
+  Melaporkan berkas hilang, ketidaksesuaian identitas, kesalahan Meson/Debian/RPM,
+  token *zephyr* / *some_puff1* tersisa di aplikasi terinstansiasi, dan perbaikan yang disarankan.
+  Sebutan *zfr* diharapkan dan tidak dianggap sisa.
+  Untuk *.githooks/pre-commit*, menelusuri ke *.git*, menghormati *core.hooksPath*,
+  dan memeriksa hook menyinkronkan *VERSION* dari *debian/changelog*.
+  Bila *po/* ada, memperingatkan jika *LINGUAS* tidak mencakup set locale gettext yang direkomendasikan
+  (lihat *i18n* di Description).
+  Keluaran ditujukan untuk manusia dan pengode AI: setiap temuan punya kode,
+  path, dan perbaikan konkret. Terminal interaktif memakai warna CSR kecuali *NO_COLOR* disetel.
+
+*shape*::
+  Cetak skor *zephyr shape* 0–100 untuk *packagedir* saat ini (seberapa lengkap
+  pohon cocok dengan gaya pengemasan zephyr). Dalam monorepo
+  *packagedir* dapat berbeda dari *repodir* (akar git / meta); alat memakai
+  shape untuk lebih memilih direktori paket daripada akar repositori.
+  *\-b* / *--bool* mencetak *1* jika skor setidaknya ambang batas
+  (default *50*), jika tidak *0*.
+
+*dist*::
+  Bangun arsip sumber proyek saat ini (menelusuri dari direktori saat ini ke induk untuk menemukan akar proyek).
+  Bila direktori ini adalah akar proyek git, jalankan *meson dist* (setelah *meson setup*, default
+  *--allow-dirty* dan *--no-tests*). Templat bahasa bersarang tidak punya
+  *.git* sendiri, jadi *meson dist* akan mengemas meta-repo induk;
+  pohon tersebut mendapat tarball direktori hanya proyek ini. Mencetak path arsip ke stdout. *dist* di *rpm/Makefile* dan target ninja Meson *srcdist*
+  memakai ulang perintah ini.
+
+*release*::
+  Parse opsi yang sama dengan *gh-makerelease*(1), bangun ulang argv, dan *exec*
+  *gh-makerelease* dari PATH. Perintah ini tidak mengimplementasikan tagging,
+  pengemasan, atau unggah GitHub sendiri. Proyek *zephyr* dirilis
+  dari akar checkout git (templat bahasa plus *zfr/*). Lihat
+  *Options for release* di bawah.
+
+*ize*::
+  Refaktor proyek saat ini di tempat agar sesuai gaya zephyr terkini
+  (menelusuri dari direktori saat ini ke induk). Menyalin kerangka *debian/* dan *rpm/* yang hilang dari templat bahasa (nama
+  ditulis ulang ke proyek ini), menulis *VERSION* dan *.githooks/pre-commit*,
+  menambal *meson.build* (*zfr version*, target man *asciidoctor*,
+  *run_target look*, pemasangan bash-completion). Mengonversi halaman man groff *\*.1* di bawah proyek (bukan *debian/*) menjadi *docs/\*.adoc* dengan aturan Meson,
+  dan mengubah versi changelog hardcoded di *src/* menjadi substitusi *\*.in*
+  *@VERSION@* atau *PROJECT_VERSION* via *config.h* untuk keluarga bahasa C.
+  *\-n* / *--dry-run* hanya mencetak rencana tanpa menulis.
+  Setelahnya jalankan *zfr lint*.
+
+*help*::
+  Tampilkan bantuan baris perintah.
+
+== Options
+
+Opsi untuk *create*:
+
+*-l, --lang* _LANG_::
+  Templat bahasa yang dipakai (default: *python*).
+  Nilai yang didukung meliputi *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*,
+  *haskell*, *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift*, dan
+  *typescript*.
+
+*-D, --distribution* _DIST_::
+  distribution changelog Debian (default: *unstable*).
+
+*-1, --init-version* _VER_::
+  Versi paket awal dan tag git (default: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  Nama penulis changelog dan git (default: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  Email penulis changelog dan git (default: *lenik@bodz.net*).
+
+Opsi untuk *about*:
+
+*-d, --debian*::
+  Tampilkan bidang pengemasan Debian terurai (*debian/control*, entri
+  *debian/changelog* terbaru). Daftar seperti *Build-Depends* dibungkus sesuai
+  lebar terminal; deskripsi panjang diformat ulang sebagai paragraf.
+
+*-r, --redhat*::
+  Tampilkan bidang pengemasan RPM terurai dari *rpm/*.spec* (makro seperti
+  *%{version}* ditampilkan memakai *zfr version -r*). Isi *%description*
+  diformat ulang; scriptlet spec tidak di-dump.
+
+*--color* _WHEN_::
+  Penyorotan CSR: *auto* (default: TTY dan tanpa *NO_COLOR*), *always*, atau
+  *never*.
+
+Opsi untuk *version*:
+
+*-g, --git*::
+  Pakai *git describe --tags --always --dirty* (default bila *git* dan *.git*
+  tersedia).
+
+*-c, --changelog*::
+  Pakai versi *debian/changelog* terbaru (default bila *git* atau *.git*
+  tidak tersedia).
+
+*-r, --rpm*::
+  Cetak *Version* kompatibel RPM (tanda hubung menjadi garis bawah).
+
+Opsi untuk *lint*:
+
+*-v, --verbose*::
+  Juga cetak pemeriksaan yang lulus.
+
+*-q, --quiet*::
+  Hanya cetak kesalahan.
+
+*--strict*::
+  Anggap peringatan sebagai kegagalan (status keluar 1).
+
+*--color* _WHEN_::
+  Penyorotan CSR: *auto* (default: TTY dan tanpa *NO_COLOR*), *always*, atau
+  *never*.
+
+Opsi untuk *shape*:
+
+*-b, --bool*::
+  Cetak *1* jika skor shape setidaknya *--threshold*, jika tidak *0*.
+
+*-v, --verbose*::
+  Cetak *packagedir*, *repodir*, *role*, dan *threshold* ke stderr.
+
+*--threshold* _N_::
+  Ambang batas untuk *--bool* (default: *50*).
+
+Opsi untuk *dist*:
+
+*-o, --output* _DIR_::
+  Tulis arsip ke *_DIR_* (default: direktori Meson *meson-dist*,
+  atau *rpmbuild/SOURCES* dengan *--rpm*).
+
+*-b, --builddir* _DIR_::
+  Direktori build Meson. Default adalah */build* bila builddir itu
+  dikonfigurasi untuk pohon sumber ini, jika tidak *<project>/build*.
+
+*-f, --format* _FMT_::
+  Format arsip: *xz* (default), *gz*, atau *zip*.
+
+*--rpm*::
+  Beri nama arsip *_NAME_*-*_VERSION_*.tar.xz dan tulis ke
+  *rpmbuild/SOURCES* kecuali *-o* diberikan. Dipakai oleh *rpm/Makefile*.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  Teruskan *--allow-dirty* ke *meson dist* (default: izinkan).
+
+*--tests*::
+  Jalankan tes selama *meson dist* (default adalah *--no-tests*).
+
+Opsi untuk *release* (di-parse di sini, diteruskan ke *gh-makerelease*):
+
+*-b, --build-binary*::
+  Build biner Debian saja (*-b*); tanpa _.dsc_.
+*-n, --no-pre-clean*::
+  Pakai ulang cache build Debian.
+*-u, --upload*::
+  Pakai ulang artefak ber-scope versi bila ada.
+*--unsigned*::
+  Build paket Debian tidak ditandatangani (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  Host unggah *dput*(1) untuk berkas _.changes_.
+*-d, --docker*::
+  Build paket Debian dengan *build4*(1) di Docker.
+*-B, --base-image* _IMAGE_::
+  Image target *build4* (default: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  Jalankan *build4* lewat SSH di *SERVER* (implikasi *-d*).
+*-l, --local*::
+  Hanya build; tanpa tag, push, atau buat GitHub release.
+*-f, --force*::
+  Ganti tag/release yang ada.
+*-I, --no-install*::
+  Lewati *sudo dpkg -i*.
+*-T, --no-tag*::
+  Lewati membuat dan push tag release git.
+*-U, --no-upload*::
+  Lewati *dput* berkas _.changes_.
+*-R, --no-release*::
+  Lewati membuat GitHub release.
+*-P, --no-publish*::
+  Lewati publikasi VSIX marketplace.
+*-Y, --no-rpm*::
+  Lewati *make -C rpm rpm srpm*.
+*-D, --no-deb*::
+  Lewati Debian *debuild*.
+*-v, --verbose*::
+  Logging verbose (dapat diulang).
+*-q, --quiet*::
+  Keluaran lebih sedikit (dapat diulang).
+
+Opsi untuk *ize*:
+
+*-l, --lang* _LANG_::
+  Templat bahasa untuk menyalin kerangka (default: deteksi).
+
+*-n, --dry-run*::
+  Cetak rencana penambahan/pembaruan/konversi tanpa menulis berkas.
+
+*-v, --verbose*::
+  Juga cetak path yang dilewati karena sudah ada.
+
+*--no-man*::
+  Jangan konversi sumber groff *\*.1* ke *docs/\*.adoc*.
+
+*--no-subst*::
+  Jangan tulis ulang versi hardcoded di *src/* ke *@VERSION@* / *config.h*.
+
+*--color* _WHEN_::
+  Penyorotan CSR: *auto* (default: TTY dan tanpa *NO_COLOR*), *always*, atau
+  *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  Timpa akar templat (biasanya */usr/share/zephyr*).
+
+*NO_COLOR*::
+  Bila disetel, *zfr about*, *zfr lint*, dan *zfr ize* menonaktifkan penyorotan CSR
+  dalam mode *--color auto*.
+
+*PYTHONPATH*::
+  Harus mencakup direktori yang berisi paket *zfr_lib* bila
+  menjalankan alat dari tata letak instalasi non-default.
+
+== Tests
+
+Pohon sumber (bukan paket terpasang) menyertakan *tests/* dengan
+cakupan *unittest* Python untuk CLI. *meson test* (direktori build
+*/build*) menemukan *tests/test_*.py*. Tes membuat proyek contoh sementara
+dan menjalankan setiap subperintah (*create*, *add*, *remove*,
+*rename*, *about*, *version*, *lint*, *shape*, *dist*, *ize*, *release*,
+*detect*, *help*), wrapper *zfr-**, skor kepercayaan bahasa,
+katalog gettext, dan manual per locale *docs/<lang>/zfr.adoc*.
+Saat menjalankan tanpa Meson, setel *ZFR_PKGDATADIR* ke akar checkout zephyr
+(induk dari *zfr/*) dan *PYTHONPATH* ke *src/*.
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  Templat bahasa terpasang.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI dan wrapper tipis.
+
+*/usr/share/doc/zephyr/*::
+  Dokumentasi paket (LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  Halaman manual terlokalisasi, dibangun dari *docs/<locale>/zfr.adoc*
+  (terjemahan dokumen penuh, bukan fragmen gettext/po4a). Sumber Bahasa Indonesia adalah *docs/id/zfr.adoc*.
+
+== Exit status
+
+*0*::
+  Berhasil. Untuk *lint*, proyek tidak punya temuan tingkat kesalahan
+  (peringatan tetap dicetak kecuali *--strict*).
+
+*non-zero*::
+  Terjadi kesalahan (bahasa tidak dikenal, tujuan sudah ada, kegagalan deteksi,
+  berkas puff hilang, temuan *lint*, dan seterusnya).
+
+== Author
+
+Ditulis oleh {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+Lisensi AGPL-3.0-or-later.
+Ini perangkat lunak bebas: Anda bebas mengubah dan mendistribusikan ulang di bawah
+ketentuan GNU Affero General Public License.
+TIDAK ADA JAMINAN, sejauh diizinkan hukum.
+Lihat berkas LICENSE dalam distribusi sumber untuk teks lisensi lengkap,
+termasuk ketentuan tambahan yang menyatakan proyek ini menentang eksploitasi AI dan
+hegemoni AI, serta menolak lisensi gaya MIT tanpa pikir panjang dan lisensi gaya BSD
+naif secara politik.

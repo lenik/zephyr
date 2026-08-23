@@ -1,0 +1,382 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: 使用者命令
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - 多語言 CLI 專案範本與輔助工具
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*、*zfr-rename*、*zfr-add*、*zfr-remove*、
+*zfr-about*、*zfr-version*、*zfr-lint*、*zfr-dist*、*zfr-ize*、
+*zfr-shape* 與 *zfr-release* 是相同子命令的薄封裝。
+
+== Description
+
+*zfr* 是 *zephyr* 範本集合的命令列工具。
+它提供用於小型命令列公用程式的語言範本，以及實例化與管理這些專案的輔助功能。
+
+*重要：* 已實例化的專案應繼續呼叫 *zfr*
+（例如在 *meson.build* 與 *rpm/Makefile* 中使用 *zfr version*）。
+字串 *zfr* *不是* create/rename 的魔法占位符，也*不會*被改寫為專案名稱。
+會被改寫的範本占位符仍是 *zephyr*（範例 puff 為 *some_puff1*）。
+
+典型工作流程：
+
+. 從語言範本建立專案：
++
+----
+zfr create -l python myproj
+----
+
+. 進入專案並新增應用程式 *puff*（範例應用程式）：
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. 可選：稍後使用 *rename* / *remove* 重新命名專案或移除 puff。
+
+安裝後，範本位於 */usr/share/zephyr/<lang>/*；若使用未安裝的建置目錄封裝（如 *build/zfr*），則位於原始碼樹中
+（*ZFR_PKGDATADIR* 可覆寫）。每個範本可包含名為 *some_puff1* 的範例 puff；在 *create* 命令列傳入 puff 名稱即可實例化，
+省略則得到空專案。
+
+在 monorepo 中，*repodir* 為 git（或 meta）检出根目錄，*packagedir* 為具有 zephyr 形態的套件樹（例如 *repodir/bash*）。
+從目前目錄向上遍歷的命令會先解析 *packagedir*。
+
+*i18n*::
+  Zephyr 風格建議至少涵蓋以下 gettext 語言：
+  *ar*、*bn*、*de*、*es*、*fr*、*hi*、*id*、*it*、*ja*、*ko*、*pt*、*ru*、
+  *sv*、*ta*、*te*、*th*、*tr*、*ur*、*vi*、*zh_CN*、*zh_TW*
+  （別名 *zh-cn* / *zh-tw*）。英語（*en*）為來源 *msgid* 語言，
+  不列入 *po/LINGUAS*。請在 *po/LINGUAS* 中列出上述 locale，並提供對應的 *po/<locale>.po* 檔案。
+
+== Commands
+
+*create*::
+  將 *pkgdatadir/<lang>/* 複製到新目錄 *./<project_name>/*
+  （若目錄已存在則失敗）。將 *zephyr* 改寫為 *_PROJECT_NAME_*；若給出 puff 名稱，則將 *some_puff1* 改寫為第一個
+  *_PUFF_NAME_*（其餘透過 *add* 新增）。未給出 puff 名稱時，刪除範本 puff 檔案但保留 *some_puff1* 占位符，以便後續 *add* 實例化。
+  使用 *--distribution* / *--init-version* / *--author* / *--email* 寫入新的 *debian/changelog*（捨棄範本 changelog），然後執行
+  *git init*，將 *core.hooksPath* 設為 *.githooks*（複製 *pre-commit*，使 *VERSION* 與 *debian/changelog* 同步），建立初始提交，並打上註釋標籤 *vVER*。
+
+*rename*::
+  在目前專案目錄中將 *zephyr* 改寫為 *_PROJECT_NAME_*；對每個給定名稱，將範本 puff *some_puff1* 改寫為該名稱。
+  不會改寫 *zfr*。
+
+*add*::
+  偵測專案語言，將範本 puff 檔案複製到目前專案，並把 *some_puff1* 重新命名為各 *_PUFF_NAME_*。
+  在可能時更新 Meson 清單（或等效 wiring）。
+
+*remove*::
+  從目前專案中刪除各給定 puff 名稱對應的檔案與 Meson wiring。
+
+*detect*::
+  輸出目前目錄偵測到的語言
+  （向上遍歷父目錄以找到專案根）。
+
+*about*::
+  輸出目前專案資訊。從目前目錄向父目錄遍歷以找到專案根（含 *project()* 的 *meson.build* 或 *debian/control*）。
+  常見欄位（名稱、版本、授權、首頁、維護者、摘要、section、priority、distribution、
+  architecture）從 Debian 或 RPM 中繼資料解析，並依終端寬度換行。還會輸出原始碼檔案/行數統計與估算的 payload 大小。
+  互動式終端使用 CSR（主控台 SGR）著色，除非設定了 *NO_COLOR*。使用 *-d* / *-r* 檢視完整解析後的 Debian 或 RPM 檢視
+  （非打包檔案傾印）。
+
+*version*::
+  輸出目前專案版本（單行，供腳本使用）。預設可用 *git* 與 *.git* 時使用 *git describe*，否則使用最新
+  *debian/changelog* 版本。再回退到 *VERSION* 檔案，最後為 *0.0.0*。
+  非 semver 令牌（例如 git 雜湊）會包裝為 *0.0.0-<token>*。
+
+*lint*::
+  對照 zephyr 打包與版面風格驗證目前專案
+  （從目前目錄向父目錄遍歷以找到專案根）。
+  報告缺失檔案、身分不一致、Meson/Debian/RPM 錯誤、
+  已實例化應用程式中殘留的 *zephyr* / *some_puff1* 占位符，以及建議修復。
+  *zfr* 的提及是預期行為，不視為殘留。
+  對於 *.githooks/pre-commit*，向上遍歷至 *.git*，遵循 *core.hooksPath*，
+  並檢查 hook 是否從 *debian/changelog* 同步 *VERSION*。
+  存在 *po/* 時，若 *LINGUAS* 未涵蓋建議的 gettext locale 集合（見 Description 中的 *i18n*），則發出警告。
+  輸出面向人類與 AI 編碼者：每項發現含代碼、路徑與具體修復。
+  互動式終端使用 CSR 著色，除非設定了 *NO_COLOR*。
+
+*shape*::
+  為目前 *packagedir* 輸出 0–100 的 *zephyr shape* 得分（樹與 zephyr 打包風格的匹配程度）。在 monorepo 中
+  *packagedir* 可能與 *repodir*（git / meta 根）不同；工具用 shape 優先選擇套件目錄而非儲存庫根。
+  *\-b* / *--bool* 在得分不低於閾值
+  （預設 *50*）時輸出 *1*，否則輸出 *0*。
+
+*dist*::
+  建置目前專案的原始碼歸檔（從目前目錄向父目錄遍歷以找到專案根）。若此目錄為 git 專案根，則執行 *meson dist*
+  （在 *meson setup* 之後，預設 *--allow-dirty* 與 *--no-tests*）。巢狀語言範本沒有獨立 *.git*，因此 *meson dist* 會打包父 meta-repo；
+  這類樹改為僅打包本專案的目錄 tarball。在 stdout 輸出歸檔路徑。*rpm/Makefile* 的 *dist* 與 Meson *srcdist*
+  ninja 目標複用此命令。
+
+*release*::
+  解析與 *gh-makerelease*(1) 相同的選項，重建 argv，並 *exec* PATH 中的 *gh-makerelease*。本命令不自行實作打標籤、打包或 GitHub 上傳。*zephyr* 專案從 git 检出根發布（語言範本加 *zfr/*）。見下文 *Options for release*。
+
+*ize*::
+  就地重構目前專案以符合目前 zephyr 風格
+  （從目前目錄向父目錄遍歷）。從語言範本複製缺失的 *debian/* 與 *rpm/* 腳手架（名稱改寫為本專案），寫入 *VERSION* 與 *.githooks/pre-commit*，
+  修補 *meson.build*（*zfr version*、*asciidoctor* man 目標、
+  *run_target look*、bash-completion 安裝）。將專案下（非 *debian/*）的 groff *\*.1* 手冊頁轉換為帶 Meson 規則的 *docs/\*.adoc*，
+  並將 *src/* 中硬編碼的 changelog 版本轉為 *\*.in* 的 *@VERSION@* 替換，或對 C 系語言透過 *config.h* 使用 *PROJECT_VERSION*。
+  *\-n* / *--dry-run* 只列印計畫而不寫入。
+  完成後執行 *zfr lint*。
+
+*help*::
+  顯示命令列說明。
+
+== Options
+
+*create* 的選項：
+
+*-l, --lang* _LANG_::
+  使用的語言範本（預設：*python*）。
+  支援的值包括 *bash*、*c*、*clib*、*cpp*、*cpplib*、*csharp*、*erlang*、*go*、
+  *haskell*、*java*、*perl*、*python*、*ruby*、*rust*、*smalltalk*、*swift* 與
+  *typescript*。
+
+*-D, --distribution* _DIST_::
+  Debian changelog 的 distribution（預設：*unstable*）。
+
+*-1, --init-version* _VER_::
+  初始套件版本與 git 標籤（預設：*0.0.1*）。
+
+*-a, --author* _AUTHOR_::
+  Changelog 與 git 作者名（預設：*Lenik (谢继雷)*）。
+
+*-e, --email* _EMAIL_::
+  Changelog 與 git 作者電子郵件（預設：*lenik@bodz.net*）。
+
+*about* 的選項：
+
+*-d, --debian*::
+  顯示解析後的 Debian 打包欄位（*debian/control*、最新
+  *debian/changelog* 條目）。*Build-Depends* 等清單依終端寬度換行；長描述依段落重排。
+
+*-r, --redhat*::
+  顯示從 *rpm/*.spec* 解析的 RPM 打包欄位（*%{version}* 等巨集透過 *zfr version -r* 顯示）。*%description*
+  正文會重排；不傾印 spec scriptlet。
+
+*--color* _WHEN_::
+  CSR 高亮：*auto*（預設：TTY 且未設定 *NO_COLOR*）、*always* 或
+  *never*。
+
+*version* 的選項：
+
+*-g, --git*::
+  使用 *git describe --tags --always --dirty*（*git* 與 *.git*
+  可用時為預設）。
+
+*-c, --changelog*::
+  使用最新 *debian/changelog* 版本（*git* 或 *.git* 不可用時為預設）。
+
+*-r, --rpm*::
+  輸出 RPM 相容的 *Version*（連字號對應為底線）。
+
+*lint* 的選項：
+
+*-v, --verbose*::
+  同時輸出通過的檢查。
+
+*-q, --quiet*::
+  僅輸出錯誤。
+
+*--strict*::
+  將警告視為失敗（退出狀態 1）。
+
+*--color* _WHEN_::
+  CSR 高亮：*auto*（預設：TTY 且未設定 *NO_COLOR*）、*always* 或
+  *never*。
+
+*shape* 的選項：
+
+*-b, --bool*::
+  若 shape 得分不低於 *--threshold* 則輸出 *1*，否則 *0*。
+
+*-v, --verbose*::
+  在 stderr 輸出 *packagedir*、*repodir*、*role* 與 *threshold*。
+
+*--threshold* _N_::
+  *--bool* 的閾值（預設：*50*）。
+
+*dist* 的選項：
+
+*-o, --output* _DIR_::
+  將歸檔寫入 *_DIR_*（預設：Meson *meson-dist*
+  目錄，或使用 *--rpm* 時為 *rpmbuild/SOURCES*）。
+
+*-b, --builddir* _DIR_::
+  Meson 建置目錄。若 */build* 已為此原始碼樹設定，則預設為 */build*，否則為 *<project>/build*。
+
+*-f, --format* _FMT_::
+  歸檔格式：*xz*（預設）、*gz* 或 *zip*。
+
+*--rpm*::
+  將歸檔命名為 *_NAME_*-*_VERSION_*.tar.xz 並寫入
+  *rpmbuild/SOURCES*（除非指定 *-o*）。由 *rpm/Makefile* 使用。
+
+*--allow-dirty*, *--no-allow-dirty*::
+  向 *meson dist* 傳遞 *--allow-dirty*（預設：允許）。
+
+*--tests*::
+  在 *meson dist* 期間執行測試（預設為 *--no-tests*）。
+
+*release* 的選項（在此解析，透傳給 *gh-makerelease*）：
+
+*-b, --build-binary*::
+  僅建置 Debian 二進位套件（*-b*）；無 _.dsc_。
+*-n, --no-pre-clean*::
+  複用 Debian 建置快取。
+*-u, --upload*::
+  若存在則複用依版本劃分的既有產物。
+*--unsigned*::
+  建置未簽名的 Debian 套件（*-us -uc*）。
+*-p, --dput-host* _HOST_::
+  上傳 _.changes_ 檔案的 *dput*(1) 主機。
+*-d, --docker*::
+  在 Docker 中用 *build4*(1) 建置 Debian 套件。
+*-B, --base-image* _IMAGE_::
+  *build4* 目標映像（預設：*b4f-debian:trixie*）。
+*-s, --docker-server* _SERVER_::
+  透過 SSH 在 *SERVER* 上執行 *build4*（隱含 *-d*）。
+*-l, --local*::
+  僅建置；不打標籤、不推送、不建立 GitHub release。
+*-f, --force*::
+  替換既有標籤/release。
+*-I, --no-install*::
+  跳過 *sudo dpkg -i*。
+*-T, --no-tag*::
+  跳過建立並推送 git release 標籤。
+*-U, --no-upload*::
+  跳過 *dput* _.changes_ 檔案。
+*-R, --no-release*::
+  跳過建立 GitHub release。
+*-P, --no-publish*::
+  跳過 VSIX marketplace 發布。
+*-Y, --no-rpm*::
+  跳過 *make -C rpm rpm srpm*。
+*-D, --no-deb*::
+  跳過 Debian *debuild*。
+*-v, --verbose*::
+  詳細日誌（可重複）。
+*-q, --quiet*::
+  減少輸出（可重複）。
+
+*ize* 的選項：
+
+*-l, --lang* _LANG_::
+  複製腳手架所用的語言範本（預設：自動偵測）。
+
+*-n, --dry-run*::
+  列印計畫的新增/更新/轉換，不寫入檔案。
+
+*-v, --verbose*::
+  同時輸出已存在而跳過的路徑。
+
+*--no-man*::
+  不將 groff *\*.1* 來源轉換為 *docs/\*.adoc*。
+
+*--no-subst*::
+  不將 *src/* 中硬編碼版本改寫為 *@VERSION@* / *config.h*。
+
+*--color* _WHEN_::
+  CSR 高亮：*auto*（預設：TTY 且未設定 *NO_COLOR*）、*always* 或
+  *never*。
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  覆寫範本根目錄（通常為 */usr/share/zephyr*）。
+
+*NO_COLOR*::
+  設定後，*zfr about*、*zfr lint* 與 *zfr ize* 在 *--color auto* 模式下停用 CSR
+  高亮。
+
+*PYTHONPATH*::
+  從非預設安裝版面執行工具時，必須包含 *zfr_lib* 套件所在目錄。
+
+== Tests
+
+原始碼樹（非已安裝套件）包含 *tests/*，以 Python *unittest* 涵蓋 CLI。*meson test*（建置目錄
+*/build*）發現 *tests/test_*.py*。測試建立暫時範例專案並演練各子命令（*create*、*add*、*remove*、
+*rename*、*about*、*version*、*lint*、*shape*、*dist*、*ize*、*release*、
+*detect*、*help*）、*zfr-** 封裝、語言置信度評分、
+gettext 目錄，以及各 locale 手冊 *docs/<lang>/zfr.adoc*。
+不使用 Meson 時，將 *ZFR_PKGDATADIR* 設為 zephyr 检出根（*zfr/* 的父目錄），*PYTHONPATH* 設為 *src/*。
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  已安裝的語言範本。
+
+*/usr/bin/zfr*、*/usr/bin/zfr-\**::
+  CLI 與薄封裝。
+
+*/usr/share/doc/zephyr/*::
+  套件文件（LICENSE、README）。
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  在地化手冊頁，由 *docs/<locale>/zfr.adoc* 建置
+  （完整文件翻譯，非 gettext/po4a 片段）。繁體中文手冊原始檔為 *docs/zh_TW/zfr.adoc*。
+
+== Exit status
+
+*0*::
+  成功。對 *lint* 而言，專案無錯誤級發現
+  （除非 *--strict*，否則仍會輸出警告）。
+
+*non-zero*::
+  發生錯誤（未知語言、目標已存在、偵測失敗、
+  缺失 puff 檔案、*lint* 發現等）。
+
+== Author
+
+作者 {project-author} <{project-email}>。
+
+== Copyright
+
+Copyright (C) {project-year}。
+授權條款 AGPL-3.0-or-later。
+本軟體為自由軟體：您可在 GNU Affero General Public License 條款下
+修改並再散布。
+在法律允許範圍內不提供任何擔保。
+完整授權條款文字見原始碼散布中的 LICENSE 檔案，
+其中包括補充條款：本專案反對 AI 剝削與 AI 霸權，
+並拒絕盲目的 MIT 式授權與政治天真的 BSD 式授權。

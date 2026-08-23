@@ -376,11 +376,13 @@ Options for *ize*:
 
 The source tree (not the installed package) includes *tests/* with
 Python *unittest* coverage of the CLI. *meson test* (build directory
-*/build*) discovers *tests/test_\*.py*. Tests create temporary example
-projects and exercise *create*, *add*, *remove*, *rename*, *about*,
-*version*, *lint*, *dist*, *ize*, and *detect*. When running without
-Meson, set *ZFR_PKGDATADIR* to the zephyr checkout root (parent of
-*zfr/*) and *PYTHONPATH* to *src/*.
+*/build*) discovers *tests/test_*.py*. Tests create temporary example
+projects and exercise every subcommand (*create*, *add*, *remove*,
+*rename*, *about*, *version*, *lint*, *shape*, *dist*, *ize*, *release*,
+*detect*, *help*), the *zfr-** wrappers, language confidence scoring,
+gettext catalogs, and the per-locale *docs/<lang>/zfr.adoc* manuals.
+When running without Meson, set *ZFR_PKGDATADIR* to the zephyr checkout
+root (parent of *zfr/*) and *PYTHONPATH* to *src/*.
 
 == Files
 
@@ -394,7 +396,8 @@ Meson, set *ZFR_PKGDATADIR* to the zephyr checkout root (parent of
   Package documentation (LICENSE, README).
 
 */usr/share/man/<locale>/man1/zfr.1*::
-  Localized manual pages (po4a from *docs/zfr.adoc*).
+  Localized manual pages, built from *docs/<locale>/zfr.adoc*
+  (full-document translations, not gettext/po4a fragments).
 
 == Exit status
 

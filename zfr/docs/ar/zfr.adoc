@@ -1,0 +1,423 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: أوامر المستخدم
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - قوالب مشاريع CLI متعددة اللغات وأدوات مساعدة
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create* و*zfr-rename* و*zfr-add* و*zfr-remove* و
+*zfr-about* و*zfr-version* و*zfr-lint* و*zfr-dist* و*zfr-ize* و
+*zfr-shape* و*zfr-release* هي غلافات رقيقة لنفس الأوامر الفرعية.
+
+== Description
+
+*zfr* هو أداة سطر الأوامر لمجموعة قوالب *zephyr*.
+توفر قوالب لغات لأدوات سطر أوامر صغيرة ومساعدات لإنشائها وإدارتها.
+
+*مهم:* يُتوقَّع أن تستمر المشاريع المُنشأة في استدعاء *zfr*
+(مثلًا *zfr version* في *meson.build* و*rpm/Makefile*).
+السلسلة *zfr* *ليست* رمزًا سحريًا لـ create/rename ولا تُعاد كتابتها
+أبدًا إلى اسم المشروع. العنصر النائب في القالب الذي *يُعاد* كتابته
+يبقى *zephyr* (و*some_puff1* لعينات puffs).
+
+سير العمل المعتاد:
+
+. إنشاء مشروع من قالب لغة:
++
+----
+zfr create -l python myproj
+----
+
+. الدخول إلى المشروع وإضافة *puffs* تطبيقية (تطبيقات مثال):
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. اختياريًا: إعادة تسمية المشروع أو إزالة puffs لاحقًا عبر *rename* / *remove*.
+
+توجد القوالب تحت */usr/share/zephyr/<lang>/* عند التثبيت، أو في شجرة
+المصدر عند تشغيل غلاف builddir غير مثبت مثل *build/zfr*
+(*ZFR_PKGDATADIR* يتجاوز ذلك). قد تتضمن كل قالب puff عينة باسم
+*some_puff1*؛ مرّر أسماء puffs في سطر أوامر *create* لإنشائها،
+أو اتركها لمشروع فارغ.
+
+في monorepo، *repodir* هو جذر checkout لـ git (أو meta) و*packagedir*
+هو شجرة الحزمة ذات شكل zephyr (مثلًا *repodir/bash*).
+الأوامر التي تمشي من المجلد الحالي تحدّد *packagedir* أولًا.
+
+*i18n*::
+  يوصي أسلوب Zephyr بتغطية gettext على الأقل لـ:
+  *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
+  *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
+  (الأسماء البديلة *zh-cn* / *zh-tw*). الإنجليزية (*en*) هي لغة
+  *msgid* المصدر ولا تُدرج في *po/LINGUAS*. أدرج تلك اللغات في
+  *po/LINGUAS* ووزّع ملفات *po/<locale>.po* المطابقة.
+
+== Commands
+
+*create*::
+  ينسخ *pkgdatadir/<lang>/* إلى مجلد جديد *./<project_name>/* (يفشل إن
+  وُجد المجلد مسبقًا). يعيد كتابة *zephyr* → *_PROJECT_NAME_* وعند
+  تمرير أسماء puffs، *some_puff1* → أول *_PUFF_NAME_* (أسماء إضافية
+  عبر *add*). بدون أسماء puffs، يحذف ملفات puff القالب لكن يبقي
+  رموز *some_puff1* ليتمكن *add* لاحقًا من إنشائها.
+  يكتب *debian/changelog* جديدًا (يُتجاهل changelog القالب) باستخدام
+  *--distribution* / *--init-version* / *--author* / *--email*، ثم
+  يشغّل *git init*، يضبط *core.hooksPath* على *.githooks* (ينسخ
+  *pre-commit* ليبقى *VERSION* متزامنًا مع *debian/changelog*)، commit
+  أولي، ووسمًا مُعلَّقًا *vVER*.
+
+*rename*::
+  في مجلد المشروع الحالي، يعيد كتابة *zephyr* → *_PROJECT_NAME_* ولكل
+  اسم مُمرَّر، puff القالب *some_puff1* → ذلك الاسم.
+  لا يعيد كتابة *zfr*.
+
+*add*::
+  يكتشف لغة المشروع وينسخ ملفات puff القالب إلى المشروع الحالي،
+  مع إعادة تسمية *some_puff1* إلى كل *_PUFF_NAME_*. يحدّث قوائم Meson
+  (أو التوصيل المكافئ) إن أمكن.
+
+*remove*::
+  يزيل الملفات وتوصيل Meson لكل اسم puff مُعطى من المشروع الحالي.
+
+*detect*::
+  يطبع اللغة المكتشفة للمجلد الحالي
+  (يمشي في المجلدات الأب للعثور على جذر المشروع).
+
+*about*::
+  يطبع معلومات عن المشروع الحالي. يمشي من المجلد الحالي نحو الأب
+  للعثور على جذر المشروع (*meson.build* مع *project()* أو
+  *debian/control*). تُقرأ الحقول الشائعة (الاسم، الإصدار، الترخيص،
+  الصفحة الرئيسية، maintainer، الملخص، القسم، الأولوية، التوزيع،
+  المعمارية) من بيانات Debian أو RPM وتُلفّ بعرض الطرفية. يطبع أيضًا
+  عدد الملفات/الأسطر المصدرية وحجم الحمولة التقريبي. الطرفيات
+  التفاعلية تستخدم ألوان CSR (SGR) ما لم يُضبط *NO_COLOR*. استخدم
+  *-d* / *-r* لعرض Debian أو RPM مُحلَّل كامل (وليس dump لملفات
+  التعبئة).
+
+*version*::
+  يطبع إصدار المشروع الحالي (سطر واحد، للسكربتات). الافتراضي
+  *git describe* عند توفر *git* و*.git*، وإلا أحدث إصدار
+  *debian/changelog*. يتراجع إلى ملف *VERSION* ثم *0.0.0*.
+  الرمز غير semver (مثل hash git) يُلفّ كـ *0.0.0-<token>*.
+
+*lint*::
+  يتحقق من المشروع الحالي مقابل أسلوب تعبئة وتخطيط zephyr
+  (يمشي من المجلد الحالي نحو الأب للعثور على جذر المشروع).
+  يبلغ عن ملفات ناقصة، عدم تطابق الهوية، أخطاء Meson/Debian/RPM،
+  رموز *zephyr* / *some_puff1* المتبقية في التطبيقات المُنشأة،
+  وإصلاحات مقترحة. ذكر *zfr* متوقع ولا يُعامل كمتبقٍ.
+  لـ *.githooks/pre-commit*، يمشي حتى *.git*، يحترم *core.hooksPath*،
+  ويتحقق أن الـ hook يزامن *VERSION* من *debian/changelog*.
+  عند وجود *po/*، يحذّر إن لم يغطّ *LINGUAS* مجموعة gettext
+  الموصى بها (انظر *i18n* تحت Description).
+  المخرجات للبشر ومبرمجي الذكاء الاصطناعي: كل نتيجة لها رمز ومسار
+  وإصلاح ملموس. الطرفيات التفاعلية تستخدم ألوان CSR ما لم يُضبط
+  *NO_COLOR*.
+
+*shape*::
+  يطبع درجة *zephyr shape* من 0–100 لـ *packagedir* الحالي (مدى
+  تطابق الشجرة مع أسلوب تعبئة zephyr). في monorepo قد يختلف
+  *packagedir* عن *repodir* (جذر git / meta)؛ الأدوات تستخدم shape
+  لتفضيل مجلد الحزمة على جذر المستودع.
+  *\-b* / *--bool* يطبع *1* إن كانت الدرجة ≥ العتبة (افتراضي *50*)،
+  وإلا *0*.
+
+*dist*::
+  يبني أرشيف مصدر للمشروع الحالي (يمشي من المجلد الحالي نحو الأب
+  للعثور على جذر المشروع). إن كان هذا المجلد جذر مشروع git، يشغّل
+  *meson dist* (بعد *meson setup*، افتراضي *--allow-dirty* و
+  *--no-tests*). قوالب اللغات المتداخلة ليس لها *.git* خاص، لذا
+  *meson dist* سيحزم meta-repo الأب؛ تلك الأشجار تحصل على tarball
+  مجلد للمشروع فقط. يطبع مسار الأرشيف على stdout. *dist* في
+  *rpm/Makefile* وهدف ninja *srcdist* في Meson يعيدان استخدام هذا
+  الأمر.
+
+*release*::
+  يحلّل نفس خيارات *gh-makerelease*(1)، يعيد بناء argv، و*exec*
+  *gh-makerelease* من PATH. هذا الأمر لا ينفّذ الوسم أو التعبئة أو
+  رفع GitHub بنفسه. يُصدَر مشروع *zephyr* من جذر checkout لـ git
+  (قوالب اللغات و*zfr/*). انظر *Options for release* أدناه.
+
+*ize*::
+  يعيد هيكلة المشروع الحالي في المكان ليطابق أسلوب zephyr الحالي
+  (يمشي من المجلد الحالي نحو الأب). ينسخ هيكل *debian/* و*rpm/*
+  الناقص من قالب اللغة (مع إعادة كتابة الأسماء لهذا المشروع)، يكتب
+  *VERSION* و*.githooks/pre-commit*، يرقع *meson.build* (*zfr version*،
+  أهداف man لـ *asciidoctor*، *run_target look*، تثبيت bash-completion).
+  يحوّل صفحات man groff *\*.1* تحت المشروع (وليس *debian/*) إلى
+  *docs/\*.adoc* بقواعد Meson، ويحوّل إصدارات changelog المُثبّتة في
+  *src/* إلى استبدالات *\*.in* *@VERSION@* أو *PROJECT_VERSION* عبر
+  *config.h* لعائلة C. *\-n* / *--dry-run* يطبع الخطة دون كتابة.
+  بعد ذلك شغّل *zfr lint*.
+
+*help*::
+  يعرض مساعدة سطر الأوامر.
+
+== Options
+
+خيارات *create*:
+
+*-l, --lang* _LANG_::
+  قالب اللغة المستخدم (افتراضي: *python*).
+  القيم المدعومة تشمل *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*,
+  *erlang*, *go*, *haskell*, *java*, *perl*, *python*, *ruby*, *rust*,
+  *smalltalk*, *swift*, و*typescript*.
+
+*-D, --distribution* _DIST_::
+  توزيع changelog لـ Debian (افتراضي: *unstable*).
+
+*-1, --init-version* _VER_::
+  إصدار الحزمة الأولي ووسم git (افتراضي: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  اسم المؤلف في changelog وgit (افتراضي: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  بريد المؤلف في changelog وgit (افتراضي: *lenik@bodz.net*).
+
+خيارات *about*:
+
+*-d, --debian*::
+  عرض حقول تعبئة Debian المُحلَّلة (*debian/control*، أحدث
+  stanza في *debian/changelog*). القوائم مثل *Build-Depends* تُلفّ
+  بعرض الطرفية؛ الوصف الطويل يُعاد تنسيقه كفقرات.
+
+*-r, --redhat*::
+  عرض حقول تعبئة RPM المُحلَّلة من *rpm/*.spec* (ماكروهات مثل
+  *%{version}* تُعرض باستخدام *zfr version -r*). نص *%description*
+  يُعاد تنسيقه؛ scriptlets المواصفة لا تُطبع.
+
+*--color* _WHEN_::
+  تمييز CSR: *auto* (افتراضي: TTY وبدون *NO_COLOR*)، *always*، أو
+  *never*.
+
+خيارات *version*:
+
+*-g, --git*::
+  استخدام *git describe --tags --always --dirty* (افتراضي عند توفر
+  *git* و*.git*).
+
+*-c, --changelog*::
+  استخدام أحدث إصدار *debian/changelog* (افتراضي عند عدم توفر *git*
+  أو *.git*).
+
+*-r, --rpm*::
+  طباعة *Version* متوافق مع RPM (الشرطات → شرطات سفلية).
+
+خيارات *lint*:
+
+*-v, --verbose*::
+  طباعة الفحوصات الناجحة أيضًا.
+
+*-q, --quiet*::
+  طباعة الأخطاء فقط.
+
+*--strict*::
+  معاملة التحذيرات كفشل (حالة خروج 1).
+
+*--color* _WHEN_::
+  تمييز CSR: *auto* (افتراضي: TTY وبدون *NO_COLOR*)، *always*، أو
+  *never*.
+
+خيارات *shape*:
+
+*-b, --bool*::
+  طباعة *1* إن كانت درجة shape ≥ *--threshold*، وإلا *0*.
+
+*-v, --verbose*::
+  طباعة *packagedir* و*repodir* و*role* و*threshold* على stderr.
+
+*--threshold* _N_::
+  العتبة لـ *--bool* (افتراضي: *50*).
+
+خيارات *dist*:
+
+*-o, --output* _DIR_::
+  كتابة الأرشيف في *_DIR_* (افتراضي: مجلد Meson *meson-dist*، أو
+  *rpmbuild/SOURCES* مع *--rpm*).
+
+*-b, --builddir* _DIR_::
+  مجلد بناء Meson. الافتراضي */build* إن كان builddir مُعدًّا لهذه
+  الشجرة، وإلا *<project>/build*.
+
+*-f, --format* _FMT_::
+  صيغة الأرشيف: *xz* (افتراضي)، *gz*، أو *zip*.
+
+*--rpm*::
+  تسمية الأرشيف *_NAME_*-*_VERSION_*.tar.xz وكتابته في
+  *rpmbuild/SOURCES* ما لم يُعطَ *-o*. يستخدمه *rpm/Makefile*.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  تمرير *--allow-dirty* إلى *meson dist* (افتراضي: السماح).
+
+*--tests*::
+  تشغيل الاختبارات أثناء *meson dist* (الافتراضي *--no-tests*).
+
+خيارات *release* (تُحلّل هنا وتُمرَّر إلى *gh-makerelease*):
+
+*-b, --build-binary*::
+  بناء Debian ثنائي فقط (*-b*)؛ بدون _.dsc_.
+*-n, --no-pre-clean*::
+  إعادة استخدام ذاكرة تخزين بناء Debian.
+*-u, --upload*::
+  إعادة استخدام artifacts مرتبطة بالإصدار إن وُجدت.
+*--unsigned*::
+  بناء حزم Debian غير موقّعة (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  مضيف رفع *dput*(1) لملف _.changes_.
+*-d, --docker*::
+  بناء حزمة Debian بـ *build4*(1) في Docker.
+*-B, --base-image* _IMAGE_::
+  صورة هدف *build4* (افتراضي: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  تشغيل *build4* عبر SSH على *SERVER* (يُلزم *-d*).
+*-l, --local*::
+  بناء فقط؛ بدون وسم أو push أو إنشاء GitHub release.
+*-f, --force*::
+  استبدال وسم/release موجود.
+*-I, --no-install*::
+  تخطي *sudo dpkg -i*.
+*-T, --no-tag*::
+  تخطي إنشاء وpush وسم git للإصدار.
+*-U, --no-upload*::
+  تخطي *dput* لملف _.changes_.
+*-R, --no-release*::
+  تخطي إنشاء GitHub release.
+*-P, --no-publish*::
+  تخطي نشر VSIX marketplace.
+*-Y, --no-rpm*::
+  تخطي *make -C rpm rpm srpm*.
+*-D, --no-deb*::
+  تخطي Debian *debuild*.
+*-v, --verbose*::
+  تسجيل مفصّل (قابل للتكرار).
+*-q, --quiet*::
+  مخرجات أقل (قابل للتكرار).
+
+خيارات *ize*:
+
+*-l, --lang* _LANG_::
+  قالب اللغة لنسخ الهيكل منه (افتراضي: اكتشاف).
+
+*-n, --dry-run*::
+  طباعة الإضافات/التحديثات/التحويلات المخططة دون كتابة ملفات.
+
+*-v, --verbose*::
+  طباعة المسارات المتخطاة الموجودة مسبقًا أيضًا.
+
+*--no-man*::
+  عدم تحويل مصادر groff *\*.1* إلى *docs/\*.adoc*.
+
+*--no-subst*::
+  عدم إعادة كتابة الإصدارات المُثبّتة في *src/* إلى *@VERSION@* /
+  *config.h*.
+
+*--color* _WHEN_::
+  تمييز CSR: *auto* (افتراضي: TTY وبدون *NO_COLOR*)، *always*، أو
+  *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  تجاوز جذر القوالب (عادة */usr/share/zephyr*).
+
+*NO_COLOR*::
+  عند التعيين، *zfr about* و*zfr lint* و*zfr ize* يعطّلان تمييز
+  CSR في وضع *--color auto*.
+
+*PYTHONPATH*::
+  يجب أن يتضمن المجلد الذي يحتوي حزمة *zfr_lib* عند تشغيل
+  الأدوات من تخطيط تثبيت غير افتراضي.
+
+== Tests
+
+شجرة المصدر (وليس الحزمة المثبتة) تتضمن *tests/* مع تغطية Python
+*unittest* لـ CLI. *meson test* (مجلد البناء */build*) يكتشف
+*tests/test_*.py*. الاختبارات تنشئ مشاريع مثال مؤقتة وتمرّ على
+كل أمر فرعي (*create*, *add*, *remove*, *rename*, *about*,
+*version*, *lint*, *shape*, *dist*, *ize*, *release*, *detect*,
+*help*)، غلافات *zfr-**، تسجيل ثقة اللغة، فهارس gettext،
+والأدلة *docs/<lang>/zfr.adoc* لكل locale. بدون Meson، اضبط
+*ZFR_PKGDATADIR* على جذر checkout لـ zephyr (الأب لـ *zfr/*) و
+*PYTHONPATH* على *src/*.
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  قوالب اللغات المثبتة.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI والغلافات الرقيقة.
+
+*/usr/share/doc/zephyr/*::
+  توثيق الحزمة (LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  صفحات دليل مترجمة، مبنية من *docs/<locale>/zfr.adoc*
+  (ترجمات مستند كامل، وليس fragments gettext/po4a).
+
+== Exit status
+
+*0*::
+  نجاح. لـ *lint*، لا توجد نتائج بمستوى خطأ (التحذيرات تُطبع
+  ما لم يُستخدم *--strict*).
+
+*non-zero*::
+  حدث خطأ (لغة غير معروفة، الوجهة موجودة، فشل اكتشاف، ملفات puff
+  ناقصة، نتائج *lint*، إلخ).
+
+== Author
+
+كتبه {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+الترخيص AGPL-3.0-or-later.
+هذا برنامج حر: يمكنك تغييره وإعادة توزيعه بموجب شروط
+GNU Affero General Public License.
+لا ضمان، في الحدود التي يسمح بها القانون.
+راجع ملف LICENSE في التوزيع المصدري للنص الكامل للترخيص،
+بما في ذلك شروط إضافية تُعلن أن هذا المشروع يعارض استغلال
+الذكاء الاصطناعي وهيمنته، ويرفض ترخيص MIT الأعمى وترخيص
+BSD السياسي الساذج.

@@ -1,0 +1,401 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: பயனர் கட்டளைகள்
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - பல மொழி CLI திட்ட வார்ப்புருக்கள் மற்றும் உதவி கருவிகள்
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape*, மற்றும் *zfr-release* அதே துணைக் கட்டளைகளின் மெல்லிய
+wrapper-கள்.
+
+== Description
+
+*zfr* என்பது *zephyr* வார்ப்புரு தொகுப்புக்கான கட்டளை வரி கருவி.
+சிறிய கட்டளை வரி பயன்பாடுகளுக்கான மொழி வார்ப்புருக்களையும் அவற்றை
+உருவாக்கவும் நிர்வகிக்கவும் உதவிகளையும் வழங்குகிறது.
+
+*முக்கியம்:* உருவாக்கப்பட்ட திட்டங்கள் *zfr*-ஐ தொடர்ந்து அழைக்க
+வேண்டும் (*meson.build* மற்றும் *rpm/Makefile*-ல் *zfr version* போல).
+*zfr* சரம் create/rename magic token அல்ல; திட்டப் பெயராக எழுதப்பட
+மாட்டாது. *மாற்றப்படும்* வார்ப்புரு placeholder *zephyr* (மாதிரி
+puff-களுக்கு *some_puff1*).
+
+பொதுவான பணி ஓட்டம்:
+
+. மொழி வார்ப்புருவிலிருந்து திட்டம் உருவாக்குதல்:
++
+----
+zfr create -l python myproj
+----
+
+. திட்டத்தில் நுழைந்து பயன்பாட்டு *puff*-கள் (எடுத்துக்காட்டு
+பயன்பாடுகள்) சேர்த்தல்:
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. விரும்பினால் பின்னர் *rename* / *remove* மூலம் திட்டம் மறுபெயரிடுதல்
+அல்லது puff-களை நீக்குதல்.
+
+வார்ப்புருக்கள் நிறுவப்பட்டால் */usr/share/zephyr/<lang>/*-ல்,
+நிறுவப்படாத builddir wrapper (*build/zfr* போல) இயக்கும்போது மூல
+மரத்தில் (*ZFR_PKGDATADIR* override). ஒவ்வொரு வார்ப்புருவிலும்
+*some_puff1* மாதிரி puff இருக்கலாம்; *create* கட்டளை வரியில் puff
+பெயர்கள் கொடுத்தால் instantiate, விட்டால் காலி திட்டம்.
+
+monorepo-வில் *repodir* git (அல்லது meta) checkout root, *packagedir*
+zephyr வடிவத்தைக் கொண்ட தொகுப்பு மரம் (எ.கா. *repodir/bash*).
+தற்போதைய கோப்பகத்திலிருந்து நடக்கும் கட்டளைகள் முதலில் *packagedir*
+கண்டறிக.
+
+*i18n*::
+  Zephyr பாணி குறைந்தது இந்த locale-களுக்கு gettext கவரேஜை
+  பரிந்துரைக்கிறது:
+  *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
+  *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
+  (alias *zh-cn* / *zh-tw*). ஆங்கிலம் (*en*) மூல *msgid* மொழி,
+  *po/LINGUAS*-ல் இல்லை. அந்த locale-களை *po/LINGUAS*-ல் பட்டியலிட்டு
+  *po/<locale>.po* கோப்புகளை வழங்கவும்.
+
+== Commands
+
+*create*::
+  *pkgdatadir/<lang>/* புதிய *./<project_name>/* கோப்பகத்தில் நகலெடுக்கிறது
+  (ஏற்கனவே இருந்தால் தோல்வி). *zephyr* → *_PROJECT_NAME_* மற்றும் puff
+  பெயர்கள் இருந்தால் *some_puff1* → முதல் *_PUFF_NAME_* (மேலும் *add*
+  மூலம்). puff இல்லையெனில் வார்ப்புரு puff கோப்புகள் நீக்க, *some_puff1*
+  token-கள் *add* instantiate-க்கு. *--distribution* / *--init-version* /
+  *--author* / *--email* மூலம் புதிய *debian/changelog*, பின்னர் *git init*,
+  *core.hooksPath* *.githooks* (*pre-commit*, *VERSION* *debian/changelog*
+  sync), ஆரம்ப commit, annotated tag *vVER*.
+
+*rename*::
+  தற்போதைய திட்டக் கோப்பகத்தில் *zephyr* → *_PROJECT_NAME_* மற்றும்
+  ஒவ்வொரு பெயருக்கும் வார்ப்புரு puff *some_puff1* → அந்த பெயர்.
+  *zfr* மாற்றாது.
+
+*add*::
+  திட்ட மொழி detect செய்து வார்ப்புரு puff கோப்புகளை தற்போதைய திட்டத்தில்
+  நகலெடுத்து *some_puff1* → ஒவ்வொரு *_PUFF_NAME_*. சாத்தியமான Meson
+  பட்டியல்கள் (அல்லது wiring) புதுப்பிக்க.
+
+*remove*::
+  தற்போதைய திட்டத்திலிருந்து ஒவ்வொரு puff பெயருக்கும் கோப்புகள் மற்றும்
+  Meson wiring நீக்க.
+
+*detect*::
+  தற்போதைய கோப்பகத்தின் detect செய்யப்பட்ட மொழி (parent-களில் project
+  root தேட).
+
+*about*::
+  தற்போதைய திட்டத் தகவல். parent-களில் project root (*meson.build*
+  *project()* அல்லது *debian/control*). பொதுவான புலங்கள் Debian/RPM
+  metadata-விலிருந்து parse, terminal அகலத்தில் wrap. மூல கோப்பு/வரி
+  எண்ணிக்கை, payload size மதிப்பீடு. interactive terminal CSR (console SGR),
+  *NO_COLOR* இல்லாவிட்டால். *-d* / *-r* முழு parsed Debian/RPM view
+  (packaging dump அல்ல).
+
+*version*::
+  தற்போதைய திட்ட பதிப்பு (ஒரு வரி, ஸ்கிரிப்ட்களுக்கு). *git* மற்றும்
+  *.git* இருந்தால் *git describe*, இல்லையெனில் *debian/changelog*.
+  fallback: *VERSION*, பின்னர் *0.0.0*. non-semver token *0.0.0-<token>*
+  wrap.
+
+*lint*::
+  zephyr packaging/layout பாணிக்கு எதிராக validate (parent-ல் root).
+  missing கோப்புகள், identity mismatch, Meson/Debian/RPM பிழை, instantiate
+  பயன்பாடுகளில் leftover *zephyr* / *some_puff1*, suggested fix.
+  *zfr* எதிர்பார்க்கப்படும், leftover அல்ல. *.githooks/pre-commit*-ல்
+  *.git* வரை, *core.hooksPath*, hook *VERSION* *debian/changelog*-லிருந்து
+  sync. *po/* இருந்தால் *LINGUAS* recommended gettext locale set கவர்
+  செய்யாவிட்டால் எச்சரிக்கை (Description *i18n*). மனிதர்களும் AI coder-களும்:
+  code, path, concrete fix. CSR, *NO_COLOR* இல்லாவிட்டால்.
+
+*shape*::
+  தற்போதைய *packagedir*-க்கு 0–100 *zephyr shape* score (zephyr packaging
+  பாணி பொருத்தம்). monorepo-வில் *packagedir* *repodir* (git/meta root)
+  வேறு; shape package கோப்பகத்தை repo root-க்கு முன்னுரிமை. *\-b* /
+  *--bool* threshold (default *50*) பூர்த்தியானால் *1*, இல்லையெனில் *0*.
+
+*dist*::
+  தற்போதைய திட்டத்தின் மூல archive (parent-ல் root). git project root
+  எனில் *meson dist* (*meson setup* பின், default *--allow-dirty*, *--no-tests*).
+  nested மொழி வார்ப்புருக்களுக்கு சொந்த *.git* இல்லை; *meson dist* parent
+  meta-repo pack செய்யும்; அந்த மரங்களுக்கு இந்த திட்டத்தின் directory
+  tarball மட்டும். archive path stdout. *rpm/Makefile* *dist* மற்றும் Meson
+  *srcdist* ninja target இந்த கட்டளை reuse.
+
+*release*::
+  *gh-makerelease*(1) போல option parse, argv rebuild, PATH-லிருந்து
+  *gh-makerelease* *exec*. tagging, packaging, GitHub upload இங்கே இல்லை.
+  *zephyr* git checkout root-லிருந்து release (மொழி வார்ப்புருக்கள் +
+  *zfr/*). கீழே *Options for release*.
+
+*ize*::
+  தற்போதைய திட்டத்தை in-place refactor current zephyr பாணிக்கு (parent-ல்
+  root). மொழி வார்ப்புருவிலிருந்து missing *debian/*, *rpm/* scaffolding
+  (பெயர்கள் rewrite), *VERSION*, *.githooks/pre-commit*, *meson.build* patch
+  (*zfr version*, *asciidoctor* man target, *run_target look*, bash-completion
+  install). groff *\*.1* man (திட்டம், *debian/* அல்ல) *docs/\*.adoc* Meson
+  rules; *src/* hardcoded changelog version *\*.in* *@VERSION@* அல்லது C
+  குடும்பத்தில் *config.h* *PROJECT_VERSION*. *\-n* / *--dry-run* plan
+  எழுதாது. பின்னர் *zfr lint*.
+
+*help*::
+  கட்டளை வரி உதவி காட்டு.
+
+== Options
+
+*create* விருப்பங்கள்:
+
+*-l, --lang* _LANG_::
+  பயன்படுத்த வார்ப்புரு மொழி (default: *python*).
+  *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*, *haskell*,
+  *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift*, *typescript*
+  உட்பட.
+
+*-D, --distribution* _DIST_::
+  Debian changelog distribution (default: *unstable*).
+
+*-1, --init-version* _VER_::
+  ஆரம்ப package version மற்றும் git tag (default: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  Changelog மற்றும் git author பெயர் (default: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  Changelog மற்றும் git author email (default: *lenik@bodz.net*).
+
+*about* விருப்பங்கள்:
+
+*-d, --debian*::
+  Parsed Debian packaging (*debian/control*, சமீபத்திய *debian/changelog*
+  stanza). *Build-Depends* போன்றவை terminal wrap; நீண்ட description
+  paragraph reflow.
+
+*-r, --redhat*::
+  *rpm/*.spec* parsed RPM (*%{version}* *zfr version -r*). *%description*
+  reflow; spec scriptlet dump அல்ல.
+
+*--color* _WHEN_::
+  CSR: *auto* (default: TTY, *NO_COLOR* இல்லை), *always*, *never*.
+
+*version* விருப்பங்கள்:
+
+*-g, --git*::
+  *git describe --tags --always --dirty* (*git*, *.git* default).
+
+*-c, --changelog*::
+  சமீபத்திய *debian/changelog* (*git*/*.git* இல்லையெனில் default).
+
+*-r, --rpm*::
+  RPM-compatible *Version* (hyphen underscore).
+
+*lint* விருப்பங்கள்:
+
+*-v, --verbose*::
+  pass checks-உம் print.
+
+*-q, --quiet*::
+  errors மட்டும்.
+
+*--strict*::
+  warnings failure (exit 1).
+
+*--color* _WHEN_::
+  CSR: *auto*, *always*, *never*.
+
+*shape* விருப்பங்கள்:
+
+*-b, --bool*::
+  score *--threshold* பூர்த்தியானால் *1*, இல்லையெனில் *0*.
+
+*-v, --verbose*::
+  stderr-ல் *packagedir*, *repodir*, *role*, *threshold*.
+
+*--threshold* _N_::
+  *--bool* threshold (default: *50*).
+
+*dist* விருப்பங்கள்:
+
+*-o, --output* _DIR_::
+  archive *_DIR_* (*--rpm*-ல் *rpmbuild/SOURCES*, default Meson *meson-dist*).
+
+*-b, --builddir* _DIR_::
+  Meson build dir. default */build* configured, இல்லையெனில் *<project>/build*.
+
+*-f, --format* _FMT_::
+  archive: *xz* (default), *gz*, *zip*.
+
+*--rpm*::
+  archive *_NAME_*-*_VERSION_*.tar.xz, *-o* இல்லாவிட்டால் *rpmbuild/SOURCES*.
+  *rpm/Makefile*.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  *meson dist*-க்கு *--allow-dirty* (default: allow).
+
+*--tests*::
+  *meson dist*-ல் tests (default *--no-tests*).
+
+*release* விருப்பங்கள் (இங்கே parse, *gh-makerelease*-க்கு pass):
+
+*-b, --build-binary*::
+  Debian binary-only (*-b*); _.dsc_ இல்லை.
+*-n, --no-pre-clean*::
+  Debian build cache reuse.
+*-u, --upload*::
+  version-scoped artifacts reuse.
+*--unsigned*::
+  unsigned Debian (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  _.changes_-க்கு *dput*(1) host.
+*-d, --docker*::
+  Docker-ல் *build4*(1) Debian build.
+*-B, --base-image* _IMAGE_::
+  *build4* image (default: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  *SERVER*-ல் SSH *build4* (implies *-d*).
+*-l, --local*::
+  build மட்டும்; tag, push, GitHub release இல்லை.
+*-f, --force*::
+  existing tag/release replace.
+*-I, --no-install*::
+  *sudo dpkg -i* skip.
+*-T, --no-tag*::
+  git release tag skip.
+*-U, --no-upload*::
+  _.changes_ *dput* skip.
+*-R, --no-release*::
+  GitHub release skip.
+*-P, --no-publish*::
+  VSIX marketplace skip.
+*-Y, --no-rpm*::
+  *make -C rpm rpm srpm* skip.
+*-D, --no-deb*::
+  Debian *debuild* skip.
+*-v, --verbose*::
+  verbose (repeatable).
+*-q, --quiet*::
+  குறைந்த output (repeatable).
+
+*ize* விருப்பங்கள்:
+
+*-l, --lang* _LANG_::
+  scaffolding மொழி வார்ப்புரு (default: detect).
+
+*-n, --dry-run*::
+  planned add/update/conversion எழுதாது.
+
+*-v, --verbose*::
+  skip செய்த existing paths-உம்.
+
+*--no-man*::
+  groff *\*.1* *docs/\*.adoc* convert இல்லை.
+
+*--no-subst*::
+  *src/* hardcoded version *@VERSION@* / *config.h* rewrite இல்லை.
+
+*--color* _WHEN_::
+  CSR: *auto*, *always*, *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  வார்ப்புரு root override (பொதுவாக */usr/share/zephyr*).
+
+*NO_COLOR*::
+  set எனில் *zfr about*, *zfr lint*, *zfr ize* *--color auto*-ல் CSR off.
+
+*PYTHONPATH*::
+  non-default install-ல் *zfr_lib* கொண்ட dir தேவை.
+
+== Tests
+
+மூல மரம் (install package அல்ல) *tests/* Python *unittest* CLI coverage.
+*meson test* (build */build*) *tests/test_*.py* கண்டறி. temp example
+திட்டங்கள், ஒவ்வொரு subcommand (*create*, *add*, *remove*, *rename*,
+*about*, *version*, *lint*, *shape*, *dist*, *ize*, *release*, *detect*,
+*help*), *zfr-** wrapper, language confidence, gettext catalog, locale
+*docs/<lang>/zfr.adoc* manual. Meson இல்லாமல் *ZFR_PKGDATADIR* zephyr
+checkout root (*zfr/* parent), *PYTHONPATH* *src/*.
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  நிறுவப்பட்ட மொழி வார்ப்புருக்கள்.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI மற்றும் மெல்லிய wrapper-கள்.
+
+*/usr/share/doc/zephyr/*::
+  package documentation (LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  localized manual, *docs/<locale>/zfr.adoc*-லிருந்து
+  (full-document translation, gettext/po4a fragment அல்ல).
+
+== Exit status
+
+*0*::
+  வெற்றி. *lint*-ல் error-level finding இல்லை (*--strict* இல்லாமல்
+  warnings print).
+
+*non-zero*::
+  பிழை (unknown language, destination exists, detection failure, missing puff,
+  *lint* findings போன்றவை).
+
+== Author
+
+{project-author} <{project-email}> எழுதியது.
+
+== Copyright
+
+Copyright (C) {project-year}.
+License AGPL-3.0-or-later.
+இது free software: GNU Affero General Public License விதிமுறைகளில்
+மாற்றவும் redistribute செய்யவும் சுதந்திரம்.
+சட்டப்படி அனுமதிக்கப்பட்ட அளவு WARRANTY இல்லை.
+முழு license text மூல distribution LICENSE கோப்பில், supplemental terms
+உட்பட—இந்த திட்டம் AI exploitation, AI hegemony-க்கு எதிராகவும் mindless
+MIT-style, politically naive BSD-style licensing-ஐ நிராகரிக்கவும் கூறுகிறது.

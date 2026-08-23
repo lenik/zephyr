@@ -1,34 +1,49 @@
-# Indonesian translations for PACKAGE package.
-# Copyright (C) 2026 THE PACKAGE'S COPYRIGHT HOLDER
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2026.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: zfr\n"
+"\n"
 "Report-Msgid-Bugs-To: zephyr@bodz.net\n"
-"POT-Creation-Date: 2026-08-23 18:39+0800\n"
-"PO-Revision-Date: 2026-08-22 00:53+0800\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"\n"
+"POT-Creation-Date: 2026-08-23 19:11+0800\n"
+"\n"
+"PO-Revision-Date: 2026-08-23 19:30+0800\n"
+"\n"
+"Last-Translator: Cursor Agent\n"
+"\n"
+"Language-Team: Indonesian\n"
+"\n"
 "Language: id\n"
+"\n"
 "MIME-Version: 1.0\n"
+"\n"
 "Content-Type: text/plain; charset=UTF-8\n"
+"\n"
 "Content-Transfer-Encoding: 8bit\n"
+"\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"\n"
 
-#: src/zfr:30
+#: src/zfr:32
 msgid ""
 "Zephyr template helper (CLI name: zfr). Create projects and manage example "
 "puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
 msgstr ""
+"Pembantu templat Zephyr (nama CLI: zfr). Buat proyek dan kelola puff contoh."
+" Pohon yang diinstansiasi tetap memanggil zfr; zfr bukan token pengganti "
+"nama."
 
-#: src/zfr:39
+#: src/zfr:45
 msgid "show this help"
-msgstr ""
+msgstr "tampilkan bantuan ini"
 
 #: src/zfr_lib/about.py:496
 msgid "print current project information (walks parents from cwd)"
-msgstr ""
+msgstr "cetak informasi proyek saat ini (menelusuri induk dari cwd)"
 
 #: src/zfr_lib/about.py:498
 msgid ""
@@ -36,257 +51,181 @@ msgid ""
 "parent directories). CSR colors when stdout is a TTY. Common packaging "
 "fields are parsed from debian or RPM."
 msgstr ""
+"Cetak informasi tentang proyek zephyr saat ini (menelusuri dari cwd ke "
+"direktori induk). Warna CSR saat stdout adalah TTY. Bidang pengemasan umum "
+"diurai dari debian atau RPM."
 
 #: src/zfr_lib/about.py:505
 msgid "show parsed Debian packaging fields"
-msgstr ""
+msgstr "tampilkan bidang pengemasan Debian yang diurai"
 
 #: src/zfr_lib/about.py:506
 msgid "show parsed RPM packaging fields"
-msgstr ""
+msgstr "tampilkan bidang pengemasan RPM yang diurai"
 
 #: src/zfr_lib/about.py:511
 msgid "CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)"
-msgstr ""
+msgstr "penyorotan CSR (console SGR) (default: auto = TTY dan tanpa NO_COLOR)"
 
 #: src/zfr_lib/add.py:20
 msgid "instantiate puff(s) from the language template"
-msgstr ""
+msgstr "instansiasi puff dari templat bahasa"
 
 #: src/zfr_lib/add.py:21
 msgid "Detect language and add puff(s) from pkgdatadir/<lang>."
-msgstr ""
+msgstr "Deteksi bahasa dan tambahkan puff dari pkgdatadir/<lang>."
 
 #: src/zfr_lib/add.py:25
 msgid "new puff name(s) (snake_case recommended)"
-msgstr ""
+msgstr "nama puff baru (snake_case disarankan)"
 
 #: src/zfr_lib/create.py:291
 msgid "create a new project from a language template"
-msgstr ""
+msgstr "buat proyek baru dari templat bahasa"
 
 #: src/zfr_lib/create.py:292
 msgid "Create a new project directory from pkgdatadir/<lang>."
-msgstr ""
+msgstr "Buat direktori proyek baru dari pkgdatadir/<lang>."
 
 #: src/zfr_lib/create.py:298
 #, python-format
 msgid "template language (default: python; one of: %s)"
-msgstr ""
+msgstr "bahasa templat (default: python; salah satu dari: %s)"
 
 #: src/zfr_lib/create.py:302
 #, python-format
 msgid "debian changelog distribution (default: %s)"
-msgstr ""
+msgstr "distribusi debian changelog (default: %s)"
 
 #: src/zfr_lib/create.py:306
 #, python-format
 msgid "initial package version and git tag (default: %s)"
-msgstr ""
+msgstr "versi paket awal dan tag git (default: %s)"
 
 #: src/zfr_lib/create.py:310
 #, python-format
 msgid "changelog/git author name (default: %s)"
-msgstr ""
+msgstr "nama penulis changelog/git (default: %s)"
 
 #: src/zfr_lib/create.py:314
 #, python-format
 msgid "changelog/git author email (default: %s)"
-msgstr ""
+msgstr "email penulis changelog/git (default: %s)"
 
 #: src/zfr_lib/create.py:316
 msgid "new project directory name"
-msgstr ""
+msgstr "nama direktori proyek baru"
 
 #: src/zfr_lib/create.py:319
 msgid "optional puff names to add after creating the project"
-msgstr ""
+msgstr "nama puff opsional untuk ditambahkan setelah membuat proyek"
 
 #: src/zfr_lib/detect.py:15
 msgid "print detected language for the current directory"
-msgstr ""
+msgstr "cetak bahasa terdeteksi untuk direktori saat ini"
 
 #: src/zfr_lib/detect.py:16
 msgid ""
 "Print the detected language of the current project and layout details on "
 "stderr."
 msgstr ""
+"Cetak bahasa terdeteksi proyek saat ini dan detail tata letak ke stderr."
 
-#: src/zfr_lib/dist.py:338
-msgid "build a source tarball (meson dist, or this project only)"
+#: src/zfr_lib/dist.py:60
+msgid ""
+"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with "
+"--rpm)"
 msgstr ""
+"tulis arsip ke DIR (default: meson-dist, atau rpmbuild/SOURCES dengan --rpm)"
 
-#: src/zfr_lib/dist.py:340
+#: src/zfr_lib/dist.py:70
+msgid ""
+"Meson build directory (default: /build when it matches this source tree, "
+"else <project>/build)"
+msgstr ""
+"direktori build Meson (default: /build jika cocok dengan pohon sumber ini, "
+"else <project>/build)"
+
+#: src/zfr_lib/dist.py:80
+msgid "archive format (default: xz)"
+msgstr "format arsip (default: xz)"
+
+#: src/zfr_lib/dist.py:86
+msgid ""
+"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless"
+" -o is given"
+msgstr ""
+"beri nama arsip NAME-VERSION.tar.xz dan tulis ke rpmbuild/SOURCES kecuali -o"
+" diberikan"
+
+#: src/zfr_lib/dist.py:94
+msgid "pass --allow-dirty to meson dist (default: allow)"
+msgstr "oper --allow-dirty ke meson dist (default: allow)"
+
+#: src/zfr_lib/dist.py:99
+msgid "run tests during meson dist (default: --no-tests)"
+msgstr "jalankan tes selama meson dist (default: --no-tests)"
+
+#: src/zfr_lib/dist.py:343
+msgid "build a source tarball (meson dist, or this project only)"
+msgstr "buat tarball sumber (meson dist, atau proyek ini saja)"
+
+#: src/zfr_lib/dist.py:345
 msgid ""
 "Build a source archive of the current zephyr project (walks from cwd toward "
 "parent directories). Uses meson dist when this directory is the git project "
 "root; otherwise packs this project only so nested language templates do not "
 "ship the parent meta-repo. Prints the archive path on stdout."
 msgstr ""
+"Buat arsip sumber proyek zephyr saat ini (menelusuri dari cwd ke direktori "
+"induk). Menggunakan meson dist saat direktori ini adalah root proyek git; "
+"jika tidak, hanya mengemas proyek ini agar templat bahasa bersarang tidak "
+"mengirim meta-repo induk. Mencetak jalur arsip ke stdout."
 
-#: src/zfr_lib/release.py:26
-msgid "Debian binary-only build (no .dsc)"
+#: src/zfr_lib/ize/__init__.py:60
+msgid "refactor this project to current zephyr style"
+msgstr "refaktor proyek ini ke gaya zephyr saat ini"
+
+#: src/zfr_lib/ize/__init__.py:61
+msgid ""
+"Refactor the current project to match current zephyr style: missing "
+"debian/rpm files, meson targets, AsciiDoc man pages, and Meson version "
+"substitutions. Walks from cwd toward parents."
 msgstr ""
+"Refaktor proyek saat ini agar sesuai gaya zephyr saat ini: file debian/rpm "
+"yang hilang, target meson, halaman man AsciiDoc, dan substitusi versi Meson."
+" Menelusuri dari cwd ke induk."
 
-#: src/zfr_lib/release.py:32
-msgid "Reuse build cache"
-msgstr ""
-
-#: src/zfr_lib/release.py:38
-msgid "Reuse existing artifacts; build only if missing"
-msgstr ""
-
-#: src/zfr_lib/release.py:43
-msgid "Build unsigned packages"
-msgstr ""
-
-#: src/zfr_lib/release.py:50
-msgid "dput upload host for .changes (debian)"
-msgstr ""
-
-#: src/zfr_lib/release.py:56
-msgid "Build debian package with build4 (Docker)"
-msgstr ""
-
-#: src/zfr_lib/release.py:63
+#: src/zfr_lib/ize/__init__.py:65
 #, python-format
-msgid "build4 target image (default: %s)"
+msgid "language template to align with (default: detect; one of: %s)"
 msgstr ""
+"templat bahasa untuk diselaraskan (default: detect; salah satu dari: %s)"
 
-#: src/zfr_lib/release.py:70
-msgid "Run build4 over SSH on SERVER (implies -d)"
-msgstr ""
+#: src/zfr_lib/ize/__init__.py:66
+msgid "print planned changes without writing files"
+msgstr "cetak perubahan yang direncanakan tanpa menulis file"
 
-#: src/zfr_lib/release.py:76
-msgid "Build in local, no tag/push/release"
-msgstr ""
+#: src/zfr_lib/ize/__init__.py:67
+msgid "also print skipped files"
+msgstr "juga cetak file yang dilewati"
 
-#: src/zfr_lib/release.py:82
-msgid "Replace existing release and tag if present"
-msgstr ""
+#: src/zfr_lib/ize/__init__.py:68
+msgid "do not convert groff .1 man pages to docs/*.adoc"
+msgstr "jangan konversi halaman man groff .1 ke docs/*.adoc"
 
-#: src/zfr_lib/release.py:88
-msgid "Skip sudo dpkg -i (still find debs/changes)"
-msgstr ""
+#: src/zfr_lib/ize/__init__.py:69
+msgid "do not turn hardcoded versions into @VERSION@ / config.h"
+msgstr "jangan ubah versi hardcoded menjadi @VERSION@ / config.h"
 
-#: src/zfr_lib/release.py:94
-msgid "Skip git tag create/push"
-msgstr ""
-
-#: src/zfr_lib/release.py:100
-msgid "Skip dput upload to deb pool (-u reuses build artifacts)"
-msgstr ""
-
-#: src/zfr_lib/release.py:106
-msgid "Skip GitHub release"
-msgstr ""
-
-#: src/zfr_lib/release.py:112
-msgid "Skip VSIX marketplace publish"
-msgstr ""
-
-#: src/zfr_lib/release.py:118
-msgid "Skip RPM build (rpm/Makefile)"
-msgstr ""
-
-#: src/zfr_lib/release.py:124
-msgid "Skip Debian debuild"
-msgstr ""
-
-#: src/zfr_lib/release.py:131
-msgid "Verbose logging"
-msgstr ""
-
-#: src/zfr_lib/release.py:138
-msgid "Less output"
-msgstr ""
-
-#: src/zfr_lib/release.py:205
-msgid "create a GitHub release (parse options, exec gh-makerelease)"
-msgstr ""
-
-#: src/zfr_lib/release.py:207
-msgid ""
-"Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
-"not implement tagging, packaging, or uploads."
-msgstr ""
-
-#: src/zfr_lib/remove.py:20
-msgid "remove puff(s) from the current project"
-msgstr ""
-
-#: src/zfr_lib/remove.py:21
-msgid "Remove puff files for NAME(s) from the current project."
-msgstr ""
-
-#: src/zfr_lib/remove.py:25
-msgid "puff name(s) to remove"
-msgstr ""
-
-#: src/zfr_lib/rename.py:51
-msgid "rename zephyr project and example puff names"
-msgstr ""
-
-#: src/zfr_lib/rename.py:52
-msgid "Rename zephyr → ProjectName and some_puff1 → example names."
-msgstr ""
-
-#: src/zfr_lib/rename.py:56
-msgid "new project name (replaces 'zephyr')"
-msgstr ""
-
-#: src/zfr_lib/rename.py:57
-msgid "new example names (each replaces template some_puff1)"
-msgstr ""
-
-#: src/zfr_lib/shape.py:259
-msgid ""
-"print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
-msgstr ""
-
-#: src/zfr_lib/shape.py:261
-msgid ""
-"Score how completely the current directory matches zephyr package style "
-"(0-100). In monorepos, scores the packagedir."
-msgstr ""
-
-#: src/zfr_lib/shape.py:267
-msgid "print 1 if score >= threshold, else 0"
-msgstr ""
-
-#: src/zfr_lib/shape.py:268
-msgid "print packagedir/repodir/role on stderr"
-msgstr ""
-
-#: src/zfr_lib/shape.py:269
-#, python-format
-msgid "bool threshold 0-100 (default: %s)"
-msgstr ""
-
-#: src/zfr_lib/version.py:51
-msgid "print current project version (walks parents from cwd)"
-msgstr ""
-
-#: src/zfr_lib/version.py:52
-msgid ""
-"Print the current project version (walks from cwd toward parent directories)."
-msgstr ""
-
-#: src/zfr_lib/version.py:57
-msgid "use git describe (default when git and .git are available)"
-msgstr ""
-
-#: src/zfr_lib/version.py:58
-msgid "use debian/changelog (default when git or .git is unavailable)"
-msgstr ""
-
-#: src/zfr_lib/version.py:59
-msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
-msgstr ""
+#: src/zfr_lib/ize/__init__.py:70 src/zfr_lib/lint/__init__.py:98
+msgid "CSR (console SGR) highlighting (default: auto)"
+msgstr "penyorotan CSR (console SGR) (default: auto)"
 
 #: src/zfr_lib/lint/__init__.py:90
 msgid "validate project packaging and zephyr layout (walks parents from cwd)"
 msgstr ""
+"validasi pengemasan proyek dan tata letak zephyr (menelusuri induk dari cwd)"
 
 #: src/zfr_lib/lint/__init__.py:91
 msgid ""
@@ -294,51 +233,184 @@ msgid ""
 "mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
 "is a TTY."
 msgstr ""
+"Periksa proyek zephyr saat ini untuk file yang hilang dan kesalahan "
+"pengemasan/gaya. Menelusuri dari cwd ke direktori induk. Warna CSR saat "
+"stdout adalah TTY."
 
 #: src/zfr_lib/lint/__init__.py:95
 msgid "show passing checks too"
-msgstr ""
+msgstr "tampilkan juga pemeriksaan yang lulus"
 
 #: src/zfr_lib/lint/__init__.py:96
 msgid "only print errors"
-msgstr ""
+msgstr "hanya cetak kesalahan"
 
 #: src/zfr_lib/lint/__init__.py:97
 msgid "treat warnings as failures (exit 1)"
-msgstr ""
+msgstr "anggap peringatan sebagai kegagalan (exit 1)"
 
-#: src/zfr_lib/lint/__init__.py:98 src/zfr_lib/ize/__init__.py:70
-msgid "CSR (console SGR) highlighting (default: auto)"
-msgstr ""
+#: src/zfr_lib/release.py:26
+msgid "Debian binary-only build (no .dsc)"
+msgstr "build Debian hanya biner (tanpa .dsc)"
 
-#: src/zfr_lib/ize/__init__.py:60
-msgid "refactor this project to current zephyr style"
-msgstr ""
+#: src/zfr_lib/release.py:32
+msgid "Reuse build cache"
+msgstr "gunakan ulang cache build"
 
-#: src/zfr_lib/ize/__init__.py:61
-msgid ""
-"Refactor the current project to match current zephyr style: missing debian/"
-"rpm files, meson targets, AsciiDoc man pages, and Meson version "
-"substitutions. Walks from cwd toward parents."
-msgstr ""
+#: src/zfr_lib/release.py:38
+msgid "Reuse existing artifacts; build only if missing"
+msgstr "gunakan ulang artefak yang ada; build hanya jika hilang"
 
-#: src/zfr_lib/ize/__init__.py:65
+#: src/zfr_lib/release.py:43
+msgid "Build unsigned packages"
+msgstr "buat paket unsigned"
+
+#: src/zfr_lib/release.py:50
+msgid "dput upload host for .changes (debian)"
+msgstr "host unggah dput untuk .changes (debian)"
+
+#: src/zfr_lib/release.py:56
+msgid "Build debian package with build4 (Docker)"
+msgstr "buat paket debian dengan build4 (Docker)"
+
+#: src/zfr_lib/release.py:63
 #, python-format
-msgid "language template to align with (default: detect; one of: %s)"
-msgstr ""
+msgid "build4 target image (default: %s)"
+msgstr "image target build4 (default: %s)"
 
-#: src/zfr_lib/ize/__init__.py:66
-msgid "print planned changes without writing files"
-msgstr ""
+#: src/zfr_lib/release.py:70
+msgid "Run build4 over SSH on SERVER (implies -d)"
+msgstr "jalankan build4 melalui SSH di SERVER (implies -d)"
 
-#: src/zfr_lib/ize/__init__.py:67
-msgid "also print skipped files"
-msgstr ""
+#: src/zfr_lib/release.py:76
+msgid "Build in local, no tag/push/release"
+msgstr "build lokal, tanpa tag/push/release"
 
-#: src/zfr_lib/ize/__init__.py:68
-msgid "do not convert groff .1 man pages to docs/*.adoc"
-msgstr ""
+#: src/zfr_lib/release.py:82
+msgid "Replace existing release and tag if present"
+msgstr "ganti release dan tag yang ada jika ada"
 
-#: src/zfr_lib/ize/__init__.py:69
-msgid "do not turn hardcoded versions into @VERSION@ / config.h"
+#: src/zfr_lib/release.py:88
+msgid "Skip sudo dpkg -i (still find debs/changes)"
+msgstr "lewati sudo dpkg -i (tetap menemukan debs/changes)"
+
+#: src/zfr_lib/release.py:94
+msgid "Skip git tag create/push"
+msgstr "lewati buat/push tag git"
+
+#: src/zfr_lib/release.py:100
+msgid "Skip dput upload to deb pool (-u reuses build artifacts)"
+msgstr "lewati unggah dput ke deb pool (-u menggunakan ulang artefak build)"
+
+#: src/zfr_lib/release.py:106
+msgid "Skip GitHub release"
+msgstr "lewati release GitHub"
+
+#: src/zfr_lib/release.py:112
+msgid "Skip VSIX marketplace publish"
+msgstr "lewati publikasi VSIX marketplace"
+
+#: src/zfr_lib/release.py:118
+msgid "Skip RPM build (rpm/Makefile)"
+msgstr "lewati build RPM (rpm/Makefile)"
+
+#: src/zfr_lib/release.py:124
+msgid "Skip Debian debuild"
+msgstr "lewati Debian debuild"
+
+#: src/zfr_lib/release.py:131
+msgid "Verbose logging"
+msgstr "logging verbose"
+
+#: src/zfr_lib/release.py:138
+msgid "Less output"
+msgstr "output lebih sedikit"
+
+#: src/zfr_lib/release.py:205
+msgid "create a GitHub release (parse options, exec gh-makerelease)"
+msgstr "buat release GitHub (urai opsi, exec gh-makerelease)"
+
+#: src/zfr_lib/release.py:207
+msgid ""
+"Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
+"not implement tagging, packaging, or uploads."
 msgstr ""
+"Uraikan opsi gh-makerelease, bangun ulang argv, dan exec gh-makerelease. "
+"Tidak mengimplementasikan tagging, packaging, atau uploads."
+
+#: src/zfr_lib/remove.py:20
+msgid "remove puff(s) from the current project"
+msgstr "hapus puff dari proyek saat ini"
+
+#: src/zfr_lib/remove.py:21
+msgid "Remove puff files for NAME(s) from the current project."
+msgstr "Hapus file puff untuk NAME dari proyek saat ini."
+
+#: src/zfr_lib/remove.py:25
+msgid "puff name(s) to remove"
+msgstr "nama puff yang akan dihapus"
+
+#: src/zfr_lib/rename.py:51
+msgid "rename zephyr project and example puff names"
+msgstr "ganti nama proyek zephyr dan nama puff contoh"
+
+#: src/zfr_lib/rename.py:52
+msgid "Rename zephyr → ProjectName and some_puff1 → example names."
+msgstr "Ganti nama zephyr → ProjectName dan some_puff1 → nama contoh."
+
+#: src/zfr_lib/rename.py:56
+msgid "new project name (replaces 'zephyr')"
+msgstr "nama proyek baru (mengganti 'zephyr')"
+
+#: src/zfr_lib/rename.py:57
+msgid "new example names (each replaces template some_puff1)"
+msgstr "nama contoh baru (masing-masing mengganti some_puff1 templat)"
+
+#: src/zfr_lib/shape.py:259
+msgid ""
+"print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
+msgstr ""
+"cetak skor bentuk paket zephyr 0-100 (packagedir vs repodir di monorepos)"
+
+#: src/zfr_lib/shape.py:261
+msgid ""
+"Score how completely the current directory matches zephyr package style "
+"(0-100). In monorepos, scores the packagedir."
+msgstr ""
+"Skor seberapa lengkap direktori saat ini cocok dengan gaya paket zephyr "
+"(0-100). Di monorepos, menilai packagedir."
+
+#: src/zfr_lib/shape.py:267
+msgid "print 1 if score >= threshold, else 0"
+msgstr "cetak 1 jika score >= threshold, else 0"
+
+#: src/zfr_lib/shape.py:268
+msgid "print packagedir/repodir/role on stderr"
+msgstr "cetak packagedir/repodir/role ke stderr"
+
+#: src/zfr_lib/shape.py:269
+#, python-format
+msgid "bool threshold 0-100 (default: %s)"
+msgstr "ambang bool 0-100 (default: %s)"
+
+#: src/zfr_lib/version.py:51
+msgid "print current project version (walks parents from cwd)"
+msgstr "cetak versi proyek saat ini (menelusuri induk dari cwd)"
+
+#: src/zfr_lib/version.py:52
+msgid ""
+"Print the current project version (walks from cwd toward parent "
+"directories)."
+msgstr "Cetak versi proyek saat ini (menelusuri dari cwd ke direktori induk)."
+
+#: src/zfr_lib/version.py:57
+msgid "use git describe (default when git and .git are available)"
+msgstr "gunakan git describe (default saat git dan .git tersedia)"
+
+#: src/zfr_lib/version.py:58
+msgid "use debian/changelog (default when git or .git is unavailable)"
+msgstr "gunakan debian/changelog (default saat git atau .git tidak tersedia)"
+
+#: src/zfr_lib/version.py:59
+msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
+msgstr "cetak Version kompatibel RPM (tanda hubung menjadi underscore)"

@@ -1,0 +1,395 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: వినియోగదారు ఆదేశాలు
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - బహుభాషా CLI ప్రాజెక్ట్ టెంప్లేట్లు మరియు సహాయక సాధనాలు
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape*, మరియు *zfr-release* అదే ఉప-ఆదేశాల చుట్టూ పలుచని wrapper-లు.
+
+== Description
+
+*zfr* అనేది *zephyr* టెంప్లేట్ సేకరణకు కమాండ్-లైన్ సాధనం.
+చిన్న కమాండ్-లైన్ యుటిలిటీల కోసం భాషా టెంప్లేట్లను మరియు వాటిని
+సృష్టించడానికి, నిర్వహించడానికి సహాయకాలను అందిస్తుంది.
+
+*ముఖ్యం:* instantiate చేసిన ప్రాజెక్ట్లు *zfr* ను కొనసాగించాలని
+ఊహిస్తారు (*meson.build* మరియు *rpm/Makefile* లో *zfr version* వంటిది).
+*zfr* స్ట్రింగ్ create/rename magic token కాదు; ప్రాజెక్ట్ పేరుగా
+ఎప్పటికీ రాయబడదు. *మార్చబడే* టెంప్లేట్ placeholder *zephyr*
+(మరియు నమూనా puff-ల కోసం *some_puff1*).
+
+సాధారణ workflow:
+
+. భాషా టెంప్లేట్ నుండి ప్రాజెక్ట్ సృష్టించడం:
++
+----
+zfr create -l python myproj
+----
+
+. ప్రాజెక్ట్‌లోకి ప్రవేశించి అప్లికేషన్ *puff*-లు (ఉదాహరణ యాప్‌లు)
+జోడించడం:
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. అవసరమైతే తర్వాత *rename* / *remove* తో ప్రాజెక్ట్ పేరు మార్చడం
+లేదా puff-లు తొలగించడం.
+
+టెంప్లేట్లు ఇన్‌స్టాల్ అయితే */usr/share/zephyr/<lang>/* లో,
+uninstalled builddir wrapper (*build/zfr* వంటిది) నడిపితే మూల
+ట్రీలో (*ZFR_PKGDATADIR* override). ప్రతి టెంప్లేట్‌లో *some_puff1*
+నమూనా puff ఉండవచ్చు; *create* కమాండ్ లైన్‌లో puff పేర్లు ఇస్తే
+instantiate, లేకుంటే ఖాళీ ప్రాజెక్ట్.
+
+monorepo లో *repodir* git (లేదా meta) checkout root, *packagedir*
+zephyr ఆకారం గల ప్యాకేజ్ ట్రీ (ఉదా. *repodir/bash*). ప్రస్తుత
+డైరెక్టరీ నుండి నడిచే ఆదేశాలు ముందుగా *packagedir* కనుగొంటాయి.
+
+*i18n*::
+  Zephyr శైలి కనీసం ఈ locale-ల కోసం gettext coverage సిఫార్సు చేస్తుంది:
+  *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
+  *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
+  (alias *zh-cn* / *zh-tw*). ఇంగ్లీష్ (*en*) మూల *msgid* భాష, *po/LINGUAS*
+  లో లేదు. ఆ locale-లను *po/LINGUAS* లో జాబితా చేసి *po/<locale>.po*
+  ఫైళ్లు అందించండి.
+
+== Commands
+
+*create*::
+  *pkgdatadir/<lang>/* కొత్త *./<project_name>/* డైరెక్టరీకి కాపీ (డైరెక్టరీ
+  ఉంటే విఫలం). *zephyr* → *_PROJECT_NAME_* మరియు puff పేర్లు ఇస్తే
+  *some_puff1* → మొదటి *_PUFF_NAME_* (మరిన్ని *add* ద్వారా). puff
+  పేర్లు లేకుంటే టెంప్లేట్ puff ఫైళ్లు తొలగించి *some_puff1* token-లు
+  *add* instantiate కోసం ఉంచుతుంది. *--distribution* / *--init-version* /
+  *--author* / *--email* తో కొత్త *debian/changelog*, తర్వాత *git init*,
+  *core.hooksPath* *.githooks* (*pre-commit*, *VERSION* *debian/changelog*
+  sync), ప్రారంభ commit, annotated tag *vVER*.
+
+*rename*::
+  ప్రస్తుత ప్రాజెక్ట్ డైరెక్టరీలో *zephyr* → *_PROJECT_NAME_* మరియు
+  ప్రతి పేరుకు టెంప్లేట్ puff *some_puff1* → ఆ పేరు. *zfr* రాయదు.
+
+*add*::
+  ప్రాజెక్ట్ భాష detect చేసి టెంప్లేట్ puff ఫైళ్లను ప్రస్తుత ప్రాజెక్ట్‌కు
+  కాపీ, *some_puff1* → ప్రతి *_PUFF_NAME_*. సాధ్యమైతే Meson జాబితాలు
+  (లేదా wiring) నవీకరణ.
+
+*remove*::
+  ప్రస్తుత ప్రాజెక్ట్ నుండి ప్రతి puff పేరుకు ఫైళ్లు మరియు Meson wiring
+  తొలగింపు.
+
+*detect*::
+  ప్రస్తుత డైరెక్టరీ detect చేసిన భాష (parent-లలో project root).
+
+*about*::
+  ప్రస్తుత ప్రాజెక్ట్ సమాచారం. parent-లలో project root (*meson.build*
+  *project()* లేదా *debian/control*). సాధారణ ఫీల్డ్‌లు Debian/RPM
+  metadata నుండి parse, terminal వెడల్పుకు wrap. మూల ఫైల్/లైన్
+  లెక్కలు, payload size అంచనా. interactive terminal CSR (console SGR),
+  *NO_COLOR* లేకుంటే. *-d* / *-r* పూర్తి parsed Debian/RPM view
+  (packaging dump కాదు).
+
+*version*::
+  ప్రస్తుత ప్రాజెక్ట్ వెర్షన్ (ఒక లైన్, scripts కోసం). *git* మరియు
+  *.git* ఉంటే *git describe*, లేకుంటే *debian/changelog*. fallback:
+  *VERSION*, తర్వాత *0.0.0*. non-semver token *0.0.0-<token>* wrap.
+
+*lint*::
+  zephyr packaging/layout శైలికి validate (parent-లలో root). missing
+  ఫైళ్లు, identity mismatch, Meson/Debian/RPM తప్పులు, instantiate
+  యాప్‌లలో leftover *zephyr* / *some_puff1*, suggested fix. *zfr*
+  mentions expected, leftover కాదు. *.githooks/pre-commit* *.git*
+  వరకు, *core.hooksPath*, hook *VERSION* *debian/changelog* నుండి sync.
+  *po/* ఉంటే *LINGUAS* recommended gettext locale set కవర్ చేయకపోతే
+  warning (Description *i18n*). మానవులు మరియు AI coder-ల కోసం: code,
+  path, concrete fix. CSR, *NO_COLOR* లేకుంటే.
+
+*shape*::
+  ప్రస్తుత *packagedir* కు 0–100 *zephyr shape* score (zephyr packaging
+  శైలి match). monorepo లో *packagedir* *repodir* (git/meta root) కి
+  భిన్నం; shape package directory ను repo root కంటే prefer. *\-b* /
+  *--bool* threshold (default *50*) పూర్తి అయితే *1*, లేకుంటే *0*.
+
+*dist*::
+  ప్రస్తుత ప్రాజెక్ట్ source archive (parent-లలో root). git project
+  root అయితే *meson dist* (*meson setup* తర్వాత, default *--allow-dirty*,
+  *--no-tests*). nested భాషా టెంప్లేట్లకు స్వంత *.git* లేదు; *meson dist*
+  parent meta-repo pack; ఆ ట్రీలకు ఈ ప్రాజెక్ట్ directory tarball మాత్రమే.
+  archive path stdout. *rpm/Makefile* *dist* మరియు Meson *srcdist* ninja
+  target ఈ command reuse.
+
+*release*::
+  *gh-makerelease*(1) వంటి options parse, argv rebuild, PATH నుండి
+  *gh-makerelease* *exec*. tagging, packaging, GitHub upload ఇక్కడ
+  implement చేయదు. *zephyr* git checkout root నుండి release (భాషా
+  టెంప్లేట్లు + *zfr/*). క్రింద *Options for release*.
+
+*ize*::
+  ప్రస్తుత ప్రాజెక్ట్ in-place refactor current zephyr శైలికి (parent-లలో
+  root). భాషా టెంప్లేట్ నుండి missing *debian/*, *rpm/* scaffolding
+  (పేర్లు rewrite), *VERSION*, *.githooks/pre-commit*, *meson.build*
+  patch (*zfr version*, *asciidoctor* man targets, *run_target look*,
+  bash-completion install). groff *\*.1* man (ప్రాజెక్ట్, *debian/* కాదు)
+  *docs/\*.adoc* Meson rules; *src/* hardcoded changelog version
+  *\*.in* *@VERSION@* లేదా C family *config.h* *PROJECT_VERSION*.
+  *\-n* / *--dry-run* plan రాయదు. తర్వాత *zfr lint*.
+
+*help*::
+  కమాండ్-లైన్ సహాయం చూపించు.
+
+== Options
+
+*create* options:
+
+*-l, --lang* _LANG_::
+  ఉపయోగించే భాషా టెంప్లేట్ (default: *python*).
+  *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*, *haskell*,
+  *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift*, *typescript*
+  సహా.
+
+*-D, --distribution* _DIST_::
+  Debian changelog distribution (default: *unstable*).
+
+*-1, --init-version* _VER_::
+  ప్రారంభ package version మరియు git tag (default: *0.0.1*).
+
+*-a, --author* _AUTHOR_::
+  Changelog మరియు git author పేరు (default: *Lenik (谢继雷)*).
+
+*-e, --email* _EMAIL_::
+  Changelog మరియు git author email (default: *lenik@bodz.net*).
+
+*about* options:
+
+*-d, --debian*::
+  Parsed Debian packaging (*debian/control*, తాజా *debian/changelog*
+  stanza). *Build-Depends* వంటివి terminal wrap; పొడవైన description
+  paragraph reflow.
+
+*-r, --redhat*::
+  *rpm/*.spec* parsed RPM (*%{version}* *zfr version -r*). *%description*
+  reflow; spec scriptlet dump కాదు.
+
+*--color* _WHEN_::
+  CSR: *auto* (default: TTY, *NO_COLOR* లేదు), *always*, *never*.
+
+*version* options:
+
+*-g, --git*::
+  *git describe --tags --always --dirty* (*git*, *.git* default).
+
+*-c, --changelog*::
+  తాజా *debian/changelog* (*git*/*.git* లేకుంటే default).
+
+*-r, --rpm*::
+  RPM-compatible *Version* (hyphen underscore).
+
+*lint* options:
+
+*-v, --verbose*::
+  pass checks కూడా print.
+
+*-q, --quiet*::
+  errors మాత్రమే.
+
+*--strict*::
+  warnings failure (exit 1).
+
+*--color* _WHEN_::
+  CSR: *auto*, *always*, *never*.
+
+*shape* options:
+
+*-b, --bool*::
+  score *--threshold* పూర్తి అయితే *1*, లేకుంటే *0*.
+
+*-v, --verbose*::
+  stderr లో *packagedir*, *repodir*, *role*, *threshold*.
+
+*--threshold* _N_::
+  *--bool* threshold (default: *50*).
+
+*dist* options:
+
+*-o, --output* _DIR_::
+  archive *_DIR_* (*--rpm* తో *rpmbuild/SOURCES*, default Meson *meson-dist*).
+
+*-b, --builddir* _DIR_::
+  Meson build dir. default */build* configured, లేకుంటే *<project>/build*.
+
+*-f, --format* _FMT_::
+  archive: *xz* (default), *gz*, *zip*.
+
+*--rpm*::
+  archive *_NAME_*-*_VERSION_*.tar.xz, *-o* లేకుంటే *rpmbuild/SOURCES*.
+  *rpm/Makefile* ఉపయోగం.
+
+*--allow-dirty*, *--no-allow-dirty*::
+  *meson dist* కు *--allow-dirty* (default: allow).
+
+*--tests*::
+  *meson dist* లో tests (default *--no-tests*).
+
+*release* options (ఇక్కడ parse, *gh-makerelease* కు pass):
+
+*-b, --build-binary*::
+  Debian binary-only (*-b*); _.dsc_ లేదు.
+*-n, --no-pre-clean*::
+  Debian build cache reuse.
+*-u, --upload*::
+  version-scoped artifacts reuse.
+*--unsigned*::
+  unsigned Debian (*-us -uc*).
+*-p, --dput-host* _HOST_::
+  _.changes_ కు *dput*(1) host.
+*-d, --docker*::
+  Docker లో *build4*(1) Debian build.
+*-B, --base-image* _IMAGE_::
+  *build4* image (default: *b4f-debian:trixie*).
+*-s, --docker-server* _SERVER_::
+  *SERVER* లో SSH *build4* (implies *-d*).
+*-l, --local*::
+  build మాత్రమే; tag, push, GitHub release లేదు.
+*-f, --force*::
+  existing tag/release replace.
+*-I, --no-install*::
+  *sudo dpkg -i* skip.
+*-T, --no-tag*::
+  git release tag skip.
+*-U, --no-upload*::
+  _.changes_ *dput* skip.
+*-R, --no-release*::
+  GitHub release skip.
+*-P, --no-publish*::
+  VSIX marketplace skip.
+*-Y, --no-rpm*::
+  *make -C rpm rpm srpm* skip.
+*-D, --no-deb*::
+  Debian *debuild* skip.
+*-v, --verbose*::
+  verbose (repeatable).
+*-q, --quiet*::
+  తక్కువ output (repeatable).
+
+*ize* options:
+
+*-l, --lang* _LANG_::
+  scaffolding భాషా టెంప్లేట్ (default: detect).
+
+*-n, --dry-run*::
+  planned add/update/conversion రాయదు.
+
+*-v, --verbose*::
+  skip చేసిన existing paths కూడా.
+
+*--no-man*::
+  groff *\*.1* *docs/\*.adoc* convert చేయదు.
+
+*--no-subst*::
+  *src/* hardcoded version *@VERSION@* / *config.h* rewrite చేయదు.
+
+*--color* _WHEN_::
+  CSR: *auto*, *always*, *never*.
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  టెంప్లేట్ root override (సాధారణంగా */usr/share/zephyr*).
+
+*NO_COLOR*::
+  set అయితే *zfr about*, *zfr lint*, *zfr ize* *--color auto* లో CSR off.
+
+*PYTHONPATH*::
+  non-default install లో *zfr_lib* ఉన్న dir అవసరం.
+
+== Tests
+
+మూల ట్రీ (install package కాదు) *tests/* Python *unittest* CLI coverage.
+*meson test* (build */build*) *tests/test_*.py* కనుగొంటుంది. temp example
+ప్రాజెక్ట్లు, ప్రతి subcommand (*create*, *add*, *remove*, *rename*,
+*about*, *version*, *lint*, *shape*, *dist*, *ize*, *release*, *detect*,
+*help*), *zfr-** wrapper, language confidence, gettext catalog, locale
+*docs/<lang>/zfr.adoc* manual. Meson లేకుండా *ZFR_PKGDATADIR* zephyr
+checkout root (*zfr/* parent), *PYTHONPATH* *src/*.
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  install చేసిన భాషా టెంప్లేట్లు.
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI మరియు పలుచని wrapper-లు.
+
+*/usr/share/doc/zephyr/*::
+  package documentation (LICENSE, README).
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  localized manual, *docs/<locale>/zfr.adoc* నుండి నిర్మించబడింది
+  (full-document translation, gettext/po4a fragment కాదు).
+
+== Exit status
+
+*0*::
+  విజయం. *lint* లో error-level findings లేవు (*--strict* లేకుండా
+  warnings print).
+
+*non-zero*::
+  error (unknown language, destination exists, detection failure, missing puff,
+  *lint* findings మొదలైనవి).
+
+== Author
+
+{project-author} <{project-email}> రాశారు.
+
+== Copyright
+
+Copyright (C) {project-year}.
+License AGPL-3.0-or-later.
+ఇది free software: GNU Affero General Public License నిబంధనల ప్రకారం
+మార్చవచ్చు మరియు redistribute చేయవచ్చు.
+చట్టపరమైన పరిధి వరకు WARRANTY లేదు.
+పూర్తి license text మూల distribution LICENSE ఫైల్‌లో, supplemental terms
+తో—ఈ ప్రాజెక్ట్ AI exploitation, AI hegemonyకు వ్యతిరేకంగా మరియు mindless
+MIT-style, politically naive BSD-style licensing ను తిరస్కరిస్తుంది.

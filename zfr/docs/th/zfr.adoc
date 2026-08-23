@@ -1,0 +1,403 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: คำสั่งผู้ใช้
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - เทมเพลตโปรเจกต์ CLI หลายภาษาและเครื่องมือช่วย
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape*, และ *zfr-release* เป็น wrapper บาง ๆ ของคำสั่งย่อยเดียวกัน
+
+== Description
+
+*zfr* เป็นเครื่องมือบรรทัดคำสั่งสำหรับชุดเทมเพลต *zephyr*
+มีเทมเพลตภาษาสำหรับยูทิลิตีบรรทัดคำสั่งขนาดเล็กและตัวช่วย
+สร้างและจัดการโปรเจกต์
+
+*สำคัญ:* โปรเจกต์ที่ instantiate แล้วควรเรียก *zfr* ต่อไป
+(เช่น *zfr version* ใน *meson.build* และ *rpm/Makefile*)
+สตริง *zfr* *ไม่ใช่* magic token ของ create/rename และจะไม่ถูก
+เขียนทับเป็นชื่อโปรเจกต์ placeholder ของเทมเพลตที่ *ถูก* เขียนทับ
+คือ *zephyr* (และ *some_puff1* สำหรับ puff ตัวอย่าง)
+
+ขั้นตอนทำงานทั่วไป:
+
+. สร้างโปรเจกต์จากเทมเพลตภาษา:
++
+----
+zfr create -l python myproj
+----
+
+. เข้าโปรเจกต์และเพิ่ม *puff* แอปพลิเคชัน (แอปตัวอย่าง):
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. ถ้าต้องการ เปลี่ยนชื่อโปรเจกต์หรือลบ puff ภายหลังด้วย *rename* / *remove*
+
+เทมเพลตอยู่ที่ */usr/share/zephyr/<lang>/* เมื่อติดตั้งแล้ว
+หรือใน source tree เมื่อรัน wrapper builddir ที่ยังไม่ติดตั้ง เช่น *build/zfr*
+(*ZFR_PKGDATADIR* override) แต่ละเทมเพลตอาจมี puff ตัวอย่างชื่อ *some_puff1*
+ส่งชื่อ puff ในบรรทัดคำสั่ง *create* เพื่อ instantiate หรือไม่ส่งเพื่อโปรเจกต์ว่าง
+
+ใน monorepo *repodir* คือ root ของ git (หรือ meta) checkout และ *packagedir*
+คือ tree แพ็กเกจที่มีรูปแบบ zephyr (เช่น *repodir/bash*)
+คำสั่งที่เดินจากไดเรกทอรีปัจจุบันจะหา *packagedir* ก่อน
+
+*i18n*::
+  สไตล์ Zephyr แนะนำ gettext coverage อย่างน้อยสำหรับ:
+  *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
+  *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
+  (alias *zh-cn* / *zh-tw*) อังกฤษ (*en*) เป็นภาษา *msgid* ต้นทาง
+  และไม่อยู่ใน *po/LINGUAS* ใส่ locale เหล่านั้นใน *po/LINGUAS*
+  และส่ง *po/<locale>.po* ที่ตรงกัน
+
+== Commands
+
+*create*::
+  คัดลอก *pkgdatadir/<lang>/* ไปยังไดเรกทอรีใหม่ *./<project_name>/*
+  (ล้มเหลวถ้ามีอยู่แล้ว) เขียนทับ *zephyr* → *_PROJECT_NAME_* และเมื่อมีชื่อ
+  puff *some_puff1* → *_PUFF_NAME_* แรก (ชื่อเพิ่มผ่าน *add*) ถ้าไม่มีชื่อ puff
+  ลบไฟล์ puff ของเทมเพลตแต่เก็บ token *some_puff1* ไว้ให้ *add* ภายหลัง
+  เขียน *debian/changelog* ใหม่ (ทิ้ง changelog เทมเพลต) ด้วย *--distribution* /
+  *--init-version* / *--author* / *--email* จากนั้น *git init* ตั้ง *core.hooksPath*
+  เป็น *.githooks* (คัดลอก *pre-commit* ให้ *VERSION* sync กับ *debian/changelog*)
+  commit เริ่มต้น และ tag แบบ annotated *vVER*
+
+*rename*::
+  ในไดเรกทอรีโปรเจกต์ปัจจุบัน เขียนทับ *zephyr* → *_PROJECT_NAME_* และ
+  สำหรับแต่ละชื่อ puff เทมเพลต *some_puff1* → ชื่อนั้น ไม่เขียนทับ *zfr*
+
+*add*::
+  ตรวจจับภาษาโปรเจกต์และคัดลอกไฟล์ puff เทมเพลตเข้าโปรเจกต์ปัจจุบัน
+  เปลี่ยนชื่อ *some_puff1* เป็นแต่ละ *_PUFF_NAME_* อัปเดตรายการ Meson
+  (หรือ wiring เทียบเท่า) เมื่อทำได้
+
+*remove*::
+  ลบไฟล์และ Meson wiring ของแต่ละชื่อ puff จากโปรเจกต์ปัจจุบัน
+
+*detect*::
+  พิมพ์ภาษาที่ตรวจจับได้ของไดเรกทอรีปัจจุบัน (เดินขึ้น parent หา project root)
+
+*about*::
+  พิมพ์ข้อมูลโปรเจกต์ปัจจุบัน เดินจากไดเรกทอรีปัจจุบันขึ้น parent หา
+  project root (*meson.build* ที่มี *project()* หรือ *debian/control*)
+  ฟิลด์ทั่วไป (name, version, license, homepage, maintainer, summary,
+  section, priority, distribution, architecture) parse จาก metadata Debian
+  หรือ RPM และ wrap ตามความกว้างเทอร์มินัล ยังพิมพ์จำนวนไฟล์/บรรทัดซอร์ส
+  และขนาด payload โดยประมาณ เทอร์มินัล interactive ใช้สี CSR (console SGR)
+  เว้นแต่ตั้ง *NO_COLOR* ใช้ *-d* / *-r* สำหรับมุมมอง Debian หรือ RPM
+  ที่ parse แล้วเต็ม (ไม่ dump ไฟล์แพ็กเกจ)
+
+*version*::
+  พิมพ์เวอร์ชันโปรเจกต์ปัจจุบัน (หนึ่งบรรทัด สำหรับสคริปต์) ค่าเริ่มต้นคือ
+  *git describe* เมื่อมี *git* และ *.git* มิฉะนั้นเวอร์ชัน *debian/changelog*
+  ล่าสุด fallback ไป *VERSION* แล้ว *0.0.0* token ที่ไม่ใช่ semver
+  (เช่น git hash) ห่อเป็น *0.0.0-<token>*
+
+*lint*::
+  ตรวจสอบโปรเจกต์ปัจจุบันกับสไตล์แพ็กเกจและเลย์เอาต์ zephyr (เดินขึ้น parent
+  หา root) รายงานไฟล์หาย ความไม่ตรงของ identity ข้อผิดพลาด Meson/Debian/RPM
+  token *zephyr* / *some_puff1* ค้างในแอปที่ instantiate และวิธีแก้ที่แนะนำ
+  การกล่าวถึง *zfr* เป็นที่คาดหวัง ไม่ถือว่าเป็นของค้าง สำหรับ
+  *.githooks/pre-commit* เดินขึ้นถึง *.git* เคารพ *core.hooksPath*
+  และตรวจว่า hook sync *VERSION* จาก *debian/changelog* เมื่อมี *po/*
+  เตือนถ้า *LINGUAS* ไม่ครอบคลุมชุด locale gettext ที่แนะนำ (ดู *i18n*
+  ใต้ Description) ผลลัพธ์สำหรับมนุษย์และ AI coder: แต่ละ finding มี code
+  path และวิธีแก้ที่ชัดเจน เทอร์มินัล interactive ใช้สี CSR เว้นแต่ *NO_COLOR*
+
+*shape*::
+  พิมพ์คะแนน *zephyr shape* 0–100 สำหรับ *packagedir* ปัจจุบัน (tree ตรง
+  สไตล์แพ็กเกจ zephyr มากแค่ไหน) ใน monorepo *packagedir* อาจต่างจาก
+  *repodir* (git / meta root) เครื่องมือใช้ shape เพื่อเลือกไดเรกทอรีแพ็กเกจ
+  มากกว่า root repo *\-b* / *--bool* พิมพ์ *1* ถ้าคะแนนอย่างน้อย threshold
+  (ค่าเริ่มต้น *50*) มิฉะนั้น *0*
+
+*dist*::
+  สร้าง source archive ของโปรเจกต์ปัจจุบัน (เดินขึ้น parent หา root)
+  เมื่อไดเรกทอรีนี้เป็น git project root รัน *meson dist* (หลัง *meson setup*
+  ค่าเริ่มต้น *--allow-dirty* และ *--no-tests*) เทมเพลตภาษาซ้อนไม่มี *.git*
+  ของตัวเอง ดังนั้น *meson dist* จะแพ็ก meta-repo แม่ tree เหล่านั้นได้
+  directory tarball เฉพาะโปรเจกต์นี้ พิมพ์ path archive บน stdout
+  *rpm/Makefile* *dist* และ ninja target Meson *srcdist* ใช้คำสั่งนี้ซ้ำ
+
+*release*::
+  parse ตัวเลือกเดียวกับ *gh-makerelease*(1) สร้าง argv ใหม่ และ *exec*
+  *gh-makerelease* จาก PATH คำสั่งนี้ไม่ implement tagging แพ็กเกจ
+  หรืออัปโหลด GitHub เอง โปรเจกต์ *zephyr* release จาก git checkout root
+  (เทมเพลตภาษา plus *zfr/*) ดู *Options for release* ด้านล่าง
+
+*ize*::
+  refactor โปรเจกต์ปัจจุบันในที่เพื่อให้ตรงสไตล์ zephyr ปัจจุบัน (เดินขึ้น
+  parent) คัดลอก scaffolding *debian/* และ *rpm/* ที่ขาดจากเทมเพลตภาษา
+  (ชื่อเขียนทับเป็นโปรเจกต์นี้) เขียน *VERSION* และ *.githooks/pre-commit*
+  แพตช์ *meson.build* (*zfr version*, target man *asciidoctor*, *run_target look*,
+  ติดตั้ง bash-completion) แปลง man groff *\*.1* ภายใต้โปรเจกต์ (ไม่ใช่
+  *debian/*) เป็น *docs/\*.adoc* ด้วยกฎ Meson และเปลี่ยนเวอร์ชัน changelog
+  ฮาร์ดโค้ดใน *src/* เป็น *\*.in* *@VERSION@* หรือ *PROJECT_VERSION* ผ่าน
+  *config.h* สำหรับตระกูล C *\-n* / *--dry-run* พิมพ์แผนโดยไม่เขียน
+  หลังจากนั้นรัน *zfr lint*
+
+*help*::
+  แสดงความช่วยเหลือบรรทัดคำสั่ง
+
+== Options
+
+ตัวเลือกสำหรับ *create*:
+
+*-l, --lang* _LANG_::
+  เทมเพลตภาษาที่ใช้ (ค่าเริ่มต้น: *python*)
+  รวมถึง *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*,
+  *haskell*, *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift*,
+  และ *typescript*
+
+*-D, --distribution* _DIST_::
+  distribution ของ Debian changelog (ค่าเริ่มต้น: *unstable*)
+
+*-1, --init-version* _VER_::
+  เวอร์ชันแพ็กเกจเริ่มต้นและ git tag (ค่าเริ่มต้น: *0.0.1*)
+
+*-a, --author* _AUTHOR_::
+  ชื่อผู้เขียน changelog และ git (ค่าเริ่มต้น: *Lenik (谢继雷)*)
+
+*-e, --email* _EMAIL_::
+  อีเมลผู้เขียน changelog และ git (ค่าเริ่มต้น: *lenik@bodz.net*)
+
+ตัวเลือกสำหรับ *about*:
+
+*-d, --debian*::
+  แสดงฟิลด์แพ็กเกจ Debian ที่ parse แล้ว (*debian/control*, stanza
+  *debian/changelog* ล่าสุด) รายการเช่น *Build-Depends* wrap ตามความกว้าง
+  เทอร์มินัล คำอธิบายยาว reflow เป็นย่อหน้า
+
+*-r, --redhat*::
+  แสดงฟิลด์แพ็กเกจ RPM ที่ parse จาก *rpm/*.spec* (macro เช่น *%{version}*
+  แสดงด้วย *zfr version -r*) เนื้อ *%description* reflow ไม่ dump scriptlet spec
+
+*--color* _WHEN_::
+  ไฮไลต์ CSR: *auto* (ค่าเริ่มต้น: TTY และไม่มี *NO_COLOR*), *always*,
+  หรือ *never*
+
+ตัวเลือกสำหรับ *version*:
+
+*-g, --git*::
+  ใช้ *git describe --tags --always --dirty* (ค่าเริ่มต้นเมื่อมี *git* และ *.git*)
+
+*-c, --changelog*::
+  ใช้เวอร์ชัน *debian/changelog* ล่าสุด (ค่าเริ่มต้นเมื่อไม่มี *git* หรือ *.git*)
+
+*-r, --rpm*::
+  พิมพ์ *Version* ที่เข้ากันได้กับ RPM (ขีดกลาง map เป็นขีดล่าง)
+
+ตัวเลือกสำหรับ *lint*:
+
+*-v, --verbose*::
+  พิมพ์การตรวจที่ผ่านด้วย
+
+*-q, --quiet*::
+  พิมพ์เฉพาะ error
+
+*--strict*::
+  ถือ warning เป็นความล้มเหลว (exit status 1)
+
+*--color* _WHEN_::
+  ไฮไลต์ CSR: *auto*, *always*, หรือ *never*
+
+ตัวเลือกสำหรับ *shape*:
+
+*-b, --bool*::
+  พิมพ์ *1* ถ้าคะแนน shape อย่างน้อย *--threshold* มิฉะนั้น *0*
+
+*-v, --verbose*::
+  พิมพ์ *packagedir*, *repodir*, *role*, และ *threshold* บน standard error
+
+*--threshold* _N_::
+  threshold สำหรับ *--bool* (ค่าเริ่มต้น: *50*)
+
+ตัวเลือกสำหรับ *dist*:
+
+*-o, --output* _DIR_::
+  เขียน archive ไป *_DIR_* (ค่าเริ่มต้น: ไดเรกทอรี Meson *meson-dist*
+  หรือ *rpmbuild/SOURCES* กับ *--rpm*)
+
+*-b, --builddir* _DIR_::
+  ไดเรกทอรี build Meson ค่าเริ่มต้นคือ */build* เมื่อ builddir นั้น
+  configure สำหรับ source tree นี้ มิฉะนั้น *<project>/build*
+
+*-f, --format* _FMT_::
+  รูปแบบ archive: *xz* (ค่าเริ่มต้น), *gz*, หรือ *zip*
+
+*--rpm*::
+  ตั้งชื่อ archive *_NAME_*-*_VERSION_*.tar.xz และเขียนไป *rpmbuild/SOURCES*
+  เว้นแต่กำหนด *-o* ใช้โดย *rpm/Makefile*
+
+*--allow-dirty*, *--no-allow-dirty*::
+  ส่ง *--allow-dirty* ไป *meson dist* (ค่าเริ่มต้น: อนุญาต)
+
+*--tests*::
+  รันเทสระหว่าง *meson dist* (ค่าเริ่มต้นคือ *--no-tests*)
+
+ตัวเลือกสำหรับ *release* (parse ที่นี่ ส่งต่อไป *gh-makerelease*):
+
+*-b, --build-binary*::
+  build Debian binary เท่านั้น (*-b*); ไม่มี _.dsc_
+*-n, --no-pre-clean*::
+  ใช้ cache build Debian ซ้ำ
+*-u, --upload*::
+  ใช้ artifact ตามเวอร์ชันที่มีอยู่เมื่อมี
+*--unsigned*::
+  build แพ็กเกจ Debian ไม่ลงนาม (*-us -uc*)
+*-p, --dput-host* _HOST_::
+  host อัปโหลด *dput*(1) สำหรับไฟล์ _.changes_
+*-d, --docker*::
+  build แพ็กเกจ Debian ด้วย *build4*(1) ใน Docker
+*-B, --base-image* _IMAGE_::
+  image เป้าหมาย *build4* (ค่าเริ่มต้น: *b4f-debian:trixie*)
+*-s, --docker-server* _SERVER_::
+  รัน *build4* ผ่าน SSH บน *SERVER* (implies *-d*)
+*-l, --local*::
+  build เท่านั้น ไม่ tag push หรือสร้าง GitHub release
+*-f, --force*::
+  แทนที่ tag/release ที่มีอยู่
+*-I, --no-install*::
+  ข้าม *sudo dpkg -i*
+*-T, --no-tag*::
+  ข้ามสร้างและ push git release tag
+*-U, --no-upload*::
+  ข้าม *dput* ไฟล์ _.changes_
+*-R, --no-release*::
+  ข้ามสร้าง GitHub release
+*-P, --no-publish*::
+  ข้ามเผยแพร่ VSIX marketplace
+*-Y, --no-rpm*::
+  ข้าม *make -C rpm rpm srpm*
+*-D, --no-deb*::
+  ข้าม Debian *debuild*
+*-v, --verbose*::
+  บันทึก verbose (ทำซ้ำได้)
+*-q, --quiet*::
+  ผลลัพธ์น้อยลง (ทำซ้ำได้)
+
+ตัวเลือกสำหรับ *ize*:
+
+*-l, --lang* _LANG_::
+  เทมเพลตภาษาที่คัดลอก scaffolding (ค่าเริ่มต้น: detect)
+
+*-n, --dry-run*::
+  พิมพ์แผนเพิ่ม/อัปเดต/แปลงโดยไม่เขียนไฟล์
+
+*-v, --verbose*::
+  พิมพ์ path ที่ข้ามเพราะมีอยู่แล้วด้วย
+
+*--no-man*::
+  ไม่แปลงซอร์ส groff *\*.1* เป็น *docs/\*.adoc*
+
+*--no-subst*::
+  ไม่เขียนทับเวอร์ชันฮาร์ดโค้ดใน *src/* เป็น *@VERSION@* / *config.h*
+
+*--color* _WHEN_::
+  ไฮไลต์ CSR: *auto*, *always*, หรือ *never*
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  override root เทมเพลต (ปกติ */usr/share/zephyr*)
+
+*NO_COLOR*::
+  เมื่อตั้งค่า *zfr about*, *zfr lint*, และ *zfr ize* ปิดไฮไลต์ CSR
+  ในโหมด *--color auto*
+
+*PYTHONPATH*::
+  ต้องมีไดเรกทอรีที่มีแพ็กเกจ *zfr_lib* เมื่อรันเครื่องมือจาก layout
+  ติดตั้งที่ไม่ใช่ค่าเริ่มต้น
+
+== Tests
+
+source tree (ไม่ใช่แพ็กเกจที่ติดตั้ง) มี *tests/* พร้อม coverage CLI
+ด้วย Python *unittest* *meson test* (ไดเรกทอรี build */build*) ค้นหา
+*tests/test_*.py* เทสสร้างโปรเจกต์ตัวอย่างชั่วคราวและทดสอบทุกคำสั่งย่อย
+(*create*, *add*, *remove*, *rename*, *about*, *version*, *lint*, *shape*,
+*dist*, *ize*, *release*, *detect*, *help*) wrapper *zfr-** การให้คะแนน
+confidence ภาษา catalog gettext และคู่มือ *docs/<lang>/zfr.adoc* ต่อ locale
+เมื่อรันโดยไม่มี Meson ตั้ง *ZFR_PKGDATADIR* เป็น root checkout zephyr
+(parent ของ *zfr/*) และ *PYTHONPATH* เป็น *src/*
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  เทมเพลตภาษาที่ติดตั้ง
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI และ wrapper บาง ๆ
+
+*/usr/share/doc/zephyr/*::
+  เอกสารแพ็กเกจ (LICENSE, README)
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  หน้าคู่มือแปลภาษา สร้างจาก *docs/<locale>/zfr.adoc*
+  (แปลเอกสารเต็ม ไม่ใช่ fragment gettext/po4a)
+
+== Exit status
+
+*0*::
+  สำเร็จ สำหรับ *lint* โปรเจกต์ไม่มี finding ระดับ error (warning ยังพิมพ์
+  เว้นแต่ *--strict*)
+
+*non-zero*::
+  เกิดข้อผิดพลาด (ภาษาไม่รู้จัก ปลายทางมีอยู่แล้ว ตรวจจับล้มเหลว
+  ไฟล์ puff หาย finding *lint* เป็นต้น)
+
+== Author
+
+เขียนโดย {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year}.
+License AGPL-3.0-or-later.
+นี่เป็นซอฟต์แวร์เสรี: คุณเปลี่ยนและแจกจ่ายต่อได้ภายใต้เงื่อนไข
+GNU Affero General Public License
+ไม่มี WARRANTY ตามที่กฎหมายอนุญาต
+ดูไฟล์ LICENSE ในการแจกจ่ายซอร์สสำหรับข้อความใบอนุญาตเต็ม รวมข้อกำหนด
+เสริมที่ระบุว่าโปรเจกต์นี้ต่อต้านการแสวงหาประโยชน์จาก AI และ hegemony ของ AI
+และปฏิเสธการอนุญาตแบบ MIT ที่ไม่คิด และ BSD ที่ไร้การเมือง

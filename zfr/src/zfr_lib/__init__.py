@@ -532,6 +532,33 @@ def project_version(
     return v
 
 
+def cli_root() -> Path:
+    """Install prefix of this zfr tree (source: zfr/, installed: share/zephyr/zfr)."""
+    libdir = Path(__file__).resolve().parent
+    parent = libdir.parent
+    if parent.name == "src":
+        return parent.parent
+    return parent
+
+
+def cli_version(*, rpm: bool = False) -> str:
+    """Version of the zfr CLI itself (not the project in cwd)."""
+    root = cli_root()
+    v = git_describe_version(root)
+    if not v:
+        v = changelog_version(root)
+    if not v:
+        v = changelog_version(root.parent)
+    if not v:
+        v = version_file_version(root)
+    if not v:
+        v = "0.0.0"
+    v = apply_version_modifiers(v)
+    if rpm:
+        v = rpm_compatible_version(v)
+    return v
+
+
 def detect_lang(workdir: Path | None = None) -> str:
     """Detect zephyr template language: max confidence in the langs vector."""
     from .lang import detect_lang as _detect

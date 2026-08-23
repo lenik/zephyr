@@ -52,6 +52,11 @@ meson.add_install_script(
     get_option('datadir') / meson.project_name(),
 )
 
+install_data(
+    'VERSION',
+    install_dir: pkgdatadir / 'zfr',
+)
+
 # Python implementation under <pkgdatadir>/zfr/
 install_data(
     [
@@ -133,7 +138,8 @@ subdir('tests')
 # gettext catalogs for the zfr CLI (domain: zfr)
 subdir('po')
 
-# Man page for zephyr tools (English) plus po4a locales under man/<lang>/man1.
+# Man page for zephyr tools (English) plus full-document translations
+# under docs/<lang>/zfr.adoc (no po4a).
 custom_target(
     'zfr-man',
     input: 'docs/zfr.adoc',
@@ -153,46 +159,23 @@ custom_target(
     install_dir: mandir / 'man1',
 )
 
-po4a_translate = find_program('po4a-translate', required: true)
-# Fully translated catalogs (keep threshold 80). Other LINGUAS ship as stubs.
-man_i18n_langs = ['zh_CN', 'zh_TW']
+man_i18n_langs = [
+    'ar', 'bn', 'de', 'es', 'fr', 'hi', 'id', 'it', 'ja', 'ko',
+    'pt', 'ru', 'sv', 'ta', 'te', 'th', 'tr', 'ur', 'vi', 'zh_CN', 'zh_TW',
+]
 foreach lang : man_i18n_langs
-    adoc_i18n = custom_target(
-        'zfr-adoc-' + lang,
-        input: ['docs/zfr.adoc', files('po/man/' + lang + '.po')],
-        output: 'zfr-' + lang + '.adoc',
-        command: [
-            po4a_translate,
-            '-f',
-            'asciidoc',
-            '-m',
-            '@INPUT0@',
-            '-p',
-            '@INPUT1@',
-            '-l',
-            '@OUTPUT@',
-            '-k',
-            '80',
-        ],
-    )
     man_i18n = custom_target(
         'zfr-man-' + lang,
-        input: adoc_i18n,
+        input: 'docs' / lang / 'zfr.adoc',
         output: 'zfr.' + lang + '.1',
         command: [
             asciidoctor,
-            '-b',
-            'manpage',
-            '-a',
-            'project-version=' + meson.project_version(),
-            '-a',
-            'project-year=@0@'.format(project_year),
-            '-a',
-            'project-author=' + project_author,
-            '-a',
-            'project-email=' + project_email,
-            '-o',
-            '@OUTPUT@',
+            '-b', 'manpage',
+            '-a', 'project-version=' + meson.project_version(),
+            '-a', 'project-year=@0@'.format(project_year),
+            '-a', 'project-author=' + project_author,
+            '-a', 'project-email=' + project_email,
+            '-o', '@OUTPUT@',
             '@INPUT@',
         ],
         build_by_default: true,

@@ -1,0 +1,398 @@
+= zfr(1)
+Lenik <zephyr@bodz.net>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: ব্যবহারকারীর আদেশ
+:mansource: zephyr
+:man-linkstyle: blue R <>
+:nofooter:
+
+== Name
+
+zfr - বহুভাষী CLI প্রকল্প টেমপ্লেট ও সহায়ক সরঞ্জাম
+
+== Synopsis
+
+*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+
+*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+
+*zfr* *about* [*-d*] [*-r*]
+
+*zfr* *version* [*-g*] [*-c*] [*-r*]
+
+*zfr* *lint* [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+
+*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+
+*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+            [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
+
+*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
+           [*--color* _WHEN_]
+
+*zfr* *release* [_OPTIONS_]
+
+*zfr* *detect*
+
+*zfr* *help*
+
+*zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
+*zfr-shape*, এবং *zfr-release* একই উপ-আদেশের পাতল wrapper।
+
+== Description
+
+*zfr* হল *zephyr* টেমপ্লেট সংগ্রহের কমান্ড-লাইন সরঞ্জাম।
+এটি ছোট কমান্ড-লাইন ইউটিলিটির জন্য ভাষা টেমপ্লেট এবং সেগুলি
+তৈরি ও পরিচালনার সহায়ক সরবরাহ করে।
+
+*গুরুত্বপূর্ণ:* তৈরি করা প্রকল্পগুলো *zfr* কল করতে থাকবে বলে
+ধরা হয় (উদাহরণ: *meson.build* ও *rpm/Makefile*-এ *zfr version*)।
+*zfr* স্ট্রিংটি create/rename-এর কোনো magic token নয় এবং
+কখনো প্রকল্পের নামে লেখা হয় না। যে টেমপ্লেট placeholder
+*পুনর্লিখিত* হয় তা *zephyr* (আর নমুনা puff-এর জন্য *some_puff1*)।
+
+সাধারণ কাজের ধারা:
+
+. ভাষা টেমপ্লেট থেকে প্রকল্প তৈরি:
++
+----
+zfr create -l python myproj
+----
+
+. প্রকল্পে প্রবেশ করে অ্যাপ্লিকেশন *puff* (উদাহরণ অ্যাপ) যোগ:
++
+----
+cd myproj
+zfr add myapp another_app
+----
+
+. পরে *rename* / *remove* দিয়ে প্রকল্পের নাম বদলানো বা puff সরানো (ঐচ্ছিক)।
+
+ইনস্টল থাকলে টেমপ্লেট */usr/share/zephyr/<lang>/*-এ থাকে; uninstall
+builddir wrapper যেমন *build/zfr* চালালে সোর্স ট্রিতে (*ZFR_PKGDATADIR*
+override করে)। প্রতিটি টেমপ্লেটে *some_puff1* নামে নমুনা puff থাকতে
+পারে; *create* কমান্ড লাইনে puff নাম দিলে instantiate হয়, না দিলে
+খালি প্রকল্প।
+
+monorepo-তে *repodir* git (বা meta) checkout-এর মূল এবং *packagedir*
+zephyr আকারের প্যাকেজ ট্রি (উদাহ.: *repodir/bash*)। বর্তমান ডিরেক্টরি
+থেকে চলা আদেশগুলো প্রথমে *packagedir* খুঁজে বের করে।
+
+*i18n*::
+  Zephyr স্টাইল অন্তত এই locale-গুলোর জন্য gettext কভারেজ
+  সুপারিশ করে:
+  *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
+  *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
+  (alias *zh-cn* / *zh-tw*)। ইংরেজি (*en*) উৎস *msgid* ভাষা এবং
+  *po/LINGUAS*-এ নেই। সেই locale *po/LINGUAS*-এ তালিকাভুক্ত করুন এবং
+  মিল রেখে *po/<locale>.po* ফাইল সরবরাহ করুন।
+
+== Commands
+
+*create*::
+  *pkgdatadir/<lang>/* নতুন *./<project_name>/* ডিরেক্টরিতে কপি করে
+  (ডিরেক্টরি থাকলে ব্যর্থ)। *zephyr* → *_PROJECT_NAME_* লেখে এবং puff
+  নাম দিলে *some_puff1* → প্রথম *_PUFF_NAME_* (আর puff *add* দিয়ে)।
+  puff নাম না থাকলে টেমপ্লেট puff ফাইল সরায় কিন্তু *some_puff1* token
+  রাখে যাতে পরে *add* instantiate করতে পারে।
+  *--distribution* / *--init-version* / *--author* / *--email* দিয়ে
+  নতুন *debian/changelog* লেখে (টেমপ্লেট changelog বাতিল), তারপর
+  *git init*, *core.hooksPath* *.githooks* (*pre-commit* কপি, *VERSION*
+  *debian/changelog*-এর সাথে sync), প্রাথমিক commit ও annotated tag *vVER*।
+
+*rename*::
+  বর্তমান প্রকল্প ডিরেক্টরিতে *zephyr* → *_PROJECT_NAME_* এবং প্রতিটি
+  নামের জন্য টেমপ্লেট puff *some_puff1* → সেই নাম। *zfr* লেখে না।
+
+*add*::
+  প্রকল্পের ভাষা detect করে টেমপ্লেট puff ফাইল বর্তমান প্রকল্পে কপি
+  করে, *some_puff1* প্রতিটি *_PUFF_NAME_*-এ rename। সম্ভব হলে Meson
+  তালিকা (বা সমতুল্য wiring) আপডেট।
+
+*remove*::
+  বর্তমান প্রকল্প থেকে প্রতিটি puff নামের ফাইল ও Meson wiring সরায়।
+
+*detect*::
+  বর্তমান ডিরেক্টরির detect করা ভাষা প্রিন্ট (parent-এ project root
+  খুঁজে)।
+
+*about*::
+  বর্তমান প্রকল্পের তথ্য প্রিন্ট। বর্তমান ডিরেক্টরি থেকে parent-এ
+  project root (*meson.build* *project()* বা *debian/control*) খুঁজে।
+  সাধারণ ক্ষেত্র (name, version, license, homepage, maintainer, summary,
+  section, priority, distribution, architecture) Debian/RPM metadata থেকে
+  parse করে terminal প্রস্থে wrap। সোর্স ফাইল/লাইন সংখ্যা ও অনুমানিত
+  payload size-ও প্রিন্ট। ইন্টারঅ্যাক্টিভ terminal CSR (console SGR)
+  রঙ, *NO_COLOR* না থাকলে। *-d* / *-r* পূর্ণ parsed Debian/RPM view
+  (packaging ফাইল dump নয়)।
+
+*version*::
+  বর্তমান প্রকল্প সংস্করণ (এক লাইন, স্ক্রিপ্টের জন্য)। *git* ও *.git*
+  থাকলে *git describe*, নাহলে সর্বশেষ *debian/changelog*। fallback:
+  *VERSION* ফাইল, তারপর *0.0.0*। non-semver token (git hash) *0.0.0-<token>*
+  হিসেবে wrap।
+
+*lint*::
+  বর্তমান প্রকল্প zephyr packaging ও layout স্টাইলের বিরুদ্ধে validate
+  (parent-এ project root)। missing ফাইল, identity mismatch, Meson/Debian/RPM
+  ভুল, instantiate অ্যাপে leftover *zephyr* / *some_puff1*, suggested fix।
+  *zfr* উল্লেখ expected, leftover নয়। *.githooks/pre-commit*-এ *.git*
+  পর্যন্ত, *core.hooksPath* মানে, hook *VERSION* *debian/changelog* থেকে
+  sync করে কিনা। *po/* থাকলে *LINGUAS* recommended gettext locale set
+  কভার না করলে সতর্ক (Description-এর *i18n*)। মানুষ ও AI coder-এর জন্য:
+  প্রতিটি finding-এ code, path, concrete fix। terminal CSR, *NO_COLOR* ছাড়া।
+
+*shape*::
+  বর্তমান *packagedir*-এর 0–100 *zephyr shape* score (zephyr packaging
+  স্টাইলের সাথে মিল)। monorepo-তে *packagedir* *repodir* (git/meta root)
+  থেকে আলাদা; shape package ডিরেক্টরিকে repo root-এর উপরে prefer করে।
+  *\-b* / *--bool* score threshold (default *50*) পূর্ণ হলে *1*, নাহলে *0*।
+
+*dist*::
+  বর্তমান প্রকল্পের সোর্স archive (parent-এ project root)। git project
+  root হলে *meson dist* (*meson setup* পর, default *--allow-dirty* ও
+  *--no-tests*)। nested ভাষা টেমপ্লেটের নিজস্ব *.git* নেই, তাই *meson dist*
+  parent meta-repo pack করত; সেই ট্রি শুধু এই প্রকল্পের directory tarball।
+  archive path stdout-এ। *rpm/Makefile* *dist* ও Meson *srcdist* ninja
+  target এই command reuse।
+
+*release*::
+  *gh-makerelease*(1)-এর মতো option parse, argv rebuild, PATH থেকে
+  *gh-makerelease* *exec*। tagging, packaging, GitHub upload নিজে করে
+  না। *zephyr* git checkout root থেকে release (ভাষা টেমপ্লেট + *zfr/*)।
+  নিচে *Options for release*।
+
+*ize*::
+  বর্তমান প্রকল্প in-place refactor current zephyr স্টাইলে (parent-এ
+  root)। ভাষা টেমপ্লেট থেকে missing *debian/* ও *rpm/* scaffolding
+  (নাম এই প্রকল্পে rewrite), *VERSION* ও *.githooks/pre-commit*, *meson.build*
+  patch (*zfr version*, *asciidoctor* man target, *run_target look*,
+  bash-completion install)। groff *\*.1* man (প্রকল্পে, *debian/* নয়)
+  *docs/\*.adoc* Meson rule-এ; *src/* hardcoded changelog version
+  *\*.in* *@VERSION@* বা C পরিবারে *config.h* *PROJECT_VERSION*।
+  *\-n* / *--dry-run* plan লেখে না। পরে *zfr lint*।
+
+*help*::
+  কমান্ড-লাইন সহায়তা দেখান।
+
+== Options
+
+*create*-এর option:
+
+*-l, --lang* _LANG_::
+  ব্যবহারের ভাষা টেমপ্লেট (default: *python*)।
+  সমর্থিত: *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*,
+  *haskell*, *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift*,
+  *typescript*।
+
+*-D, --distribution* _DIST_::
+  Debian changelog distribution (default: *unstable*)।
+
+*-1, --init-version* _VER_::
+  প্রাথমিক package version ও git tag (default: *0.0.1*)।
+
+*-a, --author* _AUTHOR_::
+  Changelog ও git author নাম (default: *Lenik (谢继雷)*)।
+
+*-e, --email* _EMAIL_::
+  Changelog ও git author email (default: *lenik@bodz.net*)।
+
+*about*-এর option:
+
+*-d, --debian*::
+  Parsed Debian packaging ক্ষেত্র (*debian/control*, সর্বশেষ *debian/changelog*
+  stanza)। *Build-Depends* ইত্যাদি terminal প্রস্থে wrap; দীর্ঘ description
+  paragraph হিসেবে reflow।
+
+*-r, --redhat*::
+  *rpm/*.spec* থেকে parsed RPM (*%{version}* *zfr version -r* দিয়ে)।
+  *%description* reflow; spec scriptlet dump নয়।
+
+*--color* _WHEN_::
+  CSR highlight: *auto* (default: TTY ও *NO_COLOR* নেই), *always*, *never*।
+
+*version*-এর option:
+
+*-g, --git*::
+  *git describe --tags --always --dirty* (*git* ও *.git* থাকলে default)।
+
+*-c, --changelog*::
+  সর্বশেষ *debian/changelog* version (*git* বা *.git* না থাকলে default)।
+
+*-r, --rpm*::
+  RPM-compatible *Version* (hyphen underscore)।
+
+*lint*-এর option:
+
+*-v, --verbose*::
+  pass করা check-ও প্রিন্ট।
+
+*-q, --quiet*::
+  শুধু error।
+
+*--strict*::
+  warning failure (exit 1)।
+
+*--color* _WHEN_::
+  CSR: *auto*, *always*, *never*।
+
+*shape*-এর option:
+
+*-b, --bool*::
+  score *--threshold* পূর্ণ হলে *1*, নাহলে *0*।
+
+*-v, --verbose*::
+  stderr-এ *packagedir*, *repodir*, *role*, *threshold*।
+
+*--threshold* _N_::
+  *--bool* threshold (default: *50*)।
+
+*dist*-এর option:
+
+*-o, --output* _DIR_::
+  archive *_DIR_*-এ (default: Meson *meson-dist*, *--rpm*-এ *rpmbuild/SOURCES*)।
+
+*-b, --builddir* _DIR_::
+  Meson build dir। default */build* configured হলে, নাহলে *<project>/build*।
+
+*-f, --format* _FMT_::
+  archive: *xz* (default), *gz*, *zip*।
+
+*--rpm*::
+  archive *_NAME_*-*_VERSION_*.tar.xz, *-o* না থাকলে *rpmbuild/SOURCES*।
+  *rpm/Makefile* ব্যবহার।
+
+*--allow-dirty*, *--no-allow-dirty*::
+  *meson dist*-এ *--allow-dirty* (default: allow)।
+
+*--tests*::
+  *meson dist*-এ test (default *--no-tests*)।
+
+*release*-এর option (এখানে parse, *gh-makerelease*-এ pass):
+
+*-b, --build-binary*::
+  Debian binary-only (*-b*); _.dsc_ নয়।
+*-n, --no-pre-clean*::
+  Debian build cache reuse।
+*-u, --upload*::
+  version-scoped artifact reuse যদি থাকে।
+*--unsigned*::
+  unsigned Debian (*-us -uc*)।
+*-p, --dput-host* _HOST_::
+  _.changes_-এর *dput*(1) host।
+*-d, --docker*::
+  Docker-এ *build4*(1) Debian build।
+*-B, --base-image* _IMAGE_::
+  *build4* image (default: *b4f-debian:trixie*)।
+*-s, --docker-server* _SERVER_::
+  *SERVER*-এ SSH *build4* (implies *-d*)।
+*-l, --local*::
+  শুধু build; tag, push, GitHub release নয়।
+*-f, --force*::
+  existing tag/release replace।
+*-I, --no-install*::
+  *sudo dpkg -i* skip।
+*-T, --no-tag*::
+  git release tag skip।
+*-U, --no-upload*::
+  _.changes_ *dput* skip।
+*-R, --no-release*::
+  GitHub release skip।
+*-P, --no-publish*::
+  VSIX marketplace skip।
+*-Y, --no-rpm*::
+  *make -C rpm rpm srpm* skip।
+*-D, --no-deb*::
+  Debian *debuild* skip।
+*-v, --verbose*::
+  verbose log (repeatable)।
+*-q, --quiet*::
+  কম output (repeatable)।
+
+*ize*-এর option:
+
+*-l, --lang* _LANG_::
+  scaffolding-এর ভাষা টেমপ্লেট (default: detect)।
+
+*-n, --dry-run*::
+  planned add/update/conversion লেখে না।
+
+*-v, --verbose*::
+  skip করা existing path-ও।
+
+*--no-man*::
+  groff *\*.1* *docs/\*.adoc*-এ convert নয়।
+
+*--no-subst*::
+  *src/* hardcoded version *@VERSION@* / *config.h*-এ rewrite নয়।
+
+*--color* _WHEN_::
+  CSR: *auto*, *always*, *never*।
+
+== Environment
+
+*ZFR_PKGDATADIR*::
+  টেমপ্লেট root override (সাধারণত */usr/share/zephyr*)।
+
+*NO_COLOR*::
+  set থাকলে *zfr about*, *zfr lint*, *zfr ize* *--color auto*-এ CSR বন্ধ।
+
+*PYTHONPATH*::
+  non-default install-এ *zfr_lib* ধারণকারী dir থাকতে হবে।
+
+== Tests
+
+সোর্স ট্রি (install package নয়) *tests/* Python *unittest* CLI coverage।
+*meson test* (build */build*) *tests/test_*.py* খুঁজে। temp example
+প্রকল্প ও প্রতিটি subcommand (*create*, *add*, *remove*, *rename*, *about*,
+*version*, *lint*, *shape*, *dist*, *ize*, *release*, *detect*, *help*),
+*zfr-** wrapper, language confidence, gettext catalog, locale *docs/<lang>/zfr.adoc*
+manual। Meson ছাড়া *ZFR_PKGDATADIR* zephyr checkout root (*zfr/* parent),
+*PYTHONPATH* *src/*।
+
+== Files
+
+*/usr/share/zephyr/<lang>/*::
+  install করা ভাষা টেমপ্লেট।
+
+*/usr/bin/zfr*, */usr/bin/zfr-\**::
+  CLI ও পাতল wrapper।
+
+*/usr/share/doc/zephyr/*::
+  package documentation (LICENSE, README)।
+
+*/usr/share/man/<locale>/man1/zfr.1*::
+  localized manual, *docs/<locale>/zfr.adoc* থেকে তৈরি
+  (full-document translation, gettext/po4a fragment নয়)।
+
+== Exit status
+
+*0*::
+  সফল। *lint*-এ error-level finding নেই (*--strict* ছাড়া warning প্রিন্ট)।
+
+*non-zero*::
+  error (unknown language, destination exists, detection failure, missing puff,
+  *lint* finding ইত্যাদি)।
+
+== Author
+
+{project-author} <{project-email}> লিখেছেন।
+
+== Copyright
+
+Copyright (C) {project-year}।
+License AGPL-3.0-or-later।
+এটি free software: GNU Affero General Public License-এর শর্তে
+পরিবর্তন ও redistribute করতে পারবেন।
+আইনসম্মত সীমায় কোনো WARRANTY নেই।
+সম্পূর্ণ license text সোর্স distribution-এর LICENSE ফাইলে, supplemental
+terms সহ—এই প্রকল্প AI exploitation ও AI hegemony-র বিরোধিতা এবং
+mindless MIT-style ও politically naive BSD-style licensing প্রত্যাখ্যান
+জানায়।
