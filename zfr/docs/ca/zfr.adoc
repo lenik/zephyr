@@ -93,7 +93,7 @@ Les ordres que recorren des del directori actual resolen primer *packagedir*.
   *gl*, *hr*, *lt*, *ms*, *pt_BR*, *sk*, *sl*. L'anglès (*en*) és l'idioma font
   *msgid* i no es llista a *po/LINGUAS*. Es permeten locales addicionals per sobre
   del nivell. Poseu els arguments per defecte de *lint* a
-  *.config/zephyr/lint.options*. Els manuals han de ser traduccions manuals
+  *.config/zfr/lint.options*. Els manuals han de ser traduccions manuals
   completes sota *docs/<locale>/* (no fragments po4a).
 
 == Commands
@@ -155,7 +155,7 @@ Les ordres que recorren des del directori actual resolen primer *packagedir*.
   i comprova que el hook sincronitzi *VERSION* des de *debian/changelog*.
   Quan *po/* o *docs/\*.adoc* està present, avisa si la cobertura no compleix
   *--l10n-level* (vegeu *i18n* a Description; per defecte *L1*, el fitxer del projecte
-  *.config/zephyr/lint.options* pot establir un altre nivell).
+  *.config/zfr/lint.options* pot establir un altre nivell).
   La sortida està pensada per a humans i codificadors IA: cada troball té un codi,
   camí i una correcció concreta. Els terminals interactius usen colors CSR (console SGR)
   tret que *NO_COLOR* estigui definit.
@@ -264,7 +264,7 @@ Opcions per a *lint*:
 *-l, --l10n-level* _LEVEL_::
   Cobertura requerida de gettext i manuals complets: *L0* (cap), *L1*
   (10 locales, per defecte), *L2* (20) o *L3* (30). *LEVEL* pot ser *L2* o
-  *2*. Els valors per defecte també venen de *.config/zephyr/lint.options*.
+  *2*. Els valors per defecte també venen de *.config/zfr/lint.options*.
 
 *--color* _WHEN_::
   Realçat CSR: *auto* (per defecte: TTY i sense *NO_COLOR*), *always* o
@@ -393,7 +393,7 @@ Sense Meson, establiu *ZFR_PKGDATADIR* a l'arrel del checkout zephyr
 
 == Files
 
-*.config/zephyr/lint.options*::
+*.config/zfr/lint.options*::
   Arguments per defecte de *zfr lint* per a aquest projecte (tokens shell; comentaris *#*).
   El CLI zfr inclou *-l 2*.
 

@@ -77,7 +77,7 @@ L10N_LEVELS: dict[str, tuple[str, ...]] = {
     ),
 }
 
-LINT_OPTIONS_REL = Path(".config") / "zephyr" / "lint.options"
+LINT_OPTIONS_REL = Path(".config") / "zfr" / "lint.options"
 EN_MAN_NAME = "zfr - multi-language CLI project templates and helper tools"
 
 
@@ -102,7 +102,7 @@ def lint_options_path(root: Path) -> Path:
 
 
 def load_lint_option_tokens(root: Path) -> list[str]:
-    """Tokens from packagedir/.config/zephyr/lint.options (comments allowed)."""
+    """Tokens from packagedir/.config/zfr/lint.options (comments allowed)."""
     path = lint_options_path(root)
     if not path.is_file():
         return []

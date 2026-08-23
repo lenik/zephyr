@@ -93,7 +93,7 @@ Commando's die vanuit de huidige map omhoog lopen, bepalen eerst *packagedir*.
   *gl*, *hr*, *lt*, *ms*, *pt_BR*, *sk*, *sl* toe. Engels (*en*) is de bron-
   *msgid*-taal en staat niet in *po/LINGUAS*. Extra locales boven het niveau
   zijn toegestaan. Zet standaard *lint*-argumenten in
-  *.config/zephyr/lint.options*. Manpages moeten volledige handmatige
+  *.config/zfr/lint.options*. Manpages moeten volledige handmatige
   vertalingen zijn onder *docs/<locale>/* (geen po4a-fragmenten).
 
 == Commands
@@ -159,7 +159,7 @@ Commando's die vanuit de huidige map omhoog lopen, bepalen eerst *packagedir*.
   *debian/changelog*.
   Wanneer *po/* of *docs/\*.adoc* aanwezig is, waarschuwt het als de dekking
   niet voldoet aan *--l10n-level* (zie *i18n* onder Description; standaard
-  *L1*, projectbestand *.config/zephyr/lint.options* kan een ander niveau
+  *L1*, projectbestand *.config/zfr/lint.options* kan een ander niveau
   instellen).
   Uitvoer is bedoeld voor mensen en AI-coders: elke bevinding heeft een code,
   pad en een concrete fix. Interactieve terminals gebruiken CSR-kleuren, tenzij
@@ -272,7 +272,7 @@ Opties voor *lint*:
 *-l, --l10n-level* _LEVEL_::
   Vereiste gettext- en volledige manpage-dekking: *L0* (geen), *L1* (10 locales,
   standaard), *L2* (20) of *L3* (30). *LEVEL* kan *L2* of *2* zijn. Standaarden
-  komen ook uit *.config/zephyr/lint.options*.
+  komen ook uit *.config/zfr/lint.options*.
 
 *--color* _WHEN_::
   CSR-markering: *auto* (standaard: TTY en geen *NO_COLOR*), *always* of
@@ -402,7 +402,7 @@ wortel (ouder van *zfr/*) en *PYTHONPATH* op *src/*.
 
 == Files
 
-*.config/zephyr/lint.options*::
+*.config/zfr/lint.options*::
   Standaard *zfr lint*-argumenten voor dit project (shell-tokens; *#*-commentaar).
   De zfr-CLI zelf levert *-l 2* mee.
 

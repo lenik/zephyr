@@ -93,7 +93,7 @@ Az aktuális könyvtárból induló parancsok először a *packagedir*-t határo
   *gl*, *hr*, *lt*, *ms*, *pt_BR*, *sk*, *sl*. Az angol (*en*) a forrás
   *msgid* nyelv, és nincs felsorolva a *po/LINGUAS*-ban. A szint feletti extra locale-ok
   megengedettek. Az alapértelmezett *lint* argumentumokat a
-  *.config/zephyr/lint.options* tartalmazhatja. A kézikönyvoldalak teljes,
+  *.config/zfr/lint.options* tartalmazhatja. A kézikönyvoldalak teljes,
   kézi fordítások legyenek a *docs/<locale>/* alatt (nem po4a töredékek).
 
 == Commands
@@ -154,7 +154,7 @@ Az aktuális könyvtárból induló parancsok először a *packagedir*-t határo
   és ellenőrzi, hogy a hook szinkronizálja-e a *VERSION*-t a *debian/changelog*-ból.
   Ha *po/* vagy *docs/\*.adoc* jelen van, figyelmeztet, ha a lefedettség nem felel meg
   a *--l10n-level*-nek (lásd *i18n* a Description alatt; alapértelmezett *L1*, a projektfájl
-  *.config/zephyr/lint.options* más szintet is megadhat).
+  *.config/zfr/lint.options* más szintet is megadhat).
   A kimenet embereknek és AI kódolóknak szól: minden találathoz kód,
   útvonal és konkrét javítás tartozik. Interaktív terminálok CSR (console SGR)
   színeket használnak, hacsak nincs beállítva *NO_COLOR*.
@@ -263,7 +263,7 @@ A *lint* kapcsolói:
 *-l, --l10n-level* _LEVEL_::
   Szükséges gettext és teljes kézikönyv-lefedettség: *L0* (nincs), *L1*
   (10 locale, alapértelmezett), *L2* (20) vagy *L3* (30). A *LEVEL* lehet *L2* vagy
-  *2*. Az alapértelmezések a *.config/zephyr/lint.options*-ból is jöhetnek.
+  *2*. Az alapértelmezések a *.config/zfr/lint.options*-ból is jöhetnek.
 
 *--color* _WHEN_::
   CSR kiemelés: *auto* (alapértelmezett: TTY és nincs *NO_COLOR*), *always* vagy
@@ -392,7 +392,7 @@ Meson nélkül állítsa a *ZFR_PKGDATADIR*-t a zephyr checkout gyökerére
 
 == Files
 
-*.config/zephyr/lint.options*::
+*.config/zfr/lint.options*::
   Alapértelmezett *zfr lint* argumentumok ehhez a projekthez (shell tokenek; *#* megjegyzések).
   Maga a zfr CLI *-l 2*-t szállít.
 

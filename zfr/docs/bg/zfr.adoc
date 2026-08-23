@@ -93,7 +93,7 @@ zfr add myapp another_app
   *gl*, *hr*, *lt*, *ms*, *pt_BR*, *sk*, *sl*. Английският (*en*) е изходният
   *msgid* език и не се изброява в *po/LINGUAS*. Допълнителни локали над
   нивото са позволени. Поставете аргументите по подразбиране за *lint* в
-  *.config/zephyr/lint.options*. Ръководствата трябва да са цялостни
+  *.config/zfr/lint.options*. Ръководствата трябва да са цялостни
   ръчни преводи под *docs/<locale>/* (не po4a фрагменти).
 
 == Commands
@@ -154,7 +154,7 @@ zfr add myapp another_app
   и проверява дали hook-ът синхронизира *VERSION* от *debian/changelog*.
   Когато *po/* или *docs/\*.adoc* присъстват, предупреждава, ако покритието не
   отговаря на *--l10n-level* (виж *i18n* под Description; по подразбиране *L1*,
-  проектният файл *.config/zephyr/lint.options* може да зададе друго ниво).
+  проектният файл *.config/zfr/lint.options* може да зададе друго ниво).
   Изходът е предназначен за хора и AI програмисти: всяко откритие има код,
   път и конкретна поправка. Интерактивните терминали използват CSR (console SGR)
   цветове, освен ако *NO_COLOR* е зададено.
@@ -263,7 +263,7 @@ zfr add myapp another_app
 *-l, --l10n-level* _LEVEL_::
   Изисквано gettext и цялостно manpage покритие: *L0* (няма), *L1*
   (10 локала, по подразбиране), *L2* (20) или *L3* (30). *LEVEL* може да е *L2* или
-  *2*. Стойностите по подразбиране идват и от *.config/zephyr/lint.options*.
+  *2*. Стойностите по подразбиране идват и от *.config/zfr/lint.options*.
 
 *--color* _WHEN_::
   CSR подчертаване: *auto* (по подразбиране: TTY и без *NO_COLOR*), *always* или
@@ -392,7 +392,7 @@ gettext каталози и ръководствата *docs/<lang>/zfr.adoc* з
 
 == Files
 
-*.config/zephyr/lint.options*::
+*.config/zfr/lint.options*::
   Аргументи по подразбиране за *zfr lint* за този проект (shell токени; *#* коментари).
   Самият zfr CLI доставя *-l 2*.
 

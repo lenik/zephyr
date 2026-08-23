@@ -96,7 +96,7 @@ Polecenia przechodzące od bieżącego katalogu w górę najpierw wyznaczają
   *hr*, *lt*, *ms*, *pt_BR*, *sk*, *sl*. Angielski (*en*) jest językiem źródłowym
   *msgid* i nie jest wymieniony w *po/LINGUAS*. Dodatkowe locale ponad poziom są
   dozwolone. Domyślne argumenty *lint* umieść w
-  *.config/zephyr/lint.options*. Strony podręcznika muszą być pełnymi,
+  *.config/zfr/lint.options*. Strony podręcznika muszą być pełnymi,
   ręcznymi tłumaczeniami w *docs/<locale>/* (nie fragmentami po4a).
 
 == Commands
@@ -160,7 +160,7 @@ Polecenia przechodzące od bieżącego katalogu w górę najpierw wyznaczają
   *debian/changelog*.
   Gdy obecne jest *po/* lub *docs/\*.adoc*, ostrzega, jeśli obsługa nie spełnia
   *--l10n-level* (patrz *i18n* w Description; domyślnie *L1*, plik projektu
-  *.config/zephyr/lint.options* może ustawić inny poziom).
+  *.config/zfr/lint.options* może ustawić inny poziom).
   Wynik jest przeznaczony dla ludzi i kodujących AI: każde znalezisko ma kod,
   ścieżkę i konkretną poprawkę. Interaktywne terminale używają kolorów CSR,
   chyba że ustawiono *NO_COLOR*.
@@ -269,7 +269,7 @@ Opcje dla *lint*:
 *-l, --l10n-level* _LEVEL_::
   Wymagana obsługa gettext i pełnych stron podręcznika: *L0* (brak), *L1* (10
   locale, domyślnie), *L2* (20) lub *L3* (30). *LEVEL* może być *L2* lub *2*.
-  Domyślne wartości pochodzą też z *.config/zephyr/lint.options*.
+  Domyślne wartości pochodzą też z *.config/zfr/lint.options*.
 
 *--color* _WHEN_::
   Podświetlanie CSR: *auto* (domyślnie: TTY i brak *NO_COLOR*), *always* lub
@@ -398,7 +398,7 @@ Bez Meson ustaw *ZFR_PKGDATADIR* na korzeń checkoutu zephyr (rodzic *zfr/*) i
 
 == Files
 
-*.config/zephyr/lint.options*::
+*.config/zfr/lint.options*::
   Domyślne argumenty *zfr lint* dla tego projektu (tokeny powłoki; komentarze *#*).
   Samo CLI zfr dostarcza *-l 2*.
 

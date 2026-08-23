@@ -93,7 +93,7 @@ Příkazy procházející z aktuálního adresáře nejprve určí *packagedir*.
   *gl*, *hr*, *lt*, *ms*, *pt_BR*, *sk*, *sl*. Angličtina (*en*) je zdrojový
   jazyk *msgid* a není uvedena v *po/LINGUAS*. Další jazyky nad úrovní jsou
   povoleny. Výchozí argumenty *lint* lze zadat v
-  *.config/zephyr/lint.options*. Manuálové stránky musí být celé ruční
+  *.config/zfr/lint.options*. Manuálové stránky musí být celé ruční
   překlady v *docs/<locale>/* (ne fragmenty po4a).
 
 == Commands
@@ -155,7 +155,7 @@ Příkazy procházející z aktuálního adresáře nejprve určí *packagedir*.
   a kontroluje, že hook synchronizuje *VERSION* z *debian/changelog*.
   Pokud je přítomno *po/* nebo *docs/\*.adoc*, varuje, pokud pokrytí nesplňuje
   *--l10n-level* (viz *i18n* v Description; výchozí *L1*, soubor projektu
-  *.config/zephyr/lint.options* může nastavit jinou úroveň).
+  *.config/zfr/lint.options* může nastavit jinou úroveň).
   Výstup je určen lidem a AI kodérům: každý nález má kód,
   cestu a konkrétní opravu. Interaktivní terminály používají barvy CSR (console SGR),
   pokud není nastaveno *NO_COLOR*.
@@ -265,7 +265,7 @@ Volby pro *lint*:
 *-l, --l10n-level* _LEVEL_::
   Požadované pokrytí gettext a celých manuálových stránek: *L0* (žádné), *L1*
   (10 jazyků, výchozí), *L2* (20) nebo *L3* (30). *LEVEL* může být *L2* nebo
-  *2*. Výchozí hodnoty také pocházejí z *.config/zephyr/lint.options*.
+  *2*. Výchozí hodnoty také pocházejí z *.config/zfr/lint.options*.
 
 *--color* _WHEN_::
   CSR zvýraznění: *auto* (výchozí: TTY a bez *NO_COLOR*), *always* nebo
@@ -394,7 +394,7 @@ Bez Meson nastavte *ZFR_PKGDATADIR* na kořen zephyr checkoutu
 
 == Files
 
-*.config/zephyr/lint.options*::
+*.config/zfr/lint.options*::
   Výchozí argumenty *zfr lint* pro tento projekt (shell tokeny; komentáře *#*).
   Samotné CLI zfr dodává *-l 2*.
 

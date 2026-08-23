@@ -93,7 +93,7 @@ Commands that walk from the current directory resolve *packagedir* first.
   *gl*, *hr*, *lt*, *ms*, *pt_BR*, *sk*, *sl*. English (*en*) is the source
   *msgid* language and is not listed in *po/LINGUAS*. Extra locales beyond
   the level are allowed. Put default *lint* arguments in
-  *.config/zephyr/lint.options*. Man pages must be whole-document
+  *.config/zfr/lint.options*. Man pages must be whole-document
   hand translations under *docs/<locale>/* (not po4a fragments).
 
 == Commands
@@ -155,7 +155,7 @@ Commands that walk from the current directory resolve *packagedir* first.
   and checks that the hook syncs *VERSION* from *debian/changelog*.
   When *po/* or *docs/\*.adoc* is present, warns if coverage does not meet
   *--l10n-level* (see *i18n* under Description; default *L1*, project file
-  *.config/zephyr/lint.options* may set another level).
+  *.config/zfr/lint.options* may set another level).
   Output is meant for humans and AI coders: each finding has a code,
   path, and a concrete fix. Interactive terminals use CSR (console SGR)
   colors unless *NO_COLOR* is set.
@@ -266,7 +266,7 @@ Options for *lint*:
 *-l, --l10n-level* _LEVEL_::
   Required gettext and whole-document manpage coverage: *L0* (none), *L1*
   (10 locales, default), *L2* (20), or *L3* (30). *LEVEL* may be *L2* or
-  *2*. Defaults also come from *.config/zephyr/lint.options*.
+  *2*. Defaults also come from *.config/zfr/lint.options*.
 
 *--color* _WHEN_::
   CSR highlighting: *auto* (default: TTY and no *NO_COLOR*), *always*, or
@@ -395,7 +395,7 @@ root (parent of *zfr/*) and *PYTHONPATH* to *src/*.
 
 == Files
 
-*.config/zephyr/lint.options*::
+*.config/zfr/lint.options*::
   Default *zfr lint* arguments for this project (shell tokens; *#* comments).
   The zfr CLI itself ships *-l 2*.
 

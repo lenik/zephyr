@@ -93,7 +93,7 @@ zfr add myapp another_app
   *gl*, *hr*, *lt*, *ms*, *pt_BR*, *sk*, *sl*. Τα αγγλικά (*en*) είναι η γλώσσα πηγής
   *msgid* και δεν αναφέρονται στο *po/LINGUAS*. Επιτρέπονται επιπλέον locales πάνω από
   το επίπεδο. Βάλτε προεπιλεγμένα ορίσματα *lint* στο
-  *.config/zephyr/lint.options*. Τα εγχειρίδια πρέπει να είναι ολόκληρες
+  *.config/zfr/lint.options*. Τα εγχειρίδια πρέπει να είναι ολόκληρες
   χειροκίνητες μεταφράσεις κάτω από *docs/<locale>/* (όχι θραύσματα po4a).
 
 == Commands
@@ -155,7 +155,7 @@ zfr add myapp another_app
   και ελέγχει αν το hook συγχρονίζει *VERSION* από *debian/changelog*.
   Όταν υπάρχουν *po/* ή *docs/\*.adoc*, προειδοποιεί αν η κάλυψη δεν πληροί
   *--l10n-level* (βλ. *i18n* στο Description· προεπιλογή *L1*, το αρχείο έργου
-  *.config/zephyr/lint.options* μπορεί να ορίσει άλλο επίπεδο).
+  *.config/zfr/lint.options* μπορεί να ορίσει άλλο επίπεδο).
   Η έξοδος προορίζεται για ανθρώπους και AI coders: κάθε εύρημα έχει κωδικό,
   διαδρομή και συγκεκριμένη διόρθωση. Διαδραστικά τερματικά χρησιμοποιούν CSR (console SGR)
   χρώματα εκτός αν έχει οριστεί *NO_COLOR*.
@@ -264,7 +264,7 @@ zfr add myapp another_app
 *-l, --l10n-level* _LEVEL_::
   Απαιτούμενη κάλυψη gettext και ολόκληρων εγχειριδίων: *L0* (καμία), *L1*
   (10 locales, προεπιλογή), *L2* (20) ή *L3* (30). Το *LEVEL* μπορεί να είναι *L2* ή
-  *2*. Προεπιλογές έρχονται και από *.config/zephyr/lint.options*.
+  *2*. Προεπιλογές έρχονται και από *.config/zfr/lint.options*.
 
 *--color* _WHEN_::
   CSR highlighting: *auto* (προεπιλογή: TTY και χωρίς *NO_COLOR*), *always* ή
@@ -393,7 +393,7 @@ Python *unittest* κάλυψη CLI. Το *meson test* (κατάλογος build
 
 == Files
 
-*.config/zephyr/lint.options*::
+*.config/zfr/lint.options*::
   Προεπιλεγμένα ορίσματα *zfr lint* για αυτό το έργο (shell tokens· σχόλια *#*).
   Το ίδιο το zfr CLI περιλαμβάνει *-l 2*.
 
