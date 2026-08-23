@@ -9,7 +9,7 @@ v{project-version}, {project-year}
 
 == Name
 
-zfr - பல மொழி CLI திட்ட வார்ப்புருக்கள் மற்றும் உதவி கருவிகள்
+zfr - பன்மொழி கட்டளைவரித் திட்ட வார்ப்புருக்களும் துணைக் கருவிகளும்
 
 == Synopsis
 
@@ -44,22 +44,21 @@ zfr - பல மொழி CLI திட்ட வார்ப்புருக�
 
 *zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
 *zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
-*zfr-shape*, மற்றும் *zfr-release* அதே துணைக் கட்டளைகளின் மெல்லிய
-wrapper-கள்.
+*zfr-shape*, *zfr-release* ஆகியவை அதே துணைக்கட்டளைகளின் சுருக்கப் பெயர்கள்.
 
 == Description
 
-*zfr* என்பது *zephyr* வார்ப்புரு தொகுப்புக்கான கட்டளை வரி கருவி.
-சிறிய கட்டளை வரி பயன்பாடுகளுக்கான மொழி வார்ப்புருக்களையும் அவற்றை
-உருவாக்கவும் நிர்வகிக்கவும் உதவிகளையும் வழங்குகிறது.
+*zfr* என்பது *zephyr* வார்ப்புருத் தொகுப்பின் கட்டளைவரிக் கருவி.
+சிறிய கட்டளைவரிப் பயன்பாடுகளுக்கான மொழி வார்ப்புருக்களையும்,
+அவற்றை உருவாக்கி நிர்வகிக்கும் துணைகளையும் வழங்குகிறது.
 
-*முக்கியம்:* உருவாக்கப்பட்ட திட்டங்கள் *zfr*-ஐ தொடர்ந்து அழைக்க
-வேண்டும் (*meson.build* மற்றும் *rpm/Makefile*-ல் *zfr version* போல).
-*zfr* சரம் create/rename magic token அல்ல; திட்டப் பெயராக எழுதப்பட
-மாட்டாது. *மாற்றப்படும்* வார்ப்புரு placeholder *zephyr* (மாதிரி
-puff-களுக்கு *some_puff1*).
+*முக்கியம்:* உருவாக்கப்பட்ட திட்டங்கள் *zfr*-ஐத் தொடர்ந்து அழைக்க வேண்டும்
+(எடுத்துக்காட்டு: *meson.build* மற்றும் *rpm/Makefile*-ல் *zfr version*).
+*zfr* என்ற சரம் create/rename-க்கான மாயச் சின்னம் *அல்ல*; திட்டப் பெயராக
+ஒருபோதும் மாற்றப்படாது. மாற்றப்படும் வார்ப்புரு இடம் *zephyr* மட்டுமே
+(மாதிரி puff-க்கு *some_puff1*).
 
-பொதுவான பணி ஓட்டம்:
+வழக்கமான பணிமுறை:
 
 . மொழி வார்ப்புருவிலிருந்து திட்டம் உருவாக்குதல்:
 +
@@ -67,298 +66,302 @@ puff-களுக்கு *some_puff1*).
 zfr create -l python myproj
 ----
 
-. திட்டத்தில் நுழைந்து பயன்பாட்டு *puff*-கள் (எடுத்துக்காட்டு
-பயன்பாடுகள்) சேர்த்தல்:
+. திட்டத்துக்குள் சென்று பயன்பாட்டு *puff*-களை (மாதிரிப் பயன்பாடுகள்) சேர்த்தல்:
 +
 ----
 cd myproj
 zfr add myapp another_app
 ----
 
-. விரும்பினால் பின்னர் *rename* / *remove* மூலம் திட்டம் மறுபெயரிடுதல்
-அல்லது puff-களை நீக்குதல்.
+. விரும்பினால் பின்னர் *rename* / *remove* மூலம் திட்டத்தை மறுபெயரிடலாம் அல்லது puff-களை நீக்கலாம்.
 
-வார்ப்புருக்கள் நிறுவப்பட்டால் */usr/share/zephyr/<lang>/*-ல்,
-நிறுவப்படாத builddir wrapper (*build/zfr* போல) இயக்கும்போது மூல
-மரத்தில் (*ZFR_PKGDATADIR* override). ஒவ்வொரு வார்ப்புருவிலும்
-*some_puff1* மாதிரி puff இருக்கலாம்; *create* கட்டளை வரியில் puff
-பெயர்கள் கொடுத்தால் instantiate, விட்டால் காலி திட்டம்.
+நிறுவிய பின் வார்ப்புருக்கள் */usr/share/zephyr/<lang>/* கீழ் உள்ளன; நிறுவாத
+உருவாக்க அடைவிலிருந்து (*build/zfr* போன்றது) இயக்கினால் மூல மரத்தில் உள்ளன
+(*ZFR_PKGDATADIR* மேலெழுதும்). ஒவ்வொரு வார்ப்புருவிலும் *some_puff1* என்ற மாதிரி
+puff இருக்கலாம்; *create* வரியில் puff பெயர்களைக் கொடுத்தால் அவற்றை உருவாக்கும்,
+விட்டால் வெற்றுத் திட்டம்.
 
-monorepo-வில் *repodir* git (அல்லது meta) checkout root, *packagedir*
-zephyr வடிவத்தைக் கொண்ட தொகுப்பு மரம் (எ.கா. *repodir/bash*).
-தற்போதைய கோப்பகத்திலிருந்து நடக்கும் கட்டளைகள் முதலில் *packagedir*
-கண்டறிக.
+ஒரே கிட் களஞ்சியத்தில் பல தொகுப்புகள் இருந்தால் *repodir* கிட் (அல்லது மெட்டா) வேர்,
+*packagedir* zephyr வடிவம் கொண்ட தொகுப்பு மரம் (எ.கா. *repodir/bash*).
+நடப்பு அடைவிலிருந்து மேலே தேடும் கட்டளைகள் முதலில் *packagedir*-ஐக் கண்டுபிடிக்கும்.
 
 *i18n*::
-  Zephyr பாணி குறைந்தது இந்த locale-களுக்கு gettext கவரேஜை
-  பரிந்துரைக்கிறது:
+  Zephyr பாணி குறைந்தபட்சம் இவ்வளவு gettext மொழிகளைப் பரிந்துரைக்கிறது:
   *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
   *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
-  (alias *zh-cn* / *zh-tw*). ஆங்கிலம் (*en*) மூல *msgid* மொழி,
-  *po/LINGUAS*-ல் இல்லை. அந்த locale-களை *po/LINGUAS*-ல் பட்டியலிட்டு
-  *po/<locale>.po* கோப்புகளை வழங்கவும்.
+  (மாற்றுப்பெயர்கள் *zh-cn* / *zh-tw*). ஆங்கிலம் (*en*) மூல *msgid* மொழி;
+  *po/LINGUAS*-ல் இல்லை. மேற்குறித்த locale-களை *po/LINGUAS*-ல் பட்டியலிட்டு
+  பொருந்தும் *po/<locale>.po* கோப்புகளை வழங்கவும்.
 
 == Commands
 
 *create*::
-  *pkgdatadir/<lang>/* புதிய *./<project_name>/* கோப்பகத்தில் நகலெடுக்கிறது
-  (ஏற்கனவே இருந்தால் தோல்வி). *zephyr* → *_PROJECT_NAME_* மற்றும் puff
-  பெயர்கள் இருந்தால் *some_puff1* → முதல் *_PUFF_NAME_* (மேலும் *add*
-  மூலம்). puff இல்லையெனில் வார்ப்புரு puff கோப்புகள் நீக்க, *some_puff1*
-  token-கள் *add* instantiate-க்கு. *--distribution* / *--init-version* /
-  *--author* / *--email* மூலம் புதிய *debian/changelog*, பின்னர் *git init*,
-  *core.hooksPath* *.githooks* (*pre-commit*, *VERSION* *debian/changelog*
-  sync), ஆரம்ப commit, annotated tag *vVER*.
+  *pkgdatadir/<lang>/*-ஐப் புதிய அடைவு *./<project_name>/*-க்கு நகலெடுக்கும்
+  (அடைவு ஏற்கனவே இருந்தால் தோல்வி). *zephyr*-ஐ *_PROJECT_NAME_*-ஆக மாற்றும்;
+  puff பெயர்கள் கொடுத்தால் *some_puff1*-ஐ முதல் *_PUFF_NAME_*-ஆக மாற்றும் (மீதி *add*).
+  puff பெயர் இல்லையெனில் வார்ப்புரு puff கோப்புகளை நீக்கி *some_puff1* இடங்களை வைக்கும், பின்னர் *add* செய்ய.
+  *--distribution* / *--init-version* / *--author* / *--email* கொண்டு புதிய *debian/changelog* எழுதும்
+  (வார்ப்புரு changelog நிராகரிக்கப்படும்), பிறகு *git init*, *core.hooksPath*-ஐ *.githooks*-க்கு அமைக்கும்
+  (*pre-commit* நகலிட்டு *VERSION*-ஐ *debian/changelog*-உடன் ஒத்திசைக்க), முதல் commit,
+  குறிப்புடன் கூடிய குறிச்சொல் *vVER*.
 
 *rename*::
-  தற்போதைய திட்டக் கோப்பகத்தில் *zephyr* → *_PROJECT_NAME_* மற்றும்
-  ஒவ்வொரு பெயருக்கும் வார்ப்புரு puff *some_puff1* → அந்த பெயர்.
-  *zfr* மாற்றாது.
+  நடப்புத் திட்ட அடைவில் *zephyr*-ஐ *_PROJECT_NAME_*-ஆக மாற்றும்;
+  கொடுத்த ஒவ்வொரு பெயருக்கும் வார்ப்புரு puff *some_puff1*-ஐ அப்பெயருக்கு மாற்றும்.
+  *zfr*-ஐ மாற்றாது.
 
 *add*::
-  திட்ட மொழி detect செய்து வார்ப்புரு puff கோப்புகளை தற்போதைய திட்டத்தில்
-  நகலெடுத்து *some_puff1* → ஒவ்வொரு *_PUFF_NAME_*. சாத்தியமான Meson
-  பட்டியல்கள் (அல்லது wiring) புதுப்பிக்க.
+  திட்ட மொழியைக் கண்டுபிடித்து வார்ப்புரு puff கோப்புகளை நடப்புத் திட்டத்துக்கு நகலெடுத்து
+  *some_puff1*-ஐ ஒவ்வொரு *_PUFF_NAME_*-க்கும் மறுபெயரிடும்.
+  முடிந்தால் Meson பட்டியல்களைப் புதுப்பிக்கும்.
 
 *remove*::
-  தற்போதைய திட்டத்திலிருந்து ஒவ்வொரு puff பெயருக்கும் கோப்புகள் மற்றும்
-  Meson wiring நீக்க.
+  கொடுத்த ஒவ்வொரு puff பெயருக்கான கோப்புகளையும் Meson இணைப்பையும் நடப்புத் திட்டத்திலிருந்து நீக்கும்.
 
 *detect*::
-  தற்போதைய கோப்பகத்தின் detect செய்யப்பட்ட மொழி (parent-களில் project
-  root தேட).
+  நடப்பு அடைவுக்குக் கண்டுபிடிக்கப்பட்ட மொழியை அச்சிடும்
+  (திட்ட வேர் கிடைக்கும் வரை மேல் அடைவுகளைப் பார்க்கும்).
 
 *about*::
-  தற்போதைய திட்டத் தகவல். parent-களில் project root (*meson.build*
-  *project()* அல்லது *debian/control*). பொதுவான புலங்கள் Debian/RPM
-  metadata-விலிருந்து parse, terminal அகலத்தில் wrap. மூல கோப்பு/வரி
-  எண்ணிக்கை, payload size மதிப்பீடு. interactive terminal CSR (console SGR),
-  *NO_COLOR* இல்லாவிட்டால். *-d* / *-r* முழு parsed Debian/RPM view
-  (packaging dump அல்ல).
+  நடப்புத் திட்டத் தகவலை அச்சிடும். நடப்பு அடைவிலிருந்து மேலே தேடி
+  திட்ட வேரைக் கண்டுபிடிக்கும் (*project()* உள்ள *meson.build* அல்லது *debian/control*).
+  பொதுவான புலங்கள் (பெயர், பதிப்பு, உரிமம், முகப்பு, பராமரிப்பாளர், சுருக்கம், section,
+  priority, distribution, architecture) Debian அல்லது RPM மெட்டாவிலிருந்து படித்து முனைய அகலத்துக்கு மடிக்கப்படும்.
+  மூலக் கோப்பு/வரி எண்ணிக்கைகளும் மதிப்பிடப்பட்ட தரவு அளவும் அச்சிடும்.
+  ஊடாடும் முனையம் CSR (கன்சோல் SGR) நிறங்களைப் பயன்படுத்தும், *NO_COLOR* அமைத்தால் அல்ல.
+  முழு Debian அல்லது RPM பார்வைக்கு *-d* / *-r* (தொகுப்புக் கோப்புகளின் நகல் அல்ல).
 
 *version*::
-  தற்போதைய திட்ட பதிப்பு (ஒரு வரி, ஸ்கிரிப்ட்களுக்கு). *git* மற்றும்
-  *.git* இருந்தால் *git describe*, இல்லையெனில் *debian/changelog*.
-  fallback: *VERSION*, பின்னர் *0.0.0*. non-semver token *0.0.0-<token>*
-  wrap.
+  நடப்புத் திட்டப் பதிப்பை ஒரு வரியில் அச்சிடும் (சிறுநிரல்களுக்கு).
+  *git* மற்றும் *.git* இருந்தால் இயல்பு *git describe*; இல்லையெனில் சமீபத்திய *debian/changelog*.
+  அடுத்து *VERSION* கோப்பு, கடைசியாக *0.0.0*.
+  semver அல்லாத அடையாளம் (கிட் ஹாஷ் போன்றது) *0.0.0-<token>* ஆகச் சுற்றப்படும்.
 
 *lint*::
-  zephyr packaging/layout பாணிக்கு எதிராக validate (parent-ல் root).
-  missing கோப்புகள், identity mismatch, Meson/Debian/RPM பிழை, instantiate
-  பயன்பாடுகளில் leftover *zephyr* / *some_puff1*, suggested fix.
-  *zfr* எதிர்பார்க்கப்படும், leftover அல்ல. *.githooks/pre-commit*-ல்
-  *.git* வரை, *core.hooksPath*, hook *VERSION* *debian/changelog*-லிருந்து
-  sync. *po/* இருந்தால் *LINGUAS* recommended gettext locale set கவர்
-  செய்யாவிட்டால் எச்சரிக்கை (Description *i18n*). மனிதர்களும் AI coder-களும்:
-  code, path, concrete fix. CSR, *NO_COLOR* இல்லாவிட்டால்.
+  நடப்புத் திட்டத்தை zephyr தொகுப்பு மற்றும் அமைப்புப் பாணிக்குச் சரிபார்க்கும்
+  (திட்ட வேருக்காக மேலே தேடும்).
+  இல்லாத கோப்புகள், அடையாளப் பொருத்தமின்மை, Meson/Debian/RPM பிழைகள்,
+  உருவாக்கப்பட்ட பயன்பாடுகளில் மீதமுள்ள *zephyr* / *some_puff1*, பரிந்துரைக்கப்பட்ட திருத்தங்கள் ஆகியவற்றை அறிவிக்கும்.
+  *zfr* குறிப்புகள் எதிர்பார்க்கப்படுபவை, மீதி எனக் கருதப்படா.
+  *.githooks/pre-commit*-க்கு *.git* வரை சென்று *core.hooksPath*-ஐ மதித்து
+  ஹூக் *VERSION*-ஐ *debian/changelog*-இலிருந்து ஒத்திசைக்கிறதா எனப் பார்க்கும்.
+  *po/* இருந்தால் *LINGUAS* பரிந்துரைக்கப்பட்ட gettext locale தொகுப்பை உள்ளடக்காவிட்டால் எச்சரிக்கும்
+  (விளக்கத்தில் *i18n* பார்க்க).
+  ஒவ்வொரு கண்டுபிடிப்புக்கும் குறியீடு, பாதை, தெளிவான திருத்தம் உண்டு.
+  ஊடாடும் முனையம் CSR நிறங்களைப் பயன்படுத்தும், *NO_COLOR* அமைத்தால் அல்ல.
 
 *shape*::
-  தற்போதைய *packagedir*-க்கு 0–100 *zephyr shape* score (zephyr packaging
-  பாணி பொருத்தம்). monorepo-வில் *packagedir* *repodir* (git/meta root)
-  வேறு; shape package கோப்பகத்தை repo root-க்கு முன்னுரிமை. *\-b* /
-  *--bool* threshold (default *50*) பூர்த்தியானால் *1*, இல்லையெனில் *0*.
+  நடப்பு *packagedir*-க்கு 0–100 *zephyr shape* மதிப்பெண் (zephyr தொகுப்புப் பாணிக்கு எவ்வளவு நெருக்கமோ).
+  ஒரே களஞ்சியத்தில் *packagedir* *repodir*-இலிருந்து (கிட் / மெட்டா வேர்) வேறுபடலாம்;
+  கருவிகள் களஞ்சிய வேரை விட தொகுப்பு அடைவைத் தேர்ந்தெடுக்க இந்த மதிப்பெண்ணைப் பயன்படுத்தும்.
+  *\-b* / *--bool* மதிப்பெண் வரம்புக்கு (இயல்பு *50*) குறையாவிட்டால் *1*, இல்லையெனில் *0*.
 
 *dist*::
-  தற்போதைய திட்டத்தின் மூல archive (parent-ல் root). git project root
-  எனில் *meson dist* (*meson setup* பின், default *--allow-dirty*, *--no-tests*).
-  nested மொழி வார்ப்புருக்களுக்கு சொந்த *.git* இல்லை; *meson dist* parent
-  meta-repo pack செய்யும்; அந்த மரங்களுக்கு இந்த திட்டத்தின் directory
-  tarball மட்டும். archive path stdout. *rpm/Makefile* *dist* மற்றும் Meson
-  *srcdist* ninja target இந்த கட்டளை reuse.
+  நடப்புத் திட்டத்தின் மூலக் காப்பகத்தை உருவாக்கும் (திட்ட வேருக்காக மேலே தேடும்).
+  இந்த அடைவு கிட் திட்ட வேராக இருந்தால் *meson dist* இயக்கும்
+  (*meson setup*-க்குப் பிறகு, இயல்பு *--allow-dirty* மற்றும் *--no-tests*).
+  உள் மொழி வார்ப்புருக்களுக்குத் தனி *.git* இல்லை, எனவே *meson dist* தாய் மெட்டா-களஞ்சியத்தைக் கட்டும்;
+  அத்தகைய மரங்களுக்கு இந்தத் திட்டம் மட்டும் உள்ள அடைவு டார்பால் கிடைக்கும்.
+  காப்பகப் பாதையை stdout-ல் அச்சிடும். *rpm/Makefile* *dist* மற்றும் Meson *srcdist*
+  ninja இலக்கு இந்தக் கட்டளையையே மீண்டும் பயன்படுத்தும்.
 
 *release*::
-  *gh-makerelease*(1) போல option parse, argv rebuild, PATH-லிருந்து
-  *gh-makerelease* *exec*. tagging, packaging, GitHub upload இங்கே இல்லை.
-  *zephyr* git checkout root-லிருந்து release (மொழி வார்ப்புருக்கள் +
-  *zfr/*). கீழே *Options for release*.
+  *gh-makerelease*(1)-உடன் ஒரே விருப்பங்களைப் பாகுபடுத்தி argv-ஐ மீண்டும் கட்டி PATH-இல் உள்ள
+  *gh-makerelease*-ஐ *exec* செய்யும். குறிச்சொல், தொகுத்தல், GitHub பதிவேற்றம் இந்தக் கட்டளை செய்யாது.
+  *zephyr* திட்டம் கிட் செக்அவுட் வேரிலிருந்து வெளியிடப்படும் (மொழி வார்ப்புருக்கள் + *zfr/*).
+  கீழே *Options for release* பார்க்க.
 
 *ize*::
-  தற்போதைய திட்டத்தை in-place refactor current zephyr பாணிக்கு (parent-ல்
-  root). மொழி வார்ப்புருவிலிருந்து missing *debian/*, *rpm/* scaffolding
-  (பெயர்கள் rewrite), *VERSION*, *.githooks/pre-commit*, *meson.build* patch
-  (*zfr version*, *asciidoctor* man target, *run_target look*, bash-completion
-  install). groff *\*.1* man (திட்டம், *debian/* அல்ல) *docs/\*.adoc* Meson
-  rules; *src/* hardcoded changelog version *\*.in* *@VERSION@* அல்லது C
-  குடும்பத்தில் *config.h* *PROJECT_VERSION*. *\-n* / *--dry-run* plan
-  எழுதாது. பின்னர் *zfr lint*.
+  நடப்புத் திட்டத்தைத் தற்போதைய zephyr பாணிக்குப் பொருந்தும்படி அங்கேயே மாற்றும்
+  (மேலே தேடும்). மொழி வார்ப்புருவிலிருந்து இல்லாத *debian/* மற்றும் *rpm/* சாரத்தை நகலெடுக்கும்
+  (பெயர்கள் இந்தத் திட்டத்துக்கு மாற்றப்படும்), *VERSION* மற்றும் *.githooks/pre-commit* எழுதும்,
+  *meson.build*-ஐச் சரிசெய்யும் (*zfr version*, *asciidoctor* man இலக்குகள்,
+  *run_target look*, bash-completion நிறுவல்). திட்டத்தின் கீழ் (*debian/* அல்ல) groff *\*.1*
+  பக்கங்களை Meson விதிகளுடன் *docs/\*.adoc*-ஆக மாற்றும், *src/*-இல் கடினமாக எழுதப்பட்ட
+  changelog பதிப்புகளை *\*.in* *@VERSION@* பதிலீடுகளாக அல்லது C குடும்பத்துக்கு *config.h* வழியாக
+  *PROJECT_VERSION*-ஆக மாற்றும். *\-n* / *--dry-run* திட்டத்தை மட்டும் காட்டும்.
+  பிறகு *zfr lint* இயக்கவும்.
 
 *help*::
-  கட்டளை வரி உதவி காட்டு.
+  கட்டளைவரி உதவியைக் காட்டு.
 
 == Options
 
 *create* விருப்பங்கள்:
 
 *-l, --lang* _LANG_::
-  பயன்படுத்த வார்ப்புரு மொழி (default: *python*).
-  *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*, *haskell*,
-  *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift*, *typescript*
-  உட்பட.
+  பயன்படுத்த வேண்டிய மொழி வார்ப்புரு (இயல்பு: *python*).
+  ஆதரவு: *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*,
+  *haskell*, *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift*,
+  *typescript*.
 
 *-D, --distribution* _DIST_::
-  Debian changelog distribution (default: *unstable*).
+  Debian changelog விநியோகம் (இயல்பு: *unstable*).
 
 *-1, --init-version* _VER_::
-  ஆரம்ப package version மற்றும் git tag (default: *0.0.1*).
+  முதல் தொகுப்புப் பதிப்பும் கிட் குறிச்சொல்லும் (இயல்பு: *0.0.1*).
 
 *-a, --author* _AUTHOR_::
-  Changelog மற்றும் git author பெயர் (default: *Lenik (谢继雷)*).
+  Changelog மற்றும் கிட் ஆசிரியர் பெயர் (இயல்பு: *Lenik (谢继雷)*).
 
 *-e, --email* _EMAIL_::
-  Changelog மற்றும் git author email (default: *lenik@bodz.net*).
+  Changelog மற்றும் கிட் ஆசிரியர் மின்னஞ்சல் (இயல்பு: *lenik@bodz.net*).
 
 *about* விருப்பங்கள்:
 
 *-d, --debian*::
-  Parsed Debian packaging (*debian/control*, சமீபத்திய *debian/changelog*
-  stanza). *Build-Depends* போன்றவை terminal wrap; நீண்ட description
-  paragraph reflow.
+  பாகுபடுத்திய Debian தொகுப்புப் புலங்கள் (*debian/control*, சமீபத்திய
+  *debian/changelog* பகுதி). *Build-Depends* போன்ற பட்டியல்கள் முனைய அகலத்துக்கு மடிக்கப்படும்;
+  நீண்ட விளக்கம் பத்திகளாக மீண்டும் அமையும்.
 
 *-r, --redhat*::
-  *rpm/*.spec* parsed RPM (*%{version}* *zfr version -r*). *%description*
-  reflow; spec scriptlet dump அல்ல.
+  *rpm/*.spec*-இலிருந்து பாகுபடுத்திய RPM புலங்கள் (*%{version}* போன்ற மேக்ரோக்கள்
+  *zfr version -r* மூலம் காட்டப்படும்). *%description* மீண்டும் அமையும்; spec சிறுநிரல்கள் வெளியிடப்படா.
 
 *--color* _WHEN_::
-  CSR: *auto* (default: TTY, *NO_COLOR* இல்லை), *always*, *never*.
+  CSR நிறம்: *auto* (இயல்பு: TTY மற்றும் *NO_COLOR* இல்லை), *always*, அல்லது *never*.
 
 *version* விருப்பங்கள்:
 
 *-g, --git*::
-  *git describe --tags --always --dirty* (*git*, *.git* default).
+  *git describe --tags --always --dirty* (*git* மற்றும் *.git* இருந்தால் இயல்பு).
 
 *-c, --changelog*::
-  சமீபத்திய *debian/changelog* (*git*/*.git* இல்லையெனில் default).
+  சமீபத்திய *debian/changelog* பதிப்பு (*git* அல்லது *.git* இல்லையெனில் இயல்பு).
 
 *-r, --rpm*::
-  RPM-compatible *Version* (hyphen underscore).
+  RPM ஏற்ற *Version* (ஹைபன்கள் அடிக்கோடுகள்).
 
 *lint* விருப்பங்கள்:
 
 *-v, --verbose*::
-  pass checks-உம் print.
+  வெற்றி பெற்ற சோதனைகளையும் அச்சிடு.
 
 *-q, --quiet*::
-  errors மட்டும்.
+  பிழைகளை மட்டும் அச்சிடு.
 
 *--strict*::
-  warnings failure (exit 1).
+  எச்சரிக்கைகளைத் தோல்வியாகக் கருது (வெளியேறும் நிலை 1).
 
 *--color* _WHEN_::
-  CSR: *auto*, *always*, *never*.
+  CSR நிறம்: *auto* (இயல்பு: TTY மற்றும் *NO_COLOR* இல்லை), *always*, அல்லது *never*.
 
 *shape* விருப்பங்கள்:
 
 *-b, --bool*::
-  score *--threshold* பூர்த்தியானால் *1*, இல்லையெனில் *0*.
+  மதிப்பெண் *--threshold*-ஐக் குறையாவிட்டால் *1*, இல்லையெனில் *0*.
 
 *-v, --verbose*::
-  stderr-ல் *packagedir*, *repodir*, *role*, *threshold*.
+  *packagedir*, *repodir*, *role*, *threshold*-ஐ stderr-இல் அச்சிடு.
 
 *--threshold* _N_::
-  *--bool* threshold (default: *50*).
+  *--bool*-க்கான வரம்பு (இயல்பு: *50*).
 
 *dist* விருப்பங்கள்:
 
 *-o, --output* _DIR_::
-  archive *_DIR_* (*--rpm*-ல் *rpmbuild/SOURCES*, default Meson *meson-dist*).
+  காப்பகத்தை *_DIR_*-இல் எழுது (இயல்பு: Meson *meson-dist* அடைவு,
+  அல்லது *--rpm*-உடன் *rpmbuild/SOURCES*).
 
 *-b, --builddir* _DIR_::
-  Meson build dir. default */build* configured, இல்லையெனில் *<project>/build*.
+  Meson உருவாக்க அடைவு. இந்த மூல மரத்துக்குப் பொருந்தினால் இயல்பு */build*,
+  இல்லையெனில் *<project>/build*.
 
 *-f, --format* _FMT_::
-  archive: *xz* (default), *gz*, *zip*.
+  காப்பக வடிவம்: *xz* (இயல்பு), *gz*, அல்லது *zip*.
 
 *--rpm*::
-  archive *_NAME_*-*_VERSION_*.tar.xz, *-o* இல்லாவிட்டால் *rpmbuild/SOURCES*.
-  *rpm/Makefile*.
+  காப்பகப் பெயர் *_NAME_*-*_VERSION_*.tar.xz, *-o* இல்லையெனில் *rpmbuild/SOURCES*-க்கு எழுது.
+  *rpm/Makefile* பயன்படுத்தும்.
 
 *--allow-dirty*, *--no-allow-dirty*::
-  *meson dist*-க்கு *--allow-dirty* (default: allow).
+  *meson dist*-க்கு *--allow-dirty* அனுப்பு (இயல்பு: அனுமதி).
 
 *--tests*::
-  *meson dist*-ல் tests (default *--no-tests*).
+  *meson dist*-இன் போது சோதனைகளை இயக்கு (இயல்பு *--no-tests*).
 
-*release* விருப்பங்கள் (இங்கே parse, *gh-makerelease*-க்கு pass):
+*release* விருப்பங்கள் (இங்கு பாகுபடுத்தி *gh-makerelease*-க்கு அனுப்பப்படும்):
 
 *-b, --build-binary*::
-  Debian binary-only (*-b*); _.dsc_ இல்லை.
+  Debian இருமம் மட்டும் (*-b*); _.dsc_ இல்லை.
 *-n, --no-pre-clean*::
-  Debian build cache reuse.
+  Debian உருவாக்க தற்காலிக நினைவை மீண்டும் பயன்படுத்து.
 *-u, --upload*::
-  version-scoped artifacts reuse.
+  உள்ள பதிப்பு கலைப்பொருட்களை மீண்டும் பயன்படுத்து.
 *--unsigned*::
-  unsigned Debian (*-us -uc*).
+  கையொப்பமில்லா Debian தொகுப்புகள் (*-us -uc*).
 *-p, --dput-host* _HOST_::
-  _.changes_-க்கு *dput*(1) host.
+  _.changes_-க்கான *dput*(1) பதிவேற்ற புரவலன்.
 *-d, --docker*::
-  Docker-ல் *build4*(1) Debian build.
+  Docker-இல் *build4*(1) கொண்டு Debian தொகுப்பைக் கட்டு.
 *-B, --base-image* _IMAGE_::
-  *build4* image (default: *b4f-debian:trixie*).
+  *build4* இலக்கு படிமம் (இயல்பு: *b4f-debian:trixie*).
 *-s, --docker-server* _SERVER_::
-  *SERVER*-ல் SSH *build4* (implies *-d*).
+  *SERVER*-இல் SSH வழியாக *build4* இயக்கு (*-d* குறிக்கும்).
 *-l, --local*::
-  build மட்டும்; tag, push, GitHub release இல்லை.
+  கட்டல் மட்டும்; குறிச்சொல், தள்ளுதல், GitHub வெளியீடு வேண்டாம்.
 *-f, --force*::
-  existing tag/release replace.
+  உள்ள குறிச்சொல்/வெளியீட்டை மாற்று.
 *-I, --no-install*::
-  *sudo dpkg -i* skip.
+  *sudo dpkg -i*-ஐத் தவிர்.
 *-T, --no-tag*::
-  git release tag skip.
+  கிட் வெளியீட்டுக் குறிச்சொல் உருவாக்கம்/தள்ளுதலைத் தவிர்.
 *-U, --no-upload*::
-  _.changes_ *dput* skip.
+  _.changes_-இன் *dput*-ஐத் தவிர்.
 *-R, --no-release*::
-  GitHub release skip.
+  GitHub வெளியீடு உருவாக்குவதைத் தவிர்.
 *-P, --no-publish*::
-  VSIX marketplace skip.
+  VSIX சந்தை வெளியீட்டைத் தவிர்.
 *-Y, --no-rpm*::
-  *make -C rpm rpm srpm* skip.
+  *make -C rpm rpm srpm*-ஐத் தவிர்.
 *-D, --no-deb*::
-  Debian *debuild* skip.
+  Debian *debuild*-ஐத் தவிர்.
 *-v, --verbose*::
-  verbose (repeatable).
+  விரிவான பதிவு (மீண்டும் செய்யலாம்).
 *-q, --quiet*::
-  குறைந்த output (repeatable).
+  குறைந்த வெளியீடு (மீண்டும் செய்யலாம்).
 
 *ize* விருப்பங்கள்:
 
 *-l, --lang* _LANG_::
-  scaffolding மொழி வார்ப்புரு (default: detect).
+  சாரத்தை நகலெடுக்கும் மொழி வார்ப்புரு (இயல்பு: கண்டுபிடி).
 
 *-n, --dry-run*::
-  planned add/update/conversion எழுதாது.
+  சேர்ப்புகள்/புதுப்பிப்புகள்/மாற்றங்களின் திட்டத்தை எழுதாமல் காட்டு.
 
 *-v, --verbose*::
-  skip செய்த existing paths-உம்.
+  ஏற்கனவே இருப்பதால் தவிர்க்கப்பட்ட பாதைகளையும் காட்டு.
 
 *--no-man*::
-  groff *\*.1* *docs/\*.adoc* convert இல்லை.
+  groff *\*.1* மூலங்களை *docs/\*.adoc*-ஆக மாற்றாதே.
 
 *--no-subst*::
-  *src/* hardcoded version *@VERSION@* / *config.h* rewrite இல்லை.
+  *src/*-இல் கடினமாக எழுதப்பட்ட பதிப்புகளை *@VERSION@* / *config.h*-ஆக மாற்றாதே.
 
 *--color* _WHEN_::
-  CSR: *auto*, *always*, *never*.
+  CSR நிறம்: *auto* (இயல்பு: TTY மற்றும் *NO_COLOR* இல்லை), *always*, அல்லது *never*.
 
 == Environment
 
 *ZFR_PKGDATADIR*::
-  வார்ப்புரு root override (பொதுவாக */usr/share/zephyr*).
+  வார்ப்புரு வேரை மேலெழுது (வழக்கமாக */usr/share/zephyr*).
 
 *NO_COLOR*::
-  set எனில் *zfr about*, *zfr lint*, *zfr ize* *--color auto*-ல் CSR off.
+  அமைத்தால் *zfr about*, *zfr lint*, *zfr ize* *--color auto*-இல் CSR நிறத்தை நிறுத்தும்.
 
 *PYTHONPATH*::
-  non-default install-ல் *zfr_lib* கொண்ட dir தேவை.
+  இயல்பு அல்லாத நிறுவலிலிருந்து இயக்கினால் *zfr_lib* தொகுப்பு உள்ள அடைவு இருக்க வேண்டும்.
 
 == Tests
 
-மூல மரம் (install package அல்ல) *tests/* Python *unittest* CLI coverage.
-*meson test* (build */build*) *tests/test_*.py* கண்டறி. temp example
-திட்டங்கள், ஒவ்வொரு subcommand (*create*, *add*, *remove*, *rename*,
-*about*, *version*, *lint*, *shape*, *dist*, *ize*, *release*, *detect*,
-*help*), *zfr-** wrapper, language confidence, gettext catalog, locale
-*docs/<lang>/zfr.adoc* manual. Meson இல்லாமல் *ZFR_PKGDATADIR* zephyr
-checkout root (*zfr/* parent), *PYTHONPATH* *src/*.
+மூல மரத்தில் (நிறுவப்பட்ட தொகுப்பில் அல்ல) CLI-க்கான Python *unittest* உடன் *tests/* உள்ளது.
+*meson test* (உருவாக்க அடைவு */build*) *tests/test_*.py*-ஐக் கண்டுபிடிக்கும்.
+சோதனைகள் தற்காலிக எடுத்துக்காட்டுத் திட்டங்களை உருவாக்கி ஒவ்வொரு துணைக்கட்டளையையும்
+(*create*, *add*, *remove*, *rename*, *about*, *version*, *lint*, *shape*,
+*dist*, *ize*, *release*, *detect*, *help*), *zfr-** சுருக்கப் பெயர்கள்,
+மொழி நம்பிக்கை மதிப்பெண், gettext அட்டவணைகள், locale வாரியான *docs/<lang>/zfr.adoc*
+கையேடுகளையும் இயக்கும். Meson இல்லாமல் இயக்கினால் *ZFR_PKGDATADIR*-ஐ zephyr
+செக்அவுட் வேருக்கு (*zfr/*-இன் பெற்றோர்) மற்றும் *PYTHONPATH*-ஐ *src/*-க்கு அமைக்கவும்.
 
 == Files
 
@@ -366,24 +369,24 @@ checkout root (*zfr/* parent), *PYTHONPATH* *src/*.
   நிறுவப்பட்ட மொழி வார்ப்புருக்கள்.
 
 */usr/bin/zfr*, */usr/bin/zfr-\**::
-  CLI மற்றும் மெல்லிய wrapper-கள்.
+  CLI மற்றும் சுருக்கப் பெயர்கள்.
 
 */usr/share/doc/zephyr/*::
-  package documentation (LICENSE, README).
+  தொகுப்பு ஆவணங்கள் (LICENSE, README).
 
 */usr/share/man/<locale>/man1/zfr.1*::
-  localized manual, *docs/<locale>/zfr.adoc*-லிருந்து
-  (full-document translation, gettext/po4a fragment அல்ல).
+  உள்ளூர் கையேட்டுப் பக்கங்கள், *docs/<locale>/zfr.adoc*-இலிருந்து கட்டப்பட்டவை
+  (முழு ஆவண மொழிபெயர்ப்புகள், gettext/po4a துண்டுகள் அல்ல).
 
 == Exit status
 
 *0*::
-  வெற்றி. *lint*-ல் error-level finding இல்லை (*--strict* இல்லாமல்
-  warnings print).
+  வெற்றி. *lint*-க்குத் திட்டத்தில் பிழை-நிலை கண்டுபிடிப்புகள் இல்லை
+  (*--strict* இல்லையெனில் எச்சரிக்கைகள் இன்னும் அச்சிடப்படும்).
 
 *non-zero*::
-  பிழை (unknown language, destination exists, detection failure, missing puff,
-  *lint* findings போன்றவை).
+  பிழை (தெரியாத மொழி, இலக்கு உள்ளது, கண்டுபிடிப்புத் தோல்வி,
+  puff கோப்புகள் இல்லை, *lint* கண்டுபிடிப்புகள் முதலியன).
 
 == Author
 
@@ -392,10 +395,10 @@ checkout root (*zfr/* parent), *PYTHONPATH* *src/*.
 == Copyright
 
 Copyright (C) {project-year}.
-License AGPL-3.0-or-later.
-இது free software: GNU Affero General Public License விதிமுறைகளில்
-மாற்றவும் redistribute செய்யவும் சுதந்திரம்.
-சட்டப்படி அனுமதிக்கப்பட்ட அளவு WARRANTY இல்லை.
-முழு license text மூல distribution LICENSE கோப்பில், supplemental terms
-உட்பட—இந்த திட்டம் AI exploitation, AI hegemony-க்கு எதிராகவும் mindless
-MIT-style, politically naive BSD-style licensing-ஐ நிராகரிக்கவும் கூறுகிறது.
+உரிமம் AGPL-3.0-or-later.
+இது இலவச மென்பொருள்: GNU Affero General Public License நிபந்தனைகளின்படி
+மாற்றி மறுவிநியோகம் செய்யலாம்.
+சட்டம் அனுமதிக்கும் அளவுக்கு உத்தரவாதம் இல்லை.
+முழு உரிம உரைக்கு மூல விநியோகத்தில் LICENSE பார்க்கவும்;
+இந்தத் திட்டம் AI சுரண்டலுக்கும் AI மேலாதிக்கத்துக்கும் எதிரானது,
+சிந்தனையற்ற MIT-பாணி மற்றும் அரசியல் ரீதியாக அப்பாவியான BSD-பாணி உரிமத்தை நிராகரிக்கிறது.

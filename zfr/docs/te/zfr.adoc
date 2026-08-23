@@ -2,14 +2,14 @@
 Lenik <zephyr@bodz.net>
 v{project-version}, {project-year}
 :doctype: manpage
-:manmanual: వినియోగదారు ఆదేశాలు
+:manmanual: వాడుకరి ఆదేశాలు
 :mansource: zephyr
 :man-linkstyle: blue R <>
 :nofooter:
 
 == Name
 
-zfr - బహుభాషా CLI ప్రాజెక్ట్ టెంప్లేట్లు మరియు సహాయక సాధనాలు
+zfr - బహుభాషా కమాండ్-లైన్ ప్రాజెక్ట్ మూసలు మరియు సహాయక సాధనాలు
 
 == Synopsis
 
@@ -44,340 +44,348 @@ zfr - బహుభాషా CLI ప్రాజెక్ట్ టెంప్�
 
 *zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
 *zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
-*zfr-shape*, మరియు *zfr-release* అదే ఉప-ఆదేశాల చుట్టూ పలుచని wrapper-లు.
+*zfr-shape*, *zfr-release* అన్నీ ఒకే ఉప-ఆదేశాలకు సంక్షిప్త పేర్లు.
 
 == Description
 
-*zfr* అనేది *zephyr* టెంప్లేట్ సేకరణకు కమాండ్-లైన్ సాధనం.
-చిన్న కమాండ్-లైన్ యుటిలిటీల కోసం భాషా టెంప్లేట్లను మరియు వాటిని
-సృష్టించడానికి, నిర్వహించడానికి సహాయకాలను అందిస్తుంది.
+*zfr* అనేది *zephyr* మూస సంకలనానికి కమాండ్-లైన్ సాధనం.
+చిన్న కమాండ్-లైన్ ఉపకరణాల కోసం భాషా మూసలను, వాటిని సృష్టించి
+నిర్వహించే సహాయకాలను అందిస్తుంది.
 
-*ముఖ్యం:* instantiate చేసిన ప్రాజెక్ట్లు *zfr* ను కొనసాగించాలని
-ఊహిస్తారు (*meson.build* మరియు *rpm/Makefile* లో *zfr version* వంటిది).
-*zfr* స్ట్రింగ్ create/rename magic token కాదు; ప్రాజెక్ట్ పేరుగా
-ఎప్పటికీ రాయబడదు. *మార్చబడే* టెంప్లేట్ placeholder *zephyr*
-(మరియు నమూనా puff-ల కోసం *some_puff1*).
+*ముఖ్యం:* సృష్టించిన ప్రాజెక్టులు *zfr* ను అలాగే పిలవాలి
+(ఉదాహరణకు *meson.build* మరియు *rpm/Makefile* లో *zfr version*).
+*zfr* అనే పదం create/rename కోసం మాయా స్థానం *కాదు*; ప్రాజెక్టు పేరుకు
+ఎప్పుడూ మార్చబడదు. మార్చబడే మూస స్థానం *zephyr* మాత్రమే
+(నమూనా puff కు *some_puff1*).
 
-సాధారణ workflow:
+సాధారణ విధానం:
 
-. భాషా టెంప్లేట్ నుండి ప్రాజెక్ట్ సృష్టించడం:
+. భాషా మూస నుండి ప్రాజెక్టు సృష్టించండి:
 +
 ----
 zfr create -l python myproj
 ----
 
-. ప్రాజెక్ట్‌లోకి ప్రవేశించి అప్లికేషన్ *puff*-లు (ఉదాహరణ యాప్‌లు)
-జోడించడం:
+. ప్రాజెక్టులోకి వెళ్లి అనువర్తన *puff* లను (నమూనా అనువర్తనాలు) జోడించండి:
 +
 ----
 cd myproj
 zfr add myapp another_app
 ----
 
-. అవసరమైతే తర్వాత *rename* / *remove* తో ప్రాజెక్ట్ పేరు మార్చడం
-లేదా puff-లు తొలగించడం.
+. కావాలంటే తర్వాత *rename* / *remove* తో ప్రాజెక్టు పేరు మార్చండి లేదా puff లను తొలగించండి.
 
-టెంప్లేట్లు ఇన్‌స్టాల్ అయితే */usr/share/zephyr/<lang>/* లో,
-uninstalled builddir wrapper (*build/zfr* వంటిది) నడిపితే మూల
-ట్రీలో (*ZFR_PKGDATADIR* override). ప్రతి టెంప్లేట్‌లో *some_puff1*
-నమూనా puff ఉండవచ్చు; *create* కమాండ్ లైన్‌లో puff పేర్లు ఇస్తే
-instantiate, లేకుంటే ఖాళీ ప్రాజెక్ట్.
+స్థాపన తర్వాత మూసలు */usr/share/zephyr/<lang>/* వద్ద ఉంటాయి; స్థాపించని
+నిర్మాణ సంచయం (*build/zfr* వంటిది) నుండి నడిపితే మూల వృక్షంలో ఉంటాయి
+(*ZFR_PKGDATADIR* భర్తీ చేస్తుంది). ప్రతి మూసలో *some_puff1* అనే నమూనా puff
+ఉండవచ్చు; *create* పంక్తిలో puff పేర్లు ఇస్తే వాటిని సృష్టిస్తుంది, ఇవ్వకపోతే ఖాళీ ప్రాజెక్టు.
 
-monorepo లో *repodir* git (లేదా meta) checkout root, *packagedir*
-zephyr ఆకారం గల ప్యాకేజ్ ట్రీ (ఉదా. *repodir/bash*). ప్రస్తుత
-డైరెక్టరీ నుండి నడిచే ఆదేశాలు ముందుగా *packagedir* కనుగొంటాయి.
+ఒకే గిట్ రిపోలో పలు ప్యాకేజీలు ఉంటే *repodir* గిట్ (లేదా మెటా) మూలం,
+*packagedir* zephyr రూపం ఉన్న ప్యాకేజీ వృక్షం (ఉదా. *repodir/bash*).
+ప్రస్తుత సంచయం నుండి పైకి వెతికే ఆదేశాలు ముందు *packagedir* ను కనుగొంటాయి.
 
 *i18n*::
-  Zephyr శైలి కనీసం ఈ locale-ల కోసం gettext coverage సిఫార్సు చేస్తుంది:
+  Zephyr శైలి కనీసం ఈ gettext భాషలను సిఫారసు చేస్తుంది:
   *ar*, *bn*, *de*, *es*, *fr*, *hi*, *id*, *it*, *ja*, *ko*, *pt*, *ru*,
   *sv*, *ta*, *te*, *th*, *tr*, *ur*, *vi*, *zh_CN*, *zh_TW*
-  (alias *zh-cn* / *zh-tw*). ఇంగ్లీష్ (*en*) మూల *msgid* భాష, *po/LINGUAS*
-  లో లేదు. ఆ locale-లను *po/LINGUAS* లో జాబితా చేసి *po/<locale>.po*
-  ఫైళ్లు అందించండి.
+  (మారుపేర్లు *zh-cn* / *zh-tw*). ఆంగ్లం (*en*) మూల *msgid* భాష;
+  *po/LINGUAS* లో ఉండదు. పై locale లను *po/LINGUAS* లో రాసి సరిపోలే
+  *po/<locale>.po* ఫైళ్లను ఇవ్వండి.
 
 == Commands
 
 *create*::
-  *pkgdatadir/<lang>/* కొత్త *./<project_name>/* డైరెక్టరీకి కాపీ (డైరెక్టరీ
-  ఉంటే విఫలం). *zephyr* → *_PROJECT_NAME_* మరియు puff పేర్లు ఇస్తే
-  *some_puff1* → మొదటి *_PUFF_NAME_* (మరిన్ని *add* ద్వారా). puff
-  పేర్లు లేకుంటే టెంప్లేట్ puff ఫైళ్లు తొలగించి *some_puff1* token-లు
-  *add* instantiate కోసం ఉంచుతుంది. *--distribution* / *--init-version* /
-  *--author* / *--email* తో కొత్త *debian/changelog*, తర్వాత *git init*,
-  *core.hooksPath* *.githooks* (*pre-commit*, *VERSION* *debian/changelog*
-  sync), ప్రారంభ commit, annotated tag *vVER*.
+  *pkgdatadir/<lang>/* ను కొత్త సంచయం *./<project_name>/* లోకి నకలు చేస్తుంది
+  (సంచయం ఇప్పటికే ఉంటే విఫలమవుతుంది). *zephyr* ను *_PROJECT_NAME_* గా మారుస్తుంది;
+  puff పేర్లు ఇస్తే *some_puff1* ను మొదటి *_PUFF_NAME_* గా మారుస్తుంది (మిగిలినవి *add*).
+  puff పేర్లు లేకుంటే మూస puff ఫైళ్లను తీసేసి *some_puff1* స్థానాలను ఉంచుతుంది, తర్వాత *add* చేయడానికి.
+  *--distribution* / *--init-version* / *--author* / *--email* తో కొత్త *debian/changelog* రాస్తుంది
+  (మూస changelog వదిలివేయబడుతుంది), తర్వాత *git init*, *core.hooksPath* ను *.githooks* కు సెట్ చేస్తుంది
+  (*pre-commit* నకలు చేసి *VERSION* ను *debian/changelog* తో సమకాలీకరిస్తుంది), మొదటి కమిట్,
+  వ్యాఖ్య ట్యాగ్ *vVER*.
 
 *rename*::
-  ప్రస్తుత ప్రాజెక్ట్ డైరెక్టరీలో *zephyr* → *_PROJECT_NAME_* మరియు
-  ప్రతి పేరుకు టెంప్లేట్ puff *some_puff1* → ఆ పేరు. *zfr* రాయదు.
+  ప్రస్తుత ప్రాజెక్టు సంచయంలో *zephyr* ను *_PROJECT_NAME_* గా మారుస్తుంది;
+  ఇచ్చిన ప్రతి పేరుకు మూస puff *some_puff1* ను ఆ పేరుకు మారుస్తుంది.
+  *zfr* ను మార్చదు.
 
 *add*::
-  ప్రాజెక్ట్ భాష detect చేసి టెంప్లేట్ puff ఫైళ్లను ప్రస్తుత ప్రాజెక్ట్‌కు
-  కాపీ, *some_puff1* → ప్రతి *_PUFF_NAME_*. సాధ్యమైతే Meson జాబితాలు
-  (లేదా wiring) నవీకరణ.
+  ప్రాజెక్టు భాషను గుర్తించి మూస puff ఫైళ్లను ప్రస్తుత ప్రాజెక్టులోకి నకలు చేసి
+  *some_puff1* ను ప్రతి *_PUFF_NAME_* కు పేరు మారుస్తుంది.
+  సాధ్యమైతే Meson జాబితాలను నవీకరిస్తుంది.
 
 *remove*::
-  ప్రస్తుత ప్రాజెక్ట్ నుండి ప్రతి puff పేరుకు ఫైళ్లు మరియు Meson wiring
-  తొలగింపు.
+  ఇచ్చిన ప్రతి puff పేరుకు సంబంధించిన ఫైళ్లు మరియు Meson అనుసంధానాన్ని ప్రస్తుత ప్రాజెక్టు నుండి తొలగిస్తుంది.
 
 *detect*::
-  ప్రస్తుత డైరెక్టరీ detect చేసిన భాష (parent-లలో project root).
+  ప్రస్తుత సంచయానికి గుర్తించిన భాషను ముద్రిస్తుంది
+  (ప్రాజెక్టు మూలం కనిపించే వరకు పై సంచయాలను చూస్తుంది).
 
 *about*::
-  ప్రస్తుత ప్రాజెక్ట్ సమాచారం. parent-లలో project root (*meson.build*
-  *project()* లేదా *debian/control*). సాధారణ ఫీల్డ్‌లు Debian/RPM
-  metadata నుండి parse, terminal వెడల్పుకు wrap. మూల ఫైల్/లైన్
-  లెక్కలు, payload size అంచనా. interactive terminal CSR (console SGR),
-  *NO_COLOR* లేకుంటే. *-d* / *-r* పూర్తి parsed Debian/RPM view
-  (packaging dump కాదు).
+  ప్రస్తుత ప్రాజెక్టు సమాచారాన్ని ముద్రిస్తుంది. ప్రస్తుత సంచయం నుండి పైకి వెతికి
+  ప్రాజెక్టు మూలాన్ని కనుగొంటుంది (*project()* ఉన్న *meson.build* లేదా *debian/control*).
+  సాధారణ క్షేత్రాలు (పేరు, సంస్కరణ, లైసెన్సు, హోమ్‌పేజీ, నిర్వాహకుడు, సారాంశం, section,
+  priority, distribution, architecture) Debian లేదా RPM మెటాడేటా నుండి చదివి టెర్మినల్ వెడల్పుకు మడతపెడతాయి.
+  మూల ఫైలు/పంక్తి లెక్కలు మరియు అంచనా పేలోడ్ పరిమాణం కూడా ముద్రిస్తుంది.
+  సంవాద టెర్మినల్ CSR (కన్సోల్ SGR) రంగులు వాడుతుంది, *NO_COLOR* సెట్ చేస్తే కాదు.
+  పూర్తి Debian లేదా RPM వీక్షణకు *-d* / *-r* (*ప్యాకేజింగ్ ఫైళ్ల ముడి నకలు కాదు*).
 
 *version*::
-  ప్రస్తుత ప్రాజెక్ట్ వెర్షన్ (ఒక లైన్, scripts కోసం). *git* మరియు
-  *.git* ఉంటే *git describe*, లేకుంటే *debian/changelog*. fallback:
-  *VERSION*, తర్వాత *0.0.0*. non-semver token *0.0.0-<token>* wrap.
+  ప్రస్తుత ప్రాజెక్టు సంస్కరణను ఒక పంక్తిలో ముద్రిస్తుంది (స్క్రిప్టుల కోసం).
+  *git* మరియు *.git* ఉంటే డిఫాల్ట్ *git describe*; లేకపోతే తాజా *debian/changelog*.
+  తర్వాత *VERSION* ఫైలు, చివరగా *0.0.0*.
+  semver కాని టోకెన్ (గిట్ హాష్ వంటిది) *0.0.0-<token>* గా చుట్టబడుతుంది.
 
 *lint*::
-  zephyr packaging/layout శైలికి validate (parent-లలో root). missing
-  ఫైళ్లు, identity mismatch, Meson/Debian/RPM తప్పులు, instantiate
-  యాప్‌లలో leftover *zephyr* / *some_puff1*, suggested fix. *zfr*
-  mentions expected, leftover కాదు. *.githooks/pre-commit* *.git*
-  వరకు, *core.hooksPath*, hook *VERSION* *debian/changelog* నుండి sync.
-  *po/* ఉంటే *LINGUAS* recommended gettext locale set కవర్ చేయకపోతే
-  warning (Description *i18n*). మానవులు మరియు AI coder-ల కోసం: code,
-  path, concrete fix. CSR, *NO_COLOR* లేకుంటే.
+  ప్రస్తుత ప్రాజెక్టును zephyr ప్యాకేజింగ్ మరియు అమరిక శైలికి సరిచూస్తుంది
+  (ప్రాజెక్టు మూలం కోసం పైకి వెతుకుతుంది).
+  లేని ఫైళ్లు, గుర్తింపు అసమతుల్యతలు, Meson/Debian/RPM తప్పులు,
+  సృష్టించిన అనువర్తనాల్లో మిగిలిన *zephyr* / *some_puff1*, సూచించిన సరిదిద్దులు నివేదిస్తుంది.
+  *zfr* ప్రస్తావనలు ఆశించినవి, మిగులుగా పరిగణించవు.
+  *.githooks/pre-commit* కోసం *.git* వరకు వెళ్లి *core.hooksPath* ను గౌరవించి
+  హుక్ *VERSION* ను *debian/changelog* నుండి సమకాలీకరిస్తుందో చూస్తుంది.
+  *po/* ఉంటే *LINGUAS* సిఫారసు gettext locale సమితిని కవర్ చేయకపోతే హెచ్చరిస్తుంది
+  (Description లోని *i18n* చూడండి).
+  ప్రతి అంశానికి కోడ్, మార్గం, కాంక్రీట్ సరిదిద్దు ఉంటాయి.
+  సంవాద టెర్మినల్ CSR రంగులు వాడుతుంది, *NO_COLOR* సెట్ చేస్తే కాదు.
 
 *shape*::
-  ప్రస్తుత *packagedir* కు 0–100 *zephyr shape* score (zephyr packaging
-  శైలి match). monorepo లో *packagedir* *repodir* (git/meta root) కి
-  భిన్నం; shape package directory ను repo root కంటే prefer. *\-b* /
-  *--bool* threshold (default *50*) పూర్తి అయితే *1*, లేకుంటే *0*.
+  ప్రస్తుత *packagedir* కు 0–100 *zephyr shape* స్కోరు (zephyr ప్యాకేజింగ్ శైలికి ఎంత దగ్గరగా ఉందో).
+  ఒకే రిపోలో *packagedir* *repodir* (గిట్ / మెటా మూలం) కంటే వేరుగా ఉండవచ్చు;
+  సాధనాలు రిపో మూలం కంటే ప్యాకేజీ సంచయాన్ని ఎంచుకోవడానికి ఈ స్కోరు వాడతాయి.
+  *\-b* / *--bool* స్కోరు గడువు (డిఫాల్ట్ *50*) కంటే తక్కువ కాకపోతే *1*, లేకపోతే *0*.
 
 *dist*::
-  ప్రస్తుత ప్రాజెక్ట్ source archive (parent-లలో root). git project
-  root అయితే *meson dist* (*meson setup* తర్వాత, default *--allow-dirty*,
-  *--no-tests*). nested భాషా టెంప్లేట్లకు స్వంత *.git* లేదు; *meson dist*
-  parent meta-repo pack; ఆ ట్రీలకు ఈ ప్రాజెక్ట్ directory tarball మాత్రమే.
-  archive path stdout. *rpm/Makefile* *dist* మరియు Meson *srcdist* ninja
-  target ఈ command reuse.
+  ప్రస్తుత ప్రాజెక్టు మూల ఆర్కైవ్ నిర్మిస్తుంది (ప్రాజెక్టు మూలం కోసం పైకి వెతుకుతుంది).
+  ఈ సంచయం గిట్ ప్రాజెక్టు మూలం అయితే *meson dist* నడుపుతుంది
+  (*meson setup* తర్వాత, డిఫాల్ట్ *--allow-dirty* మరియు *--no-tests*).
+  లోపలి భాషా మూసలకు సొంత *.git* లేదు, కాబట్టి *meson dist* తల్లి మెటా-రిపోను కట్టేస్తుంది;
+  అలాంటి వృక్షాలకు ఈ ప్రాజెక్టు మాత్రమే ఉన్న డైరెక్టరీ టార్‌బాల్ ఇస్తుంది.
+  ఆర్కైవ్ మార్గాన్ని stdout లో ముద్రిస్తుంది. *rpm/Makefile* *dist* మరియు Meson *srcdist*
+  ninja లక్ష్యం ఈ ఆదేశాన్నే వాడతాయి.
 
 *release*::
-  *gh-makerelease*(1) వంటి options parse, argv rebuild, PATH నుండి
-  *gh-makerelease* *exec*. tagging, packaging, GitHub upload ఇక్కడ
-  implement చేయదు. *zephyr* git checkout root నుండి release (భాషా
-  టెంప్లేట్లు + *zfr/*). క్రింద *Options for release*.
+  *gh-makerelease*(1) తో ఒకే ఐచ్ఛికాలను చదివి argv ను మళ్లీ కట్టి PATH లోని
+  *gh-makerelease* ను *exec* చేస్తుంది. ట్యాగ్, ప్యాకేజింగ్, GitHub అప్‌లోడ్ ఈ ఆదేశం చేయదు.
+  *zephyr* ప్రాజెక్టు గిట్ చెక్‌అవుట్ మూలం నుండి విడుదలవుతుంది (భాషా మూసలు + *zfr/*).
+  కింది *Options for release* చూడండి.
 
 *ize*::
-  ప్రస్తుత ప్రాజెక్ట్ in-place refactor current zephyr శైలికి (parent-లలో
-  root). భాషా టెంప్లేట్ నుండి missing *debian/*, *rpm/* scaffolding
-  (పేర్లు rewrite), *VERSION*, *.githooks/pre-commit*, *meson.build*
-  patch (*zfr version*, *asciidoctor* man targets, *run_target look*,
-  bash-completion install). groff *\*.1* man (ప్రాజెక్ట్, *debian/* కాదు)
-  *docs/\*.adoc* Meson rules; *src/* hardcoded changelog version
-  *\*.in* *@VERSION@* లేదా C family *config.h* *PROJECT_VERSION*.
-  *\-n* / *--dry-run* plan రాయదు. తర్వాత *zfr lint*.
+  ప్రస్తుత ప్రాజెక్టును ప్రస్తుత zephyr శైలికి సరిపోయేలా అక్కడికక్కడే మారుస్తుంది
+  (పైకి వెతుకుతుంది). భాషా మూస నుండి లేని *debian/* మరియు *rpm/* అస్తివారాలను నకలు చేస్తుంది
+  (పేర్లు ఈ ప్రాజెక్టుకు మార్చబడతాయి), *VERSION* మరియు *.githooks/pre-commit* రాస్తుంది,
+  *meson.build* ను సరిచేస్తుంది (*zfr version*, *asciidoctor* man లక్ష్యాలు,
+  *run_target look*, bash-completion స్థాపన). ప్రాజెక్టు కింద (*debian/* కాదు) groff *\*.1*
+  పుటలను Meson నియమాలతో *docs/\*.adoc* గా మారుస్తుంది, *src/* లో హార్డ్‌కోడ్ చేసిన
+  changelog సంస్కరణలను *\*.in* *@VERSION@* భర్తీలు లేదా C కుటుంబానికి *config.h* ద్వారా
+  *PROJECT_VERSION* గా మారుస్తుంది. *\-n* / *--dry-run* ప్రణాళికను మాత్రమే చూపిస్తుంది.
+  తర్వాత *zfr lint* నడపండి.
 
 *help*::
   కమాండ్-లైన్ సహాయం చూపించు.
 
 == Options
 
-*create* options:
+*create* ఐచ్ఛికాలు:
 
 *-l, --lang* _LANG_::
-  ఉపయోగించే భాషా టెంప్లేట్ (default: *python*).
-  *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*, *haskell*,
-  *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift*, *typescript*
-  సహా.
+  వాడాల్సిన భాషా మూస (డిఫాల్ట్: *python*).
+  మద్దతు ఉన్నవి: *bash*, *c*, *clib*, *cpp*, *cpplib*, *csharp*, *erlang*, *go*,
+  *haskell*, *java*, *perl*, *python*, *ruby*, *rust*, *smalltalk*, *swift*,
+  *typescript*.
 
 *-D, --distribution* _DIST_::
-  Debian changelog distribution (default: *unstable*).
+  Debian changelog పంపిణీ (డిఫాల్ట్: *unstable*).
 
 *-1, --init-version* _VER_::
-  ప్రారంభ package version మరియు git tag (default: *0.0.1*).
+  మొదటి ప్యాకేజీ సంస్కరణ మరియు గిట్ ట్యాగ్ (డిఫాల్ట్: *0.0.1*).
 
 *-a, --author* _AUTHOR_::
-  Changelog మరియు git author పేరు (default: *Lenik (谢继雷)*).
+  Changelog మరియు గిట్ రచయిత పేరు (డిఫాల్ట్: *Lenik (谢继雷)*).
 
 *-e, --email* _EMAIL_::
-  Changelog మరియు git author email (default: *lenik@bodz.net*).
+  Changelog మరియు గిట్ రచయిత ఈమెయిల్ (డిఫాల్ట్: *lenik@bodz.net*).
 
-*about* options:
+*about* ఐచ్ఛికాలు:
 
 *-d, --debian*::
-  Parsed Debian packaging (*debian/control*, తాజా *debian/changelog*
-  stanza). *Build-Depends* వంటివి terminal wrap; పొడవైన description
-  paragraph reflow.
+  చదివిన Debian ప్యాకేజింగ్ క్షేత్రాలు (*debian/control*, తాజా
+  *debian/changelog* ఖండం). *Build-Depends* వంటి జాబితాలు టెర్మినల్ వెడల్పుకు మడతపెట్టబడతాయి;
+  పొడవైన వివరణ పేరాలుగా తిరిగి అమర్చబడుతుంది.
 
 *-r, --redhat*::
-  *rpm/*.spec* parsed RPM (*%{version}* *zfr version -r*). *%description*
-  reflow; spec scriptlet dump కాదు.
+  *rpm/*.spec* నుండి చదివిన RPM క్షేత్రాలు (*%{version}* వంటి మాక్రోలు
+  *zfr version -r* తో చూపబడతాయి). *%description* మళ్లీ అమర్చబడుతుంది; spec స్క్రిప్ట్‌లెట్లు ముడి నకలు కావు.
 
 *--color* _WHEN_::
-  CSR: *auto* (default: TTY, *NO_COLOR* లేదు), *always*, *never*.
+  CSR రంగులు: *auto* (డిఫాల్ట్: TTY మరియు *NO_COLOR* లేదు), *always*, లేదా *never*.
 
-*version* options:
+*version* ఐచ్ఛికాలు:
 
 *-g, --git*::
-  *git describe --tags --always --dirty* (*git*, *.git* default).
+  *git describe --tags --always --dirty* (*git* మరియు *.git* ఉంటే డిఫాల్ట్).
 
 *-c, --changelog*::
-  తాజా *debian/changelog* (*git*/*.git* లేకుంటే default).
+  తాజా *debian/changelog* సంస్కరణ (*git* లేదా *.git* లేకపోతే డిఫాల్ట్).
 
 *-r, --rpm*::
-  RPM-compatible *Version* (hyphen underscore).
+  RPM అనుకూల *Version* (హైఫన్లు అండర్‌స్కోర్‌లు).
 
-*lint* options:
+*lint* ఐచ్ఛికాలు:
 
 *-v, --verbose*::
-  pass checks కూడా print.
+  విజయవంతమైన తనిఖీలను కూడా ముద్రించు.
 
 *-q, --quiet*::
-  errors మాత్రమే.
+  లోపాలు మాత్రమే ముద్రించు.
 
 *--strict*::
-  warnings failure (exit 1).
+  హెచ్చరికలను వైఫల్యంగా పరిగణించు (నిష్క్రమణ 1).
 
 *--color* _WHEN_::
-  CSR: *auto*, *always*, *never*.
+  CSR రంగులు: *auto* (డిఫాల్ట్: TTY మరియు *NO_COLOR* లేదు), *always*, లేదా *never*.
 
-*shape* options:
+*shape* ఐచ్ఛికాలు:
 
 *-b, --bool*::
-  score *--threshold* పూర్తి అయితే *1*, లేకుంటే *0*.
+  స్కోరు *--threshold* కంటే తక్కువ కాకపోతే *1*, లేకపోతే *0*.
 
 *-v, --verbose*::
-  stderr లో *packagedir*, *repodir*, *role*, *threshold*.
+  *packagedir*, *repodir*, *role*, *threshold* ను stderr పై ముద్రించు.
 
 *--threshold* _N_::
-  *--bool* threshold (default: *50*).
+  *--bool* గడువు (డిఫాల్ట్: *50*).
 
-*dist* options:
+*dist* ఐచ్ఛికాలు:
 
 *-o, --output* _DIR_::
-  archive *_DIR_* (*--rpm* తో *rpmbuild/SOURCES*, default Meson *meson-dist*).
+  ఆర్కైవ్ ను *_DIR_* లో రాయి (డిఫాల్ట్: Meson *meson-dist* సంచయం,
+  లేదా *--rpm* తో *rpmbuild/SOURCES*).
 
 *-b, --builddir* _DIR_::
-  Meson build dir. default */build* configured, లేకుంటే *<project>/build*.
+  Meson నిర్మాణ సంచయం. ఈ మూల వృక్షానికి సరిపోతే డిఫాల్ట్ */build*,
+  లేకపోతే *<project>/build*.
 
 *-f, --format* _FMT_::
-  archive: *xz* (default), *gz*, *zip*.
+  ఆర్కైవ్ రూపం: *xz* (డిఫాల్ట్), *gz*, లేదా *zip*.
 
 *--rpm*::
-  archive *_NAME_*-*_VERSION_*.tar.xz, *-o* లేకుంటే *rpmbuild/SOURCES*.
-  *rpm/Makefile* ఉపయోగం.
+  ఆర్కైవ్ పేరు *_NAME_*-*_VERSION_*.tar.xz, *-o* లేకపోతే *rpmbuild/SOURCES* కు రాయి.
+  *rpm/Makefile* వాడుతుంది.
 
 *--allow-dirty*, *--no-allow-dirty*::
-  *meson dist* కు *--allow-dirty* (default: allow).
+  *meson dist* కు *--allow-dirty* పంపు (డిఫాల్ట్: అనుమతించు).
 
 *--tests*::
-  *meson dist* లో tests (default *--no-tests*).
+  *meson dist* సమయంలో పరీక్షలు నడుపు (డిఫాల్ట్ *--no-tests*).
 
-*release* options (ఇక్కడ parse, *gh-makerelease* కు pass):
+*release* ఐచ్ఛికాలు (ఇక్కడ చదవబడి *gh-makerelease* కు పంపబడతాయి):
 
 *-b, --build-binary*::
-  Debian binary-only (*-b*); _.dsc_ లేదు.
+  Debian బైనరీ మాత్రమే (*-b*); _.dsc_ లేదు.
 *-n, --no-pre-clean*::
-  Debian build cache reuse.
+  Debian నిర్మాణ కాష్ ను మళ్లీ వాడు.
 *-u, --upload*::
-  version-scoped artifacts reuse.
+  ఉన్న సంస్కరణ ఆర్టిఫాక్ట్‌లను మళ్లీ వాడు.
 *--unsigned*::
-  unsigned Debian (*-us -uc*).
+  సంతకం లేని Debian ప్యాకేజీలు (*-us -uc*).
 *-p, --dput-host* _HOST_::
-  _.changes_ కు *dput*(1) host.
+  _.changes_ కోసం *dput*(1) అప్‌లోడ్ హోస్ట్.
 *-d, --docker*::
-  Docker లో *build4*(1) Debian build.
+  Docker లో *build4*(1) తో Debian ప్యాకేజీ నిర్మించు.
 *-B, --base-image* _IMAGE_::
-  *build4* image (default: *b4f-debian:trixie*).
+  *build4* లక్ష్య చిత్రం (డిఫాల్ట్: *b4f-debian:trixie*).
 *-s, --docker-server* _SERVER_::
-  *SERVER* లో SSH *build4* (implies *-d*).
+  *SERVER* పై SSH ద్వారా *build4* నడుపు (*-d* సూచిస్తుంది).
 *-l, --local*::
-  build మాత్రమే; tag, push, GitHub release లేదు.
+  నిర్మాణం మాత్రమే; ట్యాగ్, పుష్, GitHub విడుదల వద్దు.
 *-f, --force*::
-  existing tag/release replace.
+  ఉన్న ట్యాగ్/విడుదలను భర్తీ చేయి.
 *-I, --no-install*::
-  *sudo dpkg -i* skip.
+  *sudo dpkg -i* దాటవేయి.
 *-T, --no-tag*::
-  git release tag skip.
+  గిట్ విడుదల ట్యాగ్ సృష్టించడం/పుష్ దాటవేయి.
 *-U, --no-upload*::
-  _.changes_ *dput* skip.
+  _.changes_ పై *dput* దాటవేయి.
 *-R, --no-release*::
-  GitHub release skip.
+  GitHub విడుదల సృష్టించడం దాటవేయి.
 *-P, --no-publish*::
-  VSIX marketplace skip.
+  VSIX మార్కెట్ ప్రచురణ దాటవేయి.
 *-Y, --no-rpm*::
-  *make -C rpm rpm srpm* skip.
+  *make -C rpm rpm srpm* దాటవేయి.
 *-D, --no-deb*::
-  Debian *debuild* skip.
+  Debian *debuild* దాటవేయి.
 *-v, --verbose*::
-  verbose (repeatable).
+  వివరమైన లాగ్ (పునరావృతం చేయవచ్చు).
 *-q, --quiet*::
-  తక్కువ output (repeatable).
+  తక్కువ అవుట్‌పుట్ (పునరావృతం చేయవచ్చు).
 
-*ize* options:
+*ize* ఐచ్ఛికాలు:
 
 *-l, --lang* _LANG_::
-  scaffolding భాషా టెంప్లేట్ (default: detect).
+  అస్తివారం నకలు చేసే భాషా మూస (డిఫాల్ట్: గుర్తించు).
 
 *-n, --dry-run*::
-  planned add/update/conversion రాయదు.
+  జోడింపులు/నవీకరణలు/మార్పుల ప్రణాళికను రాయకుండా చూపించు.
 
 *-v, --verbose*::
-  skip చేసిన existing paths కూడా.
+  ఇప్పటికే ఉన్నందున దాటవేసిన మార్గాలను కూడా చూపించు.
 
 *--no-man*::
-  groff *\*.1* *docs/\*.adoc* convert చేయదు.
+  groff *\*.1* మూలాలను *docs/\*.adoc* గా మార్చవద్దు.
 
 *--no-subst*::
-  *src/* hardcoded version *@VERSION@* / *config.h* rewrite చేయదు.
+  *src/* లో హార్డ్‌కోడ్ సంస్కరణలను *@VERSION@* / *config.h* గా మార్చవద్దు.
 
 *--color* _WHEN_::
-  CSR: *auto*, *always*, *never*.
+  CSR రంగులు: *auto* (డిఫాల్ట్: TTY మరియు *NO_COLOR* లేదు), *always*, లేదా *never*.
 
 == Environment
 
 *ZFR_PKGDATADIR*::
-  టెంప్లేట్ root override (సాధారణంగా */usr/share/zephyr*).
+  మూసల మూలాన్ని భర్తీ చేయి (సాధారణంగా */usr/share/zephyr*).
 
 *NO_COLOR*::
-  set అయితే *zfr about*, *zfr lint*, *zfr ize* *--color auto* లో CSR off.
+  సెట్ చేస్తే *zfr about*, *zfr lint*, *zfr ize* *--color auto* లో CSR రంగులు ఆపుతాయి.
 
 *PYTHONPATH*::
-  non-default install లో *zfr_lib* ఉన్న dir అవసరం.
+  డిఫాల్ట్ కాని స్థాపన నుండి నడిపితే *zfr_lib* ప్యాకేజీ ఉన్న సంచయం ఉండాలి.
 
 == Tests
 
-మూల ట్రీ (install package కాదు) *tests/* Python *unittest* CLI coverage.
-*meson test* (build */build*) *tests/test_*.py* కనుగొంటుంది. temp example
-ప్రాజెక్ట్లు, ప్రతి subcommand (*create*, *add*, *remove*, *rename*,
-*about*, *version*, *lint*, *shape*, *dist*, *ize*, *release*, *detect*,
-*help*), *zfr-** wrapper, language confidence, gettext catalog, locale
-*docs/<lang>/zfr.adoc* manual. Meson లేకుండా *ZFR_PKGDATADIR* zephyr
-checkout root (*zfr/* parent), *PYTHONPATH* *src/*.
+మూల వృక్షంలో (స్థాపిత ప్యాకేజీలో కాదు) CLI కోసం Python *unittest* తో *tests/* ఉంది.
+*meson test* (నిర్మాణ సంచయం */build*) *tests/test_*.py* ను కనుగొంటుంది.
+పరీక్షలు తాత్కాలిక నమూనా ప్రాజెక్టులు సృష్టించి ప్రతి ఉప-ఆదేశాన్ని
+(*create*, *add*, *remove*, *rename*, *about*, *version*, *lint*, *shape*,
+*dist*, *ize*, *release*, *detect*, *help*), *zfr-** సంక్షిప్త పేర్లు,
+భాషా విశ్వాస స్కోరు, gettext కేటలాగ్‌లు, locale వారీ *docs/<lang>/zfr.adoc*
+మాన్యువల్‌లను నడుపుతాయి. Meson లేకుండా నడిపితే *ZFR_PKGDATADIR* ను zephyr
+చెక్‌అవుట్ మూలానికి (*zfr/* తల్లి) మరియు *PYTHONPATH* ను *src/* కు సెట్ చేయండి.
 
 == Files
 
 */usr/share/zephyr/<lang>/*::
-  install చేసిన భాషా టెంప్లేట్లు.
+  స్థాపిత భాషా మూసలు.
 
 */usr/bin/zfr*, */usr/bin/zfr-\**::
-  CLI మరియు పలుచని wrapper-లు.
+  CLI మరియు సంక్షిప్త పేర్లు.
 
 */usr/share/doc/zephyr/*::
-  package documentation (LICENSE, README).
+  ప్యాకేజీ పత్రాలు (LICENSE, README).
 
 */usr/share/man/<locale>/man1/zfr.1*::
-  localized manual, *docs/<locale>/zfr.adoc* నుండి నిర్మించబడింది
-  (full-document translation, gettext/po4a fragment కాదు).
+  స్థానిక మాన్యువల్ పుటలు, *docs/<locale>/zfr.adoc* నుండి నిర్మితం
+  (పూర్తి పత్ర అనువాదాలు, gettext/po4a ముక్కలు కావు).
 
 == Exit status
 
 *0*::
-  విజయం. *lint* లో error-level findings లేవు (*--strict* లేకుండా
-  warnings print).
+  విజయం. *lint* కు ప్రాజెక్టులో లోప-స్థాయి అంశాలు లేవు
+  (*--strict* లేకపోతే హెచ్చరికలు ఇంకా ముద్రించబడతాయి).
 
 *non-zero*::
-  error (unknown language, destination exists, detection failure, missing puff,
-  *lint* findings మొదలైనవి).
+  లోపం (తెలియని భాష, గమ్యం ఉంది, గుర్తింపు వైఫల్యం,
+  puff ఫైళ్లు లేవు, *lint* అంశాలు మొదలైనవి).
 
 == Author
 
@@ -386,10 +394,10 @@ checkout root (*zfr/* parent), *PYTHONPATH* *src/*.
 == Copyright
 
 Copyright (C) {project-year}.
-License AGPL-3.0-or-later.
-ఇది free software: GNU Affero General Public License నిబంధనల ప్రకారం
-మార్చవచ్చు మరియు redistribute చేయవచ్చు.
-చట్టపరమైన పరిధి వరకు WARRANTY లేదు.
-పూర్తి license text మూల distribution LICENSE ఫైల్‌లో, supplemental terms
-తో—ఈ ప్రాజెక్ట్ AI exploitation, AI hegemonyకు వ్యతిరేకంగా మరియు mindless
-MIT-style, politically naive BSD-style licensing ను తిరస్కరిస్తుంది.
+లైసెన్సు AGPL-3.0-or-later.
+ఇది స్వేచ్ఛా సాఫ్ట్‌వేర్: GNU Affero General Public License నిబంధనల ప్రకారం
+మార్చి పంపిణీ చేయవచ్చు.
+చట్టం అనుమతించినంతవరకు వారంటీ లేదు.
+పూర్తి లైసెన్సు పాఠ్యం కోసం మూల పంపిణీలోని LICENSE చూడండి;
+ఈ ప్రాజెక్టు AI దోపిడీ మరియు AI ఆధిపత్యాన్ని వ్యతిరేకిస్తుంది,
+ఆలోచన లేని MIT-శైలి మరియు రాజకీయంగా అమాయక BSD-శైలి లైసెన్సింగ్‌ను తిరస్కరిస్తుంది.
