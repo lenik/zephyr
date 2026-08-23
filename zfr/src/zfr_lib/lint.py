@@ -1019,7 +1019,17 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
     ]
 
 
+def _resolve_lint_root(root: Path) -> Path:
+    """Lint the zfr CLI package when cwd is the zephyr meta-repo root."""
+    if _role(root) == "meta":
+        cli = root / "zfr"
+        if _is_zfr_cli_package(cli):
+            return cli
+    return root
+
+
 def collect_findings(root: Path) -> tuple[str, str, str, list[Finding]]:
+    root = _resolve_lint_root(root)
     role = _role(root)
     if role == "meta":
         lang = "meta"
@@ -1269,7 +1279,7 @@ def cmd_lint(
     strict: bool = False,
     workdir: Path | None = None,
 ) -> int:
-    root = find_project_dir(workdir)
+    root = _resolve_lint_root(find_project_dir(workdir))
     name, lang, role, findings = collect_findings(root)
     sys.stdout.write(
         format_report(

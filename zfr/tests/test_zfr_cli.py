@@ -111,6 +111,13 @@ class ZephyrDetectTests(unittest.TestCase):
         self.assertIn("layout.pre-commit", verbose.stdout)
         self.assertIn("syncs VERSION from debian/changelog", verbose.stdout)
 
+    def test_lint_from_meta_root_lints_zfr_cli(self) -> None:
+        proc = run_zephyr("lint", cwd=REPO, check=False)
+        self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        self.assertIn("lang=python", proc.stdout)
+        self.assertIn("role=package", proc.stdout)
+        self.assertRegex(proc.stdout, r"errors=0\s+warnings=0\s+notes=0")
+
     def test_lint_zfr_cli_is_clean(self) -> None:
         proc = run_zephyr("lint", cwd=ROOT, check=False)
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
