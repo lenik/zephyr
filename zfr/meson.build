@@ -206,13 +206,19 @@ install_data(
 )
 
 install_data(
-    [
-        'LICENSE',
-        'README.md',
-        'README-zh.md',
-    ],
+    'LICENSE',
     install_dir: pkgdocdir,
 )
+
+foreach doc : ['README.md', 'README-zh.md']
+    meson.add_install_script(
+        'sh',
+        '-c',
+        'install -D -m644 "$0" "${MESON_INSTALL_DESTDIR_PREFIX}/$1"',
+        meson.project_source_root() / '..' / doc,
+        pkgdocdir / doc,
+    )
+endforeach
 
 run_target(
     'look',

@@ -14,6 +14,7 @@ create/rename 的魔法替换词；会被改写的占位符仍是 **`zephyr`**
 
 ```bash
 sudo apt install meson ninja-build python3 asciidoctor
+cd zfr
 meson setup /build
 ninja -C /build
 sudo ninja -C /build install
@@ -70,9 +71,10 @@ debian/rpm、Meson 目标、AsciiDoc 手册、Meson 版本替换）。
 
 ## 测试
 
-父仓库提供 `tests/`（不安装）。在源码根目录：
+父仓库在 `zfr/tests/` 提供测试（不安装）。在 `zfr/` 下：
 
 ```bash
+cd zfr
 meson setup /build
 meson test -C /build
 ```

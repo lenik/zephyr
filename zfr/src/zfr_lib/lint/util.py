@@ -86,7 +86,11 @@ def _specs(root: Path) -> list[Path]:
 
 
 def _has_file(root: Path, rel: str) -> bool:
-    return (root / rel).is_file()
+    if (root / rel).is_file():
+        return True
+    if rel in ("README.md", "README-zh.md") and _is_zfr_cli_package(root):
+        return (root.parent / rel).is_file()
+    return False
 
 
 def _line_of(text: str, needle: str) -> int | None:

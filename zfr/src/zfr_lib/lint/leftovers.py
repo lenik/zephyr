@@ -33,6 +33,8 @@ def check_readme(root: Path, role: str) -> list[Finding]:
     out: list[Finding] = []
     for name in ("README.md", "README-zh.md"):
         path = root / name
+        if not path.is_file() and _is_zfr_cli_package(root):
+            path = root.parent / name
         if not path.is_file():
             continue
         text = _read(path)

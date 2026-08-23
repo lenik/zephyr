@@ -15,6 +15,7 @@ create/rename magic token; the placeholder that *is* rewritten remains
 
 ```bash
 sudo apt install meson ninja-build python3 asciidoctor
+cd zfr
 meson setup /build
 ninja -C /build
 sudo ninja -C /build install
@@ -79,9 +80,10 @@ fragments. Extra locales beyond the level are allowed.
 
 ## Tests
 
-The parent tree ships `tests/` (not installed). From the source root:
+The meta-repo ships `zfr/tests/` (not installed). From `zfr/`:
 
 ```bash
+cd zfr
 meson setup /build
 meson test -C /build
 ```
