@@ -4,7 +4,6 @@
 
 from __future__ import annotations
 
-import argparse
 import sys
 from pathlib import Path
 
@@ -12,18 +11,12 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zfr_lib.commands import cmd_remove  # noqa: E402
+from zfr_lib.cli import standalone_main  # noqa: E402
+from zfr_lib.remove import DESCRIPTION, add_arguments, run  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(
-        prog="zfr-remove",
-        description="Remove puff files for NAME(s) from the current project.",
-    )
-    p.add_argument("puff_names", nargs="+", help="puff name(s) to remove")
-    args = p.parse_args(argv)
-    cmd_remove(list(args.puff_names))
-    return 0
+    return standalone_main("zfr-remove", DESCRIPTION, add_arguments, run, argv)
 
 
 if __name__ == "__main__":

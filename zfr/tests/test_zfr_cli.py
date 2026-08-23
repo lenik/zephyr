@@ -333,5 +333,42 @@ class ZephyrIzeTests(unittest.TestCase):
             self.assertTrue(mode & stat.S_IXUSR)
 
 
+class ZephyrLangAndI18nTests(unittest.TestCase):
+    def test_detect_ignores_control_description(self) -> None:
+        """Debian Description must not vote; Depends + sources decide."""
+        with tempfile.TemporaryDirectory(prefix="zfr-lang-") as tmp:
+            root = Path(tmp)
+            (root / "src").mkdir()
+            (root / "src" / "app.py").write_text("print('ok')\n", encoding="utf-8")
+            (root / "debian").mkdir()
+            (root / "debian" / "control").write_text(
+                "Source: demo\n"
+                "Build-Depends: debhelper-compat (= 13), python3\n"
+                "\n"
+                "Package: demo\n"
+                "Architecture: all\n"
+                "Depends: ${python3:Depends}\n"
+                "Description: demo that mentions typescript in prose\n"
+                " Long description about typescript and nodejs packaging.\n",
+                encoding="utf-8",
+            )
+            proc = run_zephyr("detect", cwd=root)
+            self.assertEqual(proc.stdout.strip(), "python")
+
+    def test_help_zh_cn(self) -> None:
+        env = _env()
+        env["LANGUAGE"] = "zh_CN"
+        env["LANG"] = "C.UTF-8"
+        env["LC_ALL"] = "C.UTF-8"
+        proc = subprocess.run(
+            [sys.executable, str(ZEPHYR), "-h"],
+            env=env,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertIn("模板助手", proc.stdout)
+
+
 if __name__ == "__main__":
     unittest.main()

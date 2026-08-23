@@ -16,7 +16,7 @@ from . import (
     project_version,
     rpm_compatible_version,
 )
-from .commands import _meson_project_fields, _parse_control_stanzas
+from .packaging import _meson_project_fields, _parse_control_stanzas
 from .csr import Csr, human_size, render_fields, split_commas, term_columns, wrap_text
 
 _LIST_KEYS = frozenset(
@@ -487,3 +487,35 @@ def cmd_about(
             _write_paragraphs("Description", spec.get("Description") or "", csr=csr, columns=cols)
 
     sys.stdout.flush()
+
+import argparse
+from .cli import register_command
+from .i18n import _
+
+NAME = "about"
+HELP = _("print current project information (walks parents from cwd)")
+DESCRIPTION = _(
+    "Print information about the current zephyr project "
+    "(walks from cwd toward parent directories). CSR colors when stdout "
+    "is a TTY. Common packaging fields are parsed from debian or RPM."
+)
+
+
+def add_arguments(p: argparse.ArgumentParser) -> None:
+    p.add_argument("-d", "--debian", action="store_true", help=_("show parsed Debian packaging fields"))
+    p.add_argument("-r", "--redhat", action="store_true", help=_("show parsed RPM packaging fields"))
+    p.add_argument(
+        "--color",
+        choices=("auto", "always", "never"),
+        default="auto",
+        help=_("CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)"),
+    )
+
+
+def run(args: argparse.Namespace) -> int:
+    cmd_about(debian=args.debian, redhat=args.redhat, color=args.color)
+    return 0
+
+
+def register(sub: argparse._SubParsersAction) -> None:
+    register_command(sub, NAME, help=HELP, description=DESCRIPTION, add_arguments=add_arguments, run=run)

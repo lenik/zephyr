@@ -1,3 +1,14 @@
+zephyr (1.10.0) testing; urgency=medium
+
+  * Split zfr commands into per-command modules; argparse lives with each
+    command (zfr is only a dispatcher). Modularize lint and ize.
+  * Detect language with a built-in confidence vector over project files
+    (Depends/Build-Depends only; Description is ignored).
+  * Fix CLI gettext: find compiled .mo catalogs (including source po/
+    via msgfmt) so `LANGUAGE=zh_CN zfr -h` is translated.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 23 Aug 2026 18:40:00 +0800
+
 zephyr (1.9.0) testing; urgency=medium
 
   * Add zfr-release / zfr release: parse gh-makerelease options and exec

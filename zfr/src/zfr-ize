@@ -4,7 +4,6 @@
 
 from __future__ import annotations
 
-import argparse
 import sys
 from pathlib import Path
 
@@ -12,59 +11,12 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zfr_lib.ize import cmd_ize  # noqa: E402
+from zfr_lib.cli import standalone_main  # noqa: E402
+from zfr_lib.ize import DESCRIPTION, add_arguments, run  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(
-        prog="zfr-ize",
-        description="Refactor the current project to match current zephyr "
-        "style: missing debian/rpm files, meson targets, AsciiDoc man pages, "
-        "and Meson version substitutions. Walks from cwd toward parents.",
-    )
-    p.add_argument(
-        "-l",
-        "--lang",
-        metavar="LANG",
-        help="language template to align with (default: detect)",
-    )
-    p.add_argument(
-        "-n",
-        "--dry-run",
-        action="store_true",
-        help="print planned changes without writing files",
-    )
-    p.add_argument(
-        "-v",
-        "--verbose",
-        action="store_true",
-        help="also print skipped files",
-    )
-    p.add_argument(
-        "--no-man",
-        action="store_true",
-        help="do not convert groff .1 man pages to docs/*.adoc",
-    )
-    p.add_argument(
-        "--no-subst",
-        action="store_true",
-        help="do not turn hardcoded versions into @VERSION@ / config.h",
-    )
-    p.add_argument(
-        "--color",
-        choices=("auto", "always", "never"),
-        default="auto",
-        help="CSR (console SGR) highlighting (default: auto)",
-    )
-    args = p.parse_args(argv)
-    return cmd_ize(
-        lang=args.lang,
-        dry_run=args.dry_run,
-        man=not args.no_man,
-        subst=not args.no_subst,
-        verbose=args.verbose,
-        color=args.color,
-    )
+    return standalone_main("zfr-ize", DESCRIPTION, add_arguments, run, argv)
 
 
 if __name__ == "__main__":

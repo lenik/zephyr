@@ -72,20 +72,11 @@ install_data(
     install_mode: 'rwxr-xr-x',
 )
 
-install_data(
-    [
-        'src/zfr_lib/__init__.py',
-        'src/zfr_lib/commands.py',
-        'src/zfr_lib/about.py',
-        'src/zfr_lib/csr.py',
-        'src/zfr_lib/lint.py',
-        'src/zfr_lib/dist.py',
-        'src/zfr_lib/ize.py',
-        'src/zfr_lib/shape.py',
-        'src/zfr_lib/i18n.py',
-        'src/zfr_lib/release.py',
-    ],
-    install_dir: pkgdatadir / 'zfr' / 'zfr_lib',
+install_subdir(
+    'src/zfr_lib',
+    install_dir: pkgdatadir / 'zfr',
+    exclude_directories: ['__pycache__'],
+    exclude_files: ['paths_config.py.in'],
 )
 
 paths_cfg = configuration_data()

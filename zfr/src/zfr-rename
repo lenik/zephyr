@@ -4,7 +4,6 @@
 
 from __future__ import annotations
 
-import argparse
 import sys
 from pathlib import Path
 
@@ -12,19 +11,12 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zfr_lib.commands import cmd_rename  # noqa: E402
+from zfr_lib.cli import standalone_main  # noqa: E402
+from zfr_lib.rename import DESCRIPTION, add_arguments, run  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(
-        prog="zfr-rename",
-        description="Rename zephyr → ProjectName and some_puff1 → Example names.",
-    )
-    p.add_argument("project_name", help="new project name")
-    p.add_argument("puff_names", nargs="*", help="example puff names to rename to")
-    args = p.parse_args(argv)
-    cmd_rename(args.project_name, list(args.puff_names))
-    return 0
+    return standalone_main("zfr-rename", DESCRIPTION, add_arguments, run, argv)
 
 
 if __name__ == "__main__":

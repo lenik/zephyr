@@ -250,3 +250,28 @@ def cmd_shape(
             file=__import__("sys").stderr,
         )
     return 0
+
+import argparse
+from .cli import register_command
+from .i18n import _
+
+NAME = "shape"
+HELP = _("print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)")
+DESCRIPTION = _(
+    "Score how completely the current directory matches zephyr "
+    "package style (0-100). In monorepos, scores the packagedir."
+)
+
+
+def add_arguments(p: argparse.ArgumentParser) -> None:
+    p.add_argument("-b", "--bool", action="store_true", dest="as_bool", help=_("print 1 if score >= threshold, else 0"))
+    p.add_argument("-v", "--verbose", action="store_true", help=_("print packagedir/repodir/role on stderr"))
+    p.add_argument("--threshold", type=int, default=SHAPE_BOOL_THRESHOLD, metavar="N", help=_("bool threshold 0-100 (default: %s)") % SHAPE_BOOL_THRESHOLD)
+
+
+def run(args: argparse.Namespace) -> int:
+    return cmd_shape(as_bool=args.as_bool, threshold=args.threshold, verbose=args.verbose)
+
+
+def register(sub: argparse._SubParsersAction) -> None:
+    register_command(sub, NAME, help=HELP, description=DESCRIPTION, add_arguments=add_arguments, run=run)

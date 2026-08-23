@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: zephyr@bodz.net\n"
-"POT-Creation-Date: 2026-08-23 16:29+0800\n"
+"POT-Creation-Date: 2026-08-23 18:39+0800\n"
 "PO-Revision-Date: 2026-08-22 00:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,50 +17,115 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/zfr:69
+#: src/zfr:30
 msgid ""
 "Zephyr template helper (CLI name: zfr). Create projects and manage example "
 "puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
-msgstr "Zephyr 模板助手（命令名稱為 zfr）。用於建立專案並管理示例 puff。實體化後的專案應繼續呼叫 zfr；zfr 不是重新命名替換詞。"
+msgstr ""
+"Zephyr 模板助手（命令名稱為 zfr）。用於建立專案並管理示例 puff。實體化後的專"
+"案應繼續呼叫 zfr；zfr 不是重新命名替換詞。"
 
-#: src/zfr:216
+#: src/zfr:39
+msgid "show this help"
+msgstr "顯示此說明"
+
+#: src/zfr_lib/about.py:496
+msgid "print current project information (walks parents from cwd)"
+msgstr "列印目前專案資訊（從 cwd 向父目錄尋找）"
+
+#: src/zfr_lib/about.py:498
 msgid ""
-"print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
-msgstr "列印 zephyr 封裝形態得分 0–100（單體倉庫中為 packagedir 對 repodir）"
+"Print information about the current zephyr project (walks from cwd toward "
+"parent directories). CSR colors when stdout is a TTY. Common packaging "
+"fields are parsed from debian or RPM."
+msgstr ""
 
-#: src/zfr:226
-msgid ""
-"print 1 if score >= threshold, else 0 (predicate instead of numeric score)"
-msgstr "得分不低於閾值時列印 1，否則列印 0（謂詞，而非數值得分）"
+#: src/zfr_lib/about.py:505
+msgid "show parsed Debian packaging fields"
+msgstr ""
 
-#: src/zfr:234 src/zfr-shape:39
-msgid "print packagedir/repodir/role on stderr"
-msgstr "在標準錯誤輸出 packagedir/repodir/role"
+#: src/zfr_lib/about.py:506
+msgid "show parsed RPM packaging fields"
+msgstr ""
 
-#: src/zfr:241 src/zfr-shape:46
+#: src/zfr_lib/about.py:511
+msgid "CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)"
+msgstr ""
+
+#: src/zfr_lib/add.py:20
+msgid "instantiate puff(s) from the language template"
+msgstr "從語言模板實體化 puff"
+
+#: src/zfr_lib/add.py:21
+msgid "Detect language and add puff(s) from pkgdatadir/<lang>."
+msgstr "偵測語言並從 pkgdatadir/<lang> 新增 puff。"
+
+#: src/zfr_lib/add.py:25
+msgid "new puff name(s) (snake_case recommended)"
+msgstr "新 puff 名稱（建議 snake_case）"
+
+#: src/zfr_lib/create.py:291
+msgid "create a new project from a language template"
+msgstr "從語言模板建立新專案"
+
+#: src/zfr_lib/create.py:292
+msgid "Create a new project directory from pkgdatadir/<lang>."
+msgstr "從 pkgdatadir/<lang> 建立新專案目錄。"
+
+#: src/zfr_lib/create.py:298
 #, python-format
-msgid "bool threshold 0-100 (default: %s)"
-msgstr "布林閾值 0–100（預設：%s）"
+msgid "template language (default: python; one of: %s)"
+msgstr "模板語言（預設：python；可選：%s）"
 
-#: src/zfr:252
-msgid "create a GitHub release (parse options, exec gh-makerelease)"
-msgstr "建立 GitHub 發布（解析選項並執行 gh-makerelease）"
+#: src/zfr_lib/create.py:302
+#, python-format
+msgid "debian changelog distribution (default: %s)"
+msgstr "debian changelog 發行版（預設：%s）"
 
-#: src/zfr-shape:24
+#: src/zfr_lib/create.py:306
+#, python-format
+msgid "initial package version and git tag (default: %s)"
+msgstr "初始套件版本與 git 標籤（預設：%s）"
+
+#: src/zfr_lib/create.py:310
+#, python-format
+msgid "changelog/git author name (default: %s)"
+msgstr "changelog/git 作者名（預設：%s）"
+
+#: src/zfr_lib/create.py:314
+#, python-format
+msgid "changelog/git author email (default: %s)"
+msgstr "changelog/git 作者信箱（預設：%s）"
+
+#: src/zfr_lib/create.py:316
+msgid "new project directory name"
+msgstr "新專案目錄名"
+
+#: src/zfr_lib/create.py:319
+msgid "optional puff names to add after creating the project"
+msgstr "建立後要新增的 puff 名稱（可選）"
+
+#: src/zfr_lib/detect.py:15
+msgid "print detected language for the current directory"
+msgstr "列印目前目錄偵測到的語言"
+
+#: src/zfr_lib/detect.py:16
 msgid ""
-"Score how completely the current directory matches zephyr package style "
-"(0-100). In monorepos, scores the packagedir."
-msgstr "評估目前目錄與 zephyr 封裝風格的吻合程度（0–100）。在單體倉庫中評估 packagedir。"
+"Print the detected language of the current project and layout details on "
+"stderr."
+msgstr ""
 
-#: src/zfr-shape:33
-msgid "print 1 if score >= threshold, else 0"
-msgstr "得分不低於閾值時列印 1，否則列印 0"
+#: src/zfr_lib/dist.py:338
+msgid "build a source tarball (meson dist, or this project only)"
+msgstr ""
 
-#: src/zfr-release:25
+#: src/zfr_lib/dist.py:340
 msgid ""
-"Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
-"not implement tagging, packaging, or uploads."
-msgstr "解析 gh-makerelease 選項、重組參數並執行 gh-makerelease。本命令不實作打標籤、打包或上傳。"
+"Build a source archive of the current zephyr project (walks from cwd toward "
+"parent directories). Uses meson dist when this directory is the git project "
+"root; otherwise packs this project only so nested language templates do not "
+"ship the parent meta-repo. Prints the archive path on stdout."
+msgstr ""
 
 #: src/zfr_lib/release.py:26
 msgid "Debian binary-only build (no .dsc)"
@@ -138,3 +203,153 @@ msgstr "詳細日誌"
 #: src/zfr_lib/release.py:138
 msgid "Less output"
 msgstr "減少輸出"
+
+#: src/zfr_lib/release.py:205
+msgid "create a GitHub release (parse options, exec gh-makerelease)"
+msgstr "建立 GitHub 發布（解析選項並執行 gh-makerelease）"
+
+#: src/zfr_lib/release.py:207
+msgid ""
+"Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
+"not implement tagging, packaging, or uploads."
+msgstr ""
+"解析 gh-makerelease 選項、重組參數並執行 gh-makerelease。本命令不實作打標籤、"
+"打包或上傳。"
+
+#: src/zfr_lib/remove.py:20
+msgid "remove puff(s) from the current project"
+msgstr ""
+
+#: src/zfr_lib/remove.py:21
+msgid "Remove puff files for NAME(s) from the current project."
+msgstr ""
+
+#: src/zfr_lib/remove.py:25
+msgid "puff name(s) to remove"
+msgstr ""
+
+#: src/zfr_lib/rename.py:51
+msgid "rename zephyr project and example puff names"
+msgstr ""
+
+#: src/zfr_lib/rename.py:52
+msgid "Rename zephyr → ProjectName and some_puff1 → example names."
+msgstr ""
+
+#: src/zfr_lib/rename.py:56
+msgid "new project name (replaces 'zephyr')"
+msgstr ""
+
+#: src/zfr_lib/rename.py:57
+msgid "new example names (each replaces template some_puff1)"
+msgstr ""
+
+#: src/zfr_lib/shape.py:259
+msgid ""
+"print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
+msgstr "列印 zephyr 封裝形態得分 0–100（單體倉庫中為 packagedir 對 repodir）"
+
+#: src/zfr_lib/shape.py:261
+msgid ""
+"Score how completely the current directory matches zephyr package style "
+"(0-100). In monorepos, scores the packagedir."
+msgstr ""
+"評估目前目錄與 zephyr 封裝風格的吻合程度（0–100）。在單體倉庫中評估 "
+"packagedir。"
+
+#: src/zfr_lib/shape.py:267
+msgid "print 1 if score >= threshold, else 0"
+msgstr "得分不低於閾值時列印 1，否則列印 0"
+
+#: src/zfr_lib/shape.py:268
+msgid "print packagedir/repodir/role on stderr"
+msgstr "在標準錯誤輸出 packagedir/repodir/role"
+
+#: src/zfr_lib/shape.py:269
+#, python-format
+msgid "bool threshold 0-100 (default: %s)"
+msgstr "布林閾值 0–100（預設：%s）"
+
+#: src/zfr_lib/version.py:51
+msgid "print current project version (walks parents from cwd)"
+msgstr ""
+
+#: src/zfr_lib/version.py:52
+msgid ""
+"Print the current project version (walks from cwd toward parent directories)."
+msgstr ""
+
+#: src/zfr_lib/version.py:57
+msgid "use git describe (default when git and .git are available)"
+msgstr ""
+
+#: src/zfr_lib/version.py:58
+msgid "use debian/changelog (default when git or .git is unavailable)"
+msgstr ""
+
+#: src/zfr_lib/version.py:59
+msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
+msgstr ""
+
+#: src/zfr_lib/lint/__init__.py:90
+msgid "validate project packaging and zephyr layout (walks parents from cwd)"
+msgstr "檢查專案打包與 zephyr 佈局（從 cwd 向父目錄尋找）"
+
+#: src/zfr_lib/lint/__init__.py:91
+msgid ""
+"Check the current zephyr project for missing files and packaging/style "
+"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
+"is a TTY."
+msgstr ""
+
+#: src/zfr_lib/lint/__init__.py:95
+msgid "show passing checks too"
+msgstr ""
+
+#: src/zfr_lib/lint/__init__.py:96
+msgid "only print errors"
+msgstr ""
+
+#: src/zfr_lib/lint/__init__.py:97
+msgid "treat warnings as failures (exit 1)"
+msgstr ""
+
+#: src/zfr_lib/lint/__init__.py:98 src/zfr_lib/ize/__init__.py:70
+msgid "CSR (console SGR) highlighting (default: auto)"
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:60
+msgid "refactor this project to current zephyr style"
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:61
+msgid ""
+"Refactor the current project to match current zephyr style: missing debian/"
+"rpm files, meson targets, AsciiDoc man pages, and Meson version "
+"substitutions. Walks from cwd toward parents."
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:65
+#, python-format
+msgid "language template to align with (default: detect; one of: %s)"
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:66
+msgid "print planned changes without writing files"
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:67
+msgid "also print skipped files"
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:68
+msgid "do not convert groff .1 man pages to docs/*.adoc"
+msgstr ""
+
+#: src/zfr_lib/ize/__init__.py:69
+msgid "do not turn hardcoded versions into @VERSION@ / config.h"
+msgstr ""
+
+#~ msgid ""
+#~ "print 1 if score >= threshold, else 0 (predicate instead of numeric score)"
+#~ msgstr "得分不低於閾值時列印 1，否則列印 0（謂詞，而非數值得分）"

@@ -4,7 +4,6 @@
 
 from __future__ import annotations
 
-import argparse
 import sys
 from pathlib import Path
 
@@ -12,22 +11,12 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zfr_lib.i18n import _, init_i18n  # noqa: E402
-from zfr_lib.release import add_release_arguments, cmd_release  # noqa: E402
+from zfr_lib.cli import standalone_main  # noqa: E402
+from zfr_lib.release import DESCRIPTION, add_arguments, run  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
-    init_i18n()
-    p = argparse.ArgumentParser(
-        prog="zfr-release",
-        description=_(
-            "Parse gh-makerelease options, rebuild argv, and exec "
-            "gh-makerelease. Does not implement tagging, packaging, or uploads."
-        ),
-    )
-    add_release_arguments(p)
-    args = p.parse_args(argv)
-    return cmd_release(args)
+    return standalone_main("zfr-release", DESCRIPTION, add_arguments, run, argv)
 
 
 if __name__ == "__main__":

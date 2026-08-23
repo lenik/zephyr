@@ -198,3 +198,22 @@ def exec_makerelease(argv: Sequence[str]) -> int:
 def cmd_release(ns: argparse.Namespace) -> int:
     """Parse-only front end: recompose options and exec gh-makerelease."""
     return exec_makerelease(compose_makerelease_argv(ns))
+
+from .cli import register_command
+
+NAME = "release"
+HELP = _("create a GitHub release (parse options, exec gh-makerelease)")
+DESCRIPTION = _(
+    "Parse gh-makerelease options, rebuild argv, and exec "
+    "gh-makerelease. Does not implement tagging, packaging, or uploads."
+)
+
+add_arguments = add_release_arguments
+
+
+def run(args: argparse.Namespace) -> int:
+    return cmd_release(args)
+
+
+def register(sub: argparse._SubParsersAction) -> None:
+    register_command(sub, NAME, help=HELP, description=DESCRIPTION, add_arguments=add_arguments, run=run)

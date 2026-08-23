@@ -17,7 +17,9 @@ from . import (
     find_project_dir,
     project_version,
 )
-from .commands import _meson_project_fields, _parse_control_stanzas
+from .cli import register_command
+from .i18n import _
+from .packaging import _meson_project_fields, _parse_control_stanzas
 
 _FORMATS = {
     "xz": ("xztar", ".tar.xz"),
@@ -54,16 +56,20 @@ def add_dist_arguments(p: argparse.ArgumentParser) -> None:
         "--output",
         type=Path,
         metavar="DIR",
-        help="write the archive into DIR (default: meson-dist, or "
-        "rpmbuild/SOURCES with --rpm)",
+        help=_(
+            "write the archive into DIR (default: meson-dist, or "
+            "rpmbuild/SOURCES with --rpm)"
+        ),
     )
     p.add_argument(
         "-b",
         "--builddir",
         type=Path,
         metavar="DIR",
-        help="Meson build directory (default: /build when it matches this "
-        "source tree, else <project>/build)",
+        help=_(
+            "Meson build directory (default: /build when it matches this "
+            "source tree, else <project>/build)"
+        ),
     )
     p.add_argument(
         "-f",
@@ -71,24 +77,26 @@ def add_dist_arguments(p: argparse.ArgumentParser) -> None:
         dest="fmt",
         choices=tuple(_FORMATS),
         default="xz",
-        help="archive format (default: xz)",
+        help=_("archive format (default: xz)"),
     )
     p.add_argument(
         "--rpm",
         action="store_true",
-        help="name the archive NAME-VERSION.tar.xz and write it to "
-        "rpmbuild/SOURCES unless -o is given",
+        help=_(
+            "name the archive NAME-VERSION.tar.xz and write it to "
+            "rpmbuild/SOURCES unless -o is given"
+        ),
     )
     p.add_argument(
         "--allow-dirty",
         action=argparse.BooleanOptionalAction,
         default=True,
-        help="pass --allow-dirty to meson dist (default: allow)",
+        help=_("pass --allow-dirty to meson dist (default: allow)"),
     )
     p.add_argument(
         "--tests",
         action="store_true",
-        help="run tests during meson dist (default: --no-tests)",
+        help=_("run tests during meson dist (default: --no-tests)"),
     )
 
 
@@ -330,3 +338,30 @@ def cmd_dist(
     _directory_archive(archive_root, dest, f"{name}-{version}", fmt=fmt)
     print(dest, flush=True)
     return 0
+
+NAME = "dist"
+HELP = _("build a source tarball (meson dist, or this project only)")
+DESCRIPTION = _(
+    "Build a source archive of the current zephyr project "
+    "(walks from cwd toward parent directories). Uses meson dist when "
+    "this directory is the git project root; otherwise packs this "
+    "project only so nested language templates do not ship the parent "
+    "meta-repo. Prints the archive path on stdout."
+)
+
+add_arguments = add_dist_arguments
+
+
+def run(args: argparse.Namespace) -> int:
+    return cmd_dist(
+        output=args.output,
+        builddir=args.builddir,
+        fmt=args.fmt,
+        rpm=args.rpm,
+        allow_dirty=args.allow_dirty,
+        tests=args.tests,
+    )
+
+
+def register(sub: argparse._SubParsersAction) -> None:
+    register_command(sub, NAME, help=HELP, description=DESCRIPTION, add_arguments=add_arguments, run=run)

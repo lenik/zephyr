@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zfr-shape — print zephyr package shape score (0-100)."""
+"""zfr-shape — print zephyr package shape score."""
 
 from __future__ import annotations
 
-import argparse
 import sys
 from pathlib import Path
 
@@ -12,45 +11,12 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zfr_lib.i18n import _, init_i18n  # noqa: E402
-from zfr_lib.shape import SHAPE_BOOL_THRESHOLD, cmd_shape  # noqa: E402
+from zfr_lib.cli import standalone_main  # noqa: E402
+from zfr_lib.shape import DESCRIPTION, add_arguments, run  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
-    init_i18n()
-    p = argparse.ArgumentParser(
-        prog="zfr-shape",
-        description=_(
-            "Score how completely the current directory matches zephyr "
-            "package style (0-100). In monorepos, scores the packagedir."
-        ),
-    )
-    p.add_argument(
-        "-b",
-        "--bool",
-        action="store_true",
-        dest="as_bool",
-        help=_("print 1 if score >= threshold, else 0"),
-    )
-    p.add_argument(
-        "-v",
-        "--verbose",
-        action="store_true",
-        help=_("print packagedir/repodir/role on stderr"),
-    )
-    p.add_argument(
-        "--threshold",
-        type=int,
-        default=SHAPE_BOOL_THRESHOLD,
-        metavar="N",
-        help=_("bool threshold 0-100 (default: %s)") % SHAPE_BOOL_THRESHOLD,
-    )
-    args = p.parse_args(argv)
-    return cmd_shape(
-        as_bool=args.as_bool,
-        threshold=args.threshold,
-        verbose=args.verbose,
-    )
+    return standalone_main("zfr-shape", DESCRIPTION, add_arguments, run, argv)
 
 
 if __name__ == "__main__":

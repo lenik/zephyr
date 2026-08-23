@@ -4,7 +4,6 @@
 
 from __future__ import annotations
 
-import argparse
 import sys
 from pathlib import Path
 
@@ -12,37 +11,12 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zfr_lib.about import cmd_about  # noqa: E402
+from zfr_lib.cli import standalone_main  # noqa: E402
+from zfr_lib.about import DESCRIPTION, add_arguments, run  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(
-        prog="zfr-about",
-        description="Print information about the current zephyr project "
-        "(walks from cwd toward parent directories). CSR colors when stdout "
-        "is a TTY. Common packaging fields are parsed from debian or RPM.",
-    )
-    p.add_argument(
-        "-d",
-        "--debian",
-        action="store_true",
-        help="show parsed Debian packaging fields",
-    )
-    p.add_argument(
-        "-r",
-        "--redhat",
-        action="store_true",
-        help="show parsed RPM packaging fields",
-    )
-    p.add_argument(
-        "--color",
-        choices=("auto", "always", "never"),
-        default="auto",
-        help="CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)",
-    )
-    args = p.parse_args(argv)
-    cmd_about(debian=args.debian, redhat=args.redhat, color=args.color)
-    return 0
+    return standalone_main("zfr-about", DESCRIPTION, add_arguments, run, argv)
 
 
 if __name__ == "__main__":

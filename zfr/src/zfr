@@ -2,29 +2,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """zfr — multi-language CLI project template helper.
 
-Usage:
-  zfr create [-l LANG] [-D DIST] [-1 VER] [-a AUTHOR] [-e EMAIL]
-                PROJECT_NAME [PUFF_NAME ...]
-  zfr rename PROJECT_NAME [PUFF_NAME ...]
-  zfr add PUFF_NAME [PUFF_NAME ...]
-  zfr remove PUFF_NAME [PUFF_NAME ...]
-  zfr about [-d] [-r] [--color WHEN]
-  zfr version [-g] [-c] [-r]
-  zfr lint [-v] [-q] [--strict] [--color WHEN]
-  zfr shape [-b] [-v] [--threshold N]
-  zfr dist [-o DIR] [-b DIR] [-f FMT] [--rpm] [--allow-dirty|--no-allow-dirty]
-              [--tests]
-  zfr ize [-l LANG] [-n] [-v] [--no-man] [--no-subst] [--color WHEN]
-  zfr release [OPTIONS]
-  zfr detect
-  zfr help
-
-The CLI is named zfr. Instantiated projects should keep calling zfr
-(version/lint/dist/ize/shape). zfr is not rewritten by create/rename; the
-template placeholder remains zephyr (and some_puff1 for sample puffs).
-
-In a monorepo, *packagedir* is the package tree (e.g. repo/bash) and
-*repodir* is the git/meta root; tools resolve packagedir via shape score.
+Subcommands are defined in zfr_lib.<cmd> (argparse + implementation).
+This dispatcher only registers them and forwards to args._run.
 """
 
 from __future__ import annotations
@@ -33,32 +12,17 @@ import argparse
 import sys
 from pathlib import Path
 
-# Allow running from the source tree without installation.
 _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zfr_lib import LANGS, detect_lang, pkgdatadir  # noqa: E402
-from zfr_lib.about import cmd_about  # noqa: E402
-from zfr_lib.dist import add_dist_arguments, cmd_dist  # noqa: E402
 from zfr_lib.i18n import _, init_i18n  # noqa: E402
-from zfr_lib.ize import cmd_ize  # noqa: E402
-from zfr_lib.commands import (  # noqa: E402
-    DEFAULT_AUTHOR,
-    DEFAULT_DISTRIBUTION,
-    DEFAULT_EMAIL,
-    DEFAULT_INIT_VERSION,
-    cmd_add,
-    cmd_create,
-    cmd_remove,
-    cmd_rename,
-    cmd_version,
-)
-from zfr_lib.lint import cmd_lint  # noqa: E402
-from zfr_lib.release import add_release_arguments, cmd_release  # noqa: E402
-from zfr_lib.shape import SHAPE_BOOL_THRESHOLD, cmd_shape, resolve_layout, shape_score  # noqa: E402
 
-__version__ = "1.9.0"
+init_i18n()
+
+from zfr_lib.registry import COMMANDS  # noqa: E402
+
+__version__ = "1.10.0"
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -73,227 +37,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     sub = p.add_subparsers(dest="cmd", required=True)
-
-    pc = sub.add_parser("create", help="create a new project from a language template")
-    pc.add_argument(
-        "-l",
-        "--lang",
-        default="python",
-        metavar="LANG",
-        help=f"template language (default: python; one of: {', '.join(LANGS)})",
-    )
-    pc.add_argument(
-        "-D",
-        "--distribution",
-        default=DEFAULT_DISTRIBUTION,
-        metavar="DIST",
-        help=f"debian changelog distribution (default: {DEFAULT_DISTRIBUTION})",
-    )
-    pc.add_argument(
-        "-1",
-        "--init-version",
-        default=DEFAULT_INIT_VERSION,
-        metavar="VER",
-        help=f"initial package version and git tag (default: {DEFAULT_INIT_VERSION})",
-    )
-    pc.add_argument(
-        "-a",
-        "--author",
-        default=DEFAULT_AUTHOR,
-        metavar="AUTHOR",
-        help=f"changelog/git author name (default: {DEFAULT_AUTHOR})",
-    )
-    pc.add_argument(
-        "-e",
-        "--email",
-        default=DEFAULT_EMAIL,
-        metavar="EMAIL",
-        help=f"changelog/git author email (default: {DEFAULT_EMAIL})",
-    )
-    pc.add_argument("project_name", help="new project directory name")
-    pc.add_argument(
-        "puff_names",
-        nargs="*",
-        help="optional puff names to add after creating the project",
-    )
-
-    pr = sub.add_parser("rename", help="rename zephyr project and example puff names")
-    pr.add_argument("project_name", help="new project name (replaces 'zephyr')")
-    pr.add_argument(
-        "puff_names",
-        nargs="*",
-        help="new example names (each replaces template some_puff1)",
-    )
-
-    pa = sub.add_parser("add", help="instantiate puff(s) from the language template")
-    pa.add_argument(
-        "puff_names",
-        nargs="+",
-        help="new puff name(s) (snake_case recommended)",
-    )
-
-    prm = sub.add_parser("remove", help="remove puff(s) from the current project")
-    prm.add_argument("puff_names", nargs="+", help="puff name(s) to remove")
-
-    pabout = sub.add_parser(
-        "about",
-        help="print current project information (walks parents from cwd)",
-    )
-    pabout.add_argument(
-        "-d",
-        "--debian",
-        action="store_true",
-        help="show Debian packaging fields",
-    )
-    pabout.add_argument(
-        "-r",
-        "--redhat",
-        action="store_true",
-        help="show RPM packaging fields",
-    )
-    pabout.add_argument(
-        "--color",
-        choices=("auto", "always", "never"),
-        default="auto",
-        help="CSR (console SGR) highlighting (default: auto)",
-    )
-
-    pver = sub.add_parser(
-        "version",
-        help="print current project version (walks parents from cwd)",
-    )
-    srcg = pver.add_mutually_exclusive_group()
-    srcg.add_argument(
-        "-g",
-        "--git",
-        action="store_true",
-        help="use git describe (default when git and .git are available)",
-    )
-    srcg.add_argument(
-        "-c",
-        "--changelog",
-        action="store_true",
-        help="use debian/changelog (default when git or .git is unavailable)",
-    )
-    pver.add_argument(
-        "-r",
-        "--rpm",
-        action="store_true",
-        help="print an RPM-compatible Version (hyphens mapped to underscores)",
-    )
-
-    plint = sub.add_parser(
-        "lint",
-        help="validate project packaging and zephyr layout (walks parents from cwd)",
-    )
-    plint.add_argument(
-        "-v",
-        "--verbose",
-        action="store_true",
-        help="show passing checks too",
-    )
-    plint.add_argument(
-        "-q",
-        "--quiet",
-        action="store_true",
-        help="only print errors",
-    )
-    plint.add_argument(
-        "--strict",
-        action="store_true",
-        help="treat warnings as failures (exit 1)",
-    )
-    plint.add_argument(
-        "--color",
-        choices=("auto", "always", "never"),
-        default="auto",
-        help="CSR (console SGR) highlighting (default: auto)",
-    )
-
-    pshape = sub.add_parser(
-        "shape",
-        help=_(
-            "print zephyr package shape score 0-100 "
-            "(packagedir vs repodir in monorepos)"
-        ),
-    )
-    pshape.add_argument(
-        "-b",
-        "--bool",
-        action="store_true",
-        dest="as_bool",
-        help=_(
-            "print 1 if score >= threshold, else 0 "
-            "(predicate instead of numeric score)"
-        ),
-    )
-    pshape.add_argument(
-        "-v",
-        "--verbose",
-        action="store_true",
-        help=_("print packagedir/repodir/role on stderr"),
-    )
-    pshape.add_argument(
-        "--threshold",
-        type=int,
-        default=SHAPE_BOOL_THRESHOLD,
-        metavar="N",
-        help=_("bool threshold 0-100 (default: %s)") % SHAPE_BOOL_THRESHOLD,
-    )
-
-    pdist = sub.add_parser(
-        "dist",
-        help="build a source tarball (meson dist, or this project only)",
-    )
-    add_dist_arguments(pdist)
-
-    prel = sub.add_parser(
-        "release",
-        help=_("create a GitHub release (parse options, exec gh-makerelease)"),
-    )
-    add_release_arguments(prel)
-
-    pize = sub.add_parser(
-        "ize",
-        help="refactor this project to current zephyr style",
-    )
-    pize.add_argument(
-        "-l",
-        "--lang",
-        metavar="LANG",
-        help=f"language template to align with (default: detect; one of: {', '.join(LANGS)})",
-    )
-    pize.add_argument(
-        "-n",
-        "--dry-run",
-        action="store_true",
-        help="print planned changes without writing files",
-    )
-    pize.add_argument(
-        "-v",
-        "--verbose",
-        action="store_true",
-        help="also print skipped files",
-    )
-    pize.add_argument(
-        "--no-man",
-        action="store_true",
-        help="do not convert groff .1 man pages to docs/*.adoc",
-    )
-    pize.add_argument(
-        "--no-subst",
-        action="store_true",
-        help="do not turn hardcoded versions into @VERSION@ / config.h",
-    )
-    pize.add_argument(
-        "--color",
-        choices=("auto", "always", "never"),
-        default="auto",
-        help="CSR (console SGR) highlighting (default: auto)",
-    )
-
-    sub.add_parser("detect", help="print detected language for the current directory")
-    sub.add_parser("help", help="show this help")
+    for mod in COMMANDS:
+        mod.register(sub)
+    sub.add_parser("help", help=_("show this help"))
     return p
 
 
@@ -309,82 +55,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "help":
         parser.print_help()
         return 0
-    if args.cmd == "detect":
-        layout = resolve_layout()
-        lang = detect_lang(layout.packagedir)
-        print(lang, flush=True)
-        print(
-            f"packagedir: {layout.packagedir}\n"
-            f"repodir: {layout.repodir}\n"
-            f"role: {layout.role}\n"
-            f"shape: {shape_score(layout.packagedir)}\n"
-            f"pkgdatadir: {pkgdatadir()}",
-            file=sys.stderr,
-        )
-        return 0
-    if args.cmd == "shape":
-        return cmd_shape(
-            as_bool=args.as_bool,
-            threshold=args.threshold,
-            verbose=args.verbose,
-        )
-    if args.cmd == "create":
-        cmd_create(
-            args.project_name,
-            lang=args.lang,
-            puff_names=list(args.puff_names),
-            distribution=args.distribution,
-            init_version=args.init_version,
-            author=args.author,
-            email=args.email,
-        )
-        return 0
-    if args.cmd == "rename":
-        if not args.project_name:
-            parser.error("PROJECT_NAME required")
-        cmd_rename(args.project_name, list(args.puff_names))
-        return 0
-    if args.cmd == "add":
-        cmd_add(list(args.puff_names))
-        return 0
-    if args.cmd == "remove":
-        cmd_remove(list(args.puff_names))
-        return 0
-    if args.cmd == "about":
-        cmd_about(debian=args.debian, redhat=args.redhat, color=args.color)
-        return 0
-    if args.cmd == "version":
-        cmd_version(git=args.git, changelog=args.changelog, rpm=args.rpm)
-        return 0
-    if args.cmd == "lint":
-        return cmd_lint(
-            verbose=args.verbose,
-            quiet=args.quiet,
-            color=args.color,
-            strict=args.strict,
-        )
-    if args.cmd == "release":
-        return cmd_release(args)
-    if args.cmd == "dist":
-        return cmd_dist(
-            output=args.output,
-            builddir=args.builddir,
-            fmt=args.fmt,
-            rpm=args.rpm,
-            allow_dirty=args.allow_dirty,
-            tests=args.tests,
-        )
-    if args.cmd == "ize":
-        return cmd_ize(
-            lang=args.lang,
-            dry_run=args.dry_run,
-            man=not args.no_man,
-            subst=not args.no_subst,
-            verbose=args.verbose,
-            color=args.color,
-        )
-    parser.error(f"unknown command: {args.cmd}")
-    return 2
+    run = getattr(args, "_run", None)
+    if run is None:
+        parser.error(f"unknown command: {args.cmd}")
+        return 2
+    return int(run(args) or 0)
 
 
 if __name__ == "__main__":
