@@ -100,6 +100,10 @@ class ZephyrDetectTests(unittest.TestCase):
             "bison",
             "as",
             "gcc",
+            "pascal",
+            "fortran",
+            "cobol",
+            "d",
         ):
             with self.subTest(lang=lang):
                 d = REPO / lang
@@ -120,6 +124,10 @@ class ZephyrDetectTests(unittest.TestCase):
             "bison",
             "as",
             "gcc",
+            "pascal",
+            "fortran",
+            "cobol",
+            "d",
         ):
             with self.subTest(lang=lang):
                 with tempfile.TemporaryDirectory(prefix=f"zfr-{lang}-") as tmp:
