@@ -9,11 +9,13 @@ from .util import *  # noqa: F403
 convert_man_file = _man.convert_man_file
 groff_to_adoc = _man.groff_to_adoc
 _man_target = _man._man_target
+strip_install_man_paths = _man.strip_install_man_paths
 render_spec = _spec.render_spec
 # Names used by Ize methods copied from ize.py:
 convert_man_file = convert_man_file
 groff_to_adoc = groff_to_adoc
 _man_target = _man_target
+strip_install_man_paths = strip_install_man_paths
 render_spec = render_spec
 
 class Ize:
@@ -292,8 +294,16 @@ class Ize:
         ]
         for adoc in docs:
             needle = f"docs/{adoc.name}"
-            if needle not in text and f"'{adoc.name}'" not in text:
-                text += _man_target(adoc.stem)
+            if needle not in text and f"'{adoc.stem}-man'" not in text:
+                section = "1"
+                try:
+                    first = adoc.read_text(encoding="utf-8", errors="ignore").splitlines()[0]
+                    m = re.match(r"^=\s+\S+\((\d+[a-zA-Z]*)\)", first)
+                    if m:
+                        section = m.group(1)
+                except (OSError, IndexError):
+                    pass
+                text += _man_target(adoc.stem, section)
                 details.append(f"man target {adoc.stem}")
 
         if not re.search(r"run_target\s*\(\s*['\"]look['\"]", text):
@@ -336,19 +346,23 @@ endforeach
 
     def convert_manpages(self) -> None:
         docs = self.root / "docs"
+        man_re = re.compile(r"^(?P<stem>.+)\.(?P<section>[1-9][a-zA-Z]*)(?:\.in)?$")
         for path in list(iter_files(self.root)):
-            if path.suffix != ".1" and not path.name.endswith(".1.in"):
+            m = man_re.match(path.name)
+            if not m:
                 continue
-            if any(part in SKIP_MAN_PARTS for part in path.resolve().relative_to(self.root.resolve()).parts):
+            rel_parts = path.resolve().relative_to(self.root.resolve()).parts
+            if any(part in SKIP_MAN_PARTS for part in rel_parts):
                 continue
-            stem = path.name[:-5] if path.name.endswith(".1.in") else path.stem
+            stem = m.group("stem")
+            section = m.group("section")
             dest = docs / f"{stem}.adoc"
             if dest.is_file():
                 if self.verbose:
                     self.note("skip", _rel(self.root, dest), "adoc already exists")
                 continue
             try:
-                adoc = convert_man_file(path, stem)
+                adoc = convert_man_file(path, stem, section=section)
             except OSError as e:
                 self.note("skip", _rel(self.root, path), f"convert failed: {e}")
                 continue
@@ -358,25 +372,17 @@ endforeach
             self.write_text(dest, adoc, f"from {_rel(self.root, path)}", kind="convert")
             rel_src = _rel(self.root, path)
             if path.parent in (self.root, self.root / "docs", self.root / "man"):
-                self.note("convert", rel_src, "removed groff source; meson generates .1")
+                self.note("convert", rel_src, "removed groff source; meson generates manpage")
                 if not self.dry_run:
                     path.unlink(missing_ok=True)
             meson = self.root / "meson.build"
             if meson.is_file():
                 text = meson.read_text(encoding="utf-8")
-                new = text
-                new = re.sub(
-                    rf"[ \t]*install_man\s*\(\s*['\"]{re.escape(rel_src)}['\"]\s*\)[ \t]*\n?",
-                    "",
-                    new,
-                )
-                new = re.sub(
-                    rf"['\"]{re.escape(rel_src)}['\"]",
-                    f"'docs/{stem}.adoc'",
-                    new,
+                new = strip_install_man_paths(
+                    text, {rel_src, path.name, f"{stem}.{section}"}
                 )
                 if new != text:
-                    self.write_text(meson, new, f"stop installing source {rel_src}")
+                    self.write_text(meson, new, f"drop groff {rel_src} from install_man")
 
     def patch_meson_man_targets(self) -> None:
         path = self.root / "meson.build"
@@ -394,10 +400,23 @@ endforeach
                 "mandir = prefix / get_option('mandir')\n"
             )
             details.append("mandir")
+        # Strip leftover install_man(.../*.adoc) from a prior ize run.
+        cleaned = strip_install_man_paths(text, set())
+        if cleaned != text:
+            text = cleaned
+            details.append("remove AsciiDoc paths from install_man")
         for adoc in sorted((self.root / "docs").glob("*.adoc")):
-            if f"docs/{adoc.name}" in text or f"{adoc.stem}-man" in text:
+            if f"'{adoc.stem}-man'" in text or f'"{adoc.stem}-man"' in text:
                 continue
-            text += _man_target(adoc.stem)
+            section = "1"
+            try:
+                first = adoc.read_text(encoding="utf-8", errors="ignore").splitlines()[0]
+                m = re.match(r"^=\s+\S+\((\d+[a-zA-Z]*)\)", first)
+                if m:
+                    section = m.group(1)
+            except (OSError, IndexError):
+                pass
+            text += _man_target(adoc.stem, section)
             details.append(f"man target {adoc.stem}")
         if text != orig:
             self.write_text(path, text if text.endswith("\n") else text + "\n", ", ".join(details))

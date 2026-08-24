@@ -109,6 +109,7 @@ SKIP_MAN_PARTS = SKIP_DIR_NAMES | {
     "po",
     "rpm",
     "githooks",
+    "autom4te.cache",
 }
 
 _GIT_DESCRIBE_RE = re.compile(

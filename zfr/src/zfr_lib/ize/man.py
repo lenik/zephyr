@@ -4,12 +4,42 @@ from __future__ import annotations
 
 from .util import *  # noqa: F403
 
-def _man_target(name: str) -> str:
+def strip_install_man_paths(text: str, remove: set[str]) -> str:
+    """Drop groff (or adoc) paths from install_man() after conversion to docs/*.adoc.
+
+    Meson install_man() only accepts numeric-section man sources, not AsciiDoc.
+    """
+    drop = set(remove)
+    drop |= {p.replace("\\", "/") for p in remove}
+
+    def _keep(name: str) -> bool:
+        n = name.replace("\\", "/")
+        if n in drop or Path(n).name in drop:
+            return False
+        if n.endswith(".adoc") or n.endswith(".adoc.in"):
+            return False
+        return True
+
+    def repl(m: re.Match[str]) -> str:
+        inner = m.group(1)
+        names = [a or b for a, b in re.findall(r"'([^']+)'|\"([^\"]+)\"", inner)]
+        kept = [n for n in names if _keep(n)]
+        if not kept:
+            return ""
+        if len(kept) == 1:
+            return f"install_man('{kept[0]}')\n"
+        files = ", ".join(f"'{k}'" for k in kept)
+        return f"install_man([{files}])\n"
+
+    return re.sub(r"install_man\s*\(([^)]*)\)[ \t]*\n?", repl, text)
+
+
+def _man_target(name: str, section: str = "1") -> str:
     return f"""
 custom_target(
     '{name}-man',
     input: 'docs/{name}.adoc',
-    output: '{name}.1',
+    output: '{name}.{section}',
     command: [
         asciidoctor,
         '-b', 'manpage',
@@ -22,7 +52,7 @@ custom_target(
     ],
     build_by_default: true,
     install: true,
-    install_dir: mandir / 'man1',
+    install_dir: mandir / 'man{section}',
 )
 """
 
@@ -85,7 +115,7 @@ def groff_to_adoc(text: str, name: str, section: str = "1") -> str:
     )
 
 
-def convert_man_file(path: Path, name: str) -> str:
+def convert_man_file(path: Path, name: str, section: str = "1") -> str:
     if shutil.which("pandoc"):
         proc = subprocess.run(
             ["pandoc", "-f", "man", "-t", "asciidoc", "--wrap=none", str(path)],
@@ -95,7 +125,7 @@ def convert_man_file(path: Path, name: str) -> str:
         if proc.returncode == 0 and proc.stdout.strip():
             body = proc.stdout.strip()
             if not body.lstrip().startswith("= "):
-                body = f"= {name}(1)\n\n{body}"
+                body = f"= {name}({section})\n\n{body}"
             header = (
                 "{project-author} <{project-email}>\n"
                 "v{project-version}, {project-year}\n"
@@ -109,4 +139,4 @@ def convert_man_file(path: Path, name: str) -> str:
                 parts = body.split("\n", 1)
                 body = parts[0] + "\n" + header + (parts[1] if len(parts) > 1 else "")
             return body if body.endswith("\n") else body + "\n"
-    return groff_to_adoc(path.read_text(encoding="utf-8", errors="ignore"), name)
+    return groff_to_adoc(path.read_text(encoding="utf-8", errors="ignore"), name, section)

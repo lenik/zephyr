@@ -1,3 +1,15 @@
+zephyr (2.4.0) testing; urgency=medium
+
+  * ize convert_manpages: convert groff sections other than .1; skip
+    autom4te.cache; install_dir manN from the adoc title.
+  * strip_install_man_paths: drop leftover docs/*.adoc from install_man()
+    after conversion (Meson only accepts numeric-section man sources).
+  * Validated one-pass ize --mesonize + meson setup on batch2 (autover,
+    bash-shlib, brightness, btshare, catme, cdtree, configutils, coolapk,
+    coolauto, coolbin, coolclip, coolcmd).
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 24 Aug 2026 18:19:11 +0800
+
 zephyr (2.3.0) testing; urgency=medium
 
   * zfr ize: add -m/--mesonize (default on; --no-mesonize to skip) to run

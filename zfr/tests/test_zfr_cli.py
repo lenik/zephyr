@@ -498,6 +498,17 @@ class ZephyrIzeTests(unittest.TestCase):
             mode = (root / "debian" / "rules").stat().st_mode
             self.assertTrue(mode & stat.S_IXUSR)
 
+    def test_strip_install_man_drops_adoc(self) -> None:
+        from zfr_lib.ize.man import strip_install_man_paths
+
+        text = (
+            "install_man('docs/foo.adoc')\n"
+            "install_man(['docs/a.adoc', 'man/keep.1'])\n"
+        )
+        out = strip_install_man_paths(text, set())
+        self.assertNotIn(".adoc", out)
+        self.assertIn("install_man('man/keep.1')", out)
+
 
 class ZephyrLangAndI18nTests(unittest.TestCase):
     def test_detect_ignores_control_description(self) -> None:
