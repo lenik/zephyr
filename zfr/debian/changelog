@@ -1,3 +1,17 @@
+zephyr (2.2.2) testing; urgency=medium
+
+  * L3 locale set: replace Slovak/Slovene (sk, sl) with Vietnamese and
+    Ukrainian (vi, uk).
+  * Add Ukrainian gettext catalog (po/uk.po) and whole-document manpage
+    (docs/uk/zfr.adoc); register uk in po/LINGUAS and meson man_i18n_langs
+    (vi was already present).
+  * Document the L3 swap in en, zh_CN, and L2 manpages (bg, ca, cs, el, hu,
+    nl, pl).
+  * lint template.coverage: skip commons / test names; map rpm/zephyr.spec
+    to rpm/<project>.spec in findings.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 24 Aug 2026 10:45:00 +0800
+
 zephyr (2.2.1) testing; urgency=medium
 
   * Add language templates: pascal (Free Pascal), fortran (gfortran), cobol

@@ -162,7 +162,7 @@ custom_target(
 man_i18n_langs = [
     'ar', 'bg', 'bn', 'ca', 'cs', 'de', 'el', 'es', 'fr', 'hi', 'hu', 'id',
     'it', 'ja', 'ko', 'nl', 'pl', 'pt', 'ru', 'sv', 'ta', 'te', 'th', 'tr',
-    'ur', 'vi', 'zh_CN', 'zh_TW',
+    'uk', 'ur', 'vi', 'zh_CN', 'zh_TW',
 ]
 foreach lang : man_i18n_langs
     man_i18n = custom_target(
