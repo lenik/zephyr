@@ -40,8 +40,9 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                 "rpm.missing",
                 "no rpm/*.spec (optional, but zephyr style includes RPM next to debian/)",
                 "rpm/",
-                fix="Copy rpm/ (zephyr.spec + Makefile using `zfr version`) from the "
-                "zephyr tree and rewrite names. Align Name/Summary/Requires/URL with debian/control.",
+                fix="Copy rpm/ from a language template; name the spec after the package "
+                "(rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. "
+                "Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`.",
             )
         )
         return out

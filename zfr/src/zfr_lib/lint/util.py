@@ -96,6 +96,24 @@ def _has_file(root: Path, rel: str) -> bool:
 _EXAMPLE_SHARED_STEMS = frozenset({"common_lib", "commons", "Commons", "CommonLib"})
 
 
+def _stem_is_example_shared(stem: str) -> bool:
+    """Exact commons / common_lib example-shared stems."""
+    if stem in _EXAMPLE_SHARED_STEMS:
+        return True
+    return stem.lower() in {s.lower() for s in _EXAMPLE_SHARED_STEMS}
+
+
+def _stem_is_example_shared_or_test(stem: str) -> bool:
+    """Example-shared stems plus unit-test names (commons_test, test_commons, …)."""
+    if _stem_is_example_shared(stem):
+        return True
+    low = stem.lower().replace("-", "_")
+    for marker in ("commons", "common_lib", "commonlib"):
+        if marker in low:
+            return True
+    return False
+
+
 def is_example_shared_src(root: Path, path: Path) -> bool:
     """True for template example shared modules (src/common_lib.*, src/commons.*)."""
     try:
@@ -104,8 +122,17 @@ def is_example_shared_src(root: Path, path: Path) -> bool:
         return False
     if len(rel.parts) != 2 or rel.parts[0] != "src":
         return False
-    stem = path.stem
-    return stem in _EXAMPLE_SHARED_STEMS or stem.lower() in _EXAMPLE_SHARED_STEMS
+    return _stem_is_example_shared(path.stem)
+
+
+def is_example_shared_rel(rel: Path) -> bool:
+    """True if a template-relative path is example commons scaffolding (src or tests)."""
+    if not rel.parts:
+        return False
+    top = rel.parts[0]
+    if top not in {"src", "tests", "lib"}:
+        return False
+    return _stem_is_example_shared_or_test(rel.stem)
 
 
 def find_example_shared_modules(root: Path) -> list[Path]:
@@ -114,9 +141,7 @@ def find_example_shared_modules(root: Path) -> list[Path]:
         return []
     found: list[Path] = []
     for path in sorted(src.iterdir()):
-        if path.is_file() and (
-            path.stem in _EXAMPLE_SHARED_STEMS or path.stem.lower() in _EXAMPLE_SHARED_STEMS
-        ):
+        if path.is_file() and _stem_is_example_shared(path.stem):
             found.append(path)
     return found
 
