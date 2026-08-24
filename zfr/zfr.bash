@@ -114,7 +114,7 @@ _zfr()
 					;;
 			esac
 			if [[ $cur == -* ]]; then
-				COMPREPLY=($(compgen -W '-l --lang -n --dry-run -v --verbose --no-man --no-subst --color --help' -- "$cur"))
+				COMPREPLY=($(compgen -W '-l --lang -m --mesonize --no-mesonize -n --dry-run -v --verbose --no-man --no-subst --color --help' -- "$cur"))
 			fi
 			;;
 		release)
@@ -271,7 +271,7 @@ _zfr_ize()
 			;;
 	esac
 	if [[ $cur == -* ]]; then
-		COMPREPLY=($(compgen -W '-l --lang -n --dry-run -v --verbose --no-man --no-subst --color --help' -- "$cur"))
+		COMPREPLY=($(compgen -W '-l --lang -m --mesonize --no-mesonize -n --dry-run -v --verbose --no-man --no-subst --color --help' -- "$cur"))
 	fi
 }
 

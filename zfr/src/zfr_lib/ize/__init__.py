@@ -21,6 +21,7 @@ def cmd_ize(
     dry_run: bool = False,
     man: bool = True,
     subst: bool = True,
+    mesonize: bool = True,
     verbose: bool = False,
     color: str = "auto",
     workdir: Path | None = None,
@@ -53,6 +54,7 @@ def cmd_ize(
         dry_run=dry_run,
         do_man=man,
         do_subst=subst,
+        do_mesonize=mesonize,
         verbose=verbose,
         color=color,
     ).run()
@@ -68,13 +70,28 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
     p.add_argument("-l", "--lang", metavar="LANG", help=_("language template to align with (default: detect; one of: %s)") % ", ".join(LANGS))
     p.add_argument("-n", "--dry-run", action="store_true", help=_("print planned changes without writing files"))
     p.add_argument("-v", "--verbose", action="store_true", help=_("also print skipped files"))
+    p.add_argument(
+        "-m",
+        "--mesonize",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help=_("run 2meson to convert Autotools/CMake to Meson when present (default: on)"),
+    )
     p.add_argument("--no-man", action="store_true", help=_("do not convert groff .1 man pages to docs/*.adoc"))
     p.add_argument("--no-subst", action="store_true", help=_("do not turn hardcoded versions into @VERSION@ / config.h"))
     p.add_argument("--color", choices=("auto", "always", "never"), default="auto", help=_("CSR (console SGR) highlighting (default: auto)"))
 
 
 def run(args: argparse.Namespace) -> int:
-    return cmd_ize(lang=args.lang, dry_run=args.dry_run, man=not args.no_man, subst=not args.no_subst, verbose=args.verbose, color=args.color)
+    return cmd_ize(
+        lang=args.lang,
+        dry_run=args.dry_run,
+        man=not args.no_man,
+        subst=not args.no_subst,
+        mesonize=args.mesonize,
+        verbose=args.verbose,
+        color=args.color,
+    )
 
 
 def register(sub: argparse._SubParsersAction) -> None:

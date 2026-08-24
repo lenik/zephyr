@@ -33,8 +33,8 @@ zfr - 多语言 CLI 项目模板与辅助工具
 *zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
             [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
 
-*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
-           [*--color* _WHEN_]
+*zfr* *ize* [*-l* _LANG_] [*-m*|*--no-mesonize*] [*-n*] [*-v*]
+           [*--no-man*] [*--no-subst*] [*--color* _WHEN_]
 
 *zfr* *release* [_OPTIONS_]
 
@@ -157,7 +157,10 @@ zfr add myapp another_app
 
 *ize*::
   就地重构当前项目以符合当前 zephyr 风格
-  （从当前目录向父目录遍历）。从语言模板复制缺失的 *debian/* 与 *rpm/* 脚手架（名称改写为本项目），写入 *VERSION* 与 *.githooks/pre-commit*，
+  （从当前目录向父目录遍历）。默认在存在 Autotools（*configure.ac* / *configure.in*）
+  或 CMake（*CMakeLists.txt*）源时先运行 *2meson* 生成 *meson.build*
+  （*-m* / *--mesonize*，默认开启；*--no-mesonize* 跳过）。
+  从语言模板复制缺失的 *debian/* 与 *rpm/* 脚手架（名称改写为本项目），写入 *VERSION* 与 *.githooks/pre-commit*，
   修补 *meson.build*（*zfr version*、*asciidoctor* man 目标、
   *run_target look*、bash-completion 安装）。将项目下（非 *debian/*）的 groff *\*.1* 手册页转换为带 Meson 规则的 *docs/\*.adoc*，
   并将 *src/* 中硬编码的 changelog 版本转为 *\*.in* 的 *@VERSION@* 替换，或对 C 系语言通过 *config.h* 使用 *PROJECT_VERSION*。
@@ -316,6 +319,10 @@ zfr add myapp another_app
 *-l, --lang* _LANG_::
   复制脚手架所用的语言模板（默认：自动检测）。
 
+*-m, --mesonize* / *--no-mesonize*::
+  存在 Autotools/CMake 源时，运行 *2meson* 先转换为 Meson（默认：开启）。
+  需要 *2meson* 在 *PATH* 中（或设置 *ZFR_2MESON*）。
+
 *-n, --dry-run*::
   打印计划的添加/更新/转换，不写入文件。
 
@@ -336,6 +343,9 @@ zfr add myapp another_app
 
 *ZFR_PKGDATADIR*::
   覆盖模板根目录（通常为 */usr/share/zephyr*）。
+
+*ZFR_2MESON*::
+  覆盖 *zfr ize --mesonize* 所用的 *2meson* 可执行文件。
 
 *NO_COLOR*::
   设置后，*zfr about*、*zfr lint* 与 *zfr ize* 在 *--color auto* 模式下禁用 CSR

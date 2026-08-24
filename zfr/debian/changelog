@@ -1,3 +1,15 @@
+zephyr (2.3.0) testing; urgency=medium
+
+  * zfr ize: add -m/--mesonize (default on; --no-mesonize to skip) to run
+    2meson when Autotools/CMake sources are present, before scaffolding.
+  * Fix patch_meson project() parsing: string-aware parenthesis matching so
+    multi-line version: run_command(...) is not truncated; accept
+    "version :" spacing; safer license injection before the closing paren.
+  * Document mesonize in en/zh_CN manpages and bash completion; add ize
+    mesonize CLI test; gettext string for the new option across LINGUAS.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 24 Aug 2026 15:20:00 +0800
+
 zephyr (2.2.2) testing; urgency=medium
 
   * L3 locale set: replace Slovak/Slovene (sk, sl) with Vietnamese and

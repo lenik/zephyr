@@ -33,8 +33,8 @@ zfr - multi-language CLI project templates and helper tools
 *zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
             [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
 
-*zfr* *ize* [*-l* _LANG_] [*-n*] [*-v*] [*--no-man*] [*--no-subst*]
-           [*--color* _WHEN_]
+*zfr* *ize* [*-l* _LANG_] [*-m*|*--no-mesonize*] [*-n*] [*-v*]
+           [*--no-man*] [*--no-subst*] [*--color* _WHEN_]
 
 *zfr* *release* [_OPTIONS_]
 
@@ -193,8 +193,11 @@ Commands that walk from the current directory resolve *packagedir* first.
 
 *ize*::
   Refactor the current project in place so it matches current zephyr
-  style (walks from the current directory toward parents). Copies missing
-  *debian/* and *rpm/* scaffolding from the language template (names
+  style (walks from the current directory toward parents). By default runs
+  *2meson* first when Autotools (*configure.ac* / *configure.in*) or CMake
+  (*CMakeLists.txt*) sources are present, producing *meson.build* before
+  other upgrades (*-m* / *--mesonize*, default on; *--no-mesonize* to skip).
+  Copies missing *debian/* and *rpm/* scaffolding from the language template (names
   rewritten to this project), writes *VERSION* and *.githooks/pre-commit*,
   patches *meson.build* (*zfr version*, *asciidoctor* man targets,
   *run_target look*, bash-completion install). Converts groff *\*.1* man
@@ -360,6 +363,10 @@ Options for *ize*:
 *-l, --lang* _LANG_::
   Language template to copy scaffolding from (default: detect).
 
+*-m, --mesonize* / *--no-mesonize*::
+  Run *2meson* to convert Autotools/CMake to Meson when those sources
+  are present (default: on). Requires *2meson* on *PATH* (or *ZFR_2MESON*).
+
 *-n, --dry-run*::
   Print planned adds/updates/conversions without writing files.
 
@@ -380,6 +387,9 @@ Options for *ize*:
 
 *ZFR_PKGDATADIR*::
   Override the templates root (normally */usr/share/zephyr*).
+
+*ZFR_2MESON*::
+  Override the *2meson* executable used by *zfr ize --mesonize*.
 
 *NO_COLOR*::
   When set, *zfr about*, *zfr lint*, and *zfr ize* disable CSR

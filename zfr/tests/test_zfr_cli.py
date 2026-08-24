@@ -76,6 +76,54 @@ class ZephyrHelpTests(unittest.TestCase):
         )
         self.assertEqual(proc.returncode, 0, proc.stderr)
         self.assertIn("dry-run", proc.stdout)
+        self.assertIn("mesonize", proc.stdout)
+
+    def test_ize_mesonize_autotools_fixture(self) -> None:
+        """ize runs 2meson before scaffolding when configure.ac is present."""
+        if not shutil.which("2meson"):
+            self.skipTest("2meson not on PATH")
+        with tempfile.TemporaryDirectory(prefix="zfr-ize-mesonize-") as tmp:
+            root = Path(tmp)
+            (root / "debian").mkdir()
+            (root / "configure.ac").write_text(
+                "AC_INIT([tiny], [0.1.0], [t@e])\n"
+                "AM_INIT_AUTOMAKE([-Wno-portability])\n"
+                "AC_CONFIG_FILES([Makefile])\n"
+                "AC_OUTPUT\n",
+                encoding="utf-8",
+            )
+            (root / "Makefile.am").write_text(
+                "dist_bin_SCRIPTS = tiny\n",
+                encoding="utf-8",
+            )
+            (root / "tiny.in").write_text(
+                "#!/bin/sh\necho @PACKAGE@ @VERSION@\n",
+                encoding="utf-8",
+            )
+            (root / "debian" / "control").write_text(
+                "Source: tiny\n"
+                "Maintainer: Lenik <zephyr@bodz.net>\n"
+                "Build-Depends: debhelper-compat (= 13)\n"
+                "\n"
+                "Package: tiny\n"
+                "Architecture: all\n"
+                "Depends: ${misc:Depends}\n"
+                "Description: tiny script\n"
+                " test\n",
+                encoding="utf-8",
+            )
+            proc = run_zephyr("ize", "-l", "bash", "--color", "never", cwd=root)
+            self.assertEqual(proc.returncode, 0, proc.stderr + proc.stdout)
+            self.assertIn("2meson", proc.stdout)
+            meson = (root / "meson.build").read_text(encoding="utf-8")
+            self.assertIn("configure_file", meson)
+            self.assertIn("input: 'tiny.in'", meson)
+            self.assertIn("zfr version", meson)
+            proc2 = run_zephyr(
+                "ize", "-l", "bash", "--no-mesonize", "-n", "--color", "never", cwd=root
+            )
+            self.assertEqual(proc2.returncode, 0, proc2.stderr + proc2.stdout)
+            self.assertNotIn("2meson via", proc2.stdout)
 
 
 class ZephyrDetectTests(unittest.TestCase):

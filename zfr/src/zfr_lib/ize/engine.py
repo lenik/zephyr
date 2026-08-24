@@ -25,6 +25,7 @@ class Ize:
         dry_run: bool = False,
         do_man: bool = True,
         do_subst: bool = True,
+        do_mesonize: bool = True,
         verbose: bool = False,
         color: str = "auto",
     ) -> None:
@@ -33,9 +34,11 @@ class Ize:
         self.dry_run = dry_run
         self.do_man = do_man
         self.do_subst = do_subst
+        self.do_mesonize = do_mesonize
         self.verbose = verbose
         self.csr = Csr(color)
         self.changes: list[Change] = []
+        self._mesonized = False
         meson = _meson_project_fields(root)
         src, _, _ = _control(root)
         self.name = src.get("Source") or meson.get("name") or root.name
@@ -67,6 +70,7 @@ class Ize:
             dest.chmod(mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
     def run(self) -> int:
+        self.mesonize()
         self.add_missing_files()
         self.ensure_changelog_version()
         self.ensure_hooks()
@@ -80,6 +84,47 @@ class Ize:
         self.report()
         return 0
 
+    def mesonize(self) -> None:
+        """Convert Autotools/CMake to Meson via 2meson (default on)."""
+        from .mesonize import find_2meson, has_foreign_build, run_2meson
+
+        if not self.do_mesonize:
+            if self.verbose:
+                self.note("skip", "2meson", "--no-mesonize")
+            return
+        if not has_foreign_build(self.root):
+            if self.verbose:
+                self.note("skip", "2meson", "no Autotools/CMake sources")
+            return
+        exe = find_2meson()
+        if exe is None:
+            raise SystemExit(
+                "zfr ize: Autotools/CMake detected but 2meson not found in PATH "
+                "(install 2meson or set ZFR_2MESON)"
+            )
+        # Force overwrite when meson.build already exists alongside configure.ac
+        # so a prior partial conversion can be refreshed.
+        force = True
+        detail = f"via {exe}"
+        if self.dry_run:
+            self.note("convert", "meson.build", f"would run 2meson {detail}")
+            code, out = run_2meson(
+                self.root, dry_run=True, force=force, verbose=self.verbose
+            )
+            if code != 0:
+                raise SystemExit(f"zfr ize: 2meson dry-run failed (exit {code}):\n{out}")
+            self._mesonized = True
+            return
+        code, out = run_2meson(
+            self.root, dry_run=False, force=force, verbose=self.verbose
+        )
+        if code != 0:
+            raise SystemExit(f"zfr ize: 2meson failed (exit {code}):\n{out}")
+        self._mesonized = True
+        self.note("convert", "meson.build", f"2meson {detail}")
+        if self.verbose and out.strip():
+            for line in out.strip().splitlines()[:20]:
+                self.note("note", "2meson", line.strip())
     def add_missing_files(self) -> None:
         try:
             tmpl = template_dir(self.lang)
@@ -90,7 +135,11 @@ class Ize:
         else:
             tmpl_copy = tmpl
         meson_dest = self.root / "meson.build"
-        if not meson_dest.is_file() and tmpl_copy is not None:
+        if (
+            not meson_dest.is_file()
+            and not self._mesonized
+            and tmpl_copy is not None
+        ):
             src = tmpl_copy / "meson.build"
             if src.is_file():
                 self.copy_file(src, meson_dest, "meson.build from language template")
@@ -163,15 +212,16 @@ class Ize:
         elif "zfr version" not in text:
             proj_end = _project_call_end(text)
             proj = text[text.find("project(") : proj_end] if proj_end else ""
-            if re.search(r"version:\s*'[^']+'", proj or text):
+            ver_lit = re.search(r"version\s*:\s*'[^']+'", proj or text)
+            if ver_lit:
                 text = re.sub(
-                    r"version:\s*'[^']+'",
+                    r"version\s*:\s*'[^']+'",
                     lambda _m: "version: " + VERSION_RUN,
                     text,
                     count=1,
                 )
                 details.append("replace hardcoded project version")
-            elif proj_end and "version:" not in proj:
+            elif proj_end and not re.search(r"version\s*:", proj):
                 def _inject(m: re.Match[str]) -> str:
                     return m.group(0) + "\n    version: " + VERSION_RUN + ","
                 text2, n = re.subn(
@@ -187,16 +237,16 @@ class Ize:
         end = _project_call_end(text)
         if end is not None:
             insert_at = end
-            extra = ""
-            if "license:" not in text[: end + 80] and _AGPL not in text[:end]:
-                # license may be inside project()
-                if "license:" not in text[text.find("project(") : end]:
-                    extra_license = f",\n    license: '{_AGPL}'"
-                    # insert before closing paren
-                    text = text[: end - 1] + extra_license + text[end - 1 :]
-                    insert_at = end + len(extra_license)
-                    details.append("license AGPL-3.0-or-later")
-                    end = insert_at
+            proj_span = text[text.find("project(") : end]
+            if not re.search(r"license\s*:", proj_span) and _AGPL not in proj_span:
+                # Insert before closing paren; ensure a comma after the previous arg.
+                before = text[: end - 1].rstrip()
+                sep = "" if before.endswith(",") else ","
+                extra_license = f"{sep}\n    license: '{_AGPL}'"
+                text = before + extra_license + text[end - 1 :]
+                insert_at = len(before) + len(extra_license) + 1  # past ')'
+                details.append("license AGPL-3.0-or-later")
+                end = insert_at
             after = text[end:]
             author, email = _maintainer(self.root)
             block = ""
@@ -546,8 +596,9 @@ endforeach
             "update": csr.yellow,
             "convert": csr.cyan,
             "skip": csr.dim,
+            "note": csr.dim,
         }
-        shown = [c for c in self.changes if c.kind != "skip" or self.verbose]
+        shown = [c for c in self.changes if c.kind not in {"skip", "note"} or self.verbose]
         for c in shown:
             tag = csr.wrap(f"{c.kind:7}", csr.bold, kind_color.get(c.kind, ""))
             path = csr.wrap(c.path, csr.bold, csr.blue)

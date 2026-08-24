@@ -135,15 +135,41 @@ def _rel(root: Path, path: Path) -> str:
 
 
 def _project_call_end(text: str) -> int | None:
+    """Index just past the closing ')' of the first project(...) call.
+
+    Skips parentheses inside Meson string literals (including triple quotes)
+    so nested run_command() / shell snippets do not truncate the span.
+    """
     m = re.search(r"project\s*\(", text)
     if not m:
         return None
     i = m.end()
     depth = 1
-    while i < len(text) and depth:
-        if text[i] == "(":
+    n = len(text)
+    while i < n and depth:
+        ch = text[i]
+        if ch in ("'", '"'):
+            quote = ch
+            # Triple-quoted string?
+            if i + 2 < n and text[i : i + 3] == quote * 3:
+                i += 3
+                while i + 2 < n and text[i : i + 3] != quote * 3:
+                    i += 1
+                i = min(i + 3, n)
+                continue
+            i += 1
+            while i < n:
+                if text[i] == "\\" and i + 1 < n:
+                    i += 2
+                    continue
+                if text[i] == quote:
+                    i += 1
+                    break
+                i += 1
+            continue
+        if ch == "(":
             depth += 1
-        elif text[i] == ")":
+        elif ch == ")":
             depth -= 1
         i += 1
     return i if depth == 0 else None
