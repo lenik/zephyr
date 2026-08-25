@@ -1,3 +1,18 @@
+zephyr (2.6.4) testing; urgency=medium
+
+  * lint/rpm: rewrite broken check_rpm (early return left most checks dead);
+    compare %files to Meson install set (bindir, completions, manN, pkgdata,
+    perl5, includedir, sysconfdir, shlib.d, setup/, gettext .mo, locale mans).
+  * lint/rpm: error on BuildArch: noarch when Meson has executable(); on Debian
+    substvars (${…}) left in Requires; on spurious %{_datadir}/%{name}/;
+    on bash-completion basename mismatches (e.g. coolutils vs coolutils.sh).
+  * lint/debian: error Architecture: all when Meson has executable() (same
+    class of bug as RPM BuildArch: noarch).
+  * Catches the failure modes seen under ``zfr release -l -fIR`` before the
+    build, matching what ``zfr ize`` now repairs.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Tue, 25 Aug 2026 22:33:54 +0800
+
 zephyr (2.6.3) testing; urgency=medium
 
   * lint: add -i/--info and -I/--no-info to show or hide the zephyr

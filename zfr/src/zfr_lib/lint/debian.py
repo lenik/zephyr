@@ -95,7 +95,32 @@ def check_debian(root: Path, lang: str, role: str) -> list[Finding]:
             )
         )
     else:
-        out.append(Finding("ok", "debian.Architecture", _("Architecture: %s") % arch, rel))
+        # Meson executable() means ELF binaries — Architecture: all will fail on Debian too.
+        has_elf = False
+        try:
+            from ..ize.rpm_files import _all_meson_texts
+
+            has_elf = bool(re.search(r"\bexecutable\s*\(", _all_meson_texts(root)))
+        except Exception:
+            has_elf = False
+        if has_elf and arch == "all":
+            out.append(
+                Finding(
+                    "error",
+                    "debian.Architecture.elf",
+                    _(
+                        "Architecture: all but Meson has executable(); "
+                        "ELF binaries need Architecture: any "
+                        "(same class of bug as RPM BuildArch: noarch)"
+                    ),
+                    rel,
+                    fix=_("Architecture: any"),
+                )
+            )
+        else:
+            out.append(
+                Finding("ok", "debian.Architecture", _("Architecture: %s") % arch, rel)
+            )
 
     homepage = src.get("Homepage", "")
     if homepage:
