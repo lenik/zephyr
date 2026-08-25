@@ -53,7 +53,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
             Finding(
                 "ok",
                 "i18n.l10n-level",
-                f"l10n level {level}: no locale coverage required",
+                _("l10n level %s: no locale coverage required") % level,
             )
         ]
 
@@ -62,7 +62,8 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
         Finding(
             "ok",
             "i18n.l10n-level",
-            f"l10n level {level} ({len(required)} locales)",
+            _("l10n level %(level)s (%(count)d locales)")
+            % {"level": level, "count": len(required)},
         )
     )
 
@@ -74,11 +75,15 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
             Finding(
                 "note",
                 "i18n.po",
-                "no po/ directory (optional unless the project uses gettext)",
-                fix="If the app is translated, add po/ with LINGUAS + *.po and "
+                _("no po/ directory (optional unless the project uses gettext)"),
+                fix=_("If the app is translated, add po/ with LINGUAS + *.po and "
                 "i18n.gettext() in meson.build. Required locales at "
-                f"{level}: " + ", ".join(required)
-                + f" (source language {RECOMMENDED_I18N_SOURCE}).",
+                "%(level)s: %(locales)s (source language %(source)s).")
+                % {
+                    "level": level,
+                    "locales": ", ".join(required),
+                    "source": RECOMMENDED_I18N_SOURCE,
+                },
             )
         )
     else:
@@ -89,11 +94,14 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                 Finding(
                     "warn",
                     "i18n.linguas",
-                    "po/ exists but po/LINGUAS is missing or empty",
+                    _("po/ exists but po/LINGUAS is missing or empty"),
                     "po/LINGUAS",
-                    fix="Create po/LINGUAS listing at least:\n"
-                    + "\n".join(required)
-                    + f"\n(English/{RECOMMENDED_I18N_SOURCE} is the msgid source and is not listed.)",
+                    fix=_("Create po/LINGUAS listing at least:\n%(locales)s\n"
+                    "(English/%(source)s is the msgid source and is not listed.)")
+                    % {
+                        "locales": "\n".join(required),
+                        "source": RECOMMENDED_I18N_SOURCE,
+                    },
                 )
             )
         else:
@@ -103,12 +111,17 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     Finding(
                         "warn",
                         "i18n.linguas.coverage",
-                        f"po/LINGUAS missing {level} locale(s): " + ", ".join(missing),
+                        _("po/LINGUAS missing %(level)s locale(s): %(locales)s")
+                        % {"level": level, "locales": ", ".join(missing)},
                         "po/LINGUAS",
-                        fix=f"Level {level} requires: "
-                        + ", ".join(required)
-                        + f" (source {RECOMMENDED_I18N_SOURCE}; zh-cn→zh_CN, zh-tw→zh_TW). "
-                        "Append the missing lines to LINGUAS and add matching po/<locale>.po.",
+                        fix=_("Level %(level)s requires: %(locales)s "
+                        "(source %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). "
+                        "Append the missing lines to LINGUAS and add matching po/<locale>.po.")
+                        % {
+                            "level": level,
+                            "locales": ", ".join(required),
+                            "source": RECOMMENDED_I18N_SOURCE,
+                        },
                     )
                 )
             else:
@@ -116,7 +129,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     Finding(
                         "ok",
                         "i18n.linguas.coverage",
-                        f"po/LINGUAS covers {level} locale set",
+                        _("po/LINGUAS covers %s locale set") % level,
                         "po/LINGUAS",
                     )
                 )
@@ -131,10 +144,10 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     Finding(
                         "warn",
                         "i18n.po.files",
-                        "LINGUAS entries without po/<locale>.po: " + ", ".join(missing_po),
+                        _("LINGUAS entries without po/<locale>.po: %s") % ", ".join(missing_po),
                         "po/",
-                        fix="For each locale: msginit -i <domain>.pot -o po/<locale>.po "
-                        "-l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot",
+                        fix=_("For each locale: msginit -i <domain>.pot -o po/<locale>.po "
+                        "-l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"),
                     )
                 )
             else:
@@ -144,7 +157,8 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                         Finding(
                             "ok",
                             "i18n.po.files",
-                            f"{level} locale .po files present ({len(covered)})",
+                            _("%(level)s locale .po files present (%(count)d)")
+                            % {"level": level, "count": len(covered)},
                             "po/",
                         )
                     )
@@ -175,11 +189,12 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                 Finding(
                     "warn",
                     "i18n.man.coverage",
-                    f"missing whole-document man translations for {level}: "
-                    + ", ".join(missing_man),
+                    _("missing whole-document man translations for %(level)s: %(files)s")
+                    % {"level": level, "files": ", ".join(missing_man)},
                     "docs/",
-                    fix="Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). "
-                    f"{level} requires: " + ", ".join(required) + ".",
+                    fix=_("Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). "
+                    "%(level)s requires: %(locales)s.")
+                    % {"level": level, "locales": ", ".join(required)},
                 )
             )
         else:
@@ -187,7 +202,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                 Finding(
                     "ok",
                     "i18n.man.coverage",
-                    f"{level} whole-document man translations present",
+                    _("%s whole-document man translations present") % level,
                     "docs/",
                 )
             )
@@ -196,10 +211,10 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                 Finding(
                     "warn",
                     "i18n.man.english-copy",
-                    "man translation still contains the English Name line: "
-                    + ", ".join(english_copies),
+                    _("man translation still contains the English Name line: %s")
+                    % ", ".join(english_copies),
                     "docs/",
-                    fix="Translate the Name line; do not leave the English wording.",
+                    fix=_("Translate the Name line; do not leave the English wording."),
                 )
             )
 

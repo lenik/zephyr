@@ -82,6 +82,27 @@ class ZephyrGettextTests(unittest.TestCase):
                 self.assertEqual(proc.returncode, 0, proc.stderr)
                 self.assertIn(needle, proc.stdout)
 
+    def test_lint_zh_cn_and_de(self) -> None:
+        for lang, needles in (
+            ("zh_CN", ("状态:", "错误=", "警告=")),
+            ("de", ("Status:", "Fehler=", "Warnungen=")),
+        ):
+            with self.subTest(lang=lang):
+                env = _env()
+                env["LANGUAGE"] = lang
+                env["LANG"] = "C.UTF-8"
+                env["LC_ALL"] = "C.UTF-8"
+                proc = subprocess.run(
+                    [sys.executable, str(ZEPHYR), "lint", "--color", "never"],
+                    env=env,
+                    cwd=ROOT,
+                    capture_output=True,
+                    text=True,
+                )
+                self.assertIn("zfr lint", proc.stdout)
+                for needle in needles:
+                    self.assertIn(needle, proc.stdout, proc.stdout[:500])
+
 
 class ZephyrManpageTranslationTests(unittest.TestCase):
     def test_every_locale_has_whole_document_adoc(self) -> None:

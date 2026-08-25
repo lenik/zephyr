@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 
 from ..finding import Finding
+from ..i18n import _
 from ._puff_helpers import merge_puff, puff_paths
 from ._spec import LangSpec, WireSpec
 
@@ -26,14 +27,14 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
 
 def _lint(root: Path, role: str) -> list[Finding]:
     if (root / "tests").is_dir():
-        return [Finding("ok", "lang.tests", "tests/ present")]
+        return [Finding("ok", "lang.tests", _("tests/ present"))]
     return [
         Finding(
             "note",
             "lang.tests",
-            "no tests/ directory",
+            _("no tests/ directory"),
             "tests/",
-            fix="Add tests/smoke.sh and meson test() for stdin/stdout copy.",
+            fix=_("Add tests/smoke.sh and meson test() for stdin/stdout copy."),
         )
     ]
 

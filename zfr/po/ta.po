@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zfr\n"
 "Report-Msgid-Bugs-To: zephyr@bodz.net\n"
-"POT-Creation-Date: 2026-08-23 19:11+0800\n"
-"PO-Revision-Date: 2026-08-23 19:45+0800\n"
-"Last-Translator: Lenik (谢继雷) <lenik@bodz.net>\n"
+"POT-Creation-Date: 2026-08-25 18:17+0800\n"
+"PO-Revision-Date: 2026-08-25 18:13+0800\n"
+"Last-Translator: Cursor Agent\n"
 "Language-Team: Tamil\n"
 "Language: ta\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 "களை நிர்வகிக்கும். உருவாக்கப்பட்ட திட்ட மரங்கள் zfr-ஐத் தொடர்ந்து அழைக்கும்; zfr பெயர் "
 "மாற்றச் சின்னம் அல்ல."
 
-#: src/zfr:45
+#: src/zfr:46
 msgid "show this help"
 msgstr "இந்த உதவியைக் காட்டு"
 
@@ -68,44 +68,44 @@ msgstr "மொழியைக் கண்டுபிடித்து pkgdata
 msgid "new puff name(s) (snake_case recommended)"
 msgstr "புதிய puff பெயர்கள் (snake_case பரிந்துரை)"
 
-#: src/zfr_lib/create.py:291
+#: src/zfr_lib/create.py:311
 msgid "create a new project from a language template"
 msgstr "மொழி வார்ப்புருவிலிருந்து புதிய திட்டம் உருவாக்கு"
 
-#: src/zfr_lib/create.py:292
+#: src/zfr_lib/create.py:312
 msgid "Create a new project directory from pkgdatadir/<lang>."
 msgstr "pkgdatadir/<lang>-இலிருந்து புதிய திட்ட அடைவை உருவாக்கு."
 
-#: src/zfr_lib/create.py:298
+#: src/zfr_lib/create.py:319
 #, python-format
 msgid "template language (default: python; one of: %s)"
 msgstr "வார்ப்புரு மொழி (இயல்பு: python; இவற்றில் ஒன்று: %s)"
 
-#: src/zfr_lib/create.py:302
+#: src/zfr_lib/create.py:323
 #, python-format
 msgid "debian changelog distribution (default: %s)"
 msgstr "debian changelog விநியோகம் (இயல்பு: %s)"
 
-#: src/zfr_lib/create.py:306
+#: src/zfr_lib/create.py:327
 #, python-format
 msgid "initial package version and git tag (default: %s)"
 msgstr "முதல் தொகுப்புப் பதிப்பும் git குறிச்சொல்லும் (இயல்பு: %s)"
 
-#: src/zfr_lib/create.py:310
+#: src/zfr_lib/create.py:331
 #, python-format
 msgid "changelog/git author name (default: %s)"
 msgstr "changelog/git ஆசிரியர் பெயர் (இயல்பு: %s)"
 
-#: src/zfr_lib/create.py:314
+#: src/zfr_lib/create.py:335
 #, python-format
 msgid "changelog/git author email (default: %s)"
 msgstr "changelog/git ஆசிரியர் மின்னஞ்சல் (இயல்பு: %s)"
 
-#: src/zfr_lib/create.py:316
+#: src/zfr_lib/create.py:337
 msgid "new project directory name"
 msgstr "புதிய திட்ட அடைவுப் பெயர்"
 
-#: src/zfr_lib/create.py:319
+#: src/zfr_lib/create.py:340
 msgid "optional puff names to add after creating the project"
 msgstr "திட்டம் உருவாக்கிய பின் சேர்க்க விருப்ப puff பெயர்கள்"
 
@@ -170,11 +170,11 @@ msgstr ""
 "இந்தத் திட்டத்தை மட்டும் கட்டி, உள்ளே உள்ள மொழி வார்ப்புருக்கள் தாய் மெட்டா-களஞ்சியத்தை "
 "அனுப்பாமல் இருக்கும். காப்பகப் பாதையை stdout-இல் காட்டும்."
 
-#: src/zfr_lib/ize/__init__.py:60
+#: src/zfr_lib/ize/__init__.py:65
 msgid "refactor this project to current zephyr style"
 msgstr "இந்தத் திட்டத்தைத் தற்போதைய zephyr பாணிக்குப் பொருந்தும்படி மாற்று"
 
-#: src/zfr_lib/ize/__init__.py:61
+#: src/zfr_lib/ize/__init__.py:66
 msgid ""
 "Refactor the current project to match current zephyr style: missing debian/"
 "rpm files, meson targets, AsciiDoc man pages, and Meson version "
@@ -184,37 +184,508 @@ msgstr ""
 "meson இலக்குகள், AsciiDoc கையேட்டுப் பக்கங்கள், Meson பதிப்புப் பதிலீடுகள். நடப்பு "
 "அடைவிலிருந்து மேலே தேடும்."
 
-#: src/zfr_lib/ize/__init__.py:65
+#: src/zfr_lib/ize/__init__.py:70
 #, python-format
 msgid "language template to align with (default: detect; one of: %s)"
 msgstr "பொருத்த வேண்டிய மொழி வார்ப்புரு (இயல்பு: கண்டுபிடி; இவற்றில் ஒன்று: %s)"
 
-#: src/zfr_lib/ize/__init__.py:66
+#: src/zfr_lib/ize/__init__.py:71
 msgid "print planned changes without writing files"
 msgstr "கோப்புகளை எழுதாமல் திட்டத்தைக் காட்டு"
 
-#: src/zfr_lib/ize/__init__.py:67
+#: src/zfr_lib/ize/__init__.py:72
 msgid "also print skipped files"
 msgstr "தவிர்க்கப்பட்ட கோப்புகளையும் காட்டு"
 
-#: src/zfr_lib/ize/__init__.py:68
+#: src/zfr_lib/ize/__init__.py:78
+msgid ""
+"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgstr ""
+"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+
+#: src/zfr_lib/ize/__init__.py:80
 msgid "do not convert groff .1 man pages to docs/*.adoc"
 msgstr "groff .1 கையேட்டுப் பக்கங்களை docs/*.adoc-ஆக மாற்றாதே"
 
-#: src/zfr_lib/ize/__init__.py:69
+#: src/zfr_lib/ize/__init__.py:81
 msgid "do not turn hardcoded versions into @VERSION@ / config.h"
 msgstr "கடினமாக எழுதப்பட்ட பதிப்புகளை @VERSION@ / config.h-ஆக மாற்றாதே"
 
-#: src/zfr_lib/ize/__init__.py:70 src/zfr_lib/lint/__init__.py:98
+#: src/zfr_lib/ize/__init__.py:82 src/zfr_lib/lint/__init__.py:115
 msgid "CSR (console SGR) highlighting (default: auto)"
 msgstr "CSR (கன்சோல் SGR) நிறம் (இயல்பு: auto)"
 
-#: src/zfr_lib/lint/__init__.py:90
+#: src/zfr_lib/l10n.py:93
+#, python-format
+msgid "l10n level must be L0–L3 (or 0–3), not %r"
+msgstr "l10n நிலை L0–L3 (அல்லது 0–3) ஆக இருக்க வேண்டும், %r அல்ல"
+
+#: src/zfr_lib/lang/antlr.py:42 src/zfr_lib/lang/as.py:30
+#: src/zfr_lib/lang/bison.py:38 src/zfr_lib/lang/clib.py:34
+#: src/zfr_lib/lang/cobol.py:32 src/zfr_lib/lang/cpplib.py:34
+#: src/zfr_lib/lang/cpp.py:21 src/zfr_lib/lang/c.py:21 src/zfr_lib/lang/d.py:32
+#: src/zfr_lib/lang/fortran.py:32 src/zfr_lib/lang/gcc.py:48
+#: src/zfr_lib/lang/kotlin.py:22 src/zfr_lib/lang/lua.py:22
+#: src/zfr_lib/lang/nim.py:24 src/zfr_lib/lang/pascal.py:32
+#: src/zfr_lib/lang/python.py:21
+msgid "tests/ present"
+msgstr "tests/ உள்ளது"
+
+#: src/zfr_lib/lang/antlr.py:47 src/zfr_lib/lang/as.py:35
+#: src/zfr_lib/lang/bison.py:43 src/zfr_lib/lang/clib.py:35
+#: src/zfr_lib/lang/cpplib.py:35 src/zfr_lib/lang/cpp.py:22
+#: src/zfr_lib/lang/c.py:22 src/zfr_lib/lang/gcc.py:53
+msgid "no tests/ directory"
+msgstr "tests/ அடைவு இல்லை"
+
+#: src/zfr_lib/lang/antlr.py:49
+msgid "Add tests/TestCommons.java or fixture checks for parser output."
+msgstr ""
+"பார்சர் வெளியீட்டுக்கு tests/TestCommons.java அல்லது fixture சோதனைகளைச் சேர்க்கவும்."
+
+#: src/zfr_lib/lang/as.py:37
+msgid "Add tests/smoke.sh and meson test() for stdin/stdout copy."
+msgstr "stdin/stdout நகலுக்கு tests/smoke.sh மற்றும் meson test() சேர்க்கவும்."
+
+#: src/zfr_lib/lang/bash.py:45
+#, python-format
+msgid "src scripts: %s"
+msgstr "src ஸ்கிரிப்ட்கள்: %s"
+
+#: src/zfr_lib/lang/bash.py:46
+msgid "no src/*.in scripts"
+msgstr "src/*.in ஸ்கிரிப்ட்கள் இல்லை"
+
+#: src/zfr_lib/lang/bash.py:47
+msgid ""
+"Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ and meson "
+"configure_file + install_mode rwxr-xr-x."
+msgstr ""
+"அமைக்கப்பட்ட ஸ்கிரிப்ட்களை src/<puff>.in ஆக @PACKAGE@/@VERSION@ உடன் வைத்து meson "
+"configure_file + install_mode rwxr-xr-x பயன்படுத்தவும்."
+
+#: src/zfr_lib/lang/bison.py:45
+msgid "Add tests/ with fixture checks for parser dump/format output."
+msgstr "பார்சர் dump/format வெளியீட்டுக்கு fixture சோதனைகளுடன் tests/ சேர்க்கவும்."
+
+#: src/zfr_lib/lang/clib.py:36 src/zfr_lib/lang/cpplib.py:36
+#: src/zfr_lib/lang/cpp.py:23 src/zfr_lib/lang/c.py:23
+#: src/zfr_lib/lang/gcc.py:55
+msgid "Add tests/ and meson test() entries like the C family templates."
+msgstr ""
+"C குடும்ப வார்ப்புருக்களைப் போல tests/ மற்றும் meson test() உள்ளீடுகளைச் சேர்க்கவும்."
+
+#: src/zfr_lib/lang/cobol.py:37
+msgid "no tests/ (cobol template uses cobc + meson test)"
+msgstr "tests/ இல்லை (cobol வார்ப்புரு cobc + meson test பயன்படுத்துகிறது)"
+
+#: src/zfr_lib/lang/cobol.py:39
+msgid "Add tests/test_commons.sh or similar smoke test for cobc."
+msgstr "cobc-க்கு tests/test_commons.sh அல்லது இதேபோன்ற புகை சோதனையைச் சேர்க்கவும்."
+
+#: src/zfr_lib/lang/d.py:37
+msgid "no tests/ (D template uses ldc/dmd + meson test)"
+msgstr "tests/ இல்லை (D வார்ப்புரு ldc/dmd + meson test பயன்படுத்துகிறது)"
+
+#: src/zfr_lib/lang/d.py:39
+msgid "Add tests/test_commons.d and meson test() executable."
+msgstr "tests/test_commons.d மற்றும் meson test() இயக்கக்கூடியதைச் சேர்க்கவும்."
+
+#: src/zfr_lib/lang/fortran.py:37
+msgid "no tests/ (fortran template uses gfortran + meson test)"
+msgstr "tests/ இல்லை (fortran வார்ப்புரு gfortran + meson test பயன்படுத்துகிறது)"
+
+#: src/zfr_lib/lang/fortran.py:39
+msgid "Add tests/test_commons.f90 and meson test() executable."
+msgstr "tests/test_commons.f90 மற்றும் meson test() இயக்கக்கூடியதைச் சேர்க்கவும்."
+
+#: src/zfr_lib/lang/go.py:22
+msgid "missing go.mod"
+msgstr "go.mod இல்லை"
+
+#: src/zfr_lib/lang/go.py:23
+msgid ""
+"Add go.mod; meson should `go build` with -X main.buildVersion from "
+"meson.project_version()."
+msgstr ""
+"go.mod சேர்க்கவும்; meson meson.project_version()-இலிருந்து -X main.buildVersion "
+"உடன் `go build` இயக்க வேண்டும்."
+
+#: src/zfr_lib/lang/kotlin.py:23
+msgid "no tests/ (kotlin template uses kotlinc + meson test)"
+msgstr "tests/ இல்லை (kotlin வார்ப்புரு kotlinc + meson test பயன்படுத்துகிறது)"
+
+#: src/zfr_lib/lang/kotlin.py:24
+msgid "Add tests/Test*.kt and meson test() compiling with kotlinc."
+msgstr "kotlinc கொண்டு தொகுக்கும் tests/Test*.kt மற்றும் meson test() சேர்க்கவும்."
+
+#: src/zfr_lib/lang/lua.py:23
+msgid "no tests/ (lua template uses lua tests + meson test)"
+msgstr "tests/ இல்லை (lua வார்ப்புரு lua சோதனைகள் + meson test பயன்படுத்துகிறது)"
+
+#: src/zfr_lib/lang/lua.py:24
+msgid ""
+"Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
+msgstr ""
+"LUA_PATH=src/?.lua உடன் lua அழைக்கும் tests/test_*.lua மற்றும் meson test() "
+"சேர்க்கவும்."
+
+#: src/zfr_lib/lang/nim.py:25
+msgid "no tests/ (nim template uses unittest + meson test)"
+msgstr "tests/ இல்லை (nim வார்ப்புரு unittest + meson test பயன்படுத்துகிறது)"
+
+#: src/zfr_lib/lang/nim.py:26
+msgid "Add tests/test_*.nim and meson test() with nim r."
+msgstr "nim r உடன் tests/test_*.nim மற்றும் meson test() சேர்க்கவும்."
+
+#: src/zfr_lib/lang/pascal.py:37
+msgid "no tests/ (pascal template uses fpc + meson test)"
+msgstr "tests/ இல்லை (pascal வார்ப்புரு fpc + meson test பயன்படுத்துகிறது)"
+
+#: src/zfr_lib/lang/pascal.py:39
+msgid "Add tests/test_commons.pas and meson test() with fpc."
+msgstr "fpc உடன் tests/test_commons.pas மற்றும் meson test() சேர்க்கவும்."
+
+#: src/zfr_lib/lang/python.py:22
+msgid "no tests/ (python template uses unittest + meson test)"
+msgstr "tests/ இல்லை (python வார்ப்புரு unittest + meson test பயன்படுத்துகிறது)"
+
+#: src/zfr_lib/lang/python.py:23
+msgid "Add tests/test_*.py and meson test() with PYTHONPATH=src."
+msgstr "PYTHONPATH=src உடன் tests/test_*.py மற்றும் meson test() சேர்க்கவும்."
+
+#: src/zfr_lib/lang/rust.py:22
+msgid "missing Cargo.toml"
+msgstr "Cargo.toml இல்லை"
+
+#: src/zfr_lib/lang/rust.py:23
+msgid ""
+"Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
+msgstr ""
+"Rust zephyr திட்டங்கள் இருமத்திற்கு Cargo.toml உடன் meson custom_target "
+"வைத்திருக்கும்."
+
+#: src/zfr_lib/lang/zig.py:23
+msgid "missing build.zig"
+msgstr "build.zig இல்லை"
+
+#: src/zfr_lib/lang/zig.py:24
+msgid "Add build.zig; meson should invoke `zig build -Doptimize=ReleaseFast`."
+msgstr ""
+"build.zig சேர்க்கவும்; meson `zig build -Doptimize=ReleaseFast` அழைக்க வேண்டும்."
+
+#: src/zfr_lib/lint/debian.py:42
+#, python-format
+msgid "Build-Depends has %s"
+msgstr "Build-Depends-இல் %s உள்ளது"
+
+#: src/zfr_lib/lint/debian.py:48
+#, python-format
+msgid "Build-Depends missing %s"
+msgstr "Build-Depends-இல் %s இல்லை"
+
+#: src/zfr_lib/lint/debian.py:50
+#, python-format
+msgid ""
+"Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man "
+"pages)."
+msgstr ""
+"Build-Depends-இல் %s சேர்க்கவும் (zephyr தொகுப்புகள் Meson + AsciiDoc man பக்கங்களால் "
+"கட்டப்படுகின்றன)."
+
+#: src/zfr_lib/lint/debian.py:54
+msgid "debhelper-compat present"
+msgstr "debhelper-compat உள்ளது"
+
+#: src/zfr_lib/lint/debian.py:60
+msgid "Build-Depends missing debhelper-compat (= 13)"
+msgstr "Build-Depends-இல் debhelper-compat (= 13) இல்லை"
+
+#: src/zfr_lib/lint/debian.py:62
+msgid "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+msgstr ""
+"Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+
+#: src/zfr_lib/lint/debian.py:72
+msgid "Package stanza missing Architecture"
+msgstr "Package சரணத்தில் Architecture இல்லை"
+
+#: src/zfr_lib/lint/debian.py:74
+msgid "Architecture: all  (scripts) or any (compiled)."
+msgstr "Architecture: all  (ஸ்கிரிப்ட்கள்) அல்லது any (தொகுக்கப்பட்டவை)."
+
+#: src/zfr_lib/lint/debian.py:82
+#, python-format
+msgid "bash packages should be Architecture: all (got %s)"
+msgstr "bash தொகுப்புகள் Architecture: all ஆக இருக்க வேண்டும் (கிடைத்தது %s)"
+
+#: src/zfr_lib/lint/debian.py:84
+msgid "Architecture: all"
+msgstr "Architecture: all"
+
+#: src/zfr_lib/lint/debian.py:92
+#, python-format
+msgid "%s packages are usually Architecture: any (got all)"
+msgstr "%s தொகுப்புகள் பொதுவாக Architecture: any (கிடைத்தது all)"
+
+#: src/zfr_lib/lint/debian.py:94
+msgid "Architecture: any"
+msgstr "Architecture: any"
+
+#: src/zfr_lib/lint/debian.py:98
+#, python-format
+msgid "Architecture: %s"
+msgstr "புலம் Architecture: %s"
+
+#: src/zfr_lib/lint/debian.py:102
+#, python-format
+msgid "Homepage: %s"
+msgstr "புலம் Homepage: %s"
+
+#: src/zfr_lib/lint/debian.py:108
+msgid "no Homepage"
+msgstr "Homepage இல்லை"
+
+#: src/zfr_lib/lint/debian.py:110
+msgid "Set Homepage: to the project URL."
+msgstr "Homepage: ஐ திட்ட URL-க்கு அமைக்கவும்."
+
+#: src/zfr_lib/lint/debian.py:116
+msgid "dh meson debian/build"
+msgstr "dh meson debian/build பயன்படுத்துகிறது"
+
+#: src/zfr_lib/lint/debian.py:122
+msgid ""
+"debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
+msgstr "debian/rules dh --buildsystem=meson --builddirectory=debian/build அல்ல"
+
+#: src/zfr_lib/lint/debian.py:125
+#, no-python-format
+msgid ""
+"Use:\n"
+"#!/usr/bin/make -f\n"
+"\n"
+"%:\n"
+"\tdh $@ --buildsystem=meson --builddirectory=debian/build"
+msgstr ""
+"பயன்படுத்தவும்:\n"
+"#!/usr/bin/make -f\n"
+"\n"
+"%:\n"
+"\tdh $@ --buildsystem=meson --builddirectory=debian/build"
+
+#: src/zfr_lib/lint/debian.py:131
+msgid "copyright mentions AGPL"
+msgstr "பதிப்புரிமை AGPL-ஐக் குறிப்பிடுகிறது"
+
+#: src/zfr_lib/lint/debian.py:137
+msgid "debian/copyright does not mention AGPL"
+msgstr "debian/copyright AGPL-ஐக் குறிப்பிடவில்லை"
+
+#: src/zfr_lib/lint/debian.py:139
+msgid "Use the template debian/copyright (License: AGPL-3+)."
+msgstr "வார்ப்புரு debian/copyright-ஐப் பயன்படுத்தவும் (License: AGPL-3+)."
+
+#: src/zfr_lib/lint/debian.py:145
+#, python-format
+msgid "source format %s"
+msgstr "மூல வடிவம் %s"
+
+#: src/zfr_lib/lint/debian.py:154
+#, python-format
+msgid "VERSION=%(file)r != changelog %(changelog)r"
+msgstr "VERSION=%(file)r != மாற்றப் பதிவு %(changelog)r"
+
+#: src/zfr_lib/lint/debian.py:156
+msgid ""
+"VERSION should match the latest debian/changelog entry (pre-commit hook "
+"updates it). Git describe may still differ."
+msgstr ""
+"VERSION, debian/changelog-இன் சமீபத்திய பதிவுடன் பொருந்த வேண்டும் (pre-commit கொக்கி "
+"அதைப் புதுப்பிக்கிறது). Git describe இன்னும் வேறுபடலாம்."
+
+#: src/zfr_lib/lint/debian.py:162
+#, python-format
+msgid "VERSION matches changelog %s"
+msgstr "VERSION மாற்றப் பதிவு %s உடன் பொருந்துகிறது"
+
+#: src/zfr_lib/lint/debian.py:172
+msgid "bash project Depends missing bash-shlib"
+msgstr "bash திட்டத்தின் Depends-இல் bash-shlib இல்லை"
+
+#: src/zfr_lib/lint/debian.py:174
+msgid "Depends: bash, bash-shlib, ${misc:Depends}"
+msgstr "Depends: bash, bash-shlib, ${misc:Depends}"
+
+#: src/zfr_lib/lint/debian.py:178
+msgid "Depends includes bash-shlib"
+msgstr "Depends-இல் bash-shlib உள்ளது"
+
+#: src/zfr_lib/lint/i18n_check.py:56
+#, python-format
+msgid "l10n level %s: no locale coverage required"
+msgstr "l10n நிலை %s: மொழிக்கூறு கவரேஜ் தேவையில்லை"
+
+#: src/zfr_lib/lint/i18n_check.py:65
+#, python-format
+msgid "l10n level %(level)s (%(count)d locales)"
+msgstr "l10n நிலை %(level)s (%(count)d மொழிக்கூறுகள்)"
+
+#: src/zfr_lib/lint/i18n_check.py:78
+msgid "no po/ directory (optional unless the project uses gettext)"
+msgstr "po/ அடைவு இல்லை (திட்டம் gettext பயன்படுத்தாவிட்டால் விருப்பமானது)"
+
+#: src/zfr_lib/lint/i18n_check.py:79
+#, python-format
+msgid ""
+"If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in "
+"meson.build. Required locales at %(level)s: %(locales)s (source language "
+"%(source)s)."
+msgstr ""
+"பயன்பாடு மொழிபெயர்க்கப்பட்டிருந்தால், meson.build-இல் i18n.gettext() உடன் po/-இல் "
+"LINGUAS + *.po சேர்க்கவும். %(level)s-இல் தேவையான மொழிக்கூறுகள்: %(locales)s (மூல "
+"மொழி %(source)s)."
+
+#: src/zfr_lib/lint/i18n_check.py:97
+msgid "po/ exists but po/LINGUAS is missing or empty"
+msgstr "po/ உள்ளது ஆனால் po/LINGUAS இல்லை அல்லது காலி"
+
+#: src/zfr_lib/lint/i18n_check.py:99
+#, python-format
+msgid ""
+"Create po/LINGUAS listing at least:\n"
+"%(locales)s\n"
+"(English/%(source)s is the msgid source and is not listed.)"
+msgstr ""
+"குறைந்தது இவற்றைப் பட்டியலிடும் po/LINGUAS உருவாக்கவும்:\n"
+"%(locales)s\n"
+"(ஆங்கிலம்/%(source)s msgid மூலம்; பட்டியலில் இல்லை.)"
+
+#: src/zfr_lib/lint/i18n_check.py:114
+#, python-format
+msgid "po/LINGUAS missing %(level)s locale(s): %(locales)s"
+msgstr "po/LINGUAS-இல் %(level)s மொழிக்கூறு(கள்) இல்லை: %(locales)s"
+
+#: src/zfr_lib/lint/i18n_check.py:117
+#, python-format
+msgid ""
+"Level %(level)s requires: %(locales)s (source %(source)s; zh-cn→zh_CN, zh-"
+"tw→zh_TW). Append the missing lines to LINGUAS and add matching po/"
+"<locale>.po."
+msgstr ""
+"நிலை %(level)s தேவை: %(locales)s (மூலம் %(source)s; zh-cn→zh_CN, zh-"
+"tw→zh_TW). விடுபட்ட வரிகளை LINGUAS-இல் சேர்த்து பொருந்தும் po/<locale>.po சேர்க்கவும்."
+
+#: src/zfr_lib/lint/i18n_check.py:132
+#, python-format
+msgid "po/LINGUAS covers %s locale set"
+msgstr "po/LINGUAS %s மொழிக்கூறு தொகுப்பை உள்ளடக்குகிறது"
+
+#: src/zfr_lib/lint/i18n_check.py:147
+#, python-format
+msgid "LINGUAS entries without po/<locale>.po: %s"
+msgstr "po/<locale>.po இல்லாத LINGUAS பதிவுகள்: %s"
+
+#: src/zfr_lib/lint/i18n_check.py:149
+msgid ""
+"For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-"
+"translator && msgmerge -U po/<locale>.po <domain>.pot"
+msgstr ""
+"ஒவ்வொரு மொழிக்கூறுக்கும்: msginit -i <domain>.pot -o po/<locale>.po -l <locale> "
+"--no-translator && msgmerge -U po/<locale>.po <domain>.pot"
+
+#: src/zfr_lib/lint/i18n_check.py:160
+#, python-format
+msgid "%(level)s locale .po files present (%(count)d)"
+msgstr "%(level)s மொழிக்கூறு .po கோப்புகள் உள்ளன (%(count)d)"
+
+#: src/zfr_lib/lint/i18n_check.py:192
+#, python-format
+msgid "missing whole-document man translations for %(level)s: %(files)s"
+msgstr "%(level)s-க்கு முழு ஆவண man மொழிபெயர்ப்புகள் இல்லை: %(files)s"
+
+#: src/zfr_lib/lint/i18n_check.py:195
+#, python-format
+msgid ""
+"Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). "
+"%(level)s requires: %(locales)s."
+msgstr ""
+"docs/<locale>/<name>.adoc-ஐ கைமுறையாக மொழிபெயர்க்கவும் (முழு ஆவணம், po4a அல்ல). "
+"%(level)s தேவை: %(locales)s."
+
+#: src/zfr_lib/lint/i18n_check.py:205
+#, python-format
+msgid "%s whole-document man translations present"
+msgstr "%s முழு ஆவண man மொழிபெயர்ப்புகள் உள்ளன"
+
+#: src/zfr_lib/lint/i18n_check.py:214
+#, python-format
+msgid "man translation still contains the English Name line: %s"
+msgstr "man மொழிபெயர்ப்பில் இன்னும் ஆங்கில Name வரி உள்ளது: %s"
+
+#: src/zfr_lib/lint/i18n_check.py:217
+msgid "Translate the Name line; do not leave the English wording."
+msgstr "Name வரியை மொழிபெயர்க்கவும்; ஆங்கிலச் சொற்களை விடாதீர்கள்."
+
+#: src/zfr_lib/lint/identity.py:57
+#, python-format
+msgid "%(label)s is %(val)r, expected %(expected)r (directory name)"
+msgstr "%(label)s ஆனது %(val)r, எதிர்பார்ப்பு %(expected)r (அடைவுப் பெயர்)"
+
+#: src/zfr_lib/lint/identity.py:60
+#, python-format
+msgid ""
+"Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename "
+"%(expected)s` if leftover template names remain."
+msgstr ""
+"%(label)s-ஐ %(expected)r ஆக்கவும், அல்லது அடைவை மறுபெயரிடவும். வார்ப்புருப் பெயர்கள் "
+"மிஞ்சினால் `zfr rename %(expected)s` பயன்படுத்தவும்."
+
+#: src/zfr_lib/lint/identity.py:66
+#, python-format
+msgid "%(label)s=%(val)s"
+msgstr "%(label)s=%(val)s"
+
+#: src/zfr_lib/lint/identity.py:69
+#, python-format
+msgid "meson project name=%s"
+msgstr "meson திட்டப் பெயர்=%s"
+
+#: src/zfr_lib/lint/identity.py:75
+#, python-format
+msgid "debian Source=%(source)r != meson project=%(meson)r"
+msgstr "debian Source=%(source)r != meson திட்டம்=%(meson)r"
+
+#: src/zfr_lib/lint/identity.py:78
+msgid "Keep Source, Package, and meson project() name identical."
+msgstr "Source, Package மற்றும் meson project() பெயரை ஒன்றாக வைக்கவும்."
+
+#: src/zfr_lib/lint/identity.py:82
+#, python-format
+msgid "Source=%s"
+msgstr "Source=%s"
+
+#: src/zfr_lib/lint/identity.py:95
+#, python-format
+msgid "spec Name=%(spec)r != debian/meson name %(want)r"
+msgstr "spec Name=%(spec)r != debian/meson பெயர் %(want)r"
+
+#: src/zfr_lib/lint/identity.py:99
+#, python-format
+msgid "Set Name: %s in the spec (same as debian Source)."
+msgstr "spec-இல் Name: %s அமைக்கவும் (debian Source போல)."
+
+#: src/zfr_lib/lint/identity.py:103
+#, python-format
+msgid "spec Name=%s"
+msgstr "spec Name=%s"
+
+#: src/zfr_lib/lint/__init__.py:99
 msgid "validate project packaging and zephyr layout (walks parents from cwd)"
 msgstr ""
 "திட்டத் தொகுப்பையும் zephyr அமைப்பையும் சரிபார் (நடப்பு அடைவிலிருந்து மேலே தேடும்)"
 
-#: src/zfr_lib/lint/__init__.py:91
+#: src/zfr_lib/lint/__init__.py:100
 msgid ""
 "Check the current zephyr project for missing files and packaging/style "
 "mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
@@ -223,23 +694,715 @@ msgstr ""
 "நடப்பு zephyr திட்டத்தில் இல்லாத கோப்புகளையும் தொகுப்பு/பாணிப் பிழைகளையும் பார்க்கும். "
 "நடப்பு அடைவிலிருந்து மேலே தேடும். stdout முனையம் என்றால் CSR நிறங்கள்."
 
-#: src/zfr_lib/lint/__init__.py:95
+#: src/zfr_lib/lint/__init__.py:104
 msgid "show passing checks too"
 msgstr "வெற்றி பெற்ற சோதனைகளையும் காட்டு"
 
-#: src/zfr_lib/lint/__init__.py:96
+#: src/zfr_lib/lint/__init__.py:105
 msgid "only print errors"
 msgstr "பிழைகளை மட்டும் காட்டு"
 
-#: src/zfr_lib/lint/__init__.py:97
+#: src/zfr_lib/lint/__init__.py:106
 msgid "treat warnings as failures (exit 1)"
 msgstr "எச்சரிக்கைகளைத் தோல்வியாகக் கருது (வெளியேறும் நிலை 1)"
 
-#: src/zfr_lib/lint/__init__.py:108
+#: src/zfr_lib/lint/__init__.py:113
 msgid ""
 "required gettext/manpage locale coverage L0–L3 (default: L1; project file "
 "may override)"
-msgstr "தேவையான gettext/கையேட்டு locale உள்ளடக்கம் L0–L3 (இயல்புநிலை L1; திட்டக் கோப்பு மேலெழுதலாம்)"
+msgstr ""
+"தேவையான gettext/கையேட்டு locale உள்ளடக்கம் L0–L3 (இயல்புநிலை L1; திட்டக் கோப்பு "
+"மேலெழுதலாம்)"
+
+#: src/zfr_lib/lint/lang_bits.py:31
+#, python-format
+msgid "legacy example module %s; use commons or a specific name"
+msgstr "பழைய எடுத்துக்காட்டு தொகுதி %s; commons அல்லது குறிப்பிட்ட பெயர் பயன்படுத்தவும்"
+
+#: src/zfr_lib/lint/lang_bits.py:33
+msgid ""
+"Rename to src/commons.* (template convention) or a project-specific module "
+"name."
+msgstr ""
+"src/commons.* (வார்ப்புரு மரபு) அல்லது திட்ட-குறிப்பிட்ட தொகுதிப் பெயருக்கு "
+"மறுபெயரிடவும்."
+
+#: src/zfr_lib/lint/lang_bits.py:44
+#, python-format
+msgid "%s is only a template example for shared helpers"
+msgstr "%s பகிரப்பட்ட உதவிகளுக்கான வார்ப்புரு எடுத்துக்காட்டு மட்டுமே"
+
+#: src/zfr_lib/lint/lang_bits.py:46
+msgid ""
+"common_lib / commons mean “extract reusable pieces”, but filenames should be "
+"concrete. Rename to a specific module in real projects (e.g. stream_copy.py, "
+"bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
+msgstr ""
+"common_lib / commons என்றால் “மீண்டும் பயன்படுத்தக்கூடிய பகுதிகளைப் பிரித்தெடு”, ஆனால் "
+"கோப்புப் பெயர்கள் குறிப்பிட்டதாக இருக்க வேண்டும். உண்மையான திட்டங்களில் குறிப்பிட்ட "
+"தொகுதிக்கு மறுபெயரிடவும் (எ.கா. stream_copy.py, bulk.h). clib/cpplib பகிரப்பட்ட "
+"நூலக நுழைவாக lib.c/lib.cpp வைக்கின்றன."
+
+#: src/zfr_lib/lint/layout.py:35
+msgid "Add a top-level meson.build with project(...)."
+msgstr "project(...) கொண்ட மேல்நிலை meson.build சேர்க்கவும்."
+
+#: src/zfr_lib/lint/layout.py:36
+msgid "Copy LICENSE from the language template (AGPL-3.0-or-later)."
+msgstr "மொழி வார்ப்புருவிலிருந்து LICENSE நகலெடுக்கவும் (AGPL-3.0-or-later)."
+
+#: src/zfr_lib/lint/layout.py:37
+msgid "Add README.md describing this project."
+msgstr "இந்தத் திட்டத்தை விவரிக்கும் README.md சேர்க்கவும்."
+
+#: src/zfr_lib/lint/layout.py:38
+msgid "Add README-zh.md (Chinese summary), matching other zephyr templates."
+msgstr "பிற zephyr வார்ப்புருக்களைப் போல் README-zh.md (சீனச் சுருக்கம்) சேர்க்கவும்."
+
+#: src/zfr_lib/lint/layout.py:39
+msgid "Add debian/ packaging (copy debian/ from the language template)."
+msgstr ""
+"debian/ பொதியாக்கத்தைச் சேர்க்கவும் (மொழி வார்ப்புருவிலிருந்து debian/ நகலெடுக்கவும்)."
+
+#: src/zfr_lib/lint/layout.py:40
+msgid "Add debian/changelog (zfr create writes one; or use dch)."
+msgstr "debian/changelog சேர்க்கவும் (zfr create எழுதும்; அல்லது dch பயன்படுத்தவும்)."
+
+#: src/zfr_lib/lint/layout.py:41
+msgid "Add debian/copyright in machine-readable format, License: AGPL-3+."
+msgstr "இயந்திரம் படிக்கும் வடிவில் debian/copyright சேர்க்கவும், License: AGPL-3+."
+
+#: src/zfr_lib/lint/layout.py:42
+msgid ""
+"Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
+msgstr ""
+"dh --buildsystem=meson --builddirectory=debian/build பயன்படுத்தி debian/rules "
+"சேர்க்கவும்."
+
+#: src/zfr_lib/lint/layout.py:43
+msgid "Add debian/source/format (typically '3.0 (native)')."
+msgstr "debian/source/format ஐச் சேர்க்கவும் (பொதுவாக '3.0 (native)')."
+
+#: src/zfr_lib/lint/layout.py:47
+#, python-format
+msgid "present: %s"
+msgstr "உள்ளது: %s"
+
+#: src/zfr_lib/lint/layout.py:50
+#, python-format
+msgid "missing %s"
+msgstr "%s இல்லை"
+
+#: src/zfr_lib/lint/layout.py:56
+#, python-format
+msgid "AsciiDoc man sources: %s"
+msgstr "AsciiDoc man மூலங்கள்: %s"
+
+#: src/zfr_lib/lint/layout.py:63
+msgid "no docs/*.adoc man page source"
+msgstr "docs/*.adoc man பக்க மூலம் இல்லை"
+
+#: src/zfr_lib/lint/layout.py:65
+msgid ""
+"Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage "
+"(see any language template)."
+msgstr ""
+"docs/<puff>.adoc மற்றும் asciidoctor -b manpage கொண்ட meson custom_target ஐச் "
+"சேர்க்கவும் (எந்த மொழி வார்ப்புருவையும் பார்க்கவும்)."
+
+#: src/zfr_lib/lint/layout.py:78
+#, python-format
+msgid "bash completion: %s"
+msgstr "bash நிறைவு: %s"
+
+#: src/zfr_lib/lint/layout.py:86
+msgid "no *.bash bash-completion script at project root"
+msgstr "திட்ட வேரில் *.bash bash-completion ச்கிரிப்ட் இல்லை"
+
+#: src/zfr_lib/lint/layout.py:87
+msgid ""
+"Add <puff>.bash and install it to datadir/bash-completion/completions "
+"renamed to the command name (see meson.build in the template)."
+msgstr ""
+"<puff>.bash ஐச் சேர்த்து கட்டளைப் பெயருக்கு மறுபெயரிட்டு datadir/bash-completion/"
+"completions இல் நிறுவவும் (வார்ப்புருவின் meson.build ஐப் பார்க்கவும்)."
+
+#: src/zfr_lib/lint/layout.py:93
+msgid "VERSION file present"
+msgstr "VERSION கோப்பு உள்ளது"
+
+#: src/zfr_lib/lint/layout.py:99
+msgid "no VERSION file (changelog snapshot for tarball builds)"
+msgstr "VERSION கோப்பு இல்லை (tarball உருவாக்கங்களுக்கான changelog பதிவு)"
+
+#: src/zfr_lib/lint/layout.py:101
+msgid ""
+"Create VERSION with the latest debian/changelog version (one line). "
+"Enable .githooks/pre-commit: git config core.hooksPath .githooks"
+msgstr ""
+"சமீபத்திய debian/changelog பதிப்புடன் VERSION உருவாக்கவும் (ஒரு வரி). .githooks/"
+"pre-commit ஐ இயக்கவும்: git config core.hooksPath .githooks"
+
+#: src/zfr_lib/lint/layout.py:195
+msgid "no .githooks/pre-commit to sync VERSION from debian/changelog"
+msgstr "debian/changelog இலிருந்து VERSION ஒத்திசைக்க .githooks/pre-commit இல்லை"
+
+#: src/zfr_lib/lint/layout.py:197
+msgid ""
+"Walk up to the directory that contains .git, then put pre-commit in that "
+"tree's .githooks (or core.hooksPath). The hook must update VERSION from "
+"debian/changelog. `zfr create` copies one and sets git config "
+"core.hooksPath .githooks."
+msgstr ""
+".git உள்ள அடைவு வரை மேலே சென்று, அந்த மரத்தின் .githooks இல் (அல்லது "
+"core.hooksPath) pre-commit வைக்கவும். கொக்கி debian/changelog இலிருந்து VERSION "
+"ஐப் புதுப்பிக்க வேண்டும். `zfr create` ஒன்றை நகலெடுத்து git config "
+"core.hooksPath .githooks அமைக்கிறது."
+
+#: src/zfr_lib/lint/layout.py:210
+#, python-format
+msgid "pre-commit syncs VERSION from debian/changelog (%s)"
+msgstr "pre-commit debian/changelog இலிருந்து VERSION ஐ ஒத்திசைக்கிறது (%s)"
+
+#: src/zfr_lib/lint/layout.py:218
+#, python-format
+msgid "%s exists but does not sync VERSION from debian/changelog"
+msgstr "%s உள்ளது ஆனால் debian/changelog இலிருந்து VERSION ஐ ஒத்திசைக்கவில்லை"
+
+#: src/zfr_lib/lint/layout.py:220
+msgid ""
+"The hook should read debian/changelog (dpkg-parsechangelog) and write "
+"VERSION. See the zephyr .githooks/pre-commit template."
+msgstr ""
+"கொக்கி debian/changelog ஐப் படித்து (dpkg-parsechangelog) VERSION ஐ எழுத "
+"வேண்டும். zephyr .githooks/pre-commit வார்ப்புருவைப் பார்க்கவும்."
+
+#: src/zfr_lib/lint/leftovers.py:49
+#, python-format
+msgid "%s keeps the template placeholder banner (apps must rewrite it)"
+msgstr ""
+"%s வார்ப்புரு ஒதுக்கிடப் பதாகையை வைத்திருக்கிறது (பயன்பாடுகள் அதை மீண்டும் எழுத வேண்டும்)"
+
+#: src/zfr_lib/lint/leftovers.py:52
+msgid ""
+"After `zfr create`/`zfr rename`, rewrite this README and remove the "
+"generated-from-template banner. Templates should keep this banner."
+msgstr ""
+"`zfr create`/`zfr rename` க்குப் பிறகு இந்த README ஐ மீண்டும் எழுதி generated-from-"
+"template பதாகையை அகற்றவும். வார்ப்புருக்கள் இந்தப் பதாகையை வைத்திருக்க வேண்டும்."
+
+#: src/zfr_lib/lint/leftovers.py:61
+#, python-format
+msgid "%s still has the template placeholder banner"
+msgstr "%s இல் இன்னும் வார்ப்புரு ஒதுக்கிடப் பதாகை உள்ளது"
+
+#: src/zfr_lib/lint/leftovers.py:64
+#, python-format
+msgid ""
+"Rewrite %s for this project. Remove the generated-from-template banner and "
+"describe the real commands, build, and license."
+msgstr ""
+"இந்தத் திட்டத்திற்காக %s ஐ மீண்டும் எழுதவும். generated-from-template பதாகையை அகற்றி "
+"உண்மையான கட்டளைகள், உருவாக்கம் மற்றும் உரிமத்தை விவரிக்கவும்."
+
+#: src/zfr_lib/lint/leftovers.py:69
+#, python-format
+msgid "%s has no template banner"
+msgstr "%s இல் வார்ப்புருப் பதாகை இல்லை"
+
+#: src/zfr_lib/lint/leftovers.py:101
+#, python-format
+msgid "%s tree may contain zephyr/some_puff1 placeholders (expected)"
+msgstr "%s மரத்தில் zephyr/some_puff1 ஒதுக்கிடங்கள் இருக்கலாம் (எதிர்பார்க்கப்படுகிறது)"
+
+#: src/zfr_lib/lint/leftovers.py:127 src/zfr_lib/lint/template.py:95
+#, python-format
+msgid " (+%d more)"
+msgstr " (+%d மேலும்)"
+
+#: src/zfr_lib/lint/leftovers.py:132
+#, python-format
+msgid ""
+"found %(hits)d leftover template token(s) (zephyr/%(token)s): "
+"%(preview)s%(more)s"
+msgstr ""
+"%(hits)d மீதமுள்ள வார்ப்புரு குறிகள் கண்டறியப்பட்டன (zephyr/%(token)s): "
+"%(preview)s%(more)s"
+
+#: src/zfr_lib/lint/leftovers.py:134
+msgid ""
+"Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 "
+"identifiers. After create, leftover tokens mean instantiation failed."
+msgstr ""
+"`zfr rename <project> [puff ...]` ஐ இயக்கவும் அல்லது மீதமுள்ள zephyr/some_puff1 "
+"அடையாளங்களை மாற்றவும். create க்குப் பிறகு மீதமுள்ள குறிகள் உருவாக்கம் தோல்வியடைந்ததைக் "
+"குறிக்கும்."
+
+#: src/zfr_lib/lint/leftovers.py:138
+msgid "no leftover zephyr/some_puff1 tokens"
+msgstr "மீதமுள்ள zephyr/some_puff1 குறிகள் இல்லை"
+
+#: src/zfr_lib/lint/meson.py:41
+msgid "project() present"
+msgstr "project() உள்ளது"
+
+#: src/zfr_lib/lint/meson.py:47
+msgid "meson.build has no project() call"
+msgstr "meson.build இல் project() அழைப்பு இல்லை"
+
+#: src/zfr_lib/lint/meson.py:49
+msgid ""
+"project() must be the first Meson call. Copy the header from the language "
+"template."
+msgstr ""
+"project() முதல் Meson அழைப்பாக இருக்க வேண்டும். மொழி வார்ப்புருவிலிருந்து தலைப்பை "
+"நகலெடுக்கவும்."
+
+#: src/zfr_lib/lint/meson.py:54
+#, python-format
+msgid "license %s"
+msgstr "உரிமம் %s"
+
+#: src/zfr_lib/lint/meson.py:60
+msgid "meson license is not AGPL-3.0-or-later"
+msgstr "meson உரிமம் AGPL-3.0-or-later அல்ல"
+
+#: src/zfr_lib/lint/meson.py:63
+#, python-format
+msgid "Set license: '%s' in project()."
+msgstr "project() இல் license: '%s' அமைக்கவும்."
+
+#: src/zfr_lib/lint/meson.py:69
+#, python-format
+msgid "%s set"
+msgstr "%s அமைக்கப்பட்டது"
+
+#: src/zfr_lib/lint/meson.py:75
+#, python-format
+msgid "missing %s (used for man pages)"
+msgstr "%s இல்லை (man பக்கங்களுக்குப் பயன்படும்)"
+
+#: src/zfr_lib/lint/meson.py:77
+#, python-format
+msgid ""
+"Set %s next to project(), then pass -a project-author/email/year to "
+"asciidoctor."
+msgstr ""
+"project() அருகில் %s அமைத்து, பின்னர் asciidoctor க்கு -a project-author/email/"
+"year அனுப்பவும்."
+
+#: src/zfr_lib/lint/meson.py:82
+msgid "version uses `zfr version`"
+msgstr "பதிப்பு `zfr version` ஐப் பயன்படுத்துகிறது"
+
+#: src/zfr_lib/lint/meson.py:88
+msgid "version still uses inline git describe; zephyr style is `zfr version`"
+msgstr ""
+"பதிப்பு இன்னும் உள்ளமை git describe ஐப் பயன்படுத்துகிறது; zephyr பாணி `zfr version`"
+
+#: src/zfr_lib/lint/meson.py:91
+msgid ""
+"In project(version: run_command(...)), prefer:\n"
+"  v=$(zfr version 2>/dev/null || true)\n"
+"  with fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY\n"
+"See bash/meson.build in the zephyr tree."
+msgstr ""
+"project(version: run_command(...)) இல் விரும்பவும்:\n"
+"  v=$(zfr version 2>/dev/null || true)\n"
+"  காப்புடன் v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY\n"
+"zephyr மரத்தில் bash/meson.build ஐப் பார்க்கவும்."
+
+#: src/zfr_lib/lint/meson.py:102
+msgid "could not find `zfr version` or git describe in project version"
+msgstr "திட்டப் பதிப்பில் `zfr version` அல்லது git describe கிடைக்கவில்லை"
+
+#: src/zfr_lib/lint/meson.py:104
+msgid "Use `zfr version` for project() version (see bash/meson.build)."
+msgstr ""
+"project() பதிப்புக்கு `zfr version` ஐப் பயன்படுத்தவும் (bash/meson.build ஐப் "
+"பார்க்கவும்)."
+
+#: src/zfr_lib/lint/meson.py:109
+msgid "0.0.0 fallback present"
+msgstr "0.0.0 காப்பு உள்ளது"
+
+#: src/zfr_lib/lint/meson.py:115
+msgid "no explicit 0.0.0 fallback for missing git/VERSION"
+msgstr "இல்லாத git/VERSION க்கு வெளிப்படையான 0.0.0 காப்பு இல்லை"
+
+#: src/zfr_lib/lint/meson.py:117
+msgid "Keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY"
+msgstr "காப்பை வைத்திருக்கவும் v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY"
+
+#: src/zfr_lib/lint/meson.py:122
+msgid "asciidoctor man pages"
+msgstr "asciidoctor man பக்கங்கள்"
+
+#: src/zfr_lib/lint/meson.py:128
+msgid "meson.build does not invoke asciidoctor"
+msgstr "meson.build asciidoctor ஐ அழைக்கவில்லை"
+
+#: src/zfr_lib/lint/meson.py:130
+msgid ""
+"find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
+msgstr ""
+"find_program('asciidoctor') மற்றும் custom_target(..., '-b', 'manpage', ...)."
+
+#: src/zfr_lib/lint/meson.py:135
+msgid "run_target look present"
+msgstr "run_target look உள்ளது"
+
+#: src/zfr_lib/lint/meson.py:141
+msgid "no run_target('look') DESTDIR preview"
+msgstr "run_target('look') DESTDIR முன்னோட்டம் இல்லை"
+
+#: src/zfr_lib/lint/meson.py:143
+msgid ""
+"Add run_target look that meson install's into a tempdir and runs tree (see "
+"templates)."
+msgstr ""
+"tempdir இல் meson install செய்து tree இயக்கும் run_target look ஐச் சேர்க்கவும் "
+"(வார்ப்புருக்களைப் பார்க்கவும்)."
+
+#: src/zfr_lib/lint/meson.py:148
+msgid "installs bash-completion"
+msgstr "bash-completion ஐ நிறுவுகிறது"
+
+#: src/zfr_lib/lint/meson.py:154
+msgid "does not install bash-completion"
+msgstr "bash-completion ஐ நிறுவவில்லை"
+
+#: src/zfr_lib/lint/meson.py:156
+msgid ""
+"install_data(..., install_dir: datadir / 'bash-completion' / 'completions', "
+"rename: command)."
+msgstr ""
+"install_data(..., install_dir: datadir / 'bash-completion' / 'completions', "
+"rename: command). ஐப் பயன்படுத்தவும்."
+
+#: src/zfr_lib/lint/report.py:73
+msgid "FAIL"
+msgstr "தோல்வி"
+
+#: src/zfr_lib/lint/report.py:73
+msgid "PASS"
+msgstr "தேர்ச்சி"
+
+#: src/zfr_lib/lint/report.py:82
+msgid "status:"
+msgstr "நிலை:"
+
+#: src/zfr_lib/lint/report.py:83
+#, python-format
+msgid "errors=%s"
+msgstr "பிழைகள்=%s"
+
+#: src/zfr_lib/lint/report.py:84
+#, python-format
+msgid "warnings=%s"
+msgstr "எச்சரிக்கைகள்=%s"
+
+#: src/zfr_lib/lint/report.py:85
+#, python-format
+msgid "notes=%s"
+msgstr "குறிப்புகள்=%s"
+
+#: src/zfr_lib/lint/report.py:89
+msgid "zephyr meta-repo (templates + CLI tools)"
+msgstr "zephyr மெட்டா-களஞ்சியம் (வார்ப்புருக்கள் + CLI கருவிகள்)"
+
+#: src/zfr_lib/lint/report.py:90
+msgid ""
+"language template inside the meta-repo (placeholders like zephyr/some_puff1 "
+"are expected)"
+msgstr ""
+"மெட்டா-களஞ்சியத்துக்குள் மொழி வார்ப்புரு (zephyr/some_puff1 போன்ற இடம்பெறுபொருள்கள் "
+"எதிர்பார்க்கப்படும்)"
+
+#: src/zfr_lib/lint/report.py:91
+msgid ""
+"project instantiated from a language template (directory name must match "
+"meson/debian; no leftover zephyr/some_puff1 tokens)"
+msgstr ""
+"மொழி வார்ப்புருவிலிருந்து உருவாக்கப்பட்ட திட்டம் (அடைவுப் பெயர் meson/debian-உடன் "
+"பொருந்த வேண்டும்; மீதமுள்ள zephyr/some_puff1 டோக்கன்கள் இல்லை)"
+
+#: src/zfr_lib/lint/report.py:93
+#, python-format
+msgid "role: %s"
+msgstr "பங்கு: %s"
+
+#: src/zfr_lib/lint/report.py:95
+msgid "Zephyr style (finish the project to this contract)"
+msgstr "Zephyr பாணி (இந்த ஒப்பந்தத்திற்குத் திட்டத்தை முடியுங்கள்)"
+
+#: src/zfr_lib/lint/report.py:97
+msgid ""
+"License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
+"License)."
+msgstr ""
+"உரிமம் AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
+"License)."
+
+#: src/zfr_lib/lint/report.py:98
+msgid ""
+"Build with Meson; debian/rules uses dh --buildsystem=meson --"
+"builddirectory=debian/build."
+msgstr ""
+"Meson கொண்டு கட்டவும்; debian/rules dh --buildsystem=meson --"
+"builddirectory=debian/build பயன்படுத்தும்."
+
+#: src/zfr_lib/lint/report.py:99
+msgid ""
+"project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO "
+"0.0.0, DO NOT MODIFY."
+msgstr ""
+"project() பதிப்பு `zfr version`-இலிருந்து; மாற்று v=\"0.0.0\" # FIXED TO 0.0.0, "
+"DO NOT MODIFY."
+
+#: src/zfr_lib/lint/report.py:100
+msgid ""
+"Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under "
+"share/man/<locale>/man1 (whole-document adoc, not po4a)."
+msgstr ""
+"மேன் பக்கங்கள்: docs/*.adoc + asciidoctor -b manpage; மொழிபெயர்ப்பு share/man/"
+"<locale>/man1 (முழு ஆவண adoc, po4a அல்ல)."
+
+#: src/zfr_lib/lint/report.py:101
+msgid ""
+"Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; "
+"optional rpm/ aligned with debian."
+msgstr ""
+"தொகுப்பு: debian/control Build-Depends meson, ninja-build, asciidoctor; "
+"விருப்ப rpm/ debian-உடன் சீரமைக்கப்படும்."
+
+#: src/zfr_lib/lint/report.py:102
+msgid ""
+"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 "
+"locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."
+msgstr ""
+"i18n: ஆங்கில மூலம்; zfr lint -l/--l10n-level L0–L3 (இயல்பு L1). L1=10 மொழிகள், "
+"L2=20, L3=30. இயல்புகள் .config/zfr/lint.options."
+
+#: src/zfr_lib/lint/report.py:103
+msgid ""
+"Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/"
+"changelog (git describe may differ)."
+msgstr ""
+"பயன்பாடுகள்: `zfr rename <dir>` பின் `zfr add <puff>`; VERSION debian/changelog-"
+"உடன் பொருந்தும் (git describe வேறுபடலாம்)."
+
+#: src/zfr_lib/lint/report.py:116
+msgid "error"
+msgstr "பிழை"
+
+#: src/zfr_lib/lint/report.py:117
+msgid "warn"
+msgstr "எச்சரிக்கை"
+
+#: src/zfr_lib/lint/report.py:118
+msgid "note"
+msgstr "குறிப்பு"
+
+#: src/zfr_lib/lint/report.py:119
+msgid "ok"
+msgstr "சரி"
+
+#: src/zfr_lib/lint/report.py:132
+msgid "fix:"
+msgstr "சரிசெய்:"
+
+#: src/zfr_lib/lint/report.py:139
+msgid "Next steps (zephyr style)"
+msgstr "அடுத்த படிகள் (zephyr பாணி)"
+
+#: src/zfr_lib/lint/report.py:145
+msgid ""
+"Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). "
+"`zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr "
+"version`. `zfr ize` applies missing debian/rpm/meson/man/version-subst "
+"upgrades."
+msgstr ""
+"குறிப்பு: திருத்தங்களுக்குப் பின் திட்டத்திலிருந்து (அல்லது துணை அடைவிலிருந்து) `zfr "
+"lint` மீண்டும் இயக்கவும். `zfr about -d -r` தொகுப்புப் புலங்களைக் காட்டும். Meson/RPM-"
+"க்கான பதிப்பு `zfr version`. `zfr ize` விடுபட்ட debian/rpm/meson/man/version-"
+"subst மேம்பாடுகளைப் பயன்படுத்தும்."
+
+#: src/zfr_lib/lint/rpm.py:41
+msgid "no rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
+msgstr ""
+"rpm/*.spec இல்லை (விருப்பம், ஆனால் zephyr பாணி debian/-இன் அருகில் RPM வைக்கும்)"
+
+#: src/zfr_lib/lint/rpm.py:44
+#, no-python-format
+msgid ""
+"Copy rpm/ from a language template; name the spec after the package (rpm/"
+"<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. "
+"Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
+msgstr ""
+"மொழி வார்ப்புருவிலிருந்து rpm/ நகலெடுக்கவும்; spec-ஐத் தொகுப்புப் பெயரில் வைக்கவும் "
+"(rpm/<Source>.spec, zephyr.spec அல்ல) மற்றும் `zfr version` பயன்படுத்தும் Makefile "
+"வைத்திருக்கவும். Name/Summary/Requires/URL-ஐ debian/control-உடன் சீரமைக்கவும். "
+"அல்லது `zfr ize` இயக்கவும்."
+
+#: src/zfr_lib/lint/rpm.py:63
+#, no-python-format, python-brace-format
+msgid "spec Version is dynamic %{version}"
+msgstr "spec Version மாறும் %{version}"
+
+#: src/zfr_lib/lint/rpm.py:72
+msgid "spec Version is hardcoded; zephyr style injects `zfr version`"
+msgstr "spec Version நிலையாக எழுதப்பட்டுள்ளது; zephyr பாணி `zfr version` செலுத்தும்"
+
+#: src/zfr_lib/lint/rpm.py:76
+#, no-python-format
+msgid ""
+"Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze "
+"via rpm/Makefile (`zfr version` / `zfr version -r`)."
+msgstr ""
+"Version: %{version}-ஐ %{!?version:%global version 0.0.0}-உடன் பயன்படுத்தி rpm/"
+"Makefile வழியாக நிலைநிறுத்தவும் (`zfr version` / `zfr version -r`)."
+
+#: src/zfr_lib/lint/rpm.py:82
+#, python-format
+msgid "License %s"
+msgstr "உரிமம் %s"
+
+#: src/zfr_lib/lint/rpm.py:88
+msgid "spec License is not AGPL-3.0-or-later"
+msgstr "spec License AGPL-3.0-or-later அல்ல"
+
+#: src/zfr_lib/lint/rpm.py:91
+#, python-format
+msgid "License:        %s"
+msgstr "License:        %s"
+
+#: src/zfr_lib/lint/rpm.py:102
+#, python-format
+msgid "spec URL=%(url)r != debian Homepage=%(homepage)r"
+msgstr "spec URL=%(url)r != debian Homepage=%(homepage)r"
+
+#: src/zfr_lib/lint/rpm.py:105
+msgid "Set URL: to the same Homepage as debian/control."
+msgstr "URL:-ஐ debian/control-இன் Homepage-உடன் ஒன்றாக அமைக்கவும்."
+
+#: src/zfr_lib/lint/rpm.py:117
+msgid "spec Summary does not match debian Description first line"
+msgstr "spec Summary debian Description முதல் வரியுடன் பொருந்தவில்லை"
+
+#: src/zfr_lib/lint/rpm.py:120
+#, python-format
+msgid "Summary:        %s"
+msgstr "Summary:        %s"
+
+#: src/zfr_lib/lint/rpm.py:125
+msgid "spec uses Meson (not autotools)"
+msgstr "spec Meson பயன்படுத்துகிறது (autotools அல்ல)"
+
+#: src/zfr_lib/lint/rpm.py:131
+msgid "spec still uses autotools; zephyr packages build with Meson"
+msgstr ""
+"spec இன்னும் autotools பயன்படுத்துகிறது; zephyr தொகுப்புகள் Meson கொண்டு கட்டப்படும்"
+
+#: src/zfr_lib/lint/rpm.py:134
+#, no-python-format, python-brace-format
+msgid ""
+"%build: meson setup build --prefix=%{_prefix} ... && meson compile -C build\n"
+"%install: meson install -C build --destdir=%{buildroot}"
+msgstr ""
+"%build: meson setup build --prefix=%{_prefix} ... && meson compile -C build\n"
+"%install: meson install -C build --destdir=%{buildroot}"
+
+#: src/zfr_lib/lint/rpm.py:142
+msgid "Makefile uses `zfr version`"
+msgstr "Makefile `zfr version` பயன்படுத்துகிறது"
+
+#: src/zfr_lib/lint/rpm.py:149
+msgid "rpm/Makefile does not call `zfr version`"
+msgstr "rpm/Makefile `zfr version`-ஐ அழைக்கவில்லை"
+
+#: src/zfr_lib/lint/rpm.py:152
+#, no-python-format
+msgid ""
+"VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
+"RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
+msgstr ""
+"VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
+"RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
+
+#: src/zfr_lib/lint/rpm.py:161
+msgid "no rpm/Makefile convenience targets"
+msgstr "rpm/Makefile-இல் வசதி இலக்குகள் இல்லை"
+
+#: src/zfr_lib/lint/rpm.py:163
+msgid "Copy bash/rpm/Makefile (srpm/rpm via zfr version)."
+msgstr "bash/rpm/Makefile நகலெடுக்கவும் (srpm/rpm zfr version வழியாக)."
+
+#: src/zfr_lib/lint/rpm.py:172
+msgid "bash spec Requires missing bash-shlib"
+msgstr "bash spec-இல் Requires bash-shlib இல்லை"
+
+#: src/zfr_lib/lint/rpm.py:174
+msgid "Requires:       bash-shlib  (same as debian Depends)"
+msgstr "Requires:       bash-shlib  (debian Depends போல)"
+
+#: src/zfr_lib/lint/source_size.py:55
+#, python-format
+msgid "%(rel)s is %(lines)d lines (>%(limit)d); file is very long"
+msgstr "%(rel)s %(lines)d வரிகள் (>%(limit)d); கோப்பு மிக நீளம்"
+
+#: src/zfr_lib/lint/source_size.py:59
+msgid ""
+"Split this file into smaller modules; keep each unit focused and testable."
+msgstr ""
+"இந்தக் கோப்பைச் சிறிய தொகுதிகளாகப் பிரிக்கவும்; ஒவ்வொரு அலகும் குவியமும் "
+"சோதனைக்குரியதாகவும் இருக்கட்டும்."
+
+#: src/zfr_lib/lint/source_size.py:67
+#, python-format
+msgid "%(rel)s is %(lines)d lines (>%(limit)d); consider modularizing soon"
+msgstr ""
+"%(rel)s %(lines)d வரிகள் (>%(limit)d); விரைவில் தொகுதிகளாகப் பிரிப்பதைப் "
+"பரிசீலிக்கவும்"
+
+#: src/zfr_lib/lint/source_size.py:71
+msgid "Plan extraction of helpers or submodules before the file grows further."
+msgstr ""
+"கோப்பு மேலும் வளரும் முன் உதவிகள் அல்லது துணைத் தொகுதிகளைப் பிரித்தெடுக்கத் திட்டமிடுங்கள்."
+
+#: src/zfr_lib/lint/source_size.py:75
+msgid "no oversized source files"
+msgstr "அளவுக்கு மீறிய மூலக் கோப்புகள் இல்லை"
+
+#: src/zfr_lib/lint/template.py:51
+msgid "zfr CLI package is not a language template"
+msgstr "zfr CLI தொகுப்பு மொழி வார்ப்புரு அல்ல"
+
+#: src/zfr_lib/lint/template.py:93
+msgid "structural files from the language template are present"
+msgstr "மொழி வார்ப்புருவின் கட்டமைப்புக் கோப்புகள் உள்ளன"
+
+#: src/zfr_lib/lint/template.py:100
+#, python-format
+msgid ""
+"language template %(lang)s has extra scaffolding not in this tree: "
+"%(preview)s%(more)s"
+msgstr ""
+"மொழி வார்ப்புரு %(lang)s-இல் இந்த மரத்தில் இல்லாத கூடுதல் சாரங்கள் உள்ளன: "
+"%(preview)s%(more)s"
+
+#: src/zfr_lib/lint/template.py:102
+#, python-format
+msgid ""
+"Compare with the %(lang)s template under pkgdatadir. Copy missing debian/"
+"docs/src/rpm files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` "
+"puffs. Do not copy build/ or debian leftover stamp files. Example commons "
+"modules are optional."
+msgstr ""
+"pkgdatadir கீழுள்ள %(lang)s வார்ப்புருவுடன் ஒப்பிடவும். விடுபட்ட debian/docs/src/rpm "
+"கோப்புகளை நகலெடுக்கவும் (rpm/ %(name)s.spec பயன்படுத்தும், zephyr.spec அல்ல), அல்லது "
+"`zfr add` puff-கள். build/ அல்லது debian மீதமுள்ள முத்திரைக் கோப்புகளை நகலெடுக்க "
+"வேண்டாம். எடுத்துக்காட்டு commons தொகுதிகள் விருப்பம்."
 
 #: src/zfr_lib/release.py:26
 msgid "Debian binary-only build (no .dsc)"
@@ -360,14 +1523,14 @@ msgstr "புதிய திட்டப் பெயர் ('zephyr'-ஐ ம�
 msgid "new example names (each replaces template some_puff1)"
 msgstr "புதிய மாதிரிப் பெயர்கள் (ஒவ்வொன்றும் வார்ப்புரு some_puff1-ஐ மாற்றும்)"
 
-#: src/zfr_lib/shape.py:259
+#: src/zfr_lib/shape.py:263
 msgid ""
 "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
 msgstr ""
 "zephyr தொகுப்பு வடிவ மதிப்பெண் 0–100 காட்டு (ஒரே களஞ்சியத்தில் packagedir vs "
 "repodir)"
 
-#: src/zfr_lib/shape.py:261
+#: src/zfr_lib/shape.py:265
 msgid ""
 "Score how completely the current directory matches zephyr package style "
 "(0-100). In monorepos, scores the packagedir."
@@ -375,15 +1538,15 @@ msgstr ""
 "நடப்பு அடைவு zephyr தொகுப்புப் பாணிக்கு எவ்வளவு நெருக்கமோ 0–100 மதிப்பெண். ஒரே "
 "களஞ்சியத்தில் packagedir-க்கு மதிப்பெண்."
 
-#: src/zfr_lib/shape.py:267
+#: src/zfr_lib/shape.py:271
 msgid "print 1 if score >= threshold, else 0"
 msgstr "மதிப்பெண் வரம்புக்குக் குறையாவிட்டால் 1, இல்லையெனில் 0 காட்டு"
 
-#: src/zfr_lib/shape.py:268
+#: src/zfr_lib/shape.py:272
 msgid "print packagedir/repodir/role on stderr"
 msgstr "packagedir/repodir/role-ஐ stderr-இல் காட்டு"
 
-#: src/zfr_lib/shape.py:269
+#: src/zfr_lib/shape.py:273
 #, python-format
 msgid "bool threshold 0-100 (default: %s)"
 msgstr "பூலியன் வரம்பு 0–100 (இயல்பு: %s)"
@@ -409,7 +1572,3 @@ msgstr "debian/changelog பயன்படுத்து (git அல்லத�
 #: src/zfr_lib/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
 msgstr "RPM-க்கு ஏற்ற Version காட்டு (ஹைபன்கள் அடிக்கோடுகள்)"
-
-#: src/zfr_lib/ize/__init__.py
-msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
-msgstr "run 2meson to convert Autotools/CMake to Meson when present (default: on)"

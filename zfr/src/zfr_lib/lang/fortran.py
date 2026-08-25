@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 
 from ..finding import Finding
+from ..i18n import _
 from ._puff_helpers import merge_puff, puff_paths
 from ._spec import LangSpec, WireSpec
 
@@ -28,14 +29,14 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
 
 def _lint(root: Path, role: str) -> list[Finding]:
     if (root / "tests").is_dir():
-        return [Finding("ok", "lang.fortran.tests", "tests/ present")]
+        return [Finding("ok", "lang.fortran.tests", _("tests/ present"))]
     return [
         Finding(
             "warn",
             "lang.fortran.tests",
-            "no tests/ (fortran template uses gfortran + meson test)",
+            _("no tests/ (fortran template uses gfortran + meson test)"),
             "tests/",
-            fix="Add tests/test_commons.f90 and meson test() executable.",
+            fix=_("Add tests/test_commons.f90 and meson test() executable."),
         )
     ]
 

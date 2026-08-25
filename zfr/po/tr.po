@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zfr\n"
 "Report-Msgid-Bugs-To: zephyr@bodz.net\n"
-"POT-Creation-Date: 2026-08-23 19:11+0800\n"
-"PO-Revision-Date: 2026-08-23 19:30+0800\n"
+"POT-Creation-Date: 2026-08-25 18:17+0800\n"
+"PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Turkish\n"
 "Language: tr\n"
@@ -37,7 +37,7 @@ msgstr ""
 "yönetin. Örneklenen ağaçlar zfr'yi çağırmaya devam eder; zfr bir yeniden "
 "adlandırma belirteci değildir."
 
-#: src/zfr:45
+#: src/zfr:46
 msgid "show this help"
 msgstr "bu yardımı göster"
 
@@ -79,44 +79,44 @@ msgstr "Dili algıla ve pkgdatadir/<lang> konumundan puff ekle."
 msgid "new puff name(s) (snake_case recommended)"
 msgstr "yeni puff ad(lar)ı (snake_case önerilir)"
 
-#: src/zfr_lib/create.py:291
+#: src/zfr_lib/create.py:311
 msgid "create a new project from a language template"
 msgstr "dil şablonundan yeni proje oluştur"
 
-#: src/zfr_lib/create.py:292
+#: src/zfr_lib/create.py:312
 msgid "Create a new project directory from pkgdatadir/<lang>."
 msgstr "pkgdatadir/<lang> konumundan yeni proje dizini oluştur."
 
-#: src/zfr_lib/create.py:298
+#: src/zfr_lib/create.py:319
 #, python-format
 msgid "template language (default: python; one of: %s)"
 msgstr "şablon dili (varsayılan: python; şunlardan biri: %s)"
 
-#: src/zfr_lib/create.py:302
+#: src/zfr_lib/create.py:323
 #, python-format
 msgid "debian changelog distribution (default: %s)"
 msgstr "debian changelog dağıtımı (varsayılan: %s)"
 
-#: src/zfr_lib/create.py:306
+#: src/zfr_lib/create.py:327
 #, python-format
 msgid "initial package version and git tag (default: %s)"
 msgstr "başlangıç paket sürümü ve git etiketi (varsayılan: %s)"
 
-#: src/zfr_lib/create.py:310
+#: src/zfr_lib/create.py:331
 #, python-format
 msgid "changelog/git author name (default: %s)"
 msgstr "changelog/git yazar adı (varsayılan: %s)"
 
-#: src/zfr_lib/create.py:314
+#: src/zfr_lib/create.py:335
 #, python-format
 msgid "changelog/git author email (default: %s)"
 msgstr "changelog/git yazar e-postası (varsayılan: %s)"
 
-#: src/zfr_lib/create.py:316
+#: src/zfr_lib/create.py:337
 msgid "new project directory name"
 msgstr "yeni proje dizini adı"
 
-#: src/zfr_lib/create.py:319
+#: src/zfr_lib/create.py:340
 msgid "optional puff names to add after creating the project"
 msgstr "proje oluşturulduktan sonra eklenecek isteğe bağlı puff adları"
 
@@ -182,11 +182,11 @@ msgstr ""
 "yalnızca bu projeyi paketler, böylece iç içe dil şablonları üst meta-repo'yu "
 "göndermez. Arşiv yolunu stdout'a yazar."
 
-#: src/zfr_lib/ize/__init__.py:60
+#: src/zfr_lib/ize/__init__.py:65
 msgid "refactor this project to current zephyr style"
 msgstr "bu projeyi güncel zephyr stiline refactor et"
 
-#: src/zfr_lib/ize/__init__.py:61
+#: src/zfr_lib/ize/__init__.py:66
 msgid ""
 "Refactor the current project to match current zephyr style: missing debian/"
 "rpm files, meson targets, AsciiDoc man pages, and Meson version "
@@ -196,36 +196,513 @@ msgstr ""
 "meson hedefleri, AsciiDoc man sayfaları ve Meson sürüm değiştirmeleri. "
 "cwd'den üstlere gider."
 
-#: src/zfr_lib/ize/__init__.py:65
+#: src/zfr_lib/ize/__init__.py:70
 #, python-format
 msgid "language template to align with (default: detect; one of: %s)"
 msgstr "hizalanacak dil şablonu (varsayılan: detect; şunlardan biri: %s)"
 
-#: src/zfr_lib/ize/__init__.py:66
+#: src/zfr_lib/ize/__init__.py:71
 msgid "print planned changes without writing files"
 msgstr "dosya yazmadan planlanan değişiklikleri yazdır"
 
-#: src/zfr_lib/ize/__init__.py:67
+#: src/zfr_lib/ize/__init__.py:72
 msgid "also print skipped files"
 msgstr "atlanan dosyaları da yazdır"
 
-#: src/zfr_lib/ize/__init__.py:68
+#: src/zfr_lib/ize/__init__.py:78
+msgid ""
+"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgstr ""
+"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+
+#: src/zfr_lib/ize/__init__.py:80
 msgid "do not convert groff .1 man pages to docs/*.adoc"
 msgstr "groff .1 man sayfalarını docs/*.adoc'a dönüştürme"
 
-#: src/zfr_lib/ize/__init__.py:69
+#: src/zfr_lib/ize/__init__.py:81
 msgid "do not turn hardcoded versions into @VERSION@ / config.h"
 msgstr "sabit kodlanmış sürümleri @VERSION@ / config.h'e dönüştürme"
 
-#: src/zfr_lib/ize/__init__.py:70 src/zfr_lib/lint/__init__.py:98
+#: src/zfr_lib/ize/__init__.py:82 src/zfr_lib/lint/__init__.py:115
 msgid "CSR (console SGR) highlighting (default: auto)"
 msgstr "CSR (console SGR) vurgulama (varsayılan: auto)"
 
-#: src/zfr_lib/lint/__init__.py:90
+#: src/zfr_lib/l10n.py:93
+#, python-format
+msgid "l10n level must be L0–L3 (or 0–3), not %r"
+msgstr "l10n düzeyi L0–L3 (veya 0–3) olmalı, %r olamaz"
+
+#: src/zfr_lib/lang/antlr.py:42 src/zfr_lib/lang/as.py:30
+#: src/zfr_lib/lang/bison.py:38 src/zfr_lib/lang/clib.py:34
+#: src/zfr_lib/lang/cobol.py:32 src/zfr_lib/lang/cpplib.py:34
+#: src/zfr_lib/lang/cpp.py:21 src/zfr_lib/lang/c.py:21 src/zfr_lib/lang/d.py:32
+#: src/zfr_lib/lang/fortran.py:32 src/zfr_lib/lang/gcc.py:48
+#: src/zfr_lib/lang/kotlin.py:22 src/zfr_lib/lang/lua.py:22
+#: src/zfr_lib/lang/nim.py:24 src/zfr_lib/lang/pascal.py:32
+#: src/zfr_lib/lang/python.py:21
+msgid "tests/ present"
+msgstr "tests/ mevcut"
+
+#: src/zfr_lib/lang/antlr.py:47 src/zfr_lib/lang/as.py:35
+#: src/zfr_lib/lang/bison.py:43 src/zfr_lib/lang/clib.py:35
+#: src/zfr_lib/lang/cpplib.py:35 src/zfr_lib/lang/cpp.py:22
+#: src/zfr_lib/lang/c.py:22 src/zfr_lib/lang/gcc.py:53
+msgid "no tests/ directory"
+msgstr "tests/ dizini yok"
+
+#: src/zfr_lib/lang/antlr.py:49
+msgid "Add tests/TestCommons.java or fixture checks for parser output."
+msgstr ""
+"Ayrıştırıcı çıktısı için tests/TestCommons.java veya fixture denetimleri "
+"ekleyin."
+
+#: src/zfr_lib/lang/as.py:37
+msgid "Add tests/smoke.sh and meson test() for stdin/stdout copy."
+msgstr "stdin/stdout kopyası için tests/smoke.sh ve meson test() ekleyin."
+
+#: src/zfr_lib/lang/bash.py:45
+#, python-format
+msgid "src scripts: %s"
+msgstr "src betikleri: %s"
+
+#: src/zfr_lib/lang/bash.py:46
+msgid "no src/*.in scripts"
+msgstr "src/*.in betikleri yok"
+
+#: src/zfr_lib/lang/bash.py:47
+msgid ""
+"Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ and meson "
+"configure_file + install_mode rwxr-xr-x."
+msgstr ""
+"Yapılandırılan betikleri @PACKAGE@/@VERSION@ içeren src/<puff>.in olarak "
+"tutun; meson configure_file + install_mode rwxr-xr-x kullanın."
+
+#: src/zfr_lib/lang/bison.py:45
+msgid "Add tests/ with fixture checks for parser dump/format output."
+msgstr ""
+"Ayrıştırıcının dump/format çıktısı için fixture denetimleri içeren tests/ "
+"ekleyin."
+
+#: src/zfr_lib/lang/clib.py:36 src/zfr_lib/lang/cpplib.py:36
+#: src/zfr_lib/lang/cpp.py:23 src/zfr_lib/lang/c.py:23
+#: src/zfr_lib/lang/gcc.py:55
+msgid "Add tests/ and meson test() entries like the C family templates."
+msgstr ""
+"C ailesi şablonlarındaki gibi tests/ ve meson test() girdileri ekleyin."
+
+#: src/zfr_lib/lang/cobol.py:37
+msgid "no tests/ (cobol template uses cobc + meson test)"
+msgstr "tests/ yok (cobol şablonu cobc + meson test kullanır)"
+
+#: src/zfr_lib/lang/cobol.py:39
+msgid "Add tests/test_commons.sh or similar smoke test for cobc."
+msgstr "cobc için tests/test_commons.sh veya benzer bir duman testi ekleyin."
+
+#: src/zfr_lib/lang/d.py:37
+msgid "no tests/ (D template uses ldc/dmd + meson test)"
+msgstr "tests/ yok (D şablonu ldc/dmd + meson test kullanır)"
+
+#: src/zfr_lib/lang/d.py:39
+msgid "Add tests/test_commons.d and meson test() executable."
+msgstr "tests/test_commons.d ve meson test() çalıştırılabilirini ekleyin."
+
+#: src/zfr_lib/lang/fortran.py:37
+msgid "no tests/ (fortran template uses gfortran + meson test)"
+msgstr "tests/ yok (fortran şablonu gfortran + meson test kullanır)"
+
+#: src/zfr_lib/lang/fortran.py:39
+msgid "Add tests/test_commons.f90 and meson test() executable."
+msgstr "tests/test_commons.f90 ve meson test() çalıştırılabilirini ekleyin."
+
+#: src/zfr_lib/lang/go.py:22
+msgid "missing go.mod"
+msgstr "go.mod eksik"
+
+#: src/zfr_lib/lang/go.py:23
+msgid ""
+"Add go.mod; meson should `go build` with -X main.buildVersion from "
+"meson.project_version()."
+msgstr ""
+"go.mod ekleyin; meson, meson.project_version() kaynağından -X "
+"main.buildVersion ile `go build` çalıştırmalıdır."
+
+#: src/zfr_lib/lang/kotlin.py:23
+msgid "no tests/ (kotlin template uses kotlinc + meson test)"
+msgstr "tests/ yok (kotlin şablonu kotlinc + meson test kullanır)"
+
+#: src/zfr_lib/lang/kotlin.py:24
+msgid "Add tests/Test*.kt and meson test() compiling with kotlinc."
+msgstr "kotlinc ile derlenen tests/Test*.kt ve meson test() ekleyin."
+
+#: src/zfr_lib/lang/lua.py:23
+msgid "no tests/ (lua template uses lua tests + meson test)"
+msgstr "tests/ yok (lua şablonu lua testleri + meson test kullanır)"
+
+#: src/zfr_lib/lang/lua.py:24
+msgid ""
+"Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
+msgstr ""
+"LUA_PATH=src/?.lua ile lua çalıştıran tests/test_*.lua ve meson test() "
+"ekleyin."
+
+#: src/zfr_lib/lang/nim.py:25
+msgid "no tests/ (nim template uses unittest + meson test)"
+msgstr "tests/ yok (nim şablonu unittest + meson test kullanır)"
+
+#: src/zfr_lib/lang/nim.py:26
+msgid "Add tests/test_*.nim and meson test() with nim r."
+msgstr "nim r ile tests/test_*.nim ve meson test() ekleyin."
+
+#: src/zfr_lib/lang/pascal.py:37
+msgid "no tests/ (pascal template uses fpc + meson test)"
+msgstr "tests/ yok (pascal şablonu fpc + meson test kullanır)"
+
+#: src/zfr_lib/lang/pascal.py:39
+msgid "Add tests/test_commons.pas and meson test() with fpc."
+msgstr "fpc ile tests/test_commons.pas ve meson test() ekleyin."
+
+#: src/zfr_lib/lang/python.py:22
+msgid "no tests/ (python template uses unittest + meson test)"
+msgstr "tests/ yok (python şablonu unittest + meson test kullanır)"
+
+#: src/zfr_lib/lang/python.py:23
+msgid "Add tests/test_*.py and meson test() with PYTHONPATH=src."
+msgstr "PYTHONPATH=src ile tests/test_*.py ve meson test() ekleyin."
+
+#: src/zfr_lib/lang/rust.py:22
+msgid "missing Cargo.toml"
+msgstr "Cargo.toml eksik"
+
+#: src/zfr_lib/lang/rust.py:23
+msgid ""
+"Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
+msgstr ""
+"Rust zephyr projeleri ikili için Cargo.toml ile birlikte meson custom_target "
+"tutar."
+
+#: src/zfr_lib/lang/zig.py:23
+msgid "missing build.zig"
+msgstr "build.zig eksik"
+
+#: src/zfr_lib/lang/zig.py:24
+msgid "Add build.zig; meson should invoke `zig build -Doptimize=ReleaseFast`."
+msgstr ""
+"build.zig ekleyin; meson `zig build -Doptimize=ReleaseFast` komutunu "
+"çalıştırmalıdır."
+
+#: src/zfr_lib/lint/debian.py:42
+#, python-format
+msgid "Build-Depends has %s"
+msgstr "Build-Depends %s içeriyor"
+
+#: src/zfr_lib/lint/debian.py:48
+#, python-format
+msgid "Build-Depends missing %s"
+msgstr "Build-Depends içinde %s yok"
+
+#: src/zfr_lib/lint/debian.py:50
+#, python-format
+msgid ""
+"Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man "
+"pages)."
+msgstr ""
+"Build-Depends alanına %s ekleyin (zephyr paketleri Meson + AsciiDoc kılavuz "
+"sayfalarıyla derlenir)."
+
+#: src/zfr_lib/lint/debian.py:54
+msgid "debhelper-compat present"
+msgstr "debhelper-compat mevcut"
+
+#: src/zfr_lib/lint/debian.py:60
+msgid "Build-Depends missing debhelper-compat (= 13)"
+msgstr "Build-Depends içinde debhelper-compat (= 13) yok"
+
+#: src/zfr_lib/lint/debian.py:62
+msgid "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+msgstr ""
+"Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+
+#: src/zfr_lib/lint/debian.py:72
+msgid "Package stanza missing Architecture"
+msgstr "Package kıtasında Architecture yok"
+
+#: src/zfr_lib/lint/debian.py:74
+msgid "Architecture: all  (scripts) or any (compiled)."
+msgstr "Architecture: all  (betikler) veya any (derlenmiş)."
+
+#: src/zfr_lib/lint/debian.py:82
+#, python-format
+msgid "bash packages should be Architecture: all (got %s)"
+msgstr "bash paketleri Architecture: all olmalı (alınan %s)"
+
+#: src/zfr_lib/lint/debian.py:84
+msgid "Architecture: all"
+msgstr "Architecture: all"
+
+#: src/zfr_lib/lint/debian.py:92
+#, python-format
+msgid "%s packages are usually Architecture: any (got all)"
+msgstr "%s paketleri genelde Architecture: any olur (alınan all)"
+
+#: src/zfr_lib/lint/debian.py:94
+msgid "Architecture: any"
+msgstr "Architecture: any"
+
+#: src/zfr_lib/lint/debian.py:98
+#, python-format
+msgid "Architecture: %s"
+msgstr "Architecture alanı: %s"
+
+#: src/zfr_lib/lint/debian.py:102
+#, python-format
+msgid "Homepage: %s"
+msgstr "Homepage alanı: %s"
+
+#: src/zfr_lib/lint/debian.py:108
+msgid "no Homepage"
+msgstr "Homepage yok"
+
+#: src/zfr_lib/lint/debian.py:110
+msgid "Set Homepage: to the project URL."
+msgstr "Homepage: alanını proje URL’sine ayarlayın."
+
+#: src/zfr_lib/lint/debian.py:116
+msgid "dh meson debian/build"
+msgstr "dh meson debian/build kullanıyor"
+
+#: src/zfr_lib/lint/debian.py:122
+msgid ""
+"debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
+msgstr ""
+"debian/rules, dh --buildsystem=meson --builddirectory=debian/build değil"
+
+#: src/zfr_lib/lint/debian.py:125
+#, no-python-format
+msgid ""
+"Use:\n"
+"#!/usr/bin/make -f\n"
+"\n"
+"%:\n"
+"\tdh $@ --buildsystem=meson --builddirectory=debian/build"
+msgstr ""
+"Kullanın:\n"
+"#!/usr/bin/make -f\n"
+"\n"
+"%:\n"
+"\tdh $@ --buildsystem=meson --builddirectory=debian/build"
+
+#: src/zfr_lib/lint/debian.py:131
+msgid "copyright mentions AGPL"
+msgstr "copyright AGPL’den bahsediyor"
+
+#: src/zfr_lib/lint/debian.py:137
+msgid "debian/copyright does not mention AGPL"
+msgstr "debian/copyright AGPL’den bahsetmiyor"
+
+#: src/zfr_lib/lint/debian.py:139
+msgid "Use the template debian/copyright (License: AGPL-3+)."
+msgstr "debian/copyright şablonunu kullanın (License: AGPL-3+)."
+
+#: src/zfr_lib/lint/debian.py:145
+#, python-format
+msgid "source format %s"
+msgstr "kaynak biçimi %s"
+
+#: src/zfr_lib/lint/debian.py:154
+#, python-format
+msgid "VERSION=%(file)r != changelog %(changelog)r"
+msgstr "VERSION=%(file)r != değişiklik günlüğü %(changelog)r"
+
+#: src/zfr_lib/lint/debian.py:156
+msgid ""
+"VERSION should match the latest debian/changelog entry (pre-commit hook "
+"updates it). Git describe may still differ."
+msgstr ""
+"VERSION, debian/changelog içindeki en son girdiyle eşleşmelidir (pre-commit "
+"kancası onu günceller). Git describe hâlâ farklı olabilir."
+
+#: src/zfr_lib/lint/debian.py:162
+#, python-format
+msgid "VERSION matches changelog %s"
+msgstr "VERSION değişiklik günlüğü %s ile eşleşiyor"
+
+#: src/zfr_lib/lint/debian.py:172
+msgid "bash project Depends missing bash-shlib"
+msgstr "bash projesinin Depends alanında bash-shlib yok"
+
+#: src/zfr_lib/lint/debian.py:174
+msgid "Depends: bash, bash-shlib, ${misc:Depends}"
+msgstr "Depends: bash, bash-shlib, ${misc:Depends}"
+
+#: src/zfr_lib/lint/debian.py:178
+msgid "Depends includes bash-shlib"
+msgstr "Depends bash-shlib içeriyor"
+
+#: src/zfr_lib/lint/i18n_check.py:56
+#, python-format
+msgid "l10n level %s: no locale coverage required"
+msgstr "l10n düzeyi %s: yerel ayar kapsamı gerekmez"
+
+#: src/zfr_lib/lint/i18n_check.py:65
+#, python-format
+msgid "l10n level %(level)s (%(count)d locales)"
+msgstr "l10n düzeyi %(level)s (%(count)d yerel ayar)"
+
+#: src/zfr_lib/lint/i18n_check.py:78
+msgid "no po/ directory (optional unless the project uses gettext)"
+msgstr "po/ dizini yok (proje gettext kullanmıyorsa isteğe bağlı)"
+
+#: src/zfr_lib/lint/i18n_check.py:79
+#, python-format
+msgid ""
+"If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in "
+"meson.build. Required locales at %(level)s: %(locales)s (source language "
+"%(source)s)."
+msgstr ""
+"Uygulama çevrildiyse meson.build içinde i18n.gettext() ile po/ altına "
+"LINGUAS + *.po ekleyin. %(level)s düzeyinde gereken yerel ayarlar: "
+"%(locales)s (kaynak dil %(source)s)."
+
+#: src/zfr_lib/lint/i18n_check.py:97
+msgid "po/ exists but po/LINGUAS is missing or empty"
+msgstr "po/ var ama po/LINGUAS eksik veya boş"
+
+#: src/zfr_lib/lint/i18n_check.py:99
+#, python-format
+msgid ""
+"Create po/LINGUAS listing at least:\n"
+"%(locales)s\n"
+"(English/%(source)s is the msgid source and is not listed.)"
+msgstr ""
+"En az şunları listeleyen po/LINGUAS oluşturun:\n"
+"%(locales)s\n"
+"(İngilizce/%(source)s msgid kaynağıdır ve listelenmez.)"
+
+#: src/zfr_lib/lint/i18n_check.py:114
+#, python-format
+msgid "po/LINGUAS missing %(level)s locale(s): %(locales)s"
+msgstr "po/LINGUAS’ta eksik %(level)s yerel ayar(lar): %(locales)s"
+
+#: src/zfr_lib/lint/i18n_check.py:117
+#, python-format
+msgid ""
+"Level %(level)s requires: %(locales)s (source %(source)s; zh-cn→zh_CN, zh-"
+"tw→zh_TW). Append the missing lines to LINGUAS and add matching po/"
+"<locale>.po."
+msgstr ""
+"%(level)s düzeyi şunları ister: %(locales)s (kaynak %(source)s; zh-cn→zh_CN, "
+"zh-tw→zh_TW). Eksik satırları LINGUAS’a ekleyin ve eşleşen po/<locale>.po "
+"dosyalarını ekleyin."
+
+#: src/zfr_lib/lint/i18n_check.py:132
+#, python-format
+msgid "po/LINGUAS covers %s locale set"
+msgstr "po/LINGUAS, %s yerel ayar kümesini kapsıyor"
+
+#: src/zfr_lib/lint/i18n_check.py:147
+#, python-format
+msgid "LINGUAS entries without po/<locale>.po: %s"
+msgstr "po/<locale>.po’suz LINGUAS girdileri: %s"
+
+#: src/zfr_lib/lint/i18n_check.py:149
+msgid ""
+"For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-"
+"translator && msgmerge -U po/<locale>.po <domain>.pot"
+msgstr ""
+"Her yerel ayar için: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --"
+"no-translator && msgmerge -U po/<locale>.po <domain>.pot"
+
+#: src/zfr_lib/lint/i18n_check.py:160
+#, python-format
+msgid "%(level)s locale .po files present (%(count)d)"
+msgstr "%(level)s yerel ayar .po dosyaları mevcut (%(count)d)"
+
+#: src/zfr_lib/lint/i18n_check.py:192
+#, python-format
+msgid "missing whole-document man translations for %(level)s: %(files)s"
+msgstr "%(level)s için eksik tam belge man çevirileri: %(files)s"
+
+#: src/zfr_lib/lint/i18n_check.py:195
+#, python-format
+msgid ""
+"Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). "
+"%(level)s requires: %(locales)s."
+msgstr ""
+"docs/<locale>/<name>.adoc dosyasını elle çevirin (tüm belge, po4a değil). "
+"%(level)s şunları ister: %(locales)s."
+
+#: src/zfr_lib/lint/i18n_check.py:205
+#, python-format
+msgid "%s whole-document man translations present"
+msgstr "%s tam belge man çevirileri mevcut"
+
+#: src/zfr_lib/lint/i18n_check.py:214
+#, python-format
+msgid "man translation still contains the English Name line: %s"
+msgstr "man çevirisi hâlâ İngilizce Name satırını içeriyor: %s"
+
+#: src/zfr_lib/lint/i18n_check.py:217
+msgid "Translate the Name line; do not leave the English wording."
+msgstr "Name satırını çevirin; İngilizce ifadeyi bırakmayın."
+
+#: src/zfr_lib/lint/identity.py:57
+#, python-format
+msgid "%(label)s is %(val)r, expected %(expected)r (directory name)"
+msgstr "%(label)s %(val)r, beklenen %(expected)r (dizin adı)"
+
+#: src/zfr_lib/lint/identity.py:60
+#, python-format
+msgid ""
+"Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename "
+"%(expected)s` if leftover template names remain."
+msgstr ""
+"%(label)s değerini %(expected)r yapın veya dizini yeniden adlandırın. Şablon "
+"adları kaldıysa `zfr rename %(expected)s` kullanın."
+
+#: src/zfr_lib/lint/identity.py:66
+#, python-format
+msgid "%(label)s=%(val)s"
+msgstr "%(label)s=%(val)s"
+
+#: src/zfr_lib/lint/identity.py:69
+#, python-format
+msgid "meson project name=%s"
+msgstr "meson proje adı=%s"
+
+#: src/zfr_lib/lint/identity.py:75
+#, python-format
+msgid "debian Source=%(source)r != meson project=%(meson)r"
+msgstr "debian Source=%(source)r != meson projesi=%(meson)r"
+
+#: src/zfr_lib/lint/identity.py:78
+msgid "Keep Source, Package, and meson project() name identical."
+msgstr "Source, Package ve meson project() adını aynı tutun."
+
+#: src/zfr_lib/lint/identity.py:82
+#, python-format
+msgid "Source=%s"
+msgstr "Source=%s"
+
+#: src/zfr_lib/lint/identity.py:95
+#, python-format
+msgid "spec Name=%(spec)r != debian/meson name %(want)r"
+msgstr "spec Name=%(spec)r != debian/meson adı %(want)r"
+
+#: src/zfr_lib/lint/identity.py:99
+#, python-format
+msgid "Set Name: %s in the spec (same as debian Source)."
+msgstr "spec içinde Name: %s ayarlayın (debian Source ile aynı)."
+
+#: src/zfr_lib/lint/identity.py:103
+#, python-format
+msgid "spec Name=%s"
+msgstr "spec Name=%s"
+
+#: src/zfr_lib/lint/__init__.py:99
 msgid "validate project packaging and zephyr layout (walks parents from cwd)"
 msgstr "proje paketlemesini ve zephyr düzenini doğrula (cwd'den üstlere gider)"
 
-#: src/zfr_lib/lint/__init__.py:91
+#: src/zfr_lib/lint/__init__.py:100
 msgid ""
 "Check the current zephyr project for missing files and packaging/style "
 "mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
@@ -235,23 +712,714 @@ msgstr ""
 "kontrol et. cwd'den üst dizinlere gider. stdout bir TTY olduğunda CSR "
 "renkleri."
 
-#: src/zfr_lib/lint/__init__.py:95
+#: src/zfr_lib/lint/__init__.py:104
 msgid "show passing checks too"
 msgstr "başarılı kontrolleri de göster"
 
-#: src/zfr_lib/lint/__init__.py:96
+#: src/zfr_lib/lint/__init__.py:105
 msgid "only print errors"
 msgstr "yalnızca hataları yazdır"
 
-#: src/zfr_lib/lint/__init__.py:97
+#: src/zfr_lib/lint/__init__.py:106
 msgid "treat warnings as failures (exit 1)"
 msgstr "uyarıları hata say (exit 1)"
 
-#: src/zfr_lib/lint/__init__.py:108
+#: src/zfr_lib/lint/__init__.py:113
 msgid ""
 "required gettext/manpage locale coverage L0–L3 (default: L1; project file "
 "may override)"
-msgstr "Gerekli gettext/kılavuz yerel kapsamı L0–L3 (varsayılan: L1; proje dosyası geçersiz kılabilir)"
+msgstr ""
+"Gerekli gettext/kılavuz yerel kapsamı L0–L3 (varsayılan: L1; proje dosyası "
+"geçersiz kılabilir)"
+
+#: src/zfr_lib/lint/lang_bits.py:31
+#, python-format
+msgid "legacy example module %s; use commons or a specific name"
+msgstr "eski örnek modül %s; commons veya belirli bir ad kullanın"
+
+#: src/zfr_lib/lint/lang_bits.py:33
+msgid ""
+"Rename to src/commons.* (template convention) or a project-specific module "
+"name."
+msgstr ""
+"src/commons.* (şablon kuralı) veya projeye özgü bir modül adına değiştirin."
+
+#: src/zfr_lib/lint/lang_bits.py:44
+#, python-format
+msgid "%s is only a template example for shared helpers"
+msgstr "%s yalnızca paylaşılan yardımcılar için şablon örneğidir"
+
+#: src/zfr_lib/lint/lang_bits.py:46
+msgid ""
+"common_lib / commons mean “extract reusable pieces”, but filenames should be "
+"concrete. Rename to a specific module in real projects (e.g. stream_copy.py, "
+"bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
+msgstr ""
+"common_lib / commons “yeniden kullanılabilir parçaları çıkar” anlamına "
+"gelir, ancak dosya adları somut olmalıdır. Gerçek projelerde belirli bir "
+"modüle yeniden adlandırın (ör. stream_copy.py, bulk.h). clib/cpplib "
+"paylaşılan kitaplık girişi olarak lib.c/lib.cpp’yi korur."
+
+#: src/zfr_lib/lint/layout.py:35
+msgid "Add a top-level meson.build with project(...)."
+msgstr "Kökte project(...) içeren bir meson.build ekleyin."
+
+#: src/zfr_lib/lint/layout.py:36
+msgid "Copy LICENSE from the language template (AGPL-3.0-or-later)."
+msgstr "LICENSE dosyasını dil şablonundan kopyalayın (AGPL-3.0-or-later)."
+
+#: src/zfr_lib/lint/layout.py:37
+msgid "Add README.md describing this project."
+msgstr "Bu projeyi anlatan bir README.md ekleyin."
+
+#: src/zfr_lib/lint/layout.py:38
+msgid "Add README-zh.md (Chinese summary), matching other zephyr templates."
+msgstr "Diğer zephyr şablonlarıyla uyumlu README-zh.md (Çince özet) ekleyin."
+
+#: src/zfr_lib/lint/layout.py:39
+msgid "Add debian/ packaging (copy debian/ from the language template)."
+msgstr "debian/ paketlemesi ekleyin (dil şablonundan debian/ kopyalayın)."
+
+#: src/zfr_lib/lint/layout.py:40
+msgid "Add debian/changelog (zfr create writes one; or use dch)."
+msgstr "debian/changelog ekleyin (zfr create yazar; veya dch kullanın)."
+
+#: src/zfr_lib/lint/layout.py:41
+msgid "Add debian/copyright in machine-readable format, License: AGPL-3+."
+msgstr ""
+"Makinece okunabilir biçimde debian/copyright ekleyin, License: AGPL-3+."
+
+#: src/zfr_lib/lint/layout.py:42
+msgid ""
+"Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
+msgstr ""
+"dh --buildsystem=meson --builddirectory=debian/build kullanan debian/rules "
+"ekleyin."
+
+#: src/zfr_lib/lint/layout.py:43
+msgid "Add debian/source/format (typically '3.0 (native)')."
+msgstr "debian/source/format ekleyin (genellikle '3.0 (native)')."
+
+#: src/zfr_lib/lint/layout.py:47
+#, python-format
+msgid "present: %s"
+msgstr "mevcut: %s"
+
+#: src/zfr_lib/lint/layout.py:50
+#, python-format
+msgid "missing %s"
+msgstr "%s eksik"
+
+#: src/zfr_lib/lint/layout.py:56
+#, python-format
+msgid "AsciiDoc man sources: %s"
+msgstr "AsciiDoc man kaynakları: %s"
+
+#: src/zfr_lib/lint/layout.py:63
+msgid "no docs/*.adoc man page source"
+msgstr "docs/*.adoc man sayfası kaynağı yok"
+
+#: src/zfr_lib/lint/layout.py:65
+msgid ""
+"Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage "
+"(see any language template)."
+msgstr ""
+"docs/<puff>.adoc ve asciidoctor -b manpage kullanan bir meson custom_target "
+"ekleyin (herhangi bir dil şablonuna bakın)."
+
+#: src/zfr_lib/lint/layout.py:78
+#, python-format
+msgid "bash completion: %s"
+msgstr "bash tamamlama: %s"
+
+#: src/zfr_lib/lint/layout.py:86
+msgid "no *.bash bash-completion script at project root"
+msgstr "proje kökünde *.bash bash-completion betiği yok"
+
+#: src/zfr_lib/lint/layout.py:87
+msgid ""
+"Add <puff>.bash and install it to datadir/bash-completion/completions "
+"renamed to the command name (see meson.build in the template)."
+msgstr ""
+"<puff>.bash ekleyin ve komut adına yeniden adlandırarak datadir/bash-"
+"completion/completions altına kurun (şablondaki meson.build dosyasına bakın)."
+
+#: src/zfr_lib/lint/layout.py:93
+msgid "VERSION file present"
+msgstr "VERSION dosyası mevcut"
+
+#: src/zfr_lib/lint/layout.py:99
+msgid "no VERSION file (changelog snapshot for tarball builds)"
+msgstr ""
+"VERSION dosyası yok (tarball derlemeleri için changelog anlık görüntüsü)"
+
+#: src/zfr_lib/lint/layout.py:101
+msgid ""
+"Create VERSION with the latest debian/changelog version (one line). "
+"Enable .githooks/pre-commit: git config core.hooksPath .githooks"
+msgstr ""
+"En son debian/changelog sürümüyle VERSION oluşturun (tek satır). .githooks/"
+"pre-commit etkinleştirin: git config core.hooksPath .githooks"
+
+#: src/zfr_lib/lint/layout.py:195
+msgid "no .githooks/pre-commit to sync VERSION from debian/changelog"
+msgstr ""
+"debian/changelog dosyasından VERSION eşitlemek için .githooks/pre-commit yok"
+
+#: src/zfr_lib/lint/layout.py:197
+msgid ""
+"Walk up to the directory that contains .git, then put pre-commit in that "
+"tree's .githooks (or core.hooksPath). The hook must update VERSION from "
+"debian/changelog. `zfr create` copies one and sets git config "
+"core.hooksPath .githooks."
+msgstr ""
+".git içeren dizine kadar çıkın, ardından pre-commit dosyasını o "
+"ağacın .githooks dizinine (veya core.hooksPath) koyun. Kanca VERSION "
+"dosyasını debian/changelog’dan güncellemelidir. `zfr create` bir tane "
+"kopyalar ve git config core.hooksPath .githooks ayarlar."
+
+#: src/zfr_lib/lint/layout.py:210
+#, python-format
+msgid "pre-commit syncs VERSION from debian/changelog (%s)"
+msgstr "pre-commit VERSION dosyasını debian/changelog’dan eşitler (%s)"
+
+#: src/zfr_lib/lint/layout.py:218
+#, python-format
+msgid "%s exists but does not sync VERSION from debian/changelog"
+msgstr "%s var ama VERSION dosyasını debian/changelog’dan eşitlemiyor"
+
+#: src/zfr_lib/lint/layout.py:220
+msgid ""
+"The hook should read debian/changelog (dpkg-parsechangelog) and write "
+"VERSION. See the zephyr .githooks/pre-commit template."
+msgstr ""
+"Kanca debian/changelog dosyasını okumalı (dpkg-parsechangelog) ve VERSION "
+"yazmalıdır. zephyr .githooks/pre-commit şablonuna bakın."
+
+#: src/zfr_lib/lint/leftovers.py:49
+#, python-format
+msgid "%s keeps the template placeholder banner (apps must rewrite it)"
+msgstr ""
+"%s şablon yer tutucu başlığını koruyor (uygulamalar yeniden yazmalıdır)"
+
+#: src/zfr_lib/lint/leftovers.py:52
+msgid ""
+"After `zfr create`/`zfr rename`, rewrite this README and remove the "
+"generated-from-template banner. Templates should keep this banner."
+msgstr ""
+"`zfr create`/`zfr rename` sonrasında bu README dosyasını yeniden yazın ve "
+"generated-from-template başlığını kaldırın. Şablonlar bu başlığı korumalıdır."
+
+#: src/zfr_lib/lint/leftovers.py:61
+#, python-format
+msgid "%s still has the template placeholder banner"
+msgstr "%s hâlâ şablon yer tutucu başlığına sahip"
+
+#: src/zfr_lib/lint/leftovers.py:64
+#, python-format
+msgid ""
+"Rewrite %s for this project. Remove the generated-from-template banner and "
+"describe the real commands, build, and license."
+msgstr ""
+"Bu proje için %s dosyasını yeniden yazın. generated-from-template başlığını "
+"kaldırın ve gerçek komutları, derlemeyi ve lisansı açıklayın."
+
+#: src/zfr_lib/lint/leftovers.py:69
+#, python-format
+msgid "%s has no template banner"
+msgstr "%s şablon başlığına sahip değil"
+
+#: src/zfr_lib/lint/leftovers.py:101
+#, python-format
+msgid "%s tree may contain zephyr/some_puff1 placeholders (expected)"
+msgstr "%s ağacı zephyr/some_puff1 yer tutucuları içerebilir (beklenen)"
+
+#: src/zfr_lib/lint/leftovers.py:127 src/zfr_lib/lint/template.py:95
+#, python-format
+msgid " (+%d more)"
+msgstr " (+%d tane daha)"
+
+#: src/zfr_lib/lint/leftovers.py:132
+#, python-format
+msgid ""
+"found %(hits)d leftover template token(s) (zephyr/%(token)s): "
+"%(preview)s%(more)s"
+msgstr ""
+"%(hits)d adet artakalan şablon jetonu bulundu (zephyr/%(token)s): "
+"%(preview)s%(more)s"
+
+#: src/zfr_lib/lint/leftovers.py:134
+msgid ""
+"Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 "
+"identifiers. After create, leftover tokens mean instantiation failed."
+msgstr ""
+"`zfr rename <project> [puff ...]` çalıştırın veya kalan zephyr/some_puff1 "
+"tanımlayıcılarını değiştirin. Create sonrası kalan jetonlar örneğin "
+"oluşturulamadığını gösterir."
+
+#: src/zfr_lib/lint/leftovers.py:138
+msgid "no leftover zephyr/some_puff1 tokens"
+msgstr "artakalan zephyr/some_puff1 jetonu yok"
+
+#: src/zfr_lib/lint/meson.py:41
+msgid "project() present"
+msgstr "project() mevcut"
+
+#: src/zfr_lib/lint/meson.py:47
+msgid "meson.build has no project() call"
+msgstr "meson.build içinde project() çağrısı yok"
+
+#: src/zfr_lib/lint/meson.py:49
+msgid ""
+"project() must be the first Meson call. Copy the header from the language "
+"template."
+msgstr ""
+"project() ilk Meson çağrısı olmalıdır. Başlığı dil şablonundan kopyalayın."
+
+#: src/zfr_lib/lint/meson.py:54
+#, python-format
+msgid "license %s"
+msgstr "lisans %s"
+
+#: src/zfr_lib/lint/meson.py:60
+msgid "meson license is not AGPL-3.0-or-later"
+msgstr "meson lisansı AGPL-3.0-or-later değil"
+
+#: src/zfr_lib/lint/meson.py:63
+#, python-format
+msgid "Set license: '%s' in project()."
+msgstr "project() içinde license: '%s' ayarlayın."
+
+#: src/zfr_lib/lint/meson.py:69
+#, python-format
+msgid "%s set"
+msgstr "%s ayarlandı"
+
+#: src/zfr_lib/lint/meson.py:75
+#, python-format
+msgid "missing %s (used for man pages)"
+msgstr "%s eksik (man sayfaları için kullanılır)"
+
+#: src/zfr_lib/lint/meson.py:77
+#, python-format
+msgid ""
+"Set %s next to project(), then pass -a project-author/email/year to "
+"asciidoctor."
+msgstr ""
+"project() yanına %s ayarlayın, ardından asciidoctor’a -a project-author/"
+"email/year geçirin."
+
+#: src/zfr_lib/lint/meson.py:82
+msgid "version uses `zfr version`"
+msgstr "sürüm `zfr version` kullanıyor"
+
+#: src/zfr_lib/lint/meson.py:88
+msgid "version still uses inline git describe; zephyr style is `zfr version`"
+msgstr ""
+"sürüm hâlâ satır içi git describe kullanıyor; zephyr üslubu `zfr version`"
+
+#: src/zfr_lib/lint/meson.py:91
+msgid ""
+"In project(version: run_command(...)), prefer:\n"
+"  v=$(zfr version 2>/dev/null || true)\n"
+"  with fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY\n"
+"See bash/meson.build in the zephyr tree."
+msgstr ""
+"project(version: run_command(...)) içinde şunu yeğleyin:\n"
+"  v=$(zfr version 2>/dev/null || true)\n"
+"  yedek ile v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY\n"
+"zephyr ağacındaki bash/meson.build dosyasına bakın."
+
+#: src/zfr_lib/lint/meson.py:102
+msgid "could not find `zfr version` or git describe in project version"
+msgstr "proje sürümünde `zfr version` veya git describe bulunamadı"
+
+#: src/zfr_lib/lint/meson.py:104
+msgid "Use `zfr version` for project() version (see bash/meson.build)."
+msgstr ""
+"project() sürümü için `zfr version` kullanın (bash/meson.build dosyasına "
+"bakın)."
+
+#: src/zfr_lib/lint/meson.py:109
+msgid "0.0.0 fallback present"
+msgstr "0.0.0 yedeği mevcut"
+
+#: src/zfr_lib/lint/meson.py:115
+msgid "no explicit 0.0.0 fallback for missing git/VERSION"
+msgstr "eksik git/VERSION için açık 0.0.0 yedeği yok"
+
+#: src/zfr_lib/lint/meson.py:117
+msgid "Keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY"
+msgstr "Yedeği koruyun v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY"
+
+#: src/zfr_lib/lint/meson.py:122
+msgid "asciidoctor man pages"
+msgstr "asciidoctor man sayfaları"
+
+#: src/zfr_lib/lint/meson.py:128
+msgid "meson.build does not invoke asciidoctor"
+msgstr "meson.build asciidoctor çağırmıyor"
+
+#: src/zfr_lib/lint/meson.py:130
+msgid ""
+"find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
+msgstr ""
+"find_program('asciidoctor') ve custom_target(..., '-b', 'manpage', ...)."
+
+#: src/zfr_lib/lint/meson.py:135
+msgid "run_target look present"
+msgstr "run_target look mevcut"
+
+#: src/zfr_lib/lint/meson.py:141
+msgid "no run_target('look') DESTDIR preview"
+msgstr "run_target('look') DESTDIR önizlemesi yok"
+
+#: src/zfr_lib/lint/meson.py:143
+msgid ""
+"Add run_target look that meson install's into a tempdir and runs tree (see "
+"templates)."
+msgstr ""
+"tempdir'e meson install yapıp tree çalıştıran run_target look ekleyin "
+"(şablonlara bakın)."
+
+#: src/zfr_lib/lint/meson.py:148
+msgid "installs bash-completion"
+msgstr "bash-completion kurar"
+
+#: src/zfr_lib/lint/meson.py:154
+msgid "does not install bash-completion"
+msgstr "bash-completion kurmaz"
+
+#: src/zfr_lib/lint/meson.py:156
+msgid ""
+"install_data(..., install_dir: datadir / 'bash-completion' / 'completions', "
+"rename: command)."
+msgstr ""
+"install_data(..., install_dir: datadir / 'bash-completion' / 'completions', "
+"rename: command). kullanın."
+
+#: src/zfr_lib/lint/report.py:73
+msgid "FAIL"
+msgstr "HATA"
+
+#: src/zfr_lib/lint/report.py:73
+msgid "PASS"
+msgstr "TAMAM"
+
+#: src/zfr_lib/lint/report.py:82
+msgid "status:"
+msgstr "durum:"
+
+#: src/zfr_lib/lint/report.py:83
+#, python-format
+msgid "errors=%s"
+msgstr "hatalar=%s"
+
+#: src/zfr_lib/lint/report.py:84
+#, python-format
+msgid "warnings=%s"
+msgstr "uyarılar=%s"
+
+#: src/zfr_lib/lint/report.py:85
+#, python-format
+msgid "notes=%s"
+msgstr "notlar=%s"
+
+#: src/zfr_lib/lint/report.py:89
+msgid "zephyr meta-repo (templates + CLI tools)"
+msgstr "zephyr meta-deposu (şablonlar + CLI araçları)"
+
+#: src/zfr_lib/lint/report.py:90
+msgid ""
+"language template inside the meta-repo (placeholders like zephyr/some_puff1 "
+"are expected)"
+msgstr ""
+"meta-depodaki dil şablonu (zephyr/some_puff1 gibi yer tutucular beklenir)"
+
+#: src/zfr_lib/lint/report.py:91
+msgid ""
+"project instantiated from a language template (directory name must match "
+"meson/debian; no leftover zephyr/some_puff1 tokens)"
+msgstr ""
+"dil şablonundan örneklenmiş proje (dizin adı meson/debian ile eşleşmeli; "
+"artakalan zephyr/some_puff1 jetonu olmamalı)"
+
+#: src/zfr_lib/lint/report.py:93
+#, python-format
+msgid "role: %s"
+msgstr "rol: %s"
+
+#: src/zfr_lib/lint/report.py:95
+msgid "Zephyr style (finish the project to this contract)"
+msgstr "Zephyr stili (projeyi bu sözleşmeye göre tamamlayın)"
+
+#: src/zfr_lib/lint/report.py:97
+msgid ""
+"License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
+"License)."
+msgstr ""
+"Lisans AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
+"License)."
+
+#: src/zfr_lib/lint/report.py:98
+msgid ""
+"Build with Meson; debian/rules uses dh --buildsystem=meson --"
+"builddirectory=debian/build."
+msgstr ""
+"Meson ile derleyin; debian/rules dh --buildsystem=meson --"
+"builddirectory=debian/build kullanır."
+
+#: src/zfr_lib/lint/report.py:99
+msgid ""
+"project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO "
+"0.0.0, DO NOT MODIFY."
+msgstr ""
+"project() sürümü `zfr version` ile; yedek v=\"0.0.0\" # FIXED TO 0.0.0, DO "
+"NOT MODIFY."
+
+#: src/zfr_lib/lint/report.py:100
+msgid ""
+"Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under "
+"share/man/<locale>/man1 (whole-document adoc, not po4a)."
+msgstr ""
+"Kılavuz sayfaları: docs/*.adoc + asciidoctor -b manpage; çeviriler share/man/"
+"<locale>/man1 altında (tüm belge adoc, po4a değil)."
+
+#: src/zfr_lib/lint/report.py:101
+msgid ""
+"Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; "
+"optional rpm/ aligned with debian."
+msgstr ""
+"Paketleme: debian/control Build-Depends meson, ninja-build, asciidoctor; "
+"isteğe bağlı rpm/ debian ile hizalı."
+
+#: src/zfr_lib/lint/report.py:102
+msgid ""
+"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 "
+"locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."
+msgstr ""
+"i18n: İngilizce kaynak; zfr lint -l/--l10n-level L0–L3 (varsayılan L1). "
+"L1=10 yerel, L2=20, L3=30. Varsayılanlar .config/zfr/lint.options içinde."
+
+#: src/zfr_lib/lint/report.py:103
+msgid ""
+"Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/"
+"changelog (git describe may differ)."
+msgstr ""
+"Uygulamalar: `zfr rename <dir>` sonra `zfr add <puff>`; VERSION debian/"
+"changelog ile eşleşir (git describe farklı olabilir)."
+
+#: src/zfr_lib/lint/report.py:116
+msgid "error"
+msgstr "hata"
+
+#: src/zfr_lib/lint/report.py:117
+msgid "warn"
+msgstr "uyarı"
+
+#: src/zfr_lib/lint/report.py:118
+msgid "note"
+msgstr "not"
+
+#: src/zfr_lib/lint/report.py:119
+msgid "ok"
+msgstr "tamam"
+
+#: src/zfr_lib/lint/report.py:132
+msgid "fix:"
+msgstr "düzelt:"
+
+#: src/zfr_lib/lint/report.py:139
+msgid "Next steps (zephyr style)"
+msgstr "Sonraki adımlar (zephyr stili)"
+
+#: src/zfr_lib/lint/report.py:145
+msgid ""
+"Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). "
+"`zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr "
+"version`. `zfr ize` applies missing debian/rpm/meson/man/version-subst "
+"upgrades."
+msgstr ""
+"İpucu: düzenlemelerden sonra projeden (veya bir alt dizinden) `zfr lint` "
+"komutunu yeniden çalıştırın. `zfr about -d -r` paketleme alanlarını döker. "
+"Meson/RPM sürümü `zfr version`dır. `zfr ize` eksik debian/rpm/meson/man/"
+"version-subst yükseltmelerini uygular."
+
+#: src/zfr_lib/lint/rpm.py:41
+msgid "no rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
+msgstr ""
+"rpm/*.spec yok (isteğe bağlı, ancak zephyr stili debian/ yanında RPM "
+"bulundurur)"
+
+#: src/zfr_lib/lint/rpm.py:44
+#, no-python-format
+msgid ""
+"Copy rpm/ from a language template; name the spec after the package (rpm/"
+"<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. "
+"Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
+msgstr ""
+"Bir dil şablonundan rpm/ kopyalayın; spec dosyasını pakete göre adlandırın "
+"(rpm/<Source>.spec, zephyr.spec değil) ve `zfr version` kullanan bir "
+"Makefile tutun. Name/Summary/Requires/URL alanlarını debian/control ile "
+"hizalayın. Ya da `zfr ize` çalıştırın."
+
+#: src/zfr_lib/lint/rpm.py:63
+#, no-python-format, python-brace-format
+msgid "spec Version is dynamic %{version}"
+msgstr "spec Version dinamik %{version}"
+
+#: src/zfr_lib/lint/rpm.py:72
+msgid "spec Version is hardcoded; zephyr style injects `zfr version`"
+msgstr "spec Version sabit yazılmış; zephyr stili `zfr version` enjekte eder"
+
+#: src/zfr_lib/lint/rpm.py:76
+#, no-python-format
+msgid ""
+"Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze "
+"via rpm/Makefile (`zfr version` / `zfr version -r`)."
+msgstr ""
+"Version: %{version} kullanın, %{!?version:%global version 0.0.0} ile "
+"birlikte, ve rpm/Makefile üzerinden dondurun (`zfr version` / `zfr version "
+"-r`)."
+
+#: src/zfr_lib/lint/rpm.py:82
+#, python-format
+msgid "License %s"
+msgstr "Lisans %s"
+
+#: src/zfr_lib/lint/rpm.py:88
+msgid "spec License is not AGPL-3.0-or-later"
+msgstr "spec License AGPL-3.0-or-later değil"
+
+#: src/zfr_lib/lint/rpm.py:91
+#, python-format
+msgid "License:        %s"
+msgstr "License:        %s"
+
+#: src/zfr_lib/lint/rpm.py:102
+#, python-format
+msgid "spec URL=%(url)r != debian Homepage=%(homepage)r"
+msgstr "spec URL=%(url)r != debian Homepage=%(homepage)r"
+
+#: src/zfr_lib/lint/rpm.py:105
+msgid "Set URL: to the same Homepage as debian/control."
+msgstr "URL: alanını debian/control’deki Homepage ile aynı yapın."
+
+#: src/zfr_lib/lint/rpm.py:117
+msgid "spec Summary does not match debian Description first line"
+msgstr "spec Summary, debian Description ilk satırıyla eşleşmiyor"
+
+#: src/zfr_lib/lint/rpm.py:120
+#, python-format
+msgid "Summary:        %s"
+msgstr "Summary:        %s"
+
+#: src/zfr_lib/lint/rpm.py:125
+msgid "spec uses Meson (not autotools)"
+msgstr "spec Meson kullanıyor (autotools değil)"
+
+#: src/zfr_lib/lint/rpm.py:131
+msgid "spec still uses autotools; zephyr packages build with Meson"
+msgstr "spec hâlâ autotools kullanıyor; zephyr paketleri Meson ile derlenir"
+
+#: src/zfr_lib/lint/rpm.py:134
+#, no-python-format, python-brace-format
+msgid ""
+"%build: meson setup build --prefix=%{_prefix} ... && meson compile -C build\n"
+"%install: meson install -C build --destdir=%{buildroot}"
+msgstr ""
+"%build: meson setup build --prefix=%{_prefix} ... && meson compile -C build\n"
+"%install: meson install -C build --destdir=%{buildroot}"
+
+#: src/zfr_lib/lint/rpm.py:142
+msgid "Makefile uses `zfr version`"
+msgstr "Makefile `zfr version` kullanıyor"
+
+#: src/zfr_lib/lint/rpm.py:149
+msgid "rpm/Makefile does not call `zfr version`"
+msgstr "rpm/Makefile `zfr version` çağırmıyor"
+
+#: src/zfr_lib/lint/rpm.py:152
+#, no-python-format
+msgid ""
+"VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
+"RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
+msgstr ""
+"VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
+"RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
+
+#: src/zfr_lib/lint/rpm.py:161
+msgid "no rpm/Makefile convenience targets"
+msgstr "rpm/Makefile içinde kolaylık hedefleri yok"
+
+#: src/zfr_lib/lint/rpm.py:163
+msgid "Copy bash/rpm/Makefile (srpm/rpm via zfr version)."
+msgstr "bash/rpm/Makefile kopyalayın (srpm/rpm zfr version ile)."
+
+#: src/zfr_lib/lint/rpm.py:172
+msgid "bash spec Requires missing bash-shlib"
+msgstr "bash spec Requires içinde bash-shlib yok"
+
+#: src/zfr_lib/lint/rpm.py:174
+msgid "Requires:       bash-shlib  (same as debian Depends)"
+msgstr "Requires:       bash-shlib  (debian Depends ile aynı)"
+
+#: src/zfr_lib/lint/source_size.py:55
+#, python-format
+msgid "%(rel)s is %(lines)d lines (>%(limit)d); file is very long"
+msgstr "%(rel)s %(lines)d satır (>%(limit)d); dosya çok uzun"
+
+#: src/zfr_lib/lint/source_size.py:59
+msgid ""
+"Split this file into smaller modules; keep each unit focused and testable."
+msgstr ""
+"Bu dosyayı daha küçük modüllere ayırın; her birimi odaklı ve sınanabilir "
+"tutun."
+
+#: src/zfr_lib/lint/source_size.py:67
+#, python-format
+msgid "%(rel)s is %(lines)d lines (>%(limit)d); consider modularizing soon"
+msgstr ""
+"%(rel)s %(lines)d satır (>%(limit)d); yakında modülerleştirmeyi düşünün"
+
+#: src/zfr_lib/lint/source_size.py:71
+msgid "Plan extraction of helpers or submodules before the file grows further."
+msgstr ""
+"Dosya daha da büyümeden yardımcıları veya alt modülleri ayırmayı planlayın."
+
+#: src/zfr_lib/lint/source_size.py:75
+msgid "no oversized source files"
+msgstr "aşırı büyük kaynak dosya yok"
+
+#: src/zfr_lib/lint/template.py:51
+msgid "zfr CLI package is not a language template"
+msgstr "zfr CLI paketi bir dil şablonu değil"
+
+#: src/zfr_lib/lint/template.py:93
+msgid "structural files from the language template are present"
+msgstr "dil şablonunun yapısal dosyaları mevcut"
+
+#: src/zfr_lib/lint/template.py:100
+#, python-format
+msgid ""
+"language template %(lang)s has extra scaffolding not in this tree: "
+"%(preview)s%(more)s"
+msgstr ""
+"%(lang)s dil şablonunda bu ağaçta olmayan ekstra iskele var: "
+"%(preview)s%(more)s"
+
+#: src/zfr_lib/lint/template.py:102
+#, python-format
+msgid ""
+"Compare with the %(lang)s template under pkgdatadir. Copy missing debian/"
+"docs/src/rpm files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` "
+"puffs. Do not copy build/ or debian leftover stamp files. Example commons "
+"modules are optional."
+msgstr ""
+"pkgdatadir altındaki %(lang)s şablonuyla karşılaştırın. Eksik debian/docs/"
+"src/rpm dosyalarını kopyalayın (rpm/ %(name)s.spec kullanır, zephyr.spec "
+"değil) veya `zfr add` puff ekleyin. build/ veya debian artık damga "
+"dosyalarını kopyalamayın. Örnek commons modülleri isteğe bağlıdır."
 
 #: src/zfr_lib/release.py:26
 msgid "Debian binary-only build (no .dsc)"
@@ -372,13 +1540,13 @@ msgstr "yeni proje adı ('zephyr' yerine geçer)"
 msgid "new example names (each replaces template some_puff1)"
 msgstr "yeni örnek adlar (her biri şablon some_puff1 yerine geçer)"
 
-#: src/zfr_lib/shape.py:259
+#: src/zfr_lib/shape.py:263
 msgid ""
 "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
 msgstr ""
 "zephyr paket şekli puanı 0-100 yazdır (monorepos'ta packagedir vs repodir)"
 
-#: src/zfr_lib/shape.py:261
+#: src/zfr_lib/shape.py:265
 msgid ""
 "Score how completely the current directory matches zephyr package style "
 "(0-100). In monorepos, scores the packagedir."
@@ -386,15 +1554,15 @@ msgstr ""
 "Geçerli dizinin zephyr paket stiline ne kadar uyduğunu puanla (0-100). "
 "monorepos'ta packagedir'i puanlar."
 
-#: src/zfr_lib/shape.py:267
+#: src/zfr_lib/shape.py:271
 msgid "print 1 if score >= threshold, else 0"
 msgstr "score >= threshold ise 1, değilse 0 yazdır"
 
-#: src/zfr_lib/shape.py:268
+#: src/zfr_lib/shape.py:272
 msgid "print packagedir/repodir/role on stderr"
 msgstr "stderr'e packagedir/repodir/role yazdır"
 
-#: src/zfr_lib/shape.py:269
+#: src/zfr_lib/shape.py:273
 #, python-format
 msgid "bool threshold 0-100 (default: %s)"
 msgstr "bool eşiği 0-100 (varsayılan: %s)"
@@ -419,7 +1587,3 @@ msgstr "debian/changelog kullan (git veya .git yoksa varsayılan)"
 #: src/zfr_lib/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
 msgstr "RPM uyumlu Version yazdır (tireler alt çizgiye)"
-
-#: src/zfr_lib/ize/__init__.py
-msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
-msgstr "run 2meson to convert Autotools/CMake to Meson when present (default: on)"

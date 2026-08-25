@@ -32,38 +32,38 @@ from .util import *  # noqa: F403
 def check_layout(root: Path, lang: str, role: str) -> list[Finding]:
     out: list[Finding] = []
     required = [
-        ("meson.build", "meson.build", "Add a top-level meson.build with project(...)."),
-        ("LICENSE", "LICENSE", "Copy LICENSE from the language template (AGPL-3.0-or-later)."),
-        ("README.md", "README.md", "Add README.md describing this project."),
-        ("README-zh.md", "README-zh.md", "Add README-zh.md (Chinese summary), matching other zephyr templates."),
-        ("debian/control", "debian/control", "Add debian/ packaging (copy debian/ from the language template)."),
-        ("debian/changelog", "debian/changelog", "Add debian/changelog (zfr create writes one; or use dch)."),
-        ("debian/copyright", "debian/copyright", "Add debian/copyright in machine-readable format, License: AGPL-3+."),
-        ("debian/rules", "debian/rules", "Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."),
-        ("debian/source/format", "debian/source/format", "Add debian/source/format (typically '3.0 (native)')."),
+        ("meson.build", "meson.build", _("Add a top-level meson.build with project(...).")),
+        ("LICENSE", "LICENSE", _("Copy LICENSE from the language template (AGPL-3.0-or-later).")),
+        ("README.md", "README.md", _("Add README.md describing this project.")),
+        ("README-zh.md", "README-zh.md", _("Add README-zh.md (Chinese summary), matching other zephyr templates.")),
+        ("debian/control", "debian/control", _("Add debian/ packaging (copy debian/ from the language template).")),
+        ("debian/changelog", "debian/changelog", _("Add debian/changelog (zfr create writes one; or use dch).")),
+        ("debian/copyright", "debian/copyright", _("Add debian/copyright in machine-readable format, License: AGPL-3+.")),
+        ("debian/rules", "debian/rules", _("Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build.")),
+        ("debian/source/format", "debian/source/format", _("Add debian/source/format (typically '3.0 (native)').")),
     ]
     for code, rel, fix in required:
         if _has_file(root, rel):
-            out.append(Finding("ok", f"layout.{code.replace('/', '.')}", f"present: {rel}", rel))
+            out.append(Finding("ok", f"layout.{code.replace('/', '.')}", _("present: %s") % rel, rel))
         else:
             out.append(
-                Finding("error", f"layout.{code.replace('/', '.')}", f"missing {rel}", rel, fix=fix)
+                Finding("error", f"layout.{code.replace('/', '.')}", _("missing %s") % rel, rel, fix=fix)
             )
 
     adocs = list((root / "docs").glob("*.adoc")) if (root / "docs").is_dir() else []
     if adocs:
         out.append(
-            Finding("ok", "layout.docs", f"AsciiDoc man sources: {', '.join(p.name for p in adocs)}", "docs/")
+            Finding("ok", "layout.docs", _("AsciiDoc man sources: %s") % ", ".join(p.name for p in adocs), "docs/")
         )
     else:
         out.append(
             Finding(
                 "error",
                 "layout.docs",
-                "no docs/*.adoc man page source",
+                _("no docs/*.adoc man page source"),
                 "docs/",
-                fix="Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage "
-                "(see any language template).",
+                fix=_("Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage "
+                "(see any language template)."),
             )
         )
 
@@ -75,7 +75,7 @@ def check_layout(root: Path, lang: str, role: str) -> list[Finding]:
             Finding(
                 "ok",
                 "layout.completion",
-                f"bash completion: {', '.join(p.name for p in completions)}",
+                _("bash completion: %s") % ", ".join(p.name for p in completions),
             )
         )
     elif role != "meta":
@@ -83,23 +83,23 @@ def check_layout(root: Path, lang: str, role: str) -> list[Finding]:
             Finding(
                 "warn",
                 "layout.completion",
-                "no *.bash bash-completion script at project root",
-                fix="Add <puff>.bash and install it to datadir/bash-completion/completions "
-                "renamed to the command name (see meson.build in the template).",
+                _("no *.bash bash-completion script at project root"),
+                fix=_("Add <puff>.bash and install it to datadir/bash-completion/completions "
+                "renamed to the command name (see meson.build in the template)."),
             )
         )
 
     if _has_file(root, "VERSION"):
-        out.append(Finding("ok", "layout.VERSION", "VERSION file present", "VERSION"))
+        out.append(Finding("ok", "layout.VERSION", _("VERSION file present"), "VERSION"))
     else:
         out.append(
             Finding(
                 "warn",
                 "layout.VERSION",
-                "no VERSION file (changelog snapshot for tarball builds)",
+                _("no VERSION file (changelog snapshot for tarball builds)"),
                 "VERSION",
-                fix="Create VERSION with the latest debian/changelog version "
-                "(one line). Enable .githooks/pre-commit: git config core.hooksPath .githooks",
+                fix=_("Create VERSION with the latest debian/changelog version "
+                "(one line). Enable .githooks/pre-commit: git config core.hooksPath .githooks"),
             )
         )
 
@@ -192,12 +192,12 @@ def _check_pre_commit(root: Path) -> list[Finding]:
             Finding(
                 "note",
                 "layout.pre-commit",
-                "no .githooks/pre-commit to sync VERSION from debian/changelog",
+                _("no .githooks/pre-commit to sync VERSION from debian/changelog"),
                 loc,
-                fix="Walk up to the directory that contains .git, then put "
+                fix=_("Walk up to the directory that contains .git, then put "
                 "pre-commit in that tree's .githooks (or core.hooksPath). "
                 "The hook must update VERSION from debian/changelog. "
-                "`zfr create` copies one and sets git config core.hooksPath .githooks.",
+                "`zfr create` copies one and sets git config core.hooksPath .githooks."),
             )
         ]
 
@@ -207,7 +207,7 @@ def _check_pre_commit(root: Path) -> list[Finding]:
             Finding(
                 "ok",
                 "layout.pre-commit",
-                f"pre-commit syncs VERSION from debian/changelog ({label})",
+                _("pre-commit syncs VERSION from debian/changelog (%s)") % label,
                 label,
             )
         ]
@@ -215,9 +215,9 @@ def _check_pre_commit(root: Path) -> list[Finding]:
         Finding(
             "warn",
             "layout.pre-commit",
-            f"{label} exists but does not sync VERSION from debian/changelog",
+            _("%s exists but does not sync VERSION from debian/changelog") % label,
             label,
-            fix="The hook should read debian/changelog (dpkg-parsechangelog) "
-            "and write VERSION. See the zephyr .githooks/pre-commit template.",
+            fix=_("The hook should read debian/changelog (dpkg-parsechangelog) "
+            "and write VERSION. See the zephyr .githooks/pre-commit template."),
         )
     ]

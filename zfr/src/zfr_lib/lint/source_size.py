@@ -6,6 +6,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from .. import iter_files, is_probably_text
+from ..i18n import _
 from .finding import Finding
 from .util import _rel, is_example_shared_src
 
@@ -17,7 +18,8 @@ _SOURCE_PREFIXES = ("src/", "tests/", "apps/", "lib/")
 
 def _count_lines(path: Path) -> int:
     try:
-        return sum(1 for _ in path.open(encoding="utf-8", errors="ignore"))
+        with path.open(encoding="utf-8", errors="ignore") as fh:
+            return sum(1 for _line in fh)
     except OSError:
         return 0
 
@@ -50,10 +52,11 @@ def check_source_size(root: Path, role: str) -> list[Finding]:
                 Finding(
                     "warn",
                     "source.long",
-                    f"{rel} is {lines} lines (>{_WARN_LINES}); file is very long",
+                    _("%(rel)s is %(lines)d lines (>%(limit)d); file is very long")
+                    % {"rel": rel, "lines": lines, "limit": _WARN_LINES},
                     rel,
                     line=_WARN_LINES + 1,
-                    fix="Split this file into smaller modules; keep each unit focused and testable.",
+                    fix=_("Split this file into smaller modules; keep each unit focused and testable."),
                 )
             )
         elif lines > _NOTE_LINES:
@@ -61,12 +64,13 @@ def check_source_size(root: Path, role: str) -> list[Finding]:
                 Finding(
                     "note",
                     "source.long",
-                    f"{rel} is {lines} lines (>{_NOTE_LINES}); consider modularizing soon",
+                    _("%(rel)s is %(lines)d lines (>%(limit)d); consider modularizing soon")
+                    % {"rel": rel, "lines": lines, "limit": _NOTE_LINES},
                     rel,
                     line=_NOTE_LINES + 1,
-                    fix="Plan extraction of helpers or submodules before the file grows further.",
+                    fix=_("Plan extraction of helpers or submodules before the file grows further."),
                 )
             )
     if not any(f.severity in ("warn", "note") and f.code == "source.long" for f in out):
-        out.append(Finding("ok", "source.size", "no oversized source files"))
+        out.append(Finding("ok", "source.size", _("no oversized source files")))
     return out

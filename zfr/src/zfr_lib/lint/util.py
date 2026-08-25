@@ -25,6 +25,7 @@ from .. import (
     version_file_version,
 )
 from ..csr import Csr
+from ..i18n import _
 from ..packaging import _meson_project_fields, _parse_control_stanzas
 from .finding import Finding
 _PLACEHOLDER_README = "THIS FILE IS GENERATED FROM A TEMPLATE"

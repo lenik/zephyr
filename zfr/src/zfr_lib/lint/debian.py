@@ -39,27 +39,27 @@ def check_debian(root: Path, lang: str, role: str) -> list[Finding]:
     bd = src.get("Build-Depends", "")
     for dep in ("meson", "ninja-build", "asciidoctor"):
         if re.search(rf"\b{re.escape(dep)}\b", bd):
-            out.append(Finding("ok", f"debian.build-depends.{dep}", f"Build-Depends has {dep}", rel))
+            out.append(Finding("ok", f"debian.build-depends.{dep}", _("Build-Depends has %s") % dep, rel))
         else:
             out.append(
                 Finding(
                     "error",
                     f"debian.build-depends.{dep}",
-                    f"Build-Depends missing {dep}",
+                    _("Build-Depends missing %s") % dep,
                     rel,
-                    fix=f"Add {dep} to Build-Depends (zephyr packages build with Meson + AsciiDoc man pages).",
+                    fix=_("Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man pages).") % dep,
                 )
             )
     if "debhelper-compat" in bd:
-        out.append(Finding("ok", "debian.debhelper", "debhelper-compat present", rel))
+        out.append(Finding("ok", "debian.debhelper", _("debhelper-compat present"), rel))
     else:
         out.append(
             Finding(
                 "warn",
                 "debian.debhelper",
-                "Build-Depends missing debhelper-compat (= 13)",
+                _("Build-Depends missing debhelper-compat (= 13)"),
                 rel,
-                fix="Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor",
+                fix=_("Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"),
             )
         )
 
@@ -69,9 +69,9 @@ def check_debian(root: Path, lang: str, role: str) -> list[Finding]:
             Finding(
                 "error",
                 "debian.Architecture",
-                "Package stanza missing Architecture",
+                _("Package stanza missing Architecture"),
                 rel,
-                fix="Architecture: all  (scripts) or any (compiled).",
+                fix=_("Architecture: all  (scripts) or any (compiled)."),
             )
         )
     elif lang == "bash" and arch != "all":
@@ -79,9 +79,9 @@ def check_debian(root: Path, lang: str, role: str) -> list[Finding]:
             Finding(
                 "warn",
                 "debian.Architecture",
-                f"bash packages should be Architecture: all (got {arch})",
+                _("bash packages should be Architecture: all (got %s)") % arch,
                 rel,
-                fix="Architecture: all",
+                fix=_("Architecture: all"),
             )
         )
     elif lang in ("c", "clib", "cpp", "cpplib", "rust", "go", "haskell") and arch == "all":
@@ -89,59 +89,60 @@ def check_debian(root: Path, lang: str, role: str) -> list[Finding]:
             Finding(
                 "warn",
                 "debian.Architecture",
-                f"{lang} packages are usually Architecture: any (got all)",
+                _("%s packages are usually Architecture: any (got all)") % lang,
                 rel,
-                fix="Architecture: any",
+                fix=_("Architecture: any"),
             )
         )
     else:
-        out.append(Finding("ok", "debian.Architecture", f"Architecture: {arch}", rel))
+        out.append(Finding("ok", "debian.Architecture", _("Architecture: %s") % arch, rel))
 
     homepage = src.get("Homepage", "")
     if homepage:
-        out.append(Finding("ok", "debian.Homepage", f"Homepage: {homepage}", rel))
+        out.append(Finding("ok", "debian.Homepage", _("Homepage: %s") % homepage, rel))
     else:
         out.append(
             Finding(
                 "warn",
                 "debian.Homepage",
-                "no Homepage",
+                _("no Homepage"),
                 rel,
-                fix="Set Homepage: to the project URL.",
+                fix=_("Set Homepage: to the project URL."),
             )
         )
 
     rules = _read(root / "debian" / "rules")
     if "buildsystem=meson" in rules and "debian/build" in rules:
-        out.append(Finding("ok", "debian.rules", "dh meson debian/build", "debian/rules"))
+        out.append(Finding("ok", "debian.rules", _("dh meson debian/build"), "debian/rules"))
     elif rules:
         out.append(
             Finding(
                 "warn",
                 "debian.rules",
-                "debian/rules is not dh --buildsystem=meson --builddirectory=debian/build",
+                _("debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"),
                 "debian/rules",
-                fix="Use:\n#!/usr/bin/make -f\n\n%:\n\tdh $@ --buildsystem=meson --builddirectory=debian/build",
+                # xgettext: no-python-format
+                fix=_("Use:\n#!/usr/bin/make -f\n\n%:\n\tdh $@ --buildsystem=meson --builddirectory=debian/build"),
             )
         )
 
     copyr = _read(root / "debian" / "copyright")
     if "AGPL" in copyr:
-        out.append(Finding("ok", "debian.copyright", "copyright mentions AGPL", "debian/copyright"))
+        out.append(Finding("ok", "debian.copyright", _("copyright mentions AGPL"), "debian/copyright"))
     elif copyr:
         out.append(
             Finding(
                 "warn",
                 "debian.copyright",
-                "debian/copyright does not mention AGPL",
+                _("debian/copyright does not mention AGPL"),
                 "debian/copyright",
-                fix="Use the template debian/copyright (License: AGPL-3+).",
+                fix=_("Use the template debian/copyright (License: AGPL-3+)."),
             )
         )
 
     fmt = _read(root / "debian" / "source" / "format").strip()
     if fmt:
-        out.append(Finding("ok", "debian.source.format", f"source format {fmt}", "debian/source/format"))
+        out.append(Finding("ok", "debian.source.format", _("source format %s") % fmt, "debian/source/format"))
 
     ch_ver = changelog_version(root)
     file_ver = version_file_version(root)
@@ -150,15 +151,15 @@ def check_debian(root: Path, lang: str, role: str) -> list[Finding]:
             Finding(
                 "warn",
                 "debian.VERSION_sync",
-                f"VERSION={file_ver!r} != changelog {ch_ver!r}",
+                _("VERSION=%(file)r != changelog %(changelog)r") % {"file": file_ver, "changelog": ch_ver},
                 "VERSION",
-                fix="VERSION should match the latest debian/changelog entry "
-                "(pre-commit hook updates it). Git describe may still differ.",
+                fix=_("VERSION should match the latest debian/changelog entry "
+                "(pre-commit hook updates it). Git describe may still differ."),
             )
         )
     elif ch_ver and file_ver:
         out.append(
-            Finding("ok", "debian.VERSION_sync", f"VERSION matches changelog {ch_ver}", "VERSION")
+            Finding("ok", "debian.VERSION_sync", _("VERSION matches changelog %s") % ch_ver, "VERSION")
         )
 
     if lang == "bash":
@@ -168,11 +169,11 @@ def check_debian(root: Path, lang: str, role: str) -> list[Finding]:
                 Finding(
                     "error",
                     "debian.Depends.bash-shlib",
-                    "bash project Depends missing bash-shlib",
+                    _("bash project Depends missing bash-shlib"),
                     rel,
-                    fix="Depends: bash, bash-shlib, ${misc:Depends}",
+                    fix=_("Depends: bash, bash-shlib, ${misc:Depends}"),
                 )
             )
         else:
-            out.append(Finding("ok", "debian.Depends.bash-shlib", "Depends includes bash-shlib", rel))
+            out.append(Finding("ok", "debian.Depends.bash-shlib", _("Depends includes bash-shlib"), rel))
     return out

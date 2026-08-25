@@ -53,7 +53,7 @@ def collect_findings(
         except SystemExit:
             lang = "unknown"
     meson = _meson_project_fields(root)
-    src, _, _ = _control(root)
+    src, _pkg, _ctl = _control(root)
     name = src.get("Source") or meson.get("name") or root.name
     findings: list[Finding] = []
     findings.extend(check_layout(root, lang, role))

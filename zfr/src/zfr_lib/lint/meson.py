@@ -38,60 +38,60 @@ def check_meson(root: Path, lang: str) -> list[Finding]:
     rel = "meson.build"
 
     if re.search(r"^\s*project\s*\(", text, re.M):
-        out.append(Finding("ok", "meson.project", "project() present", rel))
+        out.append(Finding("ok", "meson.project", _("project() present"), rel))
     else:
         out.append(
             Finding(
                 "error",
                 "meson.project",
-                "meson.build has no project() call",
+                _("meson.build has no project() call"),
                 rel,
-                fix="project() must be the first Meson call. Copy the header from the language template.",
+                fix=_("project() must be the first Meson call. Copy the header from the language template."),
             )
         )
 
     if _AGPL in text:
-        out.append(Finding("ok", "meson.license", f"license {_AGPL}", rel))
+        out.append(Finding("ok", "meson.license", _("license %s") % _AGPL, rel))
     else:
         out.append(
             Finding(
                 "warn",
                 "meson.license",
-                "meson license is not AGPL-3.0-or-later",
+                _("meson license is not AGPL-3.0-or-later"),
                 rel,
                 line=_line_of(text, "license"),
-                fix=f"Set license: '{_AGPL}' in project().",
+                fix=_("Set license: '%s' in project().") % _AGPL,
             )
         )
 
     for var in ("project_author", "project_email", "project_year"):
         if var in text:
-            out.append(Finding("ok", f"meson.{var}", f"{var} set", rel))
+            out.append(Finding("ok", f"meson.{var}", _("%s set") % var, rel))
         else:
             out.append(
                 Finding(
                     "warn",
                     f"meson.{var}",
-                    f"missing {var} (used for man pages)",
+                    _("missing %s (used for man pages)") % var,
                     rel,
-                    fix=f"Set {var} next to project(), then pass -a project-author/email/year to asciidoctor.",
+                    fix=_("Set %s next to project(), then pass -a project-author/email/year to asciidoctor.") % var,
                 )
             )
 
     if "zfr version" in text:
-        out.append(Finding("ok", "meson.version_source", "version uses `zfr version`", rel))
+        out.append(Finding("ok", "meson.version_source", _("version uses `zfr version`"), rel))
     elif "git describe" in text:
         out.append(
             Finding(
                 "warn",
                 "meson.version_source",
-                "version still uses inline git describe; zephyr style is `zfr version`",
+                _("version still uses inline git describe; zephyr style is `zfr version`"),
                 rel,
                 line=_line_of(text, "git describe"),
-                fix="In project(version: run_command(...)), prefer:\n"
+                fix=_("In project(version: run_command(...)), prefer:\n"
                 "  v=$(zfr version 2>/dev/null || true)\n"
                 "  with fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY\n"
-                "See bash/meson.build in the zephyr tree.",
+                "See bash/meson.build in the zephyr tree."),
             )
         )
     else:
@@ -99,61 +99,61 @@ def check_meson(root: Path, lang: str) -> list[Finding]:
             Finding(
                 "warn",
                 "meson.version_source",
-                "could not find `zfr version` or git describe in project version",
+                _("could not find `zfr version` or git describe in project version"),
                 rel,
-                fix="Use `zfr version` for project() version (see bash/meson.build).",
+                fix=_("Use `zfr version` for project() version (see bash/meson.build)."),
             )
         )
 
     if 'FIXED TO 0.0.0' in text or 'v="0.0.0"' in text:
-        out.append(Finding("ok", "meson.version_fallback", "0.0.0 fallback present", rel))
+        out.append(Finding("ok", "meson.version_fallback", _("0.0.0 fallback present"), rel))
     else:
         out.append(
             Finding(
                 "note",
                 "meson.version_fallback",
-                "no explicit 0.0.0 fallback for missing git/VERSION",
+                _("no explicit 0.0.0 fallback for missing git/VERSION"),
                 rel,
-                fix='Keep fallback v="0.0.0" # FIXED TO 0.0.0, DO NOT MODIFY',
+                fix=_('Keep fallback v="0.0.0" # FIXED TO 0.0.0, DO NOT MODIFY'),
             )
         )
 
     if "asciidoctor" in text:
-        out.append(Finding("ok", "meson.asciidoctor", "asciidoctor man pages", rel))
+        out.append(Finding("ok", "meson.asciidoctor", _("asciidoctor man pages"), rel))
     else:
         out.append(
             Finding(
                 "error",
                 "meson.asciidoctor",
-                "meson.build does not invoke asciidoctor",
+                _("meson.build does not invoke asciidoctor"),
                 rel,
-                fix="find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...).",
+                fix=_("find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."),
             )
         )
 
     if re.search(r"run_target\s*\(\s*['\"]look['\"]", text):
-        out.append(Finding("ok", "meson.look", "run_target look present", rel))
+        out.append(Finding("ok", "meson.look", _("run_target look present"), rel))
     else:
         out.append(
             Finding(
                 "note",
                 "meson.look",
-                "no run_target('look') DESTDIR preview",
+                _("no run_target('look') DESTDIR preview"),
                 rel,
-                fix="Add run_target look that meson install's into a tempdir and runs tree (see templates).",
+                fix=_("Add run_target look that meson install's into a tempdir and runs tree (see templates)."),
             )
         )
 
     if "bash-completion" in text:
-        out.append(Finding("ok", "meson.completion_install", "installs bash-completion", rel))
+        out.append(Finding("ok", "meson.completion_install", _("installs bash-completion"), rel))
     else:
         out.append(
             Finding(
                 "warn",
                 "meson.completion_install",
-                "does not install bash-completion",
+                _("does not install bash-completion"),
                 rel,
-                fix="install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command).",
+                fix=_("install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."),
             )
         )
     return out

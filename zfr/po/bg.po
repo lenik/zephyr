@@ -6,25 +6,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zfr\n"
 "Report-Msgid-Bugs-To: zephyr@bodz.net\n"
-"POT-Creation-Date: 2026-08-23 19:11+0800\n"
-"PO-Revision-Date: 2026-08-23\n"
-"Last-Translator: Lenik (谢继雷) <lenik@bodz.net>\n"
+"POT-Creation-Date: 2026-08-25 18:17+0800\n"
+"PO-Revision-Date: 2026-08-25 18:13+0800\n"
+"Last-Translator: Cursor Agent\n"
 "Language-Team: Bulgarian\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: src/zfr:32
 msgid ""
 "Zephyr template helper (CLI name: zfr). Create projects and manage example "
 "puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
 msgstr ""
 "Помощник за шаблони Zephyr (CLI име: zfr). Създава проекти и управлява "
-"примерни puffs. Инстанцираните дървета продължават да извикват zfr; "
-"zfr не е маркер за преименуване."
+"примерни puffs. Инстанцираните дървета продължават да извикват zfr; zfr не е "
+"маркер за преименуване."
 
-#: src/zfr:45
+#: src/zfr:46
 msgid "show this help"
 msgstr "показване на тази помощ"
 
@@ -39,8 +40,8 @@ msgid ""
 "fields are parsed from debian or RPM."
 msgstr ""
 "Извежда информация за текущия zephyr проект (търси нагоре от cwd). CSR "
-"цветове, когато stdout е TTY. Общите полета за пакетиране се четат от "
-"debian или RPM."
+"цветове, когато stdout е TTY. Общите полета за пакетиране се четат от debian "
+"или RPM."
 
 #: src/zfr_lib/about.py:505
 msgid "show parsed Debian packaging fields"
@@ -53,8 +54,7 @@ msgstr "показване на анализираните полета за RPM
 #: src/zfr_lib/about.py:511
 msgid "CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)"
 msgstr ""
-"CSR (console SGR) подчертаване (по подразбиране: auto = TTY и без "
-"NO_COLOR)"
+"CSR (console SGR) подчертаване (по подразбиране: auto = TTY и без NO_COLOR)"
 
 #: src/zfr_lib/add.py:20
 msgid "instantiate puff(s) from the language template"
@@ -68,48 +68,47 @@ msgstr "Разпознава езика и добавя puff(ове) от pkgdat
 msgid "new puff name(s) (snake_case recommended)"
 msgstr "нови имена на puff(ове) (препоръчително snake_case)"
 
-#: src/zfr_lib/create.py:291
+#: src/zfr_lib/create.py:311
 msgid "create a new project from a language template"
 msgstr "създаване на нов проект от езиков шаблон"
 
-#: src/zfr_lib/create.py:292
+#: src/zfr_lib/create.py:312
 msgid "Create a new project directory from pkgdatadir/<lang>."
 msgstr "Създава нов проектен каталог от pkgdatadir/<lang>."
 
-#: src/zfr_lib/create.py:298
+#: src/zfr_lib/create.py:319
 #, python-format
 msgid "template language (default: python; one of: %s)"
 msgstr "език на шаблона (по подразбиране: python; един от: %s)"
 
-#: src/zfr_lib/create.py:302
+#: src/zfr_lib/create.py:323
 #, python-format
 msgid "debian changelog distribution (default: %s)"
 msgstr "дистрибуция в debian changelog (по подразбиране: %s)"
 
-#: src/zfr_lib/create.py:306
+#: src/zfr_lib/create.py:327
 #, python-format
 msgid "initial package version and git tag (default: %s)"
 msgstr "начална версия на пакета и git етикет (по подразбиране: %s)"
 
-#: src/zfr_lib/create.py:310
+#: src/zfr_lib/create.py:331
 #, python-format
 msgid "changelog/git author name (default: %s)"
 msgstr "име на автора в changelog/git (по подразбиране: %s)"
 
-#: src/zfr_lib/create.py:314
+#: src/zfr_lib/create.py:335
 #, python-format
 msgid "changelog/git author email (default: %s)"
 msgstr "имейл на автора в changelog/git (по подразбиране: %s)"
 
-#: src/zfr_lib/create.py:316
+#: src/zfr_lib/create.py:337
 msgid "new project directory name"
 msgstr "име на новия проектен каталог"
 
-#: src/zfr_lib/create.py:319
+#: src/zfr_lib/create.py:340
 msgid "optional puff names to add after creating the project"
 msgstr ""
-"незадължителни имена на puff(ове) за добавяне след създаване на "
-"проекта"
+"незадължителни имена на puff(ове) за добавяне след създаване на проекта"
 
 #: src/zfr_lib/detect.py:15
 msgid "print detected language for the current directory"
@@ -120,24 +119,24 @@ msgid ""
 "Print the detected language of the current project and layout details on "
 "stderr."
 msgstr ""
-"Извежда разпознатия език на текущия проект и подробности за "
-"оформлението на stderr."
+"Извежда разпознатия език на текущия проект и подробности за оформлението на "
+"stderr."
 
 #: src/zfr_lib/dist.py:60
 msgid ""
 "write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
 "rpm)"
 msgstr ""
-"запис на архива в DIR (по подразбиране: meson-dist или "
-"rpmbuild/SOURCES с --rpm)"
+"запис на архива в DIR (по подразбиране: meson-dist или rpmbuild/SOURCES с --"
+"rpm)"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
 "Meson build directory (default: /build when it matches this source tree, "
 "else <project>/build)"
 msgstr ""
-"Meson build каталог (по подразбиране: /build, ако съответства на това "
-"дърво с изходен код, иначе <project>/build)"
+"Meson build каталог (по подразбиране: /build, ако съответства на това дърво "
+"с изходен код, иначе <project>/build)"
 
 #: src/zfr_lib/dist.py:80
 msgid "archive format (default: xz)"
@@ -148,8 +147,8 @@ msgid ""
 "name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
 "-o is given"
 msgstr ""
-"именува архива NAME-VERSION.tar.xz и го записва в rpmbuild/SOURCES, "
-"освен ако е зададено -o"
+"именува архива NAME-VERSION.tar.xz и го записва в rpmbuild/SOURCES, освен "
+"ако е зададено -o"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"
@@ -158,8 +157,7 @@ msgstr "предаване на --allow-dirty на meson dist (по подраз
 #: src/zfr_lib/dist.py:99
 msgid "run tests during meson dist (default: --no-tests)"
 msgstr ""
-"изпълнение на тестове по време на meson dist (по подразбиране: "
-"--no-tests)"
+"изпълнение на тестове по време на meson dist (по подразбиране: --no-tests)"
 
 #: src/zfr_lib/dist.py:343
 msgid "build a source tarball (meson dist, or this project only)"
@@ -173,80 +171,1247 @@ msgid ""
 "ship the parent meta-repo. Prints the archive path on stdout."
 msgstr ""
 "Създава изходен архив на текущия zephyr проект (търси нагоре от cwd). "
-"Използва meson dist, когато този каталог е коренът на git проекта; "
-"иначе пакетира само този проект, за да не включват вложените езикови "
-"шаблони родителското meta-repo. Извежда пътя до архива на stdout."
+"Използва meson dist, когато този каталог е коренът на git проекта; иначе "
+"пакетира само този проект, за да не включват вложените езикови шаблони "
+"родителското meta-repo. Извежда пътя до архива на stdout."
 
-#: src/zfr_lib/ize/__init__.py:60
+#: src/zfr_lib/ize/__init__.py:65
 msgid "refactor this project to current zephyr style"
 msgstr "рефакториране на този проект към текущия zephyr стил"
 
-#: src/zfr_lib/ize/__init__.py:61
+#: src/zfr_lib/ize/__init__.py:66
 msgid ""
 "Refactor the current project to match current zephyr style: missing debian/"
 "rpm files, meson targets, AsciiDoc man pages, and Meson version "
 "substitutions. Walks from cwd toward parents."
 msgstr ""
-"Рефакторира текущия проект според актуалния zephyr стил: липсващи "
-"debian/rpm файлове, meson цели, AsciiDoc man страници и Meson "
-"замествания на версии. Търси нагоре от cwd."
+"Рефакторира текущия проект според актуалния zephyr стил: липсващи debian/rpm "
+"файлове, meson цели, AsciiDoc man страници и Meson замествания на версии. "
+"Търси нагоре от cwd."
 
-#: src/zfr_lib/ize/__init__.py:65
+#: src/zfr_lib/ize/__init__.py:70
 #, python-format
 msgid "language template to align with (default: detect; one of: %s)"
 msgstr "езиков шаблон за съгласуване (по подразбиране: detect; един от: %s)"
 
-#: src/zfr_lib/ize/__init__.py:66
+#: src/zfr_lib/ize/__init__.py:71
 msgid "print planned changes without writing files"
 msgstr "извеждане на планираните промени без запис на файлове"
 
-#: src/zfr_lib/ize/__init__.py:67
+#: src/zfr_lib/ize/__init__.py:72
 msgid "also print skipped files"
 msgstr "извеждане и на пропуснатите файлове"
 
-#: src/zfr_lib/ize/__init__.py:68
+#: src/zfr_lib/ize/__init__.py:78
+msgid ""
+"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgstr ""
+"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+
+#: src/zfr_lib/ize/__init__.py:80
 msgid "do not convert groff .1 man pages to docs/*.adoc"
 msgstr "без конвертиране на groff .1 man страници в docs/*.adoc"
 
-#: src/zfr_lib/ize/__init__.py:69
+#: src/zfr_lib/ize/__init__.py:81
 msgid "do not turn hardcoded versions into @VERSION@ / config.h"
 msgstr "без преобразуване на твърдо кодирани версии в @VERSION@ / config.h"
 
-#: src/zfr_lib/ize/__init__.py:70 src/zfr_lib/lint/__init__.py:98
+#: src/zfr_lib/ize/__init__.py:82 src/zfr_lib/lint/__init__.py:115
 msgid "CSR (console SGR) highlighting (default: auto)"
 msgstr "CSR (console SGR) подчертаване (по подразбиране: auto)"
 
-#: src/zfr_lib/lint/__init__.py:90
+#: src/zfr_lib/l10n.py:93
+#, python-format
+msgid "l10n level must be L0–L3 (or 0–3), not %r"
+msgstr "нивото на l10n трябва да е L0–L3 (или 0–3), не %r"
+
+#: src/zfr_lib/lang/antlr.py:42 src/zfr_lib/lang/as.py:30
+#: src/zfr_lib/lang/bison.py:38 src/zfr_lib/lang/clib.py:34
+#: src/zfr_lib/lang/cobol.py:32 src/zfr_lib/lang/cpplib.py:34
+#: src/zfr_lib/lang/cpp.py:21 src/zfr_lib/lang/c.py:21 src/zfr_lib/lang/d.py:32
+#: src/zfr_lib/lang/fortran.py:32 src/zfr_lib/lang/gcc.py:48
+#: src/zfr_lib/lang/kotlin.py:22 src/zfr_lib/lang/lua.py:22
+#: src/zfr_lib/lang/nim.py:24 src/zfr_lib/lang/pascal.py:32
+#: src/zfr_lib/lang/python.py:21
+msgid "tests/ present"
+msgstr "tests/ наличен"
+
+#: src/zfr_lib/lang/antlr.py:47 src/zfr_lib/lang/as.py:35
+#: src/zfr_lib/lang/bison.py:43 src/zfr_lib/lang/clib.py:35
+#: src/zfr_lib/lang/cpplib.py:35 src/zfr_lib/lang/cpp.py:22
+#: src/zfr_lib/lang/c.py:22 src/zfr_lib/lang/gcc.py:53
+msgid "no tests/ directory"
+msgstr "няма каталог tests/"
+
+#: src/zfr_lib/lang/antlr.py:49
+msgid "Add tests/TestCommons.java or fixture checks for parser output."
+msgstr ""
+"Добавете tests/TestCommons.java или проверки с фикстури за изхода на парсера."
+
+#: src/zfr_lib/lang/as.py:37
+msgid "Add tests/smoke.sh and meson test() for stdin/stdout copy."
+msgstr "Добавете tests/smoke.sh и meson test() за копиране на stdin/stdout."
+
+#: src/zfr_lib/lang/bash.py:45
+#, python-format
+msgid "src scripts: %s"
+msgstr "скриптове в src: %s"
+
+#: src/zfr_lib/lang/bash.py:46
+msgid "no src/*.in scripts"
+msgstr "няма скриптове src/*.in"
+
+#: src/zfr_lib/lang/bash.py:47
+msgid ""
+"Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ and meson "
+"configure_file + install_mode rwxr-xr-x."
+msgstr ""
+"Дръжте конфигурираните скриптове като src/<puff>.in с @PACKAGE@/@VERSION@ и "
+"meson configure_file + install_mode rwxr-xr-x."
+
+#: src/zfr_lib/lang/bison.py:45
+msgid "Add tests/ with fixture checks for parser dump/format output."
+msgstr ""
+"Добавете tests/ с проверки на фикстури за dump/format изхода на парсера."
+
+#: src/zfr_lib/lang/clib.py:36 src/zfr_lib/lang/cpplib.py:36
+#: src/zfr_lib/lang/cpp.py:23 src/zfr_lib/lang/c.py:23
+#: src/zfr_lib/lang/gcc.py:55
+msgid "Add tests/ and meson test() entries like the C family templates."
+msgstr ""
+"Добавете tests/ и записи meson test() както в шаблоните от семейството C."
+
+#: src/zfr_lib/lang/cobol.py:37
+msgid "no tests/ (cobol template uses cobc + meson test)"
+msgstr "няма tests/ (шаблонът cobol използва cobc + meson test)"
+
+#: src/zfr_lib/lang/cobol.py:39
+msgid "Add tests/test_commons.sh or similar smoke test for cobc."
+msgstr "Добавете tests/test_commons.sh или подобен димен тест за cobc."
+
+#: src/zfr_lib/lang/d.py:37
+msgid "no tests/ (D template uses ldc/dmd + meson test)"
+msgstr "няма tests/ (шаблонът D използва ldc/dmd + meson test)"
+
+#: src/zfr_lib/lang/d.py:39
+msgid "Add tests/test_commons.d and meson test() executable."
+msgstr "Добавете tests/test_commons.d и изпълним meson test()."
+
+#: src/zfr_lib/lang/fortran.py:37
+msgid "no tests/ (fortran template uses gfortran + meson test)"
+msgstr "няма tests/ (шаблонът fortran използва gfortran + meson test)"
+
+#: src/zfr_lib/lang/fortran.py:39
+msgid "Add tests/test_commons.f90 and meson test() executable."
+msgstr "Добавете tests/test_commons.f90 и изпълним meson test()."
+
+#: src/zfr_lib/lang/go.py:22
+msgid "missing go.mod"
+msgstr "липсва go.mod"
+
+#: src/zfr_lib/lang/go.py:23
+msgid ""
+"Add go.mod; meson should `go build` with -X main.buildVersion from "
+"meson.project_version()."
+msgstr ""
+"Добавете go.mod; meson трябва да извиква `go build` с -X main.buildVersion "
+"от meson.project_version()."
+
+#: src/zfr_lib/lang/kotlin.py:23
+msgid "no tests/ (kotlin template uses kotlinc + meson test)"
+msgstr "няма tests/ (шаблонът kotlin използва kotlinc + meson test)"
+
+#: src/zfr_lib/lang/kotlin.py:24
+msgid "Add tests/Test*.kt and meson test() compiling with kotlinc."
+msgstr "Добавете tests/Test*.kt и meson test(), компилиран с kotlinc."
+
+#: src/zfr_lib/lang/lua.py:23
+msgid "no tests/ (lua template uses lua tests + meson test)"
+msgstr "няма tests/ (шаблонът lua използва lua тестове + meson test)"
+
+#: src/zfr_lib/lang/lua.py:24
+msgid ""
+"Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
+msgstr ""
+"Добавете tests/test_*.lua и meson test(), който стартира lua с "
+"LUA_PATH=src/?.lua."
+
+#: src/zfr_lib/lang/nim.py:25
+msgid "no tests/ (nim template uses unittest + meson test)"
+msgstr "няма tests/ (шаблонът nim използва unittest + meson test)"
+
+#: src/zfr_lib/lang/nim.py:26
+msgid "Add tests/test_*.nim and meson test() with nim r."
+msgstr "Добавете tests/test_*.nim и meson test() с nim r."
+
+#: src/zfr_lib/lang/pascal.py:37
+msgid "no tests/ (pascal template uses fpc + meson test)"
+msgstr "няма tests/ (шаблонът pascal използва fpc + meson test)"
+
+#: src/zfr_lib/lang/pascal.py:39
+msgid "Add tests/test_commons.pas and meson test() with fpc."
+msgstr "Добавете tests/test_commons.pas и meson test() с fpc."
+
+#: src/zfr_lib/lang/python.py:22
+msgid "no tests/ (python template uses unittest + meson test)"
+msgstr "няма tests/ (шаблонът python използва unittest + meson test)"
+
+#: src/zfr_lib/lang/python.py:23
+msgid "Add tests/test_*.py and meson test() with PYTHONPATH=src."
+msgstr "Добавете tests/test_*.py и meson test() с PYTHONPATH=src."
+
+#: src/zfr_lib/lang/rust.py:22
+msgid "missing Cargo.toml"
+msgstr "липсва Cargo.toml"
+
+#: src/zfr_lib/lang/rust.py:23
+msgid ""
+"Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
+msgstr ""
+"Rust проекти в zephyr пазят Cargo.toml плюс meson custom_target за двоичния "
+"файл."
+
+#: src/zfr_lib/lang/zig.py:23
+msgid "missing build.zig"
+msgstr "липсва build.zig"
+
+#: src/zfr_lib/lang/zig.py:24
+msgid "Add build.zig; meson should invoke `zig build -Doptimize=ReleaseFast`."
+msgstr ""
+"Добавете build.zig; meson трябва да извиква `zig build "
+"-Doptimize=ReleaseFast`."
+
+#: src/zfr_lib/lint/debian.py:42
+#, python-format
+msgid "Build-Depends has %s"
+msgstr "Build-Depends съдържа %s"
+
+#: src/zfr_lib/lint/debian.py:48
+#, python-format
+msgid "Build-Depends missing %s"
+msgstr "в Build-Depends липсва %s"
+
+#: src/zfr_lib/lint/debian.py:50
+#, python-format
+msgid ""
+"Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man "
+"pages)."
+msgstr ""
+"Добавете %s към Build-Depends (пакетите zephyr се сглобяват с Meson и "
+"AsciiDoc man страници)."
+
+#: src/zfr_lib/lint/debian.py:54
+msgid "debhelper-compat present"
+msgstr "debhelper-compat наличен"
+
+#: src/zfr_lib/lint/debian.py:60
+msgid "Build-Depends missing debhelper-compat (= 13)"
+msgstr "в Build-Depends липсва debhelper-compat (= 13)"
+
+#: src/zfr_lib/lint/debian.py:62
+msgid "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+msgstr ""
+"Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+
+#: src/zfr_lib/lint/debian.py:72
+msgid "Package stanza missing Architecture"
+msgstr "в строфата Package липсва Architecture"
+
+#: src/zfr_lib/lint/debian.py:74
+msgid "Architecture: all  (scripts) or any (compiled)."
+msgstr "Architecture: all  (скриптове) или any (компилирани)."
+
+#: src/zfr_lib/lint/debian.py:82
+#, python-format
+msgid "bash packages should be Architecture: all (got %s)"
+msgstr "пакетите bash трябва да са Architecture: all (получено %s)"
+
+#: src/zfr_lib/lint/debian.py:84
+msgid "Architecture: all"
+msgstr "Architecture: all"
+
+#: src/zfr_lib/lint/debian.py:92
+#, python-format
+msgid "%s packages are usually Architecture: any (got all)"
+msgstr "пакетите %s обикновено са Architecture: any (получено all)"
+
+#: src/zfr_lib/lint/debian.py:94
+msgid "Architecture: any"
+msgstr "Architecture: any"
+
+#: src/zfr_lib/lint/debian.py:98
+#, python-format
+msgid "Architecture: %s"
+msgstr "поле Architecture: %s"
+
+#: src/zfr_lib/lint/debian.py:102
+#, python-format
+msgid "Homepage: %s"
+msgstr "поле Homepage: %s"
+
+#: src/zfr_lib/lint/debian.py:108
+msgid "no Homepage"
+msgstr "няма Homepage"
+
+#: src/zfr_lib/lint/debian.py:110
+msgid "Set Homepage: to the project URL."
+msgstr "Задайте Homepage: към URL адреса на проекта."
+
+#: src/zfr_lib/lint/debian.py:116
+msgid "dh meson debian/build"
+msgstr "dh с meson в debian/build"
+
+#: src/zfr_lib/lint/debian.py:122
+msgid ""
+"debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
+msgstr "debian/rules не е dh --buildsystem=meson --builddirectory=debian/build"
+
+#: src/zfr_lib/lint/debian.py:125
+#, no-python-format
+msgid ""
+"Use:\n"
+"#!/usr/bin/make -f\n"
+"\n"
+"%:\n"
+"\tdh $@ --buildsystem=meson --builddirectory=debian/build"
+msgstr ""
+"Използвайте:\n"
+"#!/usr/bin/make -f\n"
+"\n"
+"%:\n"
+"\tdh $@ --buildsystem=meson --builddirectory=debian/build"
+
+#: src/zfr_lib/lint/debian.py:131
+msgid "copyright mentions AGPL"
+msgstr "авторските права споменават AGPL"
+
+#: src/zfr_lib/lint/debian.py:137
+msgid "debian/copyright does not mention AGPL"
+msgstr "debian/copyright не споменава AGPL"
+
+#: src/zfr_lib/lint/debian.py:139
+msgid "Use the template debian/copyright (License: AGPL-3+)."
+msgstr "Използвайте шаблона debian/copyright (License: AGPL-3+)."
+
+#: src/zfr_lib/lint/debian.py:145
+#, python-format
+msgid "source format %s"
+msgstr "формат на източника %s"
+
+#: src/zfr_lib/lint/debian.py:154
+#, python-format
+msgid "VERSION=%(file)r != changelog %(changelog)r"
+msgstr "VERSION=%(file)r != журнал %(changelog)r"
+
+#: src/zfr_lib/lint/debian.py:156
+msgid ""
+"VERSION should match the latest debian/changelog entry (pre-commit hook "
+"updates it). Git describe may still differ."
+msgstr ""
+"VERSION трябва да съвпада с последния запис в debian/changelog (pre-commit "
+"куката го обновява). Git describe може все още да се различава."
+
+#: src/zfr_lib/lint/debian.py:162
+#, python-format
+msgid "VERSION matches changelog %s"
+msgstr "VERSION съвпада с журнала %s"
+
+#: src/zfr_lib/lint/debian.py:172
+msgid "bash project Depends missing bash-shlib"
+msgstr "bash проектът няма bash-shlib в Depends"
+
+#: src/zfr_lib/lint/debian.py:174
+msgid "Depends: bash, bash-shlib, ${misc:Depends}"
+msgstr "Depends: bash, bash-shlib, ${misc:Depends}"
+
+#: src/zfr_lib/lint/debian.py:178
+msgid "Depends includes bash-shlib"
+msgstr "Depends включва bash-shlib"
+
+#: src/zfr_lib/lint/i18n_check.py:56
+#, python-format
+msgid "l10n level %s: no locale coverage required"
+msgstr "l10n ниво %s: не се изисква покритие на локали"
+
+#: src/zfr_lib/lint/i18n_check.py:65
+#, python-format
+msgid "l10n level %(level)s (%(count)d locales)"
+msgstr "l10n ниво %(level)s (%(count)d локала)"
+
+#: src/zfr_lib/lint/i18n_check.py:78
+msgid "no po/ directory (optional unless the project uses gettext)"
+msgstr ""
+"няма директория po/ (незадължително, освен ако проектът използва gettext)"
+
+#: src/zfr_lib/lint/i18n_check.py:79
+#, python-format
+msgid ""
+"If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in "
+"meson.build. Required locales at %(level)s: %(locales)s (source language "
+"%(source)s)."
+msgstr ""
+"Ако приложението е преведено, добавете po/ с LINGUAS + *.po и i18n.gettext() "
+"в meson.build. Изисквани локали при %(level)s: %(locales)s (език на "
+"източника %(source)s)."
+
+#: src/zfr_lib/lint/i18n_check.py:97
+msgid "po/ exists but po/LINGUAS is missing or empty"
+msgstr "po/ съществува, но po/LINGUAS липсва или е празен"
+
+#: src/zfr_lib/lint/i18n_check.py:99
+#, python-format
+msgid ""
+"Create po/LINGUAS listing at least:\n"
+"%(locales)s\n"
+"(English/%(source)s is the msgid source and is not listed.)"
+msgstr ""
+"Създайте po/LINGUAS, който изброява поне:\n"
+"%(locales)s\n"
+"(английски/%(source)s е източникът на msgid и не се изрежда.)"
+
+#: src/zfr_lib/lint/i18n_check.py:114
+#, python-format
+msgid "po/LINGUAS missing %(level)s locale(s): %(locales)s"
+msgstr "в po/LINGUAS липсват локали за %(level)s: %(locales)s"
+
+#: src/zfr_lib/lint/i18n_check.py:117
+#, python-format
+msgid ""
+"Level %(level)s requires: %(locales)s (source %(source)s; zh-cn→zh_CN, zh-"
+"tw→zh_TW). Append the missing lines to LINGUAS and add matching po/"
+"<locale>.po."
+msgstr ""
+"Ниво %(level)s изисква: %(locales)s (източник %(source)s; zh-cn→zh_CN, zh-"
+"tw→zh_TW). Добавете липсващите редове към LINGUAS и съответните po/"
+"<locale>.po."
+
+#: src/zfr_lib/lint/i18n_check.py:132
+#, python-format
+msgid "po/LINGUAS covers %s locale set"
+msgstr "po/LINGUAS покрива набора локали %s"
+
+#: src/zfr_lib/lint/i18n_check.py:147
+#, python-format
+msgid "LINGUAS entries without po/<locale>.po: %s"
+msgstr "записи в LINGUAS без po/<locale>.po: %s"
+
+#: src/zfr_lib/lint/i18n_check.py:149
+msgid ""
+"For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-"
+"translator && msgmerge -U po/<locale>.po <domain>.pot"
+msgstr ""
+"За всеки локал: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-"
+"translator && msgmerge -U po/<locale>.po <domain>.pot"
+
+#: src/zfr_lib/lint/i18n_check.py:160
+#, python-format
+msgid "%(level)s locale .po files present (%(count)d)"
+msgstr "налични .po файлове за локали %(level)s (%(count)d)"
+
+#: src/zfr_lib/lint/i18n_check.py:192
+#, python-format
+msgid "missing whole-document man translations for %(level)s: %(files)s"
+msgstr "липсват пълни преводи на man за %(level)s: %(files)s"
+
+#: src/zfr_lib/lint/i18n_check.py:195
+#, python-format
+msgid ""
+"Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). "
+"%(level)s requires: %(locales)s."
+msgstr ""
+"Преведете ръчно docs/<locale>/<name>.adoc (целия документ, не po4a). "
+"%(level)s изисква: %(locales)s."
+
+#: src/zfr_lib/lint/i18n_check.py:205
+#, python-format
+msgid "%s whole-document man translations present"
+msgstr "пълните преводи на man за %s са налични"
+
+#: src/zfr_lib/lint/i18n_check.py:214
+#, python-format
+msgid "man translation still contains the English Name line: %s"
+msgstr "преводът на man все още съдържа английския ред Name: %s"
+
+#: src/zfr_lib/lint/i18n_check.py:217
+msgid "Translate the Name line; do not leave the English wording."
+msgstr "Преведете реда Name; не оставяйте английския текст."
+
+#: src/zfr_lib/lint/identity.py:57
+#, python-format
+msgid "%(label)s is %(val)r, expected %(expected)r (directory name)"
+msgstr "%(label)s е %(val)r, очаква се %(expected)r (име на директория)"
+
+#: src/zfr_lib/lint/identity.py:60
+#, python-format
+msgid ""
+"Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename "
+"%(expected)s` if leftover template names remain."
+msgstr ""
+"Задайте %(label)s на %(expected)r или преименувайте директорията. "
+"Използвайте `zfr rename %(expected)s`, ако остават имена от шаблона."
+
+#: src/zfr_lib/lint/identity.py:66
+#, python-format
+msgid "%(label)s=%(val)s"
+msgstr "%(label)s=%(val)s"
+
+#: src/zfr_lib/lint/identity.py:69
+#, python-format
+msgid "meson project name=%s"
+msgstr "име на meson проекта=%s"
+
+#: src/zfr_lib/lint/identity.py:75
+#, python-format
+msgid "debian Source=%(source)r != meson project=%(meson)r"
+msgstr "debian Source=%(source)r != meson проект=%(meson)r"
+
+#: src/zfr_lib/lint/identity.py:78
+msgid "Keep Source, Package, and meson project() name identical."
+msgstr "Дръжте Source, Package и името на meson project() еднакви."
+
+#: src/zfr_lib/lint/identity.py:82
+#, python-format
+msgid "Source=%s"
+msgstr "Source=%s"
+
+#: src/zfr_lib/lint/identity.py:95
+#, python-format
+msgid "spec Name=%(spec)r != debian/meson name %(want)r"
+msgstr "spec Name=%(spec)r != име debian/meson %(want)r"
+
+#: src/zfr_lib/lint/identity.py:99
+#, python-format
+msgid "Set Name: %s in the spec (same as debian Source)."
+msgstr "Задайте Name: %s в spec (същото като debian Source)."
+
+#: src/zfr_lib/lint/identity.py:103
+#, python-format
+msgid "spec Name=%s"
+msgstr "spec Name=%s"
+
+#: src/zfr_lib/lint/__init__.py:99
 msgid "validate project packaging and zephyr layout (walks parents from cwd)"
 msgstr "проверка на пакетирането и оформлението zephyr (търси нагоре от cwd)"
 
-#: src/zfr_lib/lint/__init__.py:91
+#: src/zfr_lib/lint/__init__.py:100
 msgid ""
 "Check the current zephyr project for missing files and packaging/style "
 "mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
 "is a TTY."
 msgstr ""
-"Проверява текущия zephyr проект за липсващи файлове и грешки в "
-"пакетирането/стила. Търси нагоре от cwd. CSR цветове, когато stdout е "
-"TTY."
+"Проверява текущия zephyr проект за липсващи файлове и грешки в пакетирането/"
+"стила. Търси нагоре от cwd. CSR цветове, когато stdout е TTY."
 
-#: src/zfr_lib/lint/__init__.py:95
+#: src/zfr_lib/lint/__init__.py:104
 msgid "show passing checks too"
 msgstr "показване и на успешните проверки"
 
-#: src/zfr_lib/lint/__init__.py:96
+#: src/zfr_lib/lint/__init__.py:105
 msgid "only print errors"
 msgstr "извеждане само на грешки"
 
-#: src/zfr_lib/lint/__init__.py:97
+#: src/zfr_lib/lint/__init__.py:106
 msgid "treat warnings as failures (exit 1)"
 msgstr "предупрежденията се третират като грешки (exit 1)"
 
-#: src/zfr_lib/lint/__init__.py:108
-msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
+#: src/zfr_lib/lint/__init__.py:113
+msgid ""
+"required gettext/manpage locale coverage L0–L3 (default: L1; project file "
+"may override)"
 msgstr ""
-"изисквано покритие на gettext/manpage локали L0–L3 (по подразбиране: "
-"L1; проектният файл може да замени)"
+"изисквано покритие на gettext/manpage локали L0–L3 (по подразбиране: L1; "
+"проектният файл може да замени)"
+
+#: src/zfr_lib/lint/lang_bits.py:31
+#, python-format
+msgid "legacy example module %s; use commons or a specific name"
+msgstr "остарял примерен модул %s; използвайте commons или конкретно име"
+
+#: src/zfr_lib/lint/lang_bits.py:33
+msgid ""
+"Rename to src/commons.* (template convention) or a project-specific module "
+"name."
+msgstr ""
+"Преименувайте на src/commons.* (конвенция на шаблона) или име на модул за "
+"проекта."
+
+#: src/zfr_lib/lint/lang_bits.py:44
+#, python-format
+msgid "%s is only a template example for shared helpers"
+msgstr "%s е само шаблонен пример за споделени помощници"
+
+#: src/zfr_lib/lint/lang_bits.py:46
+msgid ""
+"common_lib / commons mean “extract reusable pieces”, but filenames should be "
+"concrete. Rename to a specific module in real projects (e.g. stream_copy.py, "
+"bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
+msgstr ""
+"common_lib / commons означават „извлечи преизползваеми части“, но имената на "
+"файлове трябва да са конкретни. В реални проекти преименувайте към конкретен "
+"модул (напр. stream_copy.py, bulk.h). clib/cpplib запазват lib.c/lib.cpp "
+"като вход към споделената библиотека."
+
+#: src/zfr_lib/lint/layout.py:35
+msgid "Add a top-level meson.build with project(...)."
+msgstr "Добавете meson.build в корена с project(...)."
+
+#: src/zfr_lib/lint/layout.py:36
+msgid "Copy LICENSE from the language template (AGPL-3.0-or-later)."
+msgstr "Копирайте LICENSE от езиковия шаблон (AGPL-3.0-or-later)."
+
+#: src/zfr_lib/lint/layout.py:37
+msgid "Add README.md describing this project."
+msgstr "Добавете README.md, който описва този проект."
+
+#: src/zfr_lib/lint/layout.py:38
+msgid "Add README-zh.md (Chinese summary), matching other zephyr templates."
+msgstr ""
+"Добавете README-zh.md (китайско резюме), както при другите zephyr шаблони."
+
+#: src/zfr_lib/lint/layout.py:39
+msgid "Add debian/ packaging (copy debian/ from the language template)."
+msgstr "Добавете пакетиране debian/ (копирайте debian/ от езиковия шаблон)."
+
+#: src/zfr_lib/lint/layout.py:40
+msgid "Add debian/changelog (zfr create writes one; or use dch)."
+msgstr ""
+"Добавете debian/changelog (zfr create го създава; или използвайте dch)."
+
+#: src/zfr_lib/lint/layout.py:41
+msgid "Add debian/copyright in machine-readable format, License: AGPL-3+."
+msgstr "Добавете debian/copyright в машиночетим формат, License: AGPL-3+."
+
+#: src/zfr_lib/lint/layout.py:42
+msgid ""
+"Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
+msgstr ""
+"Добавете debian/rules с dh --buildsystem=meson --builddirectory=debian/build."
+
+#: src/zfr_lib/lint/layout.py:43
+msgid "Add debian/source/format (typically '3.0 (native)')."
+msgstr "Добавете debian/source/format (обикновено '3.0 (native)')."
+
+#: src/zfr_lib/lint/layout.py:47
+#, python-format
+msgid "present: %s"
+msgstr "налице: %s"
+
+#: src/zfr_lib/lint/layout.py:50
+#, python-format
+msgid "missing %s"
+msgstr "липсва %s"
+
+#: src/zfr_lib/lint/layout.py:56
+#, python-format
+msgid "AsciiDoc man sources: %s"
+msgstr "AsciiDoc източници за man: %s"
+
+#: src/zfr_lib/lint/layout.py:63
+msgid "no docs/*.adoc man page source"
+msgstr "няма docs/*.adoc източник за man страница"
+
+#: src/zfr_lib/lint/layout.py:65
+msgid ""
+"Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage "
+"(see any language template)."
+msgstr ""
+"Добавете docs/<puff>.adoc и meson custom_target с asciidoctor -b manpage "
+"(вижте който и да е езиков шаблон)."
+
+#: src/zfr_lib/lint/layout.py:78
+#, python-format
+msgid "bash completion: %s"
+msgstr "bash допълване: %s"
+
+#: src/zfr_lib/lint/layout.py:86
+msgid "no *.bash bash-completion script at project root"
+msgstr "няма *.bash скрипт за bash-completion в корена на проекта"
+
+#: src/zfr_lib/lint/layout.py:87
+msgid ""
+"Add <puff>.bash and install it to datadir/bash-completion/completions "
+"renamed to the command name (see meson.build in the template)."
+msgstr ""
+"Добавете <puff>.bash и го инсталирайте в datadir/bash-completion/"
+"completions, преименуван на името на командата (вижте meson.build в шаблона)."
+
+#: src/zfr_lib/lint/layout.py:93
+msgid "VERSION file present"
+msgstr "файлът VERSION е налице"
+
+#: src/zfr_lib/lint/layout.py:99
+msgid "no VERSION file (changelog snapshot for tarball builds)"
+msgstr "няма файл VERSION (снимка от changelog за tarball компилации)"
+
+#: src/zfr_lib/lint/layout.py:101
+msgid ""
+"Create VERSION with the latest debian/changelog version (one line). "
+"Enable .githooks/pre-commit: git config core.hooksPath .githooks"
+msgstr ""
+"Създайте VERSION с най-новата версия от debian/changelog (един ред). "
+"Включете .githooks/pre-commit: git config core.hooksPath .githooks"
+
+#: src/zfr_lib/lint/layout.py:195
+msgid "no .githooks/pre-commit to sync VERSION from debian/changelog"
+msgstr ""
+"няма .githooks/pre-commit за синхронизиране на VERSION от debian/changelog"
+
+#: src/zfr_lib/lint/layout.py:197
+msgid ""
+"Walk up to the directory that contains .git, then put pre-commit in that "
+"tree's .githooks (or core.hooksPath). The hook must update VERSION from "
+"debian/changelog. `zfr create` copies one and sets git config "
+"core.hooksPath .githooks."
+msgstr ""
+"Изкачете се до директорията, която съдържа .git, и поставете pre-commit "
+"в .githooks на това дърво (или core.hooksPath). Куката трябва да обновява "
+"VERSION от debian/changelog. `zfr create` копира една и задава git config "
+"core.hooksPath .githooks."
+
+#: src/zfr_lib/lint/layout.py:210
+#, python-format
+msgid "pre-commit syncs VERSION from debian/changelog (%s)"
+msgstr "pre-commit синхронизира VERSION от debian/changelog (%s)"
+
+#: src/zfr_lib/lint/layout.py:218
+#, python-format
+msgid "%s exists but does not sync VERSION from debian/changelog"
+msgstr "%s съществува, но не синхронизира VERSION от debian/changelog"
+
+#: src/zfr_lib/lint/layout.py:220
+msgid ""
+"The hook should read debian/changelog (dpkg-parsechangelog) and write "
+"VERSION. See the zephyr .githooks/pre-commit template."
+msgstr ""
+"Куката трябва да чете debian/changelog (dpkg-parsechangelog) и да записва "
+"VERSION. Вижте шаблона zephyr .githooks/pre-commit."
+
+#: src/zfr_lib/lint/leftovers.py:49
+#, python-format
+msgid "%s keeps the template placeholder banner (apps must rewrite it)"
+msgstr ""
+"%s запазва банера-заместител на шаблона (приложенията трябва да го "
+"пренапишат)"
+
+#: src/zfr_lib/lint/leftovers.py:52
+msgid ""
+"After `zfr create`/`zfr rename`, rewrite this README and remove the "
+"generated-from-template banner. Templates should keep this banner."
+msgstr ""
+"След `zfr create`/`zfr rename` пренапишете този README и премахнете банера "
+"generated-from-template. Шаблоните трябва да запазят този банер."
+
+#: src/zfr_lib/lint/leftovers.py:61
+#, python-format
+msgid "%s still has the template placeholder banner"
+msgstr "%s все още има банера-заместител на шаблона"
+
+#: src/zfr_lib/lint/leftovers.py:64
+#, python-format
+msgid ""
+"Rewrite %s for this project. Remove the generated-from-template banner and "
+"describe the real commands, build, and license."
+msgstr ""
+"Пренапишете %s за този проект. Премахнете банера generated-from-template и "
+"опишете реалните команди, компилацията и лиценза."
+
+#: src/zfr_lib/lint/leftovers.py:69
+#, python-format
+msgid "%s has no template banner"
+msgstr "%s няма банер на шаблона"
+
+#: src/zfr_lib/lint/leftovers.py:101
+#, python-format
+msgid "%s tree may contain zephyr/some_puff1 placeholders (expected)"
+msgstr "дървото %s може да съдържа заместители zephyr/some_puff1 (очаквано)"
+
+#: src/zfr_lib/lint/leftovers.py:127 src/zfr_lib/lint/template.py:95
+#, python-format
+msgid " (+%d more)"
+msgstr " (+%d още)"
+
+#: src/zfr_lib/lint/leftovers.py:132
+#, python-format
+msgid ""
+"found %(hits)d leftover template token(s) (zephyr/%(token)s): "
+"%(preview)s%(more)s"
+msgstr ""
+"намерени %(hits)d остатъчни шаблонни маркера (zephyr/%(token)s): "
+"%(preview)s%(more)s"
+
+#: src/zfr_lib/lint/leftovers.py:134
+msgid ""
+"Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 "
+"identifiers. After create, leftover tokens mean instantiation failed."
+msgstr ""
+"Изпълнете `zfr rename <project> [puff ...]` или заменете останалите "
+"идентификатори zephyr/some_puff1. След create остатъчните маркери означават "
+"неуспешна инстанциация."
+
+#: src/zfr_lib/lint/leftovers.py:138
+msgid "no leftover zephyr/some_puff1 tokens"
+msgstr "няма остатъчни маркери zephyr/some_puff1"
+
+#: src/zfr_lib/lint/meson.py:41
+msgid "project() present"
+msgstr "project() е налице"
+
+#: src/zfr_lib/lint/meson.py:47
+msgid "meson.build has no project() call"
+msgstr "meson.build няма извикване на project()"
+
+#: src/zfr_lib/lint/meson.py:49
+msgid ""
+"project() must be the first Meson call. Copy the header from the language "
+"template."
+msgstr ""
+"project() трябва да е първото извикване на Meson. Копирайте заглавната част "
+"от езиковия шаблон."
+
+#: src/zfr_lib/lint/meson.py:54
+#, python-format
+msgid "license %s"
+msgstr "лиценз %s"
+
+#: src/zfr_lib/lint/meson.py:60
+msgid "meson license is not AGPL-3.0-or-later"
+msgstr "лицензът в meson не е AGPL-3.0-or-later"
+
+#: src/zfr_lib/lint/meson.py:63
+#, python-format
+msgid "Set license: '%s' in project()."
+msgstr "Задайте license: '%s' в project()."
+
+#: src/zfr_lib/lint/meson.py:69
+#, python-format
+msgid "%s set"
+msgstr "%s е зададен"
+
+#: src/zfr_lib/lint/meson.py:75
+#, python-format
+msgid "missing %s (used for man pages)"
+msgstr "липсва %s (използва се за man страници)"
+
+#: src/zfr_lib/lint/meson.py:77
+#, python-format
+msgid ""
+"Set %s next to project(), then pass -a project-author/email/year to "
+"asciidoctor."
+msgstr ""
+"Задайте %s до project(), след което подайте -a project-author/email/year към "
+"asciidoctor."
+
+#: src/zfr_lib/lint/meson.py:82
+msgid "version uses `zfr version`"
+msgstr "версията използва `zfr version`"
+
+#: src/zfr_lib/lint/meson.py:88
+msgid "version still uses inline git describe; zephyr style is `zfr version`"
+msgstr ""
+"версията все още използва вграден git describe; стилът на zephyr е `zfr "
+"version`"
+
+#: src/zfr_lib/lint/meson.py:91
+msgid ""
+"In project(version: run_command(...)), prefer:\n"
+"  v=$(zfr version 2>/dev/null || true)\n"
+"  with fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY\n"
+"See bash/meson.build in the zephyr tree."
+msgstr ""
+"В project(version: run_command(...)) предпочитайте:\n"
+"  v=$(zfr version 2>/dev/null || true)\n"
+"  с резерв v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY\n"
+"Вижте bash/meson.build в дървото zephyr."
+
+#: src/zfr_lib/lint/meson.py:102
+msgid "could not find `zfr version` or git describe in project version"
+msgstr "не е намерен `zfr version` или git describe във версията на проекта"
+
+#: src/zfr_lib/lint/meson.py:104
+msgid "Use `zfr version` for project() version (see bash/meson.build)."
+msgstr ""
+"Използвайте `zfr version` за версията на project() (вижте bash/meson.build)."
+
+#: src/zfr_lib/lint/meson.py:109
+msgid "0.0.0 fallback present"
+msgstr "налице е резерв 0.0.0"
+
+#: src/zfr_lib/lint/meson.py:115
+msgid "no explicit 0.0.0 fallback for missing git/VERSION"
+msgstr "няма явен резерв 0.0.0 при липсващ git/VERSION"
+
+#: src/zfr_lib/lint/meson.py:117
+msgid "Keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY"
+msgstr "Запазете резерва v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY"
+
+#: src/zfr_lib/lint/meson.py:122
+msgid "asciidoctor man pages"
+msgstr "man страници чрез asciidoctor"
+
+#: src/zfr_lib/lint/meson.py:128
+msgid "meson.build does not invoke asciidoctor"
+msgstr "meson.build не извиква asciidoctor"
+
+#: src/zfr_lib/lint/meson.py:130
+msgid ""
+"find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
+msgstr ""
+"find_program('asciidoctor') и custom_target(..., '-b', 'manpage', ...)."
+
+#: src/zfr_lib/lint/meson.py:135
+msgid "run_target look present"
+msgstr "run_target look е налице"
+
+#: src/zfr_lib/lint/meson.py:141
+msgid "no run_target('look') DESTDIR preview"
+msgstr "няма преглед DESTDIR за run_target('look')"
+
+#: src/zfr_lib/lint/meson.py:143
+msgid ""
+"Add run_target look that meson install's into a tempdir and runs tree (see "
+"templates)."
+msgstr ""
+"Добавете run_target look, който прави meson install във временна директория "
+"и пуска tree (вижте шаблоните)."
+
+#: src/zfr_lib/lint/meson.py:148
+msgid "installs bash-completion"
+msgstr "инсталира bash-completion"
+
+#: src/zfr_lib/lint/meson.py:154
+msgid "does not install bash-completion"
+msgstr "не инсталира bash-completion"
+
+#: src/zfr_lib/lint/meson.py:156
+msgid ""
+"install_data(..., install_dir: datadir / 'bash-completion' / 'completions', "
+"rename: command)."
+msgstr ""
+"Използвайте install_data(..., install_dir: datadir / 'bash-completion' / "
+"'completions', rename: command)."
+
+#: src/zfr_lib/lint/report.py:73
+msgid "FAIL"
+msgstr "НЕУСПЕХ"
+
+#: src/zfr_lib/lint/report.py:73
+msgid "PASS"
+msgstr "УСПЕХ"
+
+#: src/zfr_lib/lint/report.py:82
+msgid "status:"
+msgstr "статус:"
+
+#: src/zfr_lib/lint/report.py:83
+#, python-format
+msgid "errors=%s"
+msgstr "грешки=%s"
+
+#: src/zfr_lib/lint/report.py:84
+#, python-format
+msgid "warnings=%s"
+msgstr "предупреждения=%s"
+
+#: src/zfr_lib/lint/report.py:85
+#, python-format
+msgid "notes=%s"
+msgstr "бележки=%s"
+
+#: src/zfr_lib/lint/report.py:89
+msgid "zephyr meta-repo (templates + CLI tools)"
+msgstr "мета-хранилище zephyr (шаблони + CLI инструменти)"
+
+#: src/zfr_lib/lint/report.py:90
+msgid ""
+"language template inside the meta-repo (placeholders like zephyr/some_puff1 "
+"are expected)"
+msgstr ""
+"езиков шаблон в мета-хранилището (placeholders като zephyr/some_puff1 са "
+"очаквани)"
+
+#: src/zfr_lib/lint/report.py:91
+msgid ""
+"project instantiated from a language template (directory name must match "
+"meson/debian; no leftover zephyr/some_puff1 tokens)"
+msgstr ""
+"проект, създаден от езиков шаблон (името на директорията трябва да съвпада с "
+"meson/debian; без остатъчни zephyr/some_puff1)"
+
+#: src/zfr_lib/lint/report.py:93
+#, python-format
+msgid "role: %s"
+msgstr "роля: %s"
+
+#: src/zfr_lib/lint/report.py:95
+msgid "Zephyr style (finish the project to this contract)"
+msgstr "стил Zephyr (довършете проекта до този договор)"
+
+#: src/zfr_lib/lint/report.py:97
+msgid ""
+"License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
+"License)."
+msgstr ""
+"Лиценз AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
+"License)."
+
+#: src/zfr_lib/lint/report.py:98
+msgid ""
+"Build with Meson; debian/rules uses dh --buildsystem=meson --"
+"builddirectory=debian/build."
+msgstr ""
+"Изграждане с Meson; debian/rules използва dh --buildsystem=meson --"
+"builddirectory=debian/build."
+
+#: src/zfr_lib/lint/report.py:99
+msgid ""
+"project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO "
+"0.0.0, DO NOT MODIFY."
+msgstr ""
+"версията на project() от `zfr version`; запазете резерва v=\"0.0.0\" # FIXED "
+"TO 0.0.0, DO NOT MODIFY."
+
+#: src/zfr_lib/lint/report.py:100
+msgid ""
+"Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under "
+"share/man/<locale>/man1 (whole-document adoc, not po4a)."
+msgstr ""
+"Man страници: docs/*.adoc + asciidoctor -b manpage; преведени страници в "
+"share/man/<locale>/man1 (цял adoc документ, не po4a)."
+
+#: src/zfr_lib/lint/report.py:101
+msgid ""
+"Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; "
+"optional rpm/ aligned with debian."
+msgstr ""
+"Пакетиране: debian/control Build-Depends meson, ninja-build, asciidoctor; "
+"незадължителен rpm/, подравнен с debian."
+
+#: src/zfr_lib/lint/report.py:102
+msgid ""
+"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 "
+"locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."
+msgstr ""
+"i18n: английски източник; zfr lint -l/--l10n-level L0–L3 (по подразбиране "
+"L1). L1=10 локала, L2=20, L3=30. Стойности по подразбиране в .config/zfr/"
+"lint.options."
+
+#: src/zfr_lib/lint/report.py:103
+msgid ""
+"Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/"
+"changelog (git describe may differ)."
+msgstr ""
+"Приложения: `zfr rename <dir>` после `zfr add <puff>`; VERSION съвпада с "
+"debian/changelog (git describe може да се различава)."
+
+#: src/zfr_lib/lint/report.py:116
+msgid "error"
+msgstr "грешка"
+
+#: src/zfr_lib/lint/report.py:117
+msgid "warn"
+msgstr "предупреждение"
+
+#: src/zfr_lib/lint/report.py:118
+msgid "note"
+msgstr "бележка"
+
+#: src/zfr_lib/lint/report.py:119
+msgid "ok"
+msgstr "ок"
+
+#: src/zfr_lib/lint/report.py:132
+msgid "fix:"
+msgstr "поправка:"
+
+#: src/zfr_lib/lint/report.py:139
+msgid "Next steps (zephyr style)"
+msgstr "Следващи стъпки (стил zephyr)"
+
+#: src/zfr_lib/lint/report.py:145
+msgid ""
+"Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). "
+"`zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr "
+"version`. `zfr ize` applies missing debian/rpm/meson/man/version-subst "
+"upgrades."
+msgstr ""
+"Подсказка: след редакции пуснете отново `zfr lint` от проекта (или "
+"поддиректория). `zfr about -d -r` извежда полетата за пакетиране. Версията "
+"за Meson/RPM е `zfr version`. `zfr ize` прилага липсващите надстройки debian/"
+"rpm/meson/man/version-subst."
+
+#: src/zfr_lib/lint/rpm.py:41
+msgid "no rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
+msgstr ""
+"няма rpm/*.spec (незадължително, но стилът zephyr включва RPM до debian/)"
+
+#: src/zfr_lib/lint/rpm.py:44
+#, no-python-format
+msgid ""
+"Copy rpm/ from a language template; name the spec after the package (rpm/"
+"<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. "
+"Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
+msgstr ""
+"Копирайте rpm/ от езиков шаблон; наименувайте spec-а по пакета (rpm/"
+"<Source>.spec, не zephyr.spec) и запазете Makefile, който използва `zfr "
+"version`. Подравнете Name/Summary/Requires/URL с debian/control. Или "
+"изпълнете `zfr ize`."
+
+#: src/zfr_lib/lint/rpm.py:63
+#, no-python-format, python-brace-format
+msgid "spec Version is dynamic %{version}"
+msgstr "Version в spec е динамичен %{version}"
+
+#: src/zfr_lib/lint/rpm.py:72
+msgid "spec Version is hardcoded; zephyr style injects `zfr version`"
+msgstr "Version в spec е твърдо зададен; стилът zephyr вмъква `zfr version`"
+
+#: src/zfr_lib/lint/rpm.py:76
+#, no-python-format
+msgid ""
+"Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze "
+"via rpm/Makefile (`zfr version` / `zfr version -r`)."
+msgstr ""
+"Използвайте Version: %{version} с %{!?version:%global version 0.0.0} и "
+"замразете чрез rpm/Makefile (`zfr version` / `zfr version -r`)."
+
+#: src/zfr_lib/lint/rpm.py:82
+#, python-format
+msgid "License %s"
+msgstr "Лиценз %s"
+
+#: src/zfr_lib/lint/rpm.py:88
+msgid "spec License is not AGPL-3.0-or-later"
+msgstr "License в spec не е AGPL-3.0-or-later"
+
+#: src/zfr_lib/lint/rpm.py:91
+#, python-format
+msgid "License:        %s"
+msgstr "License:        %s"
+
+#: src/zfr_lib/lint/rpm.py:102
+#, python-format
+msgid "spec URL=%(url)r != debian Homepage=%(homepage)r"
+msgstr "spec URL=%(url)r != debian Homepage=%(homepage)r"
+
+#: src/zfr_lib/lint/rpm.py:105
+msgid "Set URL: to the same Homepage as debian/control."
+msgstr "Задайте URL: да е същият Homepage като в debian/control."
+
+#: src/zfr_lib/lint/rpm.py:117
+msgid "spec Summary does not match debian Description first line"
+msgstr "Summary в spec не съвпада с първия ред на debian Description"
+
+#: src/zfr_lib/lint/rpm.py:120
+#, python-format
+msgid "Summary:        %s"
+msgstr "Summary:        %s"
+
+#: src/zfr_lib/lint/rpm.py:125
+msgid "spec uses Meson (not autotools)"
+msgstr "spec използва Meson (не autotools)"
+
+#: src/zfr_lib/lint/rpm.py:131
+msgid "spec still uses autotools; zephyr packages build with Meson"
+msgstr "spec все още използва autotools; пакетите zephyr се изграждат с Meson"
+
+#: src/zfr_lib/lint/rpm.py:134
+#, no-python-format, python-brace-format
+msgid ""
+"%build: meson setup build --prefix=%{_prefix} ... && meson compile -C build\n"
+"%install: meson install -C build --destdir=%{buildroot}"
+msgstr ""
+"%build: meson setup build --prefix=%{_prefix} ... && meson compile -C build\n"
+"%install: meson install -C build --destdir=%{buildroot}"
+
+#: src/zfr_lib/lint/rpm.py:142
+msgid "Makefile uses `zfr version`"
+msgstr "Makefile използва `zfr version`"
+
+#: src/zfr_lib/lint/rpm.py:149
+msgid "rpm/Makefile does not call `zfr version`"
+msgstr "rpm/Makefile не извиква `zfr version`"
+
+#: src/zfr_lib/lint/rpm.py:152
+#, no-python-format
+msgid ""
+"VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
+"RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
+msgstr ""
+"VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
+"RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
+
+#: src/zfr_lib/lint/rpm.py:161
+msgid "no rpm/Makefile convenience targets"
+msgstr "няма удобни цели в rpm/Makefile"
+
+#: src/zfr_lib/lint/rpm.py:163
+msgid "Copy bash/rpm/Makefile (srpm/rpm via zfr version)."
+msgstr "Копирайте bash/rpm/Makefile (srpm/rpm чрез zfr version)."
+
+#: src/zfr_lib/lint/rpm.py:172
+msgid "bash spec Requires missing bash-shlib"
+msgstr "bash spec няма Requires за bash-shlib"
+
+#: src/zfr_lib/lint/rpm.py:174
+msgid "Requires:       bash-shlib  (same as debian Depends)"
+msgstr "Requires:       bash-shlib  (като debian Depends)"
+
+#: src/zfr_lib/lint/source_size.py:55
+#, python-format
+msgid "%(rel)s is %(lines)d lines (>%(limit)d); file is very long"
+msgstr "%(rel)s е %(lines)d реда (>%(limit)d); файлът е много дълъг"
+
+#: src/zfr_lib/lint/source_size.py:59
+msgid ""
+"Split this file into smaller modules; keep each unit focused and testable."
+msgstr ""
+"Разделете този файл на по-малки модули; всяка единица да е фокусирана и "
+"тестваема."
+
+#: src/zfr_lib/lint/source_size.py:67
+#, python-format
+msgid "%(rel)s is %(lines)d lines (>%(limit)d); consider modularizing soon"
+msgstr ""
+"%(rel)s е %(lines)d реда (>%(limit)d); помислете за модуларизация скоро"
+
+#: src/zfr_lib/lint/source_size.py:71
+msgid "Plan extraction of helpers or submodules before the file grows further."
+msgstr ""
+"Планирайте извличане на помощници или подмодули преди файлът да нарасне още."
+
+#: src/zfr_lib/lint/source_size.py:75
+msgid "no oversized source files"
+msgstr "няма прекалено големи изходни файлове"
+
+#: src/zfr_lib/lint/template.py:51
+msgid "zfr CLI package is not a language template"
+msgstr "пакетът zfr CLI не е езиков шаблон"
+
+#: src/zfr_lib/lint/template.py:93
+msgid "structural files from the language template are present"
+msgstr "структурните файлове от езиковия шаблон са налице"
+
+#: src/zfr_lib/lint/template.py:100
+#, python-format
+msgid ""
+"language template %(lang)s has extra scaffolding not in this tree: "
+"%(preview)s%(more)s"
+msgstr ""
+"езиковият шаблон %(lang)s има допълнителна скелетна структура, която липсва "
+"в това дърво: %(preview)s%(more)s"
+
+#: src/zfr_lib/lint/template.py:102
+#, python-format
+msgid ""
+"Compare with the %(lang)s template under pkgdatadir. Copy missing debian/"
+"docs/src/rpm files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` "
+"puffs. Do not copy build/ or debian leftover stamp files. Example commons "
+"modules are optional."
+msgstr ""
+"Сравнете с шаблона %(lang)s под pkgdatadir. Копирайте липсващите debian/docs/"
+"src/rpm файлове (rpm/ използва %(name)s.spec, не zephyr.spec), или `zfr add` "
+"puff-ове. Не копирайте build/ или остатъчни stamp файлове от debian. "
+"Примерните commons модули са незадължителни."
 
 #: src/zfr_lib/release.py:26
 msgid "Debian binary-only build (no .dsc)"
@@ -259,8 +1424,7 @@ msgstr "повторно използване на build кеша"
 #: src/zfr_lib/release.py:38
 msgid "Reuse existing artifacts; build only if missing"
 msgstr ""
-"повторно използване на съществуващи артефакти; компилация само при "
-"липса"
+"повторно използване на съществуващи артефакти; компилация само при липса"
 
 #: src/zfr_lib/release.py:43
 msgid "Build unsigned packages"
@@ -302,8 +1466,7 @@ msgstr "пропускане на създаване/изпращане на git
 #: src/zfr_lib/release.py:100
 msgid "Skip dput upload to deb pool (-u reuses build artifacts)"
 msgstr ""
-"пропускане на dput качване в deb pool (-u повторно използва build "
-"артефакти)"
+"пропускане на dput качване в deb pool (-u повторно използва build артефакти)"
 
 #: src/zfr_lib/release.py:106
 msgid "Skip GitHub release"
@@ -332,16 +1495,15 @@ msgstr "по-малко изходни данни"
 #: src/zfr_lib/release.py:205
 msgid "create a GitHub release (parse options, exec gh-makerelease)"
 msgstr ""
-"създаване на GitHub release (анализ на опции, изпълнение на "
-"gh-makerelease)"
+"създаване на GitHub release (анализ на опции, изпълнение на gh-makerelease)"
 
 #: src/zfr_lib/release.py:207
 msgid ""
 "Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
 "not implement tagging, packaging, or uploads."
 msgstr ""
-"Анализира опциите на gh-makerelease, пресъздава argv и изпълнява "
-"gh-makerelease. Не реализира етикетиране, пакетиране или качвания."
+"Анализира опциите на gh-makerelease, пресъздава argv и изпълнява gh-"
+"makerelease. Не реализира етикетиране, пакетиране или качвания."
 
 #: src/zfr_lib/remove.py:20
 msgid "remove puff(s) from the current project"
@@ -371,30 +1533,30 @@ msgstr "ново име на проекта (замества 'zephyr')"
 msgid "new example names (each replaces template some_puff1)"
 msgstr "нови примерни имена (всяко замества шаблонното some_puff1)"
 
-#: src/zfr_lib/shape.py:259
+#: src/zfr_lib/shape.py:263
 msgid ""
 "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
 msgstr ""
-"извеждане на zephyr оценка на формата на пакета 0-100 (packagedir "
-"срещу repodir в monorepos)"
+"извеждане на zephyr оценка на формата на пакета 0-100 (packagedir срещу "
+"repodir в monorepos)"
 
-#: src/zfr_lib/shape.py:261
+#: src/zfr_lib/shape.py:265
 msgid ""
 "Score how completely the current directory matches zephyr package style "
 "(0-100). In monorepos, scores the packagedir."
 msgstr ""
-"Оценява доколко текущият каталог отговаря на zephyr стила на пакет "
-"(0-100). В monorepos оценява packagedir."
+"Оценява доколко текущият каталог отговаря на zephyr стила на пакет (0-100). "
+"В monorepos оценява packagedir."
 
-#: src/zfr_lib/shape.py:267
+#: src/zfr_lib/shape.py:271
 msgid "print 1 if score >= threshold, else 0"
 msgstr "извежда 1 ако score >= threshold, иначе 0"
 
-#: src/zfr_lib/shape.py:268
+#: src/zfr_lib/shape.py:272
 msgid "print packagedir/repodir/role on stderr"
 msgstr "извеждане на packagedir/repodir/role на stderr"
 
-#: src/zfr_lib/shape.py:269
+#: src/zfr_lib/shape.py:273
 #, python-format
 msgid "bool threshold 0-100 (default: %s)"
 msgstr "bool праг 0-100 (по подразбиране: %s)"
@@ -411,19 +1573,13 @@ msgstr "Извежда текущата версия на проекта (тър
 #: src/zfr_lib/version.py:57
 msgid "use git describe (default when git and .git are available)"
 msgstr ""
-"използване на git describe (по подразбиране, когато git и .git са "
-"налични)"
+"използване на git describe (по подразбиране, когато git и .git са налични)"
 
 #: src/zfr_lib/version.py:58
 msgid "use debian/changelog (default when git or .git is unavailable)"
 msgstr ""
-"използване на debian/changelog (по подразбиране, когато git или .git "
-"липсват)"
+"използване на debian/changelog (по подразбиране, когато git или .git липсват)"
 
 #: src/zfr_lib/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
 msgstr "извеждане на RPM-съвместима Version (тире се заменят с долни черти)"
-
-#: src/zfr_lib/ize/__init__.py
-msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
-msgstr "run 2meson to convert Autotools/CMake to Meson when present (default: on)"

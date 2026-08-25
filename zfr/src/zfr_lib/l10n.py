@@ -7,6 +7,8 @@ import argparse
 import shlex
 from pathlib import Path
 
+from .i18n import _
+
 L10N_LEVELS: dict[str, tuple[str, ...]] = {
     "L0": (),
     "L1": (
@@ -88,7 +90,7 @@ def parse_l10n_level(value: str) -> str:
         raw = f"L{int(raw)}"
     if raw not in L10N_LEVELS:
         raise argparse.ArgumentTypeError(
-            f"l10n level must be L0–L3 (or 0–3), not {value!r}"
+            _("l10n level must be L0–L3 (or 0–3), not %r") % value
         )
     return raw
 

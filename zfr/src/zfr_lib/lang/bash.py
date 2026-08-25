@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 
 from ..finding import Finding
+from ..i18n import _
 from ._puff_helpers import merge_puff, puff_dir_if_exists, puff_generic, puff_paths
 from ._spec import LangSpec, WireSpec
 
@@ -41,10 +42,10 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
 def _lint(root: Path, role: str) -> list[Finding]:
     ins = list((root / "src").glob("*.in")) if (root / "src").is_dir() else []
     if ins:
-        return [Finding("ok", "lang.bash.src", f"src scripts: {', '.join(p.name for p in ins)}")]
-    return [Finding("warn", "lang.bash.src", "no src/*.in scripts", "src/",
-        fix="Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ "
-        "and meson configure_file + install_mode rwxr-xr-x.")]
+        return [Finding("ok", "lang.bash.src", _("src scripts: %s") % ", ".join(p.name for p in ins))]
+    return [Finding("warn", "lang.bash.src", _("no src/*.in scripts"), "src/",
+        fix=_("Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ "
+        "and meson configure_file + install_mode rwxr-xr-x."))]
 
 SPEC = LangSpec(
     name=NAME,

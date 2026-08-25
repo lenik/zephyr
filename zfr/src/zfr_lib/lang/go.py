@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 
 from ..finding import Finding
+from ..i18n import _
 from ._puff_helpers import merge_puff, puff_dir_if_exists, puff_generic, puff_paths
 from ._spec import LangSpec, WireSpec
 
@@ -18,8 +19,8 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
 def _lint(root: Path, role: str) -> list[Finding]:
     if (root / "go.mod").is_file():
         return []
-    return [Finding("error", "lang.go.mod", "missing go.mod", "go.mod",
-        fix="Add go.mod; meson should `go build` with -X main.buildVersion from meson.project_version().")]
+    return [Finding("error", "lang.go.mod", _("missing go.mod"), "go.mod",
+        fix=_("Add go.mod; meson should `go build` with -X main.buildVersion from meson.project_version()."))]
 
 SPEC = LangSpec(
     name=NAME,

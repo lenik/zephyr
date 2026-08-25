@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 
 from ..finding import Finding
+from ..i18n import _
 from ._puff_helpers import merge_puff, puff_dir_if_exists, puff_generic, puff_paths
 from ._spec import LangSpec, WireSpec
 
@@ -18,8 +19,8 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
 def _lint(root: Path, role: str) -> list[Finding]:
     if (root / "Cargo.toml").is_file():
         return []
-    return [Finding("error", "lang.rust.cargo", "missing Cargo.toml", "Cargo.toml",
-        fix="Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary.")]
+    return [Finding("error", "lang.rust.cargo", _("missing Cargo.toml"), "Cargo.toml",
+        fix=_("Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."))]
 
 SPEC = LangSpec(
     name=NAME,

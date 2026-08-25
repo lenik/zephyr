@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 
 from ..finding import Finding
+from ..i18n import _
 from ._puff_helpers import merge_puff, puff_paths
 from ._spec import LangSpec, WireSpec
 
@@ -18,9 +19,9 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
 
 def _lint(root: Path, role: str) -> list[Finding]:
     if (root / "tests").is_dir():
-        return [Finding("ok", "lang.kotlin.tests", "tests/ present")]
-    return [Finding("warn", "lang.kotlin.tests", "no tests/ (kotlin template uses kotlinc + meson test)", "tests/",
-        fix="Add tests/Test*.kt and meson test() compiling with kotlinc.")]
+        return [Finding("ok", "lang.kotlin.tests", _("tests/ present"))]
+    return [Finding("warn", "lang.kotlin.tests", _("no tests/ (kotlin template uses kotlinc + meson test)"), "tests/",
+        fix=_("Add tests/Test*.kt and meson test() compiling with kotlinc."))]
 
 
 def _spec_files(puffs: list[str]) -> list[str]:

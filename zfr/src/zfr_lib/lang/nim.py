@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 
 from ..finding import Finding
+from ..i18n import _
 from ._puff_helpers import merge_puff, puff_dir_if_exists, puff_generic, puff_paths
 from ._spec import LangSpec, WireSpec
 
@@ -20,9 +21,9 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
 
 def _lint(root: Path, role: str) -> list[Finding]:
     if (root / "tests").is_dir():
-        return [Finding("ok", "lang.nim.tests", "tests/ present")]
-    return [Finding("warn", "lang.nim.tests", "no tests/ (nim template uses unittest + meson test)", "tests/",
-        fix="Add tests/test_*.nim and meson test() with nim r.")]
+        return [Finding("ok", "lang.nim.tests", _("tests/ present"))]
+    return [Finding("warn", "lang.nim.tests", _("no tests/ (nim template uses unittest + meson test)"), "tests/",
+        fix=_("Add tests/test_*.nim and meson test() with nim r."))]
 
 
 SPEC = LangSpec(

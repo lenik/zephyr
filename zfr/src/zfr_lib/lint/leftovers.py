@@ -46,11 +46,11 @@ def check_readme(root: Path, role: str) -> list[Finding]:
                     Finding(
                         "note",
                         f"readme.placeholder.{name}",
-                        f"{name} keeps the template placeholder banner (apps must rewrite it)",
+                        _("%s keeps the template placeholder banner (apps must rewrite it)") % name,
                         name,
                         line=1,
-                        fix="After `zfr create`/`zfr rename`, rewrite this README and remove "
-                        "the generated-from-template banner. Templates should keep this banner.",
+                        fix=_("After `zfr create`/`zfr rename`, rewrite this README and remove "
+                        "the generated-from-template banner. Templates should keep this banner."),
                     )
                 )
             else:
@@ -58,15 +58,15 @@ def check_readme(root: Path, role: str) -> list[Finding]:
                     Finding(
                         "error",
                         f"readme.placeholder.{name}",
-                        f"{name} still has the template placeholder banner",
+                        _("%s still has the template placeholder banner") % name,
                         name,
                         line=1,
-                        fix=f"Rewrite {name} for this project. Remove the generated-from-template "
-                        "banner and describe the real commands, build, and license.",
+                        fix=_("Rewrite %s for this project. Remove the generated-from-template "
+                        "banner and describe the real commands, build, and license.") % name,
                     )
                 )
         else:
-            out.append(Finding("ok", f"readme.{name}", f"{name} has no template banner", name))
+            out.append(Finding("ok", f"readme.{name}", _("%s has no template banner") % name, name))
     return out
 
 
@@ -98,7 +98,7 @@ def check_leftovers(root: Path, role: str) -> list[Finding]:
             Finding(
                 "ok",
                 "tokens.template",
-                f"{role} tree may contain zephyr/some_puff1 placeholders (expected)",
+                _("%s tree may contain zephyr/some_puff1 placeholders (expected)") % role,
             )
         ]
     hits = 0
@@ -124,14 +124,15 @@ def check_leftovers(root: Path, role: str) -> list[Finding]:
                 break
     if hits:
         preview = ", ".join(samples)
-        more = "" if hits <= 8 else f" (+{hits - len(samples)} more)"
+        more = "" if hits <= 8 else _(" (+%d more)") % (hits - len(samples))
         return [
             Finding(
                 "error",
                 "tokens.leftover",
-                f"found {hits} leftover template token(s) (zephyr/{TEMPLATE_PUFF}): {preview}{more}",
-                fix="Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 "
-                "identifiers. After create, leftover tokens mean instantiation failed.",
+                _("found %(hits)d leftover template token(s) (zephyr/%(token)s): %(preview)s%(more)s")
+                % {"hits": hits, "token": TEMPLATE_PUFF, "preview": preview, "more": more},
+                fix=_("Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 "
+                "identifiers. After create, leftover tokens mean instantiation failed."),
             )
         ]
-    return [Finding("ok", "tokens.leftover", "no leftover zephyr/some_puff1 tokens")]
+    return [Finding("ok", "tokens.leftover", _("no leftover zephyr/some_puff1 tokens"))]

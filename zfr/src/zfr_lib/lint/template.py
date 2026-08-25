@@ -12,13 +12,14 @@ from .. import (
     iter_files,
     template_dir,
 )
+from ..i18n import _
 from ..packaging import _meson_project_fields
 from .finding import Finding
 from .util import _control, is_example_shared_rel
 
 
 def _project_name(root: Path) -> str:
-    src, _, _ = _control(root)
+    src, _pkg, _ctl = _control(root)
     meson = _meson_project_fields(root)
     return src.get("Source") or meson.get("name") or root.name
 
@@ -47,7 +48,7 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
             Finding(
                 "ok",
                 "template.coverage",
-                "zfr CLI package is not a language template",
+                _("zfr CLI package is not a language template"),
             )
         ]
     try:
@@ -89,17 +90,18 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
         }:
             missing.append(expected.as_posix())
     if not missing:
-        return [Finding("ok", "template.coverage", "structural files from the language template are present")]
+        return [Finding("ok", "template.coverage", _("structural files from the language template are present"))]
     preview = ", ".join(missing[:12])
-    more = "" if len(missing) <= 12 else f" (+{len(missing) - 12} more)"
+    more = "" if len(missing) <= 12 else _(" (+%d more)") % (len(missing) - 12)
     return [
         Finding(
             "note",
             "template.coverage",
-            f"language template {lang} has extra scaffolding not in this tree: {preview}{more}",
-            fix=f"Compare with the {lang} template under pkgdatadir. Copy missing debian/docs/src/rpm "
-            f"files (rpm/ uses {name}.spec, not zephyr.spec), or `zfr add` puffs. "
+            _("language template %(lang)s has extra scaffolding not in this tree: %(preview)s%(more)s")
+            % {"lang": lang, "preview": preview, "more": more},
+            fix=_("Compare with the %(lang)s template under pkgdatadir. Copy missing debian/docs/src/rpm "
+            "files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` puffs. "
             "Do not copy build/ or debian leftover stamp files. "
-            "Example commons modules are optional.",
+            "Example commons modules are optional.") % {"lang": lang, "name": name},
         )
     ]

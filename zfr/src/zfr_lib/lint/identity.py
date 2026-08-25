@@ -32,7 +32,7 @@ from .util import *  # noqa: F403
 def check_identity(root: Path, lang: str, role: str) -> list[Finding]:
     out: list[Finding] = []
     meson = _meson_project_fields(root)
-    src, pkg, _ = _control(root)
+    src, pkg, _ctl = _control(root)
     dir_name = root.name
     meson_name = meson.get("name") or ""
     source = src.get("Source") or ""
@@ -54,29 +54,32 @@ def check_identity(root: Path, lang: str, role: str) -> list[Finding]:
                     Finding(
                         "error",
                         f"identity.{label}",
-                        f"{label} is {val!r}, expected {expected!r} (directory name)",
+                        _("%(label)s is %(val)r, expected %(expected)r (directory name)")
+                        % {"label": label, "val": val, "expected": expected},
                         "meson.build" if label.startswith("meson") else "debian/control",
-                        fix=f"Set {label} to {expected!r}, or rename the directory. "
-                        "Use `zfr rename {expected}` if leftover template names remain.",
+                        fix=_("Set %(label)s to %(expected)r, or rename the directory. "
+                        "Use `zfr rename %(expected)s` if leftover template names remain.")
+                        % {"label": label, "expected": expected},
                     )
                 )
             else:
-                out.append(Finding("ok", f"identity.{label}", f"{label}={val}"))
+                out.append(Finding("ok", f"identity.{label}", _("%(label)s=%(val)s") % {"label": label, "val": val}))
     else:
         if meson_name:
-            out.append(Finding("ok", "identity.meson.project", f"meson project name={meson_name}"))
+            out.append(Finding("ok", "identity.meson.project", _("meson project name=%s") % meson_name))
         if source and meson_name and source != meson_name:
             out.append(
                 Finding(
                     "warn",
                     "identity.source_vs_meson",
-                    f"debian Source={source!r} != meson project={meson_name!r}",
+                    _("debian Source=%(source)r != meson project=%(meson)r")
+                    % {"source": source, "meson": meson_name},
                     "debian/control",
-                    fix="Keep Source, Package, and meson project() name identical.",
+                    fix=_("Keep Source, Package, and meson project() name identical."),
                 )
             )
         elif source:
-            out.append(Finding("ok", "identity.debian.Source", f"Source={source}"))
+            out.append(Finding("ok", "identity.debian.Source", _("Source=%s") % source))
 
     specs = _specs(root)
     if specs:
@@ -89,12 +92,13 @@ def check_identity(root: Path, lang: str, role: str) -> list[Finding]:
                 Finding(
                     "error",
                     "identity.rpm.Name",
-                    f"spec Name={spec_name!r} != debian/meson name {want!r}",
+                    _("spec Name=%(spec)r != debian/meson name %(want)r")
+                    % {"spec": spec_name, "want": want},
                     _rel(root, specs[0]),
                     line=_line_of(text, "Name:"),
-                    fix=f"Set Name: {want} in the spec (same as debian Source).",
+                    fix=_("Set Name: %s in the spec (same as debian Source).") % want,
                 )
             )
         elif spec_name:
-            out.append(Finding("ok", "identity.rpm.Name", f"spec Name={spec_name}", _rel(root, specs[0])))
+            out.append(Finding("ok", "identity.rpm.Name", _("spec Name=%s") % spec_name, _rel(root, specs[0])))
     return out

@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 
 from ..finding import Finding
+from ..i18n import _
 from ._puff_helpers import merge_puff, puff_paths
 from ._spec import LangSpec, WireSpec
 
@@ -19,8 +20,8 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
 def _lint(root: Path, role: str) -> list[Finding]:
     if (root / "build.zig").is_file():
         return []
-    return [Finding("error", "lang.zig.build", "missing build.zig", "build.zig",
-        fix="Add build.zig; meson should invoke `zig build -Doptimize=ReleaseFast`.")]
+    return [Finding("error", "lang.zig.build", _("missing build.zig"), "build.zig",
+        fix=_("Add build.zig; meson should invoke `zig build -Doptimize=ReleaseFast`."))]
 
 
 SPEC = LangSpec(
