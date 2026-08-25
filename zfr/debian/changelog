@@ -1,3 +1,13 @@
+zephyr (2.7.3) testing; urgency=medium
+
+  * meson_rpm_files: detect Python ``custom_target`` bindir installs,
+    ``pypkgdir`` (dist-packages), and bare ``install_dir: pkgdatadir``;
+    fixes RPM unpackaged files on python projects like cutekeys.
+  * Do not treat ``install_dir: pkgdatadir / 'sub'`` as top-level
+    ``%{_datadir}/%%{name}/*`` (zephyr meta-package layout).
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Tue, 25 Aug 2026 23:43:13 +0800
+
 zephyr (2.7.1) testing; urgency=medium
 
   * ize --commit: bump patch version and prepend debian/changelog (plus

@@ -1,0 +1,63 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""Tests for Meson-derived RPM %files (meson_rpm_files)."""
+
+from __future__ import annotations
+
+import tempfile
+import unittest
+from pathlib import Path
+
+from zfr_lib.ize.rpm_files import meson_rpm_files
+
+
+class MesonRpmFilesPythonTests(unittest.TestCase):
+    def test_python_custom_target_bindir_pypkgdir_pkgdatadir(self) -> None:
+        meson = """\
+project('demopkg', 'c')
+
+bindir = prefix / get_option('bindir')
+datadir = prefix / get_option('datadir')
+pypkgdir = prefix / 'lib' / 'python3' / 'dist-packages' / meson.project_name()
+pkgdatadir = datadir / meson.project_name()
+
+custom_target(
+    'qkeygen',
+    output: 'qkeygen',
+    install: true,
+    install_dir: bindir,
+)
+
+install_data(
+    ['src/demopkg/__init__.py'],
+    install_dir: pypkgdir,
+)
+
+install_data(
+    'example.conf',
+    install_dir: pkgdatadir,
+)
+"""
+        with tempfile.TemporaryDirectory(prefix="zfr-rpmf-") as tmp:
+            root = Path(tmp)
+            (root / "meson.build").write_text(meson, encoding="utf-8")
+            files = meson_rpm_files(root, "demopkg")
+            self.assertIn("%{_bindir}/qkeygen", files)
+            self.assertIn("%{_prefix}/lib/python3/dist-packages/%{name}/*", files)
+            self.assertIn("%{_datadir}/%{name}/*", files)
+
+    def test_pkgdatadir_subpath_not_top_level_glob(self) -> None:
+        meson = """\
+project('zephyr', 'c')
+datadir = prefix / get_option('datadir')
+pkgdatadir = datadir / meson.project_name()
+install_data('VERSION', install_dir: pkgdatadir / 'zfr')
+"""
+        with tempfile.TemporaryDirectory(prefix="zfr-rpmf-") as tmp:
+            root = Path(tmp)
+            (root / "meson.build").write_text(meson, encoding="utf-8")
+            files = meson_rpm_files(root, "zephyr")
+            self.assertNotIn("%{_datadir}/%{name}/*", files)
+
+
+if __name__ == "__main__":
+    unittest.main()

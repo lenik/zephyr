@@ -184,6 +184,19 @@ def meson_rpm_files(root: Path, name: str) -> list[str]:
         if name_m:
             add(f"%{{_bindir}}/{name_m.group(1)}")
 
+    # custom_target(..., install: true, install_dir: bindir) — e.g. Python CLIs
+    for block in _meson_call_blocks(text, "custom_target"):
+        if not re.search(r"install\s*:\s*true", block):
+            continue
+        if not re.search(
+            r"install_dir:\s*(?:get_option\(\s*['\"]bindir['\"]\s*\)|bindir)\s*[,)]",
+            block,
+        ):
+            continue
+        out = re.search(r"output:\s*'([^']+)'", block)
+        if out:
+            add(f"%{{_bindir}}/{Path(out.group(1)).name}")
+
     # ---- bash-completion ----
     # bash-completion via bash_files = [...] + foreach rename stem
     if "bash-completion" in text:
@@ -268,6 +281,20 @@ def meson_rpm_files(root: Path, name: str) -> list[str]:
             _add_man(nm.group(1))
 
     # ---- bulk data dirs ----
+
+    # Python purelib (pypkgdir = …/dist-packages/…/project_name)
+    if re.search(r"pypkgdir\s*=\s*[^\n]*dist-packages", text) and re.search(
+        r"install_dir:\s*pypkgdir\b", text
+    ):
+        add("%{_prefix}/lib/python3/dist-packages/%{name}/*")
+
+    # pkgdatadir = datadir / project_name() (install_data → %{_datadir}/%{name}/)
+    if re.search(
+        r"pkgdatadir\s*=\s*datadir\s*/\s*(?:meson\.project_name\(\)|"
+        rf"['\"]{re.escape(name)}['\"])",
+        text,
+    ) and re.search(r"install_dir:\s*pkgdatadir\s*[,)]", text):
+        add("%{_datadir}/%{name}/*")
 
     # Extra pkgdata / perl modules / shared data / headers
     if re.search(
