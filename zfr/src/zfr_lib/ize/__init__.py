@@ -22,10 +22,13 @@ def cmd_ize(
     man: bool = True,
     subst: bool = True,
     mesonize: bool = True,
+    commit: bool = False,
     verbose: bool = False,
     color: str = "auto",
     workdir: Path | None = None,
 ) -> int:
+    if commit and dry_run:
+        raise SystemExit("zfr ize: --commit cannot be combined with --dry-run")
     root = find_project_dir(workdir)
     if _is_zfr_meta_repo(root):
         raise SystemExit(
@@ -55,6 +58,7 @@ def cmd_ize(
         do_man=man,
         do_subst=subst,
         do_mesonize=mesonize,
+        do_commit=commit,
         verbose=verbose,
         color=color,
     ).run()
@@ -69,6 +73,12 @@ DESCRIPTION = _('Refactor the current project to match current zephyr style: mis
 def add_arguments(p: argparse.ArgumentParser) -> None:
     p.add_argument("-l", "--lang", metavar="LANG", help=_("language template to align with (default: detect; one of: %s)") % ", ".join(LANGS))
     p.add_argument("-n", "--dry-run", action="store_true", help=_("print planned changes without writing files"))
+    p.add_argument(
+        "-c",
+        "--commit",
+        action="store_true",
+        help=_("git add -A and commit ize changes with a verbose message"),
+    )
     p.add_argument("-v", "--verbose", action="store_true", help=_("also print skipped files"))
     p.add_argument(
         "-m",
@@ -89,6 +99,7 @@ def run(args: argparse.Namespace) -> int:
         man=not args.no_man,
         subst=not args.no_subst,
         mesonize=args.mesonize,
+        commit=args.commit,
         verbose=args.verbose,
         color=args.color,
     )

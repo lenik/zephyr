@@ -41,6 +41,7 @@ class Ize:
         do_man: bool = True,
         do_subst: bool = True,
         do_mesonize: bool = True,
+        do_commit: bool = False,
         verbose: bool = False,
         color: str = "auto",
     ) -> None:
@@ -50,6 +51,7 @@ class Ize:
         self.do_man = do_man
         self.do_subst = do_subst
         self.do_mesonize = do_mesonize
+        self.do_commit = do_commit
         self.verbose = verbose
         self.csr = Csr(color)
         self.changes: list[Change] = []
@@ -104,6 +106,8 @@ class Ize:
         if self.do_subst:
             self.subst_versions()
         self.report()
+        if self.do_commit:
+            self.commit_changes()
         return 0
 
     def mesonize(self) -> None:
@@ -786,3 +790,70 @@ endforeach
         )
         if not self.dry_run:
             print("re-run `zfr lint` to check remaining style gaps.", flush=True)
+
+    def commit_message(self) -> str:
+        """Build a verbose commit message from recorded ize changes."""
+        real = [c for c in self.changes if c.kind in {"add", "update", "convert"}]
+        adds = sum(1 for c in real if c.kind == "add")
+        updates = sum(1 for c in real if c.kind == "update")
+        converts = sum(1 for c in real if c.kind == "convert")
+        subject = f"zfr ize: align {self.name} (lang={self.lang}) to current zephyr style"
+        lines = [
+            subject,
+            "",
+            f"Automated `zfr ize` on {self.name}: bring packaging, Meson, man pages,",
+            "and version substitutions up to current zephyr style.",
+            "",
+        ]
+        if real:
+            lines.append("Changes:")
+            for c in real:
+                lines.append(f"  - {c.kind:7} {c.path}: {c.detail}")
+            lines.append("")
+        lines.append(
+            f"{adds} added, {updates} updated, {converts} converted"
+            + ("; mesonized via 2meson" if self._mesonized else "")
+            + "."
+        )
+        lines.append("")
+        return "\n".join(lines)
+
+    def commit_changes(self) -> None:
+        """``git add -A`` and commit when there is something to record."""
+        import subprocess
+
+        def git(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
+            return subprocess.run(
+                ["git", *args],
+                cwd=self.root,
+                check=check,
+                capture_output=True,
+                text=True,
+            )
+
+        try:
+            git("rev-parse", "--is-inside-work-tree")
+        except (subprocess.CalledProcessError, FileNotFoundError) as e:
+            raise SystemExit(
+                f"zfr ize --commit: {self.root} is not a git working tree"
+            ) from e
+
+        real = [c for c in self.changes if c.kind in {"add", "update", "convert"}]
+        if not real and not self._mesonized:
+            print("zfr ize --commit: no ize changes to commit.", flush=True)
+            return
+
+        git("add", "-A")
+        staged = git("diff", "--cached", "--quiet", check=False)
+        if staged.returncode == 0:
+            print("zfr ize --commit: working tree clean after ize; nothing to commit.", flush=True)
+            return
+
+        msg = self.commit_message()
+        try:
+            git("commit", "-m", msg)
+        except subprocess.CalledProcessError as e:
+            err = (e.stderr or e.stdout or "").strip() or str(e)
+            raise SystemExit(f"zfr ize --commit failed: {err}") from e
+        sha = git("rev-parse", "--short", "HEAD").stdout.strip()
+        print(f"committed {sha}: {msg.splitlines()[0]}", flush=True)
