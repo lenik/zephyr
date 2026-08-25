@@ -46,7 +46,34 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                 "Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."),
             )
         )
-        return out
+    
+    from ..ize.rpm_files import meson_text as _mt
+    if (root / "postinst.in").is_file() or (root / "prerm.in").is_file() or (
+        re.search(r"'setup'\s*/\s*meson\.project_name", _mt(root) or "")
+    ):
+        if "/setup/" in files_body:
+            out.append(
+                Finding(
+                    "ok",
+                    "rpm.files.setup",
+                    _("%files covers datadir/setup scripts Meson installs"),
+                    rel,
+                )
+            )
+        else:
+            out.append(
+                Finding(
+                    "error",
+                    "rpm.files.setup",
+                    _("%files omits datadir/setup/*; rpmbuild will reject unpackaged "
+                      "postinst/prerm after meson install"),
+                    rel,
+                    line=_line_of(text, "%files"),
+                    fix=_("%{_datadir}/setup/%{name}/  (or run `zfr ize`)."),
+                )
+            )
+
+    return out
 
     spec = specs[0]
     rel = _rel(root, spec)
@@ -174,4 +201,74 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                 fix=_("Requires:       bash-shlib  (same as debian Depends)"),
             )
         )
+
+    from ..ize.rpm_files import (
+        files_section_body,
+        ships_gettext_mo,
+        ships_locale_mans,
+    )
+
+    files_body = files_section_body(text)
+    if TEMPLATE_PUFF in files_body or "some_puff1" in files_body:
+        out.append(
+            Finding(
+                "error",
+                "rpm.files.puff",
+                _("RPM %files still lists template puff some_puff1"),
+                rel,
+                line=_line_of(text, "%files"),
+                fix=_("Replace some_puff1 with real command names (or run `zfr ize`)."),
+            )
+        )
+
+    if ships_gettext_mo(root):
+        if "/locale/*/LC_MESSAGES/" in files_body and ".mo" in files_body:
+            out.append(
+                Finding(
+                    "ok",
+                    "rpm.files.mo",
+                    _("%files covers gettext .mo catalogs Meson installs"),
+                    rel,
+                )
+            )
+        else:
+            out.append(
+                Finding(
+                    "error",
+                    "rpm.files.mo",
+                    _("%files omits gettext .mo; rpmbuild will reject unpackaged "
+                      "locale/*/LC_MESSAGES/*.mo after meson install"),
+                    rel,
+                    line=_line_of(text, "%files"),
+                    # xgettext: no-python-format
+                    fix=_("%{_datadir}/locale/*/LC_MESSAGES/<name>.mo  "
+                    "(Meson i18n.gettext / po/). Or run `zfr ize`."),
+                )
+            )
+
+    if ships_locale_mans(root):
+        if "%{_mandir}/*/man1/" in files_body:
+            out.append(
+                Finding(
+                    "ok",
+                    "rpm.files.locale_man",
+                    _("%files covers locale man pages Meson installs"),
+                    rel,
+                )
+            )
+        else:
+            out.append(
+                Finding(
+                    "error",
+                    "rpm.files.locale_man",
+                    _("%files omits locale mans; rpmbuild will reject unpackaged "
+                      "$mandir/<locale>/man1 pages after meson install"),
+                    rel,
+                    line=_line_of(text, "%files"),
+                    # xgettext: no-python-format
+                    fix=_("%{_mandir}/*/man1/<cmd>.1*  "
+                    "(docs/<lang>/*.adoc / man_i18n). Or run `zfr ize`."),
+                )
+            )
+
     return out

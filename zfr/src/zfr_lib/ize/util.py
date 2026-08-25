@@ -233,12 +233,16 @@ def _puff_names(root: Path) -> list[str]:
 
 
 def _spec_files(root: Path, lang: str, name: str) -> list[str]:
-    puffs = _puff_names(root) or [TEMPLATE_PUFF]
+    from .rpm_files import gettext_mo_line, locale_man_lines
+
+    puffs = _puff_names(root) or [name]
     files: list[str] = []
     for puff in puffs:
         files.append(f"%{{_bindir}}/{puff}")
         files.append(f"%{{_datadir}}/bash-completion/completions/{puff}")
         files.append(f"%{{_mandir}}/man1/{puff}.1*")
+        for loc in locale_man_lines(root, name, [puff]):
+            files.append(loc)
     extras = _lang_spec_extra_files(lang, puffs)
     insert_after_bindir: list[str] = []
     append_before_doc: list[str] = []
@@ -250,9 +254,18 @@ def _spec_files(root: Path, lang: str, name: str) -> list[str]:
     if insert_after_bindir:
         files[1:1] = insert_after_bindir
     files.extend(append_before_doc)
+    mo = gettext_mo_line(root, name)
+    if mo:
+        files.append(mo)
+    from .rpm_files import meson_text as _mt
+    if (
+        (root / "postinst.in").is_file()
+        or (root / "prerm.in").is_file()
+        or re.search(r"'setup'\s*/\s*meson\.project_name|\"setup\"\s*/\s*meson\.project_name", _mt(root))
+    ):
+        files.append("%{_datadir}/setup/%{name}/")
     files.append("%{_datadir}/doc/%{name}/")
-    if (root / "po").is_dir():
-        files.append("%{_datadir}/locale/*/LC_MESSAGES/%s.mo" % name)
+
     # unique, keep order
     seen: set[str] = set()
     out: list[str] = []

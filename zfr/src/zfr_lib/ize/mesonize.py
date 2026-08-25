@@ -33,9 +33,14 @@ def run_2meson(
     *,
     dry_run: bool = False,
     force: bool = True,
+    remove_source: bool = True,
     verbose: bool = False,
 ) -> tuple[int, str]:
-    """Run 2meson on *root*. Returns (exit_code, combined log text)."""
+    """Run 2meson on *root*. Returns (exit_code, combined log text).
+
+    *remove_source* maps to 2meson ``-r`` so leftover configure.ac does not
+    trigger ``dh_autoreconf`` during ``zfr release``.
+    """
     exe = find_2meson()
     if exe is None:
         return 127, "2meson not found in PATH (set ZFR_2MESON or install 2meson)"
@@ -44,6 +49,8 @@ def run_2meson(
         cmd.append("-n")
     if force:
         cmd.append("-f")
+    if remove_source and not dry_run:
+        cmd.append("-r")
     if verbose:
         cmd.append("-v")
     cmd.append(str(root))

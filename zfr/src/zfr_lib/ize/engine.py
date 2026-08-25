@@ -5,10 +5,14 @@ from __future__ import annotations
 from . import man as _man
 from . import spec as _spec
 from .debian import (
+    ensure_debian_docs,
+    ensure_debian_rules_meson,
     ensure_rpm_bash_shlib,
+    ensure_rpm_noarch_nodebug,
     patch_debian_control,
     strip_readme_banner,
 )
+from .rpm_files import sync_rpm_files
 from .util import *  # noqa: F403
 
 convert_man_file = _man.convert_man_file
@@ -83,14 +87,18 @@ class Ize:
         self.mesonize()
         self.add_missing_files()
         self.patch_debian_control()
+        self.ensure_debian_rules()
+        self.fix_debian_docs()
         self.ensure_changelog_version()
         self.ensure_hooks()
-        self.ensure_completion()
         self.patch_meson()
         if self.do_man:
             self.convert_manpages()
             self.ensure_man_stubs()
             self.patch_meson_man_targets()
+        # After man stubs, puff names are known — emit completions then refresh meson.
+        self.ensure_completion()
+        self.patch_meson()
         self.ensure_rpm()
         if self.do_subst:
             self.subst_versions()
@@ -186,6 +194,22 @@ class Ize:
         if new != text:
             self.write_text(path, new, ", ".join(notes) or "debian/control lint alignment")
 
+    def ensure_debian_rules(self) -> None:
+        path = self.root / "debian" / "rules"
+        if not path.is_file():
+            return
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        new, notes = ensure_debian_rules_meson(text)
+        if new != text:
+            # Keep executable bit.
+            mode = path.stat().st_mode
+            self.write_text(path, new, ", ".join(notes) or "debian/rules")
+            path.chmod(mode)
+
+    def fix_debian_docs(self) -> None:
+        notes = ensure_debian_docs(self.root)
+        if notes:
+            self.note("update", "debian/docs", ", ".join(notes))
     def ensure_man_stubs(self) -> None:
         """Create docs/*.adoc stubs when Autotools mans were help2man-only."""
         docs = self.root / "docs"
@@ -226,19 +250,22 @@ class Ize:
                 self.write_text(meson, cleaned, "remove help2man blocks (AsciiDoc mans)")
 
     def ensure_completion(self) -> None:
-        """Add a minimal bash-completion stub when none exists (bash projects)."""
+        """Ensure a bash-completion stub exists for each command puff."""
         if self.lang != "bash":
             return
-        if list(self.root.glob("*.bash")) or list((self.root / "completions").glob("*.bash")):
-            return
-        dest = self.root / f"{self.name}.bash"
-        if dest.is_file():
-            return
-        body = (
-            f"# bash completion for {self.name} (stub; extend as needed)\n"
-            f"complete -F _longopt {self.name} 2>/dev/null || true\n"
-        )
-        self.write_text(dest, body, "bash-completion stub")
+        puffs = _puff_names(self.root) or [self.name]
+        for puff in puffs:
+            dest = self.root / f"{puff}.bash"
+            if dest.is_file():
+                continue
+            alt = self.root / "completions" / f"{puff}.bash"
+            if alt.is_file():
+                continue
+            body = (
+                f"# bash completion for {puff} (stub; extend as needed)\n"
+                f"complete -F _longopt {puff} 2>/dev/null || true\n"
+            )
+            self.write_text(dest, body, f"bash-completion stub {puff}")
 
     def ensure_changelog_version(self) -> None:
         changelog = self.root / "debian" / "changelog"
@@ -404,10 +431,10 @@ class Ize:
             )
             details.append("install LICENSE/README")
 
-        completions = list(self.root.glob("*.bash"))
-        if completions and "bash-completion" not in text:
+        completions = sorted(self.root.glob("*.bash"))
+        if completions:
             names = ",\n    ".join(f"'{p.name}'" for p in completions)
-            text += f"""
+            block = f"""
 bash_files = [
     {names},
 ]
@@ -421,7 +448,20 @@ foreach file : bash_files
     )
 endforeach
 """
-            details.append("install bash-completion")
+            if "bash-completion" not in text:
+                text += block
+                details.append("install bash-completion")
+            else:
+                new_text, nsub = re.subn(
+                    r"bash_files\s*=\s*\[[^\]]*\]",
+                    "bash_files = [\n    " + names + ",\n]",
+                    text,
+                    count=1,
+                    flags=re.S,
+                )
+                if nsub and new_text != text:
+                    text = new_text
+                    details.append("refresh bash-completion list")
 
         if text != orig:
             self.write_text(path, text if text.endswith("\n") else text + "\n", ", ".join(details))
@@ -563,6 +603,15 @@ endforeach
                 if changed:
                     new = patched
                     details.append("Requires bash-shlib")
+                patched, changed = ensure_rpm_noarch_nodebug(new)
+                if changed:
+                    new = patched
+                    details.append("noarch + no debuginfo")
+            expected = _spec_files(self.root, self.lang, self.name)
+            synced, file_notes = sync_rpm_files(new, expected=expected)
+            if file_notes:
+                new = synced
+                details.extend(file_notes)
             if new != text:
                 self.write_text(specs[0], new, ", ".join(details) or "spec touch-up")
 

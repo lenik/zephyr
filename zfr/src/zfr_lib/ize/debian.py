@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from pathlib import Path
 
 REQUIRED_BUILD_DEPENDS = ("meson", "ninja-build", "asciidoctor")
 
@@ -18,6 +19,20 @@ def _field_packages(block: str) -> set[str]:
     return names
 
 
+def _comma_before_continuations(body: str) -> str:
+    """Insert commas so folded Build-Depends lines parse as separate packages.
+
+    Debian joins a field continuation with a space, so::
+
+        Build-Depends: debhelper-compat (= 13)
+            bzip2, meson
+
+    becomes ``debhelper-compat (= 13) bzip2`` (invalid).  A trailing comma on
+    the previous physical line is required.
+    """
+    return re.sub(r"([^,\s])\n(\s+\S)", r"\1,\n\2", body)
+
+
 def ensure_build_depends(text: str, extras: tuple[str, ...] = REQUIRED_BUILD_DEPENDS) -> tuple[str, list[str]]:
     """Ensure Source Build-Depends lists *extras*. Returns (text, change notes)."""
     notes: list[str] = []
@@ -28,10 +43,14 @@ def ensure_build_depends(text: str, extras: tuple[str, ...] = REQUIRED_BUILD_DEP
     )
     if not m:
         return text, notes
-    body = m.group(2)
+    body = _comma_before_continuations(m.group(2))
+    if body != m.group(2):
+        notes.append("Build-Depends continuation commas")
     have = _field_packages(body)
     missing = [e for e in extras if e not in have]
     if not missing:
+        if body != m.group(2):
+            return text[: m.start(2)] + body + text[m.end(2) :], notes
         return text, notes
     # Prefer multi-line style when already multi-line or body is long.
     if "\n" in body.rstrip() or len(body) > 40:
@@ -255,3 +274,103 @@ def ensure_rpm_bash_shlib(spec_text: str) -> tuple[str, bool]:
             True,
         )
     return spec_text + "\nRequires:       bash-shlib\n", True
+
+def ensure_debian_rules_meson(text: str) -> tuple[str, list[str]]:
+    """Ensure debian/rules uses Meson and skips dh_autoreconf."""
+    notes: list[str] = []
+    if "--buildsystem=meson" not in text:
+        if re.search(r"^%:\n\tdh \$@\s*$", text, re.M):
+            text = (
+                "#!/usr/bin/make -f\n\n"
+                "%:\n"
+                "\tdh $@ --buildsystem=meson --builddirectory=debian/build\n"
+            )
+            notes.append("debian/rules meson buildsystem")
+        elif "dh $@" in text:
+            text = text.replace(
+                "dh $@",
+                "dh $@ --buildsystem=meson --builddirectory=debian/build",
+                1,
+            )
+            notes.append("debian/rules meson buildsystem")
+    if "override_dh_autoreconf" not in text:
+        if not text.endswith("\n"):
+            text += "\n"
+        text += (
+            "\n# Autotools leftovers must not run after Meson conversion.\n"
+            "override_dh_autoreconf:\n"
+        )
+        notes.append("override_dh_autoreconf")
+    return text, notes
+
+
+def ensure_debian_docs(root: Path) -> list[str]:
+    """Rewrite debian/docs so listed files exist (README -> README.md, drop missing)."""
+    from pathlib import Path as _Path
+
+    path = root / "debian" / "docs"
+    if not path.is_file():
+        return []
+    lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
+    out: list[str] = []
+    changed = False
+    for raw in lines:
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            out.append(raw)
+            continue
+        cand = root / line
+        if cand.is_file():
+            out.append(line)
+            continue
+        if line == "README" and (root / "README.md").is_file():
+            out.append("README.md")
+            changed = True
+            continue
+        if line == "NEWS" and not cand.is_file():
+            # Drop missing NEWS rather than fail dh_installdocs.
+            changed = True
+            continue
+        # Drop other missing entries.
+        changed = True
+    if not changed and out == [ln.strip() for ln in lines if ln.strip() and not ln.strip().startswith("#")]:
+        # also detect dropped blanks? if content same skip
+        old = [ln.strip() for ln in lines if ln.strip() and not ln.strip().startswith("#")]
+        new = [ln for ln in out if ln.strip() and not ln.strip().startswith("#")]
+        if old == new:
+            return []
+    path.write_text("\n".join(out).rstrip() + "\n", encoding="utf-8")
+    return ["debian/docs paths"]
+
+
+def ensure_rpm_noarch_nodebug(spec_text: str) -> tuple[str, bool]:
+    """For Architecture: all / bash packages: BuildArch noarch and no debuginfo."""
+    changed = False
+    if not re.search(r"(?m)^%global\s+debug_package\s+", spec_text):
+        spec_text2, n = re.subn(
+            r"(?m)^Name:",
+            "%global debug_package %{nil}\n\nName:",
+            spec_text,
+            count=1,
+        )
+        if n:
+            spec_text = spec_text2
+            changed = True
+    if not re.search(r"(?m)^BuildArch:", spec_text):
+        spec_text2, n = re.subn(
+            r"(?m)^(License:\s*.*)$",
+            r"\1\nBuildArch:      noarch",
+            spec_text,
+            count=1,
+        )
+        if not n:
+            spec_text2, n = re.subn(
+                r"(?m)^(Name:\s*.*)$",
+                r"\1\nBuildArch:      noarch",
+                spec_text,
+                count=1,
+            )
+        if n:
+            spec_text = spec_text2
+            changed = True
+    return spec_text, changed

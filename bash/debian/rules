@@ -2,3 +2,7 @@
 
 %:
 	dh $@ --buildsystem=meson --builddirectory=debian/build
+
+# Autotools leftovers must not run after Meson conversion.
+override_dh_autoreconf:
+

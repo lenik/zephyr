@@ -19,7 +19,13 @@ def render_spec(root: Path, lang: str, name: str) -> str:
     if "asciidoctor" not in br:
         br.append("asciidoctor")
     req = _split_deps(pkg.get("Depends", ""))
-    buildarch = "BuildArch:      noarch\n" if arch == "all" else ""
+    if arch == "all":
+        buildarch = (
+            "%global debug_package %{nil}\n"
+            "BuildArch:      noarch\n"
+        )
+    else:
+        buildarch = ""
     br_block = "\n".join(f"BuildRequires:  {n}" for n in br)
     req_block = "\n".join(f"Requires:       {n}" for n in req)
     if req_block:

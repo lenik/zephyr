@@ -4,6 +4,8 @@
 %{!?version:%global version 0.0.0}
 %{!?srcversion:%global srcversion %{version}}
 
+%global debug_package %{nil}
+
 Name:           zephyr
 Version:        %{version}
 Release:        1%{?dist}

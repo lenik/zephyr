@@ -1,3 +1,20 @@
+zephyr (2.6.0) testing; urgency=medium
+
+  * lint: error when RPM %files omits gettext .mo, locale mans, or
+    datadir/setup scripts that Meson installs (unpackaged after
+    `zfr release -fI`).
+  * lint: error on leftover some_puff1 / template puff in %files.
+  * ize: rewrite %files for template puff; append .mo / locale-man /
+    setup/ globs; bash specs get BuildArch noarch + %global debug_package
+    %{nil}.
+  * ize: Build-Depends continuation commas; debian/rules
+    override_dh_autoreconf; fix debian/docs README→README.md; per-puff
+    bash-completion stubs after man discovery; invoke 2meson -r.
+  * Aligns ize + lint with `zfr release -fI` (Debian + RPM); validated on
+    batch1 2tree through full local release.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Tue, 25 Aug 2026 21:14:00 +0800
+
 zephyr (2.5.0) testing; urgency=medium
 
   * ize: patch existing debian/control for lint — Build-Depends meson,
