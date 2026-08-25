@@ -76,13 +76,22 @@ def cmd_lint(
     color: str = "auto",
     strict: bool = False,
     l10n_level: str = "L1",
+    style_info: bool | None = None,
     workdir: Path | None = None,
 ) -> int:
     root = _resolve_lint_root(find_project_dir(workdir))
     name, lang, role, findings = collect_findings(root, l10n_level=l10n_level)
     sys.stdout.write(
         format_report(
-            root, name, lang, role, findings, verbose=verbose, quiet=quiet, color=color
+            root,
+            name,
+            lang,
+            role,
+            findings,
+            verbose=verbose,
+            quiet=quiet,
+            color=color,
+            style_info=style_info,
         )
     )
     sys.stdout.flush()
@@ -97,7 +106,7 @@ def cmd_lint(
 
 NAME = "lint"
 HELP = _('validate project packaging and zephyr layout (walks parents from cwd)')
-DESCRIPTION = _('Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY.')
+DESCRIPTION = _('Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY. Style-contract blurbs default on for non-TTY (AI/pipes) and off for interactive TTYs; override with -i/-I.')
 
 
 def add_arguments(p: argparse.ArgumentParser) -> None:
@@ -112,6 +121,22 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         default=None,
         help=_("required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"),
     )
+    info = p.add_mutually_exclusive_group()
+    info.add_argument(
+        "-i",
+        "--info",
+        dest="style_info",
+        action="store_true",
+        help=_("show zephyr style-contract / next-steps blurbs (default for non-TTY)"),
+    )
+    info.add_argument(
+        "-I",
+        "--no-info",
+        dest="style_info",
+        action="store_false",
+        help=_("hide zephyr style-contract / next-steps blurbs (default for interactive TTY)"),
+    )
+    p.set_defaults(style_info=None)
     p.add_argument("--color", choices=("auto", "always", "never"), default="auto", help=_("CSR (console SGR) highlighting (default: auto)"))
 
 
@@ -126,6 +151,7 @@ def run(args: argparse.Namespace) -> int:
         color=args.color,
         strict=args.strict,
         l10n_level=args.l10n_level or "L1",
+        style_info=args.style_info,
     )
 
 

@@ -1,3 +1,12 @@
+zephyr (2.6.3) testing; urgency=medium
+
+  * lint: add -i/--info and -I/--no-info to show or hide the zephyr
+    style-contract / next-steps / hint blurbs.
+  * Default: show style info when stdout is non-interactive (pipes/AI);
+    hide it on an interactive TTY. -i/-I override the auto choice.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Tue, 25 Aug 2026 22:24:57 +0800
+
 zephyr (2.6.2) testing; urgency=medium
 
   * ize: add -c/--commit — after a successful ize, ``git add -A`` and

@@ -54,6 +54,14 @@ def _next_steps(findings: list[Finding]) -> list[str]:
     return steps
 
 
+def default_show_style_info() -> bool:
+    """True for non-interactive (piped/AI) stdout; False on an interactive TTY."""
+    try:
+        return not sys.stdout.isatty()
+    except Exception:
+        return True
+
+
 def format_report(
     root: Path,
     name: str,
@@ -64,7 +72,15 @@ def format_report(
     verbose: bool = False,
     quiet: bool = False,
     color: str = "auto",
+    style_info: bool | None = None,
 ) -> str:
+    """Format the lint report.
+
+    *style_info* controls the role/contract/next-steps/hint blocks. ``None``
+    means auto: show for non-TTY (AI/pipes), hide for interactive TTYs.
+    """
+    if style_info is None:
+        style_info = default_show_style_info()
     csr = Csr(color)
     counts = {k: 0 for k in ("error", "warn", "note", "ok")}
     for f in findings:
@@ -84,7 +100,7 @@ def format_report(
         f"{csr.sev('warn', _('warnings=%s') % counts['warn'])}  "
         f"{_('notes=%s') % counts['note']}"
     )
-    if not quiet:
+    if not quiet and style_info:
         role_hint = {
             "meta": _("zephyr meta-repo (templates + CLI tools)"),
             "template": _("language template inside the meta-repo (placeholders like zephyr/some_puff1 are expected)"),
@@ -134,7 +150,7 @@ def format_report(
         lines.append("")
 
     steps = _next_steps(findings)
-    if not quiet:
+    if not quiet and style_info:
         if steps:
             lines.append(csr.wrap(_("Next steps (zephyr style)"), csr.bold, csr.magenta))
             for i, step in enumerate(steps, 1):
