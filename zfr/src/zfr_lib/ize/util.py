@@ -200,6 +200,12 @@ def _split_deps(raw: str) -> list[str]:
             continue
         item = item.split("|", 1)[0].strip()
         item = re.sub(r"\s*\([^)]*\)", "", item).strip()
+        # Drop Debian substvars glued on the same token (e.g. "bash-shlib ${misc:Depends}").
+        item = re.sub(r"\$\{[^}]+\}", "", item).strip()
+        if not item or item.startswith("${") or item.startswith("debhelper"):
+            continue
+        # Keep first package token only if spaces remain after stripping substvars.
+        item = item.split()[0]
         if item.startswith("${") or item.startswith("debhelper"):
             continue
         out.append(item)
@@ -233,40 +239,64 @@ def _puff_names(root: Path) -> list[str]:
 
 
 def _spec_files(root: Path, lang: str, name: str) -> list[str]:
-    from .rpm_files import gettext_mo_line, locale_man_lines
+    """RPM %files: prefer Meson install rules; fall back to puff guesses."""
+    from .rpm_files import meson_rpm_files
 
-    puffs = _puff_names(root) or [name]
-    files: list[str] = []
-    for puff in puffs:
-        files.append(f"%{{_bindir}}/{puff}")
-        files.append(f"%{{_datadir}}/bash-completion/completions/{puff}")
-        files.append(f"%{{_mandir}}/man1/{puff}.1*")
-        for loc in locale_man_lines(root, name, [puff]):
-            files.append(loc)
-    extras = _lang_spec_extra_files(lang, puffs)
-    insert_after_bindir: list[str] = []
-    append_before_doc: list[str] = []
-    for extra in extras:
-        if extra.startswith("%{_infodir}/"):
-            append_before_doc.append(extra)
-        else:
-            insert_after_bindir.append(extra)
-    if insert_after_bindir:
-        files[1:1] = insert_after_bindir
-    files.extend(append_before_doc)
-    mo = gettext_mo_line(root, name)
-    if mo:
-        files.append(mo)
-    from .rpm_files import meson_text as _mt
-    if (
-        (root / "postinst.in").is_file()
-        or (root / "prerm.in").is_file()
-        or re.search(r"'setup'\s*/\s*meson\.project_name|\"setup\"\s*/\s*meson\.project_name", _mt(root))
-    ):
-        files.append("%{_datadir}/setup/%{name}/")
+    meson_files = meson_rpm_files(root, name)
+    # Meson-derived list is authoritative when it found any install (bindir/man/…).
+    meson_authoritative = any(
+        x.startswith("%{_bindir}/")
+        or x.startswith("%{_mandir}/")
+        or "/shlib.d/" in x
+        or "/bash-completion/" in x
+        for x in meson_files
+    )
+    if meson_authoritative:
+        files = list(meson_files)
+    else:
+        from .rpm_files import gettext_mo_line, locale_man_lines
+
+        puffs = _puff_names(root) or [name]
+        files = []
+        for puff in puffs:
+            files.append(f"%{{_bindir}}/{puff}")
+            files.append(f"%{{_datadir}}/bash-completion/completions/{puff}")
+            files.append(f"%{{_mandir}}/man1/{puff}.1*")
+            files.extend(locale_man_lines(root, name, [puff]))
+        mo = gettext_mo_line(root, name)
+        if mo:
+            files.append(mo)
+        if (root / "postinst.in").is_file() or (root / "prerm.in").is_file():
+            files.append("%{_datadir}/setup/%{name}/")
+        files.append("%{_datadir}/doc/%{name}/")
+        # Lang template extras (e.g. Java ``%{_datadir}/%{name}/``) only when
+        # Meson did not already define the install set — otherwise they invent
+        # empty dirs that rpmbuild rejects as "Directory not found".
+        extras = _lang_spec_extra_files(lang, puffs)
+        insert_after_bindir: list[str] = []
+        append_before_doc: list[str] = []
+        for extra in extras:
+            if extra.startswith("%{_infodir}/"):
+                append_before_doc.append(extra)
+            else:
+                insert_after_bindir.append(extra)
+        if insert_after_bindir:
+            idx = next(
+                (i for i, f in enumerate(files) if f.startswith("%{_bindir}/")),
+                -1,
+            )
+            if idx >= 0:
+                files[idx + 1 : idx + 1] = insert_after_bindir
+            else:
+                files[0:0] = insert_after_bindir
+        files = [f for f in files if f != "%{_datadir}/doc/%{name}/"]
+        files.extend(append_before_doc)
+        files.append("%{_datadir}/doc/%{name}/")
+
+    # Keep doc last.
+    files = [f for f in files if f != "%{_datadir}/doc/%{name}/"]
     files.append("%{_datadir}/doc/%{name}/")
 
-    # unique, keep order
     seen: set[str] = set()
     out: list[str] = []
     for f in files:

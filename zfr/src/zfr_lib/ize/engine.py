@@ -9,10 +9,11 @@ from .debian import (
     ensure_debian_rules_meson,
     ensure_rpm_bash_shlib,
     ensure_rpm_noarch_nodebug,
+    strip_rpm_substvars,
     patch_debian_control,
     strip_readme_banner,
 )
-from .rpm_files import sync_rpm_files
+from .rpm_files import _all_meson_texts, sync_rpm_files
 from .util import *  # noqa: F403
 
 convert_man_file = _man.convert_man_file
@@ -598,15 +599,35 @@ endforeach
                 details.append("License AGPL")
             if "%configure" in new or "autoreconf" in new:
                 details.append("left autotools %build (not auto-rewritten; see zfr lint)")
+            arch_bins = bool(
+                re.search(r"\bexecutable\s*\(", _all_meson_texts(self.root))
+            )
             if self.lang == "bash":
                 patched, changed = ensure_rpm_bash_shlib(new)
                 if changed:
                     new = patched
                     details.append("Requires bash-shlib")
-                patched, changed = ensure_rpm_noarch_nodebug(new)
+                patched, changed = ensure_rpm_noarch_nodebug(
+                    new, arch_binaries=arch_bins
+                )
                 if changed:
                     new = patched
-                    details.append("noarch + no debuginfo")
+                    details.append(
+                        "drop noarch (ELF)"
+                        if arch_bins
+                        else "noarch + no debuginfo"
+                    )
+            elif arch_bins:
+                patched, changed = ensure_rpm_noarch_nodebug(
+                    new, arch_binaries=True
+                )
+                if changed:
+                    new = patched
+                    details.append("drop noarch (ELF)")
+            patched, changed = strip_rpm_substvars(new)
+            if changed:
+                new = patched
+                details.append("strip Debian substvars from Requires")
             expected = _spec_files(self.root, self.lang, self.name)
             synced, file_notes = sync_rpm_files(new, expected=expected)
             if file_notes:

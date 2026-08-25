@@ -1,3 +1,21 @@
+zephyr (2.6.1) testing; urgency=medium
+
+  * ize: derive RPM %files from Meson install rules (not docs/puff guesses),
+    covering bindir, bash-completion (single/list/configure_file), man1–9
+    including install_man and dotted stems (e.g. m2deploy.cfg.5), pkgdata,
+    perl5, includedir, sysconfdir, shlib.d, bash-alias, setup/, gettext .mo.
+  * ize: when Meson defines the install set, skip lang-template extras such as
+    Java %{_datadir}/%{name}/ that invent empty dirs rpmbuild rejects.
+  * ize: drop BuildArch: noarch / debug_package %{nil} when Meson has
+    executable() (ELF packages wrongly marked noarch after earlier ize).
+  * ize: strip Debian ${…} substvars from RPM Requires (and from dep tokens
+    when syncing from debian/control).
+  * sync_rpm_files rewrites %files whenever the Meson-derived set differs.
+  * Validated zfr release -l -fIR --unsigned on pick batch1–3: 40/42 pass;
+    ai-utils (missing ai.c) and catme (broken headers) remain project bugs.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Tue, 25 Aug 2026 22:09:44 +0800
+
 zephyr (2.6.0) testing; urgency=medium
 
   * lint: error when RPM %files omits gettext .mo, locale mans, or

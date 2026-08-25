@@ -343,8 +343,18 @@ def ensure_debian_docs(root: Path) -> list[str]:
     return ["debian/docs paths"]
 
 
-def ensure_rpm_noarch_nodebug(spec_text: str) -> tuple[str, bool]:
-    """For Architecture: all / bash packages: BuildArch noarch and no debuginfo."""
+def ensure_rpm_noarch_nodebug(
+    spec_text: str, *, arch_binaries: bool = False
+) -> tuple[str, bool]:
+    """For script-only packages: BuildArch noarch and no debuginfo.
+
+    Skip when *arch_binaries* (Meson ``executable()`` / C sources).
+    """
+    if arch_binaries:
+        # Drop mistaken noarch/debug_package from earlier ize runs.
+        new = re.sub(r"(?m)^%global\s+debug_package\s+%\{nil\}\s*\n", "", spec_text)
+        new = re.sub(r"(?m)^BuildArch:\s*noarch\s*\n", "", new)
+        return new, new != spec_text
     changed = False
     if not re.search(r"(?m)^%global\s+debug_package\s+", spec_text):
         spec_text2, n = re.subn(
@@ -374,3 +384,20 @@ def ensure_rpm_noarch_nodebug(spec_text: str) -> tuple[str, bool]:
             spec_text = spec_text2
             changed = True
     return spec_text, changed
+
+def strip_rpm_substvars(spec_text: str) -> tuple[str, bool]:
+    """Remove Debian ``${misc:Depends}``-style tokens from Requires lines."""
+    changed = False
+
+    def fix_line(m: re.Match[str]) -> str:
+        nonlocal changed
+        prefix, body = m.group(1), m.group(2)
+        cleaned = re.sub(r"\s*\$\{[^}]+\}", "", body).strip().rstrip(",")
+        cleaned = re.sub(r",\s*,", ",", cleaned).strip(" ,")
+        if cleaned != body.strip():
+            changed = True
+        return f"{prefix}{cleaned}"
+
+    new = re.sub(r"(?mi)^(Requires:\s*)(.*)$", fix_line, spec_text)
+    return new, changed
+
