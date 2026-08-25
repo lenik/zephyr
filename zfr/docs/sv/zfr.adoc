@@ -279,7 +279,7 @@ Alternativ för *dist*:
 
 *-o, --output* _DIR_::
   Skriv arkivet till *_DIR_* (standard: Meson *meson-dist*-
-  katalog, eller *rpmbuild/SOURCES* med *--rpm*).
+  katalog, eller *%_topdir/SOURCES* ($HOME/rpmbuild) med *--rpm*).
 
 *-b, --builddir* _DIR_::
   Meson-byggkatalog. Standard är */build* när den builddir konfigurerades
@@ -290,7 +290,7 @@ Alternativ för *dist*:
 
 *--rpm*::
   Döp arkivet till *_NAME_*-*_VERSION_*.tar.xz och skriv till
-  *rpmbuild/SOURCES* om inte *-o* anges. Används av *rpm/Makefile*.
+  *%_topdir/SOURCES* ($HOME/rpmbuild) om inte *-o* anges. Används av *rpm/Makefile*.
 
 *--allow-dirty*, *--no-allow-dirty*::
   Skicka *--allow-dirty* till *meson dist* (standard: tillåt).

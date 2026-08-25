@@ -121,10 +121,10 @@ msgstr "موجودہ منصوبے کی پہچانی ہوئی زبان اور ت�
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
 msgstr ""
-"آرکائیو DIR میں لکھو (طے شدہ: meson-dist، یا --rpm کے ساتھ rpmbuild/SOURCES)"
+"آرکائیو DIR میں لکھو (طے شدہ: meson-dist، یا --rpm کے ساتھ %_topdir/SOURCES ($HOME/rpmbuild))"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -140,10 +140,10 @@ msgstr "آرکائیو شکل (طے شدہ: xz)"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"آرکائیو کا نام NAME-VERSION.tar.xz؛ -o نہ ہو تو rpmbuild/SOURCES میں لکھو"
+"آرکائیو کا نام NAME-VERSION.tar.xz؛ -o نہ ہو تو %_topdir/SOURCES ($HOME/rpmbuild) میں لکھو"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"

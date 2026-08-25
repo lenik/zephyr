@@ -11,7 +11,12 @@
 
 NAME    := zephyr
 SRCDIR  := $(abspath ..)
-TOPDIR  ?= $(abspath $(SRCDIR)/rpmbuild)
+# RPM %_topdir: $HOME/rpmbuild by default (override in ~/.rpmmacros).
+# Override per build: make TOPDIR=/other/rpmbuild
+TOPDIR  ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null)
+ifeq ($(strip $(TOPDIR)),)
+TOPDIR  := $(HOME)/rpmbuild
+endif
 DIST_FLAGS ?=
 
 # Version via `zfr version` (git describe / changelog / VERSION / 0.0.0).
@@ -80,4 +85,9 @@ rpm: spec
 		-bb $(TOPDIR)/SPECS/$(NAME).spec
 
 clean:
-	rm -rf $(TOPDIR)
+	rm -f $(TOPDIR)/SPECS/$(NAME).spec
+	rm -f $(TOPDIR)/SOURCES/$(NAME)-*.tar.*
+	rm -f $(TOPDIR)/SRPMS/$(NAME)-*.src.rpm
+	rm -f $(TOPDIR)/RPMS/*/$(NAME)-*.rpm
+	rm -rf $(TOPDIR)/BUILD/$(NAME)-*
+	rm -rf $(TOPDIR)/BUILDROOT/$(NAME)-*

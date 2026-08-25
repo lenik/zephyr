@@ -260,7 +260,7 @@ zfr add myapp another_app
 
 *-o, --output* _DIR_::
   آرکائیو *_DIR_* میں لکھو (طے شدہ: Meson *meson-dist* ڈائریکٹری،
-  یا *--rpm* کے ساتھ *rpmbuild/SOURCES*)۔
+  یا *--rpm* کے ساتھ *%_topdir/SOURCES* ($HOME/rpmbuild))۔
 
 *-b, --builddir* _DIR_::
   Meson تعمیری ڈائریکٹری۔ اس ماخذ درخت سے میل کھائے تو طے شدہ */build*،
@@ -270,7 +270,7 @@ zfr add myapp another_app
   آرکائیو شکل: *xz* (طے شدہ)، *gz*، یا *zip*۔
 
 *--rpm*::
-  آرکائیو کا نام *_NAME_*-*_VERSION_*.tar.xz، *-o* نہ ہو تو *rpmbuild/SOURCES* میں لکھو۔
+  آرکائیو کا نام *_NAME_*-*_VERSION_*.tar.xz، *-o* نہ ہو تو *%_topdir/SOURCES* ($HOME/rpmbuild) میں لکھو۔
   *rpm/Makefile* استعمال کرتا ہے۔
 
 *--allow-dirty*، *--no-allow-dirty*::

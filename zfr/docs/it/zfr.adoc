@@ -284,7 +284,7 @@ Options for *dist*:
 
 *-o, --output* _DIR_::
   Scrive l'archivio in *_DIR_* (predefinito: la directory Meson *meson-dist*,
-  o *rpmbuild/SOURCES* con *--rpm*).
+  o *%_topdir/SOURCES* ($HOME/rpmbuild) con *--rpm*).
 
 *-b, --builddir* _DIR_::
   Directory di build Meson. Predefinito */build* quando quel builddir è stato
@@ -295,7 +295,7 @@ Options for *dist*:
 
 *--rpm*::
   Nomina l'archivio *_NAME_*-*_VERSION_*.tar.xz e lo scrive in
-  *rpmbuild/SOURCES* salvo che sia indicato *-o*. Usato da *rpm/Makefile*.
+  *%_topdir/SOURCES* ($HOME/rpmbuild) salvo che sia indicato *-o*. Usato da *rpm/Makefile*.
 
 *--allow-dirty*, *--no-allow-dirty*::
   Passa *--allow-dirty* a *meson dist* (predefinito: consentire).

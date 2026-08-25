@@ -272,7 +272,7 @@ zephyr 形式のパッケージツリー（例: *repodir/bash*）である。
 
 *-o, --output* _DIR_::
   アーカイブを *_DIR_* に書き込む（デフォルト: Meson *meson-dist*
-  ディレクトリ、または *--rpm* 時 *rpmbuild/SOURCES*）。
+  ディレクトリ、または *--rpm* 時 *%_topdir/SOURCES* ($HOME/rpmbuild)）。
 
 *-b, --builddir* _DIR_::
   Meson ビルドディレクトリ。デフォルトは、このソースツリー向けに設定済みなら
@@ -283,7 +283,7 @@ zephyr 形式のパッケージツリー（例: *repodir/bash*）である。
 
 *--rpm*::
   アーカイブ名 *_NAME_*-*_VERSION_*.tar.xz とし、*-o* 未指定なら
-  *rpmbuild/SOURCES* に書き込む。*rpm/Makefile* が使用。
+  *%_topdir/SOURCES* ($HOME/rpmbuild) に書き込む。*rpm/Makefile* が使用。
 
 *--allow-dirty*, *--no-allow-dirty*::
   *meson dist* に *--allow-dirty* を渡す（デフォルト: 許可）。

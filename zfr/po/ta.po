@@ -122,10 +122,10 @@ msgstr ""
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
 msgstr ""
-"காப்பகத்தை DIR-இல் எழுது (இயல்பு: meson-dist, அல்லது --rpm-உடன் rpmbuild/SOURCES)"
+"காப்பகத்தை DIR-இல் எழுது (இயல்பு: meson-dist, அல்லது --rpm-உடன் %_topdir/SOURCES ($HOME/rpmbuild))"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -141,10 +141,10 @@ msgstr "காப்பக வடிவம் (இயல்பு: xz)"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"காப்பகப் பெயர் NAME-VERSION.tar.xz; -o இல்லையெனில் rpmbuild/SOURCES-இல் எழுது"
+"காப்பகப் பெயர் NAME-VERSION.tar.xz; -o இல்லையெனில் %_topdir/SOURCES ($HOME/rpmbuild)-இல் எழுது"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"

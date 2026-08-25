@@ -283,7 +283,7 @@ zephyr आकार वाला पैकेज वृक्ष है (उद�
 
 *-o, --output* _DIR_::
   संग्रह *_DIR_* में (डिफ़ॉल्ट: Meson *meson-dist*, या *--rpm* से
-  *rpmbuild/SOURCES*)।
+  *%_topdir/SOURCES* ($HOME/rpmbuild))।
 
 *-b, --builddir* _DIR_::
   Meson build निर्देशिका। इस स्रोत वृक्ष के लिए */build* कॉन्फ़िग
@@ -294,7 +294,7 @@ zephyr आकार वाला पैकेज वृक्ष है (उद�
 
 *--rpm*::
   संग्रह *_NAME_*-*_VERSION_*.tar.xz नाम और *-o* न हो तो
-  *rpmbuild/SOURCES*। *rpm/Makefile* उपयोग।
+  *%_topdir/SOURCES* ($HOME/rpmbuild)। *rpm/Makefile* उपयोग।
 
 *--allow-dirty*, *--no-allow-dirty*::
   *meson dist* को *--allow-dirty* (डिफ़ॉल्ट: allow)।

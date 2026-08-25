@@ -267,7 +267,7 @@ zephyr 형태의 패키지 트리(예: *repodir/bash*)이다.
 
 *-o, --output* _DIR_::
   아카이브를 *_DIR_*에 기록(기본값: Meson *meson-dist*
-  디렉터리 또는 *--rpm* 시 *rpmbuild/SOURCES*).
+  디렉터리 또는 *--rpm* 시 *%_topdir/SOURCES* ($HOME/rpmbuild)).
 
 *-b, --builddir* _DIR_::
   Meson 빌드 디렉터리. 기본값은 이 소스 트리용으로 */build*가
@@ -278,7 +278,7 @@ zephyr 형태의 패키지 트리(예: *repodir/bash*)이다.
 
 *--rpm*::
   아카이브 이름 *_NAME_*-*_VERSION_*.tar.xz, *-o* 없으면
-  *rpmbuild/SOURCES*에 기록. *rpm/Makefile*에서 사용.
+  *%_topdir/SOURCES* ($HOME/rpmbuild)에 기록. *rpm/Makefile*에서 사용.
 
 *--allow-dirty*, *--no-allow-dirty*::
   *meson dist*에 *--allow-dirty* 전달(기본: 허용).

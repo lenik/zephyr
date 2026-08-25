@@ -278,7 +278,7 @@ Geçerli dizinden yürüyen komutlar önce *packagedir*'i çözümler.
 
 *-o, --output* _DIR_::
   Arşivi *_DIR_*'ye yaz (varsayılan: Meson *meson-dist* dizini veya
-  *--rpm* ile *rpmbuild/SOURCES*).
+  *--rpm* ile *%_topdir/SOURCES* ($HOME/rpmbuild)).
 
 *-b, --builddir* _DIR_::
   Meson derleme dizini. Bu kaynak ağacı için yapılandırılmışsa varsayılan
@@ -289,7 +289,7 @@ Geçerli dizinden yürüyen komutlar önce *packagedir*'i çözümler.
 
 *--rpm*::
   Arşive *_NAME_*-*_VERSION_*.tar.xz adını ver ve *-o* verilmedikçe
-  *rpmbuild/SOURCES*'a yaz. *rpm/Makefile* tarafından kullanılır.
+  *%_topdir/SOURCES* ($HOME/rpmbuild)'a yaz. *rpm/Makefile* tarafından kullanılır.
 
 *--allow-dirty*, *--no-allow-dirty*::
   *meson dist*'e *--allow-dirty* geçir (varsayılan: izin ver).

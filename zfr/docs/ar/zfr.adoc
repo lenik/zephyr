@@ -274,7 +274,7 @@ zfr add myapp another_app
 
 *-o, --output* _DIR_::
   كتابة الأرشيف في *_DIR_* (افتراضي: مجلد Meson *meson-dist*، أو
-  *rpmbuild/SOURCES* مع *--rpm*).
+  *%_topdir/SOURCES* ($HOME/rpmbuild) مع *--rpm*).
 
 *-b, --builddir* _DIR_::
   مجلد بناء Meson. الافتراضي */build* إن كان builddir مُعدًّا لهذه
@@ -285,7 +285,7 @@ zfr add myapp another_app
 
 *--rpm*::
   تسمية الأرشيف *_NAME_*-*_VERSION_*.tar.xz وكتابته في
-  *rpmbuild/SOURCES* ما لم يُعطَ *-o*. يستخدمه *rpm/Makefile*.
+  *%_topdir/SOURCES* ($HOME/rpmbuild) ما لم يُعطَ *-o*. يستخدمه *rpm/Makefile*.
 
 *--allow-dirty*, *--no-allow-dirty*::
   تمرير *--allow-dirty* إلى *meson dist* (افتراضي: السماح).

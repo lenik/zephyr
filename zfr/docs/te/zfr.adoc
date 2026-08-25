@@ -260,7 +260,7 @@ zfr add myapp another_app
 
 *-o, --output* _DIR_::
   ఆర్కైవ్ ను *_DIR_* లో రాయి (డిఫాల్ట్: Meson *meson-dist* సంచయం,
-  లేదా *--rpm* తో *rpmbuild/SOURCES*).
+  లేదా *--rpm* తో *%_topdir/SOURCES* ($HOME/rpmbuild)).
 
 *-b, --builddir* _DIR_::
   Meson నిర్మాణ సంచయం. ఈ మూల వృక్షానికి సరిపోతే డిఫాల్ట్ */build*,
@@ -270,7 +270,7 @@ zfr add myapp another_app
   ఆర్కైవ్ రూపం: *xz* (డిఫాల్ట్), *gz*, లేదా *zip*.
 
 *--rpm*::
-  ఆర్కైవ్ పేరు *_NAME_*-*_VERSION_*.tar.xz, *-o* లేకపోతే *rpmbuild/SOURCES* కు రాయి.
+  ఆర్కైవ్ పేరు *_NAME_*-*_VERSION_*.tar.xz, *-o* లేకపోతే *%_topdir/SOURCES* ($HOME/rpmbuild) కు రాయి.
   *rpm/Makefile* వాడుతుంది.
 
 *--allow-dirty*, *--no-allow-dirty*::

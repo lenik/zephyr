@@ -258,7 +258,7 @@ zfr add myapp another_app
 
 *-o, --output* _DIR_::
   เขียน archive ไป *_DIR_* (ค่าเริ่มต้น: ไดเรกทอรี Meson *meson-dist*
-  หรือ *rpmbuild/SOURCES* กับ *--rpm*)
+  หรือ *%_topdir/SOURCES* ($HOME/rpmbuild) กับ *--rpm*)
 
 *-b, --builddir* _DIR_::
   ไดเรกทอรี build Meson ค่าเริ่มต้นคือ */build* เมื่อ builddir นั้น
@@ -268,7 +268,7 @@ zfr add myapp another_app
   รูปแบบ archive: *xz* (ค่าเริ่มต้น), *gz*, หรือ *zip*
 
 *--rpm*::
-  ตั้งชื่อ archive *_NAME_*-*_VERSION_*.tar.xz และเขียนไป *rpmbuild/SOURCES*
+  ตั้งชื่อ archive *_NAME_*-*_VERSION_*.tar.xz และเขียนไป *%_topdir/SOURCES* ($HOME/rpmbuild)
   เว้นแต่กำหนด *-o* ใช้โดย *rpm/Makefile*
 
 *--allow-dirty*, *--no-allow-dirty*::

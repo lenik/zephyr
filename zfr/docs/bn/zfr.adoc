@@ -260,7 +260,7 @@ zfr add myapp another_app
 
 *-o, --output* _DIR_::
   আর্কাইভ *_DIR_*-এ লেখে (ডিফল্ট: Meson *meson-dist* ডিরেক্টরি,
-  অথবা *--rpm*-এ *rpmbuild/SOURCES*)।
+  অথবা *--rpm*-এ *%_topdir/SOURCES* ($HOME/rpmbuild))।
 
 *-b, --builddir* _DIR_::
   Meson বিল্ড ডিরেক্টরি। এই উৎস বৃক্ষের সাথে মিললে ডিফল্ট */build*,
@@ -270,7 +270,7 @@ zfr add myapp another_app
   আর্কাইভ বিন্যাস: *xz* (ডিফল্ট), *gz*, অথবা *zip*।
 
 *--rpm*::
-  আর্কাইভের নাম *_NAME_*-*_VERSION_*.tar.xz, *-o* না থাকলে *rpmbuild/SOURCES*-এ লেখে।
+  আর্কাইভের নাম *_NAME_*-*_VERSION_*.tar.xz, *-o* না থাকলে *%_topdir/SOURCES* ($HOME/rpmbuild)-এ লেখে।
   *rpm/Makefile* ব্যবহার করে।
 
 *--allow-dirty*, *--no-allow-dirty*::

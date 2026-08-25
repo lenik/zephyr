@@ -255,7 +255,7 @@ zfr add myapp another_app
 
 *-o, --output* _DIR_::
   将归档写入 *_DIR_*（默认：Meson *meson-dist*
-  目录，或使用 *--rpm* 时为 *rpmbuild/SOURCES*）。
+  目录，或使用 *--rpm* 时为 *%_topdir/SOURCES* ($HOME/rpmbuild)）。
 
 *-b, --builddir* _DIR_::
   Meson 构建目录。若 */build* 已为此源码树配置，则默认为 */build*，否则为 *<project>/build*。
@@ -265,7 +265,7 @@ zfr add myapp another_app
 
 *--rpm*::
   将归档命名为 *_NAME_*-*_VERSION_*.tar.xz 并写入
-  *rpmbuild/SOURCES*（除非指定 *-o*）。由 *rpm/Makefile* 使用。
+  *%_topdir/SOURCES* ($HOME/rpmbuild)（除非指定 *-o*）。由 *rpm/Makefile* 使用。
 
 *--allow-dirty*, *--no-allow-dirty*::
   向 *meson dist* 传递 *--allow-dirty*（默认：允许）。

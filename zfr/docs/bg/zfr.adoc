@@ -284,7 +284,7 @@ zfr add myapp another_app
 
 *-o, --output* _DIR_::
   Записва архива в *_DIR_* (по подразбиране: Meson *meson-dist*
-  директория, или *rpmbuild/SOURCES* с *--rpm*).
+  директория, или *%_topdir/SOURCES* ($HOME/rpmbuild) с *--rpm*).
 
 *-b, --builddir* _DIR_::
   Meson build директория. По подразбиране */build*, когато този builddir е
@@ -295,7 +295,7 @@ zfr add myapp another_app
 
 *--rpm*::
   Именува архива *_NAME_*-*_VERSION_*.tar.xz и го записва в
-  *rpmbuild/SOURCES*, освен ако е зададено *-o*. Използва се от *rpm/Makefile*.
+  *%_topdir/SOURCES* ($HOME/rpmbuild), освен ако е зададено *-o*. Използва се от *rpm/Makefile*.
 
 *--allow-dirty*, *--no-allow-dirty*::
   Подава *--allow-dirty* на *meson dist* (по подразбиране: позволено).

@@ -131,10 +131,10 @@ msgstr "In ngôn ngữ phát hiện của dự án hiện tại và chi tiết b
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
 msgstr ""
-"ghi kho lưu trữ vào DIR (mặc định: meson-dist, hoặc rpmbuild/SOURCES với --"
+"ghi kho lưu trữ vào DIR (mặc định: meson-dist, hoặc %_topdir/SOURCES ($HOME/rpmbuild) với --"
 "rpm)"
 
 #: src/zfr_lib/dist.py:70
@@ -151,10 +151,10 @@ msgstr "định dạng kho lưu trữ (mặc định: xz)"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"đặt tên kho lưu trữ NAME-VERSION.tar.xz và ghi vào rpmbuild/SOURCES trừ khi "
+"đặt tên kho lưu trữ NAME-VERSION.tar.xz và ghi vào %_topdir/SOURCES ($HOME/rpmbuild) trừ khi "
 "có -o"
 
 #: src/zfr_lib/dist.py:94

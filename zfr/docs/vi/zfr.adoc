@@ -264,7 +264,7 @@ Tùy chọn cho *dist*:
 
 *-o, --output* _DIR_::
   Ghi kho lưu trữ vào *_DIR_* (mặc định: thư mục Meson *meson-dist*,
-  hoặc *rpmbuild/SOURCES* với *--rpm*).
+  hoặc *%_topdir/SOURCES* ($HOME/rpmbuild) với *--rpm*).
 
 *-b, --builddir* _DIR_::
   Thư mục build Meson. Mặc định là */build* khi builddir đó đã
@@ -275,7 +275,7 @@ Tùy chọn cho *dist*:
 
 *--rpm*::
   Đặt tên kho lưu trữ *_NAME_*-*_VERSION_*.tar.xz và ghi vào
-  *rpmbuild/SOURCES* trừ khi có *-o*. Dùng bởi *rpm/Makefile*.
+  *%_topdir/SOURCES* ($HOME/rpmbuild) trừ khi có *-o*. Dùng bởi *rpm/Makefile*.
 
 *--allow-dirty*, *--no-allow-dirty*::
   Truyền *--allow-dirty* cho *meson dist* (mặc định: cho phép).

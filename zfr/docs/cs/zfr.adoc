@@ -286,7 +286,7 @@ Volby pro *dist*:
 
 *-o, --output* _DIR_::
   Zapíše archiv do *_DIR_* (výchozí: adresář Meson *meson-dist*,
-  nebo *rpmbuild/SOURCES* s *--rpm*).
+  nebo *%_topdir/SOURCES* ($HOME/rpmbuild) s *--rpm*).
 
 *-b, --builddir* _DIR_::
   Builddir Meson. Výchozí je */build*, pokud byl tento builddir
@@ -297,7 +297,7 @@ Volby pro *dist*:
 
 *--rpm*::
   Pojmenuje archiv *_NAME_*-*_VERSION_*.tar.xz a zapíše ho do
-  *rpmbuild/SOURCES*, pokud není zadáno *-o*. Používá *rpm/Makefile*.
+  *%_topdir/SOURCES* ($HOME/rpmbuild), pokud není zadáno *-o*. Používá *rpm/Makefile*.
 
 *--allow-dirty*, *--no-allow-dirty*::
   Předá *--allow-dirty* do *meson dist* (výchozí: povoleno).

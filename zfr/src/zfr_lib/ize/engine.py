@@ -575,6 +575,17 @@ endforeach
                     src = cand
             if src is not None:
                 self.copy_file(src, makefile_dest, "rpm/Makefile")
+        if makefile_dest.is_file():
+            from ..packaging import migrate_rpm_makefile_topdir
+
+            mk_text = makefile_dest.read_text(encoding="utf-8", errors="ignore")
+            migrated = migrate_rpm_makefile_topdir(mk_text)
+            if migrated is not None:
+                self.write_text(
+                    makefile_dest,
+                    migrated if migrated.endswith("\n") else migrated + "\n",
+                    "rpm/Makefile TOPDIR -> %_topdir ($HOME/rpmbuild)",
+                )
         specs = _specs(self.root)
         spec_path = self.root / "rpm" / f"{self.name}.spec"
         legacy = self.root / "rpm" / "zephyr.spec"

@@ -4,7 +4,89 @@
 from __future__ import annotations
 
 import re
+import shutil
+import subprocess
 from pathlib import Path
+
+
+def rpm_topdir() -> Path:
+    """RPM ``%_topdir``: ``$HOME/rpmbuild`` by default (``~/.rpmmacros`` may override)."""
+    if shutil.which("rpm"):
+        try:
+            proc = subprocess.run(
+                ["rpm", "--eval", "%{_topdir}"],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            val = proc.stdout.strip()
+            if val and not val.startswith("%"):
+                return Path(val).expanduser()
+        except (OSError, subprocess.CalledProcessError):
+            pass
+    return Path.home() / "rpmbuild"
+
+
+_LOCAL_TOPDIR_RE = re.compile(
+    r"^TOPDIR\s*\??=\s*\$\(abspath\s+\$\(SRCDIR\)/rpmbuild\)\s*$",
+    re.M,
+)
+_TOPDIR_BLOCK = (
+    "# RPM %_topdir: $HOME/rpmbuild by default (override in ~/.rpmmacros).\n"
+    "# Override per build: make TOPDIR=/other/rpmbuild\n"
+    "TOPDIR  ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null)\n"
+    "ifeq ($(strip $(TOPDIR)),)\n"
+    "TOPDIR  := $(HOME)/rpmbuild\n"
+    "endif"
+)
+_CLEAN_BLOCK = (
+    "clean:\n"
+    "\trm -f $(TOPDIR)/SPECS/$(NAME).spec\n"
+    "\trm -f $(TOPDIR)/SOURCES/$(NAME)-*.tar.*\n"
+    "\trm -f $(TOPDIR)/SRPMS/$(NAME)-*.src.rpm\n"
+    "\trm -f $(TOPDIR)/RPMS/*/$(NAME)-*.rpm\n"
+    "\trm -rf $(TOPDIR)/BUILD/$(NAME)-*\n"
+    "\trm -rf $(TOPDIR)/BUILDROOT/$(NAME)-*\n"
+)
+_OLD_CLEAN_RE = re.compile(
+    r"^clean:\n\trm -rf \$\(TOPDIR\)\s*$",
+    re.M,
+)
+
+
+def makefile_uses_local_rpmbuild(text: str) -> bool:
+    """True when *rpm/Makefile* pins TOPDIR to ``<project>/rpmbuild``."""
+    return bool(_LOCAL_TOPDIR_RE.search(text)) or bool(
+        re.search(r"TOPDIR\s*\??=\s*.*\$\(SRCDIR\)/rpmbuild", text)
+    )
+
+
+def migrate_rpm_makefile_topdir(text: str) -> str | None:
+    """Rewrite project-local TOPDIR/clean to %_topdir; return new text or None."""
+    new = text
+    changed = False
+    if _LOCAL_TOPDIR_RE.search(new) or re.search(
+        r"^TOPDIR\s*\??=\s*\$\(abspath\s+\$\(SRCDIR\)/rpmbuild\)", new, re.M
+    ):
+        new = re.sub(
+            r"(?m)^TOPDIR\s*\??=\s*\$\(abspath\s+\$\(SRCDIR\)/rpmbuild\)\s*\n",
+            _TOPDIR_BLOCK + "\n",
+            new,
+            count=1,
+        )
+        changed = True
+    if _OLD_CLEAN_RE.search(new):
+        new = _OLD_CLEAN_RE.sub(_CLEAN_BLOCK, new, count=1)
+        changed = True
+    elif re.search(r"(?m)^clean:\n\trm -rf \$\(TOPDIR\)\s*$", new):
+        new = re.sub(
+            r"(?m)^clean:\n\trm -rf \$\(TOPDIR\)\s*$",
+            _CLEAN_BLOCK,
+            new,
+            count=1,
+        )
+        changed = True
+    return new if changed else None
 
 
 def parse_control_stanzas(text: str) -> list[dict[str, str]]:

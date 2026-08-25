@@ -133,10 +133,10 @@ msgstr ""
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
 msgstr ""
-"arşivi DIR'ye yaz (varsayılan: meson-dist veya --rpm ile rpmbuild/SOURCES)"
+"arşivi DIR'ye yaz (varsayılan: meson-dist veya --rpm ile %_topdir/SOURCES ($HOME/rpmbuild))"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -152,10 +152,10 @@ msgstr "arşiv biçimi (varsayılan: xz)"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"arşive NAME-VERSION.tar.xz adını ver ve -o verilmediyse rpmbuild/SOURCES'a "
+"arşive NAME-VERSION.tar.xz adını ver ve -o verilmediyse %_topdir/SOURCES ($HOME/rpmbuild)'a "
 "yaz"
 
 #: src/zfr_lib/dist.py:94

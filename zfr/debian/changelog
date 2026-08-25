@@ -1,3 +1,19 @@
+zephyr (2.7.0) testing; urgency=medium
+
+  * Refactor: unify RPM %_topdir on $HOME/rpmbuild (rpm --eval '%{_topdir}';
+    override via ~/.rpmmacros), not <project>/rpmbuild.
+  * All language rpm/Makefile templates + zfr/rpm/Makefile: default TOPDIR from
+    rpm macros; clean removes only this package's SPECS/SOURCES/RPMS/SRPMS/BUILD
+    artifacts (no longer rm -rf the whole topdir).
+  * zfr dist --rpm: write SOURCES under %_topdir; help/docs updated.
+  * zfr lint/ize: flag and migrate project-local TOPDIR in rpm/Makefile.
+  * Fix test failures from %_topdir help text: escape %% for argparse.
+  * meson_rpm_files: parse foreach + rename:var bash-completion installs
+    (was falsely requiring zfr.bash in %files).
+  * lint: treat completions/foo-* globs as covering foo-bar entries.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Tue, 25 Aug 2026 22:37:50 +0800
+
 zephyr (2.6.4) testing; urgency=medium
 
   * lint/rpm: rewrite broken check_rpm (early return left most checks dead);

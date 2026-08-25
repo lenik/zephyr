@@ -130,9 +130,9 @@ msgstr "พิมพ์ภาษาที่ตรวจพบของโปร
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
-msgstr "เขียนแอร์ไคฟ์ไปที่ DIR (ค่าเริ่มต้น: meson-dist หรือ rpmbuild/SOURCES ด้วย --rpm)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
+msgstr "เขียนแอร์ไคฟ์ไปที่ DIR (ค่าเริ่มต้น: meson-dist หรือ %_topdir/SOURCES ($HOME/rpmbuild) ด้วย --rpm)"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -148,9 +148,9 @@ msgstr "รูปแบบแอร์ไคฟ์ (ค่าเริ่มต�
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
-msgstr "ตั้งชื่อแอร์ไคฟ์ NAME-VERSION.tar.xz และเขียนไป rpmbuild/SOURCES เว้นแต่ระบุ -o"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
+msgstr "ตั้งชื่อแอร์ไคฟ์ NAME-VERSION.tar.xz และเขียนไป %_topdir/SOURCES ($HOME/rpmbuild) เว้นแต่ระบุ -o"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"

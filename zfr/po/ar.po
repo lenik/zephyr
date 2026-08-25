@@ -131,10 +131,10 @@ msgstr "طباعة اللغة المكتشفة للمشروع الحالي وت�
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
 msgstr ""
-"كتابة الأرشيف في DIR (افتراضي: meson-dist، أو rpmbuild/SOURCES مع --rpm)"
+"كتابة الأرشيف في DIR (افتراضي: meson-dist، أو %_topdir/SOURCES ($HOME/rpmbuild) مع --rpm)"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -150,10 +150,10 @@ msgstr "تنسيق الأرشيف (افتراضي: xz)"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"تسمية الأرشيف NAME-VERSION.tar.xz وكتابته إلى rpmbuild/SOURCES ما لم يُعطَ -o"
+"تسمية الأرشيف NAME-VERSION.tar.xz وكتابته إلى %_topdir/SOURCES ($HOME/rpmbuild) ما لم يُعطَ -o"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"

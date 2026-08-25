@@ -123,10 +123,10 @@ msgstr ""
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
 msgstr ""
-"εγγραφή αρχείου σε DIR (προεπιλογή: meson-dist ή rpmbuild/SOURCES με --rpm)"
+"εγγραφή αρχείου σε DIR (προεπιλογή: meson-dist ή %_topdir/SOURCES ($HOME/rpmbuild) με --rpm)"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -142,10 +142,10 @@ msgstr "μορφή αρχείου (προεπιλογή: xz)"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"ονομάζει το αρχείο NAME-VERSION.tar.xz και το γράφει σε rpmbuild/SOURCES, "
+"ονομάζει το αρχείο NAME-VERSION.tar.xz και το γράφει σε %_topdir/SOURCES ($HOME/rpmbuild), "
 "εκτός αν δοθεί -o"
 
 #: src/zfr_lib/dist.py:94

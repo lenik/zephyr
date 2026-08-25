@@ -131,10 +131,10 @@ msgstr "현재 프로젝트의 감지된 언어 및 레이아웃 세부 정보�
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
 msgstr ""
-"아카이브를 DIR에 기록(기본값: meson-dist 또는 --rpm 시 rpmbuild/SOURCES)"
+"아카이브를 DIR에 기록(기본값: meson-dist 또는 --rpm 시 %_topdir/SOURCES ($HOME/rpmbuild))"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -150,10 +150,10 @@ msgstr "아카이브 형식(기본값: xz)"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"아카이브 이름을 NAME-VERSION.tar.xz로 하고 -o가 없으면 rpmbuild/SOURCES에 기"
+"아카이브 이름을 NAME-VERSION.tar.xz로 하고 -o가 없으면 %_topdir/SOURCES ($HOME/rpmbuild)에 기"
 "록"
 
 #: src/zfr_lib/dist.py:94

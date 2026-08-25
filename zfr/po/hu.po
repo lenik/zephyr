@@ -124,8 +124,8 @@ msgstr ""
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
 msgstr ""
 "archívum írása DIR könyvtárba (alapértelmezés: meson-dist vagy rpmbuild/"
 "SOURCES --rpm-mel)"
@@ -144,10 +144,10 @@ msgstr "archívum formátum (alapértelmezés: xz)"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"NAME-VERSION.tar.xz néven nevezi az archívumot és rpmbuild/SOURCES-be írja, "
+"NAME-VERSION.tar.xz néven nevezi az archívumot és %_topdir/SOURCES ($HOME/rpmbuild)-be írja, "
 "hacsak nincs megadva -o"
 
 #: src/zfr_lib/dist.py:94

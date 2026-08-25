@@ -261,7 +261,7 @@ puff இருக்கலாம்; *create* வரியில் puff பெ�
 
 *-o, --output* _DIR_::
   காப்பகத்தை *_DIR_*-இல் எழுது (இயல்பு: Meson *meson-dist* அடைவு,
-  அல்லது *--rpm*-உடன் *rpmbuild/SOURCES*).
+  அல்லது *--rpm*-உடன் *%_topdir/SOURCES* ($HOME/rpmbuild)).
 
 *-b, --builddir* _DIR_::
   Meson உருவாக்க அடைவு. இந்த மூல மரத்துக்குப் பொருந்தினால் இயல்பு */build*,
@@ -271,7 +271,7 @@ puff இருக்கலாம்; *create* வரியில் puff பெ�
   காப்பக வடிவம்: *xz* (இயல்பு), *gz*, அல்லது *zip*.
 
 *--rpm*::
-  காப்பகப் பெயர் *_NAME_*-*_VERSION_*.tar.xz, *-o* இல்லையெனில் *rpmbuild/SOURCES*-க்கு எழுது.
+  காப்பகப் பெயர் *_NAME_*-*_VERSION_*.tar.xz, *-o* இல்லையெனில் *%_topdir/SOURCES* ($HOME/rpmbuild)-க்கு எழுது.
   *rpm/Makefile* பயன்படுத்தும்.
 
 *--allow-dirty*, *--no-allow-dirty*::

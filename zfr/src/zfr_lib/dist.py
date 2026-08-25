@@ -19,7 +19,7 @@ from . import (
 )
 from .cli import register_command
 from .i18n import _
-from .packaging import _meson_project_fields, _parse_control_stanzas
+from .packaging import _meson_project_fields, _parse_control_stanzas, rpm_topdir
 
 _FORMATS = {
     "xz": ("xztar", ".tar.xz"),
@@ -58,7 +58,7 @@ def add_dist_arguments(p: argparse.ArgumentParser) -> None:
         metavar="DIR",
         help=_(
             "write the archive into DIR (default: meson-dist, or "
-            "rpmbuild/SOURCES with --rpm)"
+            "%%_topdir/SOURCES with --rpm; usually $HOME/rpmbuild)"
         ),
     )
     p.add_argument(
@@ -84,7 +84,8 @@ def add_dist_arguments(p: argparse.ArgumentParser) -> None:
         action="store_true",
         help=_(
             "name the archive NAME-VERSION.tar.xz and write it to "
-            "rpmbuild/SOURCES unless -o is given"
+            "%%_topdir/SOURCES ($HOME/rpmbuild by default; ~/.rpmmacros) "
+            "unless -o is given"
         ),
     )
     p.add_argument(
@@ -296,7 +297,7 @@ def cmd_dist(
     if output is not None:
         outdir = output.expanduser().resolve()
     elif rpm:
-        outdir = (root / "rpmbuild" / "SOURCES").resolve()
+        outdir = (rpm_topdir() / "SOURCES").resolve()
     else:
         outdir = None
 

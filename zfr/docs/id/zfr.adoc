@@ -270,7 +270,7 @@ Opsi untuk *dist*:
 
 *-o, --output* _DIR_::
   Tulis arsip ke *_DIR_* (default: direktori Meson *meson-dist*,
-  atau *rpmbuild/SOURCES* dengan *--rpm*).
+  atau *%_topdir/SOURCES* ($HOME/rpmbuild) dengan *--rpm*).
 
 *-b, --builddir* _DIR_::
   Direktori build Meson. Default adalah */build* bila builddir itu
@@ -281,7 +281,7 @@ Opsi untuk *dist*:
 
 *--rpm*::
   Beri nama arsip *_NAME_*-*_VERSION_*.tar.xz dan tulis ke
-  *rpmbuild/SOURCES* kecuali *-o* diberikan. Dipakai oleh *rpm/Makefile*.
+  *%_topdir/SOURCES* ($HOME/rpmbuild) kecuali *-o* diberikan. Dipakai oleh *rpm/Makefile*.
 
 *--allow-dirty*, *--no-allow-dirty*::
   Teruskan *--allow-dirty* ke *meson dist* (default: izinkan).

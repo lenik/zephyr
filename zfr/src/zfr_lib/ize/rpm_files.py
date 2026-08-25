@@ -191,17 +191,36 @@ def meson_rpm_files(root: Path, name: str) -> list[str]:
         if bm and "foreach" in text and "rename" in text:
             for nm in re.finditer(r"'([^']+)'", bm.group(1)):
                 add(f"%{{_datadir}}/bash-completion/completions/{Path(nm.group(1)).stem}")
+        # foreach name : ['a','b',…] / install_data(..., rename: name)
+        for m in re.finditer(
+            r"foreach\s+(\w+)\s*:\s*\[([^\]]*)\](.*?)endforeach",
+            text,
+            re.S,
+        ):
+            var, items, body = m.group(1), m.group(2), m.group(3)
+            if "bash-completion" not in body:
+                continue
+            if not re.search(rf"rename\s*:\s*{re.escape(var)}\s*[,)]", body):
+                continue
+            for nm in re.finditer(r"'([^']+)'", items):
+                add(f"%{{_datadir}}/bash-completion/completions/{nm.group(1)}")
         for m in re.finditer(
             r"install_data\s*\(\s*'([^']+)'\s*,\s*install_dir:\s*[^\n]*bash-completion[^\n]*",
             text,
         ):
             block = m.group(0)
-            ren = re.search(r"rename:\s*'([^']+)'", block)
+            # Multi-line install_data: pull a short window after the match
+            start = m.start()
+            window = text[start : start + 400]
+            ren = re.search(r"rename:\s*'([^']+)'", window)
             if ren:
                 add(f"%{{_datadir}}/bash-completion/completions/{ren.group(1)}")
-            else:
-                # installed basename kept (e.g. coolutils.sh)
-                add(f"%{{_datadir}}/bash-completion/completions/{Path(m.group(1)).name}")
+                continue
+            # rename: varname handled by foreach above — skip basename fallback
+            if re.search(r"rename\s*:\s*\w+", window):
+                continue
+            # installed basename kept (e.g. coolutils.sh)
+            add(f"%{{_datadir}}/bash-completion/completions/{Path(m.group(1)).name}")
         # install_data([ 'a', 'b' ], install_dir: … bash-completion …)
         for m in re.finditer(
             r"install_data\s*\(\s*\[([^\]]*)\]\s*,\s*install_dir:\s*[^\n]*bash-completion[^\n]*",

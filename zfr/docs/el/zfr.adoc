@@ -285,7 +285,7 @@ zfr add myapp another_app
 
 *-o, --output* _DIR_::
   Γράφει αρχείο σε *_DIR_* (προεπιλογή: κατάλογος Meson *meson-dist*,
-  ή *rpmbuild/SOURCES* με *--rpm*).
+  ή *%_topdir/SOURCES* ($HOME/rpmbuild) με *--rpm*).
 
 *-b, --builddir* _DIR_::
   Κατάλογος build Meson. Προεπιλογή */build* όταν αυτό το builddir έχει
@@ -296,7 +296,7 @@ zfr add myapp another_app
 
 *--rpm*::
   Ονομάζει αρχείο *_NAME_*-*_VERSION_*.tar.xz και το γράφει σε
-  *rpmbuild/SOURCES* εκτός αν δοθεί *-o*. Χρησιμοποιείται από *rpm/Makefile*.
+  *%_topdir/SOURCES* ($HOME/rpmbuild) εκτός αν δοθεί *-o*. Χρησιμοποιείται από *rpm/Makefile*.
 
 *--allow-dirty*, *--no-allow-dirty*::
   Περνά *--allow-dirty* στο *meson dist* (προεπιλογή: επιτρέπεται).

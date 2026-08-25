@@ -284,7 +284,7 @@ A *dist* kapcsolói:
 
 *-o, --output* _DIR_::
   Az archívumot ide írja: *_DIR_* (alapértelmezett: Meson *meson-dist*
-  könyvtár, vagy *rpmbuild/SOURCES* *--rpm*-mel).
+  könyvtár, vagy *%_topdir/SOURCES* ($HOME/rpmbuild) *--rpm*-mel).
 
 *-b, --builddir* _DIR_::
   Meson build könyvtár. Alapértelmezett */build*, ha az ehhez a forrásfához
@@ -294,7 +294,7 @@ A *dist* kapcsolói:
   Archívum formátum: *xz* (alapértelmezett), *gz* vagy *zip*.
 
 *--rpm*::
-  Az archívum neve *_NAME_*-*_VERSION_*.tar.xz, és a *rpmbuild/SOURCES*-ba kerül,
+  Az archívum neve *_NAME_*-*_VERSION_*.tar.xz, és a *%_topdir/SOURCES* ($HOME/rpmbuild)-ba kerül,
   hacsak nincs megadva *-o*. Az *rpm/Makefile* használja.
 
 *--allow-dirty*, *--no-allow-dirty*::

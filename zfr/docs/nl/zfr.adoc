@@ -293,7 +293,7 @@ Opties voor *dist*:
 
 *-o, --output* _DIR_::
   Schrijf het archief naar *_DIR_* (standaard: de Meson-*meson-dist*-map, of
-  *rpmbuild/SOURCES* met *--rpm*).
+  *%_topdir/SOURCES* ($HOME/rpmbuild) met *--rpm*).
 
 *-b, --builddir* _DIR_::
   Meson-buildmap. Standaard is */build* wanneer die builddir voor deze
@@ -304,7 +304,7 @@ Opties voor *dist*:
 
 *--rpm*::
   Noem het archief *_NAME_*-*_VERSION_*.tar.xz en schrijf het naar
-  *rpmbuild/SOURCES* tenzij *-o* is opgegeven. Gebruikt door *rpm/Makefile*.
+  *%_topdir/SOURCES* ($HOME/rpmbuild) tenzij *-o* is opgegeven. Gebruikt door *rpm/Makefile*.
 
 *--allow-dirty*, *--no-allow-dirty*::
   Geef *--allow-dirty* door aan *meson dist* (standaard: toestaan).

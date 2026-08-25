@@ -121,10 +121,10 @@ msgstr ""
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
 msgstr ""
-"zapsat archiv do DIR (výchozí: meson-dist nebo rpmbuild/SOURCES s --rpm)"
+"zapsat archiv do DIR (výchozí: meson-dist nebo %_topdir/SOURCES ($HOME/rpmbuild) s --rpm)"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -140,10 +140,10 @@ msgstr "formát archivu (výchozí: xz)"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"pojmenuje archiv NAME-VERSION.tar.xz a zapíše ho do rpmbuild/SOURCES, pokud "
+"pojmenuje archiv NAME-VERSION.tar.xz a zapíše ho do %_topdir/SOURCES ($HOME/rpmbuild), pokud "
 "není zadáno -o"
 
 #: src/zfr_lib/dist.py:94

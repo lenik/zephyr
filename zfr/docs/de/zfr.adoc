@@ -278,7 +278,7 @@ Optionen für *dist*:
 
 *-o, --output* _DIR_::
   Archiv nach *_DIR_* schreiben (Standard: Meson-*meson-dist*-Verzeichnis oder
-  *rpmbuild/SOURCES* mit *--rpm*).
+  *%_topdir/SOURCES* ($HOME/rpmbuild) mit *--rpm*).
 
 *-b, --builddir* _DIR_::
   Meson-Build-Verzeichnis. Standard ist */build*, wenn dieses Builddir für
@@ -288,7 +288,7 @@ Optionen für *dist*:
   Archivformat: *xz* (Standard), *gz* oder *zip*.
 
 *--rpm*::
-  Archiv *_NAME_*-*_VERSION_*.tar.xz benennen und nach *rpmbuild/SOURCES*
+  Archiv *_NAME_*-*_VERSION_*.tar.xz benennen und nach *%_topdir/SOURCES* ($HOME/rpmbuild)
   schreiben, sofern *-o* nicht gesetzt. Von *rpm/Makefile* verwendet.
 
 *--allow-dirty*, *--no-allow-dirty*::

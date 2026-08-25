@@ -121,9 +121,9 @@ msgstr "ప్రస్తుత ప్రాజెక్టు యొక్క 
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
-msgstr "ఆర్కైవ్‌ను DIRలో రాయి (అప్రమేయం: meson-dist, లేదా --rpmతో rpmbuild/SOURCES)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
+msgstr "ఆర్కైవ్‌ను DIRలో రాయి (అప్రమేయం: meson-dist, లేదా --rpmతో %_topdir/SOURCES ($HOME/rpmbuild))"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -138,9 +138,9 @@ msgstr "ఆర్కైవ్ రూపం (అప్రమేయం: xz)"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
-msgstr "ఆర్కైవ్ పేరు NAME-VERSION.tar.xz; -o ఇవ్వకపోతే rpmbuild/SOURCESలో రాయి"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
+msgstr "ఆర్కైవ్ పేరు NAME-VERSION.tar.xz; -o ఇవ్వకపోతే %_topdir/SOURCES ($HOME/rpmbuild)లో రాయి"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"

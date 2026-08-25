@@ -45,6 +45,18 @@ def _covers(body: list[str], expected: str) -> bool:
         "bash-completion/completions/*" in b for b in body
     ):
         return True
+    # Spec globs like …/completions/zfr-* cover …/completions/zfr-create
+    if "/bash-completion/completions/" in exp:
+        base = exp.rsplit("/", 1)[-1]
+        prefix = exp[: exp.rfind("/") + 1]
+        for b in body:
+            if not b.startswith(prefix):
+                continue
+            pat = b[len(prefix) :]
+            if pat.endswith("*") and base.startswith(pat[:-1]):
+                return True
+            if pat.endswith("-*") and base.startswith(pat[:-1]):
+                return True
     if exp.startswith("%{_mandir}/"):
         parts = exp.split("/")
         if len(parts) >= 3:
@@ -131,6 +143,76 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
         mk = _read(makefile)
         files_body = files_section_body(text)
         lines = _files_lines(files_body)
+
+        if makefile.is_file():
+            from ..packaging import makefile_uses_local_rpmbuild
+
+            if makefile_uses_local_rpmbuild(mk):
+                out.append(
+                    Finding(
+                        "error",
+                        "rpm.topdir.local",
+                        # xgettext: no-python-format
+                        _(
+                            "rpm/Makefile uses project-local <project>/rpmbuild; "
+                            "zephyr style uses %_topdir ($HOME/rpmbuild, "
+                            "override via ~/.rpmmacros)"
+                        ),
+                        "rpm/Makefile",
+                        line=_line_of(mk, "TOPDIR"),
+                        # xgettext: no-python-format
+                        fix=_(
+                            "TOPDIR ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null)\n"
+                            "ifeq ($(strip $(TOPDIR)),)\n"
+                            "TOPDIR := $(HOME)/rpmbuild\n"
+                            "endif\n"
+                            "And make clean remove only this package's artifacts "
+                            "(not rm -rf $(TOPDIR)). Or run `zfr ize`."
+                        ),
+                    )
+                )
+            else:
+                out.append(
+                    Finding(
+                        "ok",
+                        "rpm.topdir",
+                        # xgettext: no-python-format
+                        _("rpm/Makefile TOPDIR uses %_topdir / $HOME/rpmbuild"),
+                        "rpm/Makefile",
+                    )
+                )
+            if re.search(r"(?m)^clean:\n\trm -rf \$\(TOPDIR\)\s*$", mk):
+                out.append(
+                    Finding(
+                        "error",
+                        "rpm.topdir.clean",
+                        _(
+                            "rpm/Makefile `clean` does rm -rf $(TOPDIR); "
+                            "unsafe when TOPDIR is $HOME/rpmbuild"
+                        ),
+                        "rpm/Makefile",
+                        line=_line_of(mk, "clean:"),
+                        fix=_(
+                            "Remove only this package's SPECS/SOURCES/RPMS/SRPMS/"
+                            "BUILD/BUILDROOT entries under $(TOPDIR). Or run `zfr ize`."
+                        ),
+                    )
+                )
+            local_tree = root / "rpmbuild"
+            if local_tree.is_dir():
+                out.append(
+                    Finding(
+                        "warn",
+                        "rpm.topdir.leftover",
+                        # xgettext: no-python-format
+                        _(
+                            "project-local rpmbuild/ directory present; "
+                            "builds should use %_topdir ($HOME/rpmbuild)"
+                        ),
+                        "rpmbuild/",
+                        fix=_("Remove rpmbuild/ after migrating; safe to delete."),
+                    )
+                )
 
         # ---- Version / license / metadata ----
         if "%{version}" in text or "%{!?version" in text or "%{?version" in text:

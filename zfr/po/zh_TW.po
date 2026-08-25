@@ -130,10 +130,10 @@ msgstr "將目前專案偵測到的語言與版面詳情列印到 stderr。"
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
 msgstr ""
-"將封存寫入 DIR（預設：meson-dist，或使用 --rpm 時寫入 rpmbuild/SOURCES）"
+"將封存寫入 DIR（預設：meson-dist，或使用 --rpm 時寫入 %_topdir/SOURCES ($HOME/rpmbuild)）"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -148,10 +148,10 @@ msgstr "封存格式（預設：xz）"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"將封存命名為 NAME-VERSION.tar.xz 並寫入 rpmbuild/SOURCES（除非指定 -o）"
+"將封存命名為 NAME-VERSION.tar.xz 並寫入 %_topdir/SOURCES ($HOME/rpmbuild)（除非指定 -o）"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"

@@ -122,10 +122,10 @@ msgstr ""
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
 msgstr ""
-"escriu l'arxiu a DIR (per defecte: meson-dist o rpmbuild/SOURCES amb --rpm)"
+"escriu l'arxiu a DIR (per defecte: meson-dist o %_topdir/SOURCES ($HOME/rpmbuild) amb --rpm)"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -141,10 +141,10 @@ msgstr "format d'arxiu (per defecte: xz)"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"anomena l'arxiu NAME-VERSION.tar.xz i l'escriu a rpmbuild/SOURCES tret que "
+"anomena l'arxiu NAME-VERSION.tar.xz i l'escriu a %_topdir/SOURCES ($HOME/rpmbuild) tret que "
 "s'indiqui -o"
 
 #: src/zfr_lib/dist.py:94

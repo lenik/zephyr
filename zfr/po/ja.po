@@ -133,11 +133,11 @@ msgstr "現在のプロジェクトの検出言語とレイアウト詳細を st
 
 #: src/zfr_lib/dist.py:60
 msgid ""
-"write the archive into DIR (default: meson-dist, or rpmbuild/SOURCES with --"
-"rpm)"
+"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
+"rpm; usually $HOME/rpmbuild)"
 msgstr ""
 "アーカイブを DIR に書き込む（デフォルト: meson-dist、または --rpm で "
-"rpmbuild/SOURCES）"
+"%_topdir/SOURCES ($HOME/rpmbuild)）"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -153,10 +153,10 @@ msgstr "アーカイブ形式（デフォルト: xz）"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to rpmbuild/SOURCES unless "
-"-o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
+"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"アーカイブを NAME-VERSION.tar.xz と命名し、-o がなければ rpmbuild/SOURCES に"
+"アーカイブを NAME-VERSION.tar.xz と命名し、-o がなければ %_topdir/SOURCES ($HOME/rpmbuild) に"
 "書き込む"
 
 #: src/zfr_lib/dist.py:94
