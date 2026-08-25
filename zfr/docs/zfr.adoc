@@ -205,7 +205,10 @@ Commands that walk from the current directory resolve *packagedir* first.
   rules, and turns hardcoded changelog versions in *src/* into *\*.in*
   *@VERSION@* substitutions or *PROJECT_VERSION* via *config.h* for C
   family languages. *\-n* / *--dry-run* prints the plan without writing.
-  Afterward run *zfr lint*.
+  *\-c* / *--commit* bumps the patch version (*debian/changelog* +
+  *VERSION*), then ``git add -A`` and commits with a verbose message
+  listing each change (changelog author reuses the previous trailer
+  unless *--author* is set). Afterward run *zfr lint*.
 
 *help*::
   Show command-line help.
@@ -370,6 +373,19 @@ Options for *ize*:
 
 *-n, --dry-run*::
   Print planned adds/updates/conversions without writing files.
+
+*-c, --commit*::
+  After a successful ize that changed the tree: bump the patch version
+  (new *debian/changelog* stanza + *VERSION*), ``git add -A``, and commit
+  with a verbose message listing each add/update/convert. The new
+  changelog trailer reuses the previous stanza's author unless
+  *--author* is given. Refuses *--dry-run*. No-ops when ize made no
+  changes.
+
+*-a, --author* _AUTHOR_::
+  Changelog author for *--commit* (*Name* or *Name <email>*). Default:
+  reuse the previous *debian/changelog* trailer (falls back to
+  *Maintainer* when there is no prior stanza).
 
 *-v, --verbose*::
   Also print skipped paths that are already present.

@@ -185,6 +185,142 @@ def _maintainer(root: Path) -> tuple[str, str]:
     return DEFAULT_AUTHOR, DEFAULT_EMAIL
 
 
+def bump_patch_version(ver: str) -> str:
+    """Bump the patch (third) field of a Debian upstream version.
+
+    ``1.2.3`` → ``1.2.4``; ``1.2`` → ``1.2.1``; epochs and ``-revision``
+    are preserved (``1:1.0.0-2`` → ``1:1.0.1-2``).
+    """
+    ver = (ver or "").strip().lstrip("v")
+    if not ver:
+        return "0.0.1"
+    epoch = ""
+    if ":" in ver:
+        epoch, ver = ver.split(":", 1)
+        epoch = f"{epoch}:"
+    deb_rev = ""
+    if "-" in ver:
+        ver, rev = ver.rsplit("-", 1)
+        deb_rev = f"-{rev}"
+    parts = ver.split(".")
+    while len(parts) < 3:
+        parts.append("0")
+    # Bump the third component (patch); zero any further numeric tails.
+    idx = 2
+    if not parts[idx].isdigit():
+        for i in range(len(parts) - 1, -1, -1):
+            if parts[i].isdigit():
+                idx = i
+                break
+        else:
+            parts.append("1")
+            return epoch + ".".join(parts) + deb_rev
+    parts[idx] = str(int(parts[idx]) + 1)
+    for j in range(idx + 1, len(parts)):
+        if parts[j].isdigit():
+            parts[j] = "0"
+    return epoch + ".".join(parts) + deb_rev
+
+
+def changelog_distribution(root: Path) -> str:
+    """Distribution from the top debian/changelog stanza, or the create default."""
+    path = root / "debian" / "changelog"
+    if path.is_file():
+        first = path.read_text(encoding="utf-8", errors="ignore").splitlines()[:1]
+        if first:
+            m = re.match(r"\S+\s+\([^)]+\)\s+(\S+);", first[0])
+            if m:
+                return m.group(1)
+    return DEFAULT_DISTRIBUTION
+
+
+_CHANGELOG_TRAILER_RE = re.compile(
+    r"^ -- (.+?) <([^>]+)>  .+$",
+    re.M,
+)
+
+
+def changelog_author(root: Path) -> tuple[str, str] | None:
+    """Author of the latest debian/changelog stanza (``Name``, ``email``)."""
+    path = root / "debian" / "changelog"
+    if not path.is_file():
+        return None
+    text = path.read_text(encoding="utf-8", errors="ignore")
+    m = _CHANGELOG_TRAILER_RE.search(text)
+    if not m:
+        return None
+    return m.group(1).strip(), m.group(2).strip()
+
+
+def parse_author_spec(spec: str) -> tuple[str, str | None]:
+    """Parse ``Name <email>`` or bare ``Name`` into ``(name, email|None)``."""
+    spec = spec.strip()
+    m = re.match(r"^(.+?)\s*<([^>]+)>\s*$", spec)
+    if m:
+        return m.group(1).strip(), m.group(2).strip()
+    return spec, None
+
+
+def resolve_changelog_author(
+    root: Path,
+    *,
+    author_override: str | None = None,
+) -> tuple[str, str]:
+    """Changelog signer: ``--author``, else previous stanza, else Maintainer."""
+    if author_override:
+        name, email = parse_author_spec(author_override)
+        if email:
+            return name, email
+        prev = changelog_author(root)
+        if prev:
+            return name, prev[1]
+        _, maint_email = _maintainer(root)
+        return name, maint_email
+    prev = changelog_author(root)
+    if prev:
+        return prev
+    return _maintainer(root)
+
+
+def prepend_debian_changelog(
+    root: Path,
+    *,
+    package: str,
+    version: str,
+    bullets: list[str],
+    distribution: str | None = None,
+    author: str | None = None,
+    email: str | None = None,
+    author_override: str | None = None,
+) -> None:
+    """Insert a new top stanza in debian/changelog and sync VERSION."""
+    from email.utils import formatdate
+
+    if author is None or email is None:
+        a, e = resolve_changelog_author(root, author_override=author_override)
+        author = author or a
+        email = email or e
+    dist = distribution or changelog_distribution(root)
+    ver = version.lstrip("v")
+    stamp = formatdate(localtime=True)
+    if not bullets:
+        bullets = ["zfr ize"]
+    body = "\n".join(f"  * {b}" for b in bullets)
+    stanza = (
+        f"{package} ({ver}) {dist}; urgency=medium\n"
+        f"\n"
+        f"{body}\n"
+        f"\n"
+        f" -- {author} <{email}>  {stamp}\n"
+        f"\n"
+    )
+    path = root / "debian" / "changelog"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    old = path.read_text(encoding="utf-8") if path.is_file() else ""
+    path.write_text(stanza + old, encoding="utf-8")
+    (root / "VERSION").write_text(f"{ver}\n", encoding="utf-8")
+
+
 def _homepage(root: Path) -> str:
     src, _, _ = _control(root)
     return src.get("Homepage") or "https://github.com/lenik/zephyr"

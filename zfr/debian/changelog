@@ -1,3 +1,16 @@
+zephyr (2.7.1) testing; urgency=medium
+
+  * ize --commit: bump patch version and prepend debian/changelog (plus
+    sync VERSION) before git add/commit, so batch `zfr ize -c` leaves a
+    versioned packaging commit, not only style file edits.
+  * ize --commit: reuse the previous debian/changelog trailer author by
+    default (not debian/control Maintainer); override with
+    ``--author='Name <email>'`` or ``--author=Name`` (keeps prior email).
+  * Commit subject includes the new version; changelog bullets summarize
+    each add/update/convert from the ize run.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Tue, 25 Aug 2026 23:15:56 +0800
+
 zephyr (2.7.0) testing; urgency=medium
 
   * Refactor: unify RPM %_topdir on $HOME/rpmbuild (rpm --eval '%{_topdir}';

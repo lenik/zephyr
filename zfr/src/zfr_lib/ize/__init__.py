@@ -23,6 +23,7 @@ def cmd_ize(
     subst: bool = True,
     mesonize: bool = True,
     commit: bool = False,
+    author: str | None = None,
     verbose: bool = False,
     color: str = "auto",
     workdir: Path | None = None,
@@ -59,6 +60,7 @@ def cmd_ize(
         do_subst=subst,
         do_mesonize=mesonize,
         do_commit=commit,
+        author=author,
         verbose=verbose,
         color=color,
     ).run()
@@ -77,7 +79,19 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         "-c",
         "--commit",
         action="store_true",
-        help=_("git add -A and commit ize changes with a verbose message"),
+        help=_(
+            "bump patch version (debian/changelog + VERSION), git add -A, "
+            "and commit ize changes with a verbose message"
+        ),
+    )
+    p.add_argument(
+        "-a",
+        "--author",
+        metavar="AUTHOR",
+        help=_(
+            "changelog author for --commit (Name or 'Name <email>'); "
+            "default: reuse the previous debian/changelog trailer"
+        ),
     )
     p.add_argument("-v", "--verbose", action="store_true", help=_("also print skipped files"))
     p.add_argument(
@@ -100,6 +114,7 @@ def run(args: argparse.Namespace) -> int:
         subst=not args.no_subst,
         mesonize=args.mesonize,
         commit=args.commit,
+        author=args.author,
         verbose=args.verbose,
         color=args.color,
     )

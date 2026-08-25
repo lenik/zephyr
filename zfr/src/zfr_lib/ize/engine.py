@@ -42,6 +42,7 @@ class Ize:
         do_subst: bool = True,
         do_mesonize: bool = True,
         do_commit: bool = False,
+        author: str | None = None,
         verbose: bool = False,
         color: str = "auto",
     ) -> None:
@@ -52,6 +53,7 @@ class Ize:
         self.do_subst = do_subst
         self.do_mesonize = do_mesonize
         self.do_commit = do_commit
+        self.author = author
         self.verbose = verbose
         self.csr = Csr(color)
         self.changes: list[Change] = []
@@ -808,7 +810,16 @@ endforeach
         adds = sum(1 for c in real if c.kind == "add")
         updates = sum(1 for c in real if c.kind == "update")
         converts = sum(1 for c in real if c.kind == "convert")
-        subject = f"zfr ize: align {self.name} (lang={self.lang}) to current zephyr style"
+        ver = getattr(self, "_commit_version", None)
+        if ver:
+            subject = (
+                f"zfr ize: {self.name} {ver} (lang={self.lang}) — "
+                "align to current zephyr style"
+            )
+        else:
+            subject = (
+                f"zfr ize: align {self.name} (lang={self.lang}) to current zephyr style"
+            )
         lines = [
             subject,
             "",
@@ -816,6 +827,9 @@ endforeach
             "and version substitutions up to current zephyr style.",
             "",
         ]
+        if ver:
+            lines.append(f"Version: {ver} (debian/changelog + VERSION).")
+            lines.append("")
         if real:
             lines.append("Changes:")
             for c in real:
@@ -829,8 +843,53 @@ endforeach
         lines.append("")
         return "\n".join(lines)
 
+    def _changelog_bullets(self) -> list[str]:
+        """Short debian/changelog bullets from recorded ize changes."""
+        real = [c for c in self.changes if c.kind in {"add", "update", "convert"}]
+        bullets: list[str] = [
+            "Align packaging/Meson/man pages to current zephyr style (zfr ize)."
+        ]
+        if self._mesonized:
+            bullets.append("Convert Autotools/CMake to Meson via 2meson.")
+        # Cap path-level detail so the stanza stays readable.
+        for c in real[:12]:
+            bullets.append(f"{c.kind} {c.path}: {c.detail}")
+        if len(real) > 12:
+            bullets.append(f"…and {len(real) - 12} more path updates.")
+        return bullets
+
+    def bump_for_commit(self) -> str | None:
+        """Bump patch version, prepend debian/changelog, sync VERSION.
+
+        Called by ``--commit`` when ize actually changed the tree. Returns
+        the new version, or None when there is nothing to bump.
+        """
+        real = [c for c in self.changes if c.kind in {"add", "update", "convert"}]
+        if not real and not self._mesonized:
+            return None
+        if self.dry_run:
+            return None
+        old = (
+            changelog_version(self.root)
+            or version_file_version(self.root)
+            or DEFAULT_INIT_VERSION
+        )
+        new = bump_patch_version(old)
+        prepend_debian_changelog(
+            self.root,
+            package=self.name,
+            version=new,
+            bullets=self._changelog_bullets(),
+            author_override=self.author,
+        )
+        self.note("update", "debian/changelog", f"{old} → {new}")
+        self.note("update", "VERSION", new)
+        self._commit_version = new
+        print(f"zfr ize --commit: version {old} → {new}", flush=True)
+        return new
+
     def commit_changes(self) -> None:
-        """``git add -A`` and commit when there is something to record."""
+        """Bump changelog/VERSION, then ``git add -A`` and commit."""
         import subprocess
 
         def git(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -854,10 +913,15 @@ endforeach
             print("zfr ize --commit: no ize changes to commit.", flush=True)
             return
 
+        self.bump_for_commit()
+
         git("add", "-A")
         staged = git("diff", "--cached", "--quiet", check=False)
         if staged.returncode == 0:
-            print("zfr ize --commit: working tree clean after ize; nothing to commit.", flush=True)
+            print(
+                "zfr ize --commit: working tree clean after ize; nothing to commit.",
+                flush=True,
+            )
             return
 
         msg = self.commit_message()
