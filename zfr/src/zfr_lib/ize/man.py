@@ -140,3 +140,117 @@ def convert_man_file(path: Path, name: str, section: str = "1") -> str:
                 body = parts[0] + "\n" + header + (parts[1] if len(parts) > 1 else "")
             return body if body.endswith("\n") else body + "\n"
     return groff_to_adoc(path.read_text(encoding="utf-8", errors="ignore"), name, section)
+
+
+def stub_man_adoc(name: str, section: str = "1", summary: str = "") -> str:
+    """Minimal AsciiDoc man page so layout.docs / asciidoctor targets pass lint."""
+    desc = summary.strip() or f"{name} command"
+    return (
+        f"= {name}({section})\n"
+        "{project-author} <{project-email}>\n"
+        "v{project-version}, {project-year}\n"
+        ":doctype: manpage\n"
+        ":manmanual: User Commands\n"
+        f":mansource: {name}\n"
+        ":man-linkstyle: blue R <>\n"
+        ":nofooter:\n"
+        "\n"
+        "== Name\n"
+        "\n"
+        f"{name} - {desc}\n"
+        "\n"
+        "== Synopsis\n"
+        "\n"
+        f"*{name}* [_OPTION_]...\n"
+        "\n"
+        "== Description\n"
+        "\n"
+        f"{desc}.\n"
+        "\n"
+        "== Options\n"
+        "\n"
+        "*-h, --help*::\n"
+        "  Show a short usage summary and exit.\n"
+        "\n"
+        "== Author\n"
+        "\n"
+        "Written by {project-author} <{project-email}>.\n"
+        "\n"
+        "== Copyright\n"
+        "\n"
+        "Copyright (C) {project-year}.\n"
+        f"License {_AGPL}.\n"
+    )
+
+
+def discover_man_stems(root: Path, project: str) -> list[tuple[str, str]]:
+    """Guess (stem, section) pairs for man pages from Autotools / Meson traces."""
+    found: dict[str, str] = {}
+
+    def add(stem: str, section: str = "1") -> None:
+        stem = Path(stem).name
+        if not stem or stem.startswith("."):
+            return
+        found.setdefault(stem, section)
+
+    # Existing AsciiDoc already covered.
+    docs = root / "docs"
+    if docs.is_dir():
+        for p in docs.glob("*.adoc"):
+            add(p.stem, "1")
+
+    # help2man / install_man leftovers in meson.build
+    meson = root / "meson.build"
+    if meson.is_file():
+        text = meson.read_text(encoding="utf-8", errors="ignore")
+        for m in re.finditer(r"output:\s*'([^']+\.[1-9][a-zA-Z]*)'", text):
+            name = Path(m.group(1)).name
+            stem, _, sec = name.rpartition(".")
+            if stem:
+                add(stem, sec or "1")
+        for m in re.finditer(r"install_man\s*\(([^)]*)\)", text):
+            for q in re.findall(r"'([^']+)'|\"([^\"]+)\"", m.group(1)):
+                name = Path(q[0] or q[1]).name
+                if re.search(r"\.[1-9][a-zA-Z]*$", name):
+                    stem, _, sec = name.rpartition(".")
+                    add(stem, sec)
+
+    # Makefile.am man_MANS / dist_man_MANS
+    for am in root.rglob("Makefile.am"):
+        try:
+            am_text = am.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        for m in re.finditer(
+            r"^(?:dist_|notrans_)?man_MANS\s*[+?:]?=\s*(.*(?:\\\n.*)*)",
+            am_text,
+            re.M,
+        ):
+            words = re.sub(r"\\\n", " ", m.group(1))
+            for w in words.split():
+                w = w.strip()
+                if re.search(r"\.[1-9][a-zA-Z]*$", w):
+                    stem, _, sec = Path(w).name.rpartition(".")
+                    add(stem, sec)
+
+    if not found:
+        add(project, "1")
+    # Prefer stems that do not yet have docs/*.adoc when returning for stub creation.
+    return sorted(found.items())
+
+
+def strip_help2man_blocks(text: str) -> str:
+    """Remove help2man find_program + if/endif custom_target blocks from meson.build."""
+    if "help2man" not in text:
+        return text
+    # Drop: help2man = find_program(...) and following if help2man.found() ... endif
+    text2 = re.sub(
+        r"\n?#?\s*help2man\s*=\s*find_program\([^)]*\)\s*\n"
+        r"if\s+help2man\.found\(\)\s*\n"
+        r"(?:.*?\n)*?endif\s*\n?",
+        "\n",
+        text,
+        flags=re.S,
+    )
+    return text2
+

@@ -64,8 +64,8 @@ def _control(root: Path) -> tuple[dict[str, str], dict[str, str], str]:
     path = root / "debian" / "control"
     text = _read(path)
     stanzas = _parse_control_stanzas(text) if text else []
-    src = stanzas[0] if stanzas else {}
-    pkg = stanzas[1] if len(stanzas) > 1 else src
+    src = next((s for s in stanzas if "Source" in s), stanzas[0] if stanzas else {})
+    pkg = next((s for s in stanzas if "Package" in s), {})
     return src, pkg, text
 
 

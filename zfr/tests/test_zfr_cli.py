@@ -509,6 +509,40 @@ class ZephyrIzeTests(unittest.TestCase):
         self.assertNotIn(".adoc", out)
         self.assertIn("install_man('man/keep.1')", out)
 
+    def test_patch_debian_control_adds_bd_arch_shlib(self) -> None:
+        from zfr_lib.ize.debian import patch_debian_control
+
+        text = (
+            "Source: demo\n"
+            "Maintainer: A <a@b>\n"
+            "Build-Depends: debhelper-compat (= 13)\n"
+            "\n"
+            "Standards-Version: 4.6.0\n"
+            "\n"
+            "Package: demo\n"
+            "Depends: bash\n"
+            "Description: demo\n"
+            " long\n"
+        )
+        new, notes = patch_debian_control(text, lang="bash")
+        self.assertIn("asciidoctor", new)
+        self.assertIn("meson", new)
+        self.assertIn("ninja-build", new)
+        self.assertIn("Architecture: all", new)
+        self.assertIn("bash-shlib", new)
+        self.assertIn("\nPackage: demo\n", new)
+        # Blank line inside Source (before Standards-Version) must be gone.
+        self.assertNotIn("asciidoctor\n\nStandards-Version", new.replace(" ", ""))
+        self.assertTrue(any("Build-Depends" in n or "normalize" in n for n in notes))
+
+    def test_stub_man_adoc_has_name_section(self) -> None:
+        from zfr_lib.ize.man import stub_man_adoc
+
+        body = stub_man_adoc("coolcmd", "1", summary="do cool things")
+        self.assertIn("= coolcmd(1)", body)
+        self.assertIn("coolcmd - do cool things", body)
+        self.assertIn(":doctype: manpage", body)
+
 
 class ZephyrLangAndI18nTests(unittest.TestCase):
     def test_detect_ignores_control_description(self) -> None:

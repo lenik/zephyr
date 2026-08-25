@@ -4,12 +4,20 @@ from __future__ import annotations
 
 from . import man as _man
 from . import spec as _spec
+from .debian import (
+    ensure_rpm_bash_shlib,
+    patch_debian_control,
+    strip_readme_banner,
+)
 from .util import *  # noqa: F403
 
 convert_man_file = _man.convert_man_file
 groff_to_adoc = _man.groff_to_adoc
 _man_target = _man._man_target
 strip_install_man_paths = _man.strip_install_man_paths
+stub_man_adoc = _man.stub_man_adoc
+discover_man_stems = _man.discover_man_stems
+strip_help2man_blocks = _man.strip_help2man_blocks
 render_spec = _spec.render_spec
 # Names used by Ize methods copied from ize.py:
 convert_man_file = convert_man_file
@@ -74,11 +82,14 @@ class Ize:
     def run(self) -> int:
         self.mesonize()
         self.add_missing_files()
+        self.patch_debian_control()
         self.ensure_changelog_version()
         self.ensure_hooks()
+        self.ensure_completion()
         self.patch_meson()
         if self.do_man:
             self.convert_manpages()
+            self.ensure_man_stubs()
             self.patch_meson_man_targets()
         self.ensure_rpm()
         if self.do_subst:
@@ -156,7 +167,78 @@ class Ize:
                 continue
             if not src.is_file():
                 continue
-            self.copy_file(src, dest, f"from {self.lang} template")
+            if rel in ("README.md", "README-zh.md"):
+                raw = src.read_text(encoding="utf-8", errors="ignore")
+                text = strip_readme_banner(raw, self.name)
+                # Also swap template puff placeholders.
+                text = text.replace(TEMPLATE_PUFF, self.name)
+                text = text.replace("some_puff1", self.name)
+                self.write_text(dest, text, f"from {self.lang} template (banner stripped)")
+            else:
+                self.copy_file(src, dest, f"from {self.lang} template")
+
+    def patch_debian_control(self) -> None:
+        path = self.root / "debian" / "control"
+        if not path.is_file():
+            return
+        text = path.read_text(encoding="utf-8")
+        new, notes = patch_debian_control(text, lang=self.lang)
+        if new != text:
+            self.write_text(path, new, ", ".join(notes) or "debian/control lint alignment")
+
+    def ensure_man_stubs(self) -> None:
+        """Create docs/*.adoc stubs when Autotools mans were help2man-only."""
+        docs = self.root / "docs"
+        existing = list(docs.glob("*.adoc")) if docs.is_dir() else []
+        stems = discover_man_stems(self.root, self.name)
+        # Only create stubs for stems that lack adoc.
+        missing = [(s, sec) for s, sec in stems if not (docs / f"{s}.adoc").is_file()]
+        if not missing and existing:
+            # Still strip help2man if we already have adoc.
+            meson = self.root / "meson.build"
+            if meson.is_file():
+                text = meson.read_text(encoding="utf-8")
+                cleaned = strip_help2man_blocks(text)
+                if cleaned != text:
+                    self.write_text(meson, cleaned, "remove help2man blocks (AsciiDoc mans)")
+            return
+        if not missing:
+            missing = [(self.name, "1")]
+        summary = ""
+        control = self.root / "debian" / "control"
+        if control.is_file():
+            m = re.search(
+                r"^Description:\s*(.+)$",
+                control.read_text(encoding="utf-8", errors="ignore"),
+                re.M,
+            )
+            if m:
+                summary = m.group(1).strip()
+        for stem, section in missing:
+            dest = docs / f"{stem}.adoc"
+            body = stub_man_adoc(stem, section, summary=summary or f"{stem} utility")
+            self.write_text(dest, body, "AsciiDoc man stub for lint/layout.docs")
+        meson = self.root / "meson.build"
+        if meson.is_file():
+            text = meson.read_text(encoding="utf-8")
+            cleaned = strip_help2man_blocks(text)
+            if cleaned != text:
+                self.write_text(meson, cleaned, "remove help2man blocks (AsciiDoc mans)")
+
+    def ensure_completion(self) -> None:
+        """Add a minimal bash-completion stub when none exists (bash projects)."""
+        if self.lang != "bash":
+            return
+        if list(self.root.glob("*.bash")) or list((self.root / "completions").glob("*.bash")):
+            return
+        dest = self.root / f"{self.name}.bash"
+        if dest.is_file():
+            return
+        body = (
+            f"# bash completion for {self.name} (stub; extend as needed)\n"
+            f"complete -F _longopt {self.name} 2>/dev/null || true\n"
+        )
+        self.write_text(dest, body, "bash-completion stub")
 
     def ensure_changelog_version(self) -> None:
         changelog = self.root / "debian" / "changelog"
@@ -476,6 +558,11 @@ endforeach
                 details.append("License AGPL")
             if "%configure" in new or "autoreconf" in new:
                 details.append("left autotools %build (not auto-rewritten; see zfr lint)")
+            if self.lang == "bash":
+                patched, changed = ensure_rpm_bash_shlib(new)
+                if changed:
+                    new = patched
+                    details.append("Requires bash-shlib")
             if new != text:
                 self.write_text(specs[0], new, ", ".join(details) or "spec touch-up")
 

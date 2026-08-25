@@ -1,3 +1,18 @@
+zephyr (2.5.0) testing; urgency=medium
+
+  * ize: patch existing debian/control for lint — Build-Depends meson,
+    ninja-build, asciidoctor; Architecture; bash Depends bash-shlib;
+    normalize blank lines so Source/Package stanzas parse correctly.
+  * ize: emit docs/*.adoc man stubs (+ asciidoctor targets) when Autotools
+    mans were help2man-only; strip help2man blocks from meson.build.
+  * ize: strip template README banners on copy; add bash-completion stub
+    before meson patch so install_data is wired; RPM Requires bash-shlib.
+  * lint: resolve Package stanza by Package: key (not stanzas[1]).
+  * Validated ize + lint (0 errors) + meson setup on batch1 (5/6 setup;
+    ai-utils missing upstream ai.c) and batch2 (12/12).
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Tue, 25 Aug 2026 20:40:00 +0800
+
 zephyr (2.4.1) testing; urgency=medium
 
   * zfr lint: wrap all finding, fix, and report strings with gettext
