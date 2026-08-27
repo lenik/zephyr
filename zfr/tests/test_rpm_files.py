@@ -58,6 +58,28 @@ install_data('VERSION', install_dir: pkgdatadir / 'zfr')
             files = meson_rpm_files(root, "zephyr")
             self.assertNotIn("%{_datadir}/%{name}/*", files)
 
+    def test_install_subdir_bindir(self) -> None:
+        meson = """\
+project('twomeson', 'c')
+bindir = prefix / get_option('bindir')
+custom_target(
+    'twomeson',
+    output: 'twomeson',
+    install: true,
+    install_dir: bindir,
+)
+install_subdir(
+    'src/_twomeson',
+    install_dir: bindir,
+)
+"""
+        with tempfile.TemporaryDirectory(prefix="zfr-rpmf-") as tmp:
+            root = Path(tmp)
+            (root / "meson.build").write_text(meson, encoding="utf-8")
+            files = meson_rpm_files(root, "twomeson")
+            self.assertIn("%{_bindir}/twomeson", files)
+            self.assertIn("%{_bindir}/_twomeson/", files)
+
 
 if __name__ == "__main__":
     unittest.main()

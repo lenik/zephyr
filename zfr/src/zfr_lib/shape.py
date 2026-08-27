@@ -45,9 +45,19 @@ def _has_project_meson(d: Path) -> bool:
 
 
 def _is_package_candidate(d: Path) -> bool:
+    """True when *d* looks like a project root ize/lint can operate on.
+
+    Include Autotools/CMake/Maven trees that lack ``debian/`` yet — otherwise
+    ``find_packagedir`` rejects pre-ize checkouts such as batch4/echo.
+    """
     return (
         _has_project_meson(d)
         or (d / "debian" / "control").is_file()
+        or (d / "configure.ac").is_file()
+        or (d / "configure.in").is_file()
+        or (d / "CMakeLists.txt").is_file()
+        or (d / "pom.xml").is_file()
+        or (d / "Makefile.am").is_file()
         or _is_zfr_meta_repo(d)
     )
 

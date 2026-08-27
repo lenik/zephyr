@@ -402,7 +402,14 @@ def _spec_files(root: Path, lang: str, name: str) -> list[str]:
         mo = gettext_mo_line(root, name)
         if mo:
             files.append(mo)
-        if (root / "postinst.in").is_file() or (root / "prerm.in").is_file():
+        meson_txt = ""
+        mb = root / "meson.build"
+        if mb.is_file():
+            meson_txt = mb.read_text(encoding="utf-8", errors="ignore")
+        if re.search(
+            r"['\"]setup['\"]\s*/\s*meson\.project_name|datadir\s*/\s*['\"]setup['\"]",
+            meson_txt,
+        ):
             files.append("%{_datadir}/setup/%{name}/")
         files.append("%{_datadir}/doc/%{name}/")
         # Lang template extras (e.g. Java ``%{_datadir}/%{name}/``) only when

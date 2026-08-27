@@ -188,6 +188,43 @@ def normalize_control_blank_lines(text: str) -> str:
     return body
 
 
+
+def ensure_debhelper_compat(text: str) -> tuple[str, list[str]]:
+    """Prefer ``debhelper-compat (= 13)`` over bare ``debhelper (>= N)``.
+
+    Ancient ``debian/compat`` level 1 (or missing compat with old debhelper)
+    makes modern dh refuse to run.
+    """
+    notes: list[str] = []
+    m = re.search(
+        r"^(Build-Depends:\s*)(.*?)(?=\n[A-Za-z][\w-]*:|\Z)",
+        text,
+        re.S | re.M,
+    )
+    if not m:
+        return text, notes
+    body = m.group(2)
+    if re.search(r"\bdebhelper-compat\b", body):
+        return text, notes
+    body2, n = re.subn(
+        r"\bdebhelper\s*(?:\([^)]*\))?\s*,?",
+        "debhelper-compat (= 13), ",
+        body,
+        count=1,
+    )
+    if n:
+        body2 = re.sub(r",\s*,", ",", body2)
+        body2 = body2.rstrip()
+        if body.endswith("\n") and not body2.endswith("\n"):
+            body2 += "\n"
+        notes.append("debhelper-compat (= 13)")
+        return text[: m.start(2)] + body2 + text[m.end(2) :], notes
+    stripped = body.lstrip()
+    body2 = "debhelper-compat (= 13), " + stripped
+    notes.append("debhelper-compat (= 13)")
+    return text[: m.start(2)] + body2 + text[m.end(2) :], notes
+
+
 def patch_debian_control(text: str, *, lang: str) -> tuple[str, list[str]]:
     """Apply all debian/control fixes for *lang*. Returns (new_text, notes)."""
     notes: list[str] = []
@@ -195,6 +232,8 @@ def patch_debian_control(text: str, *, lang: str) -> tuple[str, list[str]]:
     if normalized != text:
         notes.append("normalize blank lines")
         text = normalized
+    text, n = ensure_debhelper_compat(text)
+    notes.extend(n)
     text, n = ensure_build_depends(text)
     notes.extend(n)
     text, n = ensure_architecture(text, lang=lang)

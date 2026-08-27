@@ -113,6 +113,19 @@ def _project_name(root: Path) -> str:
     return source or meson.get("name") or root.name
 
 
+
+def _git_tracks(root: Path, relpath: str) -> bool:
+    """True when *relpath* is tracked in the git checkout at *root*."""
+    if shutil.which("git") is None:
+        return False
+    proc = subprocess.run(
+        ["git", "-C", str(root), "ls-files", "--error-unmatch", "--", relpath],
+        capture_output=True,
+        text=True,
+    )
+    return proc.returncode == 0
+
+
 def _git_toplevel(root: Path) -> Path | None:
     if shutil.which("git") is None:
         return None
@@ -314,18 +327,37 @@ def cmd_dist(
     else:
         use_meson = git_root is not None and git_root.resolve() == root.resolve()
 
+    # After `zfr ize`, meson.build is often untracked until the user commits.
+    # meson dist then fails ("git returned a failure"); fall back to a
+    # project-tree archive so `zfr release -lI` RPM builds still work.
+    if use_meson and not _git_tracks(root, "meson.build"):
+        print(
+            "meson.build not tracked in git; packing project tree "
+            "(commit ize results to use meson dist)",
+            file=sys.stderr,
+        )
+        use_meson = False
+
     if use_meson:
         bdir = resolve_builddir(root, builddir)
         ensure_meson_setup(root, bdir)
-        produced = _meson_dist(
-            bdir, fmt=fmt, allow_dirty=allow_dirty, tests=tests
-        )
-        dest = produced if outdir is None else outdir / tarball_name
-        if outdir is None and produced.name != tarball_name:
-            dest = produced.with_name(tarball_name)
-        dest = _place_archive(produced, dest)
-        print(dest, flush=True)
-        return 0
+        try:
+            produced = _meson_dist(
+                bdir, fmt=fmt, allow_dirty=allow_dirty, tests=tests
+            )
+        except SystemExit as exc:
+            print(
+                f"{exc}; falling back to project-tree archive",
+                file=sys.stderr,
+            )
+            use_meson = False
+        else:
+            dest = produced if outdir is None else outdir / tarball_name
+            if outdir is None and produced.name != tarball_name:
+                dest = produced.with_name(tarball_name)
+            dest = _place_archive(produced, dest)
+            print(dest, flush=True)
+            return 0
 
     print(
         f"meson dist would archive {git_root or '(no git)'}; "

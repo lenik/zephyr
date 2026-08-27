@@ -201,6 +201,15 @@ class Ize:
         if new != text:
             self.write_text(path, new, ", ".join(notes) or "debian/control lint alignment")
 
+        compat = self.root / "debian" / "compat"
+        if compat.is_file():
+            # debhelper-compat in control supersedes debian/compat; drop stale levels.
+            try:
+                compat.unlink()
+                self.note("convert", "debian/compat", "removed (use debhelper-compat in control)")
+            except OSError:
+                pass
+
     def ensure_debian_rules(self) -> None:
         path = self.root / "debian" / "rules"
         if not path.is_file():
@@ -619,11 +628,16 @@ endforeach
             arch_bins = bool(
                 re.search(r"\bexecutable\s*\(", _all_meson_texts(self.root))
             )
+            # Script-only packages (no Meson executable()) need noarch +
+            # %global debug_package %{nil}; otherwise rpmbuild emits an empty
+            # debuginfo subpackage and fails (seen on pure-Python 2meson).
+            _script_langs = {"bash", "python", "perl", "java", "ruby", "typescript"}
             if self.lang == "bash":
                 patched, changed = ensure_rpm_bash_shlib(new)
                 if changed:
                     new = patched
                     details.append("Requires bash-shlib")
+            if self.lang in _script_langs or arch_bins:
                 patched, changed = ensure_rpm_noarch_nodebug(
                     new, arch_binaries=arch_bins
                 )
@@ -634,13 +648,6 @@ endforeach
                         if arch_bins
                         else "noarch + no debuginfo"
                     )
-            elif arch_bins:
-                patched, changed = ensure_rpm_noarch_nodebug(
-                    new, arch_binaries=True
-                )
-                if changed:
-                    new = patched
-                    details.append("drop noarch (ELF)")
             patched, changed = strip_rpm_substvars(new)
             if changed:
                 new = patched

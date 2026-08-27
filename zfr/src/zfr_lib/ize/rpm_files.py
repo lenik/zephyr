@@ -197,6 +197,21 @@ def meson_rpm_files(root: Path, name: str) -> list[str]:
         if out:
             add(f"%{{_bindir}}/{Path(out.group(1)).name}")
 
+    # install_subdir('src/pkg', install_dir: bindir) → %{_bindir}/pkg/
+    # (2meson ships its library next to the CLI under bindir)
+    for block in _meson_call_blocks(text, "install_subdir"):
+        if not re.search(
+            r"install_dir:\s*(?:get_option\(\s*['\"]bindir['\"]\s*\)|bindir)\s*[,)]",
+            block,
+        ):
+            continue
+        src = re.match(r"\s*'([^']+)'", block)
+        if not src:
+            continue
+        dirname = Path(src.group(1)).name
+        if dirname and dirname not in {".", ".."}:
+            add(f"%{{_bindir}}/{dirname}/")
+
     # ---- bash-completion ----
     # bash-completion via bash_files = [...] + foreach rename stem
     if "bash-completion" in text:
@@ -362,12 +377,15 @@ def meson_rpm_files(root: Path, name: str) -> list[str]:
     if re.search(r"x11conf|x-alts", text):
         add("%{_datadir}/x11conf/*")
 
-    if (
-        (root / "postinst.in").is_file()
-        or (root / "prerm.in").is_file()
-        or re.search(r"['\"]setup['\"]\s*/\s*meson\.project_name", text)
+    # Only list setup/ when Meson actually installs there — postinst.in alone
+    # is not enough (empty Makefile.am projects may keep the .in files unused).
+    if re.search(
+        r"['\"]setup['\"]\s*/\s*meson\.project_name"
+        r"|datadir\s*/\s*['\"]setup['\"]",
+        text,
     ):
         add("%{_datadir}/setup/%{name}/")
+
 
     mo = gettext_mo_line(root, name)
     if mo:

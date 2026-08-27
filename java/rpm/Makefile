@@ -47,12 +47,12 @@ all: rpm
 version:
 	@echo $(VERSION)
 
-# Prefer source-tree tools/zephyr (meta-repo bootstrap); else zfr on PATH.
+# Prefer source-tree tools/zfr (meta-repo bootstrap); else zfr on PATH.
 dist:
 	mkdir -p $(TOPDIR)/SOURCES $(TOPDIR)/SPECS
 	@set -e; \
 	cd "$(SRCDIR)"; \
-	if [ -f tools/zephyr ]; then \
+	if [ -f tools/zfr ]; then \
 		python3 tools/zfr dist --rpm -o "$(TOPDIR)/SOURCES" $(DIST_FLAGS); \
 	elif command -v zfr >/dev/null 2>&1; then \
 		zfr dist --rpm -o "$(TOPDIR)/SOURCES" $(DIST_FLAGS); \

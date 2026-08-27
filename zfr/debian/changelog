@@ -1,3 +1,18 @@
+zephyr (2.7.4) testing; urgency=medium
+
+  * ize/release: script-only packages (python/java/…) get BuildArch noarch
+    and %global debug_package %{nil} (fixes empty debuginfo on 2meson/echo).
+  * meson_rpm_files: detect install_subdir(... install_dir: bindir); only list
+    setup/ when Meson installs it.
+  * zfr dist: fall back to project-tree archive when meson.build is untracked
+    (post-ize dirty trees).
+  * shape: Autotools/CMake/Maven roots without debian/ are package candidates.
+  * detect: m4-macro data packages score as bash; debhelper-compat (= 13).
+  * language rpm/Makefile: bootstrap probe is tools/zfr (not tools/zephyr).
+  * lint: rpm.noarch.script error when script packages lack BuildArch noarch.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Thu, 27 Aug 2026 18:38:34 +0800
+
 zephyr (2.7.3) testing; urgency=medium
 
   * meson_rpm_files: detect Python ``custom_target`` bindir installs,

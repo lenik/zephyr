@@ -413,6 +413,29 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                     fix=_("Drop %global debug_package %{nil} for ELF packages."),
                 )
             )
+        elif (
+            not has_elf
+            and lang in {"bash", "python", "perl", "java", "ruby", "typescript"}
+            and not re.search(r"(?m)^BuildArch:\s*noarch\b", text)
+        ):
+            out.append(
+                Finding(
+                    "error",
+                    "rpm.noarch.script",
+                    _(
+                        "script-only package lacks BuildArch: noarch; "
+                        "rpmbuild then builds an empty debuginfo and fails "
+                        "(Empty %files file debugfiles.list)"
+                    ),
+                    rel,
+                    line=_line_of(text, "Name:") or _line_of(text, "License:"),
+                    # xgettext: no-python-format
+                    fix=_(
+                        "Add `BuildArch: noarch` and "
+                        "`%global debug_package %{nil}` (or run `zfr ize`)."
+                    ),
+                )
+            )
 
         # ---- Template puff leftovers ----
         if TEMPLATE_PUFF in files_body or "some_puff1" in files_body:

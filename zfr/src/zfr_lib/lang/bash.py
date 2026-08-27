@@ -17,6 +17,21 @@ def _score_bash(root: Path, scores: dict[str, float], meson_txt: str, depends: s
     if re.search(r"\bbash-shlib\b", depends, re.I):
         scores["bash"] += 14.0
         return
+    # Autotools m4-macro / data-only packages (e.g. libm4-xjl): treat as bash
+    # so ize can scaffold debian/rpm around install_data of *.m4.
+    m4s = list(root.rglob("*.m4"))
+    # Note: any(root.rglob(ext) for …) is always True (generator objects are
+    # truthy); check for an actual match instead.
+    has_code = any(
+        next(root.rglob(ext), None) is not None
+        for ext in ("*.c", "*.py", "*.java", "*.pl", "*.rs")
+    )
+    if m4s and not has_code:
+        # Ignore aclocal leftovers under m4/
+        real = [p for p in m4s if "aclocal" not in p.name and p.name != "libtool.m4"]
+        if len(real) >= 2:
+            scores["bash"] += 12.0
+            return
     from .. import iter_files
     src = root / "src"
     bases = [root] + ([src] if src.is_dir() else [])
