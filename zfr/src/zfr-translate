@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""zfr-translate — query and update gettext message strings."""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+_TOOLS = Path(__file__).resolve().parent
+if str(_TOOLS) not in sys.path:
+    sys.path.insert(0, str(_TOOLS))
+
+from zfr_lib.cli import standalone_main  # noqa: E402
+from zfr_lib.translate import DESCRIPTION, add_arguments, run  # noqa: E402
+
+
+def main(argv: list[str] | None = None) -> int:
+    return standalone_main("zfr-translate", DESCRIPTION, add_arguments, run, argv)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

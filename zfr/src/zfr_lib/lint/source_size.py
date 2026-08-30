@@ -38,6 +38,16 @@ def _is_source_candidate(root: Path, path: Path) -> bool:
     return rel.startswith(_SOURCE_PREFIXES)
 
 
+def _extract_subdir_fix(rel: str) -> str:
+    path = Path(rel)
+    subdir = (path.parent / path.stem).as_posix() + "/"
+    example = f"{subdir}{path.stem}_part.py"
+    return _(
+        "Extract cohesive sections into package subdirectory %(subdir)s "
+        "(e.g. %(example)s) and keep a thin %(rel)s entry point."
+    ) % {"subdir": subdir, "example": example, "rel": rel}
+
+
 def check_source_size(root: Path, role: str) -> list[Finding]:
     if role == "meta":
         return []
@@ -56,7 +66,7 @@ def check_source_size(root: Path, role: str) -> list[Finding]:
                     % {"rel": rel, "lines": lines, "limit": _WARN_LINES},
                     rel,
                     line=_WARN_LINES + 1,
-                    fix=_("Split this file into smaller modules; keep each unit focused and testable."),
+                    fix=_extract_subdir_fix(rel),
                 )
             )
         elif lines > _NOTE_LINES:
@@ -64,13 +74,13 @@ def check_source_size(root: Path, role: str) -> list[Finding]:
                 Finding(
                     "note",
                     "source.long",
-                    _("%(rel)s is %(lines)d lines (>%(limit)d); consider modularizing soon")
+                    _("%(rel)s is %(lines)d lines (>%(limit)d); consider splitting soon")
                     % {"rel": rel, "lines": lines, "limit": _NOTE_LINES},
                     rel,
                     line=_NOTE_LINES + 1,
-                    fix=_("Plan extraction of helpers or submodules before the file grows further."),
+                    fix=_extract_subdir_fix(rel),
                 )
             )
-    if not any(f.severity in ("warn", "note") and f.code == "source.long" for f in out):
+    if not any(f.severity == "warn" and f.code == "source.long" for f in out):
         out.append(Finding("ok", "source.size", _("no oversized source files")))
     return out

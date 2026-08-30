@@ -53,13 +53,7 @@ def _next_steps(findings: list[Finding]) -> list[str]:
             break
     return steps
 
-
-def default_show_style_info() -> bool:
-    """True for non-interactive (piped/AI) stdout; False on an interactive TTY."""
-    try:
-        return not sys.stdout.isatty()
-    except Exception:
-        return True
+from ..terminal import default_lint_style_info
 
 
 def format_report(
@@ -77,10 +71,11 @@ def format_report(
     """Format the lint report.
 
     *style_info* controls the role/contract/next-steps/hint blocks. ``None``
-    means auto: show for non-TTY (AI/pipes), hide for interactive TTYs.
+    means auto: show for non-TTY (pipes/CI) and AI-integrated terminals; hide
+    for a plain interactive shell TTY.
     """
     if style_info is None:
-        style_info = default_show_style_info()
+        style_info = default_lint_style_info()
     csr = Csr(color)
     counts = {k: 0 for k in ("error", "warn", "note", "ok")}
     for f in findings:
@@ -98,7 +93,7 @@ def format_report(
         f"{_('status:')} {status_s}  "
         f"{csr.sev('error', _('errors=%s') % counts['error'])}  "
         f"{csr.sev('warn', _('warnings=%s') % counts['warn'])}  "
-        f"{_('notes=%s') % counts['note']}"
+        f"{csr.sev('note', _('notes=%s') % counts['note'])}"
     )
     if not quiet and style_info:
         role_hint = {
@@ -115,7 +110,10 @@ def format_report(
             _('project() version from `zfr version`; keep fallback v="0.0.0" # FIXED TO 0.0.0, DO NOT MODIFY.'),
             _("Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."),
             _("Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional rpm/ aligned with debian."),
-            _("i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."),
+            _("i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). "
+              "L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). "
+              "Child locales auto-derive via zfr i18n -b. Rule IDs in docs/lint-std.md; "
+              "suppress with -u/--uncheck or .config/zfr/lint.options."),
             _("Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ)."),
         ):
             lines.append(f"  - {item}")
@@ -125,7 +123,7 @@ def format_report(
     shown = [f for f in findings if f.severity != "ok" or verbose]
     if quiet:
         shown = [f for f in shown if f.severity == "error"]
-    shown.sort(key=lambda f: (order.get(f.severity, 9), f.file or "", f.line or 0, f.code))
+    shown.sort(key=lambda f: (order.get(f.severity, 9), f.rule_id, f.file or "", f.line or 0, f.code))
 
     for f in shown:
         tag_label = {
@@ -138,10 +136,11 @@ def format_report(
         if f.line:
             loc = f"{loc}:{f.line}"
         tag = csr.sev(f.severity, f"{tag_label:5}")
+        rid = csr.wrap(f.rule_id, csr.bold, csr.magenta)
         code = csr.wrap(f.code, csr.dim)
         loc_s = csr.wrap(loc, csr.bold, csr.blue) if loc else ""
         extra = f"  {loc_s}" if loc_s else ""
-        lines.append(f"{tag}  {code}{extra}")
+        lines.append(f"{tag}  {rid}  {code}{extra}")
         lines.append(f"      {f.message}")
         if f.fix:
             for i, fl in enumerate(f.fix.strip().splitlines()):

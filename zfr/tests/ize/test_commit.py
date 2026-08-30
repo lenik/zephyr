@@ -4,9 +4,15 @@
 from __future__ import annotations
 
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from support import add_src_to_path
+
+add_src_to_path()
 
 from zfr_lib.ize.engine import Ize
 from zfr_lib.ize.util import (

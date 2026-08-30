@@ -1,3 +1,22 @@
+zephyr (2.7.5) testing; urgency=medium
+
+  * Split i18n and translate into subpackages (zfr_lib/i18n/, zfr_lib/translate/);
+    standalone zfr-i18n and zfr-translate entry points; zfr t prefix alias.
+  * Numbered lint (ZL001–ZL081) and ize (ZI001–ZI016) standard rules; docs in
+    docs/lint-std.md and docs/ize-std.md; suppress with -u/--uncheck or
+    .config/zfr/lint.options / ize.options.
+  * Lint report shows rule IDs; notes use note severity color; style-info block
+    defaults on for pipes/CI and AI-integrated terminals (Cursor, VS Code, …).
+  * zfr translate: -k/--keys, -m/-M match (ci/cs), -s/-S search (ci/cs),
+    -E/--entire for full-string regex; grouped output by msgid.
+  * zfr i18n -b/--build: derive child locales only when absent from po/LINGUAS.
+  * L10n tiers: L1=8 primaries, L2=+17, L3=+35; LANGS documents locale tree.
+  * Refactor: split ize/engine.py into engine/ subpackage; lint rpm_util.py;
+    tests reorganized under tests/{cli,i18n,ize,l10n,rpm}/.
+  * xgettext template (po/zfr.pot) updated for new CLI strings.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 30 Aug 2026 16:24:00 +0800
+
 zephyr (2.7.4) testing; urgency=medium
 
   * ize/release: script-only packages (python/java/…) get BuildArch noarch

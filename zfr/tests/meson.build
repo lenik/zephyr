@@ -9,7 +9,7 @@ test(
         'discover',
         '-s', meson.project_source_root() / 'tests',
         '-p',
-        'test_*.py',
+        'test*.py',
         '-v',
     ],
     workdir: meson.project_source_root(),

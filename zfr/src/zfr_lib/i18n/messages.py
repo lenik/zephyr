@@ -15,6 +15,8 @@ _translation: gettext.NullTranslations | None = None
 
 def _wanted_languages() -> list[str] | None:
     """Expand LANG/LANGUAGE into gettext catalog names (zh → zh_CN)."""
+    from ..l10n import fallback_chain, normalize_locale
+
     raw = (
         os.environ.get("LANGUAGE")
         or os.environ.get("LC_ALL")
@@ -40,6 +42,11 @@ def _wanted_languages() -> list[str] | None:
             continue
         lower = part.lower()
         add(part)
+        loc = normalize_locale(part)
+        if loc != part:
+            add(loc)
+        for fb in fallback_chain(loc):
+            add(fb)
         if lower in {"zh", "zh_hans", "zh_cn", "zh_sg"}:
             add("zh_CN")
             add("zh")
@@ -52,8 +59,8 @@ def _wanted_languages() -> list[str] | None:
 
 
 def _source_root() -> Path:
-    # zfr/src/zfr_lib/i18n.py → zfr/
-    return Path(__file__).resolve().parents[2]
+    # zfr/src/zfr_lib/i18n/messages.py → zfr/
+    return Path(__file__).resolve().parents[3]
 
 
 def _compile_po_tree(po_dir: Path) -> Path | None:
@@ -103,7 +110,7 @@ def _locale_dirs() -> list[Path]:
         dirs.append(Path(env))
 
     here = Path(__file__).resolve()
-    zfr_root = here.parents[2]
+    zfr_root = here.parents[3]
     repo = zfr_root.parent
     # Prefer catalogs compiled from the source po/ tree so uninstalled
     # `zfr -h` tracks the current strings (not a stale meson builddir).

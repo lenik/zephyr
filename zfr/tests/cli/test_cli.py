@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import os
 import shutil
 import stat
 import subprocess
@@ -12,40 +11,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-REPO = ROOT.parent
-TOOLS = ROOT / "src"
-ZEPHYR = TOOLS / "zfr"
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from support import ROOT, REPO, TOOLS, ZEPHYR, _env, run_zephyr, add_src_to_path
 
-
-def _env() -> dict[str, str]:
-    env = os.environ.copy()
-    extra = str(TOOLS)
-    prev = env.get("PYTHONPATH", "")
-    env["PYTHONPATH"] = extra if not prev else extra + os.pathsep + prev
-    env["ZFR_PKGDATADIR"] = str(REPO)
-    env["NO_COLOR"] = "1"
-    env["GIT_AUTHOR_NAME"] = "Zephyr Tests"
-    env["GIT_AUTHOR_EMAIL"] = "zephyr-tests@example.com"
-    env["GIT_COMMITTER_NAME"] = "Zephyr Tests"
-    env["GIT_COMMITTER_EMAIL"] = "zephyr-tests@example.com"
-    return env
-
-
-def run_zephyr(*args: str, cwd: Path | None = None, check: bool = True) -> subprocess.CompletedProcess[str]:
-    proc = subprocess.run(
-        [sys.executable, str(ZEPHYR), *args],
-        cwd=cwd or ROOT,
-        env=_env(),
-        capture_output=True,
-        text=True,
-    )
-    if check and proc.returncode != 0:
-        raise AssertionError(
-            f"zfr {' '.join(args)} failed ({proc.returncode})\n"
-            f"stdout:\n{proc.stdout}\nstderr:\n{proc.stderr}"
-        )
-    return proc
+add_src_to_path()
 
 
 class ZephyrHelpTests(unittest.TestCase):
@@ -579,78 +548,6 @@ class ZephyrLangAndI18nTests(unittest.TestCase):
         )
         self.assertEqual(proc.returncode, 0, proc.stderr)
         self.assertIn("模板助手", proc.stdout)
-
-
-class ZephyrLintSourceTests(unittest.TestCase):
-    def test_skips_example_commons_module(self) -> None:
-        from zfr_lib.lint.source_size import check_source_size
-        from zfr_lib.lint.util import is_example_shared_src
-
-        with tempfile.TemporaryDirectory(prefix="zfr-lint-src-") as tmp:
-            root = Path(tmp)
-            (root / "src").mkdir()
-            commons = root / "src" / "commons.py"
-            commons.write_text("\n".join(f"x = {i}" for i in range(800)), encoding="utf-8")
-            self.assertTrue(is_example_shared_src(root, commons))
-            findings = check_source_size(root, "app")
-            self.assertFalse(any(f.code == "source.long" for f in findings))
-
-    def test_template_coverage_skips_commons_and_renames_spec(self) -> None:
-        from zfr_lib.lint.template import check_template_gaps, _expected_rel
-        from zfr_lib.lint.util import is_example_shared_rel
-
-        self.assertTrue(is_example_shared_rel(Path("src/commons.c")))
-        self.assertTrue(is_example_shared_rel(Path("src/commons.h")))
-        self.assertTrue(is_example_shared_rel(Path("tests/commons_test.c")))
-        self.assertTrue(is_example_shared_rel(Path("tests/test_commons.py")))
-        self.assertFalse(is_example_shared_rel(Path("src/app.c")))
-        self.assertEqual(
-            _expected_rel(Path("rpm/zephyr.spec"), "myproj").as_posix(),
-            "rpm/myproj.spec",
-        )
-
-        with tempfile.TemporaryDirectory(prefix="zfr-tmpl-cov-") as tmp:
-            root = Path(tmp)
-            # Minimal tree: no commons, but instance-named RPM spec.
-            (root / "rpm").mkdir()
-            (root / "rpm" / "demo.spec").write_text("Name: demo\n", encoding="utf-8")
-            (root / "debian").mkdir()
-            (root / "debian" / "control").write_text(
-                "Source: demo\n\nPackage: demo\nDescription: demo\n",
-                encoding="utf-8",
-            )
-            (root / "meson.build").write_text("project('demo')\n", encoding="utf-8")
-            findings = check_template_gaps(root, "c", "app")
-            msgs = " ".join(f.message for f in findings if f.code == "template.coverage")
-            self.assertNotIn("commons", msgs)
-            self.assertNotIn("zephyr.spec", msgs)
-            # Instance-named spec is present; do not ask for the template placeholder.
-            self.assertNotRegex(msgs, r"rpm/\S+\.spec")
-
-    def test_warns_on_very_long_source(self) -> None:
-        from zfr_lib.lint.source_size import check_source_size
-
-        with tempfile.TemporaryDirectory(prefix="zfr-lint-long-") as tmp:
-            root = Path(tmp)
-            (root / "src").mkdir()
-            long = root / "src" / "big.py"
-            long.write_text("\n".join(f"x = {i}" for i in range(1100)), encoding="utf-8")
-            findings = check_source_size(root, "app")
-            warns = [f for f in findings if f.code == "source.long" and f.severity == "warn"]
-            self.assertTrue(warns)
-            self.assertIn("big.py", warns[0].file or "")
-
-    def test_notes_on_medium_source(self) -> None:
-        from zfr_lib.lint.source_size import check_source_size
-
-        with tempfile.TemporaryDirectory(prefix="zfr-lint-med-") as tmp:
-            root = Path(tmp)
-            (root / "src").mkdir()
-            med = root / "src" / "mid.py"
-            med.write_text("\n".join(f"x = {i}" for i in range(650)), encoding="utf-8")
-            findings = check_source_size(root, "app")
-            notes = [f for f in findings if f.code == "source.long" and f.severity == "note"]
-            self.assertTrue(notes)
 
 
 if __name__ == "__main__":

@@ -10,6 +10,7 @@ from pathlib import Path
 
 from .. import _is_zfr_meta_repo, find_project_dir
 from ..cli import register_command
+from ..cmd_options import IZE_OPTIONS_REL, apply_option_file
 from ..i18n import _
 from ..lang import LANGS
 from .engine import Ize
@@ -26,6 +27,7 @@ def cmd_ize(
     author: str | None = None,
     verbose: bool = False,
     color: str = "auto",
+    uncheck: list[str] | None = None,
     workdir: Path | None = None,
 ) -> int:
     if commit and dry_run:
@@ -63,6 +65,7 @@ def cmd_ize(
         author=author,
         verbose=verbose,
         color=color,
+        uncheck=uncheck,
     ).run()
     return 0
 
@@ -103,10 +106,22 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
     )
     p.add_argument("--no-man", action="store_true", help=_("do not convert groff .1 man pages to docs/*.adoc"))
     p.add_argument("--no-subst", action="store_true", help=_("do not turn hardcoded versions into @VERSION@ / config.h"))
+    p.add_argument(
+        "-u",
+        "--uncheck",
+        action="append",
+        metavar="CODE",
+        default=[],
+        help=_("suppress ize rule ID(s) or code(s), comma-separated (repeatable)"),
+    )
     p.add_argument("--color", choices=("auto", "always", "never"), default="auto", help=_("CSR (console SGR) highlighting (default: auto)"))
 
 
 def run(args: argparse.Namespace) -> int:
+    root = find_project_dir()
+    parser = argparse.ArgumentParser(add_help=False)
+    add_arguments(parser)
+    args = apply_option_file(root, IZE_OPTIONS_REL, parser, args, merge_flags=("uncheck",))
     return cmd_ize(
         lang=args.lang,
         dry_run=args.dry_run,
@@ -117,6 +132,7 @@ def run(args: argparse.Namespace) -> int:
         author=args.author,
         verbose=args.verbose,
         color=args.color,
+        uncheck=args.uncheck,
     )
 
 

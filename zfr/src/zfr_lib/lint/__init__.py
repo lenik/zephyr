@@ -14,6 +14,7 @@ from ..finding import Finding
 from ..i18n import _
 from ..l10n import apply_lint_option_file, parse_l10n_level
 from ..packaging import _meson_project_fields
+from .filtering import filter_findings
 from .report import format_report
 from .util import _control, _role
 
@@ -78,9 +79,11 @@ def cmd_lint(
     l10n_level: str = "L1",
     style_info: bool | None = None,
     workdir: Path | None = None,
+    uncheck: list[str] | None = None,
 ) -> int:
     root = _resolve_lint_root(find_project_dir(workdir))
     name, lang, role, findings = collect_findings(root, l10n_level=l10n_level)
+    findings = filter_findings(findings, uncheck)
     sys.stdout.write(
         format_report(
             root,
@@ -106,7 +109,13 @@ def cmd_lint(
 
 NAME = "lint"
 HELP = _('validate project packaging and zephyr layout (walks parents from cwd)')
-DESCRIPTION = _('Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY. Style-contract blurbs default on for non-TTY (AI/pipes) and off for interactive TTYs; override with -i/-I.')
+DESCRIPTION = _(
+    "Check the current zephyr project for missing files and packaging/style mistakes. "
+    "Walks from cwd toward parent directories. CSR colors when stdout is a TTY. "
+    "Style-contract blurbs default on for non-interactive stdout and AI-integrated "
+    "terminals (Cursor, VS Code, Windsurf, …); off for a plain interactive shell. "
+    "Override with -i/-I."
+)
 
 
 def add_arguments(p: argparse.ArgumentParser) -> None:
@@ -127,16 +136,24 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         "--info",
         dest="style_info",
         action="store_true",
-        help=_("show zephyr style-contract / next-steps blurbs (default for non-TTY)"),
+        help=_("show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"),
     )
     info.add_argument(
         "-I",
         "--no-info",
         dest="style_info",
         action="store_false",
-        help=_("hide zephyr style-contract / next-steps blurbs (default for interactive TTY)"),
+        help=_("hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"),
     )
     p.set_defaults(style_info=None)
+    p.add_argument(
+        "-u",
+        "--uncheck",
+        action="append",
+        metavar="CODE",
+        default=[],
+        help=_("suppress rule ID(s) or code(s), comma-separated (repeatable)"),
+    )
     p.add_argument("--color", choices=("auto", "always", "never"), default="auto", help=_("CSR (console SGR) highlighting (default: auto)"))
 
 
@@ -152,6 +169,7 @@ def run(args: argparse.Namespace) -> int:
         strict=args.strict,
         l10n_level=args.l10n_level or "L1",
         style_info=args.style_info,
+        uncheck=args.uncheck,
     )
 
 

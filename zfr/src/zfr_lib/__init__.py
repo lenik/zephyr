@@ -17,7 +17,7 @@ TEMPLATE_PUFF = "some_puff1"
 # Zephyr style: gettext catalogs should cover at least these locales.
 # English (en) is the source msgid language and is not listed in LINGUAS.
 # User-facing aliases zh-cn / zh-tw map to gettext zh_CN / zh_TW.
-# Default lint level is L1; see zfr_lib.l10n.L10N_LEVELS for L0–L3.
+# Default lint level is L1; see zfr_lib.l10n.L10N_LEVELS for L0–L3 tier coverage.
 from .l10n import L10N_LEVELS, linguas_for_level, parse_l10n_level
 
 RECOMMENDED_I18N_SOURCE = "en"

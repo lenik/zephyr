@@ -10,7 +10,10 @@ import sys
 import unittest
 from pathlib import Path
 
-from test_zfr_cli import ROOT, TOOLS, ZEPHYR, _env, run_zephyr
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from support import ROOT, TOOLS, ZEPHYR, _env, run_zephyr, add_src_to_path
+
+add_src_to_path()
 
 PO = ROOT / "po"
 DOCS = ROOT / "docs"
@@ -44,11 +47,18 @@ def _po_untranslated(path: Path) -> list[str]:
 class ZephyrGettextTests(unittest.TestCase):
     def test_linguas_covers_l2(self) -> None:
         sys.path.insert(0, str(TOOLS))
-        from zfr_lib.l10n import L10N_LEVELS
+        from zfr_lib.l10n import L10N_LEVELS, resolve_present_locale
 
-        self.assertTrue(
-            set(L10N_LEVELS["L2"]).issubset(set(_linguas())),
-            f"LINGUAS missing L2 locales: {sorted(set(L10N_LEVELS['L2']) - set(_linguas()))}",
+        present = set(_linguas())
+        missing = [
+            loc
+            for loc in L10N_LEVELS["L2"]
+            if resolve_present_locale(loc, present) is None
+        ]
+        self.assertEqual(
+            missing,
+            [],
+            f"LINGUAS missing L2 primaries (via legacy/fallback): {missing}",
         )
 
     def test_every_catalog_complete(self) -> None:
@@ -107,12 +117,16 @@ class ZephyrGettextTests(unittest.TestCase):
 class ZephyrManpageTranslationTests(unittest.TestCase):
     def test_every_locale_has_whole_document_adoc(self) -> None:
         sys.path.insert(0, str(TOOLS))
-        from zfr_lib.l10n import EN_MAN_NAME, L10N_LEVELS
+        from zfr_lib.l10n import EN_MAN_NAME, L10N_LEVELS, resolve_present_locale
 
         english = (DOCS / "zfr.adoc").read_text(encoding="utf-8")
         self.assertIn("== Name", english)
-        required = sorted(set(_linguas()) | set(L10N_LEVELS["L2"]))
-        for loc in required:
+        present = set(_linguas())
+        required: set[str] = set(_linguas())
+        for loc in L10N_LEVELS["L2"]:
+            resolved = resolve_present_locale(loc, present) or loc
+            required.add(resolved)
+        for loc in sorted(required):
             path = DOCS / loc / "zfr.adoc"
             with self.subTest(loc=loc):
                 self.assertTrue(path.is_file(), path)

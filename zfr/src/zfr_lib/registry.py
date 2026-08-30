@@ -20,6 +20,8 @@ from . import (
     shape,
     version,
 )
+from .i18n import cmd as i18n
+from . import translate
 
 COMMANDS: Sequence[ModuleType] = (
     create,
@@ -33,5 +35,7 @@ COMMANDS: Sequence[ModuleType] = (
     dist,
     release,
     ize,
+    i18n,
+    translate,
     detect,
 )

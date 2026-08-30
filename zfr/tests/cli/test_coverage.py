@@ -12,7 +12,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from test_zfr_cli import REPO, ROOT, TOOLS, ZEPHYR, _env, run_zephyr
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from support import REPO, ROOT, TOOLS, ZEPHYR, _env, run_zephyr, add_src_to_path
+
+add_src_to_path()
 
 WRAPPERS = (
     "zfr-create",
@@ -25,6 +28,8 @@ WRAPPERS = (
     "zfr-shape",
     "zfr-dist",
     "zfr-ize",
+    "zfr-i18n",
+    "zfr-translate",
     "zfr-release",
 )
 
@@ -40,6 +45,8 @@ SUBCOMMANDS = (
     "dist",
     "release",
     "ize",
+    "i18n",
+    "translate",
     "detect",
     "help",
 )

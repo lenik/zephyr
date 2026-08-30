@@ -26,7 +26,10 @@ def standalone_main(
     parser = argparse.ArgumentParser(prog=prog, description=description)
     add_arguments(parser)
     args = parser.parse_args(None if argv is None else list(argv))
-    result = run(args)
+    try:
+        result = run(args)
+    except BrokenPipeError:
+        return 0
     return 0 if result is None else int(result)
 
 

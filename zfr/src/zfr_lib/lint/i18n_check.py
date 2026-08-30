@@ -24,7 +24,13 @@ from .. import (
     template_dir,
     version_file_version,
 )
-from ..l10n import EN_MAN_NAME, linguas_for_level, parse_l10n_level
+from ..l10n import (
+    EN_MAN_NAME,
+    canonical_locale,
+    linguas_for_level,
+    parse_l10n_level,
+    resolve_present_locale,
+)
 from ..csr import Csr
 from ..packaging import _meson_project_fields, _parse_control_stanzas
 from .finding import Finding
@@ -88,7 +94,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
         )
     else:
         linguas_path = po / "LINGUAS"
-        present = _parse_linguas(linguas_path)
+        present = set(_parse_linguas(linguas_path))
         if not present:
             out.append(
                 Finding(
@@ -105,7 +111,11 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                 )
             )
         else:
-            missing = [loc for loc in required if loc not in present]
+            missing = [
+                loc
+                for loc in required
+                if resolve_present_locale(loc, present) is None
+            ]
             if missing:
                 out.append(
                     Finding(
@@ -114,12 +124,12 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                         _("po/LINGUAS missing %(level)s locale(s): %(locales)s")
                         % {"level": level, "locales": ", ".join(missing)},
                         "po/LINGUAS",
-                        fix=_("Level %(level)s requires: %(locales)s "
-                        "(source %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). "
-                        "Append the missing lines to LINGUAS and add matching po/<locale>.po.")
+                        fix=_("Level %(level)s requires primaries: %(locales)s "
+                        "(source %(source)s; legacy es→es_MX, pt→pt_BR). "
+                        "Run `zfr i18n -b` to auto-generate child locales.")
                         % {
                             "level": level,
-                            "locales": ", ".join(required),
+                            "locales": ", ".join(missing),
                             "source": RECOMMENDED_I18N_SOURCE,
                         },
                     )
@@ -129,16 +139,18 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     Finding(
                         "ok",
                         "i18n.linguas.coverage",
-                        _("po/LINGUAS covers %s locale set") % level,
+                        _("po/LINGUAS covers %s primary locale set") % level,
                         "po/LINGUAS",
                     )
                 )
 
-            missing_po = [
-                loc
-                for loc in required
-                if loc in present and not (po / f"{loc}.po").is_file()
-            ]
+            missing_po = []
+            for loc in required:
+                resolved = resolve_present_locale(loc, present)
+                if resolved is None:
+                    continue
+                if not (po / f"{resolved}.po").is_file():
+                    missing_po.append(loc)
             if missing_po:
                 out.append(
                     Finding(
@@ -151,7 +163,12 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     )
                 )
             else:
-                covered = [loc for loc in required if (po / f"{loc}.po").is_file()]
+                covered = [
+                    loc
+                    for loc in required
+                    if resolve_present_locale(loc, present)
+                    and (po / f"{resolve_present_locale(loc, present)}.po").is_file()
+                ]
                 if covered:
                     out.append(
                         Finding(
@@ -172,8 +189,10 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
         english_copies: list[str] = []
         for adoc in english_adocs:
             for loc in required:
-                path = docs / loc / adoc.name
-                rel = f"docs/{loc}/{adoc.name}"
+                resolved = resolve_present_locale(loc, set(_parse_linguas(po / "LINGUAS"))) if po.is_dir() else None
+                man_loc = resolved or canonical_locale(loc)
+                path = docs / man_loc / adoc.name
+                rel = f"docs/{man_loc}/{adoc.name}"
                 if not path.is_file():
                     missing_man.append(rel)
                     continue

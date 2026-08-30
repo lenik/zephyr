@@ -14,3 +14,9 @@ class Finding:
     file: str | None = None
     line: int | None = None
     fix: str | None = None
+
+    @property
+    def rule_id(self) -> str:
+        from .std import lint_rule_id
+
+        return lint_rule_id(self.code)

@@ -126,6 +126,7 @@ class Change:
     kind: str  # add, update, convert, skip
     path: str
     detail: str
+    rule: str = ""
 
 
 def _rel(root: Path, path: Path) -> str:
