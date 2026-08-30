@@ -135,6 +135,7 @@ class Ize:
         self._step("ize.i18n.man-locale", self.ensure_man_locale_coverage)
         self._step("ize.i18n.po-nowrap", self.ensure_po_no_wrap)
         self._step("ize.i18n.derive", self.derive_i18n_locales)
+        self._step("ize.rpm.leftover", self.remove_local_rpmbuild)
         self.report()
         if self.do_commit:
             self._step("ize.commit", self.commit_changes)
@@ -225,7 +226,12 @@ class Ize:
         if not path.is_file():
             return
         text = path.read_text(encoding="utf-8")
-        new, notes = patch_debian_control(text, lang=self.lang)
+        from ..rpm_files import _all_meson_texts
+
+        arch_bins = bool(re.search(r"\bexecutable\s*\(", _all_meson_texts(self.root)))
+        new, notes = patch_debian_control(
+            text, lang=self.lang, arch_binaries=arch_bins
+        )
         if new != text:
             self.write_text(path, new, ", ".join(notes) or "debian/control lint alignment")
 
@@ -294,9 +300,11 @@ class Ize:
                 self.write_text(meson, cleaned, "remove help2man blocks (AsciiDoc mans)")
 
     def ensure_completion(self) -> None:
-        """Ensure a bash-completion stub exists for each command puff."""
-        if self.lang != "bash":
-            return
+        """Ensure a bash-completion stub exists for each command puff.
+
+        Stubs live under ``completions/`` so a root ``*.bash`` file does not
+        flip language detection toward bash.
+        """
         puffs = _puff_names(self.root) or [self.name]
         for puff in puffs:
             dest = self.root / f"{puff}.bash"
@@ -305,11 +313,18 @@ class Ize:
             alt = self.root / "completions" / f"{puff}.bash"
             if alt.is_file():
                 continue
+            alt_in = self.root / "completions" / f"{puff}.in"
+            if alt_in.is_file():
+                continue
             body = (
                 f"# bash completion for {puff} (stub; extend as needed)\n"
                 f"complete -F _longopt {puff} 2>/dev/null || true\n"
             )
-            self.write_text(dest, body, f"bash-completion stub {puff}")
+            self.write_text(
+                self.root / "completions" / f"{puff}.bash",
+                body,
+                f"bash-completion stub {puff}",
+            )
 
     def ensure_changelog_version(self) -> None:
         changelog = self.root / "debian" / "changelog"
@@ -383,133 +398,43 @@ class Ize:
         ensure_ize_scripts(self, ins)
 
     def ensure_po_no_wrap(self) -> None:
-        from ...translate.po_format import po_has_line_wrapping, po_no_wrap_file
-
-        po_dir = self.root / "po"
-        if not po_dir.is_dir():
-            return
-        for po in sorted(po_dir.glob("*.po")):
-            try:
-                text = po.read_text(encoding="utf-8")
-            except OSError:
-                continue
-            if not po_has_line_wrapping(text):
-                continue
-            rel = str(po.relative_to(self.root))
-            if self.dry_run:
-                self.note("would-update", rel, "msgcat --no-wrap", rule="ize.i18n.po-nowrap")
-                continue
-            if po_no_wrap_file(po):
-                self.note("update", rel, "msgcat --no-wrap", rule="ize.i18n.po-nowrap")
+        from .i18n import ensure_po_no_wrap as _fn
+        _fn(self)
 
     def ensure_i18n_coverage(self) -> None:
-        """Add missing LINGUAS / .po entries for the project's lint l10n level."""
-        from ...l10n import linguas_for_level, project_l10n_level, resolve_present_locale
-        from ...translate.po_files import insert_locale, parse_linguas
-
-        po_dir = self.root / "po"
-        if not po_dir.is_dir():
-            return
-        level = project_l10n_level(self.root)
-        required = linguas_for_level(level)
-        if not required:
-            return
-        present = set(parse_linguas(po_dir / "LINGUAS"))
-        for loc in required:
-            resolved = resolve_present_locale(loc, present)
-            if resolved is not None and (po_dir / f"{resolved}.po").is_file():
-                continue
-            insert_name = resolved or loc
-            if self.dry_run:
-                self.note(
-                    "would-add",
-                    f"po/{insert_name}.po",
-                    f"{level} locale coverage",
-                    rule="ize.i18n.coverage",
-                )
-                continue
-            try:
-                changed = insert_locale(self.root, insert_name)
-            except (FileNotFoundError, OSError) as exc:
-                self.note("skip", "po/", str(exc), rule="ize.i18n.coverage")
-                continue
-            for rel in changed:
-                self.note("add", rel, f"{level} locale coverage", rule="ize.i18n.coverage")
-            present = set(parse_linguas(po_dir / "LINGUAS"))
+        from .i18n import ensure_i18n_coverage as _fn
+        _fn(self)
 
     def ensure_man_locale_coverage(self) -> None:
-        """Scaffold docs/<locale>/*.adoc for the project's lint l10n level.
-
-        Copies the English whole-document man source when a locale file is
-        missing so ZL055 is cleared; translators should replace the scaffold.
-        """
-        from ...l10n import (
-            canonical_locale,
-            linguas_for_level,
-            project_l10n_level,
-            resolve_present_locale,
-        )
-        from ...translate.po_files import parse_linguas
-
-        docs = self.root / "docs"
-        if not docs.is_dir():
-            return
-        english = sorted(p for p in docs.glob("*.adoc") if p.is_file())
-        if not english:
-            return
-        po_dir = self.root / "po"
-        if not po_dir.is_dir():
-            return
-        level = project_l10n_level(self.root)
-        required = linguas_for_level(level)
-        if not required:
-            return
-        present = set(parse_linguas(po_dir / "LINGUAS"))
-        for adoc in english:
-            try:
-                body = adoc.read_text(encoding="utf-8")
-            except OSError:
-                continue
-            for loc in required:
-                resolved = resolve_present_locale(loc, present) or canonical_locale(loc)
-                dest = docs / resolved / adoc.name
-                if dest.is_file():
-                    continue
-                rel = str(dest.relative_to(self.root))
-                if self.dry_run:
-                    self.note(
-                        "would-add",
-                        rel,
-                        f"{level} man locale scaffold from English",
-                        rule="ize.i18n.man-locale",
-                    )
-                    continue
-                self.write_text(
-                    dest,
-                    body,
-                    f"{level} man locale scaffold from English",
-                )
+        from .i18n import ensure_man_locale_coverage as _fn
+        _fn(self)
 
     def derive_i18n_locales(self) -> None:
-        from ...i18n.builder import default_build_po_dir, derive_locales
-        from ...i18n.meson import ensure_po_meson_derive
+        from .i18n import derive_i18n_locales as _fn
+        _fn(self)
 
-        for rel in ensure_po_meson_derive(self.root, dry_run=self.dry_run):
+    def remove_local_rpmbuild(self) -> None:
+        """Drop project-local ``rpmbuild/`` (ZL030); RPM builds use ``%_topdir``."""
+        import shutil
+
+        local = self.root / "rpmbuild"
+        if not local.is_dir():
+            return
+        if self.dry_run:
             self.note(
-                "update" if not self.dry_run else "would-update",
-                rel,
-                "Meson build runs zfr i18n -b into build dir",
-                rule="ize.i18n.derive",
+                "would-update",
+                "rpmbuild/",
+                "remove project-local leftover",
+                rule="ize.rpm.leftover",
             )
-        po_dir = default_build_po_dir(self.root)
-        written = derive_locales(self.root, po_dir=po_dir, dry_run=self.dry_run)
-        for rel in written:
-            self.note(
-                "would-derive" if self.dry_run else "derive",
-                rel,
-                "child locale from parent",
-                rule="ize.i18n.derive",
-            )
+            return
+        shutil.rmtree(local, ignore_errors=True)
+        self.note(
+            "update",
+            "rpmbuild/",
+            "removed project-local leftover",
+            rule="ize.rpm.leftover",
+        )
 
     def report(self) -> None:
         csr = self.csr

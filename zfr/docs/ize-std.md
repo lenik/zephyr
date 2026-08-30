@@ -23,5 +23,6 @@ Numbered steps performed by `zfr ize`. Each change line prints `kind  ZInnn  pat
 | ZI017 | `ize.commit` | varies | Bump patch version and git commit (`--commit`) |
 | ZI018 | `ize.i18n.coverage` | varies | Ensure `po/LINGUAS` + `.po` for lint l10n level |
 | ZI019 | `ize.i18n.man-locale` | varies | Scaffold `docs/<locale>/*.adoc` for lint l10n level |
+| ZI020 | `ize.rpm.leftover` | varies | Remove project-local `rpmbuild/` leftover tree |
 
 Suppress rules with `zfr lint -u ID` / `zfr ize -u ID` (comma-separated), or the same flag in `.config/zfr/lint.options` / `.config/zfr/ize.options`.

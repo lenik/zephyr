@@ -68,11 +68,20 @@ def ensure_rpm_spec(ize: "Ize") -> None:
     specs = _specs(ize.root)
     spec_path = rpm_dir(ize.root) / f"{ize.name}.spec"
     legacy = rpm_dir(ize.root) / "zephyr.spec"
+    arch_bins = bool(
+        re.search(r"\bexecutable\s*\(", _all_meson_texts(ize.root))
+    )
     if not specs:
         dest = spec_path if ize.name != "zephyr" else legacy
+        body = render_spec(ize.root, ize.lang, ize.name)
+        _script_langs = {"bash", "python", "perl", "java", "ruby", "typescript"}
+        if ize.lang in _script_langs or arch_bins:
+            body, _ = ensure_rpm_noarch_nodebug(body, arch_binaries=arch_bins)
+        if ize.lang == "bash" and not arch_bins:
+            body, _ = ensure_rpm_bash_shlib(body)
         ize.write_text(
             dest,
-            render_spec(ize.root, ize.lang, ize.name),
+            body,
             "RPM spec from debian/control",
         )
     elif specs:

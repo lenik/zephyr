@@ -214,7 +214,9 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
     english_adocs = (
         [p for p in docs.glob("*.adoc") if p.is_file()] if docs.is_dir() else []
     )
-    if english_adocs:
+    # Whole-document man locale coverage tracks gettext: without po/, L1 man
+    # translations are optional (same as ZL051 i18n.po note).
+    if english_adocs and po.is_dir():
         missing_man: list[str] = []
         english_copies: list[str] = []
         for adoc in english_adocs:
@@ -266,5 +268,14 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     fix=_("Translate the Name line; do not leave the English wording."),
                 )
             )
+    elif english_adocs and not po.is_dir():
+        out.append(
+            Finding(
+                "ok",
+                "i18n.man.coverage",
+                _("no po/: man locale translations not required"),
+                "docs/",
+            )
+        )
 
     return out

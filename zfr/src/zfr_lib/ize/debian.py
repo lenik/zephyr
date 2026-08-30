@@ -72,18 +72,39 @@ def ensure_build_depends(text: str, extras: tuple[str, ...] = REQUIRED_BUILD_DEP
     return text[: m.start(2)] + new_body + text[m.end(2) :], notes
 
 
-def ensure_architecture(text: str, *, lang: str) -> tuple[str, list[str]]:
-    """Ensure the first Package stanza has Architecture."""
+def ensure_architecture(
+    text: str, *, lang: str, arch_binaries: bool = False
+) -> tuple[str, list[str]]:
+    """Ensure the first Package stanza has Architecture matching *lang* / ELF."""
     notes: list[str] = []
-    want = "all" if lang == "bash" else "any"
+    if lang == "bash" and not arch_binaries:
+        want = "all"
+    elif lang in ("c", "clib", "cpp", "cpplib", "rust", "go", "haskell") or arch_binaries:
+        want = "any"
+    else:
+        want = "all" if lang in {"python", "perl", "java", "ruby", "typescript"} else "any"
     # Split on blank lines into stanzas.
     parts = re.split(r"\n(?=Package:\s)", text, maxsplit=1)
     if len(parts) < 2:
         # No Package stanza yet — nothing to fix.
         return text, notes
     head, pkg = parts[0], parts[1]
-    if re.search(r"^Architecture:\s*\S", pkg, re.M):
-        return text, notes
+    m = re.search(r"^Architecture:\s*(\S+)", pkg, re.M)
+    if m:
+        cur = m.group(1)
+        if cur == want:
+            return text, notes
+        pkg2 = re.sub(
+            r"^Architecture:\s*\S+",
+            f"Architecture: {want}",
+            pkg,
+            count=1,
+            flags=re.M,
+        )
+        notes.append(f"Architecture: {cur} → {want}")
+        if not head.endswith("\n"):
+            head += "\n"
+        return head + pkg2, notes
     # Insert after Package: line.
     pkg2, n = re.subn(
         r"^(Package:\s*\S+[^\n]*\n)",
@@ -225,7 +246,9 @@ def ensure_debhelper_compat(text: str) -> tuple[str, list[str]]:
     return text[: m.start(2)] + body2 + text[m.end(2) :], notes
 
 
-def patch_debian_control(text: str, *, lang: str) -> tuple[str, list[str]]:
+def patch_debian_control(
+    text: str, *, lang: str, arch_binaries: bool = False
+) -> tuple[str, list[str]]:
     """Apply all debian/control fixes for *lang*. Returns (new_text, notes)."""
     notes: list[str] = []
     normalized = normalize_control_blank_lines(text)
@@ -236,9 +259,9 @@ def patch_debian_control(text: str, *, lang: str) -> tuple[str, list[str]]:
     notes.extend(n)
     text, n = ensure_build_depends(text)
     notes.extend(n)
-    text, n = ensure_architecture(text, lang=lang)
+    text, n = ensure_architecture(text, lang=lang, arch_binaries=arch_binaries)
     notes.extend(n)
-    if lang == "bash":
+    if lang == "bash" and not arch_binaries:
         text, n = ensure_bash_shlib_depends(text)
         notes.extend(n)
     # Re-normalize in case inserts disturbed stanza spacing.

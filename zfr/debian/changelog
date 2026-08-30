@@ -1,3 +1,14 @@
+zephyr (2.8.3) testing; urgency=medium
+
+  * ize/lint: batch1-3 hardening — remove project rpmbuild; skip man
+    locales without po/; accept root *.in and completions/; completion
+    stubs under completions/ (keep lang detect); fix Architecture/noarch
+    for script packages; tolerate bash+ELF hybrids.
+  * source.long on ize/engine/__init__.py (605 lines)
+    moved i18n helpers into ize/engine/i18n.py
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 30 Aug 2026 19:43:56 +0800
+
 zephyr (2.8.2) testing; urgency=medium
 
   * ize: ensure LINGUAS/.po and docs/<locale> man scaffolds for lint

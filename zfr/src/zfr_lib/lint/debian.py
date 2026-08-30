@@ -64,6 +64,14 @@ def check_debian(root: Path, lang: str, role: str) -> list[Finding]:
         )
 
     arch = pkg.get("Architecture", "")
+    has_elf = False
+    try:
+        from ..ize.rpm_files import _all_meson_texts
+
+        has_elf = bool(re.search(r"\bexecutable\s*\(", _all_meson_texts(root)))
+    except Exception:
+        has_elf = False
+
     if not arch:
         out.append(
             Finding(
@@ -75,15 +83,25 @@ def check_debian(root: Path, lang: str, role: str) -> list[Finding]:
             )
         )
     elif lang == "bash" and arch != "all":
-        out.append(
-            Finding(
-                "warn",
-                "debian.Architecture",
-                _("bash packages should be Architecture: all (got %s)") % arch,
-                rel,
-                fix=_("Architecture: all"),
+        if has_elf:
+            out.append(
+                Finding(
+                    "ok",
+                    "debian.Architecture",
+                    _("Architecture: %s (bash + Meson executable)") % arch,
+                    rel,
+                )
             )
-        )
+        else:
+            out.append(
+                Finding(
+                    "warn",
+                    "debian.Architecture",
+                    _("bash packages should be Architecture: all (got %s)") % arch,
+                    rel,
+                    fix=_("Architecture: all"),
+                )
+            )
     elif lang in ("c", "clib", "cpp", "cpplib", "rust", "go", "haskell") and arch == "all":
         out.append(
             Finding(
@@ -96,13 +114,6 @@ def check_debian(root: Path, lang: str, role: str) -> list[Finding]:
         )
     else:
         # Meson executable() means ELF binaries — Architecture: all will fail on Debian too.
-        has_elf = False
-        try:
-            from ..ize.rpm_files import _all_meson_texts
-
-            has_elf = bool(re.search(r"\bexecutable\s*\(", _all_meson_texts(root)))
-        except Exception:
-            has_elf = False
         if has_elf and arch == "all":
             out.append(
                 Finding(

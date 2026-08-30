@@ -19,7 +19,9 @@ def render_spec(root: Path, lang: str, name: str) -> str:
     if "asciidoctor" not in br:
         br.append("asciidoctor")
     req = _split_deps(pkg.get("Depends", ""))
-    if arch == "all":
+    # Script languages default to noarch even if debian/control still says any.
+    script_langs = {"bash", "python", "perl", "java", "ruby", "typescript"}
+    if arch == "all" or lang in script_langs:
         buildarch = (
             "%global debug_package %{nil}\n"
             "BuildArch:      noarch\n"

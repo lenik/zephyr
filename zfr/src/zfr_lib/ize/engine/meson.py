@@ -143,8 +143,22 @@ def patch_meson_build(ize: "Ize") -> None:
         details.append("install LICENSE/README")
 
     completions = sorted(ize.root.glob("*.bash"))
+    comp_dir = ize.root / "completions"
+    if comp_dir.is_dir():
+        completions.extend(
+            sorted(
+                p
+                for p in comp_dir.glob("*.bash")
+                if p.is_file() and not p.name.startswith(".")
+            )
+        )
     if completions:
-        names = ",\n    ".join(f"'{p.name}'" for p in completions)
+        # Prefer install_data of each path; rename to command stem.
+        entries: list[str] = []
+        for p in completions:
+            rel = p.relative_to(ize.root).as_posix()
+            entries.append(f"    '{rel}'")
+        names = ",\n".join(entries)
         block = f"""
 bash_files = [
 {names},
@@ -160,12 +174,15 @@ install_data(
 endforeach
 """
         if "bash-completion" not in text:
+            if "fs = import('fs')" not in text and "fs=import('fs')" not in text:
+                # fs.stem needs the fs module
+                text += "\nfs = import('fs')\n"
             text += block
             details.append("install bash-completion")
         else:
             new_text, nsub = re.subn(
                 r"bash_files\s*=\s*\[[^\]]*\]",
-                "bash_files = [\n    " + names + ",\n]",
+                "bash_files = [\n" + names + ",\n]",
                 text,
                 count=1,
                 flags=re.S,

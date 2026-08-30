@@ -55,12 +55,78 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
     return merge_puff(puff_paths(tmpl, stem, "src/{stem}.in", "{stem}.bash", "docs/{stem}.adoc"))
 
 def _lint(root: Path, role: str) -> list[Finding]:
-    ins = list((root / "src").glob("*.in")) if (root / "src").is_dir() else []
+    src = root / "src"
+    ins = list(src.glob("*.in")) if src.is_dir() else []
     if ins:
-        return [Finding("ok", "lang.bash.src", _("src scripts: %s") % ", ".join(p.name for p in ins))]
-    return [Finding("warn", "lang.bash.src", _("no src/*.in scripts"), "src/",
-        fix=_("Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ "
-        "and meson configure_file + install_mode rwxr-xr-x."))]
+        return [
+            Finding(
+                "ok",
+                "lang.bash.src",
+                _("src scripts: %s") % ", ".join(p.name for p in ins),
+            )
+        ]
+    # 2meson / older trees keep configured scripts at the project root.
+    skip = {"postinst.in", "prerm.in", "preinst.in", "postrm.in"}
+    root_ins = sorted(
+        p for p in root.glob("*.in") if p.is_file() and p.name not in skip
+    )
+    if root_ins:
+        return [
+            Finding(
+                "ok",
+                "lang.bash.src",
+                _("root scripts: %s") % ", ".join(p.name for p in root_ins),
+            )
+        ]
+    setup_only = sorted(
+        p.name for p in root.glob("*.in") if p.is_file() and p.name in skip
+    )
+    if setup_only:
+        return [
+            Finding(
+                "ok",
+                "lang.bash.src",
+                _("setup-only package (%s); no bindir script puffs")
+                % ", ".join(setup_only),
+            )
+        ]
+    # Hybrid C packages detected as bash (completions + scripts) need no .in.
+    meson = root / "meson.build"
+    if meson.is_file():
+        try:
+            mtxt = meson.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            mtxt = ""
+        if re.search(r"\bexecutable\s*\(", mtxt) and list(root.glob("*.c")):
+            return [
+                Finding(
+                    "ok",
+                    "lang.bash.src",
+                    _("Meson executable + .c present; script .in not required"),
+                )
+            ]
+        # Pure install_data / docs packages (no configured script puffs).
+        if "configure_file" not in mtxt and "executable" not in mtxt:
+            return [
+                Finding(
+                    "ok",
+                    "lang.bash.src",
+                    _("no configure_file/executable; script .in not required"),
+                )
+            ]
+    return [
+        Finding(
+            "warn",
+            "lang.bash.src",
+            _("no src/*.in or root *.in scripts"),
+            "src/",
+            fix=_(
+                "Keep configured scripts as src/<puff>.in (preferred) or <puff>.in "
+                "with @PACKAGE@/@VERSION@ and meson configure_file + install_mode "
+                "rwxr-xr-x."
+            ),
+        )
+    ]
 
 SPEC = LangSpec(
     name=NAME,

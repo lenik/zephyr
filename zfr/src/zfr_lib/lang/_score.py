@@ -10,11 +10,20 @@ from .. import SKIP_DIR_NAMES, is_probably_text, iter_files
 from ._spec import LangSpec
 
 _SCORE_SKIP_DIRS = SKIP_DIR_NAMES | {
+    "completions",
+    "packaging",
+    "debian",
+    "docs",
     "po",
     "locale",
+    "test",
+    "tests",
+    "rpm",
+    "rpmbuild",
+    "build",
+    "builddir",
     ".githooks",
     "githooks",
-    "debian",
 }
 
 _SKIP_SUFFIXES = {
@@ -83,9 +92,9 @@ def score_meson(scores: dict[str, float], specs: dict[str, LangSpec], text: str)
         tokens = [x.lower() for x in re.findall(r"['\"]([A-Za-z+#]+)['\"]", m.group(1))]
         for tok in tokens[1:]:
             if tok == "c":
-                _add(scores, {"c": 18.0, "clib": 18.0})
+                _add(scores, {"c": 40.0, "clib": 12.0})
             elif tok in ("cpp", "c++"):
-                _add(scores, {"cpp": 18.0, "cpplib": 18.0})
+                _add(scores, {"cpp": 40.0, "cpplib": 12.0})
             elif tok == "rust":
                 _add(scores, {"rust": 20.0})
             elif tok == "gcc":
@@ -113,10 +122,18 @@ def score_depends(scores: dict[str, float], specs: dict[str, LangSpec], depends:
 
 def score_file(scores: dict[str, float], specs: dict[str, LangSpec], path: Path) -> None:
     name = path.name.lower()
+    suffix = path.suffix.lower()
+    # Root *.bash completion stubs must not outweigh Meson project('…', 'c').
+    if suffix == ".bash":
+        try:
+            text = path.read_text(encoding="utf-8", errors="ignore")[:4000]
+        except OSError:
+            text = ""
+        if "complete " in text or "bash-completion" in text.lower():
+            return
     for spec in specs.values():
         if name in spec.name_weights:
             _add(scores, {spec.name: spec.name_weights[name]})
-    suffix = path.suffix.lower()
     ext_hits: dict[str, float] = {}
     for spec in specs.values():
         if suffix in spec.ext_weights:

@@ -70,12 +70,27 @@ def check_layout(root: Path, lang: str, role: str) -> list[Finding]:
     completions = list(root.glob("*.bash"))
     if not completions and (root / "tools").is_dir():
         completions = list((root / "tools").glob("*.bash"))
+    comp_dir = root / "completions"
+    if not completions and comp_dir.is_dir():
+        completions = [
+            p
+            for p in sorted(comp_dir.iterdir())
+            if p.is_file()
+            and not p.name.startswith(".")
+            and (
+                p.suffix in {".bash", ".in", ".sh"}
+                or p.name.endswith(".bash.in")
+            )
+        ]
     if completions:
         out.append(
             Finding(
                 "ok",
                 "layout.completion",
-                _("bash completion: %s") % ", ".join(p.name for p in completions),
+                _("bash completion: %s") % ", ".join(
+                    p.relative_to(root).as_posix() if p.parent != root else p.name
+                    for p in completions
+                ),
             )
         )
     elif role != "meta":
@@ -84,8 +99,11 @@ def check_layout(root: Path, lang: str, role: str) -> list[Finding]:
                 "warn",
                 "layout.completion",
                 _("no *.bash bash-completion script at project root"),
-                fix=_("Add <puff>.bash and install it to datadir/bash-completion/completions "
-                "renamed to the command name (see meson.build in the template)."),
+                fix=_(
+                    "Add <puff>.bash (or completions/<puff>.in) and install it to "
+                    "datadir/bash-completion/completions renamed to the command name "
+                    "(see meson.build in the template)."
+                ),
             )
         )
 
