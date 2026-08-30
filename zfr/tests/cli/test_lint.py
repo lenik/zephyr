@@ -94,6 +94,10 @@ class ZephyrLintSourceTests(unittest.TestCase):
             _expected_rel(Path("packaging/rpm/zephyr.spec"), "myproj").as_posix(),
             "packaging/rpm/myproj.spec",
         )
+        self.assertEqual(
+            _expected_rel(Path("debian/zephyr.substvars"), "myproj").as_posix(),
+            "debian/myproj.substvars",
+        )
 
         with tempfile.TemporaryDirectory(prefix="zfr-tmpl-cov-") as tmp:
             root = Path(tmp)
@@ -104,11 +108,14 @@ class ZephyrLintSourceTests(unittest.TestCase):
                 "Source: demo\n\nPackage: demo\nDescription: demo\n",
                 encoding="utf-8",
             )
+            (root / "debian" / "demo.substvars").write_text("misc:Depends=\n", encoding="utf-8")
             (root / "meson.build").write_text("project('demo')\n", encoding="utf-8")
             findings = check_template_gaps(root, "c", "app")
             msgs = " ".join(f.message for f in findings if f.code == "template.coverage")
             self.assertNotIn("commons", msgs)
             self.assertNotIn("zephyr.spec", msgs)
+            self.assertNotIn("zephyr.substvars", msgs)
+            self.assertNotIn("substvars", msgs)
             self.assertNotRegex(msgs, r"packaging/rpm/\S+\.spec")
 
     def test_warns_on_very_long_source(self) -> None:

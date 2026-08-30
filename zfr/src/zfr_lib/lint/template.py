@@ -27,16 +27,30 @@ def _project_name(root: Path) -> str:
 def _expected_rel(rel: Path, project_name: str) -> Path:
     """Map template paths that use the zephyr placeholder to the instance name.
 
-    Templates ship ``packaging/rpm/zephyr.spec``; instantiated projects use
-    ``packaging/rpm/<project>.spec`` (see ``zfr ize`` / create rename).
+    Templates ship ``packaging/rpm/zephyr.spec`` and ``debian/zephyr.substvars``;
+    instantiated projects use ``<project>.spec`` / ``<project>.substvars``.
     """
     parts = list(rel.parts)
     if not parts:
         return rel
-    if parts[-1] == "zephyr.spec":
+    name = parts[-1]
+    if name == "zephyr.spec":
         parts[-1] = f"{project_name}.spec"
         return Path(*parts)
+    if name == "zephyr.substvars":
+        parts[-1] = f"{project_name}.substvars"
+        return Path(*parts)
     return rel
+
+
+# debian/ leftovers that may appear under language templates but are not scaffolding.
+_DEBIAN_TMPL_SKIP = frozenset(
+    {
+        "debhelper-build-stamp",
+        "files",
+        "substvars",  # unprefixed leftover
+    }
+)
 
 
 def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
@@ -77,6 +91,17 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
         # are template demos, not required project scaffolding.
         if is_example_shared_rel(rel):
             continue
+        if (
+            rel.parts
+            and rel.parts[0] == "debian"
+            and (
+                rel.name in _DEBIAN_TMPL_SKIP
+                or rel.name.endswith(".debhelper")
+                or rel.name.endswith(".debhelper.log")
+                or rel.name.endswith(".buildinfo")
+            )
+        ):
+            continue
         expected = _expected_rel(rel, name)
         if (root / expected).exists():
             continue
@@ -100,7 +125,8 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
             _("language template %(lang)s has extra scaffolding not in this tree: %(preview)s%(more)s")
             % {"lang": lang, "preview": preview, "more": more},
             fix=_("Compare with the %(lang)s template under pkgdatadir. Copy missing debian/docs/src/packaging "
-            "files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` puffs. "
+            "files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; "
+            "debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. "
             "Do not copy build/ or debian leftover stamp files. "
             "Example commons modules are optional.") % {"lang": lang, "name": name},
         )
