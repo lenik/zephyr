@@ -140,8 +140,8 @@ msgid ""
 "write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
 "rpm; usually $HOME/rpmbuild)"
 msgstr ""
-"Archiv nach DIR schreiben (Standard: meson-dist oder %_topdir/SOURCES ($HOME/rpmbuild) mit --"
-"rpm)"
+"Archiv nach DIR schreiben (Standard: meson-dist oder %_topdir/SOURCES ($HOME/"
+"rpmbuild) mit --rpm)"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -157,11 +157,11 @@ msgstr "Archivformat (Standard: xz)"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
-"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES ($HOME/"
+"rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"Archiv NAME-VERSION.tar.xz benennen und nach %_topdir/SOURCES ($HOME/rpmbuild) schreiben, "
-"sofern -o nicht angegeben"
+"Archiv NAME-VERSION.tar.xz benennen und nach %_topdir/SOURCES ($HOME/"
+"rpmbuild) schreiben, sofern -o nicht angegeben"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"
@@ -1620,3 +1620,278 @@ msgstr ""
 #: src/zfr_lib/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
 msgstr "RPM-kompatible Version ausgeben (Bindestriche zu Unterstrichen)"
+
+#: src/zfr_lib/locale_cmd/__init__.py:37
+msgid "no implemented locales (po/LINGUAS + po/*.po)"
+msgstr "keine implementierten Locales (po/LINGUAS + po/*.po)"
+
+#: src/zfr_lib/locale_cmd/__init__.py:49
+#, python-format
+msgid "tier %(tier)s"
+msgstr "Stufe %(tier)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:52
+#, python-format
+msgid "derived from: %(parent)s"
+msgstr "abgeleitet von: %(parent)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:55
+#, python-format
+msgid "fallback chain: %(chain)s"
+msgstr "Fallback-Kette: %(chain)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:58
+#, python-format
+msgid "children (->): %(kids)s"
+msgstr "Kinder (->): %(kids)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:62
+#, python-format
+msgid "catalog: %(path)s"
+msgstr "Katalog: %(path)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:64
+#, python-format
+msgid "po stats: %(translated)d/%(total)d translated, %(missing)d missing"
+msgstr "PO-Statistik: %(translated)d/%(total)d übersetzt, %(missing)d fehlend"
+
+#: src/zfr_lib/locale_cmd/__init__.py:67
+msgid "no .po catalog in this project"
+msgstr "kein .po-Katalog in diesem Projekt"
+
+#: src/zfr_lib/locale_cmd/__init__.py:85
+#, python-format
+msgid "locale not found: %s"
+msgstr "Locale nicht gefunden: %s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:98
+#, python-format
+msgid "would derive %d file(s)"
+msgstr "würde %d Datei(en) ableiten"
+
+#: src/zfr_lib/locale_cmd/__init__.py:106
+msgid "manage implemented gettext locales"
+msgstr "implementierte gettext-Locales verwalten"
+
+#: src/zfr_lib/locale_cmd/__init__.py:108
+msgid ""
+"List, add, delete, and derive locales in the current project. Use zfr "
+"translate to query or update message strings."
+msgstr ""
+"Locales im Projekt auflisten, hinzufügen, löschen und ableiten. Mit zfr "
+"translate Zeichenketten abfragen oder aktualisieren."
+
+#: src/zfr_lib/locale_cmd/__init__.py:118
+msgid "list all implemented locales in this project"
+msgstr "alle implementierten Locales in diesem Projekt auflisten"
+
+#: src/zfr_lib/locale_cmd/__init__.py:124
+msgid "delete a locale (LINGUAS, .po, docs/)"
+msgstr "Locale löschen (LINGUAS, .po, docs/)"
+
+#: src/zfr_lib/locale_cmd/__init__.py:130
+msgid "add a new locale"
+msgstr "neue Locale hinzufügen"
+
+#: src/zfr_lib/locale_cmd/__init__.py:135
+msgid "derive child locale PO/man files from parents"
+msgstr "untergeordnete PO-/Man-Dateien von Eltern ableiten"
+
+#: src/zfr_lib/locale_cmd/__init__.py:137
+msgid "with --derive, print only"
+msgstr "mit --derive, nur anzeigen"
+
+#: src/zfr_lib/locale_cmd/__init__.py:138
+msgid "with --derive, overwrite existing"
+msgstr "mit --derive, Vorhandenes überschreiben"
+
+#: src/zfr_lib/locale_cmd/__init__.py:139
+msgid "locale to inspect"
+msgstr "zu prüfende Locale"
+
+#: src/zfr_lib/translate_cmd/__init__.py:36
+msgid "poedit not found in PATH"
+msgstr "poedit nicht in PATH gefunden"
+
+#: src/zfr_lib/translate_cmd/__init__.py:39
+#, python-format
+msgid "file not found: %s"
+msgstr "Datei nicht gefunden: %s"
+
+#: src/zfr_lib/translate_cmd/__init__.py:92
+#, python-format
+msgid "no catalog for locale: %s"
+msgstr "kein Katalog für Locale: %s"
+
+#: src/zfr_lib/translate_cmd/__init__.py:99
+msgid "query and update gettext message strings"
+msgstr "gettext-Nachrichten abfragen und aktualisieren"
+
+#: src/zfr_lib/translate_cmd/__init__.py:101
+msgid ""
+"Look up translations for TEXT across implemented locales, or update a single "
+"locale catalog. Remaining arguments are joined with spaces."
+msgstr ""
+"Übersetzungen für TEXT in implementierten Locales suchen oder ein Katalog "
+"aktualisieren. Restliche Argumente werden mit Leerzeichen verbunden."
+
+#: src/zfr_lib/translate_cmd/__init__.py:113
+msgid "use poedit to import edits from FILE"
+msgstr "poedit verwenden, um Bearbeitungen aus DATEI zu importieren"
+
+#: src/zfr_lib/translate_cmd/__init__.py:119
+msgid "query LANG only (default: all implemented; ignored for --import)"
+msgstr "nur LANG abfragen (Standard: alle; bei --import ignoriert)"
+
+#: src/zfr_lib/translate_cmd/__init__.py:125
+msgid "update LANG with TRANSLATION (stdin if omitted)"
+msgstr "LANG mit ÜBERSETZUNG aktualisieren (stdin falls fehlend)"
+
+#: src/zfr_lib/translate_cmd/__init__.py:131
+msgid "list all message ids (msgids)"
+msgstr "alle Nachrichten-IDs (msgids) auflisten"
+
+#: src/zfr_lib/translate_cmd/__init__.py:137
+msgid "list msgids/translations containing REGEX (keys only with -k)"
+msgstr "msgids/Übersetzungen mit REGEX auflisten (nur Schlüssel mit -k)"
+
+#: src/zfr_lib/translate_cmd/__init__.py:139
+msgid "TEXT [TRANSLATION]"
+msgstr "TEXT [ÜBERSETZUNG]"
+
+#: src/zfr_lib/translate_cmd/__init__.py:154
+msgid "-k or TEXT required with --match"
+msgstr "-k oder TEXT mit --match erforderlich"
+
+#: src/zfr_lib/translate_cmd/__init__.py:161
+msgid "TEXT required with --update"
+msgstr "TEXT mit --update erforderlich"
+
+#: src/zfr_lib/translate_cmd/__init__.py:166
+msgid "TRANSLATION required (args or stdin) with --update"
+msgstr "ÜBERSETZUNG erforderlich (Argumente oder stdin) mit --update"
+
+#: src/zfr_lib/translate_cmd/__init__.py:177
+msgid "TEXT required"
+msgstr "TEXT erforderlich"
+
+#: src/zfr_lib/lint/report.py:119
+msgid ""
+"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I "
+"primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-"
+"derive via zfr locale. Defaults in .config/zfr/lint.options."
+msgstr ""
+"i18n: englische Quelle; zfr lint -l/--l10n-level L0–L3 (Standard L1). L1=10 "
+"Locales, L2=20, L3=30. Vorgaben in .config/zfr/lint.options."
+
+#: src/zfr_lib/lint/i18n_check.py:127
+#, python-format
+msgid ""
+"Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy "
+"es→es_MX, pt→pt_BR). Run `zfr locale --derive` to auto-generate child "
+"locales."
+msgstr ""
+"Stufe %(level)s erfordert: %(locales)s (Quelle %(source)s; zh-cn→zh_CN, zh-"
+"tw→zh_TW). Hängen Sie die fehlenden Zeilen an LINGUAS an und fügen Sie "
+"passende po/<locale>.po hinzu."
+
+#: src/zfr_lib/lint/i18n_check.py:142
+#, python-format
+msgid "po/LINGUAS covers %s primary locale set"
+msgstr "po/LINGUAS deckt primäres Locale-Set %s ab"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:97
+#, python-format
+msgid "would build %d derived locale file(s)"
+msgstr "würde %d abgeleitete Locale-Datei(en) erzeugen"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:107
+msgid ""
+"List, add, delete, and build derived locales in the current project. Use zfr "
+"translate to query or update message strings."
+msgstr ""
+"Abgeleitete Locales im Projekt auflisten, hinzufügen, löschen und erzeugen. "
+"Mit zfr translate Zeichenketten abfragen oder aktualisieren."
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:135
+msgid ""
+"build derived locale PO/man files from parents (skip locales in LINGUAS)"
+msgstr ""
+"abgeleitete PO-/Man-Dateien von Eltern erzeugen (in LINGUAS gelistete "
+"Locales überspringen)"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:137
+msgid "with --build, print only"
+msgstr "mit --build, nur anzeigen"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:138
+msgid "with --build, overwrite existing"
+msgstr "mit --build, Vorhandenes überschreiben"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/translate/__init__.py:168
+msgid "list msgids matching REGEX (keys only with -k)"
+msgstr "msgids auflisten, die REGEX entsprechen (nur Schlüssel mit -k)"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/translate/__init__.py:174
+msgid "list msgids/translations matching REGEX (keys only with -k)"
+msgstr ""
+"msgids/Übersetzungen auflisten, die REGEX entsprechen (nur Schlüssel mit -k)"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/translate/__init__.py:194
+msgid "use only one of --match or --search"
+msgstr "nur --match oder --search verwenden"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:113
+msgid ""
+"Check the current zephyr project for missing files and packaging/style "
+"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
+"is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-"
+"integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain "
+"interactive shell. Override with -i/-I."
+msgstr ""
+"Aktuelles Zephyr-Projekt auf fehlende Dateien und Paketierungs-/Stilfehler "
+"prüfen. Läuft von cwd zu den Elternverzeichnissen. CSR-Farben bei TTY. Stil-"
+"Vertrags-Blöcke standardmäßig für nicht-interaktive Ausgabe und KI-"
+"Terminals; aus für normale interaktive Shell. Mit -i/-I überschreiben."
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:139
+msgid ""
+"show zephyr style-contract / next-steps blurbs (default for pipes and AI "
+"terminals)"
+msgstr ""
+"Stil-Vertrags-/Nächste-Schritte-Blöcke anzeigen (Standard für Pipes und KI-"
+"Terminals)"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:146
+msgid ""
+"hide zephyr style-contract / next-steps blurbs (default for plain "
+"interactive shell)"
+msgstr ""
+"Stil-Vertrags-/Nächste-Schritte-Blöcke ausblenden (Standard für normale "
+"interaktive Shell)"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:155
+msgid "suppress rule ID(s) or code(s), comma-separated (repeatable)"
+msgstr "Regel-ID(s) oder Code(s) unterdrücken, kommagetrennt (wiederholbar)"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/report.py:113
+msgid ""
+"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I "
+"primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-"
+"derive via zfr i18n -b. Rule IDs in docs/lint-std.md; suppress with -u/--"
+"uncheck or .config/zfr/lint.options."
+msgstr ""
+"i18n: englische Quelle; zfr lint -l/--l10n-level L0–L3 (Standard L1). "
+"L1=Tier-I-Primärsprachen (8), L2=+Tier II (17), L3=+Tier III (35). Kinder-"
+"Locales werden via zfr i18n -b erzeugt. Regel-IDs in docs/lint-std.md; "
+"unterdrücken mit -u/--uncheck oder .config/zfr/lint.options."
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/i18n_check.py:127
+#, python-format
+msgid ""
+"Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy "
+"es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
+msgstr ""
+"Stufe %(level)s erfordert Primärsprachen: %(locales)s (Quelle %(source)s; "
+"Legacy es→es_MX, pt→pt_BR). `zfr i18n -b` ausführen, um Kinder-Locales "
+"automatisch zu erzeugen."

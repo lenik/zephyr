@@ -153,11 +153,11 @@ msgstr "アーカイブ形式（デフォルト: xz）"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
-"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES ($HOME/"
+"rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"アーカイブを NAME-VERSION.tar.xz と命名し、-o がなければ %_topdir/SOURCES ($HOME/rpmbuild) に"
-"書き込む"
+"アーカイブを NAME-VERSION.tar.xz と命名し、-o がなければ %_topdir/SOURCES "
+"($HOME/rpmbuild) に書き込む"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"
@@ -1617,3 +1617,271 @@ msgstr "debian/changelog を使用（git または .git が利用不可のとき
 #: src/zfr_lib/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
 msgstr "RPM 互換 Version を表示（ハイフンをアンダースコアに）"
+
+#: src/zfr_lib/locale_cmd/__init__.py:37
+msgid "no implemented locales (po/LINGUAS + po/*.po)"
+msgstr "実装済みロケールなし（po/LINGUAS + po/*.po）"
+
+#: src/zfr_lib/locale_cmd/__init__.py:49
+#, python-format
+msgid "tier %(tier)s"
+msgstr "段階 %(tier)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:52
+#, python-format
+msgid "derived from: %(parent)s"
+msgstr "派生元: %(parent)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:55
+#, python-format
+msgid "fallback chain: %(chain)s"
+msgstr "フォールバック: %(chain)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:58
+#, python-format
+msgid "children (->): %(kids)s"
+msgstr "子 (->): %(kids)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:62
+#, python-format
+msgid "catalog: %(path)s"
+msgstr "カタログ: %(path)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:64
+#, python-format
+msgid "po stats: %(translated)d/%(total)d translated, %(missing)d missing"
+msgstr "PO 統計: %(translated)d/%(total)d 翻訳済み、%(missing)d 未訳"
+
+#: src/zfr_lib/locale_cmd/__init__.py:67
+msgid "no .po catalog in this project"
+msgstr "このプロジェクトに .po カタログなし"
+
+#: src/zfr_lib/locale_cmd/__init__.py:85
+#, python-format
+msgid "locale not found: %s"
+msgstr "ロケールが見つかりません: %s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:98
+#, python-format
+msgid "would derive %d file(s)"
+msgstr "%d ファイルを派生予定"
+
+#: src/zfr_lib/locale_cmd/__init__.py:106
+msgid "manage implemented gettext locales"
+msgstr "実装済み gettext ロケールを管理"
+
+#: src/zfr_lib/locale_cmd/__init__.py:108
+msgid ""
+"List, add, delete, and derive locales in the current project. Use zfr "
+"translate to query or update message strings."
+msgstr ""
+"現在のプロジェクトのロケールを一覧・追加・削除・派生します。zfr translate で"
+"文字列を照会・更新します。"
+
+#: src/zfr_lib/locale_cmd/__init__.py:118
+msgid "list all implemented locales in this project"
+msgstr "このプロジェクトで実装済みのロケールを一覧"
+
+#: src/zfr_lib/locale_cmd/__init__.py:124
+msgid "delete a locale (LINGUAS, .po, docs/)"
+msgstr "ロケールを削除（LINGUAS、.po、docs/）"
+
+#: src/zfr_lib/locale_cmd/__init__.py:130
+msgid "add a new locale"
+msgstr "新しいロケールを追加"
+
+#: src/zfr_lib/locale_cmd/__init__.py:135
+msgid "derive child locale PO/man files from parents"
+msgstr "親から子ロケールの PO/man を派生"
+
+#: src/zfr_lib/locale_cmd/__init__.py:137
+msgid "with --derive, print only"
+msgstr "--derive 時は表示のみ"
+
+#: src/zfr_lib/locale_cmd/__init__.py:138
+msgid "with --derive, overwrite existing"
+msgstr "--derive 時は既存を上書き"
+
+#: src/zfr_lib/locale_cmd/__init__.py:139
+msgid "locale to inspect"
+msgstr "調べるロケール"
+
+#: src/zfr_lib/translate_cmd/__init__.py:36
+msgid "poedit not found in PATH"
+msgstr "PATH に poedit がありません"
+
+#: src/zfr_lib/translate_cmd/__init__.py:39
+#, python-format
+msgid "file not found: %s"
+msgstr "ファイルが見つかりません: %s"
+
+#: src/zfr_lib/translate_cmd/__init__.py:92
+#, python-format
+msgid "no catalog for locale: %s"
+msgstr "ロケールのカタログなし: %s"
+
+#: src/zfr_lib/translate_cmd/__init__.py:99
+msgid "query and update gettext message strings"
+msgstr "gettext メッセージ文字列の照会と更新"
+
+#: src/zfr_lib/translate_cmd/__init__.py:101
+msgid ""
+"Look up translations for TEXT across implemented locales, or update a single "
+"locale catalog. Remaining arguments are joined with spaces."
+msgstr ""
+"実装済みロケールで TEXT の訳を検索、またはカタログを更新します。残りの引数は"
+"空白で連結されます。"
+
+#: src/zfr_lib/translate_cmd/__init__.py:113
+msgid "use poedit to import edits from FILE"
+msgstr "poedit で FILE から編集をインポート"
+
+#: src/zfr_lib/translate_cmd/__init__.py:119
+msgid "query LANG only (default: all implemented; ignored for --import)"
+msgstr "LANG のみ照会（既定: すべて; --import では無視）"
+
+#: src/zfr_lib/translate_cmd/__init__.py:125
+msgid "update LANG with TRANSLATION (stdin if omitted)"
+msgstr "LANG を TRANSLATION で更新（省略時は stdin）"
+
+#: src/zfr_lib/translate_cmd/__init__.py:131
+msgid "list all message ids (msgids)"
+msgstr "すべてのメッセージ ID (msgid) を一覧"
+
+#: src/zfr_lib/translate_cmd/__init__.py:137
+msgid "list msgids/translations containing REGEX (keys only with -k)"
+msgstr "REGEX を含む msgid/訳文を一覧（-k でキーのみ）"
+
+#: src/zfr_lib/translate_cmd/__init__.py:139
+msgid "TEXT [TRANSLATION]"
+msgstr "TEXT [訳文]"
+
+#: src/zfr_lib/translate_cmd/__init__.py:154
+msgid "-k or TEXT required with --match"
+msgstr "--match には -k または TEXT が必要です"
+
+#: src/zfr_lib/translate_cmd/__init__.py:161
+msgid "TEXT required with --update"
+msgstr "--update には TEXT が必要です"
+
+#: src/zfr_lib/translate_cmd/__init__.py:166
+msgid "TRANSLATION required (args or stdin) with --update"
+msgstr "--update には TRANSLATION が必要です（引数または stdin）"
+
+#: src/zfr_lib/translate_cmd/__init__.py:177
+msgid "TEXT required"
+msgstr "TEXT が必要です"
+
+#: src/zfr_lib/lint/report.py:119
+msgid ""
+"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I "
+"primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-"
+"derive via zfr locale. Defaults in .config/zfr/lint.options."
+msgstr ""
+"i18n: 英語が原文。zfr lint -l/--l10n-level L0–L3（既定 L1）。L1=10 ロケール、"
+"L2=20、L3=30。既定は .config/zfr/lint.options。"
+
+#: src/zfr_lib/lint/i18n_check.py:127
+#, python-format
+msgid ""
+"Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy "
+"es→es_MX, pt→pt_BR). Run `zfr locale --derive` to auto-generate child "
+"locales."
+msgstr ""
+"レベル %(level)s が必要とするロケール: %(locales)s（ソース %(source)s。zh-"
+"cn→zh_CN, zh-tw→zh_TW）。欠けている行を LINGUAS に追記し、対応する po/"
+"<locale>.po を追加してください。"
+
+#: src/zfr_lib/lint/i18n_check.py:142
+#, python-format
+msgid "po/LINGUAS covers %s primary locale set"
+msgstr "po/LINGUAS は %s の主要ロケール集合をカバー"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:97
+#, python-format
+msgid "would build %d derived locale file(s)"
+msgstr "派生ロケールファイルを %d 件生成します"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:107
+msgid ""
+"List, add, delete, and build derived locales in the current project. Use zfr "
+"translate to query or update message strings."
+msgstr ""
+"現在のプロジェクトで派生ロケールを一覧・追加・削除・生成します。zfr "
+"translate で文字列を照会・更新します。"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:135
+msgid ""
+"build derived locale PO/man files from parents (skip locales in LINGUAS)"
+msgstr "親から派生 PO/man を生成（LINGUAS に列挙されたロケールはスキップ）"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:137
+msgid "with --build, print only"
+msgstr "--build 時は表示のみ"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:138
+msgid "with --build, overwrite existing"
+msgstr "--build 時は既存を上書き"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/translate/__init__.py:168
+msgid "list msgids matching REGEX (keys only with -k)"
+msgstr "REGEX に一致する msgid を一覧（-k でキーのみ）"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/translate/__init__.py:174
+msgid "list msgids/translations matching REGEX (keys only with -k)"
+msgstr "REGEX に一致する msgid/訳文を一覧（-k でキーのみ）"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/translate/__init__.py:194
+msgid "use only one of --match or --search"
+msgstr "--match または --search のいずれか一方のみ使用"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:113
+msgid ""
+"Check the current zephyr project for missing files and packaging/style "
+"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
+"is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-"
+"integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain "
+"interactive shell. Override with -i/-I."
+msgstr ""
+"現在の zephyr プロジェクトの欠落ファイルとパッケージング/スタイルを検査。cwd "
+"から親へ。TTY では CSR 色。スタイル契約ブロックは非対話出力と AI 端末で既定オ"
+"ン、通常の対話シェルではオフ。-i/-I で上書き。"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:139
+msgid ""
+"show zephyr style-contract / next-steps blurbs (default for pipes and AI "
+"terminals)"
+msgstr ""
+"zephyr スタイル契約/次の手順の説明を表示（パイプと AI 端末では既定でオン）"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:146
+msgid ""
+"hide zephyr style-contract / next-steps blurbs (default for plain "
+"interactive shell)"
+msgstr ""
+"zephyr スタイル契約/次の手順の説明を非表示（通常の対話シェルでは既定でオフ）"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:155
+msgid "suppress rule ID(s) or code(s), comma-separated (repeatable)"
+msgstr "抑止する規則 ID またはコード（カンマ区切り、繰り返し可）"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/report.py:113
+msgid ""
+"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I "
+"primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-"
+"derive via zfr i18n -b. Rule IDs in docs/lint-std.md; suppress with -u/--"
+"uncheck or .config/zfr/lint.options."
+msgstr ""
+"i18n: 英語ソース; zfr lint -l/--l10n-level L0–L3（既定 L1）。L1=第 I 段階プラ"
+"イマリ (8)、L2=+第 II 段階 (17)、L3=+第 III 段階 (35)。子ロケールは zfr i18n "
+"-b で自動生成。規則 ID は docs/lint-std.md;-u/--uncheck または .config/zfr/"
+"lint.options で抑制。"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/i18n_check.py:127
+#, python-format
+msgid ""
+"Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy "
+"es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
+msgstr ""
+"レベル %(level)s にはプライマリが必要: %(locales)s（ソース %(source)s; 旧 "
+"es→es_MX, pt→pt_BR）。`zfr i18n -b` で子ロケールを自動生成。"

@@ -133,7 +133,8 @@ msgid ""
 "write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
 "rpm; usually $HOME/rpmbuild)"
 msgstr ""
-"将归档写入 DIR（默认：meson-dist，或使用 --rpm 时写入 %_topdir/SOURCES ($HOME/rpmbuild)）"
+"将归档写入 DIR（默认：meson-dist，或使用 --rpm 时写入 %_topdir/SOURCES "
+"($HOME/rpmbuild)）"
 
 #: src/zfr_lib/dist.py:70
 msgid ""
@@ -148,10 +149,11 @@ msgstr "归档格式（默认：xz）"
 
 #: src/zfr_lib/dist.py:86
 msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
-"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
+"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES ($HOME/"
+"rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr ""
-"将归档命名为 NAME-VERSION.tar.xz 并写入 %_topdir/SOURCES ($HOME/rpmbuild)（除非指定 -o）"
+"将归档命名为 NAME-VERSION.tar.xz 并写入 %_topdir/SOURCES ($HOME/rpmbuild)（除"
+"非指定 -o）"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"
@@ -1534,3 +1536,268 @@ msgstr "使用 debian/changelog（git 或 .git 不可用时为默认）"
 #: src/zfr_lib/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
 msgstr "打印 RPM 兼容 Version（连字符映射为下划线）"
+
+#: src/zfr_lib/locale_cmd/__init__.py:37
+msgid "no implemented locales (po/LINGUAS + po/*.po)"
+msgstr "无已实现语言环境（po/LINGUAS + po/*.po）"
+
+#: src/zfr_lib/locale_cmd/__init__.py:49
+#, python-format
+msgid "tier %(tier)s"
+msgstr "梯队 %(tier)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:52
+#, python-format
+msgid "derived from: %(parent)s"
+msgstr "派生自：%(parent)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:55
+#, python-format
+msgid "fallback chain: %(chain)s"
+msgstr "回退链：%(chain)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:58
+#, python-format
+msgid "children (->): %(kids)s"
+msgstr "子语言 (->)：%(kids)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:62
+#, python-format
+msgid "catalog: %(path)s"
+msgstr "目录：%(path)s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:64
+#, python-format
+msgid "po stats: %(translated)d/%(total)d translated, %(missing)d missing"
+msgstr "PO 统计：%(translated)d/%(total)d 已译，%(missing)d 缺失"
+
+#: src/zfr_lib/locale_cmd/__init__.py:67
+msgid "no .po catalog in this project"
+msgstr "此项目中无 .po 目录"
+
+#: src/zfr_lib/locale_cmd/__init__.py:85
+#, python-format
+msgid "locale not found: %s"
+msgstr "未找到语言环境：%s"
+
+#: src/zfr_lib/locale_cmd/__init__.py:98
+#, python-format
+msgid "would derive %d file(s)"
+msgstr "将派生 %d 个文件"
+
+#: src/zfr_lib/locale_cmd/__init__.py:106
+msgid "manage implemented gettext locales"
+msgstr "管理已实现的 gettext 语言环境"
+
+#: src/zfr_lib/locale_cmd/__init__.py:108
+msgid ""
+"List, add, delete, and derive locales in the current project. Use zfr "
+"translate to query or update message strings."
+msgstr ""
+"列出、添加、删除并派生当前项目的语言环境。使用 zfr translate 查询或更新消息字"
+"符串。"
+
+#: src/zfr_lib/locale_cmd/__init__.py:118
+msgid "list all implemented locales in this project"
+msgstr "列出此项目中已实现的所有语言环境"
+
+#: src/zfr_lib/locale_cmd/__init__.py:124
+msgid "delete a locale (LINGUAS, .po, docs/)"
+msgstr "删除语言环境（LINGUAS、.po、docs/）"
+
+#: src/zfr_lib/locale_cmd/__init__.py:130
+msgid "add a new locale"
+msgstr "添加新语言环境"
+
+#: src/zfr_lib/locale_cmd/__init__.py:135
+msgid "derive child locale PO/man files from parents"
+msgstr "从父语言派生子 locale 的 PO/man 文件"
+
+#: src/zfr_lib/locale_cmd/__init__.py:137
+msgid "with --derive, print only"
+msgstr "配合 --derive，仅打印"
+
+#: src/zfr_lib/locale_cmd/__init__.py:138
+msgid "with --derive, overwrite existing"
+msgstr "配合 --derive，覆盖已有文件"
+
+#: src/zfr_lib/locale_cmd/__init__.py:139
+msgid "locale to inspect"
+msgstr "要检查的语言环境"
+
+#: src/zfr_lib/translate_cmd/__init__.py:36
+msgid "poedit not found in PATH"
+msgstr "PATH 中未找到 poedit"
+
+#: src/zfr_lib/translate_cmd/__init__.py:39
+#, python-format
+msgid "file not found: %s"
+msgstr "未找到文件：%s"
+
+#: src/zfr_lib/translate_cmd/__init__.py:92
+#, python-format
+msgid "no catalog for locale: %s"
+msgstr "语言环境无目录：%s"
+
+#: src/zfr_lib/translate_cmd/__init__.py:99
+msgid "query and update gettext message strings"
+msgstr "查询并更新 gettext 消息字符串"
+
+#: src/zfr_lib/translate_cmd/__init__.py:101
+msgid ""
+"Look up translations for TEXT across implemented locales, or update a single "
+"locale catalog. Remaining arguments are joined with spaces."
+msgstr ""
+"在已实现语言环境中查找 TEXT 的翻译，或更新单个目录。其余参数以空格连接。"
+
+#: src/zfr_lib/translate_cmd/__init__.py:113
+msgid "use poedit to import edits from FILE"
+msgstr "使用 poedit 从 FILE 导入编辑"
+
+#: src/zfr_lib/translate_cmd/__init__.py:119
+msgid "query LANG only (default: all implemented; ignored for --import)"
+msgstr "仅查询 LANG（默认：全部；--import 时忽略）"
+
+#: src/zfr_lib/translate_cmd/__init__.py:125
+msgid "update LANG with TRANSLATION (stdin if omitted)"
+msgstr "用 TRANSLATION 更新 LANG（省略时从 stdin 读取）"
+
+#: src/zfr_lib/translate_cmd/__init__.py:131
+msgid "list all message ids (msgids)"
+msgstr "列出所有消息 ID (msgid)"
+
+#: src/zfr_lib/translate_cmd/__init__.py:137
+msgid "list msgids/translations containing REGEX (keys only with -k)"
+msgstr "列出含 REGEX 的 msgid/译文（-k 时仅键）"
+
+#: src/zfr_lib/translate_cmd/__init__.py:139
+msgid "TEXT [TRANSLATION]"
+msgstr "TEXT [译文]"
+
+#: src/zfr_lib/translate_cmd/__init__.py:154
+msgid "-k or TEXT required with --match"
+msgstr "使用 --match 时需要 -k 或 TEXT"
+
+#: src/zfr_lib/translate_cmd/__init__.py:161
+msgid "TEXT required with --update"
+msgstr "使用 --update 时需要 TEXT"
+
+#: src/zfr_lib/translate_cmd/__init__.py:166
+msgid "TRANSLATION required (args or stdin) with --update"
+msgstr "使用 --update 时需要 TRANSLATION（参数或 stdin）"
+
+#: src/zfr_lib/translate_cmd/__init__.py:177
+msgid "TEXT required"
+msgstr "需要 TEXT"
+
+#: src/zfr_lib/lint/report.py:119
+msgid ""
+"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I "
+"primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-"
+"derive via zfr locale. Defaults in .config/zfr/lint.options."
+msgstr ""
+"i18n：英文为原文；zfr lint -l/--l10n-level L0–L3（默认 L1）。L1=10 个语言，"
+"L2=20，L3=30。默认在 .config/zfr/lint.options。"
+
+#: src/zfr_lib/lint/i18n_check.py:127
+#, python-format
+msgid ""
+"Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy "
+"es→es_MX, pt→pt_BR). Run `zfr locale --derive` to auto-generate child "
+"locales."
+msgstr ""
+"级别 %(level)s 需要：%(locales)s（源语言 %(source)s；zh-cn→zh_CN, zh-"
+"tw→zh_TW）。将缺失行追加到 LINGUAS，并添加对应的 po/<locale>.po。"
+
+#: src/zfr_lib/lint/i18n_check.py:142
+#, python-format
+msgid "po/LINGUAS covers %s primary locale set"
+msgstr "po/LINGUAS 覆盖 %s 主干语言集"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:97
+#, python-format
+msgid "would build %d derived locale file(s)"
+msgstr "将生成 %d 个派生 locale 文件"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:107
+msgid ""
+"List, add, delete, and build derived locales in the current project. Use zfr "
+"translate to query or update message strings."
+msgstr ""
+"列出、添加、删除并生成当前项目的派生语言环境。使用 zfr translate 查询或更新消"
+"息字符串。"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:135
+msgid ""
+"build derived locale PO/man files from parents (skip locales in LINGUAS)"
+msgstr ""
+"从父语言生成派生 locale 的 PO/man 文件（跳过 LINGUAS 中列出的语言环境）"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:137
+msgid "with --build, print only"
+msgstr "配合 --build，仅打印"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:138
+msgid "with --build, overwrite existing"
+msgstr "配合 --build，覆盖已有文件"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/translate/__init__.py:168
+msgid "list msgids matching REGEX (keys only with -k)"
+msgstr "列出匹配 REGEX 的 msgid（-k 时仅键）"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/translate/__init__.py:174
+msgid "list msgids/translations matching REGEX (keys only with -k)"
+msgstr "列出匹配 REGEX 的 msgid/译文（-k 时仅键）"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/translate/__init__.py:194
+msgid "use only one of --match or --search"
+msgstr "只能使用 --match 或 --search 之一"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:113
+msgid ""
+"Check the current zephyr project for missing files and packaging/style "
+"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
+"is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-"
+"integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain "
+"interactive shell. Override with -i/-I."
+msgstr ""
+"检查当前 zephyr 项目的缺失文件与打包/风格问题；从 cwd 向父目录遍历。stdout "
+"为 TTY 时使用 CSR 颜色。风格约定说明块默认对非交互输出与 AI 终端（Cursor、VS "
+"Code、Windsurf 等）开启，普通交互式 shell 关闭。可用 -i/-I 覆盖。"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:139
+msgid ""
+"show zephyr style-contract / next-steps blurbs (default for pipes and AI "
+"terminals)"
+msgstr "显示 zephyr 风格约定/后续步骤说明（管道与 AI 终端默认开启）"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:146
+msgid ""
+"hide zephyr style-contract / next-steps blurbs (default for plain "
+"interactive shell)"
+msgstr "隐藏 zephyr 风格约定/后续步骤说明（普通交互式 shell 默认关闭）"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:155
+msgid "suppress rule ID(s) or code(s), comma-separated (repeatable)"
+msgstr "抑制规则 ID 或代码，逗号分隔（可重复）"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/report.py:113
+msgid ""
+"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I "
+"primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-"
+"derive via zfr i18n -b. Rule IDs in docs/lint-std.md; suppress with -u/--"
+"uncheck or .config/zfr/lint.options."
+msgstr ""
+"i18n：英语源；zfr lint -l/--l10n-level L0–L3（默认 L1）。L1=第一梯队主干"
+"（8），L2=+第二梯队（17），L3=+第三梯队（35）。子语言环境通过 zfr i18n -b 自"
+"动生成。规则 ID 见 docs/lint-std.md；可用 -u/--uncheck 或 .config/zfr/"
+"lint.options 抑制。"
+
+#: /home/cursor/zephyr/zfr/src/zfr_lib/lint/i18n_check.py:127
+#, python-format
+msgid ""
+"Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy "
+"es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
+msgstr ""
+"级别 %(level)s 需要主干语言：%(locales)s（源 %(source)s；旧名 es→es_MX，"
+"pt→pt_BR）。运行 `zfr i18n -b` 自动生成子语言环境。"
