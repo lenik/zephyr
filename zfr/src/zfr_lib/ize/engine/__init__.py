@@ -109,7 +109,7 @@ class Ize:
             return
         dest.parent.mkdir(parents=True, exist_ok=True)
         copy_renamed_file(src, dest, self.pairs)
-        if dest.name in {"rules", "pre-commit"}:
+        if dest.name in {"rules", "pre-commit", "host.sh"} or dest.suffix.lower() in {".cmd", ".bat", ".ps1"}:
             mode = dest.stat().st_mode
             dest.chmod(mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 

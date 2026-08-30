@@ -1,3 +1,20 @@
+zephyr (2.8.0) testing; urgency=medium
+
+  * Packaging win32 overhaul (all language templates + meta packaging/ + zfr):
+    rename packaging/windows/ to packaging/win32/ with complete recipes —
+    mingw (<pkg>_mingw-<ver>.exe), innosetup (<pkg>-<ver>.exe), wix (<pkg>-<ver>.msi).
+    Inno Setup / WiX native recipes are build.cmd + build.ps1 (cmd.exe / PowerShell).
+  * Shared packaging/lib/host.sh + common.mk: can-local / run / dump for native or
+    cross tools on this host only. Remote .build-host sync+SSH+fetch+clean is no
+    longer in host.sh; gh-makerelease owns that path (project then $HOME
+    .config/zephyr/<packaging>.build-host; last hop build_dir / shell / preserved).
+  * Local cross where tools exist: mingw-w64 for mingw, wine+ISCC for Inno Setup,
+    optional wixl for MSI; macos/arch/freebsd Makefiles use the same local dispatch.
+  * zfr: packaging_host.py parser + tests; ize copies packaging/lib and win32
+    scaffold files from the language template.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 30 Aug 2026 18:25:00 +0800
+
 zephyr (2.7.8) testing; urgency=medium
 
   * Packaging layout: move rpm/ to packaging/rpm/ across all language templates

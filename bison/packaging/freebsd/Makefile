@@ -1,20 +1,50 @@
-# Convenience targets for FreeBSD pkg (stub)
-NAME    := zephyr
-SRCDIR  := $(abspath ../..)
-VERSION := $(shell cd "$(SRCDIR)" && { zfr version 2>/dev/null || head -n1 VERSION; })
-VERSION := $(patsubst v%,%,$(strip $(VERSION)))
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# FreeBSD pkg: <pkg>-<ver>.pkg
+#
+# Native FreeBSD: meson + pkg create.
+# Other hosts: .config/zephyr/freebsd.build-host
 
-.PHONY: stage pkg clean
+include ../lib/common.mk
+
+KIND    := freebsd
+OUTDIR  := $(CURDIR)/out
+STAGE   := $(CURDIR)/stage
+BUILD   := $(CURDIR)/build
+MANIFEST := $(CURDIR)/+MANIFEST
+ARTIFACT := $(OUTDIR)/$(NAME)-$(VERSION).pkg
+
+.PHONY: all local stage pkg clean
+
+all:
+	"$(HOST_SH)" run $(KIND) -- $(MAKE) -C "$(CURDIR)" local
+
+local: $(ARTIFACT)
 
 stage:
-	cd "$(SRCDIR)" && meson setup build --prefix=/usr/local --buildtype=plain
-	cd "$(SRCDIR)" && meson compile -C build
-	rm -rf stage && mkdir -p stage
-	cd "$(SRCDIR)" && DESTDIR="$(SRCDIR)/stage" meson install -C build
+	rm -rf "$(STAGE)" "$(BUILD)"
+	mkdir -p "$(STAGE)" "$(BUILD)"
+	cd "$(SRCDIR)" && meson setup "$(BUILD)" --prefix=/usr/local --buildtype=release
+	meson compile -C "$(BUILD)"
+	DESTDIR="$(STAGE)" meson install -C "$(BUILD)"
 
-# TODO: generate + build pkg from stage + pkg-plist
-pkg: stage
-	@echo "TODO: pkg create from stage/ ($(NAME)-$(VERSION))"
+$(MANIFEST):
+	@printf '%s\n' \
+		'name: $(NAME)' \
+		'version: $(VERSION)' \
+		'origin: devel/$(NAME)' \
+		'comment: Meson-based CLI' \
+		'www: https://github.com/lenik/zephyr' \
+		'maintainer: zephyr@bodz.net' \
+		'prefix: /usr/local' \
+		'desc: Meson-based CLI package' \
+		> "$(MANIFEST)"
+
+$(ARTIFACT): stage $(MANIFEST)
+	mkdir -p "$(OUTDIR)"
+	pkg create -M "$(MANIFEST)" -r "$(STAGE)" -o "$(OUTDIR)"
+	@echo "$(ARTIFACT)"
+
+pkg: $(ARTIFACT)
 
 clean:
-	rm -rf "$(SRCDIR)/build" "$(SRCDIR)/stage"
+	rm -rf "$(OUTDIR)" "$(STAGE)" "$(BUILD)" "$(MANIFEST)"

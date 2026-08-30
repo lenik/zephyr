@@ -1,13 +1,23 @@
-# Meta-repo packaging
+# Optional packaging
 
-Platform-specific recipes for the zephyr umbrella repository.
-Language templates ship their own `packaging/` trees under each `<lang>/` directory.
+Platform recipes aligned with `debian/`. Version: `zfr version`.
 
-| Platform | Directory | Notes |
+Local builds: `make -C packaging/<platform>` (or `… local`). `lib/host.sh`
+checks whether this host can build a target (`can-local`).
+
+Remote builds (`.config/zephyr/<packaging>.build-host`) are orchestrated by
+**gh-makerelease**, not by these Makefiles.
+
+| Platform | Directory | Build |
 |----------|-----------|-------|
-| Windows  | windows/  | stub |
-| macOS    | macos/    | stub |
-| Arch     | arch/     | PKGBUILD stub |
-| FreeBSD  | freebsd/  | Makefile stub |
+| RPM      | rpm/      | `make -C packaging/rpm srpm` |
+| Win32    | win32/    | `make -C packaging/win32` (innosetup/wix: `build.cmd` / `build.ps1`) |
+| macOS    | macos/    | `make -C packaging/macos` |
+| Arch     | arch/     | `make -C packaging/arch` |
+| FreeBSD  | freebsd/  | `make -C packaging/freebsd` |
 
-Per-language RPM specs live under `<lang>/packaging/rpm/`.
+Win32 artifacts:
+
+- `win32/mingw/` → `<pkg>_mingw-<ver>.exe`
+- `win32/innosetup/` → `<pkg>-<ver>.exe`
+- `win32/wix/` → `<pkg>-<ver>.msi`

@@ -1,28 +1,29 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # stub — align with debian/control and Meson install
 pkgname=zephyr
-pkgver=0.0.0  # overridden: $(zfr version)
+pkgver=0.0.0
 pkgrel=1
 pkgdesc="Meson-based CLI template"
 arch=('any')
 url="https://github.com/lenik/zephyr"
 license=('AGPL-3.0-or-later')
-depends=('meson' 'ninja' 'bash')
-makedepends=('asciidoctor')
-source=("$pkgname-$pkgver.tar.xz")
-sha256sums=('SKIP')
+depends=('bash')
+makedepends=('meson' 'ninja' 'asciidoctor')
+source=()
+sha256sums=()
 
 pkgver() {
-  cd "$srcdir/$pkgname-$pkgver"
+  cd "$startdir/../.."
   zfr version 2>/dev/null | sed 's/^v//' || head -n1 VERSION
 }
 
 build() {
-  cd "$srcdir/$pkgname-$pkgver"
-  meson setup build --prefix=/usr --buildtype=plain
-  meson compile -C build
+  cd "$startdir/../.."
+  meson setup build-arch --prefix=/usr --buildtype=plain
+  meson compile -C build-arch
 }
 
 package() {
-  cd "$srcdir/$pkgname-$pkgver"
-  DESTDIR="$pkgdir" meson install -C build
+  cd "$startdir/../.."
+  DESTDIR="$pkgdir" meson install -C build-arch
 }

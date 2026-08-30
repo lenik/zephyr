@@ -1,11 +1,16 @@
-# macOS packaging (stub)
+# macOS packaging
+
+Native Darwin host:
 
 ```sh
-meson setup build --prefix=/usr/local
-meson compile -C build
-DESTDIR=stage meson install -C build
+make -C packaging/macos
 ```
 
-Version: `zfr version`.
+writes `packaging/macos/out/<pkg>-<ver>.pkg` via `pkgbuild`.
 
-TODO: `pkgbuild` / `create-dmg` from `stage/usr/local`.
+On non-macOS hosts, use **gh-makerelease** with:
+
+```
+<project>/.config/zephyr/macos.build-host
+$HOME/.config/zephyr/macos.build-host
+```
