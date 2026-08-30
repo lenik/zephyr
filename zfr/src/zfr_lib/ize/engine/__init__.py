@@ -131,6 +131,8 @@ class Ize:
         self._step("ize.rpm", self.ensure_rpm)
         if self.do_subst:
             self._step("ize.subst", self.subst_versions)
+        self._step("ize.i18n.coverage", self.ensure_i18n_coverage)
+        self._step("ize.i18n.man-locale", self.ensure_man_locale_coverage)
         self._step("ize.i18n.po-nowrap", self.ensure_po_no_wrap)
         self._step("ize.i18n.derive", self.derive_i18n_locales)
         self.report()
@@ -400,6 +402,94 @@ class Ize:
             if po_no_wrap_file(po):
                 self.note("update", rel, "msgcat --no-wrap", rule="ize.i18n.po-nowrap")
 
+    def ensure_i18n_coverage(self) -> None:
+        """Add missing LINGUAS / .po entries for the project's lint l10n level."""
+        from ...l10n import linguas_for_level, project_l10n_level, resolve_present_locale
+        from ...translate.po_files import insert_locale, parse_linguas
+
+        po_dir = self.root / "po"
+        if not po_dir.is_dir():
+            return
+        level = project_l10n_level(self.root)
+        required = linguas_for_level(level)
+        if not required:
+            return
+        present = set(parse_linguas(po_dir / "LINGUAS"))
+        for loc in required:
+            resolved = resolve_present_locale(loc, present)
+            if resolved is not None and (po_dir / f"{resolved}.po").is_file():
+                continue
+            insert_name = resolved or loc
+            if self.dry_run:
+                self.note(
+                    "would-add",
+                    f"po/{insert_name}.po",
+                    f"{level} locale coverage",
+                    rule="ize.i18n.coverage",
+                )
+                continue
+            try:
+                changed = insert_locale(self.root, insert_name)
+            except (FileNotFoundError, OSError) as exc:
+                self.note("skip", "po/", str(exc), rule="ize.i18n.coverage")
+                continue
+            for rel in changed:
+                self.note("add", rel, f"{level} locale coverage", rule="ize.i18n.coverage")
+            present = set(parse_linguas(po_dir / "LINGUAS"))
+
+    def ensure_man_locale_coverage(self) -> None:
+        """Scaffold docs/<locale>/*.adoc for the project's lint l10n level.
+
+        Copies the English whole-document man source when a locale file is
+        missing so ZL055 is cleared; translators should replace the scaffold.
+        """
+        from ...l10n import (
+            canonical_locale,
+            linguas_for_level,
+            project_l10n_level,
+            resolve_present_locale,
+        )
+        from ...translate.po_files import parse_linguas
+
+        docs = self.root / "docs"
+        if not docs.is_dir():
+            return
+        english = sorted(p for p in docs.glob("*.adoc") if p.is_file())
+        if not english:
+            return
+        po_dir = self.root / "po"
+        if not po_dir.is_dir():
+            return
+        level = project_l10n_level(self.root)
+        required = linguas_for_level(level)
+        if not required:
+            return
+        present = set(parse_linguas(po_dir / "LINGUAS"))
+        for adoc in english:
+            try:
+                body = adoc.read_text(encoding="utf-8")
+            except OSError:
+                continue
+            for loc in required:
+                resolved = resolve_present_locale(loc, present) or canonical_locale(loc)
+                dest = docs / resolved / adoc.name
+                if dest.is_file():
+                    continue
+                rel = str(dest.relative_to(self.root))
+                if self.dry_run:
+                    self.note(
+                        "would-add",
+                        rel,
+                        f"{level} man locale scaffold from English",
+                        rule="ize.i18n.man-locale",
+                    )
+                    continue
+                self.write_text(
+                    dest,
+                    body,
+                    f"{level} man locale scaffold from English",
+                )
+
     def derive_i18n_locales(self) -> None:
         from ...i18n.builder import default_build_po_dir, derive_locales
         from ...i18n.meson import ensure_po_meson_derive
@@ -412,12 +502,14 @@ class Ize:
                 rule="ize.i18n.derive",
             )
         po_dir = default_build_po_dir(self.root)
-        if self.dry_run:
-            written = derive_locales(self.root, po_dir=po_dir, dry_run=True)
-            for rel in written:
-                self.note("would-derive", rel, "child locale from parent", rule="ize.i18n.derive")
-            return
-
+        written = derive_locales(self.root, po_dir=po_dir, dry_run=self.dry_run)
+        for rel in written:
+            self.note(
+                "would-derive" if self.dry_run else "derive",
+                rel,
+                "child locale from parent",
+                rule="ize.i18n.derive",
+            )
 
     def report(self) -> None:
         csr = self.csr

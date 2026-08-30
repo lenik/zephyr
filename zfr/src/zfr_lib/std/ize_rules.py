@@ -23,6 +23,8 @@ _IZE_RULES: tuple[StdRule, ...] = (
     StdRule("ZI015", "ize.i18n.derive", "Meson build-time derived locale catalogs"),
     StdRule("ZI016", "ize.i18n.po-nowrap", "Rewrite source .po catalogs without line wrapping"),
     StdRule("ZI017", "ize.commit", "Bump patch version and git commit (--commit)"),
+    StdRule("ZI018", "ize.i18n.coverage", "Ensure LINGUAS + .po for lint l10n level"),
+    StdRule("ZI019", "ize.i18n.man-locale", "Scaffold docs/<locale>/*.adoc for lint l10n level"),
 )
 
 IZE_RULES = RuleRegistry(_IZE_RULES)

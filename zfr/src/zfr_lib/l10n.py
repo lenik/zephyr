@@ -329,6 +329,29 @@ def linguas_for_level(level: str) -> tuple[str, ...]:
     return L10N_LEVELS[parse_l10n_level(level)]
 
 
+def project_l10n_level(root: Path) -> str:
+    """Lint l10n level for *root* from ``.config/zfr/lint.options`` (default L1)."""
+    tokens = load_lint_option_tokens(root)
+    level = "L1"
+    i = 0
+    while i < len(tokens):
+        tok = tokens[i]
+        if tok in ("-l", "--l10n-level") and i + 1 < len(tokens):
+            try:
+                level = parse_l10n_level(tokens[i + 1])
+            except (argparse.ArgumentTypeError, ValueError, TypeError):
+                pass
+            i += 2
+            continue
+        if tok.startswith("--l10n-level="):
+            try:
+                level = parse_l10n_level(tok.split("=", 1)[1])
+            except (argparse.ArgumentTypeError, ValueError, TypeError):
+                pass
+        i += 1
+    return level
+
+
 def lint_options_path(root: Path) -> Path:
     return root / LINT_OPTIONS_REL
 

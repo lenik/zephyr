@@ -20,6 +20,8 @@ Numbered steps performed by `zfr ize`. Each change line prints `kind  ZInnn  pat
 | ZI014 | `ize.subst` | varies | Replace hardcoded versions with @VERSION@ / config.h |
 | ZI015 | `ize.i18n.derive` | varies | Meson build-time derived locale catalogs |
 | ZI016 | `ize.i18n.po-nowrap` | varies | Rewrite source .po catalogs without line wrapping |
-| ZI017 | `ize.commit` | varies | Bump patch version and git commit (--commit) |
+| ZI017 | `ize.commit` | varies | Bump patch version and git commit (`--commit`) |
+| ZI018 | `ize.i18n.coverage` | varies | Ensure `po/LINGUAS` + `.po` for lint l10n level |
+| ZI019 | `ize.i18n.man-locale` | varies | Scaffold `docs/<locale>/*.adoc` for lint l10n level |
 
 Suppress rules with `zfr lint -u ID` / `zfr ize -u ID` (comma-separated), or the same flag in `.config/zfr/lint.options` / `.config/zfr/ize.options`.
