@@ -27,7 +27,12 @@ from ..translate.po_files import (
     po_stats,
     resolve_po_path,
 )
-from .builder import derive_children_of, derive_locales, default_build_po_dir
+from .builder import (
+    default_build_po_dir,
+    derive_children_of,
+    derive_locales,
+    install_derived_mo,
+)
 from .messages import _
 
 
@@ -146,6 +151,18 @@ def cmd_build(
     return 0
 
 
+def cmd_install_derived(
+    *,
+    po_dir: Path,
+    domain: str,
+    localedir: str,
+) -> int:
+    """Meson install-script entry: copy derived ``.mo`` into the install prefix."""
+    for path in install_derived_mo(po_dir, domain, localedir=localedir):
+        print(path)
+    return 0
+
+
 NAME = "i18n"
 HELP = _("manage implemented gettext locales")
 DESCRIPTION = _(
@@ -197,7 +214,21 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
     p.add_argument(
         "--domain",
         metavar="NAME",
-        help=_("gettext domain for --compile-mo (default: meson project name)"),
+        help=_("gettext domain for --compile-mo / --install-derived"),
+    )
+    p.add_argument(
+        "--install-derived",
+        action="store_true",
+        help=_(
+            "install derived .mo from --po-dir into $MESON_INSTALL_DESTDIR_PREFIX "
+            "(Meson add_install_script)"
+        ),
+    )
+    p.add_argument(
+        "--localedir",
+        metavar="DIR",
+        default="share/locale",
+        help=_("with --install-derived, locale subdirectory under prefix (default: share/locale)"),
     )
     p.add_argument("-n", "--dry-run", action="store_true", help=_("with --build, print only"))
     p.add_argument("-f", "--force", action="store_true", help=_("with --build, overwrite existing"))
@@ -205,6 +236,15 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
 
 
 def run(args: argparse.Namespace) -> int:
+    if args.install_derived:
+        if not args.po_dir or not args.domain:
+            print(_("--install-derived requires --po-dir and --domain"), file=sys.stderr)
+            return 2
+        return cmd_install_derived(
+            po_dir=Path(args.po_dir).resolve(),
+            domain=args.domain,
+            localedir=args.localedir,
+        )
     root = find_project_dir()
     if args.all:
         return cmd_list_implemented(root)

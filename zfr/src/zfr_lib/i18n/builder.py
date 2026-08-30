@@ -355,6 +355,45 @@ def compile_derived_mo(po_dir: Path, domain: str) -> list[str]:
     return written
 
 
+def install_derived_mo(
+    po_dir: Path,
+    domain: str,
+    *,
+    localedir: str = "share/locale",
+    dest_root: Path | None = None,
+) -> list[str]:
+    """Install derived ``.mo`` catalogs (those with ``.po.derive.sig``) under *dest_root*.
+
+    *dest_root* defaults to ``$MESON_INSTALL_DESTDIR_PREFIX`` or
+    ``$DESTDIR$MESON_INSTALL_PREFIX`` (Meson install-script environment).
+    """
+    if dest_root is None:
+        combined = os.environ.get("MESON_INSTALL_DESTDIR_PREFIX")
+        if combined:
+            dest_root = Path(combined)
+        else:
+            destdir = os.environ.get("DESTDIR", "")
+            prefix = os.environ.get("MESON_INSTALL_PREFIX", "")
+            dest_root = Path(destdir + prefix)
+    if not str(dest_root):
+        return []
+    installed: list[str] = []
+    for sig in sorted(po_dir.glob(f"*{_DERIVE_SIG_SUFFIX}")):
+        # ``en_GB.po.derive.sig`` → stem before ``.po.derive.sig``
+        name = sig.name
+        if not name.endswith(".po" + _DERIVE_SIG_SUFFIX):
+            continue
+        lang = name[: -len(".po" + _DERIVE_SIG_SUFFIX)]
+        mo = po_dir / lang / "LC_MESSAGES" / f"{domain}.mo"
+        if not mo.is_file():
+            continue
+        dest = dest_root / localedir / lang / "LC_MESSAGES" / f"{domain}.mo"
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(mo, dest)
+        installed.append(str(dest))
+    return installed
+
+
 def derive_children_of(
     root: Path,
     parent: str,

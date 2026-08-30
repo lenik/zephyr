@@ -20,7 +20,7 @@ _IZE_RULES: tuple[StdRule, ...] = (
     StdRule("ZI012", "ize.completion", "Add bash-completion stubs for command puffs"),
     StdRule("ZI013", "ize.rpm", "Align packaging/rpm/Makefile and RPM spec with debian/Meson"),
     StdRule("ZI014", "ize.subst", "Replace hardcoded versions with @VERSION@ / config.h"),
-    StdRule("ZI015", "ize.i18n.derive", "Meson build-time derived locale catalogs"),
+    StdRule("ZI015", "ize.i18n.derive", "Meson build+install derived locale catalogs"),
     StdRule("ZI016", "ize.i18n.po-nowrap", "Rewrite source .po catalogs without line wrapping"),
     StdRule("ZI017", "ize.commit", "Bump patch version and git commit (--commit)"),
     StdRule("ZI018", "ize.i18n.coverage", "Ensure LINGUAS + .po for lint l10n level"),
