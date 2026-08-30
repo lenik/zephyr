@@ -29,7 +29,7 @@ custom_target(
     '--po-dir', _po_build,
     '--stamp', '@OUTPUT@',
     '--compile-mo',
-    '--domain', 'zfr',
+    '--domain', 'zephyr',
   ],
   output: 'i18n-derive.stamp',
   depend_files: _po_dep_files,
@@ -40,7 +40,7 @@ custom_target(
 # zfr: i18n-derive-end
 
 i18n.gettext(
-    'zfr',
+    'zephyr',
     data_dirs: _po_src,
     install: true,
     # Install under the usual share/locale; runtime looks at ZFR_LOCALEDIR / system.

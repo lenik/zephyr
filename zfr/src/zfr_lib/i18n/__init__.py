@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""gettext helpers (domain: zfr) and i18n command package."""
+"""gettext helpers (domain: zephyr) and i18n command package."""
 
 from __future__ import annotations
 

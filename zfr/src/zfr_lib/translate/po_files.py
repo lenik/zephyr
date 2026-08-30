@@ -151,7 +151,7 @@ def iter_catalog_entries(body: str) -> list[tuple[str, str]]:
 
 
 def list_msgids(root: Path) -> list[str]:
-    pot = root / "po" / "zfr.pot"
+    pot = root / "po" / "zephyr.pot"
     if not pot.is_file():
         return []
     body = pot.read_text(encoding="utf-8", errors="replace")

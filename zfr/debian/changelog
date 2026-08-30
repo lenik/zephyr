@@ -1,3 +1,14 @@
+zephyr (2.8.1) testing; urgency=medium
+
+  * RPM %%files for the zephyr package: list zfr bindir wrappers, share/zephyr/,
+    and gettext zephyr.mo (was missing paths / wrongly expecting zfr.mo).
+  * Gettext domain aligned with the package: po/zfr.pot → po/zephyr.pot;
+    i18n.gettext / runtime _DOMAIN = zephyr.
+  * ize meson_rpm_files: detect wrapper_names→bindir, i18n.gettext domain,
+    and pkgdatadir installs (so %%files stays in sync with Meson).
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 30 Aug 2026 18:50:00 +0800
+
 zephyr (2.8.0) testing; urgency=medium
 
   * Packaging win32 overhaul (all language templates + meta packaging/ + zfr):

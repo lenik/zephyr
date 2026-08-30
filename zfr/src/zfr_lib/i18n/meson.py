@@ -33,7 +33,7 @@ if _zfr_i18n.found()
       '--po-dir', _po_build,
       '--stamp', '@OUTPUT@',
       '--compile-mo',
-      '--domain', 'zfr',
+      '--domain', 'zephyr',
     ],
     output: 'i18n-derive.stamp',
     depend_files: _po_dep_files,
@@ -53,7 +53,7 @@ _DOMAIN_RE = re.compile(
 def _patch_existing(text: str) -> str:
     if _MARKER_BEGIN in text:
         return text
-    domain = "zfr"
+    domain = "zephyr"
     match = _DOMAIN_RE.search(text)
     if match:
         domain = match.group("domain")
@@ -113,7 +113,7 @@ def ensure_po_meson_derive(root: Path, *, dry_run: bool = False) -> list[str]:
             "i18n = import('i18n')\n\n"
             + _DERIVE_BLOCK
             + "\ni18n.gettext(\n"
-            "    'zfr',\n"
+            "    'zephyr',\n"
             "    data_dirs: _po_src,\n"
             "    install: true,\n"
             ")\n"

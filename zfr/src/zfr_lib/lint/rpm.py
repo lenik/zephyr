@@ -395,8 +395,9 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                         line=_line_of(text, "%files"),
                         # xgettext: no-python-format
                         fix=_(
-                            "%{_datadir}/locale/*/LC_MESSAGES/<name>.mo  "
-                            "(Meson i18n.gettext / po/). Or run `zfr ize`."
+                            "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo  "
+                            "(i18n.gettext domain, not always the project name). "
+                            "Or run `zfr ize`."
                         ),
                     )
                 )

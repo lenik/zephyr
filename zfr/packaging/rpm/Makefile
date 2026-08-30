@@ -5,9 +5,8 @@
 #   make rpm     # binary RPM
 #
 # Version comes from `zfr version` (same as meson.build).
-# Dist reuses `zfr dist --rpm` (meson dist at the git root, else a
-# project-only tarball for nested language templates). Extra flags:
-#   make dist DIST_FLAGS='-b /other/build'
+# Dist reuses `zfr dist --rpm` (meson dist at the git root).
+# Extra flags: make dist DIST_FLAGS='-b /other/build'
 
 NAME    := zephyr
 SRCDIR  := $(abspath ../..)

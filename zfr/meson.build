@@ -139,7 +139,7 @@ endforeach
 subdir('src')
 subdir('tests')
 
-# gettext catalogs for the zfr CLI (domain: zfr)
+# gettext catalogs for the zfr CLI (domain: zephyr)
 subdir('po')
 
 # Man page for zephyr tools (English) plus full-document translations

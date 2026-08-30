@@ -48,10 +48,12 @@ install_data(
             (root / "meson.build").write_text(meson, encoding="utf-8")
             files = meson_rpm_files(root, "demopkg")
             self.assertIn("%{_bindir}/qkeygen", files)
-            self.assertIn("%{_prefix}/lib/python3/dist-packages/%{name}/*", files)
-            self.assertIn("%{_datadir}/%{name}/*", files)
+            self.assertIn(
+                "%{_prefix}/lib/python3/dist-packages/demopkg/*", files
+            )
+            self.assertIn("%{_datadir}/demopkg/", files)
 
-    def test_pkgdatadir_subpath_not_top_level_glob(self) -> None:
+    def test_pkgdatadir_subpath_lists_pkgdata_dir(self) -> None:
         meson = """\
 project('zephyr', 'c')
 datadir = prefix / get_option('datadir')
@@ -62,7 +64,46 @@ install_data('VERSION', install_dir: pkgdatadir / 'zfr')
             root = Path(tmp)
             (root / "meson.build").write_text(meson, encoding="utf-8")
             files = meson_rpm_files(root, "zephyr")
-            self.assertNotIn("%{_datadir}/%{name}/*", files)
+            self.assertIn("%{_datadir}/zephyr/", files)
+            self.assertIn("%{_datadir}/doc/zephyr/", files)
+
+    def test_gettext_domain_from_i18n_gettext(self) -> None:
+        meson = """\
+project('zephyr', 'c')
+i18n = import('i18n')
+i18n.gettext('zephyr', install: true)
+"""
+        with tempfile.TemporaryDirectory(prefix="zfr-rpmf-") as tmp:
+            root = Path(tmp)
+            (root / "meson.build").write_text(meson, encoding="utf-8")
+            (root / "po").mkdir()
+            (root / "po" / "de.po").write_text("#\n", encoding="utf-8")
+            files = meson_rpm_files(root, "zephyr")
+            self.assertIn(
+                "%{_datadir}/locale/*/LC_MESSAGES/zephyr.mo", files
+            )
+
+    def test_wrapper_names_foreach_bindir(self) -> None:
+        meson = """\
+project('zephyr', 'c')
+bindir = prefix / get_option('bindir')
+wrapper_names = ['zfr', 'zfr-lint']
+foreach name : wrapper_names
+    configure_file(
+        input: name + '.in',
+        output: name,
+        configuration: cfg,
+        install: true,
+        install_dir: bindir,
+    )
+endforeach
+"""
+        with tempfile.TemporaryDirectory(prefix="zfr-rpmf-") as tmp:
+            root = Path(tmp)
+            (root / "meson.build").write_text(meson, encoding="utf-8")
+            files = meson_rpm_files(root, "zephyr")
+            self.assertIn("%{_bindir}/zfr", files)
+            self.assertIn("%{_bindir}/zfr-lint", files)
 
     def test_install_subdir_bindir(self) -> None:
         meson = """\

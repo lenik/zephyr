@@ -1,6 +1,10 @@
 # Version is injected by packaging/rpm/Makefile via `zfr version`.
 # RPM Version cannot contain '-'; use `zfr version -r` (hyphens → '_').
 # srcversion is the unsanitized Meson/git version and names the tarball.
+#
+# Package: zephyr (suite = zfr CLI + language templates under share/zephyr/).
+# Gettext domain is zephyr (zephyr.pot / zephyr.mo).
+# In language *templates*, "zephyr" is also the create/rename magic placeholder.
 %{!?version:%global version 0.0.0}
 %{!?srcversion:%global srcversion %{version}}
 
@@ -62,6 +66,20 @@ meson compile -C build
 meson install -C build --destdir=%{buildroot}
 
 %files
+%{_bindir}/zfr
+%{_bindir}/zfr-create
+%{_bindir}/zfr-rename
+%{_bindir}/zfr-add
+%{_bindir}/zfr-remove
+%{_bindir}/zfr-about
+%{_bindir}/zfr-version
+%{_bindir}/zfr-lint
+%{_bindir}/zfr-dist
+%{_bindir}/zfr-ize
+%{_bindir}/zfr-i18n
+%{_bindir}/zfr-translate
+%{_bindir}/zfr-shape
+%{_bindir}/zfr-release
 %{_datadir}/bash-completion/completions/zfr
 %{_datadir}/bash-completion/completions/zfr-create
 %{_datadir}/bash-completion/completions/zfr-rename
@@ -77,10 +95,13 @@ meson install -C build --destdir=%{buildroot}
 %{_datadir}/bash-completion/completions/zfr-shape
 %{_datadir}/bash-completion/completions/zfr-release
 %{_mandir}/man1/zfr.1*
+%{_datadir}/zephyr/
 %{_datadir}/locale/*/LC_MESSAGES/zephyr.mo
 %{_mandir}/*/man1/zfr.1*
-%{_datadir}/doc/%{name}/
+%{_datadir}/doc/zephyr/
 %changelog
+* Sun Aug 30 2026 Lenik <zephyr@bodz.net>
+- %%files: list bindir wrappers, share/zephyr/, and gettext zephyr.mo.
 * Thu Aug 20 2026 Lenik <zephyr@bodz.net>
 - Initial RPM packaging for the zephyr meta-package (Meson, noarch).
 - Version comes from `zfr version`, the same method meson.build uses.

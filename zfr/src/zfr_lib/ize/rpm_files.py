@@ -105,10 +105,42 @@ def locale_man_lines(root: Path, name: str, puffs: list[str] | None = None) -> l
     return [f"%{{_mandir}}/*/man1/{stem}.1*" for stem in stems]
 
 
+def meson_project_name(root: Path, fallback: str = "") -> str:
+    """Meson ``project('name', …)`` — drives install paths like share/<name>/."""
+    text = meson_text(root)
+    m = re.search(r"project\s*\(\s*['\"]([^'\"]+)['\"]", text)
+    if m:
+        return m.group(1)
+    return fallback
+
+
+def gettext_domain(root: Path, name: str) -> str:
+    """Return the gettext domain Meson installs (``.mo`` basename).
+
+    Prefer ``i18n.gettext('domain', …)`` / ``--domain`` over guessing from
+    the RPM name alone (zephyr package uses domain ``zephyr``).
+    """
+    text = _all_meson_texts(root)
+    m = re.search(
+        r"i18n\.gettext\s*\(\s*['\"]([^'\"]+)['\"]",
+        text,
+    )
+    if m:
+        return m.group(1)
+    m = re.search(r"['\"]--domain['\"]\s*,\s*['\"]([^'\"]+)['\"]", text)
+    if m:
+        return m.group(1)
+    m = re.search(r"--domain['\"]?\s*,\s*['\"]([^'\"]+)['\"]", text)
+    if m:
+        return m.group(1)
+    return name
+
+
 def gettext_mo_line(root: Path, name: str) -> str | None:
     if not ships_gettext_mo(root):
         return None
-    return f"%{{_datadir}}/locale/*/LC_MESSAGES/{name}.mo"
+    domain = gettext_domain(root, name)
+    return f"%{{_datadir}}/locale/*/LC_MESSAGES/{domain}.mo"
 
 
 
@@ -160,6 +192,43 @@ def meson_rpm_files(root: Path, name: str) -> list[str]:
         out = re.search(r"output:\s*'([^']+)'", block)
         if out:
             add(f"%{{_bindir}}/{Path(out.group(1)).name}")
+
+    # foreach name : wrapper_names / ['a','b'] + configure_file(output: name → bindir)
+    # (zfr installs PATH wrappers this way; output is a Meson variable, not a string)
+    for m in re.finditer(
+        r"foreach\s+(\w+)\s*:\s*(\w+|\[)(.*?)\bendforeach\b",
+        text,
+        re.S,
+    ):
+        var, head, body = m.group(1), m.group(2), m.group(3)
+        if "configure_file" not in body:
+            continue
+        if not re.search(r"install\s*:\s*true", body):
+            continue
+        if not re.search(
+            r"install_dir:\s*(?:get_option\(\s*['\"]bindir['\"]\s*\)|bindir)\s*[,)]",
+            body,
+        ):
+            continue
+        if not re.search(rf"output:\s*{re.escape(var)}\s*[,)]", body):
+            continue
+        names: list[str] = []
+        if head == "[":
+            # foreach x : [ 'a', 'b' ] — items are in body before first newline/configure
+            bracket = re.match(r"([^\]]*)\]", body)
+            if bracket:
+                names = re.findall(r"'([^']+)'", bracket.group(1))
+        else:
+            # foreach x : wrapper_names
+            list_m = re.search(
+                rf"{re.escape(head)}\s*=\s*\[([^\]]*)\]",
+                text,
+                re.S,
+            )
+            if list_m:
+                names = re.findall(r"'([^']+)'", list_m.group(1))
+        for nm in names:
+            add(f"%{{_bindir}}/{nm}")
 
     for m in re.finditer(
         r"install_data\s*\(\s*'([^']+)'\s*,\s*install_dir:\s*"
@@ -296,24 +365,28 @@ def meson_rpm_files(root: Path, name: str) -> list[str]:
             _add_man(nm.group(1))
 
     # ---- bulk data dirs ----
+    meson_name = meson_project_name(root, name)
 
     # Python purelib (pypkgdir = …/dist-packages/…/project_name)
     if re.search(r"pypkgdir\s*=\s*[^\n]*dist-packages", text) and re.search(
         r"install_dir:\s*pypkgdir\b", text
     ):
-        add("%{_prefix}/lib/python3/dist-packages/%{name}/*")
+        add(f"%{{_prefix}}/lib/python3/dist-packages/{meson_name}/*")
 
-    # pkgdatadir = datadir / project_name() (install_data → %{_datadir}/%{name}/)
+    # pkgdatadir = datadir / project_name() — install path follows Meson
+    # project name (may differ from RPM Name; zfr RPM → share/zephyr/).
     if re.search(
         r"pkgdatadir\s*=\s*datadir\s*/\s*(?:meson\.project_name\(\)|"
+        rf"['\"]{re.escape(meson_name)}['\"]|"
         rf"['\"]{re.escape(name)}['\"])",
         text,
-    ) and re.search(r"install_dir:\s*pkgdatadir\s*[,)]", text):
-        add("%{_datadir}/%{name}/*")
+    ) and re.search(r"install_dir:\s*pkgdatadir\b", text):
+        add(f"%{{_datadir}}/{meson_name}/")
 
     # Extra pkgdata / perl modules / shared data / headers
     if re.search(
-        rf"install_dir:\s*[^\n]*datadir[^\n]*/\s*(?:meson\.project_name\(\)|'{re.escape(name)}')\s*[,)]",
+        rf"install_dir:\s*[^\n]*datadir[^\n]*/\s*(?:meson\.project_name\(\)|"
+        rf"'{re.escape(meson_name)}'|'{re.escape(name)}')\s*[,)]",
         text,
     ):
         # Avoid counting setup-only installs as pkgdata.
@@ -321,14 +394,27 @@ def meson_rpm_files(root: Path, name: str) -> list[str]:
             m.group(0)
             for m in re.finditer(r"install_dir:\s*[^\n]+", text)
             if "datadir" in m.group(0)
-            and ("project_name" in m.group(0) or f"'{name}'" in m.group(0))
+            and (
+                "project_name" in m.group(0)
+                or f"'{meson_name}'" in m.group(0)
+                or f"'{name}'" in m.group(0)
+            )
             and "setup" not in m.group(0)
             and "doc" not in m.group(0)
             and "bash-completion" not in m.group(0)
             and "bash-alias" not in m.group(0)
         ]
         if pkg_installs:
-            add("%{_datadir}/%{name}/*")
+            add(f"%{{_datadir}}/{meson_name}/")
+    # Templates copied via install script to datadir / project_name
+    if re.search(
+        r"(?:get_option\(\s*['\"]datadir['\"]\s*\)|datadir)\s*/\s*"
+        r"(?:meson\.project_name\(\)|"
+        rf"['\"]{re.escape(meson_name)}['\"]|"
+        rf"['\"]{re.escape(name)}['\"])",
+        text,
+    ) and re.search(r"add_install_script|install_templates", text):
+        add(f"%{{_datadir}}/{meson_name}/")
     if re.search(r"install_dir:\s*[^\n]*perl5", text):
         add("%{_datadir}/perl5/*")
 
@@ -393,7 +479,7 @@ def meson_rpm_files(root: Path, name: str) -> list[str]:
     for line in locale_man_lines(root, name):
         add(line)
 
-    add("%{_datadir}/doc/%{name}/")
+    add(f"%{{_datadir}}/doc/{meson_name}/")
     return files
 
 

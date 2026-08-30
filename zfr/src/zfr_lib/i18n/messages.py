@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""gettext helpers for the zfr CLI (domain: zfr)."""
+"""gettext helpers for the zfr CLI (domain: zephyr)."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ import os
 import subprocess
 from pathlib import Path
 
-_DOMAIN = "zfr"
+_DOMAIN = "zephyr"
 _translation: gettext.NullTranslations | None = None
 
 
