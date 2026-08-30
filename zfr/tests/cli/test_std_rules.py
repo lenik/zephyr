@@ -16,7 +16,7 @@ add_src_to_path()
 
 from zfr_lib.lint.filtering import filter_findings
 from zfr_lib.lint.finding import Finding
-from zfr_lib.std import lint_rule_id
+from zfr_lib.std import lint_rule_id, render_std_help, render_std_table
 from zfr_lib.std.lint_rules import LINT_RULES
 from zfr_lib.std.ize_rules import IZE_RULES
 
@@ -33,6 +33,10 @@ class StdRuleTests(unittest.TestCase):
     def test_ize_rule_lookup(self) -> None:
         self.assertEqual(IZE_RULES.rule_id("ize.rpm"), "ZI013")
 
+    def test_by_id_accepts_numeric(self) -> None:
+        self.assertEqual(LINT_RULES.by_id("26").id, "ZL026")
+        self.assertEqual(IZE_RULES.by_id("15").id, "ZI015")
+
     def test_filter_uncheck_by_id(self) -> None:
         findings = [
             Finding("note", "rpm.missing", "no spec", "rpm/"),
@@ -46,14 +50,22 @@ class StdRuleTests(unittest.TestCase):
         findings = [Finding("note", "rpm.missing", "no spec", "rpm/")]
         self.assertEqual(filter_findings(findings, ["rpm.missing"]), [])
 
-    def test_docs_list_all_rules(self) -> None:
-        lint_doc = (ROOT / "docs" / "lint-std.md").read_text(encoding="utf-8")
-        ize_doc = (ROOT / "docs" / "ize-std.md").read_text(encoding="utf-8")
+    def test_list_std_table_covers_all_rules(self) -> None:
+        lint_tbl = render_std_table(LINT_RULES.all_rules())
+        ize_tbl = render_std_table(IZE_RULES.all_rules())
         for rule in LINT_RULES.all_rules():
-            self.assertIn(rule.id, lint_doc)
-            self.assertIn(f"`{rule.code}`", lint_doc)
+            self.assertIn(rule.id, lint_tbl)
+            self.assertIn(rule.code, lint_tbl)
         for rule in IZE_RULES.all_rules():
-            self.assertIn(rule.id, ize_doc)
+            self.assertIn(rule.id, ize_tbl)
+
+    def test_help_std_text(self) -> None:
+        rule = LINT_RULES.by_id("ZL026")
+        assert rule is not None
+        text = render_std_help(rule, command="lint")
+        self.assertIn("ZL026", text)
+        self.assertIn("rpm.missing", text)
+        self.assertIn("zfr lint -u ZL026", text)
 
 
 class StdRuleCliTests(unittest.TestCase):
@@ -67,6 +79,30 @@ class StdRuleCliTests(unittest.TestCase):
         )
         self.assertEqual(proc.returncode, 0, proc.stderr)
         self.assertRegex(proc.stdout, r"\bZL\d{3}\b")
+
+    def test_lint_list_std(self) -> None:
+        proc = subprocess.run(
+            [sys.executable, str(ZEPHYR), "lint", "-L"],
+            cwd=ROOT,
+            env=_env(),
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertIn("ZL001", proc.stdout)
+        self.assertIn("source.long", proc.stdout)
+
+    def test_ize_help_std(self) -> None:
+        proc = subprocess.run(
+            [sys.executable, str(ZEPHYR), "ize", "-H", "15"],
+            cwd=ROOT,
+            env=_env(),
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertIn("ZI015", proc.stdout)
+        self.assertIn("ize.i18n.derive", proc.stdout)
 
     def test_lint_uncheck_hides_rule(self) -> None:
         with tempfile.TemporaryDirectory(prefix="zfr-lint-uncheck-") as tmp:

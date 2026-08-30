@@ -79,6 +79,18 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
     p.add_argument("-l", "--lang", metavar="LANG", help=_("language template to align with (default: detect; one of: %s)") % ", ".join(LANGS))
     p.add_argument("-n", "--dry-run", action="store_true", help=_("print planned changes without writing files"))
     p.add_argument(
+        "-L",
+        "--list-std",
+        action="store_true",
+        help=_("list numbered ize standards (ZI*) as a table and exit"),
+    )
+    p.add_argument(
+        "-H",
+        "--help-std",
+        metavar="NUM",
+        help=_("show details for ize standard NUM (e.g. ZI015, 15) and exit"),
+    )
+    p.add_argument(
         "-c",
         "--commit",
         action="store_true",
@@ -118,6 +130,18 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
 
 
 def run(args: argparse.Namespace) -> int:
+    from ..std import IZE_RULES, render_std_help, render_std_table
+
+    if args.list_std:
+        sys.stdout.write(render_std_table(IZE_RULES.all_rules()))
+        return 0
+    if args.help_std:
+        rule = IZE_RULES.by_id(args.help_std)
+        if rule is None:
+            print(_("unknown ize standard: %s") % args.help_std, file=sys.stderr)
+            return 2
+        sys.stdout.write(render_std_help(rule, command="ize"))
+        return 0
     root = find_project_dir()
     parser = argparse.ArgumentParser(add_help=False)
     add_arguments(parser)

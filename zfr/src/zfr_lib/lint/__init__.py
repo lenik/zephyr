@@ -123,6 +123,18 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
     p.add_argument("-q", "--quiet", action="store_true", help=_("only print errors"))
     p.add_argument("--strict", action="store_true", help=_("treat warnings as failures (exit 1)"))
     p.add_argument(
+        "-L",
+        "--list-std",
+        action="store_true",
+        help=_("list numbered lint standards (ZL*) as a table and exit"),
+    )
+    p.add_argument(
+        "-H",
+        "--help-std",
+        metavar="NUM",
+        help=_("show details for lint standard NUM (e.g. ZL026, 26) and exit"),
+    )
+    p.add_argument(
         "-l",
         "--l10n-level",
         metavar="LEVEL",
@@ -158,6 +170,18 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
 
 
 def run(args: argparse.Namespace) -> int:
+    from ..std import LINT_RULES, render_std_help, render_std_table
+
+    if args.list_std:
+        sys.stdout.write(render_std_table(LINT_RULES.all_rules()))
+        return 0
+    if args.help_std:
+        rule = LINT_RULES.by_id(args.help_std)
+        if rule is None:
+            print(_("unknown lint standard: %s") % args.help_std, file=sys.stderr)
+            return 2
+        sys.stdout.write(render_std_help(rule, command="lint"))
+        return 0
     root = _resolve_lint_root(find_project_dir())
     parser = argparse.ArgumentParser(add_help=False)
     add_arguments(parser)

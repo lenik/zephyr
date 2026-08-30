@@ -112,7 +112,8 @@ def format_report(
             _("Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional packaging/ aligned with debian."),
             _("i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). "
               "L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). "
-              "Child locales auto-derive via zfr i18n -b. Rule IDs in docs/lint-std.md; "
+              "Child locales auto-derive via zfr i18n -b. "
+              "List rule IDs with `zfr lint -L`; details via `zfr lint -H NUM`; "
               "suppress with -u/--uncheck or .config/zfr/lint.options."),
             _("Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ)."),
         ):
