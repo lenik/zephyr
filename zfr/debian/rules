@@ -4,3 +4,6 @@ MESON_SRC := $(if $(wildcard meson.build),.,zfr)
 
 %:
 	dh $@ --buildsystem=meson --builddirectory=debian/build --sourcedirectory=$(MESON_SRC)
+
+# Autotools leftovers must not run after Meson conversion.
+override_dh_autoreconf:

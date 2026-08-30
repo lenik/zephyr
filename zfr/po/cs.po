@@ -17,13 +17,8 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: src/zfr:32
-msgid ""
-"Zephyr template helper (CLI name: zfr). Create projects and manage example "
-"puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
-msgstr ""
-"Pomocník pro šablony Zephyr (název CLI: zfr). Vytváří projekty a spravuje "
-"ukázkové puffs. Instanciované stromy dál volají zfr; zfr není zástupný "
-"symbol pro přejmenování."
+msgid "Zephyr template helper (CLI name: zfr). Create projects and manage example puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
+msgstr "Pomocník pro šablony Zephyr (název CLI: zfr). Vytváří projekty a spravuje ukázkové puffs. Instanciované stromy dál volají zfr; zfr není zástupný symbol pro přejmenování."
 
 #: src/zfr:46
 msgid "show this help"
@@ -34,13 +29,8 @@ msgid "print current project information (walks parents from cwd)"
 msgstr "vytisknout informace o aktuálním projektu (hledá směrem nahoru od cwd)"
 
 #: src/zfr_lib/about.py:498
-msgid ""
-"Print information about the current zephyr project (walks from cwd toward "
-"parent directories). CSR colors when stdout is a TTY. Common packaging "
-"fields are parsed from debian or RPM."
-msgstr ""
-"Vytiskne informace o aktuálním zephyr projektu (hledá směrem nahoru od cwd). "
-"CSR barvy, když je stdout TTY. Běžná pole balení se načtou z debian nebo RPM."
+msgid "Print information about the current zephyr project (walks from cwd toward parent directories). CSR colors when stdout is a TTY. Common packaging fields are parsed from debian or RPM."
+msgstr "Vytiskne informace o aktuálním zephyr projektu (hledá směrem nahoru od cwd). CSR barvy, když je stdout TTY. Běžná pole balení se načtou z debian nebo RPM."
 
 #: src/zfr_lib/about.py:505
 msgid "show parsed Debian packaging fields"
@@ -112,39 +102,24 @@ msgid "print detected language for the current directory"
 msgstr "vytisknout rozpoznaný jazyk pro aktuální adresář"
 
 #: src/zfr_lib/detect.py:16
-msgid ""
-"Print the detected language of the current project and layout details on "
-"stderr."
-msgstr ""
-"Vytiskne rozpoznaný jazyk aktuálního projektu a podrobnosti rozvržení na "
-"stderr."
+msgid "Print the detected language of the current project and layout details on stderr."
+msgstr "Vytiskne rozpoznaný jazyk aktuálního projektu a podrobnosti rozvržení na stderr."
 
 #: src/zfr_lib/dist.py:60
-msgid ""
-"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
-"rpm; usually $HOME/rpmbuild)"
-msgstr ""
-"zapsat archiv do DIR (výchozí: meson-dist nebo %_topdir/SOURCES ($HOME/rpmbuild) s --rpm)"
+msgid "write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --rpm; usually $HOME/rpmbuild)"
+msgstr "zapsat archiv do DIR (výchozí: meson-dist nebo %_topdir/SOURCES ($HOME/rpmbuild) s --rpm)"
 
 #: src/zfr_lib/dist.py:70
-msgid ""
-"Meson build directory (default: /build when it matches this source tree, "
-"else <project>/build)"
-msgstr ""
-"Meson build adresář (výchozí: /build, pokud odpovídá tomuto stromu zdrojů, "
-"jinak <project>/build)"
+msgid "Meson build directory (default: /build when it matches this source tree, else <project>/build)"
+msgstr "Meson build adresář (výchozí: /build, pokud odpovídá tomuto stromu zdrojů, jinak <project>/build)"
 
 #: src/zfr_lib/dist.py:80
 msgid "archive format (default: xz)"
 msgstr "formát archivu (výchozí: xz)"
 
 #: src/zfr_lib/dist.py:86
-msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
-"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
-msgstr ""
-"pojmenuje archiv NAME-VERSION.tar.xz a zapíše ho do %_topdir/SOURCES ($HOME/rpmbuild), pokud "
-"není zadáno -o"
+msgid "name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES ($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
+msgstr "pojmenuje archiv NAME-VERSION.tar.xz a zapíše ho do %_topdir/SOURCES ($HOME/rpmbuild), pokud není zadáno -o"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"
@@ -159,30 +134,16 @@ msgid "build a source tarball (meson dist, or this project only)"
 msgstr "sestavit zdrojový tarball (meson dist nebo jen tento projekt)"
 
 #: src/zfr_lib/dist.py:345
-msgid ""
-"Build a source archive of the current zephyr project (walks from cwd toward "
-"parent directories). Uses meson dist when this directory is the git project "
-"root; otherwise packs this project only so nested language templates do not "
-"ship the parent meta-repo. Prints the archive path on stdout."
-msgstr ""
-"Sestaví zdrojový archiv aktuálního zephyr projektu (hledá směrem nahoru od "
-"cwd). Použije meson dist, když je tento adresář kořen git projektu; jinak "
-"zabalí jen tento projekt, aby vnořené jazykové šablony neobsahovaly "
-"nadřazené meta-repo. Vytiskne cestu archivu na stdout."
+msgid "Build a source archive of the current zephyr project (walks from cwd toward parent directories). Uses meson dist when this directory is the git project root; otherwise packs this project only so nested language templates do not ship the parent meta-repo. Prints the archive path on stdout."
+msgstr "Sestaví zdrojový archiv aktuálního zephyr projektu (hledá směrem nahoru od cwd). Použije meson dist, když je tento adresář kořen git projektu; jinak zabalí jen tento projekt, aby vnořené jazykové šablony neobsahovaly nadřazené meta-repo. Vytiskne cestu archivu na stdout."
 
 #: src/zfr_lib/ize/__init__.py:65
 msgid "refactor this project to current zephyr style"
 msgstr "refaktorovat tento projekt na aktuální zephyr styl"
 
 #: src/zfr_lib/ize/__init__.py:66
-msgid ""
-"Refactor the current project to match current zephyr style: missing debian/"
-"rpm files, meson targets, AsciiDoc man pages, and Meson version "
-"substitutions. Walks from cwd toward parents."
-msgstr ""
-"Refaktoruje aktuální projekt podle současného zephyr stylu: chybějící debian/"
-"rpm soubory, meson cíle, AsciiDoc man stránky a Meson náhrady verzí. Hledá "
-"směrem nahoru od cwd."
+msgid "Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, and Meson version substitutions. Walks from cwd toward parents."
+msgstr "Refaktoruje aktuální projekt podle současného zephyr stylu: chybějící debian/rpm soubory, meson cíle, AsciiDoc man stránky a Meson náhrady verzí. Hledá směrem nahoru od cwd."
 
 #: src/zfr_lib/ize/__init__.py:70
 #, python-format
@@ -198,10 +159,8 @@ msgid "also print skipped files"
 msgstr "vytisknout také přeskočené soubory"
 
 #: src/zfr_lib/ize/__init__.py:78
-msgid ""
-"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
-msgstr ""
-"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgstr "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
 
 #: src/zfr_lib/ize/__init__.py:80
 msgid "do not convert groff .1 man pages to docs/*.adoc"
@@ -240,8 +199,7 @@ msgstr "chybí adresář tests/"
 
 #: src/zfr_lib/lang/antlr.py:49
 msgid "Add tests/TestCommons.java or fixture checks for parser output."
-msgstr ""
-"Přidejte tests/TestCommons.java nebo kontroly fixture pro výstup parseru."
+msgstr "Přidejte tests/TestCommons.java nebo kontroly fixture pro výstup parseru."
 
 #: src/zfr_lib/lang/as.py:37
 msgid "Add tests/smoke.sh and meson test() for stdin/stdout copy."
@@ -257,12 +215,8 @@ msgid "no src/*.in scripts"
 msgstr "chybí skripty src/*.in"
 
 #: src/zfr_lib/lang/bash.py:47
-msgid ""
-"Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ and meson "
-"configure_file + install_mode rwxr-xr-x."
-msgstr ""
-"Ponechte konfigurované skripty jako src/<puff>.in s @PACKAGE@/@VERSION@ a "
-"meson configure_file + install_mode rwxr-xr-x."
+msgid "Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
+msgstr "Ponechte konfigurované skripty jako src/<puff>.in s @PACKAGE@/@VERSION@ a meson configure_file + install_mode rwxr-xr-x."
 
 #: src/zfr_lib/lang/bison.py:45
 msgid "Add tests/ with fixture checks for parser dump/format output."
@@ -303,12 +257,8 @@ msgid "missing go.mod"
 msgstr "chybí go.mod"
 
 #: src/zfr_lib/lang/go.py:23
-msgid ""
-"Add go.mod; meson should `go build` with -X main.buildVersion from "
-"meson.project_version()."
-msgstr ""
-"Přidejte go.mod; meson by měl spouštět `go build` s -X main.buildVersion z "
-"meson.project_version()."
+msgid "Add go.mod; meson should `go build` with -X main.buildVersion from meson.project_version()."
+msgstr "Přidejte go.mod; meson by měl spouštět `go build` s -X main.buildVersion z meson.project_version()."
 
 #: src/zfr_lib/lang/kotlin.py:23
 msgid "no tests/ (kotlin template uses kotlinc + meson test)"
@@ -323,11 +273,8 @@ msgid "no tests/ (lua template uses lua tests + meson test)"
 msgstr "chybí tests/ (šablona lua používá lua testy + meson test)"
 
 #: src/zfr_lib/lang/lua.py:24
-msgid ""
-"Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
-msgstr ""
-"Přidejte tests/test_*.lua a meson test() spouštějící lua s "
-"LUA_PATH=src/?.lua."
+msgid "Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
+msgstr "Přidejte tests/test_*.lua a meson test() spouštějící lua s LUA_PATH=src/?.lua."
 
 #: src/zfr_lib/lang/nim.py:25
 msgid "no tests/ (nim template uses unittest + meson test)"
@@ -358,10 +305,8 @@ msgid "missing Cargo.toml"
 msgstr "chybí Cargo.toml"
 
 #: src/zfr_lib/lang/rust.py:23
-msgid ""
-"Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
-msgstr ""
-"Rust projekty zephyr uchovávají Cargo.toml a meson custom_target pro binárku."
+msgid "Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
+msgstr "Rust projekty zephyr uchovávají Cargo.toml a meson custom_target pro binárku."
 
 #: src/zfr_lib/lang/zig.py:23
 msgid "missing build.zig"
@@ -369,8 +314,7 @@ msgstr "chybí build.zig"
 
 #: src/zfr_lib/lang/zig.py:24
 msgid "Add build.zig; meson should invoke `zig build -Doptimize=ReleaseFast`."
-msgstr ""
-"Přidejte build.zig; meson by měl spouštět `zig build -Doptimize=ReleaseFast`."
+msgstr "Přidejte build.zig; meson by měl spouštět `zig build -Doptimize=ReleaseFast`."
 
 #: src/zfr_lib/lint/debian.py:42
 #, python-format
@@ -384,12 +328,8 @@ msgstr "v Build-Depends chybí %s"
 
 #: src/zfr_lib/lint/debian.py:50
 #, python-format
-msgid ""
-"Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man "
-"pages)."
-msgstr ""
-"Přidejte %s do Build-Depends (balíčky zephyr se sestavují pomocí Meson a man "
-"stránek AsciiDoc)."
+msgid "Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man pages)."
+msgstr "Přidejte %s do Build-Depends (balíčky zephyr se sestavují pomocí Meson a man stránek AsciiDoc)."
 
 #: src/zfr_lib/lint/debian.py:54
 msgid "debhelper-compat present"
@@ -401,8 +341,7 @@ msgstr "v Build-Depends chybí debhelper-compat (= 13)"
 
 #: src/zfr_lib/lint/debian.py:62
 msgid "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
-msgstr ""
-"Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+msgstr "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
 
 #: src/zfr_lib/lint/debian.py:72
 msgid "Package stanza missing Architecture"
@@ -453,8 +392,7 @@ msgid "dh meson debian/build"
 msgstr "dh s meson v debian/build"
 
 #: src/zfr_lib/lint/debian.py:122
-msgid ""
-"debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
+msgid "debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
 msgstr "debian/rules není dh --buildsystem=meson --builddirectory=debian/build"
 
 #: src/zfr_lib/lint/debian.py:125
@@ -495,12 +433,8 @@ msgid "VERSION=%(file)r != changelog %(changelog)r"
 msgstr "VERSION=%(file)r != změnový záznam %(changelog)r"
 
 #: src/zfr_lib/lint/debian.py:156
-msgid ""
-"VERSION should match the latest debian/changelog entry (pre-commit hook "
-"updates it). Git describe may still differ."
-msgstr ""
-"VERSION musí odpovídat nejnovější položce debian/changelog (háček pre-commit "
-"ji aktualizuje). Git describe se stále může lišit."
+msgid "VERSION should match the latest debian/changelog entry (pre-commit hook updates it). Git describe may still differ."
+msgstr "VERSION musí odpovídat nejnovější položce debian/changelog (háček pre-commit ji aktualizuje). Git describe se stále může lišit."
 
 #: src/zfr_lib/lint/debian.py:162
 #, python-format
@@ -535,14 +469,8 @@ msgstr "chybí adresář po/ (volitelné, pokud projekt nepoužívá gettext)"
 
 #: src/zfr_lib/lint/i18n_check.py:79
 #, python-format
-msgid ""
-"If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in "
-"meson.build. Required locales at %(level)s: %(locales)s (source language "
-"%(source)s)."
-msgstr ""
-"Pokud je aplikace přeložená, přidejte po/ s LINGUAS + *.po a i18n.gettext() "
-"v meson.build. Požadované lokalizace na %(level)s: %(locales)s (zdrojový "
-"jazyk %(source)s)."
+msgid "If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in meson.build. Required locales at %(level)s: %(locales)s (source language %(source)s)."
+msgstr "Pokud je aplikace přeložená, přidejte po/ s LINGUAS + *.po a i18n.gettext() v meson.build. Požadované lokalizace na %(level)s: %(locales)s (zdrojový jazyk %(source)s)."
 
 #: src/zfr_lib/lint/i18n_check.py:97
 msgid "po/ exists but po/LINGUAS is missing or empty"
@@ -566,14 +494,8 @@ msgstr "v po/LINGUAS chybí lokalizace %(level)s: %(locales)s"
 
 #: src/zfr_lib/lint/i18n_check.py:117
 #, python-format
-msgid ""
-"Level %(level)s requires: %(locales)s (source %(source)s; zh-cn→zh_CN, zh-"
-"tw→zh_TW). Append the missing lines to LINGUAS and add matching po/"
-"<locale>.po."
-msgstr ""
-"Úroveň %(level)s vyžaduje: %(locales)s (zdroj %(source)s; zh-cn→zh_CN, zh-"
-"tw→zh_TW). Doplňte chybějící řádky do LINGUAS a přidejte odpovídající po/"
-"<locale>.po."
+msgid "Level %(level)s requires: %(locales)s (source %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Append the missing lines to LINGUAS and add matching po/<locale>.po."
+msgstr "Úroveň %(level)s vyžaduje: %(locales)s (zdroj %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Doplňte chybějící řádky do LINGUAS a přidejte odpovídající po/<locale>.po."
 
 #: src/zfr_lib/lint/i18n_check.py:132
 #, python-format
@@ -586,12 +508,8 @@ msgid "LINGUAS entries without po/<locale>.po: %s"
 msgstr "položky LINGUAS bez po/<locale>.po: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:149
-msgid ""
-"For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-"
-"translator && msgmerge -U po/<locale>.po <domain>.pot"
-msgstr ""
-"Pro každou lokalizaci: msginit -i <domain>.pot -o po/<locale>.po -l <locale> "
-"--no-translator && msgmerge -U po/<locale>.po <domain>.pot"
+msgid "For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
+msgstr "Pro každou lokalizaci: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
 
 #: src/zfr_lib/lint/i18n_check.py:160
 #, python-format
@@ -605,12 +523,8 @@ msgstr "chybí celodokumentové překlady man pro %(level)s: %(files)s"
 
 #: src/zfr_lib/lint/i18n_check.py:195
 #, python-format
-msgid ""
-"Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). "
-"%(level)s requires: %(locales)s."
-msgstr ""
-"Přeložte ručně docs/<locale>/<name>.adoc (celý dokument, ne po4a). %(level)s "
-"vyžaduje: %(locales)s."
+msgid "Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
+msgstr "Přeložte ručně docs/<locale>/<name>.adoc (celý dokument, ne po4a). %(level)s vyžaduje: %(locales)s."
 
 #: src/zfr_lib/lint/i18n_check.py:205
 #, python-format
@@ -633,12 +547,8 @@ msgstr "%(label)s je %(val)r, očekáváno %(expected)r (název adresáře)"
 
 #: src/zfr_lib/lint/identity.py:60
 #, python-format
-msgid ""
-"Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename "
-"%(expected)s` if leftover template names remain."
-msgstr ""
-"Nastavte %(label)s na %(expected)r, nebo přejmenujte adresář. Použijte `zfr "
-"rename %(expected)s`, pokud zbývají názvy ze šablony."
+msgid "Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename %(expected)s` if leftover template names remain."
+msgstr "Nastavte %(label)s na %(expected)r, nebo přejmenujte adresář. Použijte `zfr rename %(expected)s`, pokud zbývají názvy ze šablony."
 
 #: src/zfr_lib/lint/identity.py:66
 #, python-format
@@ -684,13 +594,8 @@ msgid "validate project packaging and zephyr layout (walks parents from cwd)"
 msgstr "ověřit balení projektu a zephyr rozvržení (hledá směrem nahoru od cwd)"
 
 #: src/zfr_lib/lint/__init__.py:100
-msgid ""
-"Check the current zephyr project for missing files and packaging/style "
-"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
-"is a TTY."
-msgstr ""
-"Zkontroluje aktuální zephyr projekt na chybějící soubory a chyby balení/"
-"stylu. Hledá směrem nahoru od cwd. CSR barvy, když je stdout TTY."
+msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY."
+msgstr "Zkontroluje aktuální zephyr projekt na chybějící soubory a chyby balení/stylu. Hledá směrem nahoru od cwd. CSR barvy, když je stdout TTY."
 
 #: src/zfr_lib/lint/__init__.py:104
 msgid "show passing checks too"
@@ -705,12 +610,8 @@ msgid "treat warnings as failures (exit 1)"
 msgstr "považovat varování za chyby (exit 1)"
 
 #: src/zfr_lib/lint/__init__.py:113
-msgid ""
-"required gettext/manpage locale coverage L0–L3 (default: L1; project file "
-"may override)"
-msgstr ""
-"požadované pokrytí locale gettext/manpage L0–L3 (výchozí: L1; soubor "
-"projektu může přepsat)"
+msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
+msgstr "požadované pokrytí locale gettext/manpage L0–L3 (výchozí: L1; soubor projektu může přepsat)"
 
 #: src/zfr_lib/lint/lang_bits.py:31
 #, python-format
@@ -718,12 +619,8 @@ msgid "legacy example module %s; use commons or a specific name"
 msgstr "zastaralý ukázkový modul %s; použijte commons nebo konkrétní název"
 
 #: src/zfr_lib/lint/lang_bits.py:33
-msgid ""
-"Rename to src/commons.* (template convention) or a project-specific module "
-"name."
-msgstr ""
-"Přejmenujte na src/commons.* (konvence šablony) nebo na název modulu "
-"projektu."
+msgid "Rename to src/commons.* (template convention) or a project-specific module name."
+msgstr "Přejmenujte na src/commons.* (konvence šablony) nebo na název modulu projektu."
 
 #: src/zfr_lib/lint/lang_bits.py:44
 #, python-format
@@ -731,15 +628,8 @@ msgid "%s is only a template example for shared helpers"
 msgstr "%s je jen ukázka šablony pro sdílené pomocníky"
 
 #: src/zfr_lib/lint/lang_bits.py:46
-msgid ""
-"common_lib / commons mean “extract reusable pieces”, but filenames should be "
-"concrete. Rename to a specific module in real projects (e.g. stream_copy.py, "
-"bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
-msgstr ""
-"common_lib / commons znamenají „vyjmout znovupoužitelné části“, ale názvy "
-"souborů mají být konkrétní. V reálných projektech přejmenujte na konkrétní "
-"modul (např. stream_copy.py, bulk.h). clib/cpplib ponechávají lib.c/lib.cpp "
-"jako vstup sdílené knihovny."
+msgid "common_lib / commons mean “extract reusable pieces”, but filenames should be concrete. Rename to a specific module in real projects (e.g. stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
+msgstr "common_lib / commons znamenají „vyjmout znovupoužitelné části“, ale názvy souborů mají být konkrétní. V reálných projektech přejmenujte na konkrétní modul (např. stream_copy.py, bulk.h). clib/cpplib ponechávají lib.c/lib.cpp jako vstup sdílené knihovny."
 
 #: src/zfr_lib/lint/layout.py:35
 msgid "Add a top-level meson.build with project(...)."
@@ -767,15 +657,11 @@ msgstr "Přidejte debian/changelog (zfr create ho zapíše; nebo použijte dch).
 
 #: src/zfr_lib/lint/layout.py:41
 msgid "Add debian/copyright in machine-readable format, License: AGPL-3+."
-msgstr ""
-"Přidejte debian/copyright ve strojově čitelném formátu, License: AGPL-3+."
+msgstr "Přidejte debian/copyright ve strojově čitelném formátu, License: AGPL-3+."
 
 #: src/zfr_lib/lint/layout.py:42
-msgid ""
-"Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
-msgstr ""
-"Přidejte debian/rules pomocí dh --buildsystem=meson --builddirectory=debian/"
-"build."
+msgid "Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
+msgstr "Přidejte debian/rules pomocí dh --buildsystem=meson --builddirectory=debian/build."
 
 #: src/zfr_lib/lint/layout.py:43
 msgid "Add debian/source/format (typically '3.0 (native)')."
@@ -801,12 +687,8 @@ msgid "no docs/*.adoc man page source"
 msgstr "chybí zdroj man stránky docs/*.adoc"
 
 #: src/zfr_lib/lint/layout.py:65
-msgid ""
-"Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage "
-"(see any language template)."
-msgstr ""
-"Přidejte docs/<puff>.adoc a meson custom_target s asciidoctor -b manpage "
-"(viz libovolnou jazykovou šablonu)."
+msgid "Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
+msgstr "Přidejte docs/<puff>.adoc a meson custom_target s asciidoctor -b manpage (viz libovolnou jazykovou šablonu)."
 
 #: src/zfr_lib/lint/layout.py:78
 #, python-format
@@ -818,12 +700,8 @@ msgid "no *.bash bash-completion script at project root"
 msgstr "v kořeni projektu chybí skript bash-completion *.bash"
 
 #: src/zfr_lib/lint/layout.py:87
-msgid ""
-"Add <puff>.bash and install it to datadir/bash-completion/completions "
-"renamed to the command name (see meson.build in the template)."
-msgstr ""
-"Přidejte <puff>.bash a nainstalujte jej do datadir/bash-completion/"
-"completions pod názvem příkazu (viz meson.build v šabloně)."
+msgid "Add <puff>.bash and install it to datadir/bash-completion/completions renamed to the command name (see meson.build in the template)."
+msgstr "Přidejte <puff>.bash a nainstalujte jej do datadir/bash-completion/completions pod názvem příkazu (viz meson.build v šabloně)."
 
 #: src/zfr_lib/lint/layout.py:93
 msgid "VERSION file present"
@@ -834,29 +712,16 @@ msgid "no VERSION file (changelog snapshot for tarball builds)"
 msgstr "chybí soubor VERSION (snímek changelogu pro sestavení tarballů)"
 
 #: src/zfr_lib/lint/layout.py:101
-msgid ""
-"Create VERSION with the latest debian/changelog version (one line). "
-"Enable .githooks/pre-commit: git config core.hooksPath .githooks"
-msgstr ""
-"Vytvořte VERSION s nejnovější verzí z debian/changelog (jeden řádek). "
-"Zapněte .githooks/pre-commit: git config core.hooksPath .githooks"
+msgid "Create VERSION with the latest debian/changelog version (one line). Enable .githooks/pre-commit: git config core.hooksPath .githooks"
+msgstr "Vytvořte VERSION s nejnovější verzí z debian/changelog (jeden řádek). Zapněte .githooks/pre-commit: git config core.hooksPath .githooks"
 
 #: src/zfr_lib/lint/layout.py:195
 msgid "no .githooks/pre-commit to sync VERSION from debian/changelog"
-msgstr ""
-"chybí .githooks/pre-commit pro synchronizaci VERSION z debian/changelog"
+msgstr "chybí .githooks/pre-commit pro synchronizaci VERSION z debian/changelog"
 
 #: src/zfr_lib/lint/layout.py:197
-msgid ""
-"Walk up to the directory that contains .git, then put pre-commit in that "
-"tree's .githooks (or core.hooksPath). The hook must update VERSION from "
-"debian/changelog. `zfr create` copies one and sets git config "
-"core.hooksPath .githooks."
-msgstr ""
-"Vystoupejte do adresáře, který obsahuje .git, a vložte pre-commit "
-"do .githooks tohoto stromu (nebo core.hooksPath). Hook musí aktualizovat "
-"VERSION z debian/changelog. `zfr create` jeden zkopíruje a nastaví git "
-"config core.hooksPath .githooks."
+msgid "Walk up to the directory that contains .git, then put pre-commit in that tree's .githooks (or core.hooksPath). The hook must update VERSION from debian/changelog. `zfr create` copies one and sets git config core.hooksPath .githooks."
+msgstr "Vystoupejte do adresáře, který obsahuje .git, a vložte pre-commit do .githooks tohoto stromu (nebo core.hooksPath). Hook musí aktualizovat VERSION z debian/changelog. `zfr create` jeden zkopíruje a nastaví git config core.hooksPath .githooks."
 
 #: src/zfr_lib/lint/layout.py:210
 #, python-format
@@ -869,12 +734,8 @@ msgid "%s exists but does not sync VERSION from debian/changelog"
 msgstr "%s existuje, ale nesynchronizuje VERSION z debian/changelog"
 
 #: src/zfr_lib/lint/layout.py:220
-msgid ""
-"The hook should read debian/changelog (dpkg-parsechangelog) and write "
-"VERSION. See the zephyr .githooks/pre-commit template."
-msgstr ""
-"Hook by měl číst debian/changelog (dpkg-parsechangelog) a zapisovat VERSION. "
-"Viz šablonu zephyr .githooks/pre-commit."
+msgid "The hook should read debian/changelog (dpkg-parsechangelog) and write VERSION. See the zephyr .githooks/pre-commit template."
+msgstr "Hook by měl číst debian/changelog (dpkg-parsechangelog) a zapisovat VERSION. Viz šablonu zephyr .githooks/pre-commit."
 
 #: src/zfr_lib/lint/leftovers.py:49
 #, python-format
@@ -882,12 +743,8 @@ msgid "%s keeps the template placeholder banner (apps must rewrite it)"
 msgstr "%s ponechává zástupné banner šablony (aplikace jej musí přepsat)"
 
 #: src/zfr_lib/lint/leftovers.py:52
-msgid ""
-"After `zfr create`/`zfr rename`, rewrite this README and remove the "
-"generated-from-template banner. Templates should keep this banner."
-msgstr ""
-"Po `zfr create`/`zfr rename` přepište tento README a odstraňte banner "
-"generated-from-template. Šablony by tento banner měly ponechat."
+msgid "After `zfr create`/`zfr rename`, rewrite this README and remove the generated-from-template banner. Templates should keep this banner."
+msgstr "Po `zfr create`/`zfr rename` přepište tento README a odstraňte banner generated-from-template. Šablony by tento banner měly ponechat."
 
 #: src/zfr_lib/lint/leftovers.py:61
 #, python-format
@@ -896,12 +753,8 @@ msgstr "%s stále má zástupné banner šablony"
 
 #: src/zfr_lib/lint/leftovers.py:64
 #, python-format
-msgid ""
-"Rewrite %s for this project. Remove the generated-from-template banner and "
-"describe the real commands, build, and license."
-msgstr ""
-"Přepište %s pro tento projekt. Odstraňte banner generated-from-template a "
-"popište skutečné příkazy, sestavení a licenci."
+msgid "Rewrite %s for this project. Remove the generated-from-template banner and describe the real commands, build, and license."
+msgstr "Přepište %s pro tento projekt. Odstraňte banner generated-from-template a popište skutečné příkazy, sestavení a licenci."
 
 #: src/zfr_lib/lint/leftovers.py:69
 #, python-format
@@ -920,21 +773,12 @@ msgstr " (+%d dalších)"
 
 #: src/zfr_lib/lint/leftovers.py:132
 #, python-format
-msgid ""
-"found %(hits)d leftover template token(s) (zephyr/%(token)s): "
-"%(preview)s%(more)s"
-msgstr ""
-"nalezeno %(hits)d zbylých tokenů šablony (zephyr/%(token)s): "
-"%(preview)s%(more)s"
+msgid "found %(hits)d leftover template token(s) (zephyr/%(token)s): %(preview)s%(more)s"
+msgstr "nalezeno %(hits)d zbylých tokenů šablony (zephyr/%(token)s): %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/leftovers.py:134
-msgid ""
-"Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 "
-"identifiers. After create, leftover tokens mean instantiation failed."
-msgstr ""
-"Spusťte `zfr rename <project> [puff ...]` nebo nahraďte zbývající "
-"identifikátory zephyr/some_puff1. Po create zbylé tokeny znamenají, že "
-"instanciace selhala."
+msgid "Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 identifiers. After create, leftover tokens mean instantiation failed."
+msgstr "Spusťte `zfr rename <project> [puff ...]` nebo nahraďte zbývající identifikátory zephyr/some_puff1. Po create zbylé tokeny znamenají, že instanciace selhala."
 
 #: src/zfr_lib/lint/leftovers.py:138
 msgid "no leftover zephyr/some_puff1 tokens"
@@ -949,12 +793,8 @@ msgid "meson.build has no project() call"
 msgstr "meson.build neobsahuje volání project()"
 
 #: src/zfr_lib/lint/meson.py:49
-msgid ""
-"project() must be the first Meson call. Copy the header from the language "
-"template."
-msgstr ""
-"project() musí být prvním voláním Mesonu. Zkopírujte záhlaví z jazykové "
-"šablony."
+msgid "project() must be the first Meson call. Copy the header from the language template."
+msgstr "project() musí být prvním voláním Mesonu. Zkopírujte záhlaví z jazykové šablony."
 
 #: src/zfr_lib/lint/meson.py:54
 #, python-format
@@ -982,12 +822,8 @@ msgstr "chybí %s (používá se pro man stránky)"
 
 #: src/zfr_lib/lint/meson.py:77
 #, python-format
-msgid ""
-"Set %s next to project(), then pass -a project-author/email/year to "
-"asciidoctor."
-msgstr ""
-"Nastavte %s vedle project() a poté předejte -a project-author/email/year "
-"programu asciidoctor."
+msgid "Set %s next to project(), then pass -a project-author/email/year to asciidoctor."
+msgstr "Nastavte %s vedle project() a poté předejte -a project-author/email/year programu asciidoctor."
 
 #: src/zfr_lib/lint/meson.py:82
 msgid "version uses `zfr version`"
@@ -1038,10 +874,8 @@ msgid "meson.build does not invoke asciidoctor"
 msgstr "meson.build nevolá asciidoctor"
 
 #: src/zfr_lib/lint/meson.py:130
-msgid ""
-"find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
-msgstr ""
-"find_program('asciidoctor') a custom_target(..., '-b', 'manpage', ...)."
+msgid "find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
+msgstr "find_program('asciidoctor') a custom_target(..., '-b', 'manpage', ...)."
 
 #: src/zfr_lib/lint/meson.py:135
 msgid "run_target look present"
@@ -1052,12 +886,8 @@ msgid "no run_target('look') DESTDIR preview"
 msgstr "chybí náhled DESTDIR pro run_target('look')"
 
 #: src/zfr_lib/lint/meson.py:143
-msgid ""
-"Add run_target look that meson install's into a tempdir and runs tree (see "
-"templates)."
-msgstr ""
-"Přidejte run_target look, který provede meson install do tempdir a spustí "
-"tree (viz šablony)."
+msgid "Add run_target look that meson install's into a tempdir and runs tree (see templates)."
+msgstr "Přidejte run_target look, který provede meson install do tempdir a spustí tree (viz šablony)."
 
 #: src/zfr_lib/lint/meson.py:148
 msgid "installs bash-completion"
@@ -1068,12 +898,8 @@ msgid "does not install bash-completion"
 msgstr "neinstaluje bash-completion"
 
 #: src/zfr_lib/lint/meson.py:156
-msgid ""
-"install_data(..., install_dir: datadir / 'bash-completion' / 'completions', "
-"rename: command)."
-msgstr ""
-"Použijte install_data(..., install_dir: datadir / 'bash-completion' / "
-"'completions', rename: command)."
+msgid "install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
+msgstr "Použijte install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
 
 #: src/zfr_lib/lint/report.py:73
 msgid "FAIL"
@@ -1107,20 +933,12 @@ msgid "zephyr meta-repo (templates + CLI tools)"
 msgstr "meta-repozitář zephyr (šablony + nástroje CLI)"
 
 #: src/zfr_lib/lint/report.py:90
-msgid ""
-"language template inside the meta-repo (placeholders like zephyr/some_puff1 "
-"are expected)"
-msgstr ""
-"jazyková šablona uvnitř meta-repozitáře (zástupné tokeny jako zephyr/"
-"some_puff1 jsou očekávané)"
+msgid "language template inside the meta-repo (placeholders like zephyr/some_puff1 are expected)"
+msgstr "jazyková šablona uvnitř meta-repozitáře (zástupné tokeny jako zephyr/some_puff1 jsou očekávané)"
 
 #: src/zfr_lib/lint/report.py:91
-msgid ""
-"project instantiated from a language template (directory name must match "
-"meson/debian; no leftover zephyr/some_puff1 tokens)"
-msgstr ""
-"projekt instanciovaný z jazykové šablony (název adresáře musí odpovídat "
-"meson/debian; žádné zbylé tokeny zephyr/some_puff1)"
+msgid "project instantiated from a language template (directory name must match meson/debian; no leftover zephyr/some_puff1 tokens)"
+msgstr "projekt instanciovaný z jazykové šablony (název adresáře musí odpovídat meson/debian; žádné zbylé tokeny zephyr/some_puff1)"
 
 #: src/zfr_lib/lint/report.py:93
 #, python-format
@@ -1132,60 +950,32 @@ msgid "Zephyr style (finish the project to this contract)"
 msgstr "styl Zephyr (dokončete projekt podle této smlouvy)"
 
 #: src/zfr_lib/lint/report.py:97
-msgid ""
-"License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
-"License)."
-msgstr ""
-"Licence AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
-"License)."
+msgid "License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
+msgstr "Licence AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
 
 #: src/zfr_lib/lint/report.py:98
-msgid ""
-"Build with Meson; debian/rules uses dh --buildsystem=meson --"
-"builddirectory=debian/build."
-msgstr ""
-"Sestavujte pomocí Meson; debian/rules používá dh --buildsystem=meson --"
-"builddirectory=debian/build."
+msgid "Build with Meson; debian/rules uses dh --buildsystem=meson --builddirectory=debian/build."
+msgstr "Sestavujte pomocí Meson; debian/rules používá dh --buildsystem=meson --builddirectory=debian/build."
 
 #: src/zfr_lib/lint/report.py:99
-msgid ""
-"project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO "
-"0.0.0, DO NOT MODIFY."
-msgstr ""
-"verze project() z `zfr version`; ponechte zálohu v=\"0.0.0\" # FIXED TO "
-"0.0.0, DO NOT MODIFY."
+msgid "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
+msgstr "verze project() z `zfr version`; ponechte zálohu v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 
 #: src/zfr_lib/lint/report.py:100
-msgid ""
-"Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under "
-"share/man/<locale>/man1 (whole-document adoc, not po4a)."
-msgstr ""
-"Manuálové stránky: docs/*.adoc + asciidoctor -b manpage; přeložené stránky v "
-"share/man/<locale>/man1 (celý dokument adoc, ne po4a)."
+msgid "Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
+msgstr "Manuálové stránky: docs/*.adoc + asciidoctor -b manpage; přeložené stránky v share/man/<locale>/man1 (celý dokument adoc, ne po4a)."
 
 #: src/zfr_lib/lint/report.py:101
-msgid ""
-"Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; "
-"optional rpm/ aligned with debian."
-msgstr ""
-"Balíčkování: debian/control Build-Depends meson, ninja-build, asciidoctor; "
-"volitelný rpm/ sladěný s debian."
+msgid "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional rpm/ aligned with debian."
+msgstr "Balíčkování: debian/control Build-Depends meson, ninja-build, asciidoctor; volitelný rpm/ sladěný s debian."
 
 #: src/zfr_lib/lint/report.py:102
-msgid ""
-"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 "
-"locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."
-msgstr ""
-"i18n: anglický zdroj; zfr lint -l/--l10n-level L0–L3 (výchozí L1). L1=10 "
-"lokalit, L2=20, L3=30. Výchozí hodnoty v .config/zfr/lint.options."
+msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."
+msgstr "i18n: anglický zdroj; zfr lint -l/--l10n-level L0–L3 (výchozí L1). L1=10 lokalit, L2=20, L3=30. Výchozí hodnoty v .config/zfr/lint.options."
 
 #: src/zfr_lib/lint/report.py:103
-msgid ""
-"Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/"
-"changelog (git describe may differ)."
-msgstr ""
-"Aplikace: `zfr rename <dir>` a poté `zfr add <puff>`; VERSION odpovídá "
-"debian/changelog (git describe se může lišit)."
+msgid "Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ)."
+msgstr "Aplikace: `zfr rename <dir>` a poté `zfr add <puff>`; VERSION odpovídá debian/changelog (git describe se může lišit)."
 
 #: src/zfr_lib/lint/report.py:116
 msgid "error"
@@ -1212,16 +1002,8 @@ msgid "Next steps (zephyr style)"
 msgstr "Další kroky (styl zephyr)"
 
 #: src/zfr_lib/lint/report.py:145
-msgid ""
-"Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). "
-"`zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr "
-"version`. `zfr ize` applies missing debian/rpm/meson/man/version-subst "
-"upgrades."
-msgstr ""
-"Tip: po úpravách znovu spusťte `zfr lint` z projektu (nebo podadresáře). "
-"`zfr about -d -r` vypíše pole balíčkování. Verze pro Meson/RPM je `zfr "
-"version`. `zfr ize` doplní chybějící úpravy debian/rpm/meson/man/version-"
-"subst."
+msgid "Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). `zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. `zfr ize` applies missing debian/rpm/meson/man/version-subst upgrades."
+msgstr "Tip: po úpravách znovu spusťte `zfr lint` z projektu (nebo podadresáře). `zfr about -d -r` vypíše pole balíčkování. Verze pro Meson/RPM je `zfr version`. `zfr ize` doplní chybějící úpravy debian/rpm/meson/man/version-subst."
 
 #: src/zfr_lib/lint/rpm.py:41
 msgid "no rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
@@ -1229,15 +1011,8 @@ msgstr "chybí rpm/*.spec (volitelné, ale styl zephyr má RPM vedle debian/)"
 
 #: src/zfr_lib/lint/rpm.py:44
 #, no-python-format
-msgid ""
-"Copy rpm/ from a language template; name the spec after the package (rpm/"
-"<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. "
-"Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
-msgstr ""
-"Zkopírujte rpm/ z jazykové šablony; pojmenujte spec podle balíčku (rpm/"
-"<Source>.spec, ne zephyr.spec) a ponechte Makefile používající `zfr "
-"version`. Slaďte Name/Summary/Requires/URL s debian/control. Nebo spusťte "
-"`zfr ize`."
+msgid "Copy rpm/ from a language template; name the spec after the package (rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
+msgstr "Zkopírujte rpm/ z jazykové šablony; pojmenujte spec podle balíčku (rpm/<Source>.spec, ne zephyr.spec) a ponechte Makefile používající `zfr version`. Slaďte Name/Summary/Requires/URL s debian/control. Nebo spusťte `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:63
 #, no-python-format, python-brace-format
@@ -1250,12 +1025,8 @@ msgstr "Version ve specu je natvrdo; styl zephyr vkládá `zfr version`"
 
 #: src/zfr_lib/lint/rpm.py:76
 #, no-python-format
-msgid ""
-"Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze "
-"via rpm/Makefile (`zfr version` / `zfr version -r`)."
-msgstr ""
-"Použijte Version: %{version} s %{!?version:%global version 0.0.0} a zmrazte "
-"přes rpm/Makefile (`zfr version` / `zfr version -r`)."
+msgid "Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze via rpm/Makefile (`zfr version` / `zfr version -r`)."
+msgstr "Použijte Version: %{version} s %{!?version:%global version 0.0.0} a zmrazte přes rpm/Makefile (`zfr version` / `zfr version -r`)."
 
 #: src/zfr_lib/lint/rpm.py:82
 #, python-format
@@ -1345,11 +1116,8 @@ msgid "%(rel)s is %(lines)d lines (>%(limit)d); file is very long"
 msgstr "%(rel)s má %(lines)d řádků (>%(limit)d); soubor je velmi dlouhý"
 
 #: src/zfr_lib/lint/source_size.py:59
-msgid ""
-"Split this file into smaller modules; keep each unit focused and testable."
-msgstr ""
-"Rozdělte tento soubor na menší moduly; každou jednotku držte soustředěnou a "
-"testovatelnou."
+msgid "Split this file into smaller modules; keep each unit focused and testable."
+msgstr "Rozdělte tento soubor na menší moduly; každou jednotku držte soustředěnou a testovatelnou."
 
 #: src/zfr_lib/lint/source_size.py:67
 #, python-format
@@ -1358,8 +1126,7 @@ msgstr "%(rel)s má %(lines)d řádků (>%(limit)d); zvažte brzy modularizaci"
 
 #: src/zfr_lib/lint/source_size.py:71
 msgid "Plan extraction of helpers or submodules before the file grows further."
-msgstr ""
-"Naplánujte vyčlenění pomocníků nebo podmodulů, než soubor dále poroste."
+msgstr "Naplánujte vyčlenění pomocníků nebo podmodulů, než soubor dále poroste."
 
 #: src/zfr_lib/lint/source_size.py:75
 msgid "no oversized source files"
@@ -1375,25 +1142,13 @@ msgstr "strukturální soubory z jazykové šablony jsou přítomny"
 
 #: src/zfr_lib/lint/template.py:100
 #, python-format
-msgid ""
-"language template %(lang)s has extra scaffolding not in this tree: "
-"%(preview)s%(more)s"
-msgstr ""
-"jazyková šablona %(lang)s má navíc kostru, která v tomto stromu chybí: "
-"%(preview)s%(more)s"
+msgid "language template %(lang)s has extra scaffolding not in this tree: %(preview)s%(more)s"
+msgstr "jazyková šablona %(lang)s má navíc kostru, která v tomto stromu chybí: %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/template.py:102
 #, python-format
-msgid ""
-"Compare with the %(lang)s template under pkgdatadir. Copy missing debian/"
-"docs/src/rpm files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` "
-"puffs. Do not copy build/ or debian leftover stamp files. Example commons "
-"modules are optional."
-msgstr ""
-"Porovnejte se šablonou %(lang)s v pkgdatadir. Zkopírujte chybějící soubory "
-"debian/docs/src/rpm (rpm/ používá %(name)s.spec, ne zephyr.spec), nebo `zfr "
-"add` puffy. Nekopírujte build/ ani zbylé razítkové soubory debian. Ukázkové "
-"moduly commons jsou volitelné."
+msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing debian/docs/src/rpm files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` puffs. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
+msgstr "Porovnejte se šablonou %(lang)s v pkgdatadir. Zkopírujte chybějící soubory debian/docs/src/rpm (rpm/ používá %(name)s.spec, ne zephyr.spec), nebo `zfr add` puffy. Nekopírujte build/ ani zbylé razítkové soubory debian. Ukázkové moduly commons jsou volitelné."
 
 #: src/zfr_lib/release.py:26
 msgid "Debian binary-only build (no .dsc)"
@@ -1477,12 +1232,8 @@ msgid "create a GitHub release (parse options, exec gh-makerelease)"
 msgstr "vytvořit GitHub release (parsovat volby, spustit gh-makerelease)"
 
 #: src/zfr_lib/release.py:207
-msgid ""
-"Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
-"not implement tagging, packaging, or uploads."
-msgstr ""
-"Parsuje volby gh-makerelease, sestaví argv a spustí gh-makerelease. "
-"Neimplementuje tagování, balení ani uploady."
+msgid "Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does not implement tagging, packaging, or uploads."
+msgstr "Parsuje volby gh-makerelease, sestaví argv a spustí gh-makerelease. Neimplementuje tagování, balení ani uploady."
 
 #: src/zfr_lib/remove.py:20
 msgid "remove puff(s) from the current project"
@@ -1513,19 +1264,12 @@ msgid "new example names (each replaces template some_puff1)"
 msgstr "nové ukázkové názvy (každý nahrazuje šablonu some_puff1)"
 
 #: src/zfr_lib/shape.py:263
-msgid ""
-"print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
-msgstr ""
-"vytisknout zephyr skóre tvaru balíku 0-100 (packagedir vs repodir v "
-"monorepos)"
+msgid "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
+msgstr "vytisknout zephyr skóre tvaru balíku 0-100 (packagedir vs repodir v monorepos)"
 
 #: src/zfr_lib/shape.py:265
-msgid ""
-"Score how completely the current directory matches zephyr package style "
-"(0-100). In monorepos, scores the packagedir."
-msgstr ""
-"Ohodnotí, nakolik aktuální adresář odpovídá zephyr stylu balíku (0-100). V "
-"monorepos hodnotí packagedir."
+msgid "Score how completely the current directory matches zephyr package style (0-100). In monorepos, scores the packagedir."
+msgstr "Ohodnotí, nakolik aktuální adresář odpovídá zephyr stylu balíku (0-100). V monorepos hodnotí packagedir."
 
 #: src/zfr_lib/shape.py:271
 msgid "print 1 if score >= threshold, else 0"
@@ -1545,8 +1289,7 @@ msgid "print current project version (walks parents from cwd)"
 msgstr "vytisknout aktuální verzi projektu (hledá směrem nahoru od cwd)"
 
 #: src/zfr_lib/version.py:52
-msgid ""
-"Print the current project version (walks from cwd toward parent directories)."
+msgid "Print the current project version (walks from cwd toward parent directories)."
 msgstr "Vytiskne aktuální verzi projektu (hledá směrem nahoru od cwd)."
 
 #: src/zfr_lib/version.py:57

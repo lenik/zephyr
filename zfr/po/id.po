@@ -29,12 +29,8 @@ msgstr ""
 "\n"
 
 #: src/zfr:32
-msgid ""
-"Zephyr template helper (CLI name: zfr). Create projects and manage example "
-"puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
-msgstr ""
-"Pembantu templat Zephyr (nama CLI: zfr). Buat proyek dan kelola puff contoh. "
-"Pohon yang diinstansiasi tetap memanggil zfr; zfr bukan token pengganti nama."
+msgid "Zephyr template helper (CLI name: zfr). Create projects and manage example puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
+msgstr "Pembantu templat Zephyr (nama CLI: zfr). Buat proyek dan kelola puff contoh. Pohon yang diinstansiasi tetap memanggil zfr; zfr bukan token pengganti nama."
 
 #: src/zfr:46
 msgid "show this help"
@@ -45,14 +41,8 @@ msgid "print current project information (walks parents from cwd)"
 msgstr "cetak informasi proyek saat ini (menelusuri induk dari cwd)"
 
 #: src/zfr_lib/about.py:498
-msgid ""
-"Print information about the current zephyr project (walks from cwd toward "
-"parent directories). CSR colors when stdout is a TTY. Common packaging "
-"fields are parsed from debian or RPM."
-msgstr ""
-"Cetak informasi tentang proyek zephyr saat ini (menelusuri dari cwd ke "
-"direktori induk). Warna CSR saat stdout adalah TTY. Bidang pengemasan umum "
-"diurai dari debian atau RPM."
+msgid "Print information about the current zephyr project (walks from cwd toward parent directories). CSR colors when stdout is a TTY. Common packaging fields are parsed from debian or RPM."
+msgstr "Cetak informasi tentang proyek zephyr saat ini (menelusuri dari cwd ke direktori induk). Warna CSR saat stdout adalah TTY. Bidang pengemasan umum diurai dari debian atau RPM."
 
 #: src/zfr_lib/about.py:505
 msgid "show parsed Debian packaging fields"
@@ -124,39 +114,24 @@ msgid "print detected language for the current directory"
 msgstr "cetak bahasa terdeteksi untuk direktori saat ini"
 
 #: src/zfr_lib/detect.py:16
-msgid ""
-"Print the detected language of the current project and layout details on "
-"stderr."
-msgstr ""
-"Cetak bahasa terdeteksi proyek saat ini dan detail tata letak ke stderr."
+msgid "Print the detected language of the current project and layout details on stderr."
+msgstr "Cetak bahasa terdeteksi proyek saat ini dan detail tata letak ke stderr."
 
 #: src/zfr_lib/dist.py:60
-msgid ""
-"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
-"rpm; usually $HOME/rpmbuild)"
-msgstr ""
-"tulis arsip ke DIR (default: meson-dist, atau %_topdir/SOURCES ($HOME/"
-"rpmbuild) dengan --rpm)"
+msgid "write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --rpm; usually $HOME/rpmbuild)"
+msgstr "tulis arsip ke DIR (default: meson-dist, atau %_topdir/SOURCES ($HOME/rpmbuild) dengan --rpm)"
 
 #: src/zfr_lib/dist.py:70
-msgid ""
-"Meson build directory (default: /build when it matches this source tree, "
-"else <project>/build)"
-msgstr ""
-"direktori build Meson (default: /build jika cocok dengan pohon sumber ini, "
-"else <project>/build)"
+msgid "Meson build directory (default: /build when it matches this source tree, else <project>/build)"
+msgstr "direktori build Meson (default: /build jika cocok dengan pohon sumber ini, else <project>/build)"
 
 #: src/zfr_lib/dist.py:80
 msgid "archive format (default: xz)"
 msgstr "format arsip (default: xz)"
 
 #: src/zfr_lib/dist.py:86
-msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES ($HOME/"
-"rpmbuild by default; ~/.rpmmacros) unless -o is given"
-msgstr ""
-"beri nama arsip NAME-VERSION.tar.xz dan tulis ke %_topdir/SOURCES ($HOME/"
-"rpmbuild) kecuali -o diberikan"
+msgid "name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES ($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
+msgstr "beri nama arsip NAME-VERSION.tar.xz dan tulis ke %_topdir/SOURCES ($HOME/rpmbuild) kecuali -o diberikan"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"
@@ -171,36 +146,21 @@ msgid "build a source tarball (meson dist, or this project only)"
 msgstr "buat tarball sumber (meson dist, atau proyek ini saja)"
 
 #: src/zfr_lib/dist.py:345
-msgid ""
-"Build a source archive of the current zephyr project (walks from cwd toward "
-"parent directories). Uses meson dist when this directory is the git project "
-"root; otherwise packs this project only so nested language templates do not "
-"ship the parent meta-repo. Prints the archive path on stdout."
-msgstr ""
-"Buat arsip sumber proyek zephyr saat ini (menelusuri dari cwd ke direktori "
-"induk). Menggunakan meson dist saat direktori ini adalah root proyek git; "
-"jika tidak, hanya mengemas proyek ini agar templat bahasa bersarang tidak "
-"mengirim meta-repo induk. Mencetak jalur arsip ke stdout."
+msgid "Build a source archive of the current zephyr project (walks from cwd toward parent directories). Uses meson dist when this directory is the git project root; otherwise packs this project only so nested language templates do not ship the parent meta-repo. Prints the archive path on stdout."
+msgstr "Buat arsip sumber proyek zephyr saat ini (menelusuri dari cwd ke direktori induk). Menggunakan meson dist saat direktori ini adalah root proyek git; jika tidak, hanya mengemas proyek ini agar templat bahasa bersarang tidak mengirim meta-repo induk. Mencetak jalur arsip ke stdout."
 
 #: src/zfr_lib/ize/__init__.py:65
 msgid "refactor this project to current zephyr style"
 msgstr "refaktor proyek ini ke gaya zephyr saat ini"
 
 #: src/zfr_lib/ize/__init__.py:66
-msgid ""
-"Refactor the current project to match current zephyr style: missing debian/"
-"rpm files, meson targets, AsciiDoc man pages, and Meson version "
-"substitutions. Walks from cwd toward parents."
-msgstr ""
-"Refaktor proyek saat ini agar sesuai gaya zephyr saat ini: file debian/rpm "
-"yang hilang, target meson, halaman man AsciiDoc, dan substitusi versi Meson. "
-"Menelusuri dari cwd ke induk."
+msgid "Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, and Meson version substitutions. Walks from cwd toward parents."
+msgstr "Refaktor proyek saat ini agar sesuai gaya zephyr saat ini: file debian/rpm yang hilang, target meson, halaman man AsciiDoc, dan substitusi versi Meson. Menelusuri dari cwd ke induk."
 
 #: src/zfr_lib/ize/__init__.py:70
 #, python-format
 msgid "language template to align with (default: detect; one of: %s)"
-msgstr ""
-"templat bahasa untuk diselaraskan (default: detect; salah satu dari: %s)"
+msgstr "templat bahasa untuk diselaraskan (default: detect; salah satu dari: %s)"
 
 #: src/zfr_lib/ize/__init__.py:71
 msgid "print planned changes without writing files"
@@ -211,10 +171,8 @@ msgid "also print skipped files"
 msgstr "juga cetak file yang dilewati"
 
 #: src/zfr_lib/ize/__init__.py:78
-msgid ""
-"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
-msgstr ""
-"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgstr "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
 
 #: src/zfr_lib/ize/__init__.py:80
 msgid "do not convert groff .1 man pages to docs/*.adoc"
@@ -253,9 +211,7 @@ msgstr "tidak ada direktori tests/"
 
 #: src/zfr_lib/lang/antlr.py:49
 msgid "Add tests/TestCommons.java or fixture checks for parser output."
-msgstr ""
-"Tambahkan tests/TestCommons.java atau pemeriksaan fixture untuk keluaran "
-"parser."
+msgstr "Tambahkan tests/TestCommons.java atau pemeriksaan fixture untuk keluaran parser."
 
 #: src/zfr_lib/lang/as.py:37
 msgid "Add tests/smoke.sh and meson test() for stdin/stdout copy."
@@ -271,25 +227,18 @@ msgid "no src/*.in scripts"
 msgstr "tidak ada skrip src/*.in"
 
 #: src/zfr_lib/lang/bash.py:47
-msgid ""
-"Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ and meson "
-"configure_file + install_mode rwxr-xr-x."
-msgstr ""
-"Pertahankan skrip terkonfigurasi sebagai src/<puff>.in dengan @PACKAGE@/"
-"@VERSION@ dan meson configure_file + install_mode rwxr-xr-x."
+msgid "Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
+msgstr "Pertahankan skrip terkonfigurasi sebagai src/<puff>.in dengan @PACKAGE@/@VERSION@ dan meson configure_file + install_mode rwxr-xr-x."
 
 #: src/zfr_lib/lang/bison.py:45
 msgid "Add tests/ with fixture checks for parser dump/format output."
-msgstr ""
-"Tambahkan tests/ dengan pemeriksaan fixture untuk keluaran dump/format "
-"parser."
+msgstr "Tambahkan tests/ dengan pemeriksaan fixture untuk keluaran dump/format parser."
 
 #: src/zfr_lib/lang/clib.py:36 src/zfr_lib/lang/cpplib.py:36
 #: src/zfr_lib/lang/cpp.py:23 src/zfr_lib/lang/c.py:23
 #: src/zfr_lib/lang/gcc.py:55
 msgid "Add tests/ and meson test() entries like the C family templates."
-msgstr ""
-"Tambahkan tests/ dan entri meson test() seperti pada templat keluarga C."
+msgstr "Tambahkan tests/ dan entri meson test() seperti pada templat keluarga C."
 
 #: src/zfr_lib/lang/cobol.py:37
 msgid "no tests/ (cobol template uses cobc + meson test)"
@@ -320,12 +269,8 @@ msgid "missing go.mod"
 msgstr "go.mod tidak ada"
 
 #: src/zfr_lib/lang/go.py:23
-msgid ""
-"Add go.mod; meson should `go build` with -X main.buildVersion from "
-"meson.project_version()."
-msgstr ""
-"Tambahkan go.mod; meson harus menjalankan `go build` dengan -X "
-"main.buildVersion dari meson.project_version()."
+msgid "Add go.mod; meson should `go build` with -X main.buildVersion from meson.project_version()."
+msgstr "Tambahkan go.mod; meson harus menjalankan `go build` dengan -X main.buildVersion dari meson.project_version()."
 
 #: src/zfr_lib/lang/kotlin.py:23
 msgid "no tests/ (kotlin template uses kotlinc + meson test)"
@@ -333,19 +278,15 @@ msgstr "tidak ada tests/ (templat kotlin memakai kotlinc + meson test)"
 
 #: src/zfr_lib/lang/kotlin.py:24
 msgid "Add tests/Test*.kt and meson test() compiling with kotlinc."
-msgstr ""
-"Tambahkan tests/Test*.kt dan meson test() yang dikompilasi dengan kotlinc."
+msgstr "Tambahkan tests/Test*.kt dan meson test() yang dikompilasi dengan kotlinc."
 
 #: src/zfr_lib/lang/lua.py:23
 msgid "no tests/ (lua template uses lua tests + meson test)"
 msgstr "tidak ada tests/ (templat lua memakai tes lua + meson test)"
 
 #: src/zfr_lib/lang/lua.py:24
-msgid ""
-"Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
-msgstr ""
-"Tambahkan tests/test_*.lua dan meson test() yang menjalankan lua dengan "
-"LUA_PATH=src/?.lua."
+msgid "Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
+msgstr "Tambahkan tests/test_*.lua dan meson test() yang menjalankan lua dengan LUA_PATH=src/?.lua."
 
 #: src/zfr_lib/lang/nim.py:25
 msgid "no tests/ (nim template uses unittest + meson test)"
@@ -376,10 +317,8 @@ msgid "missing Cargo.toml"
 msgstr "Cargo.toml tidak ada"
 
 #: src/zfr_lib/lang/rust.py:23
-msgid ""
-"Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
-msgstr ""
-"Proyek zephyr Rust menyimpan Cargo.toml plus meson custom_target untuk biner."
+msgid "Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
+msgstr "Proyek zephyr Rust menyimpan Cargo.toml plus meson custom_target untuk biner."
 
 #: src/zfr_lib/lang/zig.py:23
 msgid "missing build.zig"
@@ -387,9 +326,7 @@ msgstr "build.zig tidak ada"
 
 #: src/zfr_lib/lang/zig.py:24
 msgid "Add build.zig; meson should invoke `zig build -Doptimize=ReleaseFast`."
-msgstr ""
-"Tambahkan build.zig; meson harus memanggil `zig build "
-"-Doptimize=ReleaseFast`."
+msgstr "Tambahkan build.zig; meson harus memanggil `zig build -Doptimize=ReleaseFast`."
 
 #: src/zfr_lib/lint/debian.py:42
 #, python-format
@@ -403,12 +340,8 @@ msgstr "Build-Depends tanpa %s"
 
 #: src/zfr_lib/lint/debian.py:50
 #, python-format
-msgid ""
-"Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man "
-"pages)."
-msgstr ""
-"Tambahkan %s ke Build-Depends (paket zephyr dibangun dengan Meson + halaman "
-"man AsciiDoc)."
+msgid "Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man pages)."
+msgstr "Tambahkan %s ke Build-Depends (paket zephyr dibangun dengan Meson + halaman man AsciiDoc)."
 
 #: src/zfr_lib/lint/debian.py:54
 msgid "debhelper-compat present"
@@ -420,8 +353,7 @@ msgstr "Build-Depends tanpa debhelper-compat (= 13)"
 
 #: src/zfr_lib/lint/debian.py:62
 msgid "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
-msgstr ""
-"Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+msgstr "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
 
 #: src/zfr_lib/lint/debian.py:72
 msgid "Package stanza missing Architecture"
@@ -472,10 +404,8 @@ msgid "dh meson debian/build"
 msgstr "dh dengan meson di debian/build"
 
 #: src/zfr_lib/lint/debian.py:122
-msgid ""
-"debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
-msgstr ""
-"debian/rules bukan dh --buildsystem=meson --builddirectory=debian/build"
+msgid "debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
+msgstr "debian/rules bukan dh --buildsystem=meson --builddirectory=debian/build"
 
 #: src/zfr_lib/lint/debian.py:125
 #, no-python-format
@@ -515,12 +445,8 @@ msgid "VERSION=%(file)r != changelog %(changelog)r"
 msgstr "VERSION=%(file)r != log perubahan %(changelog)r"
 
 #: src/zfr_lib/lint/debian.py:156
-msgid ""
-"VERSION should match the latest debian/changelog entry (pre-commit hook "
-"updates it). Git describe may still differ."
-msgstr ""
-"VERSION harus cocok dengan entri terbaru debian/changelog (kait pre-commit "
-"memperbaruinya). Git describe mungkin masih berbeda."
+msgid "VERSION should match the latest debian/changelog entry (pre-commit hook updates it). Git describe may still differ."
+msgstr "VERSION harus cocok dengan entri terbaru debian/changelog (kait pre-commit memperbaruinya). Git describe mungkin masih berbeda."
 
 #: src/zfr_lib/lint/debian.py:162
 #, python-format
@@ -555,14 +481,8 @@ msgstr "tidak ada direktori po/ (opsional kecuali proyek memakai gettext)"
 
 #: src/zfr_lib/lint/i18n_check.py:79
 #, python-format
-msgid ""
-"If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in "
-"meson.build. Required locales at %(level)s: %(locales)s (source language "
-"%(source)s)."
-msgstr ""
-"Jika aplikasi diterjemahkan, tambahkan po/ berisi LINGUAS + *.po dan "
-"i18n.gettext() di meson.build. Locale yang wajib pada %(level)s: %(locales)s "
-"(bahasa sumber %(source)s)."
+msgid "If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in meson.build. Required locales at %(level)s: %(locales)s (source language %(source)s)."
+msgstr "Jika aplikasi diterjemahkan, tambahkan po/ berisi LINGUAS + *.po dan i18n.gettext() di meson.build. Locale yang wajib pada %(level)s: %(locales)s (bahasa sumber %(source)s)."
 
 #: src/zfr_lib/lint/i18n_check.py:97
 msgid "po/ exists but po/LINGUAS is missing or empty"
@@ -586,14 +506,8 @@ msgstr "po/LINGUAS kekurangan locale %(level)s: %(locales)s"
 
 #: src/zfr_lib/lint/i18n_check.py:117
 #, python-format
-msgid ""
-"Level %(level)s requires: %(locales)s (source %(source)s; zh-cn→zh_CN, zh-"
-"tw→zh_TW). Append the missing lines to LINGUAS and add matching po/"
-"<locale>.po."
-msgstr ""
-"Tingkat %(level)s mensyaratkan: %(locales)s (sumber %(source)s; zh-cn→zh_CN, "
-"zh-tw→zh_TW). Tambahkan baris yang hilang ke LINGUAS dan buat po/<locale>.po "
-"yang cocok."
+msgid "Level %(level)s requires: %(locales)s (source %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Append the missing lines to LINGUAS and add matching po/<locale>.po."
+msgstr "Tingkat %(level)s mensyaratkan: %(locales)s (sumber %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Tambahkan baris yang hilang ke LINGUAS dan buat po/<locale>.po yang cocok."
 
 #: src/zfr_lib/lint/i18n_check.py:132
 #, python-format
@@ -606,12 +520,8 @@ msgid "LINGUAS entries without po/<locale>.po: %s"
 msgstr "entri LINGUAS tanpa po/<locale>.po: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:149
-msgid ""
-"For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-"
-"translator && msgmerge -U po/<locale>.po <domain>.pot"
-msgstr ""
-"Untuk setiap locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --"
-"no-translator && msgmerge -U po/<locale>.po <domain>.pot"
+msgid "For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
+msgstr "Untuk setiap locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
 
 #: src/zfr_lib/lint/i18n_check.py:160
 #, python-format
@@ -625,12 +535,8 @@ msgstr "terjemahan man seluruh dokumen hilang untuk %(level)s: %(files)s"
 
 #: src/zfr_lib/lint/i18n_check.py:195
 #, python-format
-msgid ""
-"Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). "
-"%(level)s requires: %(locales)s."
-msgstr ""
-"Terjemahkan secara manual docs/<locale>/<name>.adoc (seluruh dokumen, bukan "
-"po4a). %(level)s mensyaratkan: %(locales)s."
+msgid "Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
+msgstr "Terjemahkan secara manual docs/<locale>/<name>.adoc (seluruh dokumen, bukan po4a). %(level)s mensyaratkan: %(locales)s."
 
 #: src/zfr_lib/lint/i18n_check.py:205
 #, python-format
@@ -653,12 +559,8 @@ msgstr "%(label)s adalah %(val)r, diharapkan %(expected)r (nama direktori)"
 
 #: src/zfr_lib/lint/identity.py:60
 #, python-format
-msgid ""
-"Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename "
-"%(expected)s` if leftover template names remain."
-msgstr ""
-"Setel %(label)s ke %(expected)r, atau ganti nama direktori. Gunakan `zfr "
-"rename %(expected)s` jika nama templat masih tersisa."
+msgid "Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename %(expected)s` if leftover template names remain."
+msgstr "Setel %(label)s ke %(expected)r, atau ganti nama direktori. Gunakan `zfr rename %(expected)s` jika nama templat masih tersisa."
 
 #: src/zfr_lib/lint/identity.py:66
 #, python-format
@@ -701,18 +603,11 @@ msgstr "spec Name=%s"
 
 #: src/zfr_lib/lint/__init__.py:99
 msgid "validate project packaging and zephyr layout (walks parents from cwd)"
-msgstr ""
-"validasi pengemasan proyek dan tata letak zephyr (menelusuri induk dari cwd)"
+msgstr "validasi pengemasan proyek dan tata letak zephyr (menelusuri induk dari cwd)"
 
 #: src/zfr_lib/lint/__init__.py:100
-msgid ""
-"Check the current zephyr project for missing files and packaging/style "
-"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
-"is a TTY."
-msgstr ""
-"Periksa proyek zephyr saat ini untuk file yang hilang dan kesalahan "
-"pengemasan/gaya. Menelusuri dari cwd ke direktori induk. Warna CSR saat "
-"stdout adalah TTY."
+msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY."
+msgstr "Periksa proyek zephyr saat ini untuk file yang hilang dan kesalahan pengemasan/gaya. Menelusuri dari cwd ke direktori induk. Warna CSR saat stdout adalah TTY."
 
 #: src/zfr_lib/lint/__init__.py:104
 msgid "show passing checks too"
@@ -727,12 +622,8 @@ msgid "treat warnings as failures (exit 1)"
 msgstr "anggap peringatan sebagai kegagalan (exit 1)"
 
 #: src/zfr_lib/lint/__init__.py:113
-msgid ""
-"required gettext/manpage locale coverage L0–L3 (default: L1; project file "
-"may override)"
-msgstr ""
-"Cakupan locale gettext/manual wajib L0–L3 (baku: L1; berkas proyek dapat "
-"menimpa)"
+msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
+msgstr "Cakupan locale gettext/manual wajib L0–L3 (baku: L1; berkas proyek dapat menimpa)"
 
 #: src/zfr_lib/lint/lang_bits.py:31
 #, python-format
@@ -740,12 +631,8 @@ msgid "legacy example module %s; use commons or a specific name"
 msgstr "modul contoh lama %s; gunakan commons atau nama spesifik"
 
 #: src/zfr_lib/lint/lang_bits.py:33
-msgid ""
-"Rename to src/commons.* (template convention) or a project-specific module "
-"name."
-msgstr ""
-"Ganti nama menjadi src/commons.* (konvensi templat) atau nama modul khusus "
-"proyek."
+msgid "Rename to src/commons.* (template convention) or a project-specific module name."
+msgstr "Ganti nama menjadi src/commons.* (konvensi templat) atau nama modul khusus proyek."
 
 #: src/zfr_lib/lint/lang_bits.py:44
 #, python-format
@@ -753,15 +640,8 @@ msgid "%s is only a template example for shared helpers"
 msgstr "%s hanyalah contoh templat untuk pembantu bersama"
 
 #: src/zfr_lib/lint/lang_bits.py:46
-msgid ""
-"common_lib / commons mean “extract reusable pieces”, but filenames should be "
-"concrete. Rename to a specific module in real projects (e.g. stream_copy.py, "
-"bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
-msgstr ""
-"common_lib / commons berarti “ekstrak potongan yang dapat dipakai ulang”, "
-"tetapi nama berkas harus konkret. Di proyek nyata, ganti nama ke modul "
-"spesifik (mis. stream_copy.py, bulk.h). clib/cpplib tetap memakai lib.c/"
-"lib.cpp sebagai entri pustaka bersama."
+msgid "common_lib / commons mean “extract reusable pieces”, but filenames should be concrete. Rename to a specific module in real projects (e.g. stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
+msgstr "common_lib / commons berarti “ekstrak potongan yang dapat dipakai ulang”, tetapi nama berkas harus konkret. Di proyek nyata, ganti nama ke modul spesifik (mis. stream_copy.py, bulk.h). clib/cpplib tetap memakai lib.c/lib.cpp sebagai entri pustaka bersama."
 
 #: src/zfr_lib/lint/layout.py:35
 msgid "Add a top-level meson.build with project(...)."
@@ -777,8 +657,7 @@ msgstr "Tambahkan README.md yang menjelaskan proyek ini."
 
 #: src/zfr_lib/lint/layout.py:38
 msgid "Add README-zh.md (Chinese summary), matching other zephyr templates."
-msgstr ""
-"Tambahkan README-zh.md (ringkasan Mandarin), mengikuti templat zephyr lain."
+msgstr "Tambahkan README-zh.md (ringkasan Mandarin), mengikuti templat zephyr lain."
 
 #: src/zfr_lib/lint/layout.py:39
 msgid "Add debian/ packaging (copy debian/ from the language template)."
@@ -790,15 +669,11 @@ msgstr "Tambahkan debian/changelog (zfr create menulisnya; atau gunakan dch)."
 
 #: src/zfr_lib/lint/layout.py:41
 msgid "Add debian/copyright in machine-readable format, License: AGPL-3+."
-msgstr ""
-"Tambahkan debian/copyright dalam format terbaca mesin, License: AGPL-3+."
+msgstr "Tambahkan debian/copyright dalam format terbaca mesin, License: AGPL-3+."
 
 #: src/zfr_lib/lint/layout.py:42
-msgid ""
-"Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
-msgstr ""
-"Tambahkan debian/rules memakai dh --buildsystem=meson --"
-"builddirectory=debian/build."
+msgid "Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
+msgstr "Tambahkan debian/rules memakai dh --buildsystem=meson --builddirectory=debian/build."
 
 #: src/zfr_lib/lint/layout.py:43
 msgid "Add debian/source/format (typically '3.0 (native)')."
@@ -824,12 +699,8 @@ msgid "no docs/*.adoc man page source"
 msgstr "tidak ada sumber halaman man docs/*.adoc"
 
 #: src/zfr_lib/lint/layout.py:65
-msgid ""
-"Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage "
-"(see any language template)."
-msgstr ""
-"Tambahkan docs/<puff>.adoc dan custom_target meson dengan asciidoctor -b "
-"manpage (lihat templat bahasa mana pun)."
+msgid "Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
+msgstr "Tambahkan docs/<puff>.adoc dan custom_target meson dengan asciidoctor -b manpage (lihat templat bahasa mana pun)."
 
 #: src/zfr_lib/lint/layout.py:78
 #, python-format
@@ -841,12 +712,8 @@ msgid "no *.bash bash-completion script at project root"
 msgstr "tidak ada skrip bash-completion *.bash di akar proyek"
 
 #: src/zfr_lib/lint/layout.py:87
-msgid ""
-"Add <puff>.bash and install it to datadir/bash-completion/completions "
-"renamed to the command name (see meson.build in the template)."
-msgstr ""
-"Tambahkan <puff>.bash dan pasang ke datadir/bash-completion/completions "
-"dengan nama diubah menjadi nama perintah (lihat meson.build pada templat)."
+msgid "Add <puff>.bash and install it to datadir/bash-completion/completions renamed to the command name (see meson.build in the template)."
+msgstr "Tambahkan <puff>.bash dan pasang ke datadir/bash-completion/completions dengan nama diubah menjadi nama perintah (lihat meson.build pada templat)."
 
 #: src/zfr_lib/lint/layout.py:93
 msgid "VERSION file present"
@@ -857,30 +724,16 @@ msgid "no VERSION file (changelog snapshot for tarball builds)"
 msgstr "tidak ada berkas VERSION (snapshot changelog untuk bangun tarball)"
 
 #: src/zfr_lib/lint/layout.py:101
-msgid ""
-"Create VERSION with the latest debian/changelog version (one line). "
-"Enable .githooks/pre-commit: git config core.hooksPath .githooks"
-msgstr ""
-"Buat VERSION dengan versi debian/changelog terbaru (satu baris). "
-"Aktifkan .githooks/pre-commit: git config core.hooksPath .githooks"
+msgid "Create VERSION with the latest debian/changelog version (one line). Enable .githooks/pre-commit: git config core.hooksPath .githooks"
+msgstr "Buat VERSION dengan versi debian/changelog terbaru (satu baris). Aktifkan .githooks/pre-commit: git config core.hooksPath .githooks"
 
 #: src/zfr_lib/lint/layout.py:195
 msgid "no .githooks/pre-commit to sync VERSION from debian/changelog"
-msgstr ""
-"tidak ada .githooks/pre-commit untuk menyelaraskan VERSION dari debian/"
-"changelog"
+msgstr "tidak ada .githooks/pre-commit untuk menyelaraskan VERSION dari debian/changelog"
 
 #: src/zfr_lib/lint/layout.py:197
-msgid ""
-"Walk up to the directory that contains .git, then put pre-commit in that "
-"tree's .githooks (or core.hooksPath). The hook must update VERSION from "
-"debian/changelog. `zfr create` copies one and sets git config "
-"core.hooksPath .githooks."
-msgstr ""
-"Naik ke direktori yang berisi .git, lalu letakkan pre-commit di .githooks "
-"pohon itu (atau core.hooksPath). Kait harus memperbarui VERSION dari debian/"
-"changelog. `zfr create` menyalin satu dan mengatur git config "
-"core.hooksPath .githooks."
+msgid "Walk up to the directory that contains .git, then put pre-commit in that tree's .githooks (or core.hooksPath). The hook must update VERSION from debian/changelog. `zfr create` copies one and sets git config core.hooksPath .githooks."
+msgstr "Naik ke direktori yang berisi .git, lalu letakkan pre-commit di .githooks pohon itu (atau core.hooksPath). Kait harus memperbarui VERSION dari debian/changelog. `zfr create` menyalin satu dan mengatur git config core.hooksPath .githooks."
 
 #: src/zfr_lib/lint/layout.py:210
 #, python-format
@@ -893,26 +746,17 @@ msgid "%s exists but does not sync VERSION from debian/changelog"
 msgstr "%s ada tetapi tidak menyelaraskan VERSION dari debian/changelog"
 
 #: src/zfr_lib/lint/layout.py:220
-msgid ""
-"The hook should read debian/changelog (dpkg-parsechangelog) and write "
-"VERSION. See the zephyr .githooks/pre-commit template."
-msgstr ""
-"Kait harus membaca debian/changelog (dpkg-parsechangelog) dan menulis "
-"VERSION. Lihat templat zephyr .githooks/pre-commit."
+msgid "The hook should read debian/changelog (dpkg-parsechangelog) and write VERSION. See the zephyr .githooks/pre-commit template."
+msgstr "Kait harus membaca debian/changelog (dpkg-parsechangelog) dan menulis VERSION. Lihat templat zephyr .githooks/pre-commit."
 
 #: src/zfr_lib/lint/leftovers.py:49
 #, python-format
 msgid "%s keeps the template placeholder banner (apps must rewrite it)"
-msgstr ""
-"%s tetap menyimpan spanduk penampung templat (aplikasi harus menulis ulang)"
+msgstr "%s tetap menyimpan spanduk penampung templat (aplikasi harus menulis ulang)"
 
 #: src/zfr_lib/lint/leftovers.py:52
-msgid ""
-"After `zfr create`/`zfr rename`, rewrite this README and remove the "
-"generated-from-template banner. Templates should keep this banner."
-msgstr ""
-"Setelah `zfr create`/`zfr rename`, tulis ulang README ini dan hapus spanduk "
-"generated-from-template. Templat harus mempertahankan spanduk ini."
+msgid "After `zfr create`/`zfr rename`, rewrite this README and remove the generated-from-template banner. Templates should keep this banner."
+msgstr "Setelah `zfr create`/`zfr rename`, tulis ulang README ini dan hapus spanduk generated-from-template. Templat harus mempertahankan spanduk ini."
 
 #: src/zfr_lib/lint/leftovers.py:61
 #, python-format
@@ -921,12 +765,8 @@ msgstr "%s masih memiliki spanduk penampung templat"
 
 #: src/zfr_lib/lint/leftovers.py:64
 #, python-format
-msgid ""
-"Rewrite %s for this project. Remove the generated-from-template banner and "
-"describe the real commands, build, and license."
-msgstr ""
-"Tulis ulang %s untuk proyek ini. Hapus spanduk generated-from-template dan "
-"jelaskan perintah, pembangunan, serta lisensi yang sebenarnya."
+msgid "Rewrite %s for this project. Remove the generated-from-template banner and describe the real commands, build, and license."
+msgstr "Tulis ulang %s untuk proyek ini. Hapus spanduk generated-from-template dan jelaskan perintah, pembangunan, serta lisensi yang sebenarnya."
 
 #: src/zfr_lib/lint/leftovers.py:69
 #, python-format
@@ -945,21 +785,12 @@ msgstr " (+%d lagi)"
 
 #: src/zfr_lib/lint/leftovers.py:132
 #, python-format
-msgid ""
-"found %(hits)d leftover template token(s) (zephyr/%(token)s): "
-"%(preview)s%(more)s"
-msgstr ""
-"ditemukan %(hits)d token templat tersisa (zephyr/%(token)s): "
-"%(preview)s%(more)s"
+msgid "found %(hits)d leftover template token(s) (zephyr/%(token)s): %(preview)s%(more)s"
+msgstr "ditemukan %(hits)d token templat tersisa (zephyr/%(token)s): %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/leftovers.py:134
-msgid ""
-"Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 "
-"identifiers. After create, leftover tokens mean instantiation failed."
-msgstr ""
-"Jalankan `zfr rename <project> [puff ...]` atau ganti pengenal zephyr/"
-"some_puff1 yang tersisa. Setelah create, token sisa berarti instansiasi "
-"gagal."
+msgid "Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 identifiers. After create, leftover tokens mean instantiation failed."
+msgstr "Jalankan `zfr rename <project> [puff ...]` atau ganti pengenal zephyr/some_puff1 yang tersisa. Setelah create, token sisa berarti instansiasi gagal."
 
 #: src/zfr_lib/lint/leftovers.py:138
 msgid "no leftover zephyr/some_puff1 tokens"
@@ -974,12 +805,8 @@ msgid "meson.build has no project() call"
 msgstr "meson.build tidak memiliki pemanggilan project()"
 
 #: src/zfr_lib/lint/meson.py:49
-msgid ""
-"project() must be the first Meson call. Copy the header from the language "
-"template."
-msgstr ""
-"project() harus menjadi pemanggilan Meson yang pertama. Salin header dari "
-"templat bahasa."
+msgid "project() must be the first Meson call. Copy the header from the language template."
+msgstr "project() harus menjadi pemanggilan Meson yang pertama. Salin header dari templat bahasa."
 
 #: src/zfr_lib/lint/meson.py:54
 #, python-format
@@ -1007,12 +834,8 @@ msgstr "%s hilang (dipakai untuk halaman man)"
 
 #: src/zfr_lib/lint/meson.py:77
 #, python-format
-msgid ""
-"Set %s next to project(), then pass -a project-author/email/year to "
-"asciidoctor."
-msgstr ""
-"Setel %s di samping project(), lalu teruskan -a project-author/email/year ke "
-"asciidoctor."
+msgid "Set %s next to project(), then pass -a project-author/email/year to asciidoctor."
+msgstr "Setel %s di samping project(), lalu teruskan -a project-author/email/year ke asciidoctor."
 
 #: src/zfr_lib/lint/meson.py:82
 msgid "version uses `zfr version`"
@@ -1020,8 +843,7 @@ msgstr "versi memakai `zfr version`"
 
 #: src/zfr_lib/lint/meson.py:88
 msgid "version still uses inline git describe; zephyr style is `zfr version`"
-msgstr ""
-"versi masih memakai git describe sebaris; gaya zephyr adalah `zfr version`"
+msgstr "versi masih memakai git describe sebaris; gaya zephyr adalah `zfr version`"
 
 #: src/zfr_lib/lint/meson.py:91
 msgid ""
@@ -1064,10 +886,8 @@ msgid "meson.build does not invoke asciidoctor"
 msgstr "meson.build tidak memanggil asciidoctor"
 
 #: src/zfr_lib/lint/meson.py:130
-msgid ""
-"find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
-msgstr ""
-"find_program('asciidoctor') dan custom_target(..., '-b', 'manpage', ...)."
+msgid "find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
+msgstr "find_program('asciidoctor') dan custom_target(..., '-b', 'manpage', ...)."
 
 #: src/zfr_lib/lint/meson.py:135
 msgid "run_target look present"
@@ -1078,12 +898,8 @@ msgid "no run_target('look') DESTDIR preview"
 msgstr "tidak ada pratinjau DESTDIR run_target('look')"
 
 #: src/zfr_lib/lint/meson.py:143
-msgid ""
-"Add run_target look that meson install's into a tempdir and runs tree (see "
-"templates)."
-msgstr ""
-"Tambahkan run_target look yang meson install ke tempdir lalu menjalankan "
-"tree (lihat templat)."
+msgid "Add run_target look that meson install's into a tempdir and runs tree (see templates)."
+msgstr "Tambahkan run_target look yang meson install ke tempdir lalu menjalankan tree (lihat templat)."
 
 #: src/zfr_lib/lint/meson.py:148
 msgid "installs bash-completion"
@@ -1094,12 +910,8 @@ msgid "does not install bash-completion"
 msgstr "tidak memasang bash-completion"
 
 #: src/zfr_lib/lint/meson.py:156
-msgid ""
-"install_data(..., install_dir: datadir / 'bash-completion' / 'completions', "
-"rename: command)."
-msgstr ""
-"Gunakan install_data(..., install_dir: datadir / 'bash-completion' / "
-"'completions', rename: command)."
+msgid "install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
+msgstr "Gunakan install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
 
 #: src/zfr_lib/lint/report.py:73
 msgid "FAIL"
@@ -1133,20 +945,12 @@ msgid "zephyr meta-repo (templates + CLI tools)"
 msgstr "meta-repo zephyr (templat + alat CLI)"
 
 #: src/zfr_lib/lint/report.py:90
-msgid ""
-"language template inside the meta-repo (placeholders like zephyr/some_puff1 "
-"are expected)"
-msgstr ""
-"templat bahasa di dalam meta-repo (placeholder seperti zephyr/some_puff1 "
-"diharapkan)"
+msgid "language template inside the meta-repo (placeholders like zephyr/some_puff1 are expected)"
+msgstr "templat bahasa di dalam meta-repo (placeholder seperti zephyr/some_puff1 diharapkan)"
 
 #: src/zfr_lib/lint/report.py:91
-msgid ""
-"project instantiated from a language template (directory name must match "
-"meson/debian; no leftover zephyr/some_puff1 tokens)"
-msgstr ""
-"proyek yang diinstansiasi dari templat bahasa (nama direktori harus cocok "
-"dengan meson/debian; tanpa sisa token zephyr/some_puff1)"
+msgid "project instantiated from a language template (directory name must match meson/debian; no leftover zephyr/some_puff1 tokens)"
+msgstr "proyek yang diinstansiasi dari templat bahasa (nama direktori harus cocok dengan meson/debian; tanpa sisa token zephyr/some_puff1)"
 
 #: src/zfr_lib/lint/report.py:93
 #, python-format
@@ -1158,60 +962,32 @@ msgid "Zephyr style (finish the project to this contract)"
 msgstr "gaya Zephyr (selesaikan proyek sesuai kontrak ini)"
 
 #: src/zfr_lib/lint/report.py:97
-msgid ""
-"License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
-"License)."
-msgstr ""
-"Lisensi AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
-"License)."
+msgid "License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
+msgstr "Lisensi AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
 
 #: src/zfr_lib/lint/report.py:98
-msgid ""
-"Build with Meson; debian/rules uses dh --buildsystem=meson --"
-"builddirectory=debian/build."
-msgstr ""
-"Bangun dengan Meson; debian/rules memakai dh --buildsystem=meson --"
-"builddirectory=debian/build."
+msgid "Build with Meson; debian/rules uses dh --buildsystem=meson --builddirectory=debian/build."
+msgstr "Bangun dengan Meson; debian/rules memakai dh --buildsystem=meson --builddirectory=debian/build."
 
 #: src/zfr_lib/lint/report.py:99
-msgid ""
-"project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO "
-"0.0.0, DO NOT MODIFY."
-msgstr ""
-"versi project() dari `zfr version`; pertahankan cadangan v=\"0.0.0\" # FIXED "
-"TO 0.0.0, DO NOT MODIFY."
+msgid "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
+msgstr "versi project() dari `zfr version`; pertahankan cadangan v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 
 #: src/zfr_lib/lint/report.py:100
-msgid ""
-"Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under "
-"share/man/<locale>/man1 (whole-document adoc, not po4a)."
-msgstr ""
-"Halaman man: docs/*.adoc + asciidoctor -b manpage; terjemahan di share/man/"
-"<locale>/man1 (adoc seluruh dokumen, bukan po4a)."
+msgid "Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
+msgstr "Halaman man: docs/*.adoc + asciidoctor -b manpage; terjemahan di share/man/<locale>/man1 (adoc seluruh dokumen, bukan po4a)."
 
 #: src/zfr_lib/lint/report.py:101
-msgid ""
-"Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; "
-"optional rpm/ aligned with debian."
-msgstr ""
-"Pengemasan: debian/control Build-Depends meson, ninja-build, asciidoctor; "
-"rpm/ opsional yang selaras dengan debian."
+msgid "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional rpm/ aligned with debian."
+msgstr "Pengemasan: debian/control Build-Depends meson, ninja-build, asciidoctor; rpm/ opsional yang selaras dengan debian."
 
 #: src/zfr_lib/lint/report.py:102
-msgid ""
-"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 "
-"locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."
-msgstr ""
-"i18n: sumber bahasa Inggris; zfr lint -l/--l10n-level L0–L3 (baku L1). L1=10 "
-"locale, L2=20, L3=30. Baku di .config/zfr/lint.options."
+msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."
+msgstr "i18n: sumber bahasa Inggris; zfr lint -l/--l10n-level L0–L3 (baku L1). L1=10 locale, L2=20, L3=30. Baku di .config/zfr/lint.options."
 
 #: src/zfr_lib/lint/report.py:103
-msgid ""
-"Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/"
-"changelog (git describe may differ)."
-msgstr ""
-"Aplikasi: `zfr rename <dir>` lalu `zfr add <puff>`; VERSION cocok dengan "
-"debian/changelog (git describe bisa berbeda)."
+msgid "Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ)."
+msgstr "Aplikasi: `zfr rename <dir>` lalu `zfr add <puff>`; VERSION cocok dengan debian/changelog (git describe bisa berbeda)."
 
 #: src/zfr_lib/lint/report.py:116
 msgid "error"
@@ -1238,34 +1014,17 @@ msgid "Next steps (zephyr style)"
 msgstr "Langkah berikutnya (gaya zephyr)"
 
 #: src/zfr_lib/lint/report.py:145
-msgid ""
-"Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). "
-"`zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr "
-"version`. `zfr ize` applies missing debian/rpm/meson/man/version-subst "
-"upgrades."
-msgstr ""
-"Petunjuk: setelah suntingan, jalankan lagi `zfr lint` dari proyek (atau "
-"subdirektori). `zfr about -d -r` menampilkan bidang pengemasan. Versi untuk "
-"Meson/RPM adalah `zfr version`. `zfr ize` menerapkan peningkatan debian/rpm/"
-"meson/man/version-subst yang hilang."
+msgid "Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). `zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. `zfr ize` applies missing debian/rpm/meson/man/version-subst upgrades."
+msgstr "Petunjuk: setelah suntingan, jalankan lagi `zfr lint` dari proyek (atau subdirektori). `zfr about -d -r` menampilkan bidang pengemasan. Versi untuk Meson/RPM adalah `zfr version`. `zfr ize` menerapkan peningkatan debian/rpm/meson/man/version-subst yang hilang."
 
 #: src/zfr_lib/lint/rpm.py:41
 msgid "no rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
-msgstr ""
-"tidak ada rpm/*.spec (opsional, tetapi gaya zephyr menyertakan RPM di "
-"samping debian/)"
+msgstr "tidak ada rpm/*.spec (opsional, tetapi gaya zephyr menyertakan RPM di samping debian/)"
 
 #: src/zfr_lib/lint/rpm.py:44
 #, no-python-format
-msgid ""
-"Copy rpm/ from a language template; name the spec after the package (rpm/"
-"<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. "
-"Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
-msgstr ""
-"Salin rpm/ dari templat bahasa; namai spec menurut paket (rpm/<Source>.spec, "
-"bukan zephyr.spec) dan pertahankan Makefile yang memakai `zfr version`. "
-"Selaraskan Name/Summary/Requires/URL dengan debian/control. Atau jalankan "
-"`zfr ize`."
+msgid "Copy rpm/ from a language template; name the spec after the package (rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
+msgstr "Salin rpm/ dari templat bahasa; namai spec menurut paket (rpm/<Source>.spec, bukan zephyr.spec) dan pertahankan Makefile yang memakai `zfr version`. Selaraskan Name/Summary/Requires/URL dengan debian/control. Atau jalankan `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:63
 #, no-python-format, python-brace-format
@@ -1278,12 +1037,8 @@ msgstr "Version spec dikodekan tetap; gaya zephyr menyuntikkan `zfr version`"
 
 #: src/zfr_lib/lint/rpm.py:76
 #, no-python-format
-msgid ""
-"Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze "
-"via rpm/Makefile (`zfr version` / `zfr version -r`)."
-msgstr ""
-"Gunakan Version: %{version} dengan %{!?version:%global version 0.0.0} dan "
-"bekukan lewat rpm/Makefile (`zfr version` / `zfr version -r`)."
+msgid "Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze via rpm/Makefile (`zfr version` / `zfr version -r`)."
+msgstr "Gunakan Version: %{version} dengan %{!?version:%global version 0.0.0} dan bekukan lewat rpm/Makefile (`zfr version` / `zfr version -r`)."
 
 #: src/zfr_lib/lint/rpm.py:82
 #, python-format
@@ -1373,23 +1128,17 @@ msgid "%(rel)s is %(lines)d lines (>%(limit)d); file is very long"
 msgstr "%(rel)s berisi %(lines)d baris (>%(limit)d); berkas sangat panjang"
 
 #: src/zfr_lib/lint/source_size.py:59
-msgid ""
-"Split this file into smaller modules; keep each unit focused and testable."
-msgstr ""
-"Pecah berkas ini menjadi modul lebih kecil; jaga setiap unit tetap terfokus "
-"dan dapat diuji."
+msgid "Split this file into smaller modules; keep each unit focused and testable."
+msgstr "Pecah berkas ini menjadi modul lebih kecil; jaga setiap unit tetap terfokus dan dapat diuji."
 
 #: src/zfr_lib/lint/source_size.py:67
 #, python-format
 msgid "%(rel)s is %(lines)d lines (>%(limit)d); consider modularizing soon"
-msgstr ""
-"%(rel)s berisi %(lines)d baris (>%(limit)d); pertimbangkan memodularkan "
-"segera"
+msgstr "%(rel)s berisi %(lines)d baris (>%(limit)d); pertimbangkan memodularkan segera"
 
 #: src/zfr_lib/lint/source_size.py:71
 msgid "Plan extraction of helpers or submodules before the file grows further."
-msgstr ""
-"Rencanakan ekstraksi pembantu atau submodul sebelum berkas bertambah besar."
+msgstr "Rencanakan ekstraksi pembantu atau submodul sebelum berkas bertambah besar."
 
 #: src/zfr_lib/lint/source_size.py:75
 msgid "no oversized source files"
@@ -1405,25 +1154,13 @@ msgstr "berkas struktural dari templat bahasa ada"
 
 #: src/zfr_lib/lint/template.py:100
 #, python-format
-msgid ""
-"language template %(lang)s has extra scaffolding not in this tree: "
-"%(preview)s%(more)s"
-msgstr ""
-"templat bahasa %(lang)s punya perancah ekstra yang tidak ada di pohon ini: "
-"%(preview)s%(more)s"
+msgid "language template %(lang)s has extra scaffolding not in this tree: %(preview)s%(more)s"
+msgstr "templat bahasa %(lang)s punya perancah ekstra yang tidak ada di pohon ini: %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/template.py:102
 #, python-format
-msgid ""
-"Compare with the %(lang)s template under pkgdatadir. Copy missing debian/"
-"docs/src/rpm files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` "
-"puffs. Do not copy build/ or debian leftover stamp files. Example commons "
-"modules are optional."
-msgstr ""
-"Bandingkan dengan templat %(lang)s di bawah pkgdatadir. Salin berkas debian/"
-"docs/src/rpm yang hilang (rpm/ memakai %(name)s.spec, bukan zephyr.spec), "
-"atau `zfr add` puff. Jangan salin build/ atau berkas cap sisa debian. Modul "
-"commons contoh bersifat opsional."
+msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing debian/docs/src/rpm files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` puffs. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
+msgstr "Bandingkan dengan templat %(lang)s di bawah pkgdatadir. Salin berkas debian/docs/src/rpm yang hilang (rpm/ memakai %(name)s.spec, bukan zephyr.spec), atau `zfr add` puff. Jangan salin build/ atau berkas cap sisa debian. Modul commons contoh bersifat opsional."
 
 #: src/zfr_lib/release.py:26
 msgid "Debian binary-only build (no .dsc)"
@@ -1507,12 +1244,8 @@ msgid "create a GitHub release (parse options, exec gh-makerelease)"
 msgstr "buat release GitHub (urai opsi, exec gh-makerelease)"
 
 #: src/zfr_lib/release.py:207
-msgid ""
-"Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
-"not implement tagging, packaging, or uploads."
-msgstr ""
-"Uraikan opsi gh-makerelease, bangun ulang argv, dan exec gh-makerelease. "
-"Tidak mengimplementasikan tagging, packaging, atau uploads."
+msgid "Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does not implement tagging, packaging, or uploads."
+msgstr "Uraikan opsi gh-makerelease, bangun ulang argv, dan exec gh-makerelease. Tidak mengimplementasikan tagging, packaging, atau uploads."
 
 #: src/zfr_lib/remove.py:20
 msgid "remove puff(s) from the current project"
@@ -1543,18 +1276,12 @@ msgid "new example names (each replaces template some_puff1)"
 msgstr "nama contoh baru (masing-masing mengganti some_puff1 templat)"
 
 #: src/zfr_lib/shape.py:263
-msgid ""
-"print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
-msgstr ""
-"cetak skor bentuk paket zephyr 0-100 (packagedir vs repodir di monorepos)"
+msgid "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
+msgstr "cetak skor bentuk paket zephyr 0-100 (packagedir vs repodir di monorepos)"
 
 #: src/zfr_lib/shape.py:265
-msgid ""
-"Score how completely the current directory matches zephyr package style "
-"(0-100). In monorepos, scores the packagedir."
-msgstr ""
-"Skor seberapa lengkap direktori saat ini cocok dengan gaya paket zephyr "
-"(0-100). Di monorepos, menilai packagedir."
+msgid "Score how completely the current directory matches zephyr package style (0-100). In monorepos, scores the packagedir."
+msgstr "Skor seberapa lengkap direktori saat ini cocok dengan gaya paket zephyr (0-100). Di monorepos, menilai packagedir."
 
 #: src/zfr_lib/shape.py:271
 msgid "print 1 if score >= threshold, else 0"
@@ -1574,8 +1301,7 @@ msgid "print current project version (walks parents from cwd)"
 msgstr "cetak versi proyek saat ini (menelusuri induk dari cwd)"
 
 #: src/zfr_lib/version.py:52
-msgid ""
-"Print the current project version (walks from cwd toward parent directories)."
+msgid "Print the current project version (walks from cwd toward parent directories)."
 msgstr "Cetak versi proyek saat ini (menelusuri dari cwd ke direktori induk)."
 
 #: src/zfr_lib/version.py:57
@@ -1643,12 +1369,8 @@ msgid "manage implemented gettext locales"
 msgstr "quản lý locale gettext đã triển khai"
 
 #: src/zfr_lib/locale_cmd/__init__.py:108
-msgid ""
-"List, add, delete, and derive locales in the current project. Use zfr "
-"translate to query or update message strings."
-msgstr ""
-"Liệt kê, thêm, xóa và tạo locale trong dự án. Dùng zfr translate để truy vấn "
-"hoặc cập nhật chuỗi."
+msgid "List, add, delete, and derive locales in the current project. Use zfr translate to query or update message strings."
+msgstr "Liệt kê, thêm, xóa và tạo locale trong dự án. Dùng zfr translate để truy vấn hoặc cập nhật chuỗi."
 
 #: src/zfr_lib/locale_cmd/__init__.py:118
 msgid "list all implemented locales in this project"
@@ -1697,12 +1419,8 @@ msgid "query and update gettext message strings"
 msgstr "truy vấn và cập nhật chuỗi thông điệp gettext"
 
 #: src/zfr_lib/translate_cmd/__init__.py:101
-msgid ""
-"Look up translations for TEXT across implemented locales, or update a single "
-"locale catalog. Remaining arguments are joined with spaces."
-msgstr ""
-"Tra cứu bản dịch TEXT trong các locale đã triển khai hoặc cập nhật một danh "
-"mục. Các tham số còn lại nối bằng dấu cách."
+msgid "Look up translations for TEXT across implemented locales, or update a single locale catalog. Remaining arguments are joined with spaces."
+msgstr "Tra cứu bản dịch TEXT trong các locale đã triển khai hoặc cập nhật một danh mục. Các tham số còn lại nối bằng dấu cách."
 
 #: src/zfr_lib/translate_cmd/__init__.py:113
 msgid "use poedit to import edits from FILE"
@@ -1745,24 +1463,13 @@ msgid "TEXT required"
 msgstr "cần TEXT"
 
 #: src/zfr_lib/lint/report.py:119
-msgid ""
-"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I "
-"primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-"
-"derive via zfr locale. Defaults in .config/zfr/lint.options."
-msgstr ""
-"i18n: sumber bahasa Inggris; zfr lint -l/--l10n-level L0–L3 (baku L1). L1=10 "
-"locale, L2=20, L3=30. Baku di .config/zfr/lint.options."
+msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr locale. Defaults in .config/zfr/lint.options."
+msgstr "i18n: sumber bahasa Inggris; zfr lint -l/--l10n-level L0–L3 (baku L1). L1=10 locale, L2=20, L3=30. Baku di .config/zfr/lint.options."
 
 #: src/zfr_lib/lint/i18n_check.py:127
 #, python-format
-msgid ""
-"Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy "
-"es→es_MX, pt→pt_BR). Run `zfr locale --derive` to auto-generate child "
-"locales."
-msgstr ""
-"Tingkat %(level)s mensyaratkan: %(locales)s (sumber %(source)s; zh-cn→zh_CN, "
-"zh-tw→zh_TW). Tambahkan baris yang hilang ke LINGUAS dan buat po/<locale>.po "
-"yang cocok."
+msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr locale --derive` to auto-generate child locales."
+msgstr "Tingkat %(level)s mensyaratkan: %(locales)s (sumber %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Tambahkan baris yang hilang ke LINGUAS dan buat po/<locale>.po yang cocok."
 
 #: src/zfr_lib/lint/i18n_check.py:142
 #, python-format
@@ -1775,16 +1482,11 @@ msgid "would build %d derived locale file(s)"
 msgstr "sẽ tạo %d tệp locale phái sinh"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:107
-msgid ""
-"List, add, delete, and build derived locales in the current project. Use zfr "
-"translate to query or update message strings."
-msgstr ""
-"Liệt kê, thêm, xóa và tạo locale phái sinh trong dự án. Dùng zfr translate "
-"để truy vấn hoặc cập nhật chuỗi."
+msgid "List, add, delete, and build derived locales in the current project. Use zfr translate to query or update message strings."
+msgstr "Liệt kê, thêm, xóa và tạo locale phái sinh trong dự án. Dùng zfr translate để truy vấn hoặc cập nhật chuỗi."
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:135
-msgid ""
-"build derived locale PO/man files from parents (skip locales in LINGUAS)"
+msgid "build derived locale PO/man files from parents (skip locales in LINGUAS)"
 msgstr "tạo PO/man phái sinh từ locale cha (bỏ qua locale có trong LINGUAS)"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:137
@@ -1808,55 +1510,26 @@ msgid "use only one of --match or --search"
 msgstr "chỉ dùng --match hoặc --search"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:113
-msgid ""
-"Check the current zephyr project for missing files and packaging/style "
-"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
-"is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-"
-"integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain "
-"interactive shell. Override with -i/-I."
-msgstr ""
-"Kiểm tra dự án zephyr hiện tại (thiếu tệp, đóng gói/phong cách). Đi từ cwd "
-"lên thư mục cha. Màu CSR trên TTY. Khối hợp đồng phong cách mặc định bật cho "
-"stdout không tương tác và terminal AI; tắt trên shell tương tác thường. Ghi "
-"đè bằng -i/-I."
+msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain interactive shell. Override with -i/-I."
+msgstr "Kiểm tra dự án zephyr hiện tại (thiếu tệp, đóng gói/phong cách). Đi từ cwd lên thư mục cha. Màu CSR trên TTY. Khối hợp đồng phong cách mặc định bật cho stdout không tương tác và terminal AI; tắt trên shell tương tác thường. Ghi đè bằng -i/-I."
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:139
-msgid ""
-"show zephyr style-contract / next-steps blurbs (default for pipes and AI "
-"terminals)"
-msgstr ""
-"hiển thị khối hợp đồng phong cách / bước tiếp theo (mặc định cho pipe và "
-"terminal AI)"
+msgid "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
+msgstr "hiển thị khối hợp đồng phong cách / bước tiếp theo (mặc định cho pipe và terminal AI)"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:146
-msgid ""
-"hide zephyr style-contract / next-steps blurbs (default for plain "
-"interactive shell)"
-msgstr ""
-"ẩn khối hợp đồng phong cách / bước tiếp theo (mặc định cho shell tương tác "
-"thường)"
+msgid "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
+msgstr "ẩn khối hợp đồng phong cách / bước tiếp theo (mặc định cho shell tương tác thường)"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:155
 msgid "suppress rule ID(s) or code(s), comma-separated (repeatable)"
 msgstr "ẩn ID quy tắc hoặc mã, phân tách bằng dấu phẩy (lặp lại được)"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/lint/report.py:113
-msgid ""
-"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I "
-"primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-"
-"derive via zfr i18n -b. Rule IDs in docs/lint-std.md; suppress with -u/--"
-"uncheck or .config/zfr/lint.options."
-msgstr ""
-"i18n: nguồn tiếng Anh; zfr lint -l/--l10n-level L0–L3 (mặc định L1). "
-"L1=chính tầng I (8), L2=+tầng II (17), L3=+tầng III (35). Locale con tự tạo "
-"qua zfr i18n -b. ID quy tắc trong docs/lint-std.md; ẩn bằng -u/--uncheck "
-"hoặc .config/zfr/lint.options."
+msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr i18n -b. Rule IDs in docs/lint-std.md; suppress with -u/--uncheck or .config/zfr/lint.options."
+msgstr "i18n: nguồn tiếng Anh; zfr lint -l/--l10n-level L0–L3 (mặc định L1). L1=chính tầng I (8), L2=+tầng II (17), L3=+tầng III (35). Locale con tự tạo qua zfr i18n -b. ID quy tắc trong docs/lint-std.md; ẩn bằng -u/--uncheck hoặc .config/zfr/lint.options."
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/lint/i18n_check.py:127
 #, python-format
-msgid ""
-"Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy "
-"es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
-msgstr ""
-"Cấp %(level)s cần ngôn ngữ chính: %(locales)s (nguồn %(source)s; cũ "
-"es→es_MX, pt→pt_BR). Chạy `zfr i18n -b` để tự tạo locale con."
+msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
+msgstr "Cấp %(level)s cần ngôn ngữ chính: %(locales)s (nguồn %(source)s; cũ es→es_MX, pt→pt_BR). Chạy `zfr i18n -b` để tự tạo locale con."

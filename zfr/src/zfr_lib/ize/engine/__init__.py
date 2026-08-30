@@ -131,6 +131,7 @@ class Ize:
         self._step("ize.rpm", self.ensure_rpm)
         if self.do_subst:
             self._step("ize.subst", self.subst_versions)
+        self._step("ize.i18n.po-nowrap", self.ensure_po_no_wrap)
         self._step("ize.i18n.derive", self.derive_i18n_locales)
         self.report()
         if self.do_commit:
@@ -379,16 +380,43 @@ class Ize:
         from .subst import ensure_ize_scripts
         ensure_ize_scripts(self, ins)
 
-    def derive_i18n_locales(self) -> None:
-        from ...i18n.builder import derive_locales
+    def ensure_po_no_wrap(self) -> None:
+        from ...translate.po_format import po_has_line_wrapping, po_no_wrap_file
 
-        if self.dry_run:
-            written = derive_locales(self.root, dry_run=True)
-            for rel in written:
-                self.note("would-derive", rel, "child locale from parent")
+        po_dir = self.root / "po"
+        if not po_dir.is_dir():
             return
-        for rel in derive_locales(self.root):
-            self.note("derive", rel, "child locale from parent")
+        for po in sorted(po_dir.glob("*.po")):
+            try:
+                text = po.read_text(encoding="utf-8")
+            except OSError:
+                continue
+            if not po_has_line_wrapping(text):
+                continue
+            rel = str(po.relative_to(self.root))
+            if self.dry_run:
+                self.note("would-update", rel, "msgcat --no-wrap", rule="ize.i18n.po-nowrap")
+                continue
+            if po_no_wrap_file(po):
+                self.note("update", rel, "msgcat --no-wrap", rule="ize.i18n.po-nowrap")
+
+    def derive_i18n_locales(self) -> None:
+        from ...i18n.builder import default_build_po_dir, derive_locales
+        from ...i18n.meson import ensure_po_meson_derive
+
+        for rel in ensure_po_meson_derive(self.root, dry_run=self.dry_run):
+            self.note(
+                "update" if not self.dry_run else "would-update",
+                rel,
+                "Meson build runs zfr i18n -b into build dir",
+                rule="ize.i18n.derive",
+            )
+        po_dir = default_build_po_dir(self.root)
+        if self.dry_run:
+            written = derive_locales(self.root, po_dir=po_dir, dry_run=True)
+            for rel in written:
+                self.note("would-derive", rel, "child locale from parent", rule="ize.i18n.derive")
+            return
 
 
     def report(self) -> None:

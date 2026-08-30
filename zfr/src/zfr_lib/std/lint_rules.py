@@ -87,6 +87,7 @@ _LINT_RULES: tuple[StdRule, ...] = (
     StdRule("ZL079", "template.coverage", "Language template structural files present", "varies"),
     StdRule("ZL080", "readme.placeholder.*", "README still has template placeholder banner", "varies"),
     StdRule("ZL081", "readme.*", "README has no template banner", "ok"),
+    StdRule("ZL082", "i18n.po.wrap", "gettext .po catalogs use --no-wrap (no line wrapping)", "warn"),
 )
 
 LINT_RULES = RuleRegistry(_LINT_RULES)

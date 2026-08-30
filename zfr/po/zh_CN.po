@@ -29,12 +29,8 @@ msgstr ""
 "\n"
 
 #: src/zfr:32
-msgid ""
-"Zephyr template helper (CLI name: zfr). Create projects and manage example "
-"puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
-msgstr ""
-"Zephyr 模板助手（CLI 名称：zfr）。创建项目并管理示例 puff。实例化的目录树仍调"
-"用 zfr；zfr 不是重命名标记。"
+msgid "Zephyr template helper (CLI name: zfr). Create projects and manage example puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
+msgstr "Zephyr 模板助手（CLI 名称：zfr）。创建项目并管理示例 puff。实例化的目录树仍调用 zfr；zfr 不是重命名标记。"
 
 #: src/zfr:46
 msgid "show this help"
@@ -45,13 +41,8 @@ msgid "print current project information (walks parents from cwd)"
 msgstr "打印当前项目信息（从 cwd 向上遍历父目录）"
 
 #: src/zfr_lib/about.py:498
-msgid ""
-"Print information about the current zephyr project (walks from cwd toward "
-"parent directories). CSR colors when stdout is a TTY. Common packaging "
-"fields are parsed from debian or RPM."
-msgstr ""
-"打印当前 zephyr 项目信息（从 cwd 向父目录遍历）。stdout 为 TTY 时使用 CSR 颜"
-"色。从 debian 或 RPM 解析常见打包字段。"
+msgid "Print information about the current zephyr project (walks from cwd toward parent directories). CSR colors when stdout is a TTY. Common packaging fields are parsed from debian or RPM."
+msgstr "打印当前 zephyr 项目信息（从 cwd 向父目录遍历）。stdout 为 TTY 时使用 CSR 颜色。从 debian 或 RPM 解析常见打包字段。"
 
 #: src/zfr_lib/about.py:505
 msgid "show parsed Debian packaging fields"
@@ -123,37 +114,24 @@ msgid "print detected language for the current directory"
 msgstr "打印当前目录检测到的语言"
 
 #: src/zfr_lib/detect.py:16
-msgid ""
-"Print the detected language of the current project and layout details on "
-"stderr."
+msgid "Print the detected language of the current project and layout details on stderr."
 msgstr "将当前项目检测到的语言和布局详情打印到 stderr。"
 
 #: src/zfr_lib/dist.py:60
-msgid ""
-"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
-"rpm; usually $HOME/rpmbuild)"
-msgstr ""
-"将归档写入 DIR（默认：meson-dist，或使用 --rpm 时写入 %_topdir/SOURCES "
-"($HOME/rpmbuild)）"
+msgid "write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --rpm; usually $HOME/rpmbuild)"
+msgstr "将归档写入 DIR（默认：meson-dist，或使用 --rpm 时写入 %_topdir/SOURCES ($HOME/rpmbuild)）"
 
 #: src/zfr_lib/dist.py:70
-msgid ""
-"Meson build directory (default: /build when it matches this source tree, "
-"else <project>/build)"
-msgstr ""
-"Meson 构建目录（默认：与此源码树匹配时为 /build，否则为 <project>/build）"
+msgid "Meson build directory (default: /build when it matches this source tree, else <project>/build)"
+msgstr "Meson 构建目录（默认：与此源码树匹配时为 /build，否则为 <project>/build）"
 
 #: src/zfr_lib/dist.py:80
 msgid "archive format (default: xz)"
 msgstr "归档格式（默认：xz）"
 
 #: src/zfr_lib/dist.py:86
-msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES ($HOME/"
-"rpmbuild by default; ~/.rpmmacros) unless -o is given"
-msgstr ""
-"将归档命名为 NAME-VERSION.tar.xz 并写入 %_topdir/SOURCES ($HOME/rpmbuild)（除"
-"非指定 -o）"
+msgid "name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES ($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
+msgstr "将归档命名为 NAME-VERSION.tar.xz 并写入 %_topdir/SOURCES ($HOME/rpmbuild)（除非指定 -o）"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"
@@ -168,28 +146,16 @@ msgid "build a source tarball (meson dist, or this project only)"
 msgstr "构建源码 tarball（meson dist，或仅本项目）"
 
 #: src/zfr_lib/dist.py:345
-msgid ""
-"Build a source archive of the current zephyr project (walks from cwd toward "
-"parent directories). Uses meson dist when this directory is the git project "
-"root; otherwise packs this project only so nested language templates do not "
-"ship the parent meta-repo. Prints the archive path on stdout."
-msgstr ""
-"构建当前 zephyr 项目的源码归档（从 cwd 向父目录遍历）。当此目录为 git 项目根"
-"时使用 meson dist；否则仅打包本项目，以免嵌套语言模板附带父 meta-repo。在 "
-"stdout 打印归档路径。"
+msgid "Build a source archive of the current zephyr project (walks from cwd toward parent directories). Uses meson dist when this directory is the git project root; otherwise packs this project only so nested language templates do not ship the parent meta-repo. Prints the archive path on stdout."
+msgstr "构建当前 zephyr 项目的源码归档（从 cwd 向父目录遍历）。当此目录为 git 项目根时使用 meson dist；否则仅打包本项目，以免嵌套语言模板附带父 meta-repo。在 stdout 打印归档路径。"
 
 #: src/zfr_lib/ize/__init__.py:65
 msgid "refactor this project to current zephyr style"
 msgstr "将此项目重构为当前 zephyr 风格"
 
 #: src/zfr_lib/ize/__init__.py:66
-msgid ""
-"Refactor the current project to match current zephyr style: missing debian/"
-"rpm files, meson targets, AsciiDoc man pages, and Meson version "
-"substitutions. Walks from cwd toward parents."
-msgstr ""
-"重构当前项目以匹配当前 zephyr 风格：缺失的 debian/rpm 文件、meson 目标、"
-"AsciiDoc man 页面和 Meson 版本替换。从 cwd 向父目录遍历。"
+msgid "Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, and Meson version substitutions. Walks from cwd toward parents."
+msgstr "重构当前项目以匹配当前 zephyr 风格：缺失的 debian/rpm 文件、meson 目标、AsciiDoc man 页面和 Meson 版本替换。从 cwd 向父目录遍历。"
 
 #: src/zfr_lib/ize/__init__.py:70
 #, python-format
@@ -205,8 +171,7 @@ msgid "also print skipped files"
 msgstr "同时打印跳过的文件"
 
 #: src/zfr_lib/ize/__init__.py:78
-msgid ""
-"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
 msgstr "存在 Autotools/CMake 时运行 2meson 转换为 Meson（默认：开启）"
 
 #: src/zfr_lib/ize/__init__.py:80
@@ -262,12 +227,8 @@ msgid "no src/*.in scripts"
 msgstr "没有 src/*.in 脚本"
 
 #: src/zfr_lib/lang/bash.py:47
-msgid ""
-"Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ and meson "
-"configure_file + install_mode rwxr-xr-x."
-msgstr ""
-"将需配置的脚本保留为带 @PACKAGE@/@VERSION@ 的 src/<puff>.in，并用 meson "
-"configure_file + install_mode rwxr-xr-x。"
+msgid "Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
+msgstr "将需配置的脚本保留为带 @PACKAGE@/@VERSION@ 的 src/<puff>.in，并用 meson configure_file + install_mode rwxr-xr-x。"
 
 #: src/zfr_lib/lang/bison.py:45
 msgid "Add tests/ with fixture checks for parser dump/format output."
@@ -308,12 +269,8 @@ msgid "missing go.mod"
 msgstr "缺少 go.mod"
 
 #: src/zfr_lib/lang/go.py:23
-msgid ""
-"Add go.mod; meson should `go build` with -X main.buildVersion from "
-"meson.project_version()."
-msgstr ""
-"添加 go.mod；meson 应以 meson.project_version() 得到的 -X main.buildVersion "
-"调用 `go build`。"
+msgid "Add go.mod; meson should `go build` with -X main.buildVersion from meson.project_version()."
+msgstr "添加 go.mod；meson 应以 meson.project_version() 得到的 -X main.buildVersion 调用 `go build`。"
 
 #: src/zfr_lib/lang/kotlin.py:23
 msgid "no tests/ (kotlin template uses kotlinc + meson test)"
@@ -328,10 +285,8 @@ msgid "no tests/ (lua template uses lua tests + meson test)"
 msgstr "没有 tests/（lua 模板使用 lua 测试 + meson test）"
 
 #: src/zfr_lib/lang/lua.py:24
-msgid ""
-"Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
-msgstr ""
-"添加 tests/test_*.lua，并用 LUA_PATH=src/?.lua 调用 lua 的 meson test()。"
+msgid "Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
+msgstr "添加 tests/test_*.lua，并用 LUA_PATH=src/?.lua 调用 lua 的 meson test()。"
 
 #: src/zfr_lib/lang/nim.py:25
 msgid "no tests/ (nim template uses unittest + meson test)"
@@ -362,10 +317,8 @@ msgid "missing Cargo.toml"
 msgstr "缺少 Cargo.toml"
 
 #: src/zfr_lib/lang/rust.py:23
-msgid ""
-"Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
-msgstr ""
-"Rust 的 zephyr 项目保留 Cargo.toml，并用 meson custom_target 构建二进制。"
+msgid "Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
+msgstr "Rust 的 zephyr 项目保留 Cargo.toml，并用 meson custom_target 构建二进制。"
 
 #: src/zfr_lib/lang/zig.py:23
 msgid "missing build.zig"
@@ -387,12 +340,8 @@ msgstr "Build-Depends 缺少 %s"
 
 #: src/zfr_lib/lint/debian.py:50
 #, python-format
-msgid ""
-"Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man "
-"pages)."
-msgstr ""
-"把 %s 加入 Build-Depends（zephyr 软件包用 Meson 构建，并用 AsciiDoc 生成手册"
-"页）。"
+msgid "Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man pages)."
+msgstr "把 %s 加入 Build-Depends（zephyr 软件包用 Meson 构建，并用 AsciiDoc 生成手册页）。"
 
 #: src/zfr_lib/lint/debian.py:54
 msgid "debhelper-compat present"
@@ -404,8 +353,7 @@ msgstr "Build-Depends 缺少 debhelper-compat (= 13)"
 
 #: src/zfr_lib/lint/debian.py:62
 msgid "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
-msgstr ""
-"Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+msgstr "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
 
 #: src/zfr_lib/lint/debian.py:72
 msgid "Package stanza missing Architecture"
@@ -456,8 +404,7 @@ msgid "dh meson debian/build"
 msgstr "已用 dh meson debian/build"
 
 #: src/zfr_lib/lint/debian.py:122
-msgid ""
-"debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
+msgid "debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
 msgstr "debian/rules 不是 dh --buildsystem=meson --builddirectory=debian/build"
 
 #: src/zfr_lib/lint/debian.py:125
@@ -498,12 +445,8 @@ msgid "VERSION=%(file)r != changelog %(changelog)r"
 msgstr "VERSION=%(file)r != 变更日志 %(changelog)r"
 
 #: src/zfr_lib/lint/debian.py:156
-msgid ""
-"VERSION should match the latest debian/changelog entry (pre-commit hook "
-"updates it). Git describe may still differ."
-msgstr ""
-"VERSION 应与 debian/changelog 的最新条目一致（pre-commit 钩子会更新它）。Git "
-"describe 仍可能不同。"
+msgid "VERSION should match the latest debian/changelog entry (pre-commit hook updates it). Git describe may still differ."
+msgstr "VERSION 应与 debian/changelog 的最新条目一致（pre-commit 钩子会更新它）。Git describe 仍可能不同。"
 
 #: src/zfr_lib/lint/debian.py:162
 #, python-format
@@ -538,13 +481,8 @@ msgstr "没有 po/ 目录（除非项目使用 gettext，否则可选）"
 
 #: src/zfr_lib/lint/i18n_check.py:79
 #, python-format
-msgid ""
-"If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in "
-"meson.build. Required locales at %(level)s: %(locales)s (source language "
-"%(source)s)."
-msgstr ""
-"若应用已翻译，请添加带 LINGUAS + *.po 的 po/，并在 meson.build 中调用 "
-"i18n.gettext()。%(level)s 所需语言区域：%(locales)s（源语言 %(source)s）。"
+msgid "If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in meson.build. Required locales at %(level)s: %(locales)s (source language %(source)s)."
+msgstr "若应用已翻译，请添加带 LINGUAS + *.po 的 po/，并在 meson.build 中调用 i18n.gettext()。%(level)s 所需语言区域：%(locales)s（源语言 %(source)s）。"
 
 #: src/zfr_lib/lint/i18n_check.py:97
 msgid "po/ exists but po/LINGUAS is missing or empty"
@@ -568,13 +506,8 @@ msgstr "po/LINGUAS 缺少 %(level)s 语言区域：%(locales)s"
 
 #: src/zfr_lib/lint/i18n_check.py:117
 #, python-format
-msgid ""
-"Level %(level)s requires: %(locales)s (source %(source)s; zh-cn→zh_CN, zh-"
-"tw→zh_TW). Append the missing lines to LINGUAS and add matching po/"
-"<locale>.po."
-msgstr ""
-"级别 %(level)s 需要：%(locales)s（源语言 %(source)s；zh-cn→zh_CN, zh-"
-"tw→zh_TW）。将缺失行追加到 LINGUAS，并添加对应的 po/<locale>.po。"
+msgid "Level %(level)s requires: %(locales)s (source %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Append the missing lines to LINGUAS and add matching po/<locale>.po."
+msgstr "级别 %(level)s 需要：%(locales)s（源语言 %(source)s；zh-cn→zh_CN, zh-tw→zh_TW）。将缺失行追加到 LINGUAS，并添加对应的 po/<locale>.po。"
 
 #: src/zfr_lib/lint/i18n_check.py:132
 #, python-format
@@ -587,12 +520,8 @@ msgid "LINGUAS entries without po/<locale>.po: %s"
 msgstr "没有 po/<locale>.po 的 LINGUAS 条目：%s"
 
 #: src/zfr_lib/lint/i18n_check.py:149
-msgid ""
-"For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-"
-"translator && msgmerge -U po/<locale>.po <domain>.pot"
-msgstr ""
-"对每个语言区域执行：msginit -i <domain>.pot -o po/<locale>.po -l <locale> --"
-"no-translator && msgmerge -U po/<locale>.po <domain>.pot"
+msgid "For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
+msgstr "对每个语言区域执行：msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
 
 #: src/zfr_lib/lint/i18n_check.py:160
 #, python-format
@@ -606,12 +535,8 @@ msgstr "缺少 %(level)s 的整篇手册翻译：%(files)s"
 
 #: src/zfr_lib/lint/i18n_check.py:195
 #, python-format
-msgid ""
-"Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). "
-"%(level)s requires: %(locales)s."
-msgstr ""
-"手工翻译 docs/<locale>/<name>.adoc（整篇文档，不要用 po4a）。%(level)s 需要："
-"%(locales)s。"
+msgid "Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
+msgstr "手工翻译 docs/<locale>/<name>.adoc（整篇文档，不要用 po4a）。%(level)s 需要：%(locales)s。"
 
 #: src/zfr_lib/lint/i18n_check.py:205
 #, python-format
@@ -634,12 +559,8 @@ msgstr "%(label)s 为 %(val)r，期望 %(expected)r（目录名）"
 
 #: src/zfr_lib/lint/identity.py:60
 #, python-format
-msgid ""
-"Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename "
-"%(expected)s` if leftover template names remain."
-msgstr ""
-"将 %(label)s 设为 %(expected)r，或重命名目录。若仍有模板残留名称，请使用 "
-"`zfr rename %(expected)s`。"
+msgid "Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename %(expected)s` if leftover template names remain."
+msgstr "将 %(label)s 设为 %(expected)r，或重命名目录。若仍有模板残留名称，请使用 `zfr rename %(expected)s`。"
 
 #: src/zfr_lib/lint/identity.py:66
 #, python-format
@@ -685,13 +606,8 @@ msgid "validate project packaging and zephyr layout (walks parents from cwd)"
 msgstr "验证项目打包和 zephyr 布局（从 cwd 向上遍历父目录）"
 
 #: src/zfr_lib/lint/__init__.py:100
-msgid ""
-"Check the current zephyr project for missing files and packaging/style "
-"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
-"is a TTY."
-msgstr ""
-"检查当前 zephyr 项目的缺失文件和打包/风格错误。从 cwd 向父目录遍历。stdout "
-"为 TTY 时使用 CSR 颜色。"
+msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY."
+msgstr "检查当前 zephyr 项目的缺失文件和打包/风格错误。从 cwd 向父目录遍历。stdout 为 TTY 时使用 CSR 颜色。"
 
 #: src/zfr_lib/lint/__init__.py:104
 msgid "show passing checks too"
@@ -706,9 +622,7 @@ msgid "treat warnings as failures (exit 1)"
 msgstr "将警告视为失败（exit 1）"
 
 #: src/zfr_lib/lint/__init__.py:113
-msgid ""
-"required gettext/manpage locale coverage L0–L3 (default: L1; project file "
-"may override)"
+msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
 msgstr "要求的 gettext/手册 locale 覆盖 L0–L3（默认 L1；可由项目文件覆盖）"
 
 #: src/zfr_lib/lint/lang_bits.py:31
@@ -717,9 +631,7 @@ msgid "legacy example module %s; use commons or a specific name"
 msgstr "过时的示例模块 %s；请改用 commons 或具体名称"
 
 #: src/zfr_lib/lint/lang_bits.py:33
-msgid ""
-"Rename to src/commons.* (template convention) or a project-specific module "
-"name."
+msgid "Rename to src/commons.* (template convention) or a project-specific module name."
 msgstr "重命名为 src/commons.*（模板约定）或项目专用模块名。"
 
 #: src/zfr_lib/lint/lang_bits.py:44
@@ -728,14 +640,8 @@ msgid "%s is only a template example for shared helpers"
 msgstr "%s 只是共享辅助代码的模板示例"
 
 #: src/zfr_lib/lint/lang_bits.py:46
-msgid ""
-"common_lib / commons mean “extract reusable pieces”, but filenames should be "
-"concrete. Rename to a specific module in real projects (e.g. stream_copy.py, "
-"bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
-msgstr ""
-"common_lib / commons 表示“提取可复用部分”，但文件名应当具体。在实际项目中请重"
-"命名为明确的模块（例如 stream_copy.py、bulk.h）。clib/cpplib 仍以 lib.c/"
-"lib.cpp 作为共享库入口。"
+msgid "common_lib / commons mean “extract reusable pieces”, but filenames should be concrete. Rename to a specific module in real projects (e.g. stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
+msgstr "common_lib / commons 表示“提取可复用部分”，但文件名应当具体。在实际项目中请重命名为明确的模块（例如 stream_copy.py、bulk.h）。clib/cpplib 仍以 lib.c/lib.cpp 作为共享库入口。"
 
 #: src/zfr_lib/lint/layout.py:35
 msgid "Add a top-level meson.build with project(...)."
@@ -766,11 +672,8 @@ msgid "Add debian/copyright in machine-readable format, License: AGPL-3+."
 msgstr "添加机器可读格式的 debian/copyright，License: AGPL-3+。"
 
 #: src/zfr_lib/lint/layout.py:42
-msgid ""
-"Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
-msgstr ""
-"添加使用 dh --buildsystem=meson --builddirectory=debian/build 的 debian/"
-"rules。"
+msgid "Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
+msgstr "添加使用 dh --buildsystem=meson --builddirectory=debian/build 的 debian/rules。"
 
 #: src/zfr_lib/lint/layout.py:43
 msgid "Add debian/source/format (typically '3.0 (native)')."
@@ -796,12 +699,8 @@ msgid "no docs/*.adoc man page source"
 msgstr "没有 docs/*.adoc 手册页源文件"
 
 #: src/zfr_lib/lint/layout.py:65
-msgid ""
-"Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage "
-"(see any language template)."
-msgstr ""
-"添加 docs/<puff>.adoc，并用 asciidoctor -b manpage 建立 meson custom_target"
-"（参见任一语言模板）。"
+msgid "Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
+msgstr "添加 docs/<puff>.adoc，并用 asciidoctor -b manpage 建立 meson custom_target（参见任一语言模板）。"
 
 #: src/zfr_lib/lint/layout.py:78
 #, python-format
@@ -813,12 +712,8 @@ msgid "no *.bash bash-completion script at project root"
 msgstr "项目根目录没有 *.bash 的 bash-completion 脚本"
 
 #: src/zfr_lib/lint/layout.py:87
-msgid ""
-"Add <puff>.bash and install it to datadir/bash-completion/completions "
-"renamed to the command name (see meson.build in the template)."
-msgstr ""
-"添加 <puff>.bash，安装到 datadir/bash-completion/completions 并重命名为命令名"
-"（见模板中的 meson.build）。"
+msgid "Add <puff>.bash and install it to datadir/bash-completion/completions renamed to the command name (see meson.build in the template)."
+msgstr "添加 <puff>.bash，安装到 datadir/bash-completion/completions 并重命名为命令名（见模板中的 meson.build）。"
 
 #: src/zfr_lib/lint/layout.py:93
 msgid "VERSION file present"
@@ -829,27 +724,16 @@ msgid "no VERSION file (changelog snapshot for tarball builds)"
 msgstr "没有 VERSION 文件（供 tarball 构建使用的 changelog 快照）"
 
 #: src/zfr_lib/lint/layout.py:101
-msgid ""
-"Create VERSION with the latest debian/changelog version (one line). "
-"Enable .githooks/pre-commit: git config core.hooksPath .githooks"
-msgstr ""
-"用最新的 debian/changelog 版本创建 VERSION（一行）。启用 .githooks/pre-"
-"commit：git config core.hooksPath .githooks"
+msgid "Create VERSION with the latest debian/changelog version (one line). Enable .githooks/pre-commit: git config core.hooksPath .githooks"
+msgstr "用最新的 debian/changelog 版本创建 VERSION（一行）。启用 .githooks/pre-commit：git config core.hooksPath .githooks"
 
 #: src/zfr_lib/lint/layout.py:195
 msgid "no .githooks/pre-commit to sync VERSION from debian/changelog"
 msgstr "没有用于从 debian/changelog 同步 VERSION 的 .githooks/pre-commit"
 
 #: src/zfr_lib/lint/layout.py:197
-msgid ""
-"Walk up to the directory that contains .git, then put pre-commit in that "
-"tree's .githooks (or core.hooksPath). The hook must update VERSION from "
-"debian/changelog. `zfr create` copies one and sets git config "
-"core.hooksPath .githooks."
-msgstr ""
-"向上找到包含 .git 的目录，把 pre-commit 放到该树的 .githooks（或 "
-"core.hooksPath）。钩子必须根据 debian/changelog 更新 VERSION。`zfr create` 会"
-"复制一份并执行 git config core.hooksPath .githooks。"
+msgid "Walk up to the directory that contains .git, then put pre-commit in that tree's .githooks (or core.hooksPath). The hook must update VERSION from debian/changelog. `zfr create` copies one and sets git config core.hooksPath .githooks."
+msgstr "向上找到包含 .git 的目录，把 pre-commit 放到该树的 .githooks（或 core.hooksPath）。钩子必须根据 debian/changelog 更新 VERSION。`zfr create` 会复制一份并执行 git config core.hooksPath .githooks。"
 
 #: src/zfr_lib/lint/layout.py:210
 #, python-format
@@ -862,12 +746,8 @@ msgid "%s exists but does not sync VERSION from debian/changelog"
 msgstr "%s 存在，但未从 debian/changelog 同步 VERSION"
 
 #: src/zfr_lib/lint/layout.py:220
-msgid ""
-"The hook should read debian/changelog (dpkg-parsechangelog) and write "
-"VERSION. See the zephyr .githooks/pre-commit template."
-msgstr ""
-"钩子应读取 debian/changelog（dpkg-parsechangelog）并写入 VERSION。参见 "
-"zephyr 的 .githooks/pre-commit 模板。"
+msgid "The hook should read debian/changelog (dpkg-parsechangelog) and write VERSION. See the zephyr .githooks/pre-commit template."
+msgstr "钩子应读取 debian/changelog（dpkg-parsechangelog）并写入 VERSION。参见 zephyr 的 .githooks/pre-commit 模板。"
 
 #: src/zfr_lib/lint/leftovers.py:49
 #, python-format
@@ -875,12 +755,8 @@ msgid "%s keeps the template placeholder banner (apps must rewrite it)"
 msgstr "%s 仍保留模板占位横幅（应用必须改写）"
 
 #: src/zfr_lib/lint/leftovers.py:52
-msgid ""
-"After `zfr create`/`zfr rename`, rewrite this README and remove the "
-"generated-from-template banner. Templates should keep this banner."
-msgstr ""
-"在 `zfr create`/`zfr rename` 之后，改写此 README 并去掉 generated-from-"
-"template 横幅。模板应保留该横幅。"
+msgid "After `zfr create`/`zfr rename`, rewrite this README and remove the generated-from-template banner. Templates should keep this banner."
+msgstr "在 `zfr create`/`zfr rename` 之后，改写此 README 并去掉 generated-from-template 横幅。模板应保留该横幅。"
 
 #: src/zfr_lib/lint/leftovers.py:61
 #, python-format
@@ -889,12 +765,8 @@ msgstr "%s 仍带有模板占位横幅"
 
 #: src/zfr_lib/lint/leftovers.py:64
 #, python-format
-msgid ""
-"Rewrite %s for this project. Remove the generated-from-template banner and "
-"describe the real commands, build, and license."
-msgstr ""
-"为本项目改写 %s。去掉 generated-from-template 横幅，并说明真实命令、构建和许"
-"可证。"
+msgid "Rewrite %s for this project. Remove the generated-from-template banner and describe the real commands, build, and license."
+msgstr "为本项目改写 %s。去掉 generated-from-template 横幅，并说明真实命令、构建和许可证。"
 
 #: src/zfr_lib/lint/leftovers.py:69
 #, python-format
@@ -913,18 +785,12 @@ msgstr " （另 +%d）"
 
 #: src/zfr_lib/lint/leftovers.py:132
 #, python-format
-msgid ""
-"found %(hits)d leftover template token(s) (zephyr/%(token)s): "
-"%(preview)s%(more)s"
+msgid "found %(hits)d leftover template token(s) (zephyr/%(token)s): %(preview)s%(more)s"
 msgstr "发现 %(hits)d 个残留模板标记（zephyr/%(token)s）：%(preview)s%(more)s"
 
 #: src/zfr_lib/lint/leftovers.py:134
-msgid ""
-"Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 "
-"identifiers. After create, leftover tokens mean instantiation failed."
-msgstr ""
-"运行 `zfr rename <project> [puff ...]`，或替换剩余的 zephyr/some_puff1 标识"
-"符。创建之后若仍有残留标记，说明实例化失败。"
+msgid "Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 identifiers. After create, leftover tokens mean instantiation failed."
+msgstr "运行 `zfr rename <project> [puff ...]`，或替换剩余的 zephyr/some_puff1 标识符。创建之后若仍有残留标记，说明实例化失败。"
 
 #: src/zfr_lib/lint/leftovers.py:138
 msgid "no leftover zephyr/some_puff1 tokens"
@@ -939,9 +805,7 @@ msgid "meson.build has no project() call"
 msgstr "meson.build 中没有 project() 调用"
 
 #: src/zfr_lib/lint/meson.py:49
-msgid ""
-"project() must be the first Meson call. Copy the header from the language "
-"template."
+msgid "project() must be the first Meson call. Copy the header from the language template."
 msgstr "project() 必须是第一个 Meson 调用。从语言模板复制文件头。"
 
 #: src/zfr_lib/lint/meson.py:54
@@ -970,12 +834,8 @@ msgstr "缺少 %s（用于手册页）"
 
 #: src/zfr_lib/lint/meson.py:77
 #, python-format
-msgid ""
-"Set %s next to project(), then pass -a project-author/email/year to "
-"asciidoctor."
-msgstr ""
-"在 project() 旁边设置 %s，再把 -a project-author/email/year 传给 "
-"asciidoctor。"
+msgid "Set %s next to project(), then pass -a project-author/email/year to asciidoctor."
+msgstr "在 project() 旁边设置 %s，再把 -a project-author/email/year 传给 asciidoctor。"
 
 #: src/zfr_lib/lint/meson.py:82
 msgid "version uses `zfr version`"
@@ -1026,11 +886,8 @@ msgid "meson.build does not invoke asciidoctor"
 msgstr "meson.build 未调用 asciidoctor"
 
 #: src/zfr_lib/lint/meson.py:130
-msgid ""
-"find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
-msgstr ""
-"使用 find_program('asciidoctor') 和 custom_target(..., '-b', "
-"'manpage', ...)。"
+msgid "find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
+msgstr "使用 find_program('asciidoctor') 和 custom_target(..., '-b', 'manpage', ...)。"
 
 #: src/zfr_lib/lint/meson.py:135
 msgid "run_target look present"
@@ -1041,11 +898,8 @@ msgid "no run_target('look') DESTDIR preview"
 msgstr "没有 run_target('look') 的 DESTDIR 预览"
 
 #: src/zfr_lib/lint/meson.py:143
-msgid ""
-"Add run_target look that meson install's into a tempdir and runs tree (see "
-"templates)."
-msgstr ""
-"添加 run_target look：把 meson install 装进临时目录并运行 tree（见模板）。"
+msgid "Add run_target look that meson install's into a tempdir and runs tree (see templates)."
+msgstr "添加 run_target look：把 meson install 装进临时目录并运行 tree（见模板）。"
 
 #: src/zfr_lib/lint/meson.py:148
 msgid "installs bash-completion"
@@ -1056,12 +910,8 @@ msgid "does not install bash-completion"
 msgstr "未安装 bash-completion"
 
 #: src/zfr_lib/lint/meson.py:156
-msgid ""
-"install_data(..., install_dir: datadir / 'bash-completion' / 'completions', "
-"rename: command)."
-msgstr ""
-"使用 install_data(..., install_dir: datadir / 'bash-completion' / "
-"'completions', rename: command)."
+msgid "install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
+msgstr "使用 install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
 
 #: src/zfr_lib/lint/report.py:73
 msgid "FAIL"
@@ -1095,18 +945,12 @@ msgid "zephyr meta-repo (templates + CLI tools)"
 msgstr "zephyr 元仓库（模板 + CLI 工具）"
 
 #: src/zfr_lib/lint/report.py:90
-msgid ""
-"language template inside the meta-repo (placeholders like zephyr/some_puff1 "
-"are expected)"
+msgid "language template inside the meta-repo (placeholders like zephyr/some_puff1 are expected)"
 msgstr "元仓库内的语言模板（zephyr/some_puff1 这类占位符是预期的）"
 
 #: src/zfr_lib/lint/report.py:91
-msgid ""
-"project instantiated from a language template (directory name must match "
-"meson/debian; no leftover zephyr/some_puff1 tokens)"
-msgstr ""
-"由语言模板实例化的项目（目录名必须与 meson/debian 一致；不得残留 zephyr/"
-"some_puff1 标记）"
+msgid "project instantiated from a language template (directory name must match meson/debian; no leftover zephyr/some_puff1 tokens)"
+msgstr "由语言模板实例化的项目（目录名必须与 meson/debian 一致；不得残留 zephyr/some_puff1 标记）"
 
 #: src/zfr_lib/lint/report.py:93
 #, python-format
@@ -1118,60 +962,32 @@ msgid "Zephyr style (finish the project to this contract)"
 msgstr "Zephyr 风格（按此约定把项目做完）"
 
 #: src/zfr_lib/lint/report.py:97
-msgid ""
-"License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
-"License)."
-msgstr ""
-"许可证 AGPL-3.0-or-later（meson license、debian/copyright AGPL-3+、rpm "
-"License）。"
+msgid "License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
+msgstr "许可证 AGPL-3.0-or-later（meson license、debian/copyright AGPL-3+、rpm License）。"
 
 #: src/zfr_lib/lint/report.py:98
-msgid ""
-"Build with Meson; debian/rules uses dh --buildsystem=meson --"
-"builddirectory=debian/build."
-msgstr ""
-"用 Meson 构建；debian/rules 使用 dh --buildsystem=meson --"
-"builddirectory=debian/build。"
+msgid "Build with Meson; debian/rules uses dh --buildsystem=meson --builddirectory=debian/build."
+msgstr "用 Meson 构建；debian/rules 使用 dh --buildsystem=meson --builddirectory=debian/build。"
 
 #: src/zfr_lib/lint/report.py:99
-msgid ""
-"project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO "
-"0.0.0, DO NOT MODIFY."
-msgstr ""
-"project() 的 version 来自 `zfr version`；保留回退 v=\"0.0.0\" # FIXED TO "
-"0.0.0, DO NOT MODIFY."
+msgid "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
+msgstr "project() 的 version 来自 `zfr version`；保留回退 v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 
 #: src/zfr_lib/lint/report.py:100
-msgid ""
-"Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under "
-"share/man/<locale>/man1 (whole-document adoc, not po4a)."
-msgstr ""
-"手册页：docs/*.adoc + asciidoctor -b manpage；译文在 share/man/<locale>/man1"
-"（整篇 adoc，不是 po4a）。"
+msgid "Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
+msgstr "手册页：docs/*.adoc + asciidoctor -b manpage；译文在 share/man/<locale>/man1（整篇 adoc，不是 po4a）。"
 
 #: src/zfr_lib/lint/report.py:101
-msgid ""
-"Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; "
-"optional rpm/ aligned with debian."
-msgstr ""
-"打包：debian/control Build-Depends meson, ninja-build, asciidoctor；可选 "
-"rpm/ 与 debian 对齐。"
+msgid "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional rpm/ aligned with debian."
+msgstr "打包：debian/control Build-Depends meson, ninja-build, asciidoctor；可选 rpm/ 与 debian 对齐。"
 
 #: src/zfr_lib/lint/report.py:102
-msgid ""
-"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 "
-"locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."
-msgstr ""
-"i18n：英文为原文；zfr lint -l/--l10n-level L0–L3（默认 L1）。L1=10 个语言，"
-"L2=20，L3=30。默认在 .config/zfr/lint.options。"
+msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."
+msgstr "i18n：英文为原文；zfr lint -l/--l10n-level L0–L3（默认 L1）。L1=10 个语言，L2=20，L3=30。默认在 .config/zfr/lint.options。"
 
 #: src/zfr_lib/lint/report.py:103
-msgid ""
-"Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/"
-"changelog (git describe may differ)."
-msgstr ""
-"应用：先 `zfr rename <dir>` 再 `zfr add <puff>`；VERSION 与 debian/changelog "
-"一致（git describe 可能不同）。"
+msgid "Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ)."
+msgstr "应用：先 `zfr rename <dir>` 再 `zfr add <puff>`；VERSION 与 debian/changelog 一致（git describe 可能不同）。"
 
 #: src/zfr_lib/lint/report.py:116
 msgid "error"
@@ -1198,15 +1014,8 @@ msgid "Next steps (zephyr style)"
 msgstr "后续步骤（zephyr 风格）"
 
 #: src/zfr_lib/lint/report.py:145
-msgid ""
-"Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). "
-"`zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr "
-"version`. `zfr ize` applies missing debian/rpm/meson/man/version-subst "
-"upgrades."
-msgstr ""
-"提示：修改后请在项目（或其子目录）中重新运行 `zfr lint`。`zfr about -d -r` 会"
-"打印打包字段。Meson/RPM 的版本用 `zfr version`。`zfr ize` 会补上缺失的 "
-"debian/rpm/meson/man/version-subst 升级。"
+msgid "Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). `zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. `zfr ize` applies missing debian/rpm/meson/man/version-subst upgrades."
+msgstr "提示：修改后请在项目（或其子目录）中重新运行 `zfr lint`。`zfr about -d -r` 会打印打包字段。Meson/RPM 的版本用 `zfr version`。`zfr ize` 会补上缺失的 debian/rpm/meson/man/version-subst 升级。"
 
 #: src/zfr_lib/lint/rpm.py:41
 msgid "no rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
@@ -1214,14 +1023,8 @@ msgstr "没有 rpm/*.spec（可选，但 zephyr 风格会在 debian/ 旁放 RPM�
 
 #: src/zfr_lib/lint/rpm.py:44
 #, no-python-format
-msgid ""
-"Copy rpm/ from a language template; name the spec after the package (rpm/"
-"<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. "
-"Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
-msgstr ""
-"从语言模板复制 rpm/；按软件包命名 spec（rpm/<Source>.spec，不是 "
-"zephyr.spec），并保留使用 `zfr version` 的 Makefile。将 Name/Summary/"
-"Requires/URL 与 debian/control 对齐。或运行 `zfr ize`。"
+msgid "Copy rpm/ from a language template; name the spec after the package (rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
+msgstr "从语言模板复制 rpm/；按软件包命名 spec（rpm/<Source>.spec，不是 zephyr.spec），并保留使用 `zfr version` 的 Makefile。将 Name/Summary/Requires/URL 与 debian/control 对齐。或运行 `zfr ize`。"
 
 #: src/zfr_lib/lint/rpm.py:63
 #, no-python-format, python-brace-format
@@ -1234,12 +1037,8 @@ msgstr "spec 的 Version 写死了；zephyr 风格会注入 `zfr version`"
 
 #: src/zfr_lib/lint/rpm.py:76
 #, no-python-format
-msgid ""
-"Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze "
-"via rpm/Makefile (`zfr version` / `zfr version -r`)."
-msgstr ""
-"使用 Version: %{version} 配合 %{!?version:%global version 0.0.0}，并通过 rpm/"
-"Makefile 冻结（`zfr version` / `zfr version -r`）。"
+msgid "Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze via rpm/Makefile (`zfr version` / `zfr version -r`)."
+msgstr "使用 Version: %{version} 配合 %{!?version:%global version 0.0.0}，并通过 rpm/Makefile 冻结（`zfr version` / `zfr version -r`）。"
 
 #: src/zfr_lib/lint/rpm.py:82
 #, python-format
@@ -1329,8 +1128,7 @@ msgid "%(rel)s is %(lines)d lines (>%(limit)d); file is very long"
 msgstr "%(rel)s 有 %(lines)d 行（>%(limit)d）；文件过长"
 
 #: src/zfr_lib/lint/source_size.py:59
-msgid ""
-"Split this file into smaller modules; keep each unit focused and testable."
+msgid "Split this file into smaller modules; keep each unit focused and testable."
 msgstr "把此文件拆成更小的模块；让每个单元保持专注且可测试。"
 
 #: src/zfr_lib/lint/source_size.py:67
@@ -1356,22 +1154,13 @@ msgstr "语言模板的结构文件已齐全"
 
 #: src/zfr_lib/lint/template.py:100
 #, python-format
-msgid ""
-"language template %(lang)s has extra scaffolding not in this tree: "
-"%(preview)s%(more)s"
+msgid "language template %(lang)s has extra scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "语言模板 %(lang)s 有本树中没有的额外脚手架：%(preview)s%(more)s"
 
 #: src/zfr_lib/lint/template.py:102
 #, python-format
-msgid ""
-"Compare with the %(lang)s template under pkgdatadir. Copy missing debian/"
-"docs/src/rpm files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` "
-"puffs. Do not copy build/ or debian leftover stamp files. Example commons "
-"modules are optional."
-msgstr ""
-"与 pkgdatadir 下的 %(lang)s 模板对照。复制缺失的 debian/docs/src/rpm 文件"
-"（rpm/ 用 %(name)s.spec，不是 zephyr.spec），或 `zfr add` puff。不要复制 "
-"build/ 或 debian 残留戳记文件。示例 commons 模块可选。"
+msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing debian/docs/src/rpm files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` puffs. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
+msgstr "与 pkgdatadir 下的 %(lang)s 模板对照。复制缺失的 debian/docs/src/rpm 文件（rpm/ 用 %(name)s.spec，不是 zephyr.spec），或 `zfr add` puff。不要复制 build/ 或 debian 残留戳记文件。示例 commons 模块可选。"
 
 #: src/zfr_lib/release.py:26
 msgid "Debian binary-only build (no .dsc)"
@@ -1455,12 +1244,8 @@ msgid "create a GitHub release (parse options, exec gh-makerelease)"
 msgstr "创建 GitHub release（解析选项，exec gh-makerelease）"
 
 #: src/zfr_lib/release.py:207
-msgid ""
-"Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
-"not implement tagging, packaging, or uploads."
-msgstr ""
-"解析 gh-makerelease 选项、重建 argv 并 exec gh-makerelease。不实现 tagging、"
-"packaging 或 uploads。"
+msgid "Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does not implement tagging, packaging, or uploads."
+msgstr "解析 gh-makerelease 选项、重建 argv 并 exec gh-makerelease。不实现 tagging、packaging 或 uploads。"
 
 #: src/zfr_lib/remove.py:20
 msgid "remove puff(s) from the current project"
@@ -1491,17 +1276,12 @@ msgid "new example names (each replaces template some_puff1)"
 msgstr "新示例名称（各替换模板 some_puff1）"
 
 #: src/zfr_lib/shape.py:263
-msgid ""
-"print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
+msgid "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
 msgstr "打印 zephyr 包形态得分 0-100（monorepos 中 packagedir vs repodir）"
 
 #: src/zfr_lib/shape.py:265
-msgid ""
-"Score how completely the current directory matches zephyr package style "
-"(0-100). In monorepos, scores the packagedir."
-msgstr ""
-"评分当前目录与 zephyr 包风格的匹配程度（0-100）。在 monorepos 中，评分 "
-"packagedir。"
+msgid "Score how completely the current directory matches zephyr package style (0-100). In monorepos, scores the packagedir."
+msgstr "评分当前目录与 zephyr 包风格的匹配程度（0-100）。在 monorepos 中，评分 packagedir。"
 
 #: src/zfr_lib/shape.py:271
 msgid "print 1 if score >= threshold, else 0"
@@ -1521,8 +1301,7 @@ msgid "print current project version (walks parents from cwd)"
 msgstr "打印当前项目版本（从 cwd 向上遍历父目录）"
 
 #: src/zfr_lib/version.py:52
-msgid ""
-"Print the current project version (walks from cwd toward parent directories)."
+msgid "Print the current project version (walks from cwd toward parent directories)."
 msgstr "打印当前项目版本（从 cwd 向父目录遍历）。"
 
 #: src/zfr_lib/version.py:57
@@ -1590,12 +1369,8 @@ msgid "manage implemented gettext locales"
 msgstr "管理已实现的 gettext 语言环境"
 
 #: src/zfr_lib/locale_cmd/__init__.py:108
-msgid ""
-"List, add, delete, and derive locales in the current project. Use zfr "
-"translate to query or update message strings."
-msgstr ""
-"列出、添加、删除并派生当前项目的语言环境。使用 zfr translate 查询或更新消息字"
-"符串。"
+msgid "List, add, delete, and derive locales in the current project. Use zfr translate to query or update message strings."
+msgstr "列出、添加、删除并派生当前项目的语言环境。使用 zfr translate 查询或更新消息字符串。"
 
 #: src/zfr_lib/locale_cmd/__init__.py:118
 msgid "list all implemented locales in this project"
@@ -1644,11 +1419,8 @@ msgid "query and update gettext message strings"
 msgstr "查询并更新 gettext 消息字符串"
 
 #: src/zfr_lib/translate_cmd/__init__.py:101
-msgid ""
-"Look up translations for TEXT across implemented locales, or update a single "
-"locale catalog. Remaining arguments are joined with spaces."
-msgstr ""
-"在已实现语言环境中查找 TEXT 的翻译，或更新单个目录。其余参数以空格连接。"
+msgid "Look up translations for TEXT across implemented locales, or update a single locale catalog. Remaining arguments are joined with spaces."
+msgstr "在已实现语言环境中查找 TEXT 的翻译，或更新单个目录。其余参数以空格连接。"
 
 #: src/zfr_lib/translate_cmd/__init__.py:113
 msgid "use poedit to import edits from FILE"
@@ -1691,23 +1463,13 @@ msgid "TEXT required"
 msgstr "需要 TEXT"
 
 #: src/zfr_lib/lint/report.py:119
-msgid ""
-"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I "
-"primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-"
-"derive via zfr locale. Defaults in .config/zfr/lint.options."
-msgstr ""
-"i18n：英文为原文；zfr lint -l/--l10n-level L0–L3（默认 L1）。L1=10 个语言，"
-"L2=20，L3=30。默认在 .config/zfr/lint.options。"
+msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr locale. Defaults in .config/zfr/lint.options."
+msgstr "i18n：英文为原文；zfr lint -l/--l10n-level L0–L3（默认 L1）。L1=10 个语言，L2=20，L3=30。默认在 .config/zfr/lint.options。"
 
 #: src/zfr_lib/lint/i18n_check.py:127
 #, python-format
-msgid ""
-"Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy "
-"es→es_MX, pt→pt_BR). Run `zfr locale --derive` to auto-generate child "
-"locales."
-msgstr ""
-"级别 %(level)s 需要：%(locales)s（源语言 %(source)s；zh-cn→zh_CN, zh-"
-"tw→zh_TW）。将缺失行追加到 LINGUAS，并添加对应的 po/<locale>.po。"
+msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr locale --derive` to auto-generate child locales."
+msgstr "级别 %(level)s 需要：%(locales)s（源语言 %(source)s；zh-cn→zh_CN, zh-tw→zh_TW）。将缺失行追加到 LINGUAS，并添加对应的 po/<locale>.po。"
 
 #: src/zfr_lib/lint/i18n_check.py:142
 #, python-format
@@ -1720,18 +1482,12 @@ msgid "would build %d derived locale file(s)"
 msgstr "将生成 %d 个派生 locale 文件"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:107
-msgid ""
-"List, add, delete, and build derived locales in the current project. Use zfr "
-"translate to query or update message strings."
-msgstr ""
-"列出、添加、删除并生成当前项目的派生语言环境。使用 zfr translate 查询或更新消"
-"息字符串。"
+msgid "List, add, delete, and build derived locales in the current project. Use zfr translate to query or update message strings."
+msgstr "列出、添加、删除并生成当前项目的派生语言环境。使用 zfr translate 查询或更新消息字符串。"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:135
-msgid ""
-"build derived locale PO/man files from parents (skip locales in LINGUAS)"
-msgstr ""
-"从父语言生成派生 locale 的 PO/man 文件（跳过 LINGUAS 中列出的语言环境）"
+msgid "build derived locale PO/man files from parents (skip locales in LINGUAS)"
+msgstr "从父语言生成派生 locale 的 PO/man 文件（跳过 LINGUAS 中列出的语言环境）"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/i18n/cmd.py:137
 msgid "with --build, print only"
@@ -1754,27 +1510,15 @@ msgid "use only one of --match or --search"
 msgstr "只能使用 --match 或 --search 之一"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:113
-msgid ""
-"Check the current zephyr project for missing files and packaging/style "
-"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
-"is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-"
-"integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain "
-"interactive shell. Override with -i/-I."
-msgstr ""
-"检查当前 zephyr 项目的缺失文件与打包/风格问题；从 cwd 向父目录遍历。stdout "
-"为 TTY 时使用 CSR 颜色。风格约定说明块默认对非交互输出与 AI 终端（Cursor、VS "
-"Code、Windsurf 等）开启，普通交互式 shell 关闭。可用 -i/-I 覆盖。"
+msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain interactive shell. Override with -i/-I."
+msgstr "检查当前 zephyr 项目的缺失文件与打包/风格问题；从 cwd 向父目录遍历。stdout 为 TTY 时使用 CSR 颜色。风格约定说明块默认对非交互输出与 AI 终端（Cursor、VS Code、Windsurf 等）开启，普通交互式 shell 关闭。可用 -i/-I 覆盖。"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:139
-msgid ""
-"show zephyr style-contract / next-steps blurbs (default for pipes and AI "
-"terminals)"
+msgid "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
 msgstr "显示 zephyr 风格约定/后续步骤说明（管道与 AI 终端默认开启）"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:146
-msgid ""
-"hide zephyr style-contract / next-steps blurbs (default for plain "
-"interactive shell)"
+msgid "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
 msgstr "隐藏 zephyr 风格约定/后续步骤说明（普通交互式 shell 默认关闭）"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/lint/__init__.py:155
@@ -1782,22 +1526,10 @@ msgid "suppress rule ID(s) or code(s), comma-separated (repeatable)"
 msgstr "抑制规则 ID 或代码，逗号分隔（可重复）"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/lint/report.py:113
-msgid ""
-"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I "
-"primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-"
-"derive via zfr i18n -b. Rule IDs in docs/lint-std.md; suppress with -u/--"
-"uncheck or .config/zfr/lint.options."
-msgstr ""
-"i18n：英语源；zfr lint -l/--l10n-level L0–L3（默认 L1）。L1=第一梯队主干"
-"（8），L2=+第二梯队（17），L3=+第三梯队（35）。子语言环境通过 zfr i18n -b 自"
-"动生成。规则 ID 见 docs/lint-std.md；可用 -u/--uncheck 或 .config/zfr/"
-"lint.options 抑制。"
+msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr i18n -b. Rule IDs in docs/lint-std.md; suppress with -u/--uncheck or .config/zfr/lint.options."
+msgstr "i18n：英语源；zfr lint -l/--l10n-level L0–L3（默认 L1）。L1=第一梯队主干（8），L2=+第二梯队（17），L3=+第三梯队（35）。子语言环境通过 zfr i18n -b 自动生成。规则 ID 见 docs/lint-std.md；可用 -u/--uncheck 或 .config/zfr/lint.options 抑制。"
 
 #: /home/cursor/zephyr/zfr/src/zfr_lib/lint/i18n_check.py:127
 #, python-format
-msgid ""
-"Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy "
-"es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
-msgstr ""
-"级别 %(level)s 需要主干语言：%(locales)s（源 %(source)s；旧名 es→es_MX，"
-"pt→pt_BR）。运行 `zfr i18n -b` 自动生成子语言环境。"
+msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
+msgstr "级别 %(level)s 需要主干语言：%(locales)s（源 %(source)s；旧名 es→es_MX，pt→pt_BR）。运行 `zfr i18n -b` 自动生成子语言环境。"

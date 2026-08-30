@@ -17,13 +17,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/zfr:32
-msgid ""
-"Zephyr template helper (CLI name: zfr). Create projects and manage example "
-"puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
-msgstr ""
-"Zephyr sablon-segéd (CLI név: zfr). Projekteket hoz létre és példa puffokat "
-"kezel. A példányosított fák továbbra is zfr-t hívnak; a zfr nem átnevezési "
-"token."
+msgid "Zephyr template helper (CLI name: zfr). Create projects and manage example puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
+msgstr "Zephyr sablon-segéd (CLI név: zfr). Projekteket hoz létre és példa puffokat kezel. A példányosított fák továbbra is zfr-t hívnak; a zfr nem átnevezési token."
 
 #: src/zfr:46
 msgid "show this help"
@@ -34,14 +29,8 @@ msgid "print current project information (walks parents from cwd)"
 msgstr "aktuális projektinformáció kiírása (felfelé keres cwd-től)"
 
 #: src/zfr_lib/about.py:498
-msgid ""
-"Print information about the current zephyr project (walks from cwd toward "
-"parent directories). CSR colors when stdout is a TTY. Common packaging "
-"fields are parsed from debian or RPM."
-msgstr ""
-"Kiírja az aktuális zephyr projekt adatait (felfelé keres cwd-től). CSR "
-"színek, ha a stdout TTY. A gyakori csomagolási mezők a debian vagy RPM "
-"fájlokból kerülnek beolvasásra."
+msgid "Print information about the current zephyr project (walks from cwd toward parent directories). CSR colors when stdout is a TTY. Common packaging fields are parsed from debian or RPM."
+msgstr "Kiírja az aktuális zephyr projekt adatait (felfelé keres cwd-től). CSR színek, ha a stdout TTY. A gyakori csomagolási mezők a debian vagy RPM fájlokból kerülnek beolvasásra."
 
 #: src/zfr_lib/about.py:505
 msgid "show parsed Debian packaging fields"
@@ -53,8 +42,7 @@ msgstr "feldolgozott RPM csomagolási mezők megjelenítése"
 
 #: src/zfr_lib/about.py:511
 msgid "CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)"
-msgstr ""
-"CSR (console SGR) kiemelés (alapértelmezés: auto = TTY és nincs NO_COLOR)"
+msgstr "CSR (console SGR) kiemelés (alapértelmezés: auto = TTY és nincs NO_COLOR)"
 
 #: src/zfr_lib/add.py:20
 msgid "instantiate puff(s) from the language template"
@@ -62,8 +50,7 @@ msgstr "puff(ok) létrehozása a nyelvi sablonból"
 
 #: src/zfr_lib/add.py:21
 msgid "Detect language and add puff(s) from pkgdatadir/<lang>."
-msgstr ""
-"Felismeri a nyelvet és hozzáad puff(ok)at a pkgdatadir/<lang> útvonalról."
+msgstr "Felismeri a nyelvet és hozzáad puff(ok)at a pkgdatadir/<lang> útvonalról."
 
 #: src/zfr_lib/add.py:25
 msgid "new puff name(s) (snake_case recommended)"
@@ -115,40 +102,24 @@ msgid "print detected language for the current directory"
 msgstr "felismert nyelv kiírása az aktuális könyvtárhoz"
 
 #: src/zfr_lib/detect.py:16
-msgid ""
-"Print the detected language of the current project and layout details on "
-"stderr."
-msgstr ""
-"Kiírja az aktuális projekt felismert nyelvét és az elrendezés részleteit a "
-"stderr-re."
+msgid "Print the detected language of the current project and layout details on stderr."
+msgstr "Kiírja az aktuális projekt felismert nyelvét és az elrendezés részleteit a stderr-re."
 
 #: src/zfr_lib/dist.py:60
-msgid ""
-"write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --"
-"rpm; usually $HOME/rpmbuild)"
-msgstr ""
-"archívum írása DIR könyvtárba (alapértelmezés: meson-dist vagy rpmbuild/"
-"SOURCES --rpm-mel)"
+msgid "write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --rpm; usually $HOME/rpmbuild)"
+msgstr "archívum írása DIR könyvtárba (alapértelmezés: meson-dist vagy rpmbuild/SOURCES --rpm-mel)"
 
 #: src/zfr_lib/dist.py:70
-msgid ""
-"Meson build directory (default: /build when it matches this source tree, "
-"else <project>/build)"
-msgstr ""
-"Meson build könyvtár (alapértelmezés: /build, ha ehhez a forráshoz tartozik, "
-"különben <project>/build)"
+msgid "Meson build directory (default: /build when it matches this source tree, else <project>/build)"
+msgstr "Meson build könyvtár (alapértelmezés: /build, ha ehhez a forráshoz tartozik, különben <project>/build)"
 
 #: src/zfr_lib/dist.py:80
 msgid "archive format (default: xz)"
 msgstr "archívum formátum (alapértelmezés: xz)"
 
 #: src/zfr_lib/dist.py:86
-msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES "
-"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
-msgstr ""
-"NAME-VERSION.tar.xz néven nevezi az archívumot és %_topdir/SOURCES ($HOME/rpmbuild)-be írja, "
-"hacsak nincs megadva -o"
+msgid "name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES ($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
+msgstr "NAME-VERSION.tar.xz néven nevezi az archívumot és %_topdir/SOURCES ($HOME/rpmbuild)-be írja, hacsak nincs megadva -o"
 
 #: src/zfr_lib/dist.py:94
 msgid "pass --allow-dirty to meson dist (default: allow)"
@@ -163,37 +134,21 @@ msgid "build a source tarball (meson dist, or this project only)"
 msgstr "forrás tarball készítése (meson dist vagy csak ez a projekt)"
 
 #: src/zfr_lib/dist.py:345
-msgid ""
-"Build a source archive of the current zephyr project (walks from cwd toward "
-"parent directories). Uses meson dist when this directory is the git project "
-"root; otherwise packs this project only so nested language templates do not "
-"ship the parent meta-repo. Prints the archive path on stdout."
-msgstr ""
-"Forrásarchívumot készít az aktuális zephyr projektből (felfelé keres cwd-"
-"től). meson dist-et használ, ha ez a könyvtár a git projekt gyökere; "
-"különben csak ezt a projektet csomagolja, hogy a beágyazott nyelvi sablonok "
-"ne tartalmazzák a szülő meta-repót. Az archívum útvonalát a stdout-ra írja."
+msgid "Build a source archive of the current zephyr project (walks from cwd toward parent directories). Uses meson dist when this directory is the git project root; otherwise packs this project only so nested language templates do not ship the parent meta-repo. Prints the archive path on stdout."
+msgstr "Forrásarchívumot készít az aktuális zephyr projektből (felfelé keres cwd-től). meson dist-et használ, ha ez a könyvtár a git projekt gyökere; különben csak ezt a projektet csomagolja, hogy a beágyazott nyelvi sablonok ne tartalmazzák a szülő meta-repót. Az archívum útvonalát a stdout-ra írja."
 
 #: src/zfr_lib/ize/__init__.py:65
 msgid "refactor this project to current zephyr style"
 msgstr "projekt refaktorálása az aktuális zephyr stílusra"
 
 #: src/zfr_lib/ize/__init__.py:66
-msgid ""
-"Refactor the current project to match current zephyr style: missing debian/"
-"rpm files, meson targets, AsciiDoc man pages, and Meson version "
-"substitutions. Walks from cwd toward parents."
-msgstr ""
-"Az aktuális projektet az aktuális zephyr stílushoz igazítja: hiányzó debian/"
-"rpm fájlok, meson célok, AsciiDoc man oldalak és Meson "
-"verzióhelyettesítések. Felfelé keres cwd-től."
+msgid "Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, and Meson version substitutions. Walks from cwd toward parents."
+msgstr "Az aktuális projektet az aktuális zephyr stílushoz igazítja: hiányzó debian/rpm fájlok, meson célok, AsciiDoc man oldalak és Meson verzióhelyettesítések. Felfelé keres cwd-től."
 
 #: src/zfr_lib/ize/__init__.py:70
 #, python-format
 msgid "language template to align with (default: detect; one of: %s)"
-msgstr ""
-"illesztendő nyelvi sablon (alapértelmezés: detect; egy a következők közül: "
-"%s)"
+msgstr "illesztendő nyelvi sablon (alapértelmezés: detect; egy a következők közül: %s)"
 
 #: src/zfr_lib/ize/__init__.py:71
 msgid "print planned changes without writing files"
@@ -204,10 +159,8 @@ msgid "also print skipped files"
 msgstr "kihagyott fájlok kiírása is"
 
 #: src/zfr_lib/ize/__init__.py:78
-msgid ""
-"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
-msgstr ""
-"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgstr "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
 
 #: src/zfr_lib/ize/__init__.py:80
 msgid "do not convert groff .1 man pages to docs/*.adoc"
@@ -246,15 +199,11 @@ msgstr "nincs tests/ könyvtár"
 
 #: src/zfr_lib/lang/antlr.py:49
 msgid "Add tests/TestCommons.java or fixture checks for parser output."
-msgstr ""
-"Adjon hozzá tests/TestCommons.java fájlt vagy fixture-ellenőrzéseket a "
-"parser kimenetéhez."
+msgstr "Adjon hozzá tests/TestCommons.java fájlt vagy fixture-ellenőrzéseket a parser kimenetéhez."
 
 #: src/zfr_lib/lang/as.py:37
 msgid "Add tests/smoke.sh and meson test() for stdin/stdout copy."
-msgstr ""
-"Adjon hozzá tests/smoke.sh fájlt és meson test() bejegyzést a stdin/stdout "
-"másoláshoz."
+msgstr "Adjon hozzá tests/smoke.sh fájlt és meson test() bejegyzést a stdin/stdout másoláshoz."
 
 #: src/zfr_lib/lang/bash.py:45
 #, python-format
@@ -266,27 +215,18 @@ msgid "no src/*.in scripts"
 msgstr "nincsenek src/*.in parancsfájlok"
 
 #: src/zfr_lib/lang/bash.py:47
-msgid ""
-"Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ and meson "
-"configure_file + install_mode rwxr-xr-x."
-msgstr ""
-"A konfigurált parancsfájlokat src/<puff>.in formában tartsa @PACKAGE@/"
-"@VERSION@ helyettesítőkkel és meson configure_file + install_mode rwxr-xr-x "
-"beállítással."
+msgid "Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
+msgstr "A konfigurált parancsfájlokat src/<puff>.in formában tartsa @PACKAGE@/@VERSION@ helyettesítőkkel és meson configure_file + install_mode rwxr-xr-x beállítással."
 
 #: src/zfr_lib/lang/bison.py:45
 msgid "Add tests/ with fixture checks for parser dump/format output."
-msgstr ""
-"Adjon hozzá tests/ könyvtárat fixture-ellenőrzésekkel a parser dump/format "
-"kimenetéhez."
+msgstr "Adjon hozzá tests/ könyvtárat fixture-ellenőrzésekkel a parser dump/format kimenetéhez."
 
 #: src/zfr_lib/lang/clib.py:36 src/zfr_lib/lang/cpplib.py:36
 #: src/zfr_lib/lang/cpp.py:23 src/zfr_lib/lang/c.py:23
 #: src/zfr_lib/lang/gcc.py:55
 msgid "Add tests/ and meson test() entries like the C family templates."
-msgstr ""
-"Adjon hozzá tests/ könyvtárat és meson test() bejegyzéseket a C család "
-"sablonjaihoz hasonlóan."
+msgstr "Adjon hozzá tests/ könyvtárat és meson test() bejegyzéseket a C család sablonjaihoz hasonlóan."
 
 #: src/zfr_lib/lang/cobol.py:37
 msgid "no tests/ (cobol template uses cobc + meson test)"
@@ -294,8 +234,7 @@ msgstr "nincs tests/ (a cobol sablon cobc + meson test-et használ)"
 
 #: src/zfr_lib/lang/cobol.py:39
 msgid "Add tests/test_commons.sh or similar smoke test for cobc."
-msgstr ""
-"Adjon hozzá tests/test_commons.sh fájlt vagy hasonló füsttesztet a cobc-hez."
+msgstr "Adjon hozzá tests/test_commons.sh fájlt vagy hasonló füsttesztet a cobc-hez."
 
 #: src/zfr_lib/lang/d.py:37
 msgid "no tests/ (D template uses ldc/dmd + meson test)"
@@ -318,12 +257,8 @@ msgid "missing go.mod"
 msgstr "hiányzik a go.mod"
 
 #: src/zfr_lib/lang/go.py:23
-msgid ""
-"Add go.mod; meson should `go build` with -X main.buildVersion from "
-"meson.project_version()."
-msgstr ""
-"Adjon hozzá go.mod fájlt; a meson a meson.project_version() értékéből -X "
-"main.buildVersion kapcsolóval futtassa a `go build` parancsot."
+msgid "Add go.mod; meson should `go build` with -X main.buildVersion from meson.project_version()."
+msgstr "Adjon hozzá go.mod fájlt; a meson a meson.project_version() értékéből -X main.buildVersion kapcsolóval futtassa a `go build` parancsot."
 
 #: src/zfr_lib/lang/kotlin.py:23
 msgid "no tests/ (kotlin template uses kotlinc + meson test)"
@@ -331,20 +266,15 @@ msgstr "nincs tests/ (a kotlin sablon kotlinc + meson test-et használ)"
 
 #: src/zfr_lib/lang/kotlin.py:24
 msgid "Add tests/Test*.kt and meson test() compiling with kotlinc."
-msgstr ""
-"Adjon hozzá tests/Test*.kt fájlokat és kotlinc-cel fordított meson test() "
-"bejegyzést."
+msgstr "Adjon hozzá tests/Test*.kt fájlokat és kotlinc-cel fordított meson test() bejegyzést."
 
 #: src/zfr_lib/lang/lua.py:23
 msgid "no tests/ (lua template uses lua tests + meson test)"
 msgstr "nincs tests/ (a lua sablon lua teszteket + meson test-et használ)"
 
 #: src/zfr_lib/lang/lua.py:24
-msgid ""
-"Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
-msgstr ""
-"Adjon hozzá tests/test_*.lua fájlokat és meson test()-et, amely "
-"LUA_PATH=src/?.lua mellett indítja a lua-t."
+msgid "Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
+msgstr "Adjon hozzá tests/test_*.lua fájlokat és meson test()-et, amely LUA_PATH=src/?.lua mellett indítja a lua-t."
 
 #: src/zfr_lib/lang/nim.py:25
 msgid "no tests/ (nim template uses unittest + meson test)"
@@ -352,8 +282,7 @@ msgstr "nincs tests/ (a nim sablon unittest + meson test-et használ)"
 
 #: src/zfr_lib/lang/nim.py:26
 msgid "Add tests/test_*.nim and meson test() with nim r."
-msgstr ""
-"Adjon hozzá tests/test_*.nim fájlokat és meson test()-et nim r használatával."
+msgstr "Adjon hozzá tests/test_*.nim fájlokat és meson test()-et nim r használatával."
 
 #: src/zfr_lib/lang/pascal.py:37
 msgid "no tests/ (pascal template uses fpc + meson test)"
@@ -369,20 +298,15 @@ msgstr "nincs tests/ (a python sablon unittest + meson test-et használ)"
 
 #: src/zfr_lib/lang/python.py:23
 msgid "Add tests/test_*.py and meson test() with PYTHONPATH=src."
-msgstr ""
-"Adjon hozzá tests/test_*.py fájlokat és meson test()-et PYTHONPATH=src "
-"mellett."
+msgstr "Adjon hozzá tests/test_*.py fájlokat és meson test()-et PYTHONPATH=src mellett."
 
 #: src/zfr_lib/lang/rust.py:22
 msgid "missing Cargo.toml"
 msgstr "hiányzik a Cargo.toml"
 
 #: src/zfr_lib/lang/rust.py:23
-msgid ""
-"Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
-msgstr ""
-"A Rust zephyr projektek a binárishoz Cargo.toml fájlt és meson custom_target-"
-"et tartanak."
+msgid "Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
+msgstr "A Rust zephyr projektek a binárishoz Cargo.toml fájlt és meson custom_target-et tartanak."
 
 #: src/zfr_lib/lang/zig.py:23
 msgid "missing build.zig"
@@ -390,9 +314,7 @@ msgstr "hiányzik a build.zig"
 
 #: src/zfr_lib/lang/zig.py:24
 msgid "Add build.zig; meson should invoke `zig build -Doptimize=ReleaseFast`."
-msgstr ""
-"Adjon hozzá build.zig fájlt; a meson a `zig build -Doptimize=ReleaseFast` "
-"parancsot futtassa."
+msgstr "Adjon hozzá build.zig fájlt; a meson a `zig build -Doptimize=ReleaseFast` parancsot futtassa."
 
 #: src/zfr_lib/lint/debian.py:42
 #, python-format
@@ -406,12 +328,8 @@ msgstr "a Build-Depends-ből hiányzik: %s"
 
 #: src/zfr_lib/lint/debian.py:50
 #, python-format
-msgid ""
-"Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man "
-"pages)."
-msgstr ""
-"Adja a Build-Depends mezőhöz: %s (a zephyr csomagok Mesonnal és AsciiDoc man "
-"oldalakkal épülnek)."
+msgid "Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man pages)."
+msgstr "Adja a Build-Depends mezőhöz: %s (a zephyr csomagok Mesonnal és AsciiDoc man oldalakkal épülnek)."
 
 #: src/zfr_lib/lint/debian.py:54
 msgid "debhelper-compat present"
@@ -423,8 +341,7 @@ msgstr "a Build-Depends-ből hiányzik a debhelper-compat (= 13)"
 
 #: src/zfr_lib/lint/debian.py:62
 msgid "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
-msgstr ""
-"Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+msgstr "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
 
 #: src/zfr_lib/lint/debian.py:72
 msgid "Package stanza missing Architecture"
@@ -475,10 +392,8 @@ msgid "dh meson debian/build"
 msgstr "dh meson a debian/build könyvtárral"
 
 #: src/zfr_lib/lint/debian.py:122
-msgid ""
-"debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
-msgstr ""
-"a debian/rules nem dh --buildsystem=meson --builddirectory=debian/build"
+msgid "debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
+msgstr "a debian/rules nem dh --buildsystem=meson --builddirectory=debian/build"
 
 #: src/zfr_lib/lint/debian.py:125
 #, no-python-format
@@ -518,12 +433,8 @@ msgid "VERSION=%(file)r != changelog %(changelog)r"
 msgstr "VERSION=%(file)r != napló %(changelog)r"
 
 #: src/zfr_lib/lint/debian.py:156
-msgid ""
-"VERSION should match the latest debian/changelog entry (pre-commit hook "
-"updates it). Git describe may still differ."
-msgstr ""
-"A VERSION-nek egyeznie kell a debian/changelog legújabb bejegyzésével (a pre-"
-"commit horog frissíti). A Git describe még eltérhet."
+msgid "VERSION should match the latest debian/changelog entry (pre-commit hook updates it). Git describe may still differ."
+msgstr "A VERSION-nek egyeznie kell a debian/changelog legújabb bejegyzésével (a pre-commit horog frissíti). A Git describe még eltérhet."
 
 #: src/zfr_lib/lint/debian.py:162
 #, python-format
@@ -554,19 +465,12 @@ msgstr "l10n szint %(level)s (%(count)d locale)"
 
 #: src/zfr_lib/lint/i18n_check.py:78
 msgid "no po/ directory (optional unless the project uses gettext)"
-msgstr ""
-"nincs po/ könyvtár (opcionális, hacsak a projekt nem használ gettextet)"
+msgstr "nincs po/ könyvtár (opcionális, hacsak a projekt nem használ gettextet)"
 
 #: src/zfr_lib/lint/i18n_check.py:79
 #, python-format
-msgid ""
-"If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in "
-"meson.build. Required locales at %(level)s: %(locales)s (source language "
-"%(source)s)."
-msgstr ""
-"Ha az alkalmazás fordított, adjon po/ könyvtárat LINGUAS + *.po fájlokkal és "
-"i18n.gettext()-tel a meson.build-ben. Kötelező locale-ek %(level)s szinten: "
-"%(locales)s (forrásnyelv %(source)s)."
+msgid "If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in meson.build. Required locales at %(level)s: %(locales)s (source language %(source)s)."
+msgstr "Ha az alkalmazás fordított, adjon po/ könyvtárat LINGUAS + *.po fájlokkal és i18n.gettext()-tel a meson.build-ben. Kötelező locale-ek %(level)s szinten: %(locales)s (forrásnyelv %(source)s)."
 
 #: src/zfr_lib/lint/i18n_check.py:97
 msgid "po/ exists but po/LINGUAS is missing or empty"
@@ -590,14 +494,8 @@ msgstr "a po/LINGUAS-ból hiányzik %(level)s locale: %(locales)s"
 
 #: src/zfr_lib/lint/i18n_check.py:117
 #, python-format
-msgid ""
-"Level %(level)s requires: %(locales)s (source %(source)s; zh-cn→zh_CN, zh-"
-"tw→zh_TW). Append the missing lines to LINGUAS and add matching po/"
-"<locale>.po."
-msgstr ""
-"A %(level)s szinthez kell: %(locales)s (forrás %(source)s; zh-cn→zh_CN, zh-"
-"tw→zh_TW). Fűzze a hiányzó sorokat a LINGUAS-hoz, és adja hozzá a megfelelő "
-"po/<locale>.po fájlokat."
+msgid "Level %(level)s requires: %(locales)s (source %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Append the missing lines to LINGUAS and add matching po/<locale>.po."
+msgstr "A %(level)s szinthez kell: %(locales)s (forrás %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Fűzze a hiányzó sorokat a LINGUAS-hoz, és adja hozzá a megfelelő po/<locale>.po fájlokat."
 
 #: src/zfr_lib/lint/i18n_check.py:132
 #, python-format
@@ -610,12 +508,8 @@ msgid "LINGUAS entries without po/<locale>.po: %s"
 msgstr "LINGUAS bejegyzések po/<locale>.po nélkül: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:149
-msgid ""
-"For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-"
-"translator && msgmerge -U po/<locale>.po <domain>.pot"
-msgstr ""
-"Minden locale-hez: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --"
-"no-translator && msgmerge -U po/<locale>.po <domain>.pot"
+msgid "For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
+msgstr "Minden locale-hez: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
 
 #: src/zfr_lib/lint/i18n_check.py:160
 #, python-format
@@ -629,12 +523,8 @@ msgstr "hiányzó teljes dokumentumú man-fordítások %(level)s szinten: %(file
 
 #: src/zfr_lib/lint/i18n_check.py:195
 #, python-format
-msgid ""
-"Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). "
-"%(level)s requires: %(locales)s."
-msgstr ""
-"Fordítsa kézzel a docs/<locale>/<name>.adoc fájlt (teljes dokumentum, nem "
-"po4a). %(level)s igényli: %(locales)s."
+msgid "Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
+msgstr "Fordítsa kézzel a docs/<locale>/<name>.adoc fájlt (teljes dokumentum, nem po4a). %(level)s igényli: %(locales)s."
 
 #: src/zfr_lib/lint/i18n_check.py:205
 #, python-format
@@ -657,12 +547,8 @@ msgstr "%(label)s értéke %(val)r, elvárt %(expected)r (könyvtárnév)"
 
 #: src/zfr_lib/lint/identity.py:60
 #, python-format
-msgid ""
-"Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename "
-"%(expected)s` if leftover template names remain."
-msgstr ""
-"Állítsa %(label)s értékét %(expected)r-re, vagy nevezze át a könyvtárat. "
-"Maradék sablonnév esetén: `zfr rename %(expected)s`."
+msgid "Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename %(expected)s` if leftover template names remain."
+msgstr "Állítsa %(label)s értékét %(expected)r-re, vagy nevezze át a könyvtárat. Maradék sablonnév esetén: `zfr rename %(expected)s`."
 
 #: src/zfr_lib/lint/identity.py:66
 #, python-format
@@ -705,17 +591,11 @@ msgstr "spec Name=%s"
 
 #: src/zfr_lib/lint/__init__.py:99
 msgid "validate project packaging and zephyr layout (walks parents from cwd)"
-msgstr ""
-"projektcsomagolás és zephyr elrendezés ellenőrzése (felfelé keres cwd-től)"
+msgstr "projektcsomagolás és zephyr elrendezés ellenőrzése (felfelé keres cwd-től)"
 
 #: src/zfr_lib/lint/__init__.py:100
-msgid ""
-"Check the current zephyr project for missing files and packaging/style "
-"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
-"is a TTY."
-msgstr ""
-"Ellenőrzi az aktuális zephyr projektet hiányzó fájlok és csomagolási/"
-"stílusbeli hibák miatt. Felfelé keres cwd-től. CSR színek, ha a stdout TTY."
+msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY."
+msgstr "Ellenőrzi az aktuális zephyr projektet hiányzó fájlok és csomagolási/stílusbeli hibák miatt. Felfelé keres cwd-től. CSR színek, ha a stdout TTY."
 
 #: src/zfr_lib/lint/__init__.py:104
 msgid "show passing checks too"
@@ -730,12 +610,8 @@ msgid "treat warnings as failures (exit 1)"
 msgstr "figyelmeztetések hibaként kezelése (exit 1)"
 
 #: src/zfr_lib/lint/__init__.py:113
-msgid ""
-"required gettext/manpage locale coverage L0–L3 (default: L1; project file "
-"may override)"
-msgstr ""
-"kötelező gettext/manpage locale lefedettség L0–L3 (alapértelmezés: L1; a "
-"projektfájl felülírhatja)"
+msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
+msgstr "kötelező gettext/manpage locale lefedettség L0–L3 (alapértelmezés: L1; a projektfájl felülírhatja)"
 
 #: src/zfr_lib/lint/lang_bits.py:31
 #, python-format
@@ -743,12 +619,8 @@ msgid "legacy example module %s; use commons or a specific name"
 msgstr "örökölt példamodul %s; használjon commons-t vagy konkrét nevet"
 
 #: src/zfr_lib/lint/lang_bits.py:33
-msgid ""
-"Rename to src/commons.* (template convention) or a project-specific module "
-"name."
-msgstr ""
-"Nevezze át src/commons.*-ra (sablonkonvenció) vagy projekt-specifikus "
-"modulnévre."
+msgid "Rename to src/commons.* (template convention) or a project-specific module name."
+msgstr "Nevezze át src/commons.*-ra (sablonkonvenció) vagy projekt-specifikus modulnévre."
 
 #: src/zfr_lib/lint/lang_bits.py:44
 #, python-format
@@ -756,15 +628,8 @@ msgid "%s is only a template example for shared helpers"
 msgstr "a(z) %s csak sablonpélda a megosztott segédekre"
 
 #: src/zfr_lib/lint/lang_bits.py:46
-msgid ""
-"common_lib / commons mean “extract reusable pieces”, but filenames should be "
-"concrete. Rename to a specific module in real projects (e.g. stream_copy.py, "
-"bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
-msgstr ""
-"a common_lib / commons azt jelenti: „emeld ki az újrafelhasználható "
-"darabokat”, de a fájlnevek legyenek konkrétak. Valódi projektekben nevezzük "
-"át konkrét modulra (pl. stream_copy.py, bulk.h). A clib/cpplib a lib.c/"
-"lib.cpp fájlokat tartja a közös könyvtár belépési pontjának."
+msgid "common_lib / commons mean “extract reusable pieces”, but filenames should be concrete. Rename to a specific module in real projects (e.g. stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
+msgstr "a common_lib / commons azt jelenti: „emeld ki az újrafelhasználható darabokat”, de a fájlnevek legyenek konkrétak. Valódi projektekben nevezzük át konkrét modulra (pl. stream_copy.py, bulk.h). A clib/cpplib a lib.c/lib.cpp fájlokat tartja a közös könyvtár belépési pontjának."
 
 #: src/zfr_lib/lint/layout.py:35
 msgid "Add a top-level meson.build with project(...)."
@@ -780,30 +645,23 @@ msgstr "Adjon README.md fájlt, amely leírja ezt a projektet."
 
 #: src/zfr_lib/lint/layout.py:38
 msgid "Add README-zh.md (Chinese summary), matching other zephyr templates."
-msgstr ""
-"Adjon README-zh.md fájlt (kínai összefoglaló), a többi zephyr sablonhoz "
-"igazodva."
+msgstr "Adjon README-zh.md fájlt (kínai összefoglaló), a többi zephyr sablonhoz igazodva."
 
 #: src/zfr_lib/lint/layout.py:39
 msgid "Add debian/ packaging (copy debian/ from the language template)."
-msgstr ""
-"Adjon debian/ csomagolást (másolja a debian/ könyvtárat a nyelvi sablonból)."
+msgstr "Adjon debian/ csomagolást (másolja a debian/ könyvtárat a nyelvi sablonból)."
 
 #: src/zfr_lib/lint/layout.py:40
 msgid "Add debian/changelog (zfr create writes one; or use dch)."
-msgstr ""
-"Adjon debian/changelog fájlt (a zfr create ír egyet; vagy használja a dch-t)."
+msgstr "Adjon debian/changelog fájlt (a zfr create ír egyet; vagy használja a dch-t)."
 
 #: src/zfr_lib/lint/layout.py:41
 msgid "Add debian/copyright in machine-readable format, License: AGPL-3+."
 msgstr "Adjon géppel olvasható debian/copyright fájlt, License: AGPL-3+."
 
 #: src/zfr_lib/lint/layout.py:42
-msgid ""
-"Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
-msgstr ""
-"Adjon debian/rules fájlt: dh --buildsystem=meson --builddirectory=debian/"
-"build."
+msgid "Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
+msgstr "Adjon debian/rules fájlt: dh --buildsystem=meson --builddirectory=debian/build."
 
 #: src/zfr_lib/lint/layout.py:43
 msgid "Add debian/source/format (typically '3.0 (native)')."
@@ -829,12 +687,8 @@ msgid "no docs/*.adoc man page source"
 msgstr "nincs docs/*.adoc manoldal-forrás"
 
 #: src/zfr_lib/lint/layout.py:65
-msgid ""
-"Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage "
-"(see any language template)."
-msgstr ""
-"Adja hozzá a docs/<puff>.adoc fájlt és egy meson custom_targetet asciidoctor "
-"-b manpage használatával (lásd bármely nyelvi sablont)."
+msgid "Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
+msgstr "Adja hozzá a docs/<puff>.adoc fájlt és egy meson custom_targetet asciidoctor -b manpage használatával (lásd bármely nyelvi sablont)."
 
 #: src/zfr_lib/lint/layout.py:78
 #, python-format
@@ -846,13 +700,8 @@ msgid "no *.bash bash-completion script at project root"
 msgstr "nincs *.bash bash-completion parancsfájl a projekt gyökerében"
 
 #: src/zfr_lib/lint/layout.py:87
-msgid ""
-"Add <puff>.bash and install it to datadir/bash-completion/completions "
-"renamed to the command name (see meson.build in the template)."
-msgstr ""
-"Adja hozzá a <puff>.bash fájlt, és telepítse a datadir/bash-completion/"
-"completions könyvtárba a parancs nevére átnevezve (lásd a sablon meson.build "
-"fájlját)."
+msgid "Add <puff>.bash and install it to datadir/bash-completion/completions renamed to the command name (see meson.build in the template)."
+msgstr "Adja hozzá a <puff>.bash fájlt, és telepítse a datadir/bash-completion/completions könyvtárba a parancs nevére átnevezve (lásd a sablon meson.build fájlját)."
 
 #: src/zfr_lib/lint/layout.py:93
 msgid "VERSION file present"
@@ -863,31 +712,16 @@ msgid "no VERSION file (changelog snapshot for tarball builds)"
 msgstr "nincs VERSION fájl (changelog pillanatkép tarball-összeállításokhoz)"
 
 #: src/zfr_lib/lint/layout.py:101
-msgid ""
-"Create VERSION with the latest debian/changelog version (one line). "
-"Enable .githooks/pre-commit: git config core.hooksPath .githooks"
-msgstr ""
-"Hozza létre a VERSION fájlt a legújabb debian/changelog verzióval (egy sor). "
-"Engedélyezze a .githooks/pre-commit hookot: git config "
-"core.hooksPath .githooks"
+msgid "Create VERSION with the latest debian/changelog version (one line). Enable .githooks/pre-commit: git config core.hooksPath .githooks"
+msgstr "Hozza létre a VERSION fájlt a legújabb debian/changelog verzióval (egy sor). Engedélyezze a .githooks/pre-commit hookot: git config core.hooksPath .githooks"
 
 #: src/zfr_lib/lint/layout.py:195
 msgid "no .githooks/pre-commit to sync VERSION from debian/changelog"
-msgstr ""
-"nincs .githooks/pre-commit a VERSION debian/changelogból való "
-"szinkronizálásához"
+msgstr "nincs .githooks/pre-commit a VERSION debian/changelogból való szinkronizálásához"
 
 #: src/zfr_lib/lint/layout.py:197
-msgid ""
-"Walk up to the directory that contains .git, then put pre-commit in that "
-"tree's .githooks (or core.hooksPath). The hook must update VERSION from "
-"debian/changelog. `zfr create` copies one and sets git config "
-"core.hooksPath .githooks."
-msgstr ""
-"Lépjen fel a .git-et tartalmazó könyvtárig, majd helyezze a pre-commit fájlt "
-"annak .githooks könyvtárába (vagy core.hooksPath). A horgonynak a debian/"
-"changelogból kell frissítenie a VERSION fájlt. A `zfr create` másol egyet, "
-"és beállítja: git config core.hooksPath .githooks."
+msgid "Walk up to the directory that contains .git, then put pre-commit in that tree's .githooks (or core.hooksPath). The hook must update VERSION from debian/changelog. `zfr create` copies one and sets git config core.hooksPath .githooks."
+msgstr "Lépjen fel a .git-et tartalmazó könyvtárig, majd helyezze a pre-commit fájlt annak .githooks könyvtárába (vagy core.hooksPath). A horgonynak a debian/changelogból kell frissítenie a VERSION fájlt. A `zfr create` másol egyet, és beállítja: git config core.hooksPath .githooks."
 
 #: src/zfr_lib/lint/layout.py:210
 #, python-format
@@ -897,31 +731,20 @@ msgstr "a pre-commit szinkronizálja a VERSION fájlt a debian/changelogból (%s
 #: src/zfr_lib/lint/layout.py:218
 #, python-format
 msgid "%s exists but does not sync VERSION from debian/changelog"
-msgstr ""
-"%s létezik, de nem szinkronizálja a VERSION fájlt a debian/changelogból"
+msgstr "%s létezik, de nem szinkronizálja a VERSION fájlt a debian/changelogból"
 
 #: src/zfr_lib/lint/layout.py:220
-msgid ""
-"The hook should read debian/changelog (dpkg-parsechangelog) and write "
-"VERSION. See the zephyr .githooks/pre-commit template."
-msgstr ""
-"A horgonynak a debian/changelogot kell olvasnia (dpkg-parsechangelog) és a "
-"VERSION fájlt írnia. Lásd a zephyr .githooks/pre-commit sablont."
+msgid "The hook should read debian/changelog (dpkg-parsechangelog) and write VERSION. See the zephyr .githooks/pre-commit template."
+msgstr "A horgonynak a debian/changelogot kell olvasnia (dpkg-parsechangelog) és a VERSION fájlt írnia. Lásd a zephyr .githooks/pre-commit sablont."
 
 #: src/zfr_lib/lint/leftovers.py:49
 #, python-format
 msgid "%s keeps the template placeholder banner (apps must rewrite it)"
-msgstr ""
-"%s megtartja a sablon helyőrző szalagját (az alkalmazásoknak át kell írniuk)"
+msgstr "%s megtartja a sablon helyőrző szalagját (az alkalmazásoknak át kell írniuk)"
 
 #: src/zfr_lib/lint/leftovers.py:52
-msgid ""
-"After `zfr create`/`zfr rename`, rewrite this README and remove the "
-"generated-from-template banner. Templates should keep this banner."
-msgstr ""
-"`zfr create`/`zfr rename` után írja át ezt a README fájlt, és távolítsa el a "
-"generated-from-template szalagot. A sablonoknak meg kell tartaniuk ezt a "
-"szalagot."
+msgid "After `zfr create`/`zfr rename`, rewrite this README and remove the generated-from-template banner. Templates should keep this banner."
+msgstr "`zfr create`/`zfr rename` után írja át ezt a README fájlt, és távolítsa el a generated-from-template szalagot. A sablonoknak meg kell tartaniuk ezt a szalagot."
 
 #: src/zfr_lib/lint/leftovers.py:61
 #, python-format
@@ -930,13 +753,8 @@ msgstr "%s még mindig tartalmazza a sablon helyőrző szalagját"
 
 #: src/zfr_lib/lint/leftovers.py:64
 #, python-format
-msgid ""
-"Rewrite %s for this project. Remove the generated-from-template banner and "
-"describe the real commands, build, and license."
-msgstr ""
-"Írja át a %s fájlt ehhez a projekthez. Távolítsa el a generated-from-"
-"template szalagot, és írja le a valódi parancsokat, a felépítést és a "
-"licencet."
+msgid "Rewrite %s for this project. Remove the generated-from-template banner and describe the real commands, build, and license."
+msgstr "Írja át a %s fájlt ehhez a projekthez. Távolítsa el a generated-from-template szalagot, és írja le a valódi parancsokat, a felépítést és a licencet."
 
 #: src/zfr_lib/lint/leftovers.py:69
 #, python-format
@@ -955,21 +773,12 @@ msgstr " (+%d további)"
 
 #: src/zfr_lib/lint/leftovers.py:132
 #, python-format
-msgid ""
-"found %(hits)d leftover template token(s) (zephyr/%(token)s): "
-"%(preview)s%(more)s"
-msgstr ""
-"%(hits)d maradék sablontoken található (zephyr/%(token)s): "
-"%(preview)s%(more)s"
+msgid "found %(hits)d leftover template token(s) (zephyr/%(token)s): %(preview)s%(more)s"
+msgstr "%(hits)d maradék sablontoken található (zephyr/%(token)s): %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/leftovers.py:134
-msgid ""
-"Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 "
-"identifiers. After create, leftover tokens mean instantiation failed."
-msgstr ""
-"Futtassa a `zfr rename <project> [puff ...]` parancsot, vagy cserélje le a "
-"maradék zephyr/some_puff1 azonosítókat. Create után a maradék tokenek "
-"sikertelen példányosítást jelentenek."
+msgid "Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 identifiers. After create, leftover tokens mean instantiation failed."
+msgstr "Futtassa a `zfr rename <project> [puff ...]` parancsot, vagy cserélje le a maradék zephyr/some_puff1 azonosítókat. Create után a maradék tokenek sikertelen példányosítást jelentenek."
 
 #: src/zfr_lib/lint/leftovers.py:138
 msgid "no leftover zephyr/some_puff1 tokens"
@@ -984,12 +793,8 @@ msgid "meson.build has no project() call"
 msgstr "a meson.build nem tartalmaz project() hívást"
 
 #: src/zfr_lib/lint/meson.py:49
-msgid ""
-"project() must be the first Meson call. Copy the header from the language "
-"template."
-msgstr ""
-"A project() legyen az első Meson-hívás. Másolja a fejlécet a nyelvi "
-"sablonból."
+msgid "project() must be the first Meson call. Copy the header from the language template."
+msgstr "A project() legyen az első Meson-hívás. Másolja a fejlécet a nyelvi sablonból."
 
 #: src/zfr_lib/lint/meson.py:54
 #, python-format
@@ -1017,12 +822,8 @@ msgstr "hiányzik: %s (manoldalakhoz használt)"
 
 #: src/zfr_lib/lint/meson.py:77
 #, python-format
-msgid ""
-"Set %s next to project(), then pass -a project-author/email/year to "
-"asciidoctor."
-msgstr ""
-"Állítsa be a %s változót a project() mellett, majd adja át a -a project-"
-"author/email/year kapcsolót az asciidoctornak."
+msgid "Set %s next to project(), then pass -a project-author/email/year to asciidoctor."
+msgstr "Állítsa be a %s változót a project() mellett, majd adja át a -a project-author/email/year kapcsolót az asciidoctornak."
 
 #: src/zfr_lib/lint/meson.py:82
 msgid "version uses `zfr version`"
@@ -1030,9 +831,7 @@ msgstr "a verzió `zfr version` parancsot használ"
 
 #: src/zfr_lib/lint/meson.py:88
 msgid "version still uses inline git describe; zephyr style is `zfr version`"
-msgstr ""
-"a verzió még beágyazott git describe-ot használ; a zephyr stílus a `zfr "
-"version`"
+msgstr "a verzió még beágyazott git describe-ot használ; a zephyr stílus a `zfr version`"
 
 #: src/zfr_lib/lint/meson.py:91
 msgid ""
@@ -1052,9 +851,7 @@ msgstr "nem található `zfr version` vagy git describe a projektverzióban"
 
 #: src/zfr_lib/lint/meson.py:104
 msgid "Use `zfr version` for project() version (see bash/meson.build)."
-msgstr ""
-"A project() verziójához használja a `zfr version` parancsot (lásd bash/"
-"meson.build)."
+msgstr "A project() verziójához használja a `zfr version` parancsot (lásd bash/meson.build)."
 
 #: src/zfr_lib/lint/meson.py:109
 msgid "0.0.0 fallback present"
@@ -1077,10 +874,8 @@ msgid "meson.build does not invoke asciidoctor"
 msgstr "a meson.build nem hívja az asciidoctort"
 
 #: src/zfr_lib/lint/meson.py:130
-msgid ""
-"find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
-msgstr ""
-"find_program('asciidoctor') és custom_target(..., '-b', 'manpage', ...)."
+msgid "find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
+msgstr "find_program('asciidoctor') és custom_target(..., '-b', 'manpage', ...)."
 
 #: src/zfr_lib/lint/meson.py:135
 msgid "run_target look present"
@@ -1091,12 +886,8 @@ msgid "no run_target('look') DESTDIR preview"
 msgstr "nincs run_target('look') DESTDIR előnézet"
 
 #: src/zfr_lib/lint/meson.py:143
-msgid ""
-"Add run_target look that meson install's into a tempdir and runs tree (see "
-"templates)."
-msgstr ""
-"Adjon hozzá egy run_target look célt, amely meson install-t futtat egy "
-"tempdirbe, majd tree-t (lásd a sablonokat)."
+msgid "Add run_target look that meson install's into a tempdir and runs tree (see templates)."
+msgstr "Adjon hozzá egy run_target look célt, amely meson install-t futtat egy tempdirbe, majd tree-t (lásd a sablonokat)."
 
 #: src/zfr_lib/lint/meson.py:148
 msgid "installs bash-completion"
@@ -1107,12 +898,8 @@ msgid "does not install bash-completion"
 msgstr "nem telepíti a bash-completiont"
 
 #: src/zfr_lib/lint/meson.py:156
-msgid ""
-"install_data(..., install_dir: datadir / 'bash-completion' / 'completions', "
-"rename: command)."
-msgstr ""
-"Használja: install_data(..., install_dir: datadir / 'bash-completion' / "
-"'completions', rename: command)."
+msgid "install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
+msgstr "Használja: install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
 
 #: src/zfr_lib/lint/report.py:73
 msgid "FAIL"
@@ -1146,19 +933,12 @@ msgid "zephyr meta-repo (templates + CLI tools)"
 msgstr "zephyr meta-tároló (sablonok + CLI eszközök)"
 
 #: src/zfr_lib/lint/report.py:90
-msgid ""
-"language template inside the meta-repo (placeholders like zephyr/some_puff1 "
-"are expected)"
-msgstr ""
-"nyelvi sablon a meta-tárolóban (a zephyr/some_puff1 szerű helyőrzők elvártak)"
+msgid "language template inside the meta-repo (placeholders like zephyr/some_puff1 are expected)"
+msgstr "nyelvi sablon a meta-tárolóban (a zephyr/some_puff1 szerű helyőrzők elvártak)"
 
 #: src/zfr_lib/lint/report.py:91
-msgid ""
-"project instantiated from a language template (directory name must match "
-"meson/debian; no leftover zephyr/some_puff1 tokens)"
-msgstr ""
-"nyelvi sablonból példányosított projekt (a könyvtárnévnek egyeznie kell a "
-"meson/debian értékkel; ne maradjon zephyr/some_puff1 token)"
+msgid "project instantiated from a language template (directory name must match meson/debian; no leftover zephyr/some_puff1 tokens)"
+msgstr "nyelvi sablonból példányosított projekt (a könyvtárnévnek egyeznie kell a meson/debian értékkel; ne maradjon zephyr/some_puff1 token)"
 
 #: src/zfr_lib/lint/report.py:93
 #, python-format
@@ -1170,60 +950,32 @@ msgid "Zephyr style (finish the project to this contract)"
 msgstr "Zephyr stílus (fejezze be a projektet e szerződés szerint)"
 
 #: src/zfr_lib/lint/report.py:97
-msgid ""
-"License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
-"License)."
-msgstr ""
-"Licenc AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
-"License)."
+msgid "License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
+msgstr "Licenc AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
 
 #: src/zfr_lib/lint/report.py:98
-msgid ""
-"Build with Meson; debian/rules uses dh --buildsystem=meson --"
-"builddirectory=debian/build."
-msgstr ""
-"Mesonnal építsen; a debian/rules dh --buildsystem=meson --"
-"builddirectory=debian/build-t használ."
+msgid "Build with Meson; debian/rules uses dh --buildsystem=meson --builddirectory=debian/build."
+msgstr "Mesonnal építsen; a debian/rules dh --buildsystem=meson --builddirectory=debian/build-t használ."
 
 #: src/zfr_lib/lint/report.py:99
-msgid ""
-"project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO "
-"0.0.0, DO NOT MODIFY."
-msgstr ""
-"a project() verziója a `zfr version` parancsból; tartsa a tartalékot: "
-"v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
+msgid "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
+msgstr "a project() verziója a `zfr version` parancsból; tartsa a tartalékot: v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 
 #: src/zfr_lib/lint/report.py:100
-msgid ""
-"Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under "
-"share/man/<locale>/man1 (whole-document adoc, not po4a)."
-msgstr ""
-"Man oldalak: docs/*.adoc + asciidoctor -b manpage; fordított oldalak: share/"
-"man/<locale>/man1 (teljes dokumentum adoc, nem po4a)."
+msgid "Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
+msgstr "Man oldalak: docs/*.adoc + asciidoctor -b manpage; fordított oldalak: share/man/<locale>/man1 (teljes dokumentum adoc, nem po4a)."
 
 #: src/zfr_lib/lint/report.py:101
-msgid ""
-"Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; "
-"optional rpm/ aligned with debian."
-msgstr ""
-"Csomagolás: debian/control Build-Depends meson, ninja-build, asciidoctor; "
-"opcionális rpm/, a debian-nal összhangban."
+msgid "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional rpm/ aligned with debian."
+msgstr "Csomagolás: debian/control Build-Depends meson, ninja-build, asciidoctor; opcionális rpm/, a debian-nal összhangban."
 
 #: src/zfr_lib/lint/report.py:102
-msgid ""
-"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 "
-"locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."
-msgstr ""
-"i18n: angol forrás; zfr lint -l/--l10n-level L0–L3 (alapértelmezett L1). "
-"L1=10 locale, L2=20, L3=30. Alapértékek: .config/zfr/lint.options."
+msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."
+msgstr "i18n: angol forrás; zfr lint -l/--l10n-level L0–L3 (alapértelmezett L1). L1=10 locale, L2=20, L3=30. Alapértékek: .config/zfr/lint.options."
 
 #: src/zfr_lib/lint/report.py:103
-msgid ""
-"Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/"
-"changelog (git describe may differ)."
-msgstr ""
-"Alkalmazások: `zfr rename <dir>`, majd `zfr add <puff>`; a VERSION egyezik a "
-"debian/changelog-gal (a git describe eltérhet)."
+msgid "Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ)."
+msgstr "Alkalmazások: `zfr rename <dir>`, majd `zfr add <puff>`; a VERSION egyezik a debian/changelog-gal (a git describe eltérhet)."
 
 #: src/zfr_lib/lint/report.py:116
 msgid "error"
@@ -1250,34 +1002,17 @@ msgid "Next steps (zephyr style)"
 msgstr "Következő lépések (zephyr stílus)"
 
 #: src/zfr_lib/lint/report.py:145
-msgid ""
-"Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). "
-"`zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr "
-"version`. `zfr ize` applies missing debian/rpm/meson/man/version-subst "
-"upgrades."
-msgstr ""
-"Tipp: szerkesztés után futtassa újra a `zfr lint` parancsot a projektből "
-"(vagy egy alkönyvtárból). A `zfr about -d -r` kiírja a csomagolási mezőket. "
-"A Meson/RPM verziója a `zfr version`. A `zfr ize` alkalmazza a hiányzó "
-"debian/rpm/meson/man/version-subst frissítéseket."
+msgid "Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). `zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. `zfr ize` applies missing debian/rpm/meson/man/version-subst upgrades."
+msgstr "Tipp: szerkesztés után futtassa újra a `zfr lint` parancsot a projektből (vagy egy alkönyvtárból). A `zfr about -d -r` kiírja a csomagolási mezőket. A Meson/RPM verziója a `zfr version`. A `zfr ize` alkalmazza a hiányzó debian/rpm/meson/man/version-subst frissítéseket."
 
 #: src/zfr_lib/lint/rpm.py:41
 msgid "no rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
-msgstr ""
-"nincs rpm/*.spec (opcionális, de a zephyr stílus RPM-et is tesz a debian/ "
-"mellé)"
+msgstr "nincs rpm/*.spec (opcionális, de a zephyr stílus RPM-et is tesz a debian/ mellé)"
 
 #: src/zfr_lib/lint/rpm.py:44
 #, no-python-format
-msgid ""
-"Copy rpm/ from a language template; name the spec after the package (rpm/"
-"<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. "
-"Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
-msgstr ""
-"Másolja az rpm/ könyvtárat egy nyelvi sablonból; nevezze a specet a "
-"csomagról (rpm/<Source>.spec, ne zephyr.spec), és tartson egy `zfr version` "
-"parancsot használó Makefile-t. Igazítsa a Name/Summary/Requires/URL mezőket "
-"a debian/control-hoz. Vagy futtassa a `zfr ize` parancsot."
+msgid "Copy rpm/ from a language template; name the spec after the package (rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
+msgstr "Másolja az rpm/ könyvtárat egy nyelvi sablonból; nevezze a specet a csomagról (rpm/<Source>.spec, ne zephyr.spec), és tartson egy `zfr version` parancsot használó Makefile-t. Igazítsa a Name/Summary/Requires/URL mezőket a debian/control-hoz. Vagy futtassa a `zfr ize` parancsot."
 
 #: src/zfr_lib/lint/rpm.py:63
 #, no-python-format, python-brace-format
@@ -1286,18 +1021,12 @@ msgstr "a spec Version dinamikus %{version}"
 
 #: src/zfr_lib/lint/rpm.py:72
 msgid "spec Version is hardcoded; zephyr style injects `zfr version`"
-msgstr ""
-"a spec Version be van égetve; a zephyr stílus `zfr version` értéket szúr be"
+msgstr "a spec Version be van égetve; a zephyr stílus `zfr version` értéket szúr be"
 
 #: src/zfr_lib/lint/rpm.py:76
 #, no-python-format
-msgid ""
-"Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze "
-"via rpm/Makefile (`zfr version` / `zfr version -r`)."
-msgstr ""
-"Használjon Version: %{version} értéket a %{!?version:%global version 0.0.0} "
-"makróval, és fagyassza be az rpm/Makefile-lal (`zfr version` / `zfr version "
-"-r`)."
+msgid "Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze via rpm/Makefile (`zfr version` / `zfr version -r`)."
+msgstr "Használjon Version: %{version} értéket a %{!?version:%global version 0.0.0} makróval, és fagyassza be az rpm/Makefile-lal (`zfr version` / `zfr version -r`)."
 
 #: src/zfr_lib/lint/rpm.py:82
 #, python-format
@@ -1337,8 +1066,7 @@ msgstr "a spec Mesont használ (nem autotools)"
 
 #: src/zfr_lib/lint/rpm.py:131
 msgid "spec still uses autotools; zephyr packages build with Meson"
-msgstr ""
-"a spec még mindig autotools-t használ; a zephyr csomagok Mesonnal épülnek"
+msgstr "a spec még mindig autotools-t használ; a zephyr csomagok Mesonnal épülnek"
 
 #: src/zfr_lib/lint/rpm.py:134
 #, no-python-format, python-brace-format
@@ -1372,8 +1100,7 @@ msgstr "nincsenek kényelmi célok az rpm/Makefile-ban"
 
 #: src/zfr_lib/lint/rpm.py:163
 msgid "Copy bash/rpm/Makefile (srpm/rpm via zfr version)."
-msgstr ""
-"Másolja a bash/rpm/Makefile fájlt (srpm/rpm a zfr version segítségével)."
+msgstr "Másolja a bash/rpm/Makefile fájlt (srpm/rpm a zfr version segítségével)."
 
 #: src/zfr_lib/lint/rpm.py:172
 msgid "bash spec Requires missing bash-shlib"
@@ -1389,11 +1116,8 @@ msgid "%(rel)s is %(lines)d lines (>%(limit)d); file is very long"
 msgstr "%(rel)s %(lines)d soros (>%(limit)d); a fájl nagyon hosszú"
 
 #: src/zfr_lib/lint/source_size.py:59
-msgid ""
-"Split this file into smaller modules; keep each unit focused and testable."
-msgstr ""
-"Ossza fel ezt a fájlt kisebb modulokra; minden egység maradjon fókuszált és "
-"tesztelhető."
+msgid "Split this file into smaller modules; keep each unit focused and testable."
+msgstr "Ossza fel ezt a fájlt kisebb modulokra; minden egység maradjon fókuszált és tesztelhető."
 
 #: src/zfr_lib/lint/source_size.py:67
 #, python-format
@@ -1402,8 +1126,7 @@ msgstr "%(rel)s %(lines)d soros (>%(limit)d); hamarosan érdemes modularizálni"
 
 #: src/zfr_lib/lint/source_size.py:71
 msgid "Plan extraction of helpers or submodules before the file grows further."
-msgstr ""
-"Tervezze meg a segédek vagy almodulok kiemelését, mielőtt a fájl tovább nőne."
+msgstr "Tervezze meg a segédek vagy almodulok kiemelését, mielőtt a fájl tovább nőne."
 
 #: src/zfr_lib/lint/source_size.py:75
 msgid "no oversized source files"
@@ -1419,25 +1142,13 @@ msgstr "a nyelvi sablon szerkezeti fájljai megvannak"
 
 #: src/zfr_lib/lint/template.py:100
 #, python-format
-msgid ""
-"language template %(lang)s has extra scaffolding not in this tree: "
-"%(preview)s%(more)s"
-msgstr ""
-"a(z) %(lang)s nyelvi sablonnak extra állványa van, ami ebben a fában nincs: "
-"%(preview)s%(more)s"
+msgid "language template %(lang)s has extra scaffolding not in this tree: %(preview)s%(more)s"
+msgstr "a(z) %(lang)s nyelvi sablonnak extra állványa van, ami ebben a fában nincs: %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/template.py:102
 #, python-format
-msgid ""
-"Compare with the %(lang)s template under pkgdatadir. Copy missing debian/"
-"docs/src/rpm files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` "
-"puffs. Do not copy build/ or debian leftover stamp files. Example commons "
-"modules are optional."
-msgstr ""
-"Hasonlítsa össze a pkgdatadir alatti %(lang)s sablonnal. Másolja a hiányzó "
-"debian/docs/src/rpm fájlokat (az rpm/ %(name)s.spec-et használ, nem "
-"zephyr.spec-et), vagy `zfr add` puffokat. Ne másolja a build/ könyvtárat "
-"vagy a debian maradék pecsétfájljait. A példa commons modulok opcionálisak."
+msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing debian/docs/src/rpm files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` puffs. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
+msgstr "Hasonlítsa össze a pkgdatadir alatti %(lang)s sablonnal. Másolja a hiányzó debian/docs/src/rpm fájlokat (az rpm/ %(name)s.spec-et használ, nem zephyr.spec-et), vagy `zfr add` puffokat. Ne másolja a build/ könyvtárat vagy a debian maradék pecsétfájljait. A példa commons modulok opcionálisak."
 
 #: src/zfr_lib/release.py:26
 msgid "Debian binary-only build (no .dsc)"
@@ -1490,9 +1201,7 @@ msgstr "git tag létrehozás/feltöltés kihagyása"
 
 #: src/zfr_lib/release.py:100
 msgid "Skip dput upload to deb pool (-u reuses build artifacts)"
-msgstr ""
-"dput feltöltés kihagyása a deb pool-ba (-u újrahasználja a build "
-"artefaktumokat)"
+msgstr "dput feltöltés kihagyása a deb pool-ba (-u újrahasználja a build artefaktumokat)"
 
 #: src/zfr_lib/release.py:106
 msgid "Skip GitHub release"
@@ -1520,16 +1229,11 @@ msgstr "kevesebb kimenet"
 
 #: src/zfr_lib/release.py:205
 msgid "create a GitHub release (parse options, exec gh-makerelease)"
-msgstr ""
-"GitHub release létrehozása (opciók feldolgozása, gh-makerelease futtatása)"
+msgstr "GitHub release létrehozása (opciók feldolgozása, gh-makerelease futtatása)"
 
 #: src/zfr_lib/release.py:207
-msgid ""
-"Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does "
-"not implement tagging, packaging, or uploads."
-msgstr ""
-"Feldolgozza a gh-makerelease opcióit, újraépíti az argv-t és futtatja a gh-"
-"makerelease-t. Nem valósít meg címkézést, csomagolást vagy feltöltést."
+msgid "Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does not implement tagging, packaging, or uploads."
+msgstr "Feldolgozza a gh-makerelease opcióit, újraépíti az argv-t és futtatja a gh-makerelease-t. Nem valósít meg címkézést, csomagolást vagy feltöltést."
 
 #: src/zfr_lib/remove.py:20
 msgid "remove puff(s) from the current project"
@@ -1560,19 +1264,12 @@ msgid "new example names (each replaces template some_puff1)"
 msgstr "új példanevek (mindegyik helyettesíti a some_puff1 sablont)"
 
 #: src/zfr_lib/shape.py:263
-msgid ""
-"print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
-msgstr ""
-"zephyr csomagforma-pontszám kiírása 0-100 (packagedir vs repodir "
-"monorepókban)"
+msgid "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
+msgstr "zephyr csomagforma-pontszám kiírása 0-100 (packagedir vs repodir monorepókban)"
 
 #: src/zfr_lib/shape.py:265
-msgid ""
-"Score how completely the current directory matches zephyr package style "
-"(0-100). In monorepos, scores the packagedir."
-msgstr ""
-"Értékeli, mennyire felel meg az aktuális könyvtár a zephyr csomagstílusnak "
-"(0-100). Monorepókban a packagedir-t pontozza."
+msgid "Score how completely the current directory matches zephyr package style (0-100). In monorepos, scores the packagedir."
+msgstr "Értékeli, mennyire felel meg az aktuális könyvtár a zephyr csomagstílusnak (0-100). Monorepókban a packagedir-t pontozza."
 
 #: src/zfr_lib/shape.py:271
 msgid "print 1 if score >= threshold, else 0"
@@ -1592,8 +1289,7 @@ msgid "print current project version (walks parents from cwd)"
 msgstr "aktuális projektverzió kiírása (felfelé keres cwd-től)"
 
 #: src/zfr_lib/version.py:52
-msgid ""
-"Print the current project version (walks from cwd toward parent directories)."
+msgid "Print the current project version (walks from cwd toward parent directories)."
 msgstr "Kiírja az aktuális projektverziót (felfelé keres cwd-től)."
 
 #: src/zfr_lib/version.py:57
@@ -1602,8 +1298,7 @@ msgstr "git describe használata (alapértelmezés, ha git és .git elérhető)"
 
 #: src/zfr_lib/version.py:58
 msgid "use debian/changelog (default when git or .git is unavailable)"
-msgstr ""
-"debian/changelog használata (alapértelmezés, ha git vagy .git nem elérhető)"
+msgstr "debian/changelog használata (alapértelmezés, ha git vagy .git nem elérhető)"
 
 #: src/zfr_lib/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"

@@ -20,23 +20,27 @@ from ..l10n import (
     normalize_locale,
 )
 from ..translate.po_files import (
+    catalog_locales,
     delete_locale,
     implemented_locales,
     insert_locale,
     po_stats,
     resolve_po_path,
 )
-from .builder import derive_children_of, derive_locales
+from .builder import derive_children_of, derive_locales, default_build_po_dir
 from .messages import _
 
 
 def cmd_list_implemented(root: Path) -> int:
-    locales = implemented_locales(root)
+    locales = catalog_locales(root)
     if not locales:
         print(_("no implemented locales (po/LINGUAS + po/*.po)"))
         return 0
     for loc in locales:
-        print(format_locale_display(loc))
+        tag = format_locale_display(loc)
+        if loc not in implemented_locales(root):
+            tag += _("  [derived]")
+        print(tag)
     return 0
 
 
@@ -88,11 +92,52 @@ def cmd_delete(root: Path, lang: str) -> int:
     return 0
 
 
-def cmd_build(root: Path, *, lang: str | None, dry_run: bool, force: bool) -> int:
+def cmd_build(
+    root: Path,
+    *,
+    lang: str | None,
+    dry_run: bool,
+    force: bool,
+    po_dir: Path | None,
+    stamp: Path | None,
+    compile_mo: bool = False,
+    domain: str | None = None,
+) -> int:
+    out_po = po_dir or default_build_po_dir(root)
     if lang:
-        written = derive_children_of(root, lang, dry_run=dry_run, force=force)
+        written = derive_children_of(
+            root,
+            lang,
+            po_dir=out_po,
+            dry_run=dry_run,
+            force=force,
+            stamp=stamp,
+        )
     else:
-        written = derive_locales(root, dry_run=dry_run, force=force)
+        written = derive_locales(
+            root,
+            po_dir=out_po,
+            dry_run=dry_run,
+            force=force,
+            stamp=stamp,
+        )
+    if compile_mo and not dry_run:
+        from .builder import compile_derived_mo
+
+        dom = domain or root.name
+        if domain is None:
+            meson = root / "meson.build"
+            if meson.is_file():
+                import re
+
+                match = re.search(
+                    r"project\s*\(\s*['\"]([^'\"]+)['\"]",
+                    meson.read_text(encoding="utf-8"),
+                )
+                if match:
+                    dom = match.group(1)
+        for path in compile_derived_mo(out_po, dom):
+            print(path)
     if dry_run:
         print(_("would build %d derived locale file(s)") % len(written))
     else:
@@ -134,6 +179,26 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         action="store_true",
         help=_("build derived locale PO/man files from parents (skip locales in LINGUAS)"),
     )
+    p.add_argument(
+        "--po-dir",
+        metavar="DIR",
+        help=_("output directory for derived .po files (default: build/po or $MESON_BUILD_ROOT/po)"),
+    )
+    p.add_argument(
+        "--stamp",
+        metavar="FILE",
+        help=_("write a stamp file listing derived paths (for Meson custom_target)"),
+    )
+    p.add_argument(
+        "--compile-mo",
+        action="store_true",
+        help=_("with --build, also msgfmt derived .po into LC_MESSAGES (for Meson)"),
+    )
+    p.add_argument(
+        "--domain",
+        metavar="NAME",
+        help=_("gettext domain for --compile-mo (default: meson project name)"),
+    )
     p.add_argument("-n", "--dry-run", action="store_true", help=_("with --build, print only"))
     p.add_argument("-f", "--force", action="store_true", help=_("with --build, overwrite existing"))
     p.add_argument("locale", nargs="?", metavar="LOCALE", help=_("locale to inspect"))
@@ -148,7 +213,18 @@ def run(args: argparse.Namespace) -> int:
     if args.insert:
         return cmd_insert(root, args.insert)
     if args.build:
-        return cmd_build(root, lang=args.locale, dry_run=args.dry_run, force=args.force)
+        po_dir = Path(args.po_dir).resolve() if args.po_dir else None
+        stamp = Path(args.stamp).resolve() if args.stamp else None
+        return cmd_build(
+            root,
+            lang=args.locale,
+            dry_run=args.dry_run,
+            force=args.force,
+            po_dir=po_dir,
+            stamp=stamp,
+            compile_mo=args.compile_mo,
+            domain=args.domain,
+        )
     if args.locale:
         return cmd_locale_info(root, args.locale)
     return cmd_list_implemented(root)

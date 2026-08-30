@@ -1,3 +1,20 @@
+zephyr (2.7.7) testing; urgency=medium
+
+  * PO catalogs: no line wrapping (msgcat --no-wrap). Lint ZL082 warns on wrapped
+    source .po files; ize ZI016 rewrites them. Derived catalogs follow the same rule.
+  * Derived locales at build time: zfr i18n -b writes child .po under build/po/ only
+    (Derived-From / Derived-Method headers). Meson custom_target (ize ZI015) runs
+    derive on source .po/LINGUAS changes; SHA256 .derive.sig cache skips unchanged
+    parents. --compile-mo builds <lang>/LC_MESSAGES/<domain>.mo in the build dir.
+  * zfr i18n -a lists primaries plus build-time derived locales; --po-dir, --stamp,
+    --domain, --compile-mo for Meson integration.
+  * Fix --domain override: explicit --domain is no longer replaced by meson project()
+    name (zephyr vs zfr gettext domain).
+  * Tests: po_format, meson derive hook; l10n tiers include derived build locales.
+  * rpm: debug_package nil; expand bash-completion file list; locale path fix.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 30 Aug 2026 17:05:00 +0800
+
 zephyr (2.7.6) testing; urgency=medium
 
   * L2 locale catalogs (ar, de, es, fr, hi, id, it, ja, ko, nl, pl, pt, ru,

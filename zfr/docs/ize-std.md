@@ -18,7 +18,8 @@ Numbered steps performed by `zfr ize`. Each change line prints `kind  ZInnn  pat
 | ZI012 | `ize.completion` | varies | Add bash-completion stubs for command puffs |
 | ZI013 | `ize.rpm` | varies | Align rpm/Makefile and RPM spec with debian/Meson |
 | ZI014 | `ize.subst` | varies | Replace hardcoded versions with @VERSION@ / config.h |
-| ZI015 | `ize.i18n.derive` | varies | Derive child locale gettext catalogs |
-| ZI016 | `ize.commit` | varies | Bump patch version and git commit (--commit) |
+| ZI015 | `ize.i18n.derive` | varies | Meson build-time derived locale catalogs |
+| ZI016 | `ize.i18n.po-nowrap` | varies | Rewrite source .po catalogs without line wrapping |
+| ZI017 | `ize.commit` | varies | Bump patch version and git commit (--commit) |
 
 Suppress rules with `zfr lint -u ID` / `zfr ize -u ID` (comma-separated), or the same flag in `.config/zfr/lint.options` / `.config/zfr/ize.options`.

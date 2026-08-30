@@ -9,10 +9,12 @@ from pathlib import Path
 from typing import Literal
 
 from ..l10n import (
+    DERIVE_PARENT,
     fallback_chain,
     normalize_locale,
     resolve_present_locale,
 )
+from ..i18n.builder import default_build_po_dir
 
 MatchField = Literal["msgid", "both"]
 
@@ -54,6 +56,43 @@ def implemented_locales(root: Path) -> list[str]:
         if not listed or loc in listed:
             out.append(loc)
     return out
+
+
+def _locale_in_linguas(loc: str, linguas: set[str]) -> bool:
+    loc = normalize_locale(loc)
+    return any(normalize_locale(entry) == loc or entry == loc for entry in linguas)
+
+
+def derived_build_locales(root: Path) -> list[str]:
+    """Derived child locales built at compile time (not explicit in LINGUAS)."""
+    po_dir = root / "po"
+    linguas_path = po_dir / "LINGUAS"
+    listed = set(parse_linguas(linguas_path)) if linguas_path.is_file() else set()
+    return [
+        loc
+        for loc in sorted(DERIVE_PARENT)
+        if not listed or not _locale_in_linguas(loc, listed)
+    ]
+
+
+def catalog_locales(root: Path) -> list[str]:
+    """Primary implemented locales plus derived locales built from parents."""
+    primary = implemented_locales(root)
+    seen = set(primary)
+    out = list(primary)
+    for loc in derived_build_locales(root):
+        if loc not in seen:
+            out.append(loc)
+            seen.add(loc)
+    return out
+
+
+def _find_po_file(root: Path, loc: str) -> Path | None:
+    for base in (root / "po", default_build_po_dir(root)):
+        candidate = base / f"{loc}.po"
+        if candidate.is_file():
+            return candidate
+    return None
 
 
 def _unescape_po(s: str) -> str:
@@ -244,15 +283,16 @@ def po_stats(po_path: Path) -> dict[str, int]:
 def resolve_po_path(root: Path, lang: str) -> tuple[Path, str] | None:
     loc = normalize_locale(lang)
     present = set(parse_linguas(root / "po" / "LINGUAS"))
+    present.update(derived_build_locales(root))
     resolved = resolve_present_locale(loc, present) or loc
-    po_path = root / "po" / f"{resolved}.po"
-    if po_path.is_file():
+    po_path = _find_po_file(root, resolved)
+    if po_path is not None:
         return po_path, resolved
     for fb in fallback_chain(loc):
         fb_res = resolve_present_locale(fb, present) or fb
-        candidate = root / "po" / f"{fb_res}.po"
-        if candidate.is_file():
-            return candidate, fb_res
+        po_path = _find_po_file(root, fb_res)
+        if po_path is not None:
+            return po_path, fb_res
     return None
 
 

@@ -4,6 +4,8 @@
 %{!?version:%global version 0.0.0}
 %{!?srcversion:%global srcversion %{version}}
 
+%global debug_package %{nil}
+
 Name:           zephyr
 Version:        %{version}
 Release:        1%{?dist}
@@ -60,16 +62,24 @@ meson compile -C build
 meson install -C build --destdir=%{buildroot}
 
 %files
-%{_bindir}/zfr
-%{_bindir}/zfr-*
-%{_datadir}/zephyr/
 %{_datadir}/bash-completion/completions/zfr
-%{_datadir}/bash-completion/completions/zfr-*
+%{_datadir}/bash-completion/completions/zfr-create
+%{_datadir}/bash-completion/completions/zfr-rename
+%{_datadir}/bash-completion/completions/zfr-add
+%{_datadir}/bash-completion/completions/zfr-remove
+%{_datadir}/bash-completion/completions/zfr-about
+%{_datadir}/bash-completion/completions/zfr-version
+%{_datadir}/bash-completion/completions/zfr-lint
+%{_datadir}/bash-completion/completions/zfr-dist
+%{_datadir}/bash-completion/completions/zfr-ize
+%{_datadir}/bash-completion/completions/zfr-i18n
+%{_datadir}/bash-completion/completions/zfr-translate
+%{_datadir}/bash-completion/completions/zfr-shape
+%{_datadir}/bash-completion/completions/zfr-release
 %{_mandir}/man1/zfr.1*
+%{_datadir}/locale/*/LC_MESSAGES/zephyr.mo
 %{_mandir}/*/man1/zfr.1*
-%{_datadir}/locale/*/LC_MESSAGES/zfr.mo
 %{_datadir}/doc/%{name}/
-
 %changelog
 * Thu Aug 20 2026 Lenik <zephyr@bodz.net>
 - Initial RPM packaging for the zephyr meta-package (Meson, noarch).

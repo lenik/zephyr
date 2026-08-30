@@ -159,7 +159,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                         _("LINGUAS entries without po/<locale>.po: %s") % ", ".join(missing_po),
                         "po/",
                         fix=_("For each locale: msginit -i <domain>.pot -o po/<locale>.po "
-                        "-l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"),
+                        "-l <locale> --no-translator && msgmerge -U --no-wrap po/<locale>.po <domain>.pot"),
                     )
                 )
             else:
@@ -179,6 +179,36 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                             "po/",
                         )
                     )
+
+            from ..translate.po_format import po_has_line_wrapping
+
+            wrapped: list[str] = []
+            for po_file in sorted(po.glob("*.po")):
+                try:
+                    if po_has_line_wrapping(po_file.read_text(encoding="utf-8")):
+                        wrapped.append(po_file.name)
+                except OSError:
+                    continue
+            if wrapped:
+                out.append(
+                    Finding(
+                        "warn",
+                        "i18n.po.wrap",
+                        _("gettext catalogs use line wrapping: %s") % ", ".join(wrapped),
+                        "po/",
+                        fix=_("Run `zfr ize` (ZI016) or `msgcat --no-wrap -o file.po file.po` "
+                        "on each catalog; use msgmerge --no-wrap when updating from .pot."),
+                    )
+                )
+            elif list(po.glob("*.po")):
+                out.append(
+                    Finding(
+                        "ok",
+                        "i18n.po.wrap",
+                        _("gettext catalogs use --no-wrap (no line wrapping)"),
+                        "po/",
+                    )
+                )
 
     docs = root / "docs"
     english_adocs = (

@@ -71,7 +71,7 @@ class L10nTierTests(unittest.TestCase):
     def test_derive_skips_explicit_linguas_locale(self) -> None:
         import tempfile
 
-        from zfr_lib.i18n.builder import derive_locales
+        from zfr_lib.i18n.builder import default_build_po_dir, derive_locales
 
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -82,13 +82,55 @@ class L10nTierTests(unittest.TestCase):
                 encoding="utf-8",
             )
             (po / "LINGUAS").write_text("zh_CN\nzh_TW\n", encoding="utf-8")
+            out = default_build_po_dir(root)
             self.assertEqual(
-                derive_locales(root, locales=("zh_TW",), skip_explicit=True),
+                derive_locales(root, po_dir=out, locales=("zh_TW",), skip_explicit=True),
                 [],
             )
             (po / "LINGUAS").write_text("zh_CN\n", encoding="utf-8")
-            written = derive_locales(root, locales=("zh_TW",), skip_explicit=True)
-            self.assertEqual(written, ["po/zh_TW.po"])
+            written = derive_locales(root, po_dir=out, locales=("zh_TW",), skip_explicit=True)
+            self.assertEqual(len(written), 1)
+            self.assertTrue(written[0].endswith("zh_TW.po"))
+            body = (out / "zh_TW.po").read_text(encoding="utf-8")
+            self.assertIn("# Derived-From: zh_CN", body)
+            self.assertIn("# Derived-Method: opencc_s2t", body)
+            self.assertFalse((po / "zh_TW.po").exists())
+
+    def test_derive_writes_only_to_build_dir(self) -> None:
+        import tempfile
+
+        from zfr_lib.i18n.builder import (
+            _derive_is_current,
+            _derive_signature,
+            default_build_po_dir,
+            derive_locales,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            po = root / "po"
+            po.mkdir()
+            (po / "zh_CN.po").write_text(
+                'msgid ""\nmsgstr ""\nmsgid "软件"\nmsgstr "软件"\n',
+                encoding="utf-8",
+            )
+            (po / "LINGUAS").write_text("zh_CN\n", encoding="utf-8")
+            out = default_build_po_dir(root)
+            derive_locales(root, po_dir=out, locales=("zh_TW",))
+            self.assertTrue((out / "zh_TW.po").is_file())
+            self.assertFalse((po / "zh_TW.po").exists())
+
+            src = po / "zh_CN.po"
+            sig = _derive_signature(src, "zh_CN", "opencc_s2t", "zh_TW")
+            self.assertTrue(_derive_is_current(out / "zh_TW.po", sig))
+            written = derive_locales(root, po_dir=out, locales=("zh_TW",))
+            self.assertEqual(written, [])
+            (po / "zh_CN.po").write_text(
+                (po / "zh_CN.po").read_text(encoding="utf-8") + "\n",
+                encoding="utf-8",
+            )
+            written = derive_locales(root, po_dir=out, locales=("zh_TW",))
+            self.assertEqual(len(written), 1)
 
 
 if __name__ == "__main__":

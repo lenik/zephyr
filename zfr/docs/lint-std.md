@@ -85,5 +85,6 @@ Numbered rules enforced by `zfr lint`. Each finding prints `severity  ZLnnn  cod
 | ZL079 | `template.coverage` | varies | Language template structural files present |
 | ZL080 | `readme.placeholder.*` | varies | README still has template placeholder banner |
 | ZL081 | `readme.*` | ok | README has no template banner |
+| ZL082 | `i18n.po.wrap` | warn | gettext .po catalogs use --no-wrap (no line wrapping) |
 
 Suppress rules with `zfr lint -u ID` / `zfr ize -u ID` (comma-separated), or the same flag in `.config/zfr/lint.options` / `.config/zfr/ize.options`.
