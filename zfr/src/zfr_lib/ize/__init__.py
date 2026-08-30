@@ -72,7 +72,7 @@ def cmd_ize(
 
 NAME = "ize"
 HELP = _('refactor this project to current zephyr style')
-DESCRIPTION = _('Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, and Meson version substitutions. Walks from cwd toward parents.')
+DESCRIPTION = _('Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, Meson version substitutions, and lint-level gettext/man locale coverage (LINGUAS, .po, docs/<locale>). Walks from cwd toward parents.')
 
 
 def add_arguments(p: argparse.ArgumentParser) -> None:
