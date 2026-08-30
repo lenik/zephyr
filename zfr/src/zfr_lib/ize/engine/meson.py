@@ -15,6 +15,9 @@ _man_target = _man._man_target
 strip_install_man_paths = _man.strip_install_man_paths
 discover_man_stems = _man.discover_man_stems
 strip_help2man_blocks = _man.strip_help2man_blocks
+ensure_meson_man_targets = _man.ensure_meson_man_targets
+has_foreach_man_targets = _man.has_foreach_man_targets
+
 
 if TYPE_CHECKING:
     from . import Ize
@@ -112,19 +115,10 @@ def patch_meson_build(ize: "Ize") -> None:
             else []
         )
     ]
-    for adoc in docs:
-        needle = f"docs/{adoc.name}"
-        if needle not in text and f"'{adoc.stem}-man'" not in text:
-            section = "1"
-            try:
-                first = adoc.read_text(encoding="utf-8", errors="ignore").splitlines()[0]
-                m = re.match(r"^=\s+\S+\((\d+[a-zA-Z]*)\)", first)
-                if m:
-                    section = m.group(1)
-            except (OSError, IndexError):
-                pass
-            text += _man_target(adoc.stem, section)
-            details.append(f"man target {adoc.stem}")
+    if docs:
+        stems = sorted(p.stem for p in docs)
+        text, man_details = ensure_meson_man_targets(text, stems)
+        details.extend(man_details)
 
     if not re.search(r"run_target\s*\(\s*['\"]look['\"]", text):
         text += LOOK_TARGET
@@ -152,7 +146,20 @@ def patch_meson_build(ize: "Ize") -> None:
                 if p.is_file() and not p.name.startswith(".")
             )
         )
-    if completions:
+    # Already installing completions via foreach over apps / puffs — leave alone.
+    has_apps_completion = bool(
+        re.search(
+            r"foreach\b[^:]+:\s*apps\.keys\(\).*?bash-completion",
+            text,
+            re.DOTALL,
+        )
+        or re.search(
+            r"bash-completion.*?foreach\b[^:]+:\s*apps\.keys\(\)",
+            text,
+            re.DOTALL,
+        )
+    )
+    if completions and not has_apps_completion:
         # Prefer install_data of each path; rename to command stem.
         entries: list[str] = []
         for p in completions:
@@ -255,18 +262,8 @@ def patch_meson_man_targets(ize: "Ize") -> None:
     if cleaned != text:
         text = cleaned
         details.append("remove AsciiDoc paths from install_man")
-    for adoc in sorted((ize.root / "docs").glob("*.adoc")):
-        if f"'{adoc.stem}-man'" in text or f'"{adoc.stem}-man"' in text:
-            continue
-        section = "1"
-        try:
-            first = adoc.read_text(encoding="utf-8", errors="ignore").splitlines()[0]
-            m = re.match(r"^=\s+\S+\((\d+[a-zA-Z]*)\)", first)
-            if m:
-                section = m.group(1)
-        except (OSError, IndexError):
-            pass
-        text += _man_target(adoc.stem, section)
-        details.append(f"man target {adoc.stem}")
+    stems = sorted(p.stem for p in (ize.root / "docs").glob("*.adoc") if p.is_file())
+    text, man_details = ensure_meson_man_targets(text, stems)
+    details.extend(man_details)
     if text != orig:
         ize.write_text(path, text if text.endswith("\n") else text + "\n", ", ".join(details))

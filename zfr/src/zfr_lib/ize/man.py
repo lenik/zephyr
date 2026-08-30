@@ -57,6 +57,114 @@ custom_target(
 """
 
 
+_INDIVIDUAL_MAN_TARGET_RE = re.compile(
+    r"\ncustom_target\(\s*"
+    r"'(?P<stem>[^']+)-man'\s*,\s*"
+    r"input:\s*'docs/(?P=stem)\.adoc'\s*,"
+    r".*?"
+    r"install_dir:\s*mandir\s*/\s*'man[^']+'\s*,\s*"
+    r"\)\s*",
+    re.DOTALL,
+)
+
+
+def has_foreach_man_targets(text: str) -> bool:
+    """True when meson already builds mans via ``foreach`` (e.g. ``puff + '-man'``)."""
+    if not re.search(r"\bforeach\b", text):
+        return False
+    # Expression-style target names: puff + '-man' / name + "-man"
+    if re.search(r"""\+\s*['"]-man['"]""", text):
+        return True
+    # foreach over a list that feeds asciidoctor manpage custom_targets
+    if re.search(
+        r"foreach\b.*?custom_target\s*\(.*?['\"]manpage['\"]",
+        text,
+        re.DOTALL | re.IGNORECASE,
+    ):
+        return True
+    return False
+
+
+def strip_individual_man_targets(text: str) -> tuple[str, list[str]]:
+    """Remove per-stem ``custom_target('foo-man', …)`` blocks ize used to append."""
+    removed: list[str] = []
+
+    def _repl(m: re.Match[str]) -> str:
+        removed.append(m.group("stem"))
+        return "\n"
+
+    new = _INDIVIDUAL_MAN_TARGET_RE.sub(_repl, text)
+    return new, removed
+
+
+def man_foreach_block(stems: list[str], *, section: str = "1") -> str:
+    """Meson ``foreach`` over English docs/*.adoc man pages (zephyr style)."""
+    if not stems:
+        return ""
+    quoted = ",\n    ".join(f"'{s}'" for s in stems)
+    return f"""
+man_puffs = [
+    {quoted},
+]
+foreach puff : man_puffs
+  custom_target(
+    puff + '-man',
+    input: 'docs' / (puff + '.adoc'),
+    output: puff + '.{section}',
+    command: [
+      asciidoctor,
+      '-b', 'manpage',
+      '-a', 'project-version=' + meson.project_version(),
+      '-a', 'project-year=@0@'.format(project_year),
+      '-a', 'project-author=' + project_author,
+      '-a', 'project-email=' + project_email,
+      '-o', '@OUTPUT@',
+      '@INPUT@',
+    ],
+    build_by_default: true,
+    install: true,
+    install_dir: mandir / 'man{section}',
+  )
+endforeach
+"""
+
+
+def ensure_meson_man_targets(text: str, stems: list[str], *, section: str = "1") -> tuple[str, list[str]]:
+    """Ensure English man custom_targets exist; prefer foreach, never duplicate.
+
+    If meson already has a foreach-based man loop, drop leftover individual
+    ``'stem-man'`` targets and do not append more. Otherwise add a single
+    ``man_puffs`` foreach for missing stems (or refresh the list).
+    """
+    details: list[str] = []
+    if has_foreach_man_targets(text):
+        cleaned, removed = strip_individual_man_targets(text)
+        if removed:
+            details.append(
+                "remove duplicate individual man targets: " + ", ".join(removed)
+            )
+        return cleaned, details
+
+    missing = [
+        s
+        for s in stems
+        if f"'{s}-man'" not in text and f'"{s}-man"' not in text
+    ]
+    if not missing:
+        return text, details
+
+    # Prefer one foreach for all English docs mans.
+    all_stems = sorted(set(stems))
+    block = man_foreach_block(all_stems, section=section)
+    # Drop any individual targets we're about to cover via foreach.
+    text, removed = strip_individual_man_targets(text)
+    if removed:
+        details.append("fold individual man targets into foreach")
+    text = text.rstrip() + "\n" + block
+    details.append(f"man foreach ({len(all_stems)} puffs)")
+    return text, details
+
+
 def groff_to_adoc(text: str, name: str, section: str = "1") -> str:
     """Best-effort groff man → AsciiDoc (used when pandoc is unavailable)."""
     body: list[str] = []
