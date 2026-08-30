@@ -29,18 +29,18 @@ Numbered rules enforced by `zfr lint`. Each finding prints `severity  ZLnnn  cod
 | ZL023 | `meson.asciidoctor` | varies | Meson invokes asciidoctor for man pages |
 | ZL024 | `meson.look` | varies | Meson run_target look DESTDIR preview |
 | ZL025 | `meson.completion_install` | varies | Meson installs bash-completion |
-| ZL026 | `rpm.missing` | note | Optional rpm/*.spec next to debian/ |
-| ZL027 | `rpm.topdir.local` | error | rpm/Makefile uses project-local rpmbuild |
-| ZL028 | `rpm.topdir` | ok | rpm/Makefile TOPDIR uses %_topdir |
-| ZL029 | `rpm.topdir.clean` | error | rpm/Makefile clean removes entire TOPDIR |
+| ZL026 | `rpm.missing` | note | Optional packaging/rpm/*.spec next to debian/ |
+| ZL027 | `rpm.topdir.local` | error | packaging/rpm/Makefile uses project-local rpmbuild |
+| ZL028 | `rpm.topdir` | ok | packaging/rpm/Makefile TOPDIR uses %_topdir |
+| ZL029 | `rpm.topdir.clean` | error | packaging/rpm/Makefile clean removes entire TOPDIR |
 | ZL030 | `rpm.topdir.leftover` | warn | Project-local rpmbuild/ directory |
 | ZL031 | `rpm.dynamic_version` | varies | RPM spec Version from zfr version |
 | ZL032 | `rpm.license` | varies | RPM spec License AGPL-3.0-or-later |
 | ZL033 | `rpm.URL` | warn | RPM spec URL matches debian Homepage |
 | ZL034 | `rpm.Summary` | warn | RPM spec Summary matches debian Description |
 | ZL035 | `rpm.build` | varies | RPM spec builds with Meson not autotools |
-| ZL036 | `rpm.makefile.version` | varies | rpm/Makefile calls zfr version |
-| ZL037 | `rpm.makefile` | note | rpm/Makefile convenience targets |
+| ZL036 | `rpm.makefile.version` | varies | packaging/rpm/Makefile calls zfr version |
+| ZL037 | `rpm.makefile` | note | packaging/rpm/Makefile convenience targets |
 | ZL038 | `rpm.Requires.bash-shlib` | error | bash RPM spec Requires bash-shlib |
 | ZL039 | `rpm.substvar` | error | RPM Requires without Debian substvars |
 | ZL040 | `rpm.noarch.elf` | error | noarch RPM with Meson executable() |

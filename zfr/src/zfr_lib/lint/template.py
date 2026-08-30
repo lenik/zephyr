@@ -27,8 +27,8 @@ def _project_name(root: Path) -> str:
 def _expected_rel(rel: Path, project_name: str) -> Path:
     """Map template paths that use the zephyr placeholder to the instance name.
 
-    Templates ship ``rpm/zephyr.spec``; instantiated projects use
-    ``rpm/<project>.spec`` (see ``zfr ize`` / create rename).
+    Templates ship ``packaging/rpm/zephyr.spec``; instantiated projects use
+    ``packaging/rpm/<project>.spec`` (see ``zfr ize`` / create rename).
     """
     parts = list(rel.parts)
     if not parts:
@@ -81,7 +81,7 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
         if (root / expected).exists():
             continue
         # only flag well-known scaffolding, not every po locale
-        if expected.parts[0] in {"debian", "docs", "src", "tests", "rpm", ".githooks"} or expected.name in {
+        if expected.parts[0] in {"debian", "docs", "src", "tests", "packaging", ".githooks"} or expected.name in {
             "meson.build",
             "LICENSE",
             "README.md",
@@ -99,8 +99,8 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
             "template.coverage",
             _("language template %(lang)s has extra scaffolding not in this tree: %(preview)s%(more)s")
             % {"lang": lang, "preview": preview, "more": more},
-            fix=_("Compare with the %(lang)s template under pkgdatadir. Copy missing debian/docs/src/rpm "
-            "files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` puffs. "
+            fix=_("Compare with the %(lang)s template under pkgdatadir. Copy missing debian/docs/src/packaging "
+            "files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` puffs. "
             "Do not copy build/ or debian leftover stamp files. "
             "Example commons modules are optional.") % {"lang": lang, "name": name},
         )

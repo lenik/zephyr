@@ -82,8 +82,10 @@ def _read(path: Path) -> str:
 
 
 def _specs(root: Path) -> list[Path]:
+    from .packaging import resolve_rpm_dir
+
     found: list[Path] = []
-    rpm = root / "rpm"
+    rpm = resolve_rpm_dir(root)
     if rpm.is_dir():
         found.extend(sorted(rpm.glob("*.spec")))
     found.extend(sorted(root.glob("*.spec")))
@@ -260,7 +262,7 @@ def _project_stats(root: Path, lang: str) -> dict[str, str]:
             payload = True
         elif rel.suffix == ".bash" and len(rel.parts) == 1:
             payload = True
-        elif _is_zfr_meta_repo(root) and rel.parts and rel.parts[0] not in {"debian", "rpm"}:
+        elif _is_zfr_meta_repo(root) and rel.parts and rel.parts[0] not in {"debian", "packaging"}:
             payload = True
         if payload:
             payload_bytes += size

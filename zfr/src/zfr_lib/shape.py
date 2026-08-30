@@ -114,7 +114,9 @@ def shape_score(root: Path | None = None) -> int:
         score += 5
     if (root / ".githooks" / "pre-commit").is_file():
         score += 5
-    rpm = root / "rpm"
+    from .packaging import resolve_rpm_dir
+
+    rpm = resolve_rpm_dir(root)
     if rpm.is_dir() and (any(rpm.glob("*.spec")) or (rpm / "Makefile").is_file()):
         score += 5
     po = root / "po"

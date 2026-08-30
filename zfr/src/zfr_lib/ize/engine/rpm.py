@@ -23,17 +23,22 @@ if TYPE_CHECKING:
     from . import Ize
 
 def ensure_rpm_spec(ize: "Ize") -> None:
-    makefile_dest = ize.root / "rpm" / "Makefile"
+    from ...packaging import migrate_legacy_rpm_dir, resolve_rpm_dir, rpm_dir
+
+    if migrate_legacy_rpm_dir(ize.root):
+        ize.note("update", "packaging/rpm", "migrated from legacy rpm/")
+    rpm_root = resolve_rpm_dir(ize.root)
+    makefile_dest = rpm_root / "Makefile"
     if not makefile_dest.is_file():
         src = None
         try:
-            cand = template_dir(ize.lang) / "rpm" / "Makefile"
+            cand = template_dir(ize.lang) / "packaging" / "rpm" / "Makefile"
             if cand.is_file():
                 src = cand
         except SystemExit:
             src = None
         if src is None:
-            cand = pkgdatadir() / "bash" / "rpm" / "Makefile"
+            cand = pkgdatadir() / "bash" / "packaging" / "rpm" / "Makefile"
             if cand.is_file():
                 src = cand
         if src is None:
@@ -44,11 +49,11 @@ def ensure_rpm_spec(ize: "Ize") -> None:
                 if here.parent.name == "zfr_lib"
                 else here.parents[2]
             )
-            cand = repo / "bash" / "rpm" / "Makefile"
+            cand = repo / "bash" / "packaging" / "rpm" / "Makefile"
             if cand.is_file():
                 src = cand
         if src is not None:
-            ize.copy_file(src, makefile_dest, "rpm/Makefile")
+            ize.copy_file(src, makefile_dest, "packaging/rpm/Makefile")
     if makefile_dest.is_file():
         from ...packaging import migrate_rpm_makefile_topdir
 
@@ -58,11 +63,11 @@ def ensure_rpm_spec(ize: "Ize") -> None:
             ize.write_text(
                 makefile_dest,
                 migrated if migrated.endswith("\n") else migrated + "\n",
-                "rpm/Makefile TOPDIR -> %_topdir ($HOME/rpmbuild)",
+                "packaging/rpm/Makefile TOPDIR -> %_topdir ($HOME/rpmbuild)",
             )
     specs = _specs(ize.root)
-    spec_path = ize.root / "rpm" / f"{ize.name}.spec"
-    legacy = ize.root / "rpm" / "zephyr.spec"
+    spec_path = rpm_dir(ize.root) / f"{ize.name}.spec"
+    legacy = rpm_dir(ize.root) / "zephyr.spec"
     if not specs:
         dest = spec_path if ize.name != "zephyr" else legacy
         ize.write_text(

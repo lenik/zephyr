@@ -91,14 +91,14 @@ class ZephyrLintSourceTests(unittest.TestCase):
         self.assertTrue(is_example_shared_rel(Path("tests/test_commons.py")))
         self.assertFalse(is_example_shared_rel(Path("src/app.c")))
         self.assertEqual(
-            _expected_rel(Path("rpm/zephyr.spec"), "myproj").as_posix(),
-            "rpm/myproj.spec",
+            _expected_rel(Path("packaging/rpm/zephyr.spec"), "myproj").as_posix(),
+            "packaging/rpm/myproj.spec",
         )
 
         with tempfile.TemporaryDirectory(prefix="zfr-tmpl-cov-") as tmp:
             root = Path(tmp)
-            (root / "rpm").mkdir()
-            (root / "rpm" / "demo.spec").write_text("Name: demo\n", encoding="utf-8")
+            (root / "packaging" / "rpm").mkdir(parents=True)
+            (root / "packaging" / "rpm" / "demo.spec").write_text("Name: demo\n", encoding="utf-8")
             (root / "debian").mkdir()
             (root / "debian" / "control").write_text(
                 "Source: demo\n\nPackage: demo\nDescription: demo\n",
@@ -109,7 +109,7 @@ class ZephyrLintSourceTests(unittest.TestCase):
             msgs = " ".join(f.message for f in findings if f.code == "template.coverage")
             self.assertNotIn("commons", msgs)
             self.assertNotIn("zephyr.spec", msgs)
-            self.assertNotRegex(msgs, r"rpm/\S+\.spec")
+            self.assertNotRegex(msgs, r"packaging/rpm/\S+\.spec")
 
     def test_warns_on_very_long_source(self) -> None:
         from zfr_lib.lint.source_size import check_source_size

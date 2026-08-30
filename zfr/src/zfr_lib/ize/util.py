@@ -101,13 +101,18 @@ SCAFFOLD = (
     "debian/copyright",
     "debian/rules",
     "debian/source/format",
-    "rpm/Makefile",
+    "packaging/README.md",
+    "packaging/rpm/Makefile",
+    "packaging/windows/README.md",
+    "packaging/macos/README.md",
+    "packaging/arch/PKGBUILD",
+    "packaging/freebsd/Makefile",
 )
 
 SKIP_MAN_PARTS = SKIP_DIR_NAMES | {
     "debian",
     "po",
-    "rpm",
+    "packaging",
     "githooks",
     "autom4te.cache",
 }

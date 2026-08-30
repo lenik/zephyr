@@ -65,9 +65,9 @@ gettext locale coverage) and prints fixes; colors on a TTY. `zfr shape`
 prints a 0–100 package-shape score (`-b` prints 0/1); in a monorepo it
 scores the *packagedir* (e.g. `repo/bash`), not only the git *repodir*.
 `zfr dist` builds a source tarball (`meson dist` at the git
-root, otherwise this project only) and is what `rpm/Makefile` and
+root, otherwise this project only) and is what `packaging/rpm/Makefile` and
 `ninja srcdist` use. `zfr ize` upgrades an existing tree to current
-zephyr style (missing debian/rpm files, meson targets, AsciiDoc man
+zephyr style (missing debian/packaging files, meson targets, AsciiDoc man
 pages, Meson version substitutions).
 
 When a project has `po/` or `docs/*.adoc`, `zfr lint -l/--l10n-level`

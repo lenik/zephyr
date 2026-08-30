@@ -70,8 +70,10 @@ def _control(root: Path) -> tuple[dict[str, str], dict[str, str], str]:
 
 
 def _specs(root: Path) -> list[Path]:
+    from ..packaging import resolve_rpm_dir
+
     found: list[Path] = []
-    rpm = root / "rpm"
+    rpm = resolve_rpm_dir(root)
     if rpm.is_dir():
         found.extend(sorted(rpm.glob("*.spec")))
     found.extend(sorted(root.glob("*.spec")))

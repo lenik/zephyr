@@ -12,6 +12,8 @@ from .util import *  # noqa: F403
 
 
 def check_rpm(root: Path, lang: str) -> list[Finding]:
+    from ..packaging import resolve_rpm_dir
+
     out: list[Finding] = []
     specs = _specs(root)
     src, pkg, _ctl = _control(root)
@@ -21,13 +23,13 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                 "note",
                 "rpm.missing",
                 _(
-                    "no rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
+                    "no packaging/rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
                 ),
-                "rpm/",
+                "packaging/rpm/",
                 # xgettext: no-python-format
                 fix=_(
-                    "Copy rpm/ from a language template; name the spec after the package "
-                    "(rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using "
+                    "Copy packaging/rpm/ from a language template; name the spec after the package "
+                    "(packaging/rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using "
                     "`zfr version`. Align Name/Summary/Requires/URL with debian/control. "
                     "Or run `zfr ize`."
                 ),
@@ -52,7 +54,7 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
     for spec in specs:
         rel = _rel(root, spec)
         text = _read(spec)
-        makefile = root / "rpm" / "Makefile"
+        makefile = resolve_rpm_dir(root) / "Makefile"
         mk = _read(makefile)
         files_body = files_section_body(text)
         lines = files_lines(files_body)
@@ -67,11 +69,11 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                         "rpm.topdir.local",
                         # xgettext: no-python-format
                         _(
-                            "rpm/Makefile uses project-local <project>/rpmbuild; "
+                            "packaging/rpm/Makefile uses project-local <project>/rpmbuild; "
                             "zephyr style uses %_topdir ($HOME/rpmbuild, "
                             "override via ~/.rpmmacros)"
                         ),
-                        "rpm/Makefile",
+                        "packaging/rpm/Makefile",
                         line=_line_of(mk, "TOPDIR"),
                         # xgettext: no-python-format
                         fix=_(
@@ -90,8 +92,8 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                         "ok",
                         "rpm.topdir",
                         # xgettext: no-python-format
-                        _("rpm/Makefile TOPDIR uses %_topdir / $HOME/rpmbuild"),
-                        "rpm/Makefile",
+                        _("packaging/rpm/Makefile TOPDIR uses %_topdir / $HOME/rpmbuild"),
+                        "packaging/rpm/Makefile",
                     )
                 )
             if re.search(r"(?m)^clean:\n\trm -rf \$\(TOPDIR\)\s*$", mk):
@@ -100,10 +102,10 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                         "error",
                         "rpm.topdir.clean",
                         _(
-                            "rpm/Makefile `clean` does rm -rf $(TOPDIR); "
+                            "packaging/rpm/Makefile `clean` does rm -rf $(TOPDIR); "
                             "unsafe when TOPDIR is $HOME/rpmbuild"
                         ),
-                        "rpm/Makefile",
+                        "packaging/rpm/Makefile",
                         line=_line_of(mk, "clean:"),
                         fix=_(
                             "Remove only this package's SPECS/SOURCES/RPMS/SRPMS/"
@@ -149,7 +151,7 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                     # xgettext: no-python-format
                     fix=_(
                         "Use Version: %{version} with %{!?version:%global version 0.0.0} "
-                        "and freeze via rpm/Makefile (`zfr version` / `zfr version -r`)."
+                        "and freeze via packaging/rpm/Makefile (`zfr version` / `zfr version -r`)."
                     ),
                 )
             )
@@ -227,7 +229,7 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                         "ok",
                         "rpm.makefile.version",
                         _("Makefile uses `zfr version`"),
-                        "rpm/Makefile",
+                        "packaging/rpm/Makefile",
                     )
                 )
             else:
@@ -235,8 +237,8 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                     Finding(
                         "warn",
                         "rpm.makefile.version",
-                        _("rpm/Makefile does not call `zfr version`"),
-                        "rpm/Makefile",
+                        _("packaging/rpm/Makefile does not call `zfr version`"),
+                        "packaging/rpm/Makefile",
                         # xgettext: no-python-format
                         fix=_(
                             "VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
@@ -249,9 +251,9 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                 Finding(
                     "note",
                     "rpm.makefile",
-                    _("no rpm/Makefile convenience targets"),
-                    "rpm/Makefile",
-                    fix=_("Copy bash/rpm/Makefile (srpm/rpm via zfr version)."),
+                    _("no packaging/rpm/Makefile convenience targets"),
+                    "packaging/rpm/Makefile",
+                    fix=_("Copy bash/packaging/rpm/Makefile (srpm/rpm via zfr version)."),
                 )
             )
 

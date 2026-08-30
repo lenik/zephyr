@@ -89,6 +89,51 @@ def migrate_rpm_makefile_topdir(text: str) -> str | None:
     return new if changed else None
 
 
+def rpm_dir(root: Path) -> Path:
+    """RPM packaging directory under ``packaging/rpm/``."""
+    return root / "packaging" / "rpm"
+
+
+def legacy_rpm_dir(root: Path) -> Path:
+    """Pre-2.7.8 layout: top-level ``rpm/`` next to debian/."""
+    return root / "rpm"
+
+
+def resolve_rpm_dir(root: Path) -> Path:
+    """Return the RPM packaging dir (prefers ``packaging/rpm/``, falls back to ``rpm/``)."""
+    new = rpm_dir(root)
+    if new.is_dir():
+        return new
+    old = legacy_rpm_dir(root)
+    if old.is_dir():
+        return old
+    return new
+
+
+def migrate_legacy_rpm_dir(root: Path) -> bool:
+    """Move legacy ``rpm/`` to ``packaging/rpm/``; fix Makefile SRCDIR. Return True if moved."""
+    legacy = legacy_rpm_dir(root)
+    dest = rpm_dir(root)
+    if not legacy.is_dir() or dest.exists():
+        return False
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    legacy.rename(dest)
+    makefile = dest / "Makefile"
+    if makefile.is_file():
+        text = makefile.read_text(encoding="utf-8", errors="ignore")
+        new = text.replace(
+            "SRCDIR  := $(abspath ..)",
+            "SRCDIR  := $(abspath ../..)",
+        )
+        new = new.replace(
+            "Usage (from rpm/):",
+            "Usage (from packaging/rpm/):",
+        )
+        if new != text:
+            makefile.write_text(new, encoding="utf-8")
+    return True
+
+
 def parse_control_stanzas(text: str) -> list[dict[str, str]]:
     stanzas: list[dict[str, str]] = []
     cur: dict[str, str] = {}

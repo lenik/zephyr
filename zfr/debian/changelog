@@ -1,3 +1,15 @@
+zephyr (2.7.8) testing; urgency=medium
+
+  * Packaging layout: move rpm/ to packaging/rpm/ across all language templates
+    and the meta-repo; ize/lint migrate legacy rpm/ automatically. Makefile
+    SRCDIR fixed for packaging/rpm depth.
+  * Add optional packaging stubs: windows/, macos/, arch/ (PKGBUILD), freebsd/;
+    ize scaffold copies from the language template.
+  * Remove scripts/apply_l2_new_translations.py from repository history (one-off
+    L2 translation helper, never meant to ship).
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 30 Aug 2026 17:20:00 +0800
+
 zephyr (2.7.7) testing; urgency=medium
 
   * PO catalogs: no line wrapping (msgcat --no-wrap). Lint ZL082 warns on wrapped

@@ -32,7 +32,7 @@ def render_spec(root: Path, lang: str, name: str) -> str:
         req_block = req_block + "\n"
     files = "\n".join(_spec_files(root, lang, name))
     return (
-        "# Version is injected by rpm/Makefile via `zfr version`.\n"
+        "# Version is injected by packaging/rpm/Makefile via `zfr version`.\n"
         "# RPM Version cannot contain '-'; use `zfr version -r` "
         "(hyphens → '_').\n"
         "# srcversion is the unsanitized Meson/git version and names the tarball.\n"

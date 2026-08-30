@@ -115,7 +115,7 @@ def add_release_arguments(p: argparse.ArgumentParser) -> None:
         "-Y",
         "--no-rpm",
         action="store_true",
-        help=_("Skip RPM build (rpm/Makefile)"),
+        help=_("Skip RPM build (packaging/rpm/Makefile)"),
     )
     p.add_argument(
         "-D",

@@ -18,7 +18,7 @@ _IZE_RULES: tuple[StdRule, ...] = (
     StdRule("ZI010", "ize.man.stub", "Create AsciiDoc man page stubs"),
     StdRule("ZI011", "ize.meson.man", "Add Meson asciidoctor man page targets"),
     StdRule("ZI012", "ize.completion", "Add bash-completion stubs for command puffs"),
-    StdRule("ZI013", "ize.rpm", "Align rpm/Makefile and RPM spec with debian/Meson"),
+    StdRule("ZI013", "ize.rpm", "Align packaging/rpm/Makefile and RPM spec with debian/Meson"),
     StdRule("ZI014", "ize.subst", "Replace hardcoded versions with @VERSION@ / config.h"),
     StdRule("ZI015", "ize.i18n.derive", "Meson build-time derived locale catalogs"),
     StdRule("ZI016", "ize.i18n.po-nowrap", "Rewrite source .po catalogs without line wrapping"),

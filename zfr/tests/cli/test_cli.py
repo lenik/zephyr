@@ -460,7 +460,10 @@ class ZephyrIzeTests(unittest.TestCase):
             self.assertIn("run_target", meson)
             self.assertTrue((root / "docs" / "oldpuff.adoc").is_file())
             self.assertFalse((root / "docs" / "oldpuff.1").exists())
-            self.assertTrue((root / "rpm" / "oldpuff.spec").is_file() or (root / "rpm" / "zephyr.spec").is_file())
+            self.assertTrue(
+                (root / "packaging" / "rpm" / "oldpuff.spec").is_file()
+                or (root / "packaging" / "rpm" / "zephyr.spec").is_file()
+            )
             self.assertTrue((root / "VERSION").is_file())
             self.assertIn("PROJECT_VERSION", (root / "src" / "oldpuff.c").read_text(encoding="utf-8"))
             self.assertTrue((root / "debian" / "rules").is_file())

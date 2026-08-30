@@ -109,7 +109,7 @@ def format_report(
             _("Build with Meson; debian/rules uses dh --buildsystem=meson --builddirectory=debian/build."),
             _('project() version from `zfr version`; keep fallback v="0.0.0" # FIXED TO 0.0.0, DO NOT MODIFY.'),
             _("Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."),
-            _("Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional rpm/ aligned with debian."),
+            _("Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional packaging/ aligned with debian."),
             _("i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). "
               "L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). "
               "Child locales auto-derive via zfr i18n -b. Rule IDs in docs/lint-std.md; "
@@ -159,7 +159,7 @@ def format_report(
             csr.wrap(
                 _("Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). "
                 "`zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. "
-                "`zfr ize` applies missing debian/rpm/meson/man/version-subst upgrades."),
+                "`zfr ize` applies missing debian/packaging/meson/man/version-subst upgrades."),
                 csr.dim,
             )
         )
