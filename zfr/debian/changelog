@@ -1,3 +1,12 @@
+zephyr (2.8.8) testing; urgency=medium
+
+  * i18n derive: treat equal mtimes as fresh (>=), matching msgfmt 0.23 which
+    stamps .mo with the source .po mtime; no forced mtime bumps.
+  * OpenCC: resolve config under /usr/share/opencc; skip conversion test when
+    CLI missing; Build-Depends/Recommends opencc + gettext.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Tue, 01 Sep 2026 03:40:00 +0800
+
 zephyr (2.8.7) testing; urgency=medium
 
   * lint ZL083: check root/component .gitignore (node_modules/, dist/,

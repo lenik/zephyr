@@ -24,7 +24,7 @@ from zfr_lib.l10n import (  # noqa: E402
     normalize_locale,
     resolve_present_locale,
 )
-from zfr_lib.i18n.builder import opencc_convert  # noqa: E402
+from zfr_lib.i18n.builder import opencc_convert, _which_opencc  # noqa: E402
 
 
 class L10nTierTests(unittest.TestCase):
@@ -56,9 +56,16 @@ class L10nTierTests(unittest.TestCase):
         self.assertEqual(DERIVE_PARENT["zh_TW"], "zh_CN")
         self.assertEqual(DERIVE_PARENT["zh_HK"], "zh_TW")
 
+    @unittest.skipUnless(_which_opencc() is not None, "opencc CLI not installed")
     def test_opencc_simplified_to_traditional(self) -> None:
         out = opencc_convert("软件", "opencc_s2t")
         self.assertIn("軟", out)
+
+    def test_opencc_unavailable_passthrough(self) -> None:
+        """When the CLI is missing, conversion is a no-op (not an error)."""
+        if _which_opencc() is not None:
+            self.skipTest("opencc is installed")
+        self.assertEqual(opencc_convert("软件", "opencc_s2t"), "软件")
 
     def test_tier_label_format(self) -> None:
         self.assertEqual(LOCALE_TIER_LABEL["sv"], "3.1")
@@ -98,6 +105,7 @@ class L10nTierTests(unittest.TestCase):
 
     def test_derive_writes_only_to_build_dir(self) -> None:
         import tempfile
+        import time
 
         from zfr_lib.i18n.builder import (
             _dest_fresh,
@@ -123,6 +131,9 @@ class L10nTierTests(unittest.TestCase):
             self.assertTrue(_dest_fresh(out / "zh_TW.po", src))
             written = derive_locales(root, po_dir=out, locales=("zh_TW",))
             self.assertEqual(written, [])
+            # Ensure the parent catalog mtime advances past the derived file
+            # (tmpfs can coalesce same-tick writes).
+            time.sleep(0.02)
             (po / "zh_CN.po").write_text(
                 (po / "zh_CN.po").read_text(encoding="utf-8") + "\n",
                 encoding="utf-8",

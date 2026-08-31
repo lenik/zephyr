@@ -52,6 +52,32 @@ def _which_opencc() -> str | None:
     return shutil.which("opencc")
 
 
+def _dest_fresh(dest: Path, src: Path) -> bool:
+    """True when *dest* exists and is not older than *src* (mtime).
+
+    Equal timestamps count as fresh: GNU gettext *msgfmt* 0.23+ stamps the
+    ``.mo`` with the source ``.po`` mtime, which must not trigger a rebuild.
+    """
+    if not dest.is_file():
+        return False
+    return dest.stat().st_mtime_ns >= src.stat().st_mtime_ns
+
+
+def _opencc_config_path(config: str) -> str:
+    """Resolve an OpenCC config name to a path *opencc* will accept."""
+    candidate = Path(config)
+    if candidate.is_file():
+        return str(candidate)
+    for base in (
+        Path("/usr/share/opencc"),
+        Path("/usr/local/share/opencc"),
+    ):
+        path = base / config
+        if path.is_file():
+            return str(path)
+    return config
+
+
 def opencc_convert(text: str, method: str) -> str:
     """Run OpenCC on *text*; return original text when opencc is unavailable."""
     config = _OPENCC_CONFIG.get(method)
@@ -60,8 +86,9 @@ def opencc_convert(text: str, method: str) -> str:
     opencc = _which_opencc()
     if opencc is None:
         return text
+    cfg = _opencc_config_path(config)
     proc = subprocess.run(
-        [opencc, "-c", config],
+        [opencc, "-c", cfg],
         input=text,
         capture_output=True,
         text=True,
@@ -69,7 +96,11 @@ def opencc_convert(text: str, method: str) -> str:
     )
     if proc.returncode != 0:
         return text
-    return proc.stdout
+    # OpenCC may omit a trailing newline; keep caller text shape otherwise.
+    out = proc.stdout
+    if text and not text.endswith("\n") and out.endswith("\n"):
+        out = out[:-1]
+    return out
 
 
 def _parent_po_path(src_po_dir: Path, build_po_dir: Path, parent: str) -> Path | None:
@@ -144,13 +175,6 @@ def _transform_po_body(body: str, child: str, parent: str, method: str) -> str:
         out = body
     out = _set_po_language(out, child)
     return _inject_derived_headers(out, parent, method)
-
-
-def _dest_fresh(dest: Path, src: Path) -> bool:
-    """True when *dest* exists and is strictly newer than *src* (mtime)."""
-    if not dest.is_file():
-        return False
-    return dest.stat().st_mtime_ns > src.stat().st_mtime_ns
 
 
 def _locale_explicitly_used(child: str, linguas: set[str]) -> bool:
