@@ -372,15 +372,119 @@ def _split_deps(raw: str) -> list[str]:
     return out
 
 
+_CMD_NAME_RE = re.compile(r"^[a-zA-Z][\w-]*$")
+_NON_CMD_STEMS = frozenset(
+    {
+        "makefile",
+        "cmakelists",
+        "meson",
+        "readme",
+        "license",
+        "changelog",
+        "config",
+        "configure",
+        "install",
+        "commons",
+        "common",
+    }
+)
+
+
+def _is_command_puff_name(name: str) -> bool:
+    """True for shell/CLI command names; false for libs, modules, sonames."""
+    if not name or "." in name:
+        return False
+    if name.lower() in _NON_CMD_STEMS:
+        return False
+    if name.startswith("lib"):
+        # Shared-library man stems (libfoo / libfoo.so) are not commands.
+        return False
+    if name.endswith(("_pch", "_test", "_tests")) or name.startswith("test_"):
+        return False
+    return bool(_CMD_NAME_RE.match(name))
+
+
+def _adoc_command_section(path: Path) -> str | None:
+    """Return man section from ``= name(N)`` header, else None."""
+    try:
+        text = path.read_text(encoding="utf-8", errors="ignore")
+    except OSError:
+        return None
+    for line in text.splitlines()[:30]:
+        stripped = line.strip()
+        if not stripped:
+            continue
+        m = re.match(r"^=\s+\S+\(([1-9][a-zA-Z]*)\)\s*$", stripped)
+        if m:
+            return m.group(1)
+        break
+    return None
+
+
+def _completion_stem(path: Path) -> str:
+    name = path.name
+    if name.endswith(".bash.in"):
+        return name[: -len(".bash.in")]
+    if name.endswith(".in"):
+        return Path(name[:-3]).stem
+    return path.stem
+
+
+def _meson_executable_names(root: Path) -> list[str]:
+    mb = root / "meson.build"
+    if not mb.is_file():
+        return []
+    try:
+        text = mb.read_text(encoding="utf-8", errors="ignore")
+    except OSError:
+        return []
+    return re.findall(r"""\bexecutable\s*\(\s*['\"]([^'\"]+)['\"]""", text)
+
+
 def _puff_names(root: Path) -> list[str]:
+    """Command puff names for completions / RPM fallbacks.
+
+    Prefer man section-1 docs, existing bash-completion stems, and Meson
+    ``executable()`` names. Do **not** treat every ``src/*`` module or
+    library soname man page (``libfoo.so``) as a CLI puff — that produced
+    spurious ``completions/`` stubs on multi-file C projects.
+    """
     names: list[str] = []
+
+    def add(stem: str) -> None:
+        if stem and stem not in names and _is_command_puff_name(stem):
+            names.append(stem)
+
     docs = root / "docs"
     if docs.is_dir():
         for p in sorted(docs.glob("*.adoc")):
-            if p.stem not in names:
-                names.append(p.stem)
+            if not _is_command_puff_name(p.stem):
+                continue
+            section = _adoc_command_section(p)
+            # Skip non-command mans (section 2/3/…) when the header is present.
+            if section is not None and not section.startswith("1"):
+                continue
+            add(p.stem)
+
+    for p in sorted(root.glob("*.bash")):
+        add(p.stem)
+
+    comp = root / "completions"
+    if comp.is_dir():
+        for p in sorted(comp.iterdir()):
+            if not p.is_file() or p.name.startswith("."):
+                continue
+            if p.suffix in {".bash", ".in", ".sh"} or p.name.endswith(".bash.in"):
+                add(_completion_stem(p))
+
+    for exe in _meson_executable_names(root):
+        add(exe)
+
+    # Template / early-ize fallback: a single src/<puff>.* when it matches
+    # the project directory name (not every translation unit).
     src = root / "src"
-    if src.is_dir():
+    if src.is_dir() and not names:
+        proj = root.name
         for p in sorted(src.iterdir()):
             if not p.is_file():
                 continue
@@ -389,12 +493,9 @@ def _puff_names(root: Path) -> list[str]:
                 stem = Path(stem[:-3]).stem
             else:
                 stem = p.stem
-            if stem and stem not in names and not stem.startswith("common"):
-                if TEMPLATE_PUFF in stem or re.match(r"^[a-zA-Z][\w-]*$", stem):
-                    names.append(stem)
-    for p in sorted(root.glob("*.bash")):
-        if p.stem not in names:
-            names.append(p.stem)
+            if stem == proj or stem == TEMPLATE_PUFF:
+                add(stem)
+
     return names
 
 

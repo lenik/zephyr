@@ -13,32 +13,33 @@ zfr - multi-language CLI project templates and helper tools
 
 == Synopsis
 
-*zfr* *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
               [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
 
-*zfr* *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
 
-*zfr* *add* _PUFF_NAME_ [_PUFF_NAME_]...
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *add* _PUFF_NAME_ [_PUFF_NAME_]...
 
-*zfr* *remove* _PUFF_NAME_ [_PUFF_NAME_]...
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *remove* _PUFF_NAME_ [_PUFF_NAME_]...
 
-*zfr* *about* [*-d*] [*-r*]
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *about* [*-d*] [*-r*]
 
-*zfr* *version* [*-g*] [*-c*] [*-r*]
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *version* [*-g*] [*-c*] [*-r*]
 
-*zfr* *lint* [*-l* _LEVEL_] [*-v*] [*-q*] [*--strict*] [*--color* _WHEN_]
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *lint* [*-l* _LEVEL_] [*-v*] [*-q*] [*--strict*]
+            [*-i*|**-I*] [*--color* _WHEN_]
 
-*zfr* *shape* [*-b*] [*-v*] [*--threshold* _N_]
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *shape* [*-b*] [*-v*] [*--threshold* _N_]
 
-*zfr* *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
             [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
 
-*zfr* *ize* [*-l* _LANG_] [*-m*|*--no-mesonize*] [*-n*] [*-v*]
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *ize* [*-l* _LANG_] [*-m*|*--no-mesonize*] [*-n*] [*-v*]
            [*--no-man*] [*--no-subst*] [*--color* _WHEN_]
 
-*zfr* *release* [_OPTIONS_]
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *release* [_OPTIONS_]
 
-*zfr* *detect*
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *detect*
 
 *zfr* *help*
 
@@ -215,6 +216,16 @@ Commands that walk from the current directory resolve *packagedir* first.
 
 == Options
 
+Global options (before the subcommand, or on *zfr-lint*):
+
+*--for-ai-purpose*, *--no-for-ai-purpose*::
+  Enable or disable AI-oriented hints. Default *on* in AI-integrated
+  terminals (*TERM_PROGRAM* *cursor* / *vscode* / *windsurf*, …) and when
+  stdout is non-interactive (pipes/CI); default *off* for a plain
+  interactive shell. When enabled, a successful *lint* on a dirty git tree
+  reminds agents to update *debian/changelog* and commit verbosely if the
+  user requested the run.
+
 Options for *create*:
 
 *-l, --lang* _LANG_::
@@ -276,6 +287,13 @@ Options for *lint*:
 
 *--strict*::
   Treat warnings as failures (exit status 1).
+
+*-i, --info*, *-I, --no-info*::
+  Show or hide zephyr style-contract / next-steps blurbs. Default follows
+  the same auto rules as *--for-ai-purpose*.
+
+*--for-ai-purpose*, *--no-for-ai-purpose*::
+  Same as the global flags (also accepted on *zfr-lint*).
 
 *-l, --l10n-level* _LEVEL_::
   Required gettext and whole-document manpage coverage: *L0* (none), *L1*

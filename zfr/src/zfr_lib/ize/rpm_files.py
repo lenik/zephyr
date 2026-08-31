@@ -68,13 +68,20 @@ def ships_locale_mans(root: Path) -> bool:
 
 
 def man_command_stems(root: Path, name: str) -> list[str]:
-    """Command stems that have (or will have) English man pages."""
+    """Command stems that have (or will have) English man pages.
+
+    Skips library soname docs (``libfoo.so``) and other dotted stems that are
+    not installable CLI commands.
+    """
     stems: list[str] = []
     docs = root / "docs"
     if docs.is_dir():
         for adoc in sorted(docs.glob("*.adoc")):
-            if adoc.stem not in stems:
-                stems.append(adoc.stem)
+            stem = adoc.stem
+            if "." in stem or not stem:
+                continue
+            if stem not in stems:
+                stems.append(stem)
     text = meson_text(root)
     for m in re.finditer(r"output:\s*'([^']+\.[1-9][a-zA-Z]*)'", text):
         stem = Path(m.group(1)).name.rsplit(".", 1)[0]

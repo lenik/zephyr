@@ -56,6 +56,29 @@ def _next_steps(findings: list[Finding]) -> list[str]:
 from ..terminal import default_lint_style_info
 
 
+def _git_working_tree_dirty(root: Path) -> bool:
+    """True when *root*'s git checkout has uncommitted changes."""
+    cur = root.resolve()
+    git_root: Path | None = None
+    for d in [cur, *cur.parents]:
+        if (d / ".git").exists():
+            git_root = d
+            break
+    if git_root is None or not shutil.which("git"):
+        return False
+    try:
+        proc = subprocess.run(
+            ["git", "status", "--porcelain"],
+            cwd=git_root,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except OSError:
+        return False
+    return bool(proc.stdout.strip())
+
+
 def format_report(
     root: Path,
     name: str,
@@ -67,12 +90,16 @@ def format_report(
     quiet: bool = False,
     color: str = "auto",
     style_info: bool | None = None,
+    for_ai_purpose: bool = False,
 ) -> str:
     """Format the lint report.
 
     *style_info* controls the role/contract/next-steps/hint blocks. ``None``
     means auto: show for non-TTY (pipes/CI) and AI-integrated terminals; hide
     for a plain interactive shell TTY.
+
+    *for_ai_purpose* enables the post-PASS dirty-tree reminder aimed at AI
+    agents (update changelog and commit verbosely when the user requested lint).
     """
     if style_info is None:
         style_info = default_lint_style_info()
@@ -162,6 +189,24 @@ def format_report(
                 "`zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. "
                 "`zfr ize` applies missing debian/packaging/meson/man/version-subst upgrades."),
                 csr.dim,
+            )
+        )
+
+    if (
+        for_ai_purpose
+        and not quiet
+        and not failed
+        and _git_working_tree_dirty(root)
+    ):
+        lines.append("")
+        lines.append(
+            csr.wrap(
+                _(
+                    "AI hint: if the user requested this lint, also update debian/changelog "
+                    "and create verbose commits for the dirty working tree."
+                ),
+                csr.bold,
+                csr.magenta,
             )
         )
     return "\n".join(lines).rstrip() + "\n"

@@ -42,6 +42,8 @@ def resolve_command_prefix(argv: list[str]) -> list[str]:
 
 
 def build_parser() -> argparse.ArgumentParser:
+    from zfr_lib.terminal import add_for_ai_purpose_arguments
+
     init_i18n()
     p = argparse.ArgumentParser(
         prog="zfr",
@@ -57,6 +59,7 @@ def build_parser() -> argparse.ArgumentParser:
         action="version",
         version="%(prog)s " + cli_version(),
     )
+    add_for_ai_purpose_arguments(p)
     sub = p.add_subparsers(dest="cmd", required=True)
     for mod in COMMANDS:
         mod.register(sub)
