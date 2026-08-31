@@ -128,6 +128,19 @@ def ensure_bash_shlib_depends(text: str) -> tuple[str, list[str]]:
     if len(parts) < 2:
         return text, notes
     head, pkg = parts[0], parts[1]
+    # ``Depends:`` with no value before the next field (common Autotools artifact).
+    if re.search(r"^Depends:\s*\n(?![ \t])", pkg, re.M):
+        pkg = re.sub(
+            r"^Depends:\s*\n",
+            "Depends: bash-shlib\n",
+            pkg,
+            count=1,
+            flags=re.M,
+        )
+        notes.append("Depends: bash-shlib")
+        if not head.endswith("\n"):
+            head += "\n"
+        return head + pkg, notes
     m = re.search(
         r"^(Depends:\s*)(.*?)(?=\n[A-Za-z][\w-]*:|\Z)",
         pkg,
@@ -246,6 +259,51 @@ def ensure_debhelper_compat(text: str) -> tuple[str, list[str]]:
     return text[: m.start(2)] + body2 + text[m.end(2) :], notes
 
 
+def ensure_priority_optional(text: str) -> tuple[str, list[str]]:
+    """Replace deprecated ``Priority: extra`` with ``optional``."""
+    notes: list[str] = []
+    if re.search(r"^Priority:\s*extra\s*$", text, re.M):
+        text = re.sub(
+            r"^Priority:\s*extra\s*$",
+            "Priority: optional",
+            text,
+            count=1,
+            flags=re.M,
+        )
+        notes.append("Priority: optional")
+    return text, notes
+
+
+def ensure_extended_description(text: str) -> tuple[str, list[str]]:
+    """Ensure the binary package Description has an extended paragraph."""
+    notes: list[str] = []
+    parts = re.split(r"\n(?=Package:\s)", text, maxsplit=1)
+    if len(parts) < 2:
+        return text, notes
+    head, pkg = parts[0], parts[1]
+    m = re.search(
+        r"^(Description:\s*)(.*?)(?=\n[A-Za-z][\w-]*:|\Z)",
+        pkg,
+        re.S | re.M,
+    )
+    if not m:
+        return text, notes
+    body = m.group(2)
+    lines = [ln for ln in body.splitlines() if ln.strip()]
+    if len(lines) >= 2:
+        return text, notes
+    synopsis = lines[0].strip() if lines else ""
+    if not synopsis:
+        return text, notes
+    extended = synopsis if synopsis.endswith(".") else synopsis + "."
+    new_body = f"{synopsis}\n {extended}\n"
+    pkg2 = pkg[: m.start(2)] + new_body + pkg[m.end(2) :]
+    notes.append("Description extended paragraph")
+    if not head.endswith("\n"):
+        head += "\n"
+    return head + pkg2, notes
+
+
 def patch_debian_control(
     text: str, *, lang: str, arch_binaries: bool = False
 ) -> tuple[str, list[str]]:
@@ -260,6 +318,10 @@ def patch_debian_control(
     text, n = ensure_build_depends(text)
     notes.extend(n)
     text, n = ensure_architecture(text, lang=lang, arch_binaries=arch_binaries)
+    notes.extend(n)
+    text, n = ensure_priority_optional(text)
+    notes.extend(n)
+    text, n = ensure_extended_description(text)
     notes.extend(n)
     if lang == "bash" and not arch_binaries:
         text, n = ensure_bash_shlib_depends(text)

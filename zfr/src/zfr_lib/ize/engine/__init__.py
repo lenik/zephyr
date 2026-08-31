@@ -128,13 +128,13 @@ class Ize:
             self._step("ize.meson.man", self.patch_meson_man_targets)
         self._step("ize.completion", self.ensure_completion)
         self._step("ize.meson.patch", self.patch_meson)
-        self._step("ize.rpm", self.ensure_rpm)
         if self.do_subst:
             self._step("ize.subst", self.subst_versions)
         self._step("ize.i18n.coverage", self.ensure_i18n_coverage)
         self._step("ize.i18n.man-locale", self.ensure_man_locale_coverage)
         self._step("ize.i18n.po-nowrap", self.ensure_po_no_wrap)
         self._step("ize.i18n.derive", self.derive_i18n_locales)
+        self._step("ize.rpm", self.ensure_rpm)
         self._step("ize.rpm.leftover", self.remove_local_rpmbuild)
         self.report()
         if self.do_commit:
@@ -202,6 +202,7 @@ class Ize:
                 self.copy_file(src, meson_dest, "meson.build from language template")
         if tmpl_copy is None:
             return
+        debian_fallback: Path | None = None
         for rel in SCAFFOLD:
             dest = self.root / rel
             src = tmpl_copy / rel
@@ -209,6 +210,18 @@ class Ize:
                 if self.verbose:
                     self.note("skip", rel, "already present")
                 continue
+            if not src.is_file() and rel.startswith("debian/"):
+                if debian_fallback is None:
+                    for fb_lang in ("c", "cpp", "bash"):
+                        try:
+                            cand = template_dir(fb_lang)
+                        except SystemExit:
+                            continue
+                        if (cand / "debian" / "control").is_file():
+                            debian_fallback = cand
+                            break
+                if debian_fallback is not None:
+                    src = debian_fallback / rel
             if not src.is_file():
                 continue
             if rel in ("README.md", "README-zh.md"):

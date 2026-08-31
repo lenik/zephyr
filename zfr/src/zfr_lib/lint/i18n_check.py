@@ -180,12 +180,12 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                         )
                     )
 
-            from ..translate.po_format import po_has_line_wrapping
+            from ..translate.po_format import po_has_line_wrapping, read_po_text
 
             wrapped: list[str] = []
             for po_file in sorted(po.glob("*.po")):
                 try:
-                    if po_has_line_wrapping(po_file.read_text(encoding="utf-8")):
+                    if po_has_line_wrapping(read_po_text(po_file)):
                         wrapped.append(po_file.name)
                 except OSError:
                     continue

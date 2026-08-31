@@ -100,8 +100,7 @@ class L10nTierTests(unittest.TestCase):
         import tempfile
 
         from zfr_lib.i18n.builder import (
-            _derive_is_current,
-            _derive_signature,
+            _dest_fresh,
             default_build_po_dir,
             derive_locales,
         )
@@ -121,8 +120,7 @@ class L10nTierTests(unittest.TestCase):
             self.assertFalse((po / "zh_TW.po").exists())
 
             src = po / "zh_CN.po"
-            sig = _derive_signature(src, "zh_CN", "opencc_s2t", "zh_TW")
-            self.assertTrue(_derive_is_current(out / "zh_TW.po", sig))
+            self.assertTrue(_dest_fresh(out / "zh_TW.po", src))
             written = derive_locales(root, po_dir=out, locales=("zh_TW",))
             self.assertEqual(written, [])
             (po / "zh_CN.po").write_text(
@@ -131,6 +129,34 @@ class L10nTierTests(unittest.TestCase):
             )
             written = derive_locales(root, po_dir=out, locales=("zh_TW",))
             self.assertEqual(len(written), 1)
+
+    def test_compile_derived_mo_skips_fresh(self) -> None:
+        import tempfile
+        import time
+
+        from zfr_lib.i18n.builder import compile_derived_mo, derive_locales
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            po = root / "po"
+            po.mkdir()
+            (po / "zh_CN.po").write_text(
+                'msgid ""\nmsgstr ""\n"Content-Type: text/plain; charset=UTF-8\\n"\n'
+                'msgid "软件"\nmsgstr "软件"\n',
+                encoding="utf-8",
+            )
+            (po / "LINGUAS").write_text("zh_CN\n", encoding="utf-8")
+            out = root / "build" / "po"
+            derive_locales(root, po_dir=out, locales=("zh_TW",))
+            first = compile_derived_mo(out, "demo")
+            self.assertEqual(len(first), 1)
+            time.sleep(0.01)
+            second = compile_derived_mo(out, "demo")
+            self.assertEqual(second, [])
+            po_path = out / "zh_TW.po"
+            po_path.write_text(po_path.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+            third = compile_derived_mo(out, "demo")
+            self.assertEqual(len(third), 1)
 
 
 if __name__ == "__main__":

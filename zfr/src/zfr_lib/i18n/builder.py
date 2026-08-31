@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import os
 import re
 import shutil
@@ -30,7 +29,6 @@ _OPENCC_CONFIG = {
 
 _DERIVED_FROM_RE = re.compile(r"^# Derived-From:.*$", re.MULTILINE)
 _DERIVED_METHOD_RE = re.compile(r"^# Derived-Method:.*$", re.MULTILINE)
-_DERIVE_SIG_SUFFIX = ".derive.sig"
 
 
 def default_build_po_dir(root: Path) -> Path:
@@ -148,31 +146,11 @@ def _transform_po_body(body: str, child: str, parent: str, method: str) -> str:
     return _inject_derived_headers(out, parent, method)
 
 
-def _derive_signature(src: Path, parent: str, method: str, child: str) -> str:
-    digest = hashlib.sha256()
-    digest.update(parent.encode())
-    digest.update(b"\0")
-    digest.update(method.encode())
-    digest.update(b"\0")
-    digest.update(child.encode())
-    digest.update(b"\0")
-    with src.open("rb") as fh:
-        for chunk in iter(lambda: fh.read(1 << 20), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
-def _derive_sig_path(dest: Path) -> Path:
-    return dest.with_name(dest.name + _DERIVE_SIG_SUFFIX)
-
-
-def _derive_is_current(dest: Path, signature: str) -> bool:
-    sig_path = _derive_sig_path(dest)
-    return dest.is_file() and sig_path.is_file() and sig_path.read_text(encoding="utf-8") == signature
-
-
-def _write_derive_signature(dest: Path, signature: str) -> None:
-    _derive_sig_path(dest).write_text(signature, encoding="utf-8")
+def _dest_fresh(dest: Path, src: Path) -> bool:
+    """True when *dest* exists and is strictly newer than *src* (mtime)."""
+    if not dest.is_file():
+        return False
+    return dest.stat().st_mtime_ns > src.stat().st_mtime_ns
 
 
 def _locale_explicitly_used(child: str, linguas: set[str]) -> bool:
@@ -208,19 +186,17 @@ def derive_po_file(
     if src is None:
         return None, False
     method = DERIVE_METHOD.get(child, "copy")
-    signature = _derive_signature(src, parent, method, child)
-    if not force and _derive_is_current(dest, signature):
+    if not force and _dest_fresh(dest, src):
         return dest, False
-    body = src.read_text(encoding="utf-8")
-    new_body = _transform_po_body(body, child, parent, method)
-    from ..translate.po_format import po_no_wrap_text
+    from ..translate.po_format import po_prepare_utf8, read_po_text
 
-    new_body = po_no_wrap_text(new_body)
+    body = read_po_text(src)
+    new_body = _transform_po_body(body, child, parent, method)
+    new_body = po_prepare_utf8(new_body)
     if dry_run:
         return dest, True
     out_po_dir.mkdir(parents=True, exist_ok=True)
     dest.write_text(new_body, encoding="utf-8")
-    _write_derive_signature(dest, signature)
     return dest, True
 
 
@@ -234,16 +210,15 @@ def derive_man_file(
     force: bool = False,
     skip_explicit: bool = False,
     linguas: set[str] | None = None,
-) -> Path | None:
+) -> tuple[Path | None, bool]:
+    """Derive a locale man page. Returns ``(path, written)``."""
     child = normalize_locale(child)
     parent = derive_parent(child)
     if parent is None:
-        return None
+        return None, False
     if skip_explicit and linguas and _locale_explicitly_used(child, linguas):
-        return None
+        return None, False
     dest = out_docs_dir / child / stem
-    if dest.is_file() and not force:
-        return dest
     src = src_docs_dir / parent / stem
     if not src.is_file():
         for alias, target in LEGACY_LOCALE_ALIASES.items():
@@ -256,16 +231,23 @@ def derive_man_file(
         built = out_docs_dir / parent / stem
         if built.is_file():
             src = built
+    # English whole-document mans often live at docs/*.adoc (not docs/en/).
     if not src.is_file():
-        return None
+        eng = src_docs_dir / stem
+        if eng.is_file():
+            src = eng
+    if not src.is_file():
+        return None, False
     method = DERIVE_METHOD.get(child, "copy")
+    if not force and _dest_fresh(dest, src):
+        return dest, False
     body = src.read_text(encoding="utf-8")
     new_body = _transform_text(body, child, method)
     if dry_run:
-        return dest
+        return dest, True
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(new_body, encoding="utf-8")
-    return dest
+    return dest, True
 
 
 def _display_path(root: Path, path: Path) -> str:
@@ -318,9 +300,7 @@ def derive_locales(
                 written.append(_display_path(root, po))
         if src_docs.is_dir():
             for adoc in src_docs.glob("*.adoc"):
-                dest = out_docs / child / adoc.name
-                existed = dest.is_file()
-                man = derive_man_file(
+                man, did_write = derive_man_file(
                     src_docs,
                     out_docs,
                     adoc.name,
@@ -330,16 +310,17 @@ def derive_locales(
                     skip_explicit=skip,
                     linguas=linguas,
                 )
-                if man is not None and not dry_run and man.is_file() and (force or not existed):
+                if man is not None and not dry_run and did_write:
                     written.append(_display_path(root, man))
     if stamp is not None and not dry_run:
         stamp.parent.mkdir(parents=True, exist_ok=True)
-        stamp.write_text("\n".join(written) + ("\n" if written else ""), encoding="utf-8")
+        # Always create/update the Meson output stamp under the build tree.
+        stamp.write_text("ok\n", encoding="utf-8")
     return written
 
 
 def compile_derived_mo(po_dir: Path, domain: str) -> list[str]:
-    """Compile flat derived ``*.po`` in *po_dir* to ``<lang>/LC_MESSAGES/<domain>.mo``."""
+    """Compile flat derived ``*.po`` in *po_dir* when ``.mo`` is older than the ``.po``."""
     msgfmt = shutil.which("msgfmt")
     if msgfmt is None:
         return []
@@ -347,6 +328,8 @@ def compile_derived_mo(po_dir: Path, domain: str) -> list[str]:
     for po in sorted(po_dir.glob("*.po")):
         lang = po.stem
         dest = po_dir / lang / "LC_MESSAGES" / f"{domain}.mo"
+        if _dest_fresh(dest, po):
+            continue
         dest.parent.mkdir(parents=True, exist_ok=True)
         proc = subprocess.run([msgfmt, "-o", str(dest), str(po)], check=False)
         if proc.returncode != 0:
@@ -362,7 +345,7 @@ def install_derived_mo(
     localedir: str = "share/locale",
     dest_root: Path | None = None,
 ) -> list[str]:
-    """Install derived ``.mo`` catalogs (those with ``.po.derive.sig``) under *dest_root*.
+    """Install ``.mo`` for each flat derived ``*.po`` under *po_dir*.
 
     *dest_root* defaults to ``$MESON_INSTALL_DESTDIR_PREFIX`` or
     ``$DESTDIR$MESON_INSTALL_PREFIX`` (Meson install-script environment).
@@ -378,12 +361,8 @@ def install_derived_mo(
     if not str(dest_root):
         return []
     installed: list[str] = []
-    for sig in sorted(po_dir.glob(f"*{_DERIVE_SIG_SUFFIX}")):
-        # ``en_GB.po.derive.sig`` → stem before ``.po.derive.sig``
-        name = sig.name
-        if not name.endswith(".po" + _DERIVE_SIG_SUFFIX):
-            continue
-        lang = name[: -len(".po" + _DERIVE_SIG_SUFFIX)]
+    for po in sorted(po_dir.glob("*.po")):
+        lang = po.stem
         mo = po_dir / lang / "LC_MESSAGES" / f"{domain}.mo"
         if not mo.is_file():
             continue

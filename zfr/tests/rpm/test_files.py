@@ -105,6 +105,29 @@ endforeach
             self.assertIn("%{_bindir}/zfr", files)
             self.assertIn("%{_bindir}/zfr-lint", files)
 
+    def test_foreach_man_puffs_mandir(self) -> None:
+        meson = """\
+project('twotree', 'c')
+mandir = prefix / get_option('mandir')
+man_puffs = ['2tree', 'atree']
+foreach puff : man_puffs
+  custom_target(
+    puff + '-man',
+    input: 'docs' / (puff + '.adoc'),
+    output: puff + '.1',
+    command: ['asciidoctor', '@OUTPUT@', '@INPUT@'],
+    install: true,
+    install_dir: mandir / 'man1',
+  )
+endforeach
+"""
+        with tempfile.TemporaryDirectory(prefix="zfr-rpmf-") as tmp:
+            root = Path(tmp)
+            (root / "meson.build").write_text(meson, encoding="utf-8")
+            files = meson_rpm_files(root, "twotree")
+            self.assertIn("%{_mandir}/man1/2tree.1*", files)
+            self.assertIn("%{_mandir}/man1/atree.1*", files)
+
     def test_install_subdir_bindir(self) -> None:
         meson = """\
 project('twomeson', 'c')

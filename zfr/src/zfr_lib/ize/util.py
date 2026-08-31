@@ -460,9 +460,14 @@ def _spec_files(root: Path, lang: str, name: str) -> list[str]:
         files.extend(append_before_doc)
         files.append("%{_datadir}/doc/%{name}/")
 
-    # Keep doc last.
+    # Keep doc last; skip %{name} when Meson already lists the project docdir.
     files = [f for f in files if f != "%{_datadir}/doc/%{name}/"]
-    files.append("%{_datadir}/doc/%{name}/")
+    has_doc = any(
+        f.startswith("%{_datadir}/doc/") or f.startswith("%{_docdir}")
+        for f in files
+    )
+    if not has_doc:
+        files.append("%{_datadir}/doc/%{name}/")
 
     seen: set[str] = set()
     out: list[str] = []

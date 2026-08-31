@@ -348,6 +348,41 @@ def meson_rpm_files(root: Path, name: str) -> list[str]:
         stem, sec = man.rsplit(".", 1)
         add(f"%{{_mandir}}/man{sec[0]}/{stem}.{sec}*")
 
+    # foreach puff : man_puffs → custom_target(output: puff + '.1', install_dir: mandir/…)
+    for m in re.finditer(
+        r"foreach\s+(\w+)\s*:\s*(\w+|\[)(.*?)\bendforeach\b",
+        text,
+        re.S,
+    ):
+        var, head, body = m.group(1), m.group(2), m.group(3)
+        if "custom_target" not in body:
+            continue
+        if not re.search(r"install\s*:\s*true", body):
+            continue
+        if not re.search(r"install_dir:.*mandir|['\"]man[1-9]['\"]", body):
+            continue
+        out_expr = re.search(rf"output:\s*{re.escape(var)}\s*\+\s*['\"]\.1['\"]", body)
+        if out_expr:
+            names: list[str] = []
+            if head == "[":
+                bracket = re.match(r"([^\]]*)\]", body)
+                if bracket:
+                    names = re.findall(r"'([^']+)'", bracket.group(1))
+            else:
+                list_m = re.search(
+                    rf"{re.escape(head)}\s*=\s*\[([^\]]*)\]",
+                    text,
+                    re.S,
+                )
+                if list_m:
+                    names = re.findall(r"'([^']+)'", list_m.group(1))
+            for nm in names:
+                _add_man(f"{nm}.1")
+            continue
+        out_lit = re.search(r"output:\s*'([^']+\.[1-9][a-zA-Z]*)'", body)
+        if out_lit:
+            _add_man(out_lit.group(1))
+
     for block in _meson_call_blocks(text, "custom_target"):
         if not re.search(r"install\s*:\s*true", block):
             continue

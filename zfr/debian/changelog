@@ -1,3 +1,19 @@
+zephyr (2.8.6) testing; urgency=medium
+
+  * i18n derive: drop .derive.sig sidecars; use mtime freshness for derived
+    .po/.mo and man pages; absolute Meson stamp path; install flat build/po
+    *.po catalogs.
+  * ize/lint: read legacy .po encodings and rewrite catalogs as UTF-8
+    (charset header + no-wrap); move RPM spec sync after i18n so locale
+    man globs are included on first run.
+  * ize: foreach man_puffs in RPM %files; dedupe doc paths; debian/control
+    Priority optional, extended Description, empty Depends bash-shlib fix;
+    fallback debian/copyright from c/cpp/bash when lang template lacks it.
+  * lint: debian Priority/Description checks; Java source.long threshold
+    2000; D projects accept test/ or tests/ (lang.d.tests is a note).
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 31 Aug 2026 18:16:00 +0800
+
 zephyr (2.8.5) testing; urgency=medium
 
   * lint ZL079: map debian/zephyr.substvars to <project>.substvars; skip

@@ -14,6 +14,42 @@ _WRAP_CONT_RE = re.compile(
     r'^"[^"\\]*(?:\\.[^"\\]*)*"[^\\]\n"',
     re.MULTILINE,
 )
+_CONTENT_TYPE_RE = re.compile(
+    r'Content-Type:\s*text/plain;\s*charset=([^\s\\"]+)',
+    re.IGNORECASE,
+)
+_CHARSET_LINE_RE = re.compile(
+    r'^("Content-Type:\s*text/plain;\s*charset=)[^\s\\"]+',
+    re.MULTILINE | re.IGNORECASE,
+)
+
+
+def read_po_text(path: Path) -> str:
+    """Read a gettext catalog, honoring its declared charset when not UTF-8."""
+    data = path.read_bytes()
+    try:
+        return data.decode("utf-8")
+    except UnicodeDecodeError:
+        pass
+    head = data[:4096].decode("latin-1", errors="replace")
+    m = _CONTENT_TYPE_RE.search(head)
+    if m:
+        charset = m.group(1).strip()
+        try:
+            return data.decode(charset)
+        except (LookupError, UnicodeDecodeError):
+            pass
+    return data.decode("latin-1")
+
+
+def po_normalize_utf8(text: str) -> str:
+    """Ensure gettext header declares UTF-8 charset."""
+    return _CHARSET_LINE_RE.sub(r"\1UTF-8", text)
+
+
+def po_prepare_utf8(text: str) -> str:
+    """Remove line wrapping and normalize charset header to UTF-8."""
+    return po_normalize_utf8(po_no_wrap_text(text))
 
 
 def po_has_line_wrapping(text: str) -> bool:
@@ -71,12 +107,13 @@ def po_no_wrap_text(text: str) -> str:
 
 
 def po_no_wrap_file(path: Path) -> bool:
-    """Rewrite *path* without line wrapping. Returns True when changed."""
-    original = path.read_text(encoding="utf-8")
-    updated = po_no_wrap_text(original)
-    if updated == original:
+    """Rewrite *path* as UTF-8 without line wrapping. Returns True when changed."""
+    original_bytes = path.read_bytes()
+    updated = po_prepare_utf8(read_po_text(path))
+    new_bytes = updated.encode("utf-8")
+    if new_bytes == original_bytes:
         return False
-    path.write_text(updated, encoding="utf-8")
+    path.write_bytes(new_bytes)
     return True
 
 

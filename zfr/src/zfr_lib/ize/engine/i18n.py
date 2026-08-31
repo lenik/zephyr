@@ -10,17 +10,20 @@ if TYPE_CHECKING:
 
 
 def ensure_po_no_wrap(ize: "Ize") -> None:
-    from ...translate.po_format import po_has_line_wrapping, po_no_wrap_file
+    from ...translate.po_format import po_has_line_wrapping, po_no_wrap_file, po_prepare_utf8, read_po_text
 
     po_dir = ize.root / "po"
     if not po_dir.is_dir():
         return
     for po in sorted(po_dir.glob("*.po")):
         try:
-            text = po.read_text(encoding="utf-8")
+            original_bytes = po.read_bytes()
+            text = read_po_text(po)
         except OSError:
             continue
-        if not po_has_line_wrapping(text):
+        updated = po_prepare_utf8(text)
+        needs_write = updated.encode("utf-8") != original_bytes
+        if not needs_write and not po_has_line_wrapping(text):
             continue
         rel = str(po.relative_to(ize.root))
         if ize.dry_run:

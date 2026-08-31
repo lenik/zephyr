@@ -28,11 +28,11 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
 
 
 def _lint(root: Path, role: str) -> list[Finding]:
-    if (root / "tests").is_dir():
+    if (root / "tests").is_dir() or (root / "test").is_dir():
         return [Finding("ok", "lang.d.tests", _("tests/ present"))]
     return [
         Finding(
-            "warn",
+            "note",
             "lang.d.tests",
             _("no tests/ (D template uses ldc/dmd + meson test)"),
             "tests/",

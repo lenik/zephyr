@@ -212,4 +212,36 @@ def check_debian(root: Path, lang: str, role: str) -> list[Finding]:
             )
         else:
             out.append(Finding("ok", "debian.Depends.bash-shlib", _("Depends includes bash-shlib"), rel))
+
+    priority = src.get("Priority", "")
+    if priority == "extra":
+        out.append(
+            Finding(
+                "warn",
+                "debian.Priority",
+                _("Priority: extra is deprecated"),
+                rel,
+                fix=_("Priority: optional (run `zfr ize` to fix)."),
+            )
+        )
+    elif priority:
+        out.append(Finding("ok", "debian.Priority", _("Priority: %s") % priority, rel))
+
+    desc = pkg.get("Description", "")
+    if desc:
+        desc_lines = [ln for ln in desc.splitlines() if ln.strip()]
+        if len(desc_lines) >= 2:
+            out.append(
+                Finding("ok", "debian.Description", _("extended Description present"), rel)
+            )
+        else:
+            out.append(
+                Finding(
+                    "warn",
+                    "debian.Description",
+                    _("Description missing extended paragraph"),
+                    rel,
+                    fix=_("Add an indented continuation line after the synopsis (run `zfr ize`)."),
+                )
+            )
     return out

@@ -32,6 +32,8 @@ class I18nMesonDeriveTests(unittest.TestCase):
             self.assertIn("add_install_script", text)
             self.assertIn("MESON_INSTALL_DESTDIR_PREFIX", text)
             self.assertIn("meson.project_name()", text)
+            self.assertIn("_po_build / 'i18n-derive.stamp'", text)
+            self.assertIn('for f in "$po"/*.po', text)
             self.assertIn(r"split('\n')", text)
 
     def test_ensure_po_meson_derive_upgrades_incomplete_hook(self) -> None:
@@ -54,6 +56,8 @@ class I18nMesonDeriveTests(unittest.TestCase):
             self.assertIn("add_install_script", text)
             self.assertIn("--compile-mo", text)
             self.assertIn("MESON_INSTALL_DESTDIR_PREFIX", text)
+            self.assertIn("_po_build / 'i18n-derive.stamp'", text)
+            self.assertIn('for f in "$po"/*.po', text)
 
     def test_catalog_locales_includes_derived(self) -> None:
         root = Path(__file__).resolve().parents[2]

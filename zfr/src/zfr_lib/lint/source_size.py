@@ -57,15 +57,16 @@ def check_source_size(root: Path, role: str) -> list[Finding]:
             continue
         lines = _count_lines(path)
         rel = _rel(root, path)
-        if lines > _WARN_LINES:
+        warn_limit = 2000 if path.suffix == ".java" else _WARN_LINES
+        if lines > warn_limit:
             out.append(
                 Finding(
                     "warn",
                     "source.long",
                     _("%(rel)s is %(lines)d lines (>%(limit)d); file is very long")
-                    % {"rel": rel, "lines": lines, "limit": _WARN_LINES},
+                    % {"rel": rel, "lines": lines, "limit": warn_limit},
                     rel,
-                    line=_WARN_LINES + 1,
+                    line=warn_limit + 1,
                     fix=_extract_subdir_fix(rel),
                 )
             )
