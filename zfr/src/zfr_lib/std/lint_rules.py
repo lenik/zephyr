@@ -88,6 +88,12 @@ _LINT_RULES: tuple[StdRule, ...] = (
     StdRule("ZL080", "readme.placeholder.*", "README still has template placeholder banner", "varies"),
     StdRule("ZL081", "readme.*", "README has no template banner", "ok"),
     StdRule("ZL082", "i18n.po.wrap", "gettext .po catalogs use --no-wrap (no line wrapping)", "warn"),
+    StdRule(
+        "ZL083",
+        "layout.gitignore*",
+        "Root and component .gitignore coverage (node_modules/, dist/, backend/src/generated/, …)",
+        "varies",
+    ),
 )
 
 LINT_RULES = RuleRegistry(_LINT_RULES)

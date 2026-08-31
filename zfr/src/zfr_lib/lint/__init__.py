@@ -32,6 +32,7 @@ def collect_findings(
     root: Path, *, l10n_level: str = "L1"
 ) -> tuple[str, str, str, list[Finding]]:
     from .debian import check_debian
+    from .gitignore import check_gitignore
     from .i18n_check import check_i18n
     from .identity import check_identity
     from .lang_bits import check_lang_bits
@@ -58,6 +59,7 @@ def collect_findings(
     name = src.get("Source") or meson.get("name") or root.name
     findings: list[Finding] = []
     findings.extend(check_layout(root, lang, role))
+    findings.extend(check_gitignore(root, role))
     findings.extend(check_identity(root, lang, role))
     findings.extend(check_meson(root, lang))
     findings.extend(check_debian(root, lang, role))
@@ -78,12 +80,16 @@ def cmd_lint(
     strict: bool = False,
     l10n_level: str = "L1",
     style_info: bool | None = None,
+    for_ai_purpose: bool | None = None,
     workdir: Path | None = None,
     uncheck: list[str] | None = None,
 ) -> int:
+    from ..terminal import resolve_for_ai_purpose
+
     root = _resolve_lint_root(find_project_dir(workdir))
     name, lang, role, findings = collect_findings(root, l10n_level=l10n_level)
     findings = filter_findings(findings, uncheck)
+    ai = resolve_for_ai_purpose(for_ai_purpose)
     sys.stdout.write(
         format_report(
             root,
@@ -95,6 +101,7 @@ def cmd_lint(
             quiet=quiet,
             color=color,
             style_info=style_info,
+            for_ai_purpose=ai,
         )
     )
     sys.stdout.flush()
@@ -119,6 +126,8 @@ DESCRIPTION = _(
 
 
 def add_arguments(p: argparse.ArgumentParser) -> None:
+    from ..terminal import add_for_ai_purpose_arguments
+
     p.add_argument("-v", "--verbose", action="store_true", help=_("show passing checks too"))
     p.add_argument("-q", "--quiet", action="store_true", help=_("only print errors"))
     p.add_argument("--strict", action="store_true", help=_("treat warnings as failures (exit 1)"))
@@ -158,6 +167,7 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         help=_("hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"),
     )
     p.set_defaults(style_info=None)
+    add_for_ai_purpose_arguments(p)
     p.add_argument(
         "-u",
         "--uncheck",
@@ -193,6 +203,7 @@ def run(args: argparse.Namespace) -> int:
         strict=args.strict,
         l10n_level=args.l10n_level or "L1",
         style_info=args.style_info,
+        for_ai_purpose=getattr(args, "for_ai_purpose", None),
         uncheck=args.uncheck,
     )
 

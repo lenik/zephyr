@@ -18,13 +18,14 @@ add_src_to_path()
 
 class LintStyleInfoDefaultsTests(unittest.TestCase):
     def test_non_interactive_defaults_info_on(self) -> None:
-        from zfr_lib.terminal import default_lint_style_info
+        from zfr_lib.terminal import default_for_ai_purpose, default_lint_style_info
 
         with patch.object(sys.stdout, "isatty", return_value=False):
             self.assertTrue(default_lint_style_info())
+            self.assertTrue(default_for_ai_purpose())
 
     def test_plain_interactive_shell_defaults_info_off(self) -> None:
-        from zfr_lib.terminal import default_lint_style_info
+        from zfr_lib.terminal import default_for_ai_purpose, default_lint_style_info
 
         env = {
             k: v
@@ -42,13 +43,15 @@ class LintStyleInfoDefaultsTests(unittest.TestCase):
         with patch.object(sys.stdout, "isatty", return_value=True):
             with patch.dict(os.environ, env, clear=True):
                 self.assertFalse(default_lint_style_info())
+                self.assertFalse(default_for_ai_purpose())
 
     def test_cursor_terminal_defaults_info_on(self) -> None:
-        from zfr_lib.terminal import default_lint_style_info
+        from zfr_lib.terminal import default_for_ai_purpose, default_lint_style_info
 
         with patch.object(sys.stdout, "isatty", return_value=True):
             with patch.dict(os.environ, {"TERM_PROGRAM": "cursor"}, clear=False):
                 self.assertTrue(default_lint_style_info())
+                self.assertTrue(default_for_ai_purpose())
 
     def test_vscode_pid_defaults_info_on(self) -> None:
         from zfr_lib.terminal import default_lint_style_info
@@ -65,6 +68,93 @@ class LintStyleInfoDefaultsTests(unittest.TestCase):
         with patch.object(sys.stdout, "isatty", return_value=True):
             with patch.dict(os.environ, {"TERM_PROGRAM": "windsurf"}, clear=False):
                 self.assertTrue(default_lint_style_info())
+
+
+class GitignoreLintTests(unittest.TestCase):
+    def test_backend_requires_generated_ignore(self) -> None:
+        from zfr_lib.lint.gitignore import check_gitignore
+
+        with tempfile.TemporaryDirectory(prefix="zfr-gi-") as tmp:
+            root = Path(tmp)
+            (root / "package.json").write_text("{}\n", encoding="utf-8")
+            (root / ".gitignore").write_text("node_modules/\ndist/\n", encoding="utf-8")
+            (root / "backend").mkdir()
+            findings = check_gitignore(root, "app")
+            missing = [f for f in findings if f.code == "layout.gitignore.backend"]
+            self.assertTrue(missing)
+            self.assertEqual(missing[0].severity, "warn")
+
+    def test_backend_gitignore_ok(self) -> None:
+        from zfr_lib.lint.gitignore import check_gitignore
+
+        with tempfile.TemporaryDirectory(prefix="zfr-gi-ok-") as tmp:
+            root = Path(tmp)
+            (root / "package.json").write_text("{}\n", encoding="utf-8")
+            (root / ".gitignore").write_text("node_modules/\ndist/\n", encoding="utf-8")
+            (root / "backend").mkdir()
+            (root / "backend" / ".gitignore").write_text(
+                "src/generated/\nnode_modules/\ndist/\n",
+                encoding="utf-8",
+            )
+            findings = check_gitignore(root, "app")
+            self.assertTrue(
+                any(
+                    f.severity == "ok" and f.code == "layout.gitignore.backend"
+                    for f in findings
+                )
+            )
+
+
+class AiHintReportTests(unittest.TestCase):
+    def test_ai_hint_when_pass_and_dirty(self) -> None:
+        from zfr_lib.finding import Finding
+        from zfr_lib.lint.report import format_report
+
+        with tempfile.TemporaryDirectory(prefix="zfr-ai-hint-") as tmp:
+            root = Path(tmp)
+            text = format_report(
+                root,
+                "demo",
+                "c",
+                "app",
+                [Finding("ok", "layout.LICENSE", "present", "LICENSE")],
+                quiet=True,
+                style_info=False,
+                for_ai_purpose=True,
+            )
+            # quiet suppresses AI hint; re-run without quiet + patched dirty
+            with patch("zfr_lib.lint.report._git_working_tree_dirty", return_value=True):
+                text = format_report(
+                    root,
+                    "demo",
+                    "c",
+                    "app",
+                    [Finding("ok", "layout.LICENSE", "present", "LICENSE")],
+                    quiet=False,
+                    style_info=False,
+                    for_ai_purpose=True,
+                )
+            self.assertIn("AI hint", text)
+            self.assertIn("changelog", text.lower())
+
+    def test_no_ai_hint_when_clean(self) -> None:
+        from zfr_lib.finding import Finding
+        from zfr_lib.lint.report import format_report
+
+        with tempfile.TemporaryDirectory(prefix="zfr-ai-clean-") as tmp:
+            root = Path(tmp)
+            with patch("zfr_lib.lint.report._git_working_tree_dirty", return_value=False):
+                text = format_report(
+                    root,
+                    "demo",
+                    "c",
+                    "app",
+                    [Finding("ok", "layout.LICENSE", "present", "LICENSE")],
+                    quiet=False,
+                    style_info=False,
+                    for_ai_purpose=True,
+                )
+            self.assertNotIn("AI hint", text)
 
 
 class ZephyrLintSourceTests(unittest.TestCase):

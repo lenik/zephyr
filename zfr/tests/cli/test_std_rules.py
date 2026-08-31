@@ -27,6 +27,7 @@ class StdRuleTests(unittest.TestCase):
 
     def test_lint_rule_lookup_pattern(self) -> None:
         self.assertEqual(lint_rule_id("layout.meson.build"), "ZL003")
+        self.assertEqual(lint_rule_id("layout.gitignore.backend"), "ZL083")
         self.assertEqual(lint_rule_id("debian.build-depends.meson"), "ZL008")
         self.assertEqual(lint_rule_id("readme.placeholder.README.md"), "ZL080")
 

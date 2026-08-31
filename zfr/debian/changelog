@@ -1,3 +1,15 @@
+zephyr (2.8.7) testing; urgency=medium
+
+  * lint ZL083: check root/component .gitignore (node_modules/, dist/,
+    backend/src/generated/, web/, mobile/, prisma/, e2e/).
+  * zfr: global --for-ai-purpose/--no-for-ai-purpose (auto for AI terminals
+    and non-interactive stdout); lint prints an AI dirty-tree hint to update
+    changelog and commit verbosely after PASS.
+  * ize: completion stubs only for real CLI puffs (docs man1 / executable /
+    *.bash) — skip src modules and lib*.so man stems (audiocfg).
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Tue, 01 Sep 2026 01:47:00 +0800
+
 zephyr (2.8.6) testing; urgency=medium
 
   * i18n derive: drop .derive.sig sidecars; use mtime freshness for derived
