@@ -77,6 +77,7 @@ install_data(
         'src/zfr-package',
         'src/zfr-lasterror',
         'src/zfr-release',
+        'src/zfr-publish',
     ],
     install_dir: pkgdatadir / 'zfr',
     install_mode: 'rwxr-xr-x',
@@ -122,6 +123,7 @@ wrapper_names = [
     'zfr-package',
     'zfr-lasterror',
     'zfr-release',
+    'zfr-publish',
 ]
 
 uninst_tool_cfg = configuration_data()
@@ -201,7 +203,7 @@ foreach lang : man_i18n_langs
 endforeach
 
 # Bash completion (same script under several command names)
-foreach completion_name : ['zfr', 'zfr-create', 'zfr-rename', 'zfr-add', 'zfr-remove', 'zfr-about', 'zfr-version', 'zfr-lint', 'zfr-dist', 'zfr-ize', 'zfr-i18n', 'zfr-translate', 'zfr-shape', 'zfr-build', 'zfr-package', 'zfr-lasterror', 'zfr-release']
+foreach completion_name : ['zfr', 'zfr-create', 'zfr-rename', 'zfr-add', 'zfr-remove', 'zfr-about', 'zfr-version', 'zfr-lint', 'zfr-dist', 'zfr-ize', 'zfr-i18n', 'zfr-translate', 'zfr-shape', 'zfr-build', 'zfr-package', 'zfr-lasterror', 'zfr-release', 'zfr-publish']
     install_data(
         'zfr.bash',
         install_dir: datadir / 'bash-completion' / 'completions',

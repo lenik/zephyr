@@ -1,3 +1,14 @@
+zephyr (2.8.11) testing; urgency=medium
+
+  * zfr release / zfr-release: native pipeline (detect, tag, build/package,
+    deb install, private-cloud upload, gh release); no longer execs
+    gh-makerelease. Prefer ~/.config/zfr-release.options (legacy
+    gh-makerelease.options ok).
+  * Add zfr publish / zfr-publish: same as release, then marketplace publish
+    (npm / VSIX). Marketplace publish removed from zfr release.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 06 Sep 2026 21:10:00 +0800
+
 zephyr (2.8.10) testing; urgency=medium
 
   * Refactor zfr_lib.pkg into provider interface + Deb/Npm/Make implementations

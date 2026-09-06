@@ -34,6 +34,7 @@ WRAPPERS = (
     "zfr-package",
     "zfr-lasterror",
     "zfr-release",
+    "zfr-publish",
 )
 
 SUBCOMMANDS = (
@@ -50,6 +51,7 @@ SUBCOMMANDS = (
     "package",
     "lasterror",
     "release",
+    "publish",
     "ize",
     "i18n",
     "translate",
@@ -163,28 +165,30 @@ class ZephyrDispatcherTests(unittest.TestCase):
 
     def test_release_help_and_argv(self) -> None:
         proc = run_zephyr("release", "-h")
-        self.assertIn("gh-makerelease", proc.stdout)
-        from zfr_lib.release import add_release_arguments, compose_makerelease_argv
+        self.assertIn("--local", proc.stdout)
+        self.assertIn("--test", proc.stdout)
+        self.assertNotIn("exec gh-makerelease", proc.stdout)
+        from zfr_lib.release import add_release_arguments, namespace_to_options
 
         p = argparse.ArgumentParser()
         add_release_arguments(p)
         ns = p.parse_args(["-l", "--unsigned"])
-        argv = compose_makerelease_argv(ns)
-        self.assertEqual(argv[0:2], ["-j", str(ns.jobs)])
-        self.assertIn("--local", argv)
-        self.assertIn("--unsigned", argv)
-        self.assertIn("--no-upload", argv)
-        self.assertIn("--no-publish", argv)
+        opts = namespace_to_options(ns)
+        self.assertTrue(opts.local)
+        self.assertTrue(opts.no_upload)
+        self.assertIn("-us", opts.dpkg_buildopts)
         ns_test = p.parse_args(["-t"])
-        argv_test = compose_makerelease_argv(ns_test)
-        self.assertEqual(argv_test[0:2], ["-j", str(ns_test.jobs)])
-        self.assertIn("--local", argv_test)
-        self.assertIn("--no-install", argv_test)
-        self.assertIn("--no-upload", argv_test)
-        self.assertIn("--no-publish", argv_test)
+        opts_test = namespace_to_options(ns_test)
+        self.assertTrue(opts_test.local)
+        self.assertTrue(opts_test.no_install)
+        self.assertTrue(opts_test.no_upload)
         ns_j = p.parse_args(["-j", "3", "-t"])
-        argv_j = compose_makerelease_argv(ns_j)
-        self.assertEqual(argv_j[0:2], ["-j", "3"])
+        opts_j = namespace_to_options(ns_j)
+        self.assertEqual(opts_j.jobs, 3)
+
+        pub = run_zephyr("publish", "-h")
+        self.assertIn("marketplace", pub.stdout.lower())
+        self.assertNotIn("--no-publish", pub.stdout)
 
 
 class ZephyrLangScoreTests(unittest.TestCase):

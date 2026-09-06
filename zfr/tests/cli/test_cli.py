@@ -215,59 +215,43 @@ class ZephyrDetectTests(unittest.TestCase):
             text=True,
         )
         self.assertEqual(proc.returncode, 0, proc.stderr)
-        self.assertIn("gh-makerelease", proc.stdout)
         self.assertIn("--local", proc.stdout)
         self.assertIn("--unsigned", proc.stdout)
+        self.assertIn("--test", proc.stdout)
+        self.assertNotIn("exec gh-makerelease", proc.stdout)
 
-    def test_release_recomposes_options(self) -> None:
+    def test_release_options_implications(self) -> None:
         import argparse
 
-        from zfr_lib.release import add_release_arguments, compose_makerelease_argv
+        from zfr_lib.release import add_release_arguments, namespace_to_options
 
         p = argparse.ArgumentParser()
         add_release_arguments(p)
         ns = p.parse_args(
             ["-l", "--unsigned", "-I", "-vv", "-p", "mentors", "-B", "b4f-debian:sid"]
         )
-        argv = compose_makerelease_argv(ns)
-        self.assertEqual(argv[0:2], ["-j", str(ns.jobs)])
-        self.assertEqual(
-            argv[2:],
-            [
-                "--unsigned",
-                "--dput-host",
-                "mentors",
-                "--base-image",
-                "b4f-debian:sid",
-                "--local",
-                "--no-install",
-                "--no-upload",
-                "--no-publish",
-                "--verbose",
-                "--verbose",
-            ],
-        )
+        opts = namespace_to_options(ns)
+        self.assertTrue(opts.local)
+        self.assertTrue(opts.no_upload)
+        self.assertTrue(opts.no_install)
+        self.assertEqual(opts.dput_host, "mentors")
+        self.assertEqual(opts.base_image, "b4f-debian:sid")
+        self.assertIn("-us", opts.dpkg_buildopts)
+        self.assertGreater(opts.jobs, 0)
 
     def test_release_test_alias_implies_local_no_install(self) -> None:
         import argparse
 
-        from zfr_lib.release import add_release_arguments, compose_makerelease_argv
+        from zfr_lib.release import add_release_arguments, namespace_to_options
 
         p = argparse.ArgumentParser()
         add_release_arguments(p)
         ns = p.parse_args(["--test", "--unsigned"])
-        argv = compose_makerelease_argv(ns)
-        self.assertEqual(argv[0:2], ["-j", str(ns.jobs)])
-        self.assertEqual(
-            argv[2:],
-            [
-                "--unsigned",
-                "--local",
-                "--no-install",
-                "--no-upload",
-                "--no-publish",
-            ],
-        )
+        opts = namespace_to_options(ns)
+        self.assertTrue(opts.local)
+        self.assertTrue(opts.no_install)
+        self.assertTrue(opts.no_upload)
+        self.assertIn("-us", opts.dpkg_buildopts)
 
 
 class ZephyrCreateProjectTests(unittest.TestCase):

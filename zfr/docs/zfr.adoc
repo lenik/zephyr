@@ -51,8 +51,8 @@ zfr - multi-language CLI project templates and helper tools
 
 *zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
 *zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-build*, *zfr-package*,
-*zfr-lasterror*, *zfr-ize*, *zfr-shape*, and *zfr-release* are thin wrappers
-around the same subcommands.
+*zfr-lasterror*, *zfr-ize*, *zfr-shape*, *zfr-release*, and *zfr-publish* are
+thin wrappers around the same subcommands.
 
 == Description
 
@@ -196,7 +196,7 @@ Commands that walk from the current directory resolve *packagedir* first.
   Detect the project build system (*meson*, *cmake*, *autotools*, *cargo*,
   *go*, *npm*, or *make*) and compile locally. *\-j* / *--job* _N_ sets
   parallel jobs (default: number of CPU cores). *--detect-only* prints the
-  detected system name. Used by *gh-makerelease*(1) before packaging.
+  detected system name. Used by *zfr-release*(1) / *zfr release* before packaging.
 
 *package*::
   Detect packaging types (*deb*, *rpm*, *npm*/*vsix*, *mingw*, …) and build
@@ -213,11 +213,18 @@ Commands that walk from the current directory resolve *packagedir* first.
   original order; *q* quits. *--replay* _KIND_ replays non-interactively.
 
 *release*::
-  Parse the same options as *gh-makerelease*(1), rebuild argv, and *exec*
-  *gh-makerelease* from PATH. Tagging and GitHub release stay in
-  *gh-makerelease*; build/package steps call *zfr-build* and *zfr-package*.
-  The *zephyr* project is released from the git checkout root (language
-  templates plus *zfr/*). See *Options for release* below.
+  Native release pipeline (also *zfr-release*): detect project type, create and
+  push a git tag, build and package via the same APIs as *zfr build* /
+  *zfr package*, optionally install local _.deb_ files, upload deb/rpm to the
+  private pool (*dput*), and create a GitHub release with *gh*(1). Does **not**
+  publish to npm / VSIX marketplaces — use *publish* for that. Defaults may be
+  loaded from *~/.config/zfr-release.options* (legacy *gh-makerelease.options*
+  still accepted). See *Options for release* below.
+
+*publish*::
+  Same as *release*, then publish to public marketplaces when defined for the
+  project (currently *npm* and *VSIX*). Also available as *zfr-publish*.
+  Shares *Options for release*.
 
 *ize*::
   Refactor the current project in place so it matches current zephyr
@@ -366,10 +373,12 @@ Options for *dist*:
 *--tests*::
   Run tests during *meson dist* (default is *--no-tests*).
 
-Options for *release* (parsed here, passed through to *gh-makerelease*):
+Options for *release* / *zfr-release* / *publish* / *zfr-publish*:
 
 *-j, --job* _N_::
-  Parallel jobs passed to *zfr-build* / *zfr-package* (default: CPU cores).
+  Parallel jobs for build and packaging (default: CPU cores).
+*-C, --chdir* _DIR_::
+  Change to _DIR_ before detecting the project.
 *-b, --build-binary*::
   Debian binary-only build (*-b*); no _.dsc_.
 *-n, --no-pre-clean*::
@@ -388,7 +397,7 @@ Options for *release* (parsed here, passed through to *gh-makerelease*):
   Run *build4* over SSH on *SERVER* (implies *-d*).
 *-l, --local*::
   Build only; do not tag, push, or create a GitHub release.
-  Implies *-U* (*--no-upload*) and *-P* (*--no-publish*).
+  Implies *-U* (*--no-upload*). For *publish*, also skips marketplaces.
 *-t, --test*::
   Alias for *-l* *-I*: local build without installing packages.
 *-f, --force*::
@@ -401,8 +410,6 @@ Options for *release* (parsed here, passed through to *gh-makerelease*):
   Skip *dput* of the _.changes_ file. Implied by *-l*.
 *-R, --no-release*::
   Skip creating the GitHub release.
-*-P, --no-publish*::
-  Skip VSIX marketplace publish. Implied by *-l*.
 *-Y, --no-rpm*::
   Skip *make -C rpm rpm srpm*.
 *-D, --no-deb*::

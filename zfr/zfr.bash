@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 _zfr_langs='antlr as bash bison c clib cobol cpp cpplib csharp d elixir erlang fortran gcc go haskell java kotlin lua nim ocaml pascal perl python ruby rust smalltalk swift typescript zig'
-_zfr_cmds='create rename add remove about version lint shape dist build package lasterror ize release detect help'
+_zfr_cmds='create rename add remove about version lint shape dist build package lasterror ize release publish detect help'
 
 _zfr()
 {
@@ -13,7 +13,7 @@ _zfr()
 	local i
 	for ((i = 1; i < cword; i++)); do
 		case "${words[i]}" in
-			create|rename|add|remove|about|version|lint|shape|dist|build|package|lasterror|ize|release|detect|help)
+			create|rename|add|remove|about|version|lint|shape|dist|build|package|lasterror|ize|release|publish|detect|help)
 				cmd="${words[i]}"
 				break
 				;;
@@ -152,13 +152,24 @@ _zfr()
 			;;
 		release)
 			case $prev in
-				-j|--job|-p|--dput-host|-B|--base-image|-s|--docker-server)
+				-j|--job|-C|--chdir|-p|--dput-host|-B|--base-image|-s|--docker-server)
 					COMPREPLY=()
 					return
 					;;
 			esac
 			if [[ $cur == -* ]]; then
-				COMPREPLY=($(compgen -W '-j --job -b --build-binary -n --no-pre-clean -u --upload --unsigned -p --dput-host -d --docker -B --base-image -s --docker-server -l --local -t --test -f --force -I --no-install -T --no-tag -U --no-upload -R --no-release -P --no-publish -Y --no-rpm -D --no-deb -v --verbose -q --quiet --help' -- "$cur"))
+				COMPREPLY=($(compgen -W '-j --job -C --chdir -b --build-binary -n --no-pre-clean -u --upload --unsigned -p --dput-host -d --docker -B --base-image -s --docker-server -l --local -t --test -f --force -I --no-install -T --no-tag -U --no-upload -R --no-release -Y --no-rpm -D --no-deb -v --verbose -q --quiet --help' -- "$cur"))
+			fi
+			;;
+		publish)
+			case $prev in
+				-j|--job|-C|--chdir|-p|--dput-host|-B|--base-image|-s|--docker-server)
+					COMPREPLY=()
+					return
+					;;
+			esac
+			if [[ $cur == -* ]]; then
+				COMPREPLY=($(compgen -W '-j --job -C --chdir -b --build-binary -n --no-pre-clean -u --upload --unsigned -p --dput-host -d --docker -B --base-image -s --docker-server -l --local -t --test -f --force -I --no-install -T --no-tag -U --no-upload -R --no-release -Y --no-rpm -D --no-deb -v --verbose -q --quiet --help' -- "$cur"))
 			fi
 			;;
 		detect|help)
@@ -315,17 +326,34 @@ _zfr_release()
 	local cur prev words cword
 	_init_completion || return
 	case $prev in
-		-j|--job|-p|--dput-host|-B|--base-image|-s|--docker-server)
+		-j|--job|-C|--chdir|-p|--dput-host|-B|--base-image|-s|--docker-server)
 			COMPREPLY=()
 			return
 			;;
 	esac
 	if [[ $cur == -* ]]; then
-		COMPREPLY=($(compgen -W '-j --job -b --build-binary -n --no-pre-clean -u --upload --unsigned -p --dput-host -d --docker -B --base-image -s --docker-server -l --local -t --test -f --force -I --no-install -T --no-tag -U --no-upload -R --no-release -P --no-publish -Y --no-rpm -D --no-deb -v --verbose -q --quiet --help' -- "$cur"))
+		COMPREPLY=($(compgen -W '-j --job -C --chdir -b --build-binary -n --no-pre-clean -u --upload --unsigned -p --dput-host -d --docker -B --base-image -s --docker-server -l --local -t --test -f --force -I --no-install -T --no-tag -U --no-upload -R --no-release -Y --no-rpm -D --no-deb -v --verbose -q --quiet --help' -- "$cur"))
 	fi
 }
 
 complete -F _zfr_release zfr-release
+
+_zfr_publish()
+{
+	local cur prev words cword
+	_init_completion || return
+	case $prev in
+		-j|--job|-C|--chdir|-p|--dput-host|-B|--base-image|-s|--docker-server)
+			COMPREPLY=()
+			return
+			;;
+	esac
+	if [[ $cur == -* ]]; then
+		COMPREPLY=($(compgen -W '-j --job -C --chdir -b --build-binary -n --no-pre-clean -u --upload --unsigned -p --dput-host -d --docker -B --base-image -s --docker-server -l --local -t --test -f --force -I --no-install -T --no-tag -U --no-upload -R --no-release -Y --no-rpm -D --no-deb -v --verbose -q --quiet --help' -- "$cur"))
+	fi
+}
+
+complete -F _zfr_publish zfr-publish
 
 _zfr_build()
 {
