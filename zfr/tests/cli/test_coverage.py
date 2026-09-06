@@ -189,6 +189,11 @@ class ZephyrDispatcherTests(unittest.TestCase):
         pub = run_zephyr("publish", "-h")
         self.assertIn("marketplace", pub.stdout.lower())
         self.assertNotIn("--no-publish", pub.stdout)
+        # Explicit alias: p → publish (package still via pac/pack/package).
+        p_alias = run_zephyr("p", "-h")
+        self.assertIn("marketplace", p_alias.stdout.lower())
+        pac = run_zephyr("pac", "-h")
+        self.assertIn("packaging", pac.stdout.lower())
 
 
 class ZephyrLangScoreTests(unittest.TestCase):
