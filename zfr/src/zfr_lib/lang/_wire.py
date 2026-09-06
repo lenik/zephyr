@@ -16,10 +16,36 @@ from ._spec import LangSpec, WireSpec
 
 
 def append_man_custom_target(meson: Path, name: str) -> None:
+    """Register *name* for man page build.
+
+    Prefer appending to an existing ``man_puffs`` / foreach man loop so Meson
+    keeps a single foreach. Fall back to an individual ``custom_target``.
+    """
     if not meson.is_file():
         return
     text = meson.read_text(encoding="utf-8")
     if f"'{name}-man'" in text or f'"{name}-man"' in text:
+        return
+    # Already covered by expression-style foreach (apps.keys() / puff + '-man').
+    if re.search(r"""\+\s*['"]-man['"]""", text) and (
+        f"'{name}'" in text or f'"{name}"' in text
+    ):
+        # Name may already be in apps dict / list; if man_puffs exists, ensure listed.
+        pass
+    m = re.search(r"man_puffs\s*=\s*\[([^\]]*)\]", text, re.S)
+    if m:
+        body = m.group(1)
+        if re.search(rf"['\"]{re.escape(name)}['\"]", body):
+            return
+        # Insert before closing of the list.
+        insert = m.end(1)
+        sep = "" if not body.strip() or body.rstrip().endswith(",") else ","
+        addition = f"{sep}\n    '{name}',"
+        meson.write_text(text[:insert] + addition + text[insert:], encoding="utf-8")
+        return
+    if re.search(r"""\+\s*['"]-man['"]""", text):
+        # Foreach without man_puffs (e.g. apps.keys()) — apps list wiring is
+        # handled separately; do not add a duplicate individual target.
         return
     block = f"""
 custom_target(

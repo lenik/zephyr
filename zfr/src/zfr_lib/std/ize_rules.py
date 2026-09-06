@@ -26,6 +26,11 @@ _IZE_RULES: tuple[StdRule, ...] = (
     StdRule("ZI018", "ize.i18n.coverage", "Ensure LINGUAS + .po for lint l10n level"),
     StdRule("ZI019", "ize.i18n.man-locale", "Scaffold docs/<locale>/*.adoc for lint l10n level"),
     StdRule("ZI020", "ize.rpm.leftover", "Remove project-local rpmbuild/ leftover tree"),
+    StdRule(
+        "ZI021",
+        "ize.c.bas",
+        "C-family bas i18n/logger/LOCALEDIR and gettext spacing",
+    ),
 )
 
 IZE_RULES = RuleRegistry(_IZE_RULES)

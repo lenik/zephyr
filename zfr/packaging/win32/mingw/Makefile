@@ -31,8 +31,9 @@ stage:
 	elif [ -n "$(MINGW_CC)" ]; then \
 		meson setup "$(BUILD)" --cross-file "$(CROSS)" --prefix=/ --buildtype=release; \
 	else \
-		echo "mingw: need MSYS/MinGW or x86_64-w64-mingw32-gcc" >&2; \
-		exit 1; \
+		echo "mingw: IGNORED — need MSYS/MinGW or x86_64-w64-mingw32-gcc" >&2; \
+		touch "$(STAGE)/.mingw-ignored"; \
+		exit 0; \
 	fi
 	meson compile -C "$(BUILD)"
 	DESTDIR="$(STAGE)" meson install -C "$(BUILD)"
@@ -40,6 +41,10 @@ stage:
 $(ARTIFACT): stage
 	mkdir -p "$(OUTDIR)"
 	@set -e; \
+	if [ -f "$(STAGE)/.mingw-ignored" ]; then \
+		echo "mingw: IGNORED — skip pack (cross tools unavailable)" >&2; \
+		exit 0; \
+	fi; \
 	exes=$$(find "$(STAGE)" -type f -name '*.exe' | sort); \
 	n=$$(printf '%s\n' "$$exes" | sed '/^$$/d' | wc -l); \
 	if [ "$$n" -eq 1 ]; then \

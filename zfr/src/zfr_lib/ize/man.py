@@ -85,6 +85,87 @@ def has_foreach_man_targets(text: str) -> bool:
     return False
 
 
+def count_foreach_puff_man_loops(text: str) -> int:
+    """Count Meson ``foreach`` loops that build *puff* man pages.
+
+    Counts ``foreach puff : man_puffs`` / ``apps.keys()`` style loops that use
+    ``puff + '-man'``. Ignores locale i18n loops (``foreach lang : …``) and
+    unrelated configure/completion foreach blocks.
+    """
+    if not text:
+        return 0
+    count = 0
+    for m in re.finditer(
+        r"\bforeach\s+(\w+)\s*:\s*([^\n]*)\n(.*?)endforeach\b",
+        text,
+        re.DOTALL,
+    ):
+        var, source, body = m.group(1), m.group(2), m.group(3)
+        if re.search(rf"""\b{re.escape(var)}\s*\+\s*['"]-man['"]""", body):
+            count += 1
+            continue
+        if re.search(r"\bman_puffs\b", source) and "custom_target" in body:
+            count += 1
+    return count
+
+
+_MAN_PUFFS_FOREACH_RE = re.compile(
+    r"\nman_puffs\s*=\s*\[(?P<body>[^\]]*)\]\s*\n"
+    r"foreach\s+\w+\s*:\s*man_puffs\s*\n"
+    r"(?P<loop>.*?)\bendforeach\b",
+    re.DOTALL,
+)
+
+
+def merge_foreach_man_loops(text: str, stems: list[str] | None = None) -> tuple[str, list[str]]:
+    """Collapse multiple ``man_puffs`` foreach blocks into one.
+
+    Also folds leftover individual ``'stem-man'`` targets into that single loop.
+    """
+    details: list[str] = []
+    collected: list[str] = []
+    if stems:
+        collected.extend(stems)
+
+    matches = list(_MAN_PUFFS_FOREACH_RE.finditer(text))
+    loop_body = None
+    if matches:
+        for m in matches:
+            for q in re.findall(r"'([^']+)'|\"([^\"]+)\"", m.group("body")):
+                stem = q[0] or q[1]
+                if stem and stem not in collected:
+                    collected.append(stem)
+            if loop_body is None:
+                loop_body = m.group("loop")
+        # Drop all man_puffs foreach blocks; we'll re-append one.
+        text = _MAN_PUFFS_FOREACH_RE.sub("\n", text)
+        if len(matches) > 1:
+            details.append(f"merge {len(matches)} man_puffs foreach loops")
+
+    text, removed = strip_individual_man_targets(text)
+    for stem in removed:
+        if stem not in collected:
+            collected.append(stem)
+    if removed:
+        details.append("fold individual man targets into foreach")
+
+    # Also count non-man_puffs foreach man loops (apps.keys()); do not duplicate.
+    other = count_foreach_puff_man_loops(text)
+    if other:
+        # Already have a foreach man loop (e.g. apps.keys()) — just strip individuals.
+        return text, details
+
+    collected = sorted({s for s in collected if s})
+    if not collected:
+        return text, details
+
+    block = man_foreach_block(collected)
+    text = text.rstrip() + "\n" + block
+    if not any("merge" in d or "fold" in d for d in details):
+        details.append(f"man foreach ({len(collected)} puffs)")
+    return text, details
+
+
 def strip_individual_man_targets(text: str) -> tuple[str, list[str]]:
     """Remove per-stem ``custom_target('foo-man', …)`` blocks ize used to append."""
     removed: list[str] = []
@@ -130,13 +211,19 @@ endforeach
 
 
 def ensure_meson_man_targets(text: str, stems: list[str], *, section: str = "1") -> tuple[str, list[str]]:
-    """Ensure English man custom_targets exist; prefer foreach, never duplicate.
+    """Ensure English man custom_targets exist; prefer one foreach, never duplicate.
 
-    If meson already has a foreach-based man loop, drop leftover individual
-    ``'stem-man'`` targets and do not append more. Otherwise add a single
-    ``man_puffs`` foreach for missing stems (or refresh the list).
+    Merges multiple ``man_puffs`` foreach blocks and folds individual
+    ``'stem-man'`` targets into a single loop. Leaves an existing
+    ``apps.keys()``-style foreach alone (aside from stripping individuals).
     """
     details: list[str] = []
+
+    if "man_puffs" in text or len(list(_MAN_PUFFS_FOREACH_RE.finditer(text))) > 1:
+        merged, merge_notes = merge_foreach_man_loops(text, stems=stems)
+        details.extend(merge_notes)
+        return merged, details
+
     if has_foreach_man_targets(text):
         cleaned, removed = strip_individual_man_targets(text)
         if removed:
@@ -153,10 +240,8 @@ def ensure_meson_man_targets(text: str, stems: list[str], *, section: str = "1")
     if not missing:
         return text, details
 
-    # Prefer one foreach for all English docs mans.
     all_stems = sorted(set(stems))
     block = man_foreach_block(all_stems, section=section)
-    # Drop any individual targets we're about to cover via foreach.
     text, removed = strip_individual_man_targets(text)
     if removed:
         details.append("fold individual man targets into foreach")

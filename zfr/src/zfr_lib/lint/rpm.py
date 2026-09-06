@@ -257,16 +257,19 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                 )
             )
 
-        if lang == "bash" and "bash-shlib" not in text:
-            out.append(
-                Finding(
-                    "error",
-                    "rpm.Requires.bash-shlib",
-                    _("bash spec Requires missing bash-shlib"),
-                    rel,
-                    fix=_("Requires:       bash-shlib  (same as debian Depends)"),
+        if lang == "bash":
+            from .. import project_uses_bash_shlib
+
+            if project_uses_bash_shlib(root) and "bash-shlib" not in text:
+                out.append(
+                    Finding(
+                        "error",
+                        "rpm.Requires.bash-shlib",
+                        _("bash-shlib used in sources but missing from Requires"),
+                        rel,
+                        fix=_("Requires:       bash-shlib  (same as debian Depends)"),
+                    )
                 )
-            )
 
         # ---- Debian substvars leaked into RPM Requires ----
         for m in re.finditer(

@@ -22,11 +22,11 @@ DESCRIPTION = _('Detect language and add puff(s) from pkgdatadir/<lang>.')
 
 
 def add_arguments(p: argparse.ArgumentParser) -> None:
-    p.add_argument("puff_names", nargs="+", help=_("new puff name(s) (snake_case recommended)"))
+    p.add_argument("puff_name", nargs="+", help=_("new puff name(s) (snake_case recommended)"))
 
 
 def run(args: argparse.Namespace) -> int:
-    cmd_add(list(args.puff_names))
+    cmd_add(list(args.puff_name))
     return 0
 
 

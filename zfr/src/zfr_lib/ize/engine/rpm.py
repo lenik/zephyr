@@ -78,7 +78,10 @@ def ensure_rpm_spec(ize: "Ize") -> None:
         if ize.lang in _script_langs or arch_bins:
             body, _ = ensure_rpm_noarch_nodebug(body, arch_binaries=arch_bins)
         if ize.lang == "bash" and not arch_bins:
-            body, _ = ensure_rpm_bash_shlib(body)
+            from ... import project_uses_bash_shlib
+
+            if project_uses_bash_shlib(ize.root):
+                body, _ = ensure_rpm_bash_shlib(body)
         ize.write_text(
             dest,
             body,
@@ -110,10 +113,13 @@ def ensure_rpm_spec(ize: "Ize") -> None:
         # debuginfo subpackage and fails (seen on pure-Python 2meson).
         _script_langs = {"bash", "python", "perl", "java", "ruby", "typescript"}
         if ize.lang == "bash":
-            patched, changed = ensure_rpm_bash_shlib(new)
-            if changed:
-                new = patched
-                details.append("Requires bash-shlib")
+            from ... import project_uses_bash_shlib
+
+            if project_uses_bash_shlib(ize.root):
+                patched, changed = ensure_rpm_bash_shlib(new)
+                if changed:
+                    new = patched
+                    details.append("Requires bash-shlib")
         if ize.lang in _script_langs or arch_bins:
             patched, changed = ensure_rpm_noarch_nodebug(
                 new, arch_binaries=arch_bins

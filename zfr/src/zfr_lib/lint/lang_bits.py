@@ -41,11 +41,12 @@ def _check_example_shared_modules(root: Path, lang: str, role: str) -> list[Find
             Finding(
                 "note",
                 "lang.shared.example",
-                _("%s is only a template example for shared helpers") % names,
+                _("%s is only a template example; can be removed if unnecessary") % names,
                 _rel(root, modules[0]),
-                fix=_("common_lib / commons mean “extract reusable pieces”, but filenames should be "
-                "concrete. Rename to a specific module in real projects (e.g. stream_copy.py, "
-                "bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."),
+                fix=_("commons.* is only a template example for shared helpers and can be "
+                "removed if unnecessary. Prefer a concrete module name in real projects "
+                "(e.g. stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their "
+                "shared library entry."),
             )
         )
     return out

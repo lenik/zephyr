@@ -130,6 +130,7 @@ class Ize:
         self._step("ize.meson.patch", self.patch_meson)
         if self.do_subst:
             self._step("ize.subst", self.subst_versions)
+        self._step("ize.c.bas", self.ensure_c_bas)
         self._step("ize.i18n.coverage", self.ensure_i18n_coverage)
         self._step("ize.i18n.man-locale", self.ensure_man_locale_coverage)
         self._step("ize.i18n.po-nowrap", self.ensure_po_no_wrap)
@@ -242,8 +243,13 @@ class Ize:
         from ..rpm_files import _all_meson_texts
 
         arch_bins = bool(re.search(r"\bexecutable\s*\(", _all_meson_texts(self.root)))
+        from ... import project_uses_bash_shlib
+
         new, notes = patch_debian_control(
-            text, lang=self.lang, arch_binaries=arch_bins
+            text,
+            lang=self.lang,
+            arch_binaries=arch_bins,
+            uses_bash_shlib=project_uses_bash_shlib(self.root),
         )
         if new != text:
             self.write_text(path, new, ", ".join(notes) or "debian/control lint alignment")
@@ -401,6 +407,10 @@ class Ize:
     def subst_versions(self) -> None:
         from .subst import subst_versions as _subst_versions
         _subst_versions(self)
+
+    def ensure_c_bas(self) -> None:
+        from .c_bas import ensure_c_bas as _fn
+        _fn(self)
 
     def _ensure_config_h(self) -> None:
         from .subst import ensure_config_h

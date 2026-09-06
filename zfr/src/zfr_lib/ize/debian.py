@@ -305,7 +305,7 @@ def ensure_extended_description(text: str) -> tuple[str, list[str]]:
 
 
 def patch_debian_control(
-    text: str, *, lang: str, arch_binaries: bool = False
+    text: str, *, lang: str, arch_binaries: bool = False, uses_bash_shlib: bool = False
 ) -> tuple[str, list[str]]:
     """Apply all debian/control fixes for *lang*. Returns (new_text, notes)."""
     notes: list[str] = []
@@ -323,7 +323,7 @@ def patch_debian_control(
     notes.extend(n)
     text, n = ensure_extended_description(text)
     notes.extend(n)
-    if lang == "bash" and not arch_binaries:
+    if lang == "bash" and not arch_binaries and uses_bash_shlib:
         text, n = ensure_bash_shlib_depends(text)
         notes.extend(n)
     # Re-normalize in case inserts disturbed stanza spacing.

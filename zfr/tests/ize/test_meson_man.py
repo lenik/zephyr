@@ -88,6 +88,20 @@ class MesonManForeachTests(unittest.TestCase):
         self.assertIn("foreach puff : man_puffs", block)
         self.assertIn("puff + '-man'", block)
 
+    def test_merges_duplicate_man_puffs_foreach(self) -> None:
+        from zfr_lib.ize.man import count_foreach_puff_man_loops
+
+        text = (
+            "project('demo')\n"
+            + man_foreach_block(["a"])
+            + man_foreach_block(["b"])
+        )
+        self.assertEqual(count_foreach_puff_man_loops(text), 2)
+        new, details = ensure_meson_man_targets(text, ["a", "b", "c"])
+        self.assertEqual(count_foreach_puff_man_loops(new), 1)
+        self.assertIn("'c'", new)
+        self.assertTrue(any("merge" in d for d in details))
+
 
 if __name__ == "__main__":
     unittest.main()

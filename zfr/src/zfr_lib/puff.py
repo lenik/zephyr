@@ -166,17 +166,6 @@ def _add_one(name: str, workdir: Path | None = None) -> None:
     tmpl = template_dir(lang)
     pairs = instantiation_pairs(root.name, name)
 
-    # If the template puff is still in the tree, rename it in place so all
-    # tokens are substituted (needed for rust/java/haskell single-entry apps
-    # where copying main.rs would skip an existing file).
-    if _tree_mentions_puff(root, TEMPLATE_PUFF):
-        print(f"add {name}: rename template {TEMPLATE_PUFF} → {name} (lang={lang})")
-        files, renames = rewrite_tree(root, pairs, rename_paths=True)
-        print(f"  {files} file(s) rewritten, {renames} path(s) renamed")
-        _wire_add(lang, root, name)
-        print("done")
-        return
-
     sources = _puff_source_paths(lang, tmpl)
     if not sources:
         raise SystemExit(f"no puff template files found for language {lang!r} in {tmpl}")
@@ -191,6 +180,30 @@ def _add_one(name: str, workdir: Path | None = None) -> None:
         "main.go",
     }
 
+    # Paths still named some_puff1* (create-without-puff removes these files but
+    # leaves some_puff1 tokens in meson/etc.).
+    puff_files_present = any(TEMPLATE_PUFF in path.name for path in iter_files(root))
+    has_tokens = _tree_mentions_puff(root, TEMPLATE_PUFF)
+
+    # Rename in place only when template puff *files* still exist (tokens alone
+    # are not enough — that was the create-then-add bug: rewrite tokens, no
+    # sources copied).
+    if has_tokens and puff_files_present:
+        print(f"add {name}: rename template {TEMPLATE_PUFF} → {name} (lang={lang})")
+        files, renames = rewrite_tree(root, pairs, rename_paths=True)
+        print(f"  {files} file(s) rewritten, {renames} path(s) renamed")
+        _wire_add(lang, root, name)
+        print("done")
+        return
+
+    if has_tokens and not puff_files_present:
+        # Clear leftover tokens first so copied files aren't double-substituted.
+        files, renames = rewrite_tree(root, pairs, rename_paths=True)
+        print(
+            f"add {name}: clear leftover {TEMPLATE_PUFF} tokens "
+            f"({files} file(s), {renames} path(s)); copy from template"
+        )
+
     print(f"add {name} (lang={lang}, template={tmpl})")
     for src in sources:
         if src.is_dir():
@@ -199,10 +212,9 @@ def _add_one(name: str, workdir: Path | None = None) -> None:
                 if dest.exists() and path.name not in overwrite_names and TEMPLATE_PUFF not in path.name:
                     print(f"  skip exists: {dest.relative_to(root)}")
                     continue
+                existed = dest.exists()
                 copy_renamed_file(path, dest, pairs)
-                mark = "~" if dest.exists() else "+"
-                # dest always exists after copy; detect prior existence:
-                print(f"  {mark} {dest.relative_to(root)}")
+                print(f"  {'~' if existed else '+'} {dest.relative_to(root)}")
         else:
             dest = _dest_for(src, tmpl, root, pairs)
             existed = dest.exists()

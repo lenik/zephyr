@@ -199,19 +199,34 @@ def check_debian(root: Path, lang: str, role: str) -> list[Finding]:
         )
 
     if lang == "bash":
+        from .. import project_uses_bash_shlib
+
         deps = pkg.get("Depends", "")
-        if "bash-shlib" not in deps:
+        uses = project_uses_bash_shlib(root)
+        if uses and "bash-shlib" not in deps:
             out.append(
                 Finding(
                     "error",
                     "debian.Depends.bash-shlib",
-                    _("bash project Depends missing bash-shlib"),
+                    _("bash-shlib used in sources but missing from Depends"),
                     rel,
                     fix=_("Depends: bash, bash-shlib, ${misc:Depends}"),
                 )
             )
-        else:
-            out.append(Finding("ok", "debian.Depends.bash-shlib", _("Depends includes bash-shlib"), rel))
+        elif uses:
+            out.append(
+                Finding("ok", "debian.Depends.bash-shlib", _("Depends includes bash-shlib"), rel)
+            )
+        elif "bash-shlib" in deps:
+            out.append(
+                Finding(
+                    "note",
+                    "debian.Depends.bash-shlib",
+                    _("Depends lists bash-shlib but sources do not use it"),
+                    rel,
+                    fix=_("Drop bash-shlib from Depends unless scripts `. shlib` / shlib-import."),
+                )
+            )
 
     priority = src.get("Priority", "")
     if priority == "extra":

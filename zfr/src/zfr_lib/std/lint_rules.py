@@ -94,6 +94,36 @@ _LINT_RULES: tuple[StdRule, ...] = (
         "Root and component .gitignore coverage (node_modules/, dist/, backend/src/generated/, …)",
         "varies",
     ),
+    StdRule(
+        "ZL084",
+        "meson.foreach_puff",
+        "At most one foreach puff man-page loop in meson.build",
+        "varies",
+    ),
+    StdRule(
+        "ZL085",
+        "lang.c.bas.main",
+        "C-family main uses bas i18n.h/env.h, self_exe, init_i18n(LOCALEDIR)",
+        "varies",
+    ),
+    StdRule(
+        "ZL086",
+        "lang.c.bas.logger",
+        "C-family sources define_logger() via bas/log/deflog.h",
+        "varies",
+    ),
+    StdRule(
+        "ZL087",
+        "lang.c.bas.localedir",
+        "meson config.h defines LOCALEDIR for init_i18n",
+        "varies",
+    ),
+    StdRule(
+        "ZL088",
+        "lang.c.bas.gettext_space",
+        "gettext _() strings must not have leading/trailing spaces",
+        "warn",
+    ),
 )
 
 LINT_RULES = RuleRegistry(_LINT_RULES)

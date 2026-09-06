@@ -311,6 +311,15 @@ def _is_clib_project(root: Path, meson_txt: str, control_txt: str = "") -> bool:
 def _looks_like_bash_shlib(root: Path, control_txt: str = "") -> bool:
     if re.search(r"\bbash-shlib\b", control_txt, re.I):
         return True
+    return project_uses_bash_shlib(root)
+
+
+def project_uses_bash_shlib(root: Path) -> bool:
+    """True when project sources actually import/source bash-shlib.
+
+    Declaring ``Depends: bash-shlib`` alone does not count — data-only or
+    plain bash packages should not be forced to depend on it.
+    """
     for base in _shallow_source_dirs(root):
         if base == root:
             candidates = [p for p in root.iterdir() if p.is_file()]

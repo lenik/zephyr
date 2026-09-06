@@ -288,6 +288,15 @@ cmd_run() {
     if can_local "$kind"; then
         exec "$@"
     fi
+    # MinGW (and other win32 cross builds): treat missing cross toolchain as
+    # an ignored skip so packaging make / release loops stay green on hosts
+    # without mingw-w64.
+    case $kind in
+        mingw|win32|innosetup|wix)
+            echo "host.sh: IGNORED '$kind' (cross/native tools not available on this host)." >&2
+            return 0
+            ;;
+    esac
     echo "host.sh: cannot build '$kind' on this host (native/cross tools missing)." >&2
     echo "  For remote builds, use gh-makerelease with a .build-host file:" >&2
     local k

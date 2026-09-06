@@ -156,4 +156,28 @@ def check_meson(root: Path, lang: str) -> list[Finding]:
                 fix=_("install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."),
             )
         )
+
+    from ..ize.man import count_foreach_puff_man_loops
+
+    n_foreach = count_foreach_puff_man_loops(text)
+    if n_foreach > 1:
+        out.append(
+            Finding(
+                "warn",
+                "meson.foreach_puff",
+                _("meson.build has %s foreach puff man loops; keep exactly one") % n_foreach,
+                rel,
+                fix=_("Merge into a single `foreach puff : man_puffs` (or apps.keys()) loop. "
+                "`zfr ize` consolidates duplicate man_puffs foreach blocks."),
+            )
+        )
+    elif n_foreach == 1:
+        out.append(
+            Finding(
+                "ok",
+                "meson.foreach_puff",
+                _("single foreach puff man loop"),
+                rel,
+            )
+        )
     return out
