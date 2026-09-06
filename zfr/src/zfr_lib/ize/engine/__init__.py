@@ -121,6 +121,7 @@ class Ize:
         self._step("ize.debian.docs", self.fix_debian_docs)
         self._step("ize.changelog", self.ensure_changelog_version)
         self._step("ize.hooks", self.ensure_hooks)
+        self._step("ize.cursor.rules", self.ensure_cursor_rules)
         self._step("ize.meson.patch", self.patch_meson)
         if self.do_man:
             self._step("ize.man.convert", self.convert_manpages)
@@ -387,6 +388,25 @@ class Ize:
                     check=False,
                 )
 
+    def ensure_cursor_rules(self) -> None:
+        from ...cursor_rules import RULE_NAME, cursor_rule_src, install_cursor_rules
+
+        rel = f".cursor/rules/{RULE_NAME}"
+        dest = self.root / ".cursor" / "rules" / RULE_NAME
+        src = cursor_rule_src()
+        if src is None:
+            return
+        existed = dest.is_file()
+        if existed and dest.read_bytes() == src.read_bytes():
+            if self.verbose:
+                self.note("skip", rel, "already up to date")
+            return
+        action = "update" if existed else "add"
+        if self.dry_run:
+            self.note(action, rel, "changelog workflow rule")
+            return
+        install_cursor_rules(self.root)
+        self.note(action, rel, "changelog workflow rule")
 
     def patch_meson(self) -> None:
         from .meson import patch_meson_build

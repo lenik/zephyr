@@ -33,6 +33,7 @@ from . import (
 )
 from .add import cmd_add
 from .cli import register_command
+from .cursor_rules import install_cursor_rules
 from .i18n import _
 from .puff import _leftover_template_lines
 from .remove import cmd_remove
@@ -290,6 +291,9 @@ def cmd_create(
         email=email,
     )
     _install_githooks(dest)
+    rule = install_cursor_rules(dest)
+    if rule is not None:
+        print(f".cursor/rules ← {rule.name}")
 
     print(f"git init + commit + tag v{init_version.lstrip('v')}")
     print("git config core.hooksPath .githooks")
