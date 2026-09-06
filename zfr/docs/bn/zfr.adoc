@@ -299,6 +299,9 @@ zfr add myapp another_app
   *SERVER*-এ SSH দিয়ে *build4* চালায় (*-d* বোঝায়)।
 *-l, --local*::
   শুধু বিল্ড; ট্যাগ, পুশ, GitHub রিলিজ নয়।
+  Implies *-U* (*--no-upload*) and *-P* (*--no-publish*).
+*-t, --test*::
+  Alias for *-l* *-I*: local build without installing packages.
 *-f, --force*::
   বিদ্যমান ট্যাগ/রিলিজ প্রতিস্থাপন।
 *-I, --no-install*::

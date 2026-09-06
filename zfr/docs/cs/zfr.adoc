@@ -325,6 +325,9 @@ Volby pro *release* (parsované zde, předané do *gh-makerelease*):
   Spustí *build4* přes SSH na *SERVER* (implikuje *-d*).
 *-l, --local*::
   Pouze build; bez tagování, push ani vytvoření GitHub release.
+  Implies *-U* (*--no-upload*) and *-P* (*--no-publish*).
+*-t, --test*::
+  Alias for *-l* *-I*: local build without installing packages.
 *-f, --force*::
   Nahradí existující tag/release.
 *-I, --no-install*::

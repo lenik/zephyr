@@ -323,6 +323,9 @@ A *release* kapcsolói (itt feldolgozva, továbbítva a *gh-makerelease*-nek):
   *build4* futtatása SSH-n a *SERVER*-en (*-d* implicit).
 *-l, --local*::
   Csak build; nincs tag, push vagy GitHub release.
+  Implies *-U* (*--no-upload*) and *-P* (*--no-publish*).
+*-t, --test*::
+  Alias for *-l* *-I*: local build without installing packages.
 *-f, --force*::
   Meglévő tag/release cseréje.
 *-I, --no-install*::

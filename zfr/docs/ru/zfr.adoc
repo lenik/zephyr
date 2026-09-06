@@ -316,6 +316,9 @@ zfr add myapp another_app
   Запускать *build4* по SSH на *SERVER* (подразумевает *-d*).
 *-l, --local*::
   Только сборка; без тега, push или GitHub release.
+  Подразумевает *-U* (*--no-upload*) и *-P* (*--no-publish*).
+*-t, --test*::
+  Псевдоним для *-l* *-I*: локальная сборка без установки.
 *-f, --force*::
   Заменить существующий тег/release.
 *-I, --no-install*::

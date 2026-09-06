@@ -318,6 +318,9 @@ Alternativ för *release* (parsas här, skickas vidare till *gh-makerelease*):
   Kör *build4* över SSH på *SERVER* (implikerar *-d*).
 *-l, --local*::
   Endast bygg; tagga, pusha eller skapa inte GitHub release.
+  Implies *-U* (*--no-upload*) and *-P* (*--no-publish*).
+*-t, --test*::
+  Alias for *-l* *-I*: local build without installing packages.
 *-f, --force*::
   Ersätt befintlig tagg/release.
 *-I, --no-install*::

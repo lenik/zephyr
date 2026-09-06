@@ -303,6 +303,9 @@ Tùy chọn cho *release* (phân tích tại đây, chuyển tiếp cho *gh-make
   Chạy *build4* qua SSH trên *SERVER* (ngụ ý *-d*).
 *-l, --local*::
   Chỉ build; không tag, push hay tạo GitHub release.
+  Implies *-U* (*--no-upload*) and *-P* (*--no-publish*).
+*-t, --test*::
+  Alias for *-l* *-I*: local build without installing packages.
 *-f, --force*::
   Thay tag/release hiện có.
 *-I, --no-install*::

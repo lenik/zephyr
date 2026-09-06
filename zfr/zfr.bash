@@ -125,7 +125,7 @@ _zfr()
 					;;
 			esac
 			if [[ $cur == -* ]]; then
-				COMPREPLY=($(compgen -W '-b --build-binary -n --no-pre-clean -u --upload --unsigned -p --dput-host -d --docker -B --base-image -s --docker-server -l --local -f --force -I --no-install -T --no-tag -U --no-upload -R --no-release -P --no-publish -Y --no-rpm -D --no-deb -v --verbose -q --quiet --help' -- "$cur"))
+				COMPREPLY=($(compgen -W '-b --build-binary -n --no-pre-clean -u --upload --unsigned -p --dput-host -d --docker -B --base-image -s --docker-server -l --local -t --test -f --force -I --no-install -T --no-tag -U --no-upload -R --no-release -P --no-publish -Y --no-rpm -D --no-deb -v --verbose -q --quiet --help' -- "$cur"))
 			fi
 			;;
 		detect|help)
@@ -288,7 +288,7 @@ _zfr_release()
 			;;
 	esac
 	if [[ $cur == -* ]]; then
-		COMPREPLY=($(compgen -W '-b --build-binary -n --no-pre-clean -u --upload --unsigned -p --dput-host -d --docker -B --base-image -s --docker-server -l --local -f --force -I --no-install -T --no-tag -U --no-upload -R --no-release -P --no-publish -Y --no-rpm -D --no-deb -v --verbose -q --quiet --help' -- "$cur"))
+		COMPREPLY=($(compgen -W '-b --build-binary -n --no-pre-clean -u --upload --unsigned -p --dput-host -d --docker -B --base-image -s --docker-server -l --local -t --test -f --force -I --no-install -T --no-tag -U --no-upload -R --no-release -P --no-publish -Y --no-rpm -D --no-deb -v --verbose -q --quiet --help' -- "$cur"))
 	fi
 }
 

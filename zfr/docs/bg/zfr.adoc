@@ -323,6 +323,9 @@ zfr add myapp another_app
   Изпълнява *build4* през SSH на *SERVER* (подразбира *-d*).
 *-l, --local*::
   Само build; без таг, push или GitHub release.
+  Implies *-U* (*--no-upload*) and *-P* (*--no-publish*).
+*-t, --test*::
+  Alias for *-l* *-I*: local build without installing packages.
 *-f, --force*::
   Заменя съществуващ tag/release.
 *-I, --no-install*::

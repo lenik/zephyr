@@ -311,6 +311,9 @@ zephyr 形式のパッケージツリー（例: *repodir/bash*）である。
   SSH 経由で *SERVER* 上で *build4* を実行（*-d* を暗示）。
 *-l, --local*::
   ビルドのみ; タグ、push、GitHub release は行わない。
+  *-U*（*--no-upload*）と *-P*（*--no-publish*）を含意します。
+*-t, --test*::
+  *-l* *-I* の別名：ローカルビルドでインストールをスキップ。
 *-f, --force*::
   既存タグ/release を置き換える。
 *-I, --no-install*::

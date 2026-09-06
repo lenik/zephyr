@@ -241,8 +241,30 @@ class ZephyrDetectTests(unittest.TestCase):
                 "b4f-debian:sid",
                 "--local",
                 "--no-install",
+                "--no-upload",
+                "--no-publish",
                 "--verbose",
                 "--verbose",
+            ],
+        )
+
+    def test_release_test_alias_implies_local_no_install(self) -> None:
+        import argparse
+
+        from zfr_lib.release import add_release_arguments, compose_makerelease_argv
+
+        p = argparse.ArgumentParser()
+        add_release_arguments(p)
+        ns = p.parse_args(["--test", "--unsigned"])
+        argv = compose_makerelease_argv(ns)
+        self.assertEqual(
+            argv,
+            [
+                "--unsigned",
+                "--local",
+                "--no-install",
+                "--no-upload",
+                "--no-publish",
             ],
         )
 
@@ -365,6 +387,26 @@ class ZephyrCreateProjectTests(unittest.TestCase):
         self.assertTrue((self.project / "src" / "world.in").is_file())
         run_zephyr("remove", "world", cwd=self.project)
         self.assertFalse((self.project / "src" / "world.in").exists())
+
+    def test_create_without_puff_then_add(self) -> None:
+        """Empty create deletes some_puff1 files but leaves tokens; add must copy."""
+        with tempfile.TemporaryDirectory(prefix="zephyr-add-") as tmp:
+            dest = Path(tmp) / "empty_create"
+            run_zephyr(
+                "create",
+                "-l",
+                "c",
+                "-1",
+                "0.0.1",
+                "-D",
+                "unstable",
+                str(dest),
+            )
+            self.assertFalse((dest / "src" / "some_puff1.c").exists())
+            run_zephyr("add", "myapp", cwd=dest)
+            self.assertTrue((dest / "src" / "myapp.c").is_file())
+            self.assertTrue((dest / "docs" / "myapp.adoc").is_file())
+            self.assertTrue((dest / "myapp.bash").is_file())
 
 
 class ZephyrRenameTests(unittest.TestCase):
@@ -496,7 +538,7 @@ class ZephyrIzeTests(unittest.TestCase):
             "Description: demo\n"
             " long\n"
         )
-        new, notes = patch_debian_control(text, lang="bash")
+        new, notes = patch_debian_control(text, lang="bash", uses_bash_shlib=True)
         self.assertIn("asciidoctor", new)
         self.assertIn("meson", new)
         self.assertIn("ninja-build", new)

@@ -73,7 +73,13 @@ def add_release_arguments(p: argparse.ArgumentParser) -> None:
         "-l",
         "--local",
         action="store_true",
-        help=_("Build in local, no tag/push/release"),
+        help=_("Build in local, no tag/push/release (implies -U -P)"),
+    )
+    p.add_argument(
+        "-t",
+        "--test",
+        action="store_true",
+        help=_("Alias for -l -I (local build, skip install)"),
     )
     p.add_argument(
         "-f",
@@ -139,8 +145,19 @@ def add_release_arguments(p: argparse.ArgumentParser) -> None:
     )
 
 
+def apply_release_implications(ns: argparse.Namespace) -> None:
+    """Apply -t → -l -I and -l → -U -P (mutates *ns* in place)."""
+    if getattr(ns, "test", False):
+        ns.local = True
+        ns.no_install = True
+    if ns.local:
+        ns.no_upload = True
+        ns.no_publish = True
+
+
 def compose_makerelease_argv(ns: argparse.Namespace) -> list[str]:
     """Rebuild gh-makerelease argv from a parsed namespace (no defaults)."""
+    apply_release_implications(ns)
     argv: list[str] = []
     if ns.build_binary:
         argv.append("--build-binary")

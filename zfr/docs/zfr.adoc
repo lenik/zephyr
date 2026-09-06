@@ -34,6 +34,10 @@ zfr - multi-language CLI project templates and helper tools
 *zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
             [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
 
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *build* [*-C* _DIR_] [*-b* _DIR_] [*-n*] [*-v*] [*--detect-only*]
+
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *package* [*-C* _DIR_] [*-u*|*-U*] [*-p* _HOST_] [*-D*] [*-Y*] [_OPTIONS_]
+
 *zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *ize* [*-l* _LANG_] [*-m*|*--no-mesonize*] [*-n*] [*-v*]
            [*--no-man*] [*--no-subst*] [*--color* _WHEN_]
 
@@ -44,8 +48,8 @@ zfr - multi-language CLI project templates and helper tools
 *zfr* *help*
 
 *zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
-*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-ize*,
-*zfr-shape*, and *zfr-release* are thin wrappers around the same subcommands.
+*zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-build*, *zfr-package*,
+*zfr-ize*, *zfr-shape*, and *zfr-release* are thin wrappers around the same subcommands.
 
 == Description
 
@@ -185,12 +189,23 @@ Commands that walk from the current directory resolve *packagedir* first.
   archive path on stdout. *rpm/Makefile* *dist* and the Meson *srcdist*
   ninja target reuse this command.
 
+*build*::
+  Detect the project build system (*meson*, *cmake*, *autotools*, *cargo*,
+  *go*, *npm*, or *make*) and compile locally. *--detect-only* prints the
+  detected system name. Used by *gh-makerelease*(1) before packaging.
+
+*package*::
+  Detect packaging types (*deb*, *rpm*, *npm*/*vsix*, *mingw*, …) and build
+  packages. Upload is on by default (*\-u* / *--upload*); use *\-U* /
+  *--no-upload* to skip *dput* / registry publish. *gh-makerelease*(1)
+  invokes this for Debian/RPM/installer packaging.
+
 *release*::
   Parse the same options as *gh-makerelease*(1), rebuild argv, and *exec*
-  *gh-makerelease* from PATH. This command does not implement tagging,
-  packaging, or GitHub uploads itself. The *zephyr* project is released
-  from the git checkout root (language templates plus *zfr/*). See
-  *Options for release* below.
+  *gh-makerelease* from PATH. Tagging and GitHub release stay in
+  *gh-makerelease*; build/package steps call *zfr-build* and *zfr-package*.
+  The *zephyr* project is released from the git checkout root (language
+  templates plus *zfr/*). See *Options for release* below.
 
 *ize*::
   Refactor the current project in place so it matches current zephyr
@@ -359,6 +374,9 @@ Options for *release* (parsed here, passed through to *gh-makerelease*):
   Run *build4* over SSH on *SERVER* (implies *-d*).
 *-l, --local*::
   Build only; do not tag, push, or create a GitHub release.
+  Implies *-U* (*--no-upload*) and *-P* (*--no-publish*).
+*-t, --test*::
+  Alias for *-l* *-I*: local build without installing packages.
 *-f, --force*::
   Replace an existing tag/release.
 *-I, --no-install*::
@@ -366,11 +384,11 @@ Options for *release* (parsed here, passed through to *gh-makerelease*):
 *-T, --no-tag*::
   Skip creating and pushing the git release tag.
 *-U, --no-upload*::
-  Skip *dput* of the _.changes_ file.
+  Skip *dput* of the _.changes_ file. Implied by *-l*.
 *-R, --no-release*::
   Skip creating the GitHub release.
 *-P, --no-publish*::
-  Skip VSIX marketplace publish.
+  Skip VSIX marketplace publish. Implied by *-l*.
 *-Y, --no-rpm*::
   Skip *make -C rpm rpm srpm*.
 *-D, --no-deb*::

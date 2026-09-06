@@ -317,6 +317,9 @@ Geçerli dizinden yürüyen komutlar önce *packagedir*'i çözümler.
   *build4*'ü *SERVER* üzerinde SSH ile çalıştır (*-d* gerektirir).
 *-l, --local*::
   Yalnızca derle; etiketleme, push veya GitHub release yok.
+  Implies *-U* (*--no-upload*) and *-P* (*--no-publish*).
+*-t, --test*::
+  Alias for *-l* *-I*: local build without installing packages.
 *-f, --force*::
   Mevcut etiket/release'i değiştir.
 *-I, --no-install*::

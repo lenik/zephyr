@@ -319,6 +319,9 @@ Options for *release* (parsed here, passed through to *gh-makerelease*):
   Executa *build4* via SSH em *SERVER* (implica *-d*).
 *-l, --local*::
   Apenas build; não cria tag, push ou release GitHub.
+  Implica *-U* (*--no-upload*) e *-P* (*--no-publish*).
+*-t, --test*::
+  Alias de *-l* *-I*: build local sem instalar.
 *-f, --force*::
   Substitui uma tag/release existente.
 *-I, --no-install*::

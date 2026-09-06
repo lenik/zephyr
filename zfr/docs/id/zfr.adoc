@@ -309,6 +309,9 @@ Opsi untuk *release* (di-parse di sini, diteruskan ke *gh-makerelease*):
   Jalankan *build4* lewat SSH di *SERVER* (implikasi *-d*).
 *-l, --local*::
   Hanya build; tanpa tag, push, atau buat GitHub release.
+  Implies *-U* (*--no-upload*) and *-P* (*--no-publish*).
+*-t, --test*::
+  Alias for *-l* *-I*: local build without installing packages.
 *-f, --force*::
   Ganti tag/release yang ada.
 *-I, --no-install*::

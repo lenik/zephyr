@@ -297,6 +297,9 @@ zfr add myapp another_app
   รัน *build4* ผ่าน SSH บน *SERVER* (implies *-d*)
 *-l, --local*::
   build เท่านั้น ไม่ tag push หรือสร้าง GitHub release
+  Implies *-U* (*--no-upload*) and *-P* (*--no-publish*).
+*-t, --test*::
+  Alias for *-l* *-I*: local build without installing packages.
 *-f, --force*::
   แทนที่ tag/release ที่มีอยู่
 *-I, --no-install*::

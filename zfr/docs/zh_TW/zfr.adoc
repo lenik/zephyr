@@ -278,6 +278,9 @@ zfr add myapp another_app
   透過 SSH 在 *SERVER* 上執行 *build4*（隱含 *-d*）。
 *-l, --local*::
   僅建置；不打標籤、不推送、不建立 GitHub release。
+  隐含 *-U*（*--no-upload*）和 *-P*（*--no-publish*）。
+*-t, --test*::
+  等同于 *-l* *-I*：本地构建且不安装软件包。
 *-f, --force*::
   替換既有標籤/release。
 *-I, --no-install*::
