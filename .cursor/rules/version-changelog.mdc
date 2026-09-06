@@ -1,14 +1,48 @@
 ---
-description: VERSION and debian/changelog workflow relative to git release tags
+description: debian/changelog workflow relative to solidified git release tags
 alwaysApply: true
 ---
 
-# Version / changelog after a release tag
+# Changelog vs release tags
 
-Canonical text: **`AGENTS.md`** at the zephyr repo root (section *Version and changelog vs git tags*).
+`VERSION` is maintained automatically by the project's git pre-commit hook from
+`debian/changelog`. Do not edit `VERSION` by hand.
 
-Summary:
+## Terms
 
-- **Untagged** current `VERSION`: do not bump unless the user asks for release/bump.
-- **Tag already exists** for current `VERSION` (e.g. `v2.8.9`): any further change **must** open the next version (`VERSION` + new changelog stanza). That is **not** a release — no `Release …` commit title, no new tag until the user requests a release.
-- **Release**: user-requested; commit `Release X.Y.Z: …` then tag `vX.Y.Z`.
+- **Solidified tag**: a git tag matching the current changelog upstream version
+  (typically `vX.Y.Z`) already exists. That changelog stanza is frozen.
+- **Open next version**: prepend a new `debian/changelog` stanza for the next
+  semver. This is **not** a release. On the next commit, the pre-commit hook
+  refreshes `VERSION` from the changelog.
+- **Release**: user-requested; finalize the open stanza if needed, commit with a
+  release message, then create the matching git tag.
+
+## Rules
+
+1. **Current changelog version is not yet tagged**: do not open a newer stanza
+   unless the user asks to bump or release. Add change bullets under the open
+   stanza.
+2. **Current changelog version already has a matching tag**: further product
+   changes **must** open the next version automatically (no extra user command):
+   prepend a new `debian/changelog` stanza. Do **not** title the commit as a
+   release and do **not** create a tag until the user requests a release.
+3. **Release** (only when the user asks): close/finalize as needed, make the
+   release commit, then create the matching tag.
+
+## Quick check
+
+```bash
+ver=$(dpkg-parsechangelog -S Version 2>/dev/null | sed 's/^.*://;s/-[^-]*$//')
+git rev-parse "v${ver}" >/dev/null 2>&1
+# success ⇒ solidified → open the *next* changelog version for new work
+```
+
+## Anti-patterns
+
+- Hand-editing `VERSION` (the commit hook owns it).
+- Opening a new changelog version while the current one is still untagged
+  (unless the user ordered a bump/release).
+- Calling a post-tag changelog open a “Release”, or tagging immediately after
+  opening the next version.
+- Editing bullets under a changelog version that already has a matching `v*` tag.
