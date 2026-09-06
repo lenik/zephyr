@@ -36,6 +36,7 @@ prefix = get_option('prefix')
 bindir = prefix / get_option('bindir')
 datadir = prefix / get_option('datadir')
 mandir = prefix / get_option('mandir')
+localedir = prefix / get_option('localedir')
 pkgdocdir = datadir / 'doc' / meson.project_name()
 
 config_h = configuration_data()
@@ -43,11 +44,15 @@ config_h.set_quoted('PROJECT_VERSION', meson.project_version())
 config_h.set_quoted('PROJECT_AUTHOR', project_author)
 config_h.set_quoted('PROJECT_EMAIL', project_email)
 config_h.set('PROJECT_YEAR', project_year)
+config_h.set_quoted('LOCALEDIR', localedir)
 
 configure_file(
     output: 'config.h',
     configuration: config_h,
 )
+
+bas_cpp_dep = dependency('bas-cpp', required: true)
+bas_args = ['-DLOGGER_NAME=' + meson.project_name(), '-DTEXT_DOMAIN=' + meson.project_name()]
 
 inc = include_directories('src', '.')
 
@@ -65,6 +70,8 @@ foreach source : app_sources
         name,
         [source] + common_sources,
         include_directories: inc,
+        dependencies: [bas_cpp_dep],
+        cpp_args: bas_args,
         install: true,
         install_dir: bindir,
     )

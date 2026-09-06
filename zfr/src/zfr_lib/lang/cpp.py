@@ -17,10 +17,23 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
     return merge_puff(puff_paths(tmpl, stem, "src/{stem}.cpp", "tests/{stem}_test.cpp", "{stem}.bash", "docs/{stem}.adoc"))
 
 def _lint(root: Path, role: str) -> list[Finding]:
+    from ._c_bas import lint_c_bas
+
+    out: list[Finding] = []
     if (root / "tests").is_dir():
-        return [Finding("ok", "lang.tests", _("tests/ present"))]
-    return [Finding("note", "lang.tests", _("no tests/ directory"), "tests/",
-        fix=_("Add tests/ and meson test() entries like the C family templates."))]
+        out.append(Finding("ok", "lang.tests", _("tests/ present")))
+    else:
+        out.append(
+            Finding(
+                "note",
+                "lang.tests",
+                _("no tests/ directory"),
+                "tests/",
+                fix=_("Add tests/ and meson test() entries like the C family templates."),
+            )
+        )
+    out.extend(lint_c_bas(root, lang=NAME))
+    return out
 
 SPEC = LangSpec(
     name=NAME,
