@@ -23,6 +23,10 @@ class NpmPackager:
     def name(self) -> str:
         return self._kind
 
+    def skip_reason(self, ctx: PackagerContext) -> str | None:
+        del ctx
+        return None
+
     def build(self, ctx: PackagerContext) -> bool:
         runner = shutil.which("pnpm") or shutil.which("npm")
         if not runner:

@@ -29,6 +29,13 @@ class Packager(Protocol):
     def name(self) -> str:
         """Canonical kind id (``deb``, ``rpm``, …)."""
 
+    def skip_reason(self, ctx: PackagerContext) -> str | None:
+        """If non-None, this packager will be skipped (reason for logs/UI).
+
+        Called before parallel scheduling so skipped kinds do not consume
+        worker slots or dilute per-packager ``-j`` shares.
+        """
+
     def build(self, ctx: PackagerContext) -> bool:
         """Build this kind under *ctx*.
 

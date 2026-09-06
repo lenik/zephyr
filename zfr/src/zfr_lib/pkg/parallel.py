@@ -38,6 +38,36 @@ def _plan_kinds(
     return planned
 
 
+def _probe_skips(
+    planned: list[PackagingKind],
+    ctx: PackagerContext,
+) -> tuple[list[PackagingKind], list[PackagerRecord]]:
+    """Split *planned* into runnable kinds vs pre-skipped records.
+
+    Skipped packagers are excluded before worker/job sizing so they do not
+    dilute ``jobs // N``.
+    """
+    active: list[PackagingKind] = []
+    skipped: list[PackagerRecord] = []
+    for kind in planned:
+        packager = packager_for(kind)
+        reason = packager.skip_reason(ctx)
+        if reason is None:
+            active.append(kind)
+            continue
+        log_line(f"zfr package: skipping {kind.name} ({reason})")
+        skipped.append(
+            PackagerRecord(
+                name=kind.name,
+                ok=True,
+                summary="skipped",
+                marked="",
+                error="",
+            )
+        )
+    return active, skipped
+
+
 def package_project(
     root: Path,
     *,
@@ -68,12 +98,6 @@ def package_project(
     if not planned:
         raise SystemExit("zfr package: nothing to package after --no-deb/--no-rpm filters")
 
-    log_line(
-        "zfr package: detected "
-        + ", ".join(f"{k.name}({k.path})" for k in planned)
-        + f"; parallel packagers≤{jobs}"
-    )
-
     def _ctx(inner_jobs: int, *, is_dry: bool) -> PackagerContext:
         return PackagerContext(
             root=root,
@@ -85,10 +109,45 @@ def package_project(
             base_image=base_image,
         )
 
+    probe_ctx = _ctx(jobs, is_dry=dry_run)
+    active, skipped_records = _probe_skips(planned, probe_ctx)
+    if not active and not dry_run:
+        # All skipped: still persist a run summary.
+        finished = time.time()
+        run = PackageLastRun(
+            root=str(root),
+            started=finished,
+            finished=finished,
+            jobs=jobs,
+            records=skipped_records,
+        )
+        save_last_run(run)
+        print_run_summary(run)
+        log_line("zfr package: nothing to package (all kinds skipped)")
+        if upload:
+            log_line("zfr package: upload skipped (nothing built)")
+        else:
+            log_line("zfr package: upload skipped (--no-upload)")
+        return []
+
+    log_line(
+        "zfr package: detected "
+        + ", ".join(f"{k.name}({k.path})" for k in planned)
+        + (
+            f"; active={len(active)} skipped={len(skipped_records)}"
+            if skipped_records
+            else f"; active={len(active)}"
+        )
+        + f"; parallel packagers≤{jobs}"
+    )
+
     if dry_run:
         built: list[PackagingKind] = []
-        ctx = _ctx(jobs, is_dry=True)
-        for kind in planned:
+        n = max(1, len(active))
+        workers = max(1, min(jobs, n))
+        inner_jobs = max(1, jobs // workers)
+        ctx = _ctx(inner_jobs, is_dry=True)
+        for kind in active:
             if packager_for(kind).build(ctx):
                 built.append(kind)
         if upload:
@@ -97,18 +156,21 @@ def package_project(
             log_line("zfr package: upload skipped (--no-upload)")
         return built
 
-    n = len(planned)
+    n = len(active)
     workers = max(1, min(jobs, n))
     inner_jobs = max(1, jobs // workers)
 
     board = StatusBoard(
         title="Packaging...",
-        states=[PackagerState(name=k.name) for k in planned],
+        states=[PackagerState(name=k.name) for k in active]
+        + [PackagerState(name=r.name) for r in skipped_records],
         enabled=sys.stdout.isatty(),
     )
     board.start()
+    for rec in skipped_records:
+        board.set_ok(rec.name, "skipped")
 
-    records: list[PackagerRecord] = []
+    records: list[PackagerRecord] = list(skipped_records)
     built_map: dict[str, PackagingKind] = {}
     started = time.time()
     lock = threading.Lock()
@@ -167,7 +229,7 @@ def package_project(
         return record
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
-        futs = [pool.submit(_worker, k) for k in planned]
+        futs = [pool.submit(_worker, k) for k in active]
         concurrent.futures.wait(futs)
         for f in futs:
             f.result()
@@ -188,7 +250,7 @@ def package_project(
     if not board.enabled:
         print_run_summary(run)
 
-    built = [built_map[k.name] for k in planned if k.name in built_map]
+    built = [built_map[k.name] for k in active if k.name in built_map]
     failures = run.failures()
     if failures:
         if interactive_errors and sys.stdin.isatty() and sys.stdout.isatty():

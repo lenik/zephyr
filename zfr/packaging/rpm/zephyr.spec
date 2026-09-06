@@ -36,7 +36,7 @@ zephyr ships language templates for small command-line utilities under
 haskell, java, perl, python, ruby, rust, smalltalk, swift, typescript), plus
 cmdline tools (zfr, zfr-create, zfr-rename, zfr-add, zfr-remove,
 zfr-about, zfr-version, zfr-lint, zfr-shape, zfr-dist, zfr-build,
-zfr-package, zfr-lasterror, zfr-ize, zfr-release) to create projects, manage puffs
+zfr-package, zfr-lasterror, zfr-ize, zfr-release, zfr-publish) to create projects, manage puffs
 (example apps), validate packaging against zephyr style, build source
 tarballs, compile/package projects (`zfr build` / `zfr package`), upgrade
 existing trees (`zfr ize`), and publish GitHub releases (`zfr release`).
@@ -84,6 +84,7 @@ meson install -C build --destdir=%{buildroot}
 %{_bindir}/zfr-package
 %{_bindir}/zfr-lasterror
 %{_bindir}/zfr-release
+%{_bindir}/zfr-publish
 %{_datadir}/bash-completion/completions/zfr
 %{_datadir}/bash-completion/completions/zfr-create
 %{_datadir}/bash-completion/completions/zfr-rename
@@ -101,6 +102,7 @@ meson install -C build --destdir=%{buildroot}
 %{_datadir}/bash-completion/completions/zfr-package
 %{_datadir}/bash-completion/completions/zfr-lasterror
 %{_datadir}/bash-completion/completions/zfr-release
+%{_datadir}/bash-completion/completions/zfr-publish
 %{_mandir}/man1/zfr.1*
 %{_datadir}/zephyr/
 %{_datadir}/locale/*/LC_MESSAGES/zephyr.mo

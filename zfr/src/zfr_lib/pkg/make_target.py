@@ -61,28 +61,45 @@ class MakeTargetPackager:
     def name(self) -> str:
         return self._kind
 
+    def _pkgdir(self, ctx: PackagerContext) -> Path | None:
+        kind = self._kind
+        if kind == "rpm":
+            return resolve_rpm_dir(ctx.root)
+        default_rel, _goals, _outs = target_meta(kind)
+        rel = self._rel or default_rel
+        pkgdir = ctx.root / rel
+        if not (pkgdir / "Makefile").is_file():
+            return None
+        return pkgdir
+
+    def skip_reason(self, ctx: PackagerContext) -> str | None:
+        """Skip when Makefile is missing or neither local nor remote build works."""
+        if self._pkgdir(ctx) is None:
+            return "no packaging Makefile"
+        force_local = os.environ.get("ZEPHYR_FORCE_LOCAL") == "1"
+        if can_build_local(self._kind) or force_local:
+            return None
+        if find_build_host_file(ctx.root, self._kind) is not None:
+            return None
+        return "no local tools and no .build-host"
+
     def build(self, ctx: PackagerContext) -> bool:
         jobs = resolve_jobs(ctx.jobs)
         kind = self._kind
-        if kind == "rpm":
-            pkgdir = resolve_rpm_dir(ctx.root)
-        else:
-            default_rel, _goals, _outs = target_meta(kind)
-            rel = self._rel or default_rel
-            pkgdir = ctx.root / rel
-            if not (pkgdir / "Makefile").is_file():
-                pkgdir = None
+        pkgdir = self._pkgdir(ctx)
         if pkgdir is None:
+            return False
+
+        reason = self.skip_reason(ctx)
+        if reason is not None:
+            log_line(f"zfr package: skipping {kind} ({reason})")
             return False
 
         force_local = os.environ.get("ZEPHYR_FORCE_LOCAL") == "1"
         if can_build_local(kind) or force_local:
             mode = "local"
-        elif find_build_host_file(ctx.root, kind) is not None:
-            mode = "remote"
         else:
-            log_line(f"zfr package: skipping {kind} (no local tools and no .build-host)")
-            return False
+            mode = "remote"
 
         _rel, goals, out_rels = target_meta(kind)
         log_line(f"zfr package: building {kind} ({mode}, jobs={jobs})")

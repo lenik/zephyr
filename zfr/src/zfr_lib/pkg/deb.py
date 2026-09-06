@@ -14,6 +14,10 @@ from .provider import PackagerContext
 class DebPackager:
     name = "deb"
 
+    def skip_reason(self, ctx: PackagerContext) -> str | None:
+        del ctx
+        return None
+
     def build(self, ctx: PackagerContext) -> bool:
         opts = list(ctx.dpkg_buildopts)
         jobs = resolve_jobs(ctx.jobs)

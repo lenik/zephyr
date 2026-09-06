@@ -3,6 +3,8 @@ zephyr (2.8.12) testing; urgency=medium
   * zfr: alias ``p`` → publish (package still matches ``pac`` / ``pack``).
   * Clarify agent/cursor-rules: fold post-tag changelog opens into normal
     commits (no dedicated “open version” commit; only Release is special).
+  * zfr package: probe/skip packagers before parallel scheduling so skipped
+    kinds do not dilute per-packager -j; list zfr-publish in rpm %files.
 
  -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 06 Sep 2026 21:30:00 +0800
 
