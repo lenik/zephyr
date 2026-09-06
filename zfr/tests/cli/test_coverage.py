@@ -189,11 +189,16 @@ class ZephyrDispatcherTests(unittest.TestCase):
         pub = run_zephyr("publish", "-h")
         self.assertIn("marketplace", pub.stdout.lower())
         self.assertNotIn("--no-publish", pub.stdout)
-        # Explicit alias: p → publish (package still via pac/pack/package).
-        p_alias = run_zephyr("p", "-h")
-        self.assertIn("marketplace", p_alias.stdout.lower())
+        # Ambiguous prefix must not run (package vs publish).
+        p_ambig = run_zephyr("p", "-h", check=False)
+        self.assertEqual(p_ambig.returncode, 2)
+        self.assertIn("ambiguous command 'p'", p_ambig.stderr)
+        self.assertIn("package", p_ambig.stderr)
+        self.assertIn("publish", p_ambig.stderr)
         pac = run_zephyr("pac", "-h")
         self.assertIn("packaging", pac.stdout.lower())
+        publi = run_zephyr("publi", "-h")
+        self.assertIn("marketplace", publi.stdout.lower())
 
 
 class ZephyrLangScoreTests(unittest.TestCase):

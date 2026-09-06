@@ -1,6 +1,7 @@
 zephyr (2.8.12) testing; urgency=medium
 
-  * zfr: alias ``p`` → publish (package still matches ``pac`` / ``pack``).
+  * zfr: command prefixes must be unambiguous (``p`` errors with
+    package/publish candidates; use ``pac`` / ``pub`` etc.).
   * Clarify agent/cursor-rules: fold post-tag changelog opens into normal
     commits (no dedicated “open version” commit; only Release is special).
   * zfr package: probe/skip packagers before parallel scheduling so skipped
