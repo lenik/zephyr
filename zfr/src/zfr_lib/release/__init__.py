@@ -1,28 +1,46 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""zfr release — parse gh-makerelease options and exec gh-makerelease.
+"""zfr release / zfr-release — tag, build, package, install, private upload.
 
-This command does not implement tagging, packaging, or GitHub uploads.
-It only validates the same option grammar as gh-makerelease, rebuilds
-an argv, and execs ``gh-makerelease`` from PATH.
+Pipeline: detect → tag/push → build/package → local deb install → deb/rpm
+upload (dput / private cloud) → optional ``gh release create``.
+
+Marketplace publish (npm / VSIX) is **not** included — use ``zfr publish``.
 """
 
 from __future__ import annotations
 
 import argparse
-import os
-import shutil
-import sys
-from collections.abc import Sequence
 
-from .i18n import _
-from .jobs import add_job_argument, resolve_jobs
+from ..cli import register_command
+from ..i18n import _
+from ..jobs import add_job_argument, resolve_jobs
+from .context import Options
+from .logutil import set_log_level
+from .pipeline import run_release
+from .util import load_default_options
 
 _DEFAULT_BASE_IMAGE = "b4f-debian:trixie"
 
+NAME = "release"
+HELP = _("tag, build, package, install, and upload (private cloud)")
+DESCRIPTION = _(
+    "Detect project type, tag and push, build/package, optionally install "
+    "local debs, upload deb/rpm to the private pool, and create a GitHub "
+    "release. Does not publish to npm/VSIX marketplaces (see zfr publish). "
+    "Also available as the zfr-release wrapper."
+)
+
 
 def add_release_arguments(p: argparse.ArgumentParser) -> None:
-    """Attach gh-makerelease options (parsed here, implemented there)."""
+    """Attach release / publish shared options."""
     add_job_argument(p)
+    p.add_argument(
+        "-C",
+        "--chdir",
+        metavar="DIR",
+        default="",
+        help=_("change to DIR before detecting the project"),
+    )
     p.add_argument(
         "-b",
         "--build-binary",
@@ -77,7 +95,7 @@ def add_release_arguments(p: argparse.ArgumentParser) -> None:
         "-l",
         "--local",
         action="store_true",
-        help=_("Build in local, no tag/push/release (implies -U -P)"),
+        help=_("Build in local, no tag/push/GitHub release (implies -U)"),
     )
     p.add_argument(
         "-t",
@@ -107,19 +125,13 @@ def add_release_arguments(p: argparse.ArgumentParser) -> None:
         "-U",
         "--no-upload",
         action="store_true",
-        help=_("Skip dput upload to deb pool (-u reuses build artifacts)"),
+        help=_("Skip dput / private-cloud upload (-u reuses build artifacts)"),
     )
     p.add_argument(
         "-R",
         "--no-release",
         action="store_true",
         help=_("Skip GitHub release"),
-    )
-    p.add_argument(
-        "-P",
-        "--no-publish",
-        action="store_true",
-        help=_("Skip VSIX marketplace publish"),
     )
     p.add_argument(
         "-Y",
@@ -149,89 +161,72 @@ def add_release_arguments(p: argparse.ArgumentParser) -> None:
     )
 
 
+add_arguments = add_release_arguments
+
+
 def apply_release_implications(ns: argparse.Namespace) -> None:
-    """Apply -t → -l -I and -l → -U -P (mutates *ns* in place)."""
+    """Apply -t → -l -I and -l → -U (mutates *ns* in place)."""
     if getattr(ns, "test", False):
         ns.local = True
         ns.no_install = True
     if ns.local:
         ns.no_upload = True
-        ns.no_publish = True
 
 
-def compose_makerelease_argv(ns: argparse.Namespace) -> list[str]:
-    """Rebuild gh-makerelease argv from a parsed namespace (no defaults)."""
+def namespace_to_options(ns: argparse.Namespace) -> Options:
+    """Convert a parsed argparse namespace into release Options."""
     apply_release_implications(ns)
-    argv: list[str] = []
-    jobs = resolve_jobs(getattr(ns, "jobs", None))
-    argv.extend(["-j", str(jobs)])
+    dpkg_buildopts: list[str] = []
     if ns.build_binary:
-        argv.append("--build-binary")
-    if ns.no_pre_clean:
-        argv.append("--no-pre-clean")
-    if ns.upload:
-        argv.append("--upload")
+        dpkg_buildopts.append("-b")
     if ns.unsigned:
-        argv.append("--unsigned")
-    if ns.dput_host:
-        argv.extend(["--dput-host", ns.dput_host])
-    if ns.docker:
-        argv.append("--docker")
-    if ns.base_image and ns.base_image != _DEFAULT_BASE_IMAGE:
-        argv.extend(["--base-image", ns.base_image])
-    if ns.docker_server:
-        argv.extend(["--docker-server", ns.docker_server])
-    if ns.local:
-        argv.append("--local")
-    if ns.force:
-        argv.append("--force")
-    if ns.no_install:
-        argv.append("--no-install")
-    if ns.no_tag:
-        argv.append("--no-tag")
-    if ns.no_upload:
-        argv.append("--no-upload")
-    if ns.no_release:
-        argv.append("--no-release")
-    if ns.no_publish:
-        argv.append("--no-publish")
-    if ns.no_rpm:
-        argv.append("--no-rpm")
-    if ns.no_deb:
-        argv.append("--no-deb")
-    argv.extend(["--verbose"] * int(ns.verbose or 0))
-    argv.extend(["--quiet"] * int(ns.quiet or 0))
-    return argv
+        dpkg_buildopts.extend(["-us", "-uc"])
+    if ns.no_pre_clean:
+        dpkg_buildopts.append("-nc")
+    docker = bool(ns.docker or ns.docker_server)
+    return Options(
+        force=bool(ns.force),
+        local=bool(ns.local),
+        upload=bool(ns.upload),
+        docker=docker,
+        dput_host=ns.dput_host or "",
+        base_image=ns.base_image or _DEFAULT_BASE_IMAGE,
+        docker_server=ns.docker_server or "",
+        no_install=bool(ns.no_install),
+        no_tag=bool(ns.no_tag),
+        no_upload=bool(ns.no_upload),
+        no_release=bool(ns.no_release),
+        no_publish=False,
+        no_rpm=bool(ns.no_rpm),
+        no_deb=bool(ns.no_deb),
+        chdir=ns.chdir or "",
+        dpkg_buildopts=dpkg_buildopts,
+        jobs=resolve_jobs(getattr(ns, "jobs", None)),
+    )
 
 
-def exec_makerelease(argv: Sequence[str]) -> int:
-    """Replace this process with gh-makerelease. Never returns on success."""
-    exe = shutil.which("gh-makerelease")
-    if not exe:
-        print(
-            "zfr release: gh-makerelease not found on PATH "
-            "(install the gh-makerelease package)",
-            file=sys.stderr,
-        )
-        return 127
-    os.execv(exe, [exe, *argv])
-    return 0
+def parse_release_args(
+    argv: list[str] | None = None,
+    *,
+    prog: str | None = None,
+) -> argparse.Namespace:
+    """Parse argv with defaults from ``zfr-release.options`` (CLI wins)."""
+    defaults = load_default_options()
+    args_in = list(argv) if argv is not None else None
+    if args_in is None:
+        import sys
+
+        args_in = sys.argv[1:]
+    combined = defaults + args_in
+    p = argparse.ArgumentParser(prog=prog or "zfr-release", description=DESCRIPTION)
+    add_release_arguments(p)
+    return p.parse_args(combined)
 
 
 def cmd_release(ns: argparse.Namespace) -> int:
-    """Parse-only front end: recompose options and exec gh-makerelease."""
-    return exec_makerelease(compose_makerelease_argv(ns))
-
-from .cli import register_command
-
-NAME = "release"
-HELP = _("create a GitHub release (parse options, exec gh-makerelease)")
-DESCRIPTION = _(
-    "Parse gh-makerelease options, rebuild argv, and exec "
-    "gh-makerelease. Does not implement tagging, packaging, or uploads."
-)
-
-add_arguments = add_release_arguments
+    """Run the native release pipeline from a parsed namespace."""
+    set_log_level(1 + int(ns.verbose or 0) - int(ns.quiet or 0))
+    return run_release(namespace_to_options(ns))
 
 
 def run(args: argparse.Namespace) -> int:
@@ -239,4 +234,11 @@ def run(args: argparse.Namespace) -> int:
 
 
 def register(sub: argparse._SubParsersAction) -> None:
-    register_command(sub, NAME, help=HELP, description=DESCRIPTION, add_arguments=add_arguments, run=run)
+    register_command(
+        sub,
+        NAME,
+        help=HELP,
+        description=DESCRIPTION,
+        add_arguments=add_arguments,
+        run=run,
+    )

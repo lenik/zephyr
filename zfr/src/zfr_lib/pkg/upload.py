@@ -46,21 +46,22 @@ def _load_dput_host_default() -> str:
         Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")),
         Path.home() / ".config",
     ):
-        path = base / "gh-makerelease.options"
-        if not path.is_file():
-            continue
-        try:
-            text = path.read_text(encoding="utf-8")
-        except OSError:
-            continue
-        for line in text.splitlines():
-            line = line.split("#", 1)[0].strip()
-            if line.startswith("-p") or line.startswith("--dput-host"):
-                parts = line.split(None, 1)
-                if len(parts) == 2:
-                    return parts[1].strip()
-                if line.startswith("-p") and len(line) > 2 and not line.startswith("-p "):
-                    return line[2:]
+        for name in ("zfr-release.options", "gh-makerelease.options"):
+            path = base / name
+            if not path.is_file():
+                continue
+            try:
+                text = path.read_text(encoding="utf-8")
+            except OSError:
+                continue
+            for line in text.splitlines():
+                line = line.split("#", 1)[0].strip()
+                if line.startswith("-p") or line.startswith("--dput-host"):
+                    parts = line.split(None, 1)
+                    if len(parts) == 2:
+                        return parts[1].strip()
+                    if "=" in line:
+                        return line.split("=", 1)[1].strip()
     return ""
 
 
