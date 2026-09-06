@@ -30,6 +30,8 @@ WRAPPERS = (
     "zfr-ize",
     "zfr-i18n",
     "zfr-translate",
+    "zfr-build",
+    "zfr-package",
     "zfr-release",
 )
 
@@ -43,6 +45,8 @@ SUBCOMMANDS = (
     "lint",
     "shape",
     "dist",
+    "build",
+    "package",
     "release",
     "ize",
     "i18n",
@@ -166,6 +170,14 @@ class ZephyrDispatcherTests(unittest.TestCase):
         argv = compose_makerelease_argv(ns)
         self.assertIn("--local", argv)
         self.assertIn("--unsigned", argv)
+        self.assertIn("--no-upload", argv)
+        self.assertIn("--no-publish", argv)
+        ns_test = p.parse_args(["-t"])
+        argv_test = compose_makerelease_argv(ns_test)
+        self.assertIn("--local", argv_test)
+        self.assertIn("--no-install", argv_test)
+        self.assertIn("--no-upload", argv_test)
+        self.assertIn("--no-publish", argv_test)
 
 
 class ZephyrLangScoreTests(unittest.TestCase):
