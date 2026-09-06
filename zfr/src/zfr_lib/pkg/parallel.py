@@ -1,0 +1,205 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""Parallel packaging orchestration over :class:`~.provider.Packager` providers."""
+
+from __future__ import annotations
+
+import concurrent.futures
+import subprocess
+import sys
+import threading
+import time
+from pathlib import Path
+
+from ..jobs import resolve_jobs
+from ..pkg_last import PackageLastRun, PackagerRecord, save_last_run
+from ..pkg_ui import PackagerState, StatusBoard, interactive_lasterror, print_run_summary
+from ..stream_mark import StreamRecorder, log_line, reset_recorder, set_recorder
+from .kinds import PackagingKind, detect_packaging_kinds
+from .provider import PackagerContext
+from .registry import packager_for
+from .upload import upload_artifacts
+
+
+def _plan_kinds(
+    kinds: list[PackagingKind],
+    *,
+    no_deb: bool,
+    no_rpm: bool,
+) -> list[PackagingKind]:
+    planned: list[PackagingKind] = []
+    for kind in kinds:
+        if kind.name == "deb" and no_deb:
+            log_line("zfr package: skipping deb (--no-deb)")
+            continue
+        if kind.name == "rpm" and no_rpm:
+            log_line("zfr package: skipping rpm (--no-rpm)")
+            continue
+        planned.append(kind)
+    return planned
+
+
+def package_project(
+    root: Path,
+    *,
+    upload: bool = True,
+    dput_host: str = "",
+    no_deb: bool = False,
+    no_rpm: bool = False,
+    only: list[str] | None = None,
+    dpkg_buildopts: list[str] | None = None,
+    docker: bool = False,
+    docker_server: str = "",
+    base_image: str = "b4f-debian:trixie",
+    dry_run: bool = False,
+    jobs: int = 0,
+    interactive_errors: bool = True,
+) -> list[PackagingKind]:
+    """Detect kinds, run packager providers in parallel, optionally upload."""
+    root = root.resolve()
+    jobs = resolve_jobs(jobs)
+    kinds = detect_packaging_kinds(root)
+    if only:
+        want = {x.strip().lower() for x in only if x.strip()}
+        kinds = [k for k in kinds if k.name in want]
+    if not kinds:
+        raise SystemExit(f"zfr package: no packaging types detected under {root}")
+
+    planned = _plan_kinds(kinds, no_deb=no_deb, no_rpm=no_rpm)
+    if not planned:
+        raise SystemExit("zfr package: nothing to package after --no-deb/--no-rpm filters")
+
+    log_line(
+        "zfr package: detected "
+        + ", ".join(f"{k.name}({k.path})" for k in planned)
+        + f"; parallel packagers≤{jobs}"
+    )
+
+    def _ctx(inner_jobs: int, *, is_dry: bool) -> PackagerContext:
+        return PackagerContext(
+            root=root,
+            jobs=inner_jobs,
+            dry_run=is_dry,
+            dpkg_buildopts=list(dpkg_buildopts or []),
+            docker=docker,
+            docker_server=docker_server,
+            base_image=base_image,
+        )
+
+    if dry_run:
+        built: list[PackagingKind] = []
+        ctx = _ctx(jobs, is_dry=True)
+        for kind in planned:
+            if packager_for(kind).build(ctx):
+                built.append(kind)
+        if upload:
+            upload_artifacts(root, built, dput_host=dput_host, dry_run=True)
+        else:
+            log_line("zfr package: upload skipped (--no-upload)")
+        return built
+
+    n = len(planned)
+    workers = max(1, min(jobs, n))
+    inner_jobs = max(1, jobs // workers)
+
+    board = StatusBoard(
+        title="Packaging...",
+        states=[PackagerState(name=k.name) for k in planned],
+        enabled=sys.stdout.isatty(),
+    )
+    board.start()
+
+    records: list[PackagerRecord] = []
+    built_map: dict[str, PackagingKind] = {}
+    started = time.time()
+    lock = threading.Lock()
+
+    def _worker(kind: PackagingKind) -> PackagerRecord:
+        rec = StreamRecorder()
+        token = set_recorder(rec)
+        board.set_running(kind.name)
+        done = threading.Event()
+
+        def _poll() -> None:
+            while not done.wait(0.15):
+                tip = rec.last_line()
+                if tip:
+                    board.set_tip(kind.name, tip)
+
+        threading.Thread(target=_poll, daemon=True).start()
+        err = ""
+        summary = "packaged"
+        ok = False
+        try:
+            did = packager_for(kind).build(_ctx(inner_jobs, is_dry=False))
+            ok = True
+            summary = "packaged" if did else "skipped"
+            board.set_ok(kind.name, summary)
+        except SystemExit as exc:
+            ok = False
+            err = str(exc) or "failed"
+            board.set_fail(kind.name, err)
+            summary = f"error: {err}"
+        except subprocess.CalledProcessError as exc:
+            ok = False
+            err = f"exit {exc.returncode}"
+            board.set_fail(kind.name, err)
+            summary = f"error: {err}"
+        except Exception as exc:  # noqa: BLE001
+            ok = False
+            err = str(exc) or exc.__class__.__name__
+            board.set_fail(kind.name, err)
+            summary = f"error: {err}"
+        finally:
+            done.set()
+            reset_recorder(token)
+
+        record = PackagerRecord(
+            name=kind.name,
+            ok=ok,
+            summary=summary,
+            marked=rec.marked(),
+            error=err,
+        )
+        with lock:
+            records.append(record)
+            if ok and summary == "packaged":
+                built_map[kind.name] = kind
+        return record
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
+        futs = [pool.submit(_worker, k) for k in planned]
+        concurrent.futures.wait(futs)
+        for f in futs:
+            f.result()
+
+    board.finish()
+    finished = time.time()
+    by_name = {r.name: r for r in records}
+    ordered = [by_name[k.name] for k in planned if k.name in by_name]
+    run = PackageLastRun(
+        root=str(root),
+        started=started,
+        finished=finished,
+        jobs=jobs,
+        records=ordered,
+    )
+    save_last_run(run)
+
+    if not board.enabled:
+        print_run_summary(run)
+
+    built = [built_map[k.name] for k in planned if k.name in built_map]
+    failures = run.failures()
+    if failures:
+        if interactive_errors and sys.stdin.isatty() and sys.stdout.isatty():
+            interactive_lasterror(run, only_failures=True)
+        raise SystemExit(
+            f"zfr package: {len(failures)} packager(s) failed "
+            f"(revisit with `zfr lasterror`)"
+        )
+
+    if upload:
+        upload_artifacts(root, built, dput_host=dput_host, dry_run=False)
+    else:
+        log_line("zfr package: upload skipped (--no-upload)")
+    return built
