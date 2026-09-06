@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: zephyr@bodz.net\n"
-"POT-Creation-Date: 2026-08-25 18:17+0800\n"
+"POT-Creation-Date: 2026-09-06 19:24+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Swedish\n"
@@ -28,31 +28,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "\n"
 
-#: src/zfr:32
+#: src/zfr:51
 msgid "Zephyr template helper (CLI name: zfr). Create projects and manage example puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
 msgstr "Zephyr-mallhjälpare (CLI-namn: zfr). Skapa projekt och hantera exempel-puffs. Instansierade träd fortsätter anropa zfr; zfr är inte en omdöpnings-token."
 
-#: src/zfr:46
+#: src/zfr:66
 msgid "show this help"
 msgstr "visa denna hjälp"
 
-#: src/zfr_lib/about.py:496
+#: src/zfr_lib/about.py:498
 msgid "print current project information (walks parents from cwd)"
 msgstr "skriv ut aktuell projektinformation (går uppåt från cwd)"
 
-#: src/zfr_lib/about.py:498
+#: src/zfr_lib/about.py:500
 msgid "Print information about the current zephyr project (walks from cwd toward parent directories). CSR colors when stdout is a TTY. Common packaging fields are parsed from debian or RPM."
 msgstr "Skriv ut information om det aktuella zephyr-projektet (går från cwd mot föräldrakataloger). CSR-färger när stdout är en TTY. Vanliga paketeringsfält läses från debian eller RPM."
 
-#: src/zfr_lib/about.py:505
+#: src/zfr_lib/about.py:507
 msgid "show parsed Debian packaging fields"
 msgstr "visa parsade Debian-paketeringsfält"
 
-#: src/zfr_lib/about.py:506
+#: src/zfr_lib/about.py:508
 msgid "show parsed RPM packaging fields"
 msgstr "visa parsade RPM-paketeringsfält"
 
-#: src/zfr_lib/about.py:511
+#: src/zfr_lib/about.py:513
 msgid "CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)"
 msgstr "CSR (console SGR)-markering (standard: auto = TTY och inget NO_COLOR)"
 
@@ -118,7 +118,8 @@ msgid "Print the detected language of the current project and layout details on 
 msgstr "Skriv ut identifierat språk för aktuellt projekt och layoutdetaljer på stderr."
 
 #: src/zfr_lib/dist.py:60
-msgid "write the archive into DIR (default: meson-dist, or %_topdir/SOURCES with --rpm; usually $HOME/rpmbuild)"
+#, fuzzy, python-format
+msgid "write the archive into DIR (default: meson-dist, or %%_topdir/SOURCES with --rpm; usually $HOME/rpmbuild)"
 msgstr "skriv arkivet till DIR (standard: meson-dist, eller %_topdir/SOURCES ($HOME/rpmbuild) med --rpm)"
 
 #: src/zfr_lib/dist.py:70
@@ -130,71 +131,214 @@ msgid "archive format (default: xz)"
 msgstr "arkivformat (standard: xz)"
 
 #: src/zfr_lib/dist.py:86
-msgid "name the archive NAME-VERSION.tar.xz and write it to %_topdir/SOURCES ($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
+#, fuzzy, python-format
+msgid "name the archive NAME-VERSION.tar.xz and write it to %%_topdir/SOURCES ($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr "döp arkivet till NAME-VERSION.tar.xz och skriv till %_topdir/SOURCES ($HOME/rpmbuild) om inte -o anges"
 
-#: src/zfr_lib/dist.py:94
+#: src/zfr_lib/dist.py:95
 msgid "pass --allow-dirty to meson dist (default: allow)"
 msgstr "skicka --allow-dirty till meson dist (standard: tillåt)"
 
-#: src/zfr_lib/dist.py:99
+#: src/zfr_lib/dist.py:100
 msgid "run tests during meson dist (default: --no-tests)"
 msgstr "kör tester under meson dist (standard: --no-tests)"
 
-#: src/zfr_lib/dist.py:343
+#: src/zfr_lib/dist.py:376
 msgid "build a source tarball (meson dist, or this project only)"
 msgstr "bygg käll-tarball (meson dist, eller endast detta projekt)"
 
-#: src/zfr_lib/dist.py:345
+#: src/zfr_lib/dist.py:378
 msgid "Build a source archive of the current zephyr project (walks from cwd toward parent directories). Uses meson dist when this directory is the git project root; otherwise packs this project only so nested language templates do not ship the parent meta-repo. Prints the archive path on stdout."
 msgstr "Bygg ett källarkiv för det aktuella zephyr-projektet (går från cwd mot föräldrakataloger). Använder meson dist när denna katalog är git-projektets rot; annars packar endast detta projekt så att kapslade språkmallar inte skickar med förälder-meta-repot. Skriver arkivsökvägen till stdout."
 
-#: src/zfr_lib/ize/__init__.py:65
+#: src/zfr_lib/i18n/cmd.py:42
+msgid "no implemented locales (po/LINGUAS + po/*.po)"
+msgstr "no implemented locales (po/LINGUAS + po/*.po)"
+
+#: src/zfr_lib/i18n/cmd.py:47
+msgid "  [derived]"
+msgstr "  [derived]"
+
+#: src/zfr_lib/i18n/cmd.py:57
+#, python-format
+msgid "tier %(tier)s"
+msgstr "tier %(tier)s"
+
+#: src/zfr_lib/i18n/cmd.py:60
+#, python-format
+msgid "derived from: %(parent)s"
+msgstr "derived from: %(parent)s"
+
+#: src/zfr_lib/i18n/cmd.py:63
+#, python-format
+msgid "fallback chain: %(chain)s"
+msgstr "fallback chain: %(chain)s"
+
+#: src/zfr_lib/i18n/cmd.py:66
+#, python-format
+msgid "children (->): %(kids)s"
+msgstr "children (->): %(kids)s"
+
+#: src/zfr_lib/i18n/cmd.py:70
+#, python-format
+msgid "catalog: %(path)s"
+msgstr "catalog: %(path)s"
+
+#: src/zfr_lib/i18n/cmd.py:72
+#, python-format
+msgid "po stats: %(translated)d/%(total)d translated, %(missing)d missing"
+msgstr "po stats: %(translated)d/%(total)d translated, %(missing)d missing"
+
+#: src/zfr_lib/i18n/cmd.py:75
+msgid "no .po catalog in this project"
+msgstr "no .po catalog in this project"
+
+#: src/zfr_lib/i18n/cmd.py:93
+#, python-format
+msgid "locale not found: %s"
+msgstr "locale not found: %s"
+
+#: src/zfr_lib/i18n/cmd.py:147
+#, python-format
+msgid "would build %d derived locale file(s)"
+msgstr "would build %d derived locale file(s)"
+
+#: src/zfr_lib/i18n/cmd.py:167
+msgid "manage implemented gettext locales"
+msgstr "manage implemented gettext locales"
+
+#: src/zfr_lib/i18n/cmd.py:169
+msgid "List, add, delete, and build derived locales in the current project. Use zfr translate to query or update message strings."
+msgstr "List, add, delete, and build derived locales in the current project. Use zfr translate to query or update message strings."
+
+#: src/zfr_lib/i18n/cmd.py:179
+msgid "list all implemented locales in this project"
+msgstr "list all implemented locales in this project"
+
+#: src/zfr_lib/i18n/cmd.py:185
+msgid "delete a locale (LINGUAS, .po, docs/)"
+msgstr "delete a locale (LINGUAS, .po, docs/)"
+
+#: src/zfr_lib/i18n/cmd.py:191
+msgid "add a new locale"
+msgstr "add a new locale"
+
+#: src/zfr_lib/i18n/cmd.py:197
+msgid "build derived locale PO/man files from parents (skip locales in LINGUAS)"
+msgstr "build derived locale PO/man files from parents (skip locales in LINGUAS)"
+
+#: src/zfr_lib/i18n/cmd.py:202
+msgid "output directory for derived .po files (default: build/po or $MESON_BUILD_ROOT/po)"
+msgstr "output directory for derived .po files (default: build/po or $MESON_BUILD_ROOT/po)"
+
+#: src/zfr_lib/i18n/cmd.py:207
+msgid "write a stamp file listing derived paths (for Meson custom_target)"
+msgstr "write a stamp file listing derived paths (for Meson custom_target)"
+
+#: src/zfr_lib/i18n/cmd.py:212
+msgid "with --build, also msgfmt derived .po into LC_MESSAGES (for Meson)"
+msgstr "with --build, also msgfmt derived .po into LC_MESSAGES (for Meson)"
+
+#: src/zfr_lib/i18n/cmd.py:217
+msgid "gettext domain for --compile-mo / --install-derived"
+msgstr "gettext domain for --compile-mo / --install-derived"
+
+#: src/zfr_lib/i18n/cmd.py:223
+msgid "install derived .mo from --po-dir into $MESON_INSTALL_DESTDIR_PREFIX (Meson add_install_script)"
+msgstr "install derived .mo from --po-dir into $MESON_INSTALL_DESTDIR_PREFIX (Meson add_install_script)"
+
+#: src/zfr_lib/i18n/cmd.py:231
+msgid "with --install-derived, locale subdirectory under prefix (default: share/locale)"
+msgstr "with --install-derived, locale subdirectory under prefix (default: share/locale)"
+
+#: src/zfr_lib/i18n/cmd.py:233
+msgid "with --build, print only"
+msgstr "with --build, print only"
+
+#: src/zfr_lib/i18n/cmd.py:234
+msgid "with --build, overwrite existing"
+msgstr "with --build, overwrite existing"
+
+#: src/zfr_lib/i18n/cmd.py:235
+msgid "locale to inspect"
+msgstr "locale to inspect"
+
+#: src/zfr_lib/i18n/cmd.py:241
+msgid "--install-derived requires --po-dir and --domain"
+msgstr "--install-derived requires --po-dir and --domain"
+
+#: src/zfr_lib/ize/engine/__init__.py:85
+msgid "suppressed via -u/--uncheck"
+msgstr "suppressed via -u/--uncheck"
+
+#: src/zfr_lib/ize/__init__.py:74
 msgid "refactor this project to current zephyr style"
 msgstr "refaktorera detta projekt till aktuell zephyr-stil"
 
-#: src/zfr_lib/ize/__init__.py:66
-msgid "Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, and Meson version substitutions. Walks from cwd toward parents."
+#: src/zfr_lib/ize/__init__.py:75
+#, fuzzy
+msgid "Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, Meson version substitutions, and lint-level gettext/man locale coverage (LINGUAS, .po, docs/<locale>). Walks from cwd toward parents."
 msgstr "Refaktorera aktuellt projekt till aktuell zephyr-stil: saknade debian/rpm-filer, meson-mål, AsciiDoc-manpages och Meson-versionsersättningar. Går från cwd mot föräldrar."
 
-#: src/zfr_lib/ize/__init__.py:70
+#: src/zfr_lib/ize/__init__.py:79
 #, python-format
 msgid "language template to align with (default: detect; one of: %s)"
 msgstr "språkmall att anpassa efter (standard: detect; ett av: %s)"
 
-#: src/zfr_lib/ize/__init__.py:71
+#: src/zfr_lib/ize/__init__.py:80
 msgid "print planned changes without writing files"
 msgstr "skriv ut planerade ändringar utan att skriva filer"
 
-#: src/zfr_lib/ize/__init__.py:72
+#: src/zfr_lib/ize/__init__.py:85
+msgid "list numbered ize standards (ZI*) as a table and exit"
+msgstr "list numbered ize standards (ZI*) as a table and exit"
+
+#: src/zfr_lib/ize/__init__.py:91
+msgid "show details for ize standard NUM (e.g. ZI015, 15) and exit"
+msgstr "show details for ize standard NUM (e.g. ZI015, 15) and exit"
+
+#: src/zfr_lib/ize/__init__.py:98
+msgid "bump patch version (debian/changelog + VERSION), git add -A, and commit ize changes with a verbose message"
+msgstr "bump patch version (debian/changelog + VERSION), git add -A, and commit ize changes with a verbose message"
+
+#: src/zfr_lib/ize/__init__.py:107
+msgid "changelog author for --commit (Name or 'Name <email>'); default: reuse the previous debian/changelog trailer"
+msgstr "changelog author for --commit (Name or 'Name <email>'); default: reuse the previous debian/changelog trailer"
+
+#: src/zfr_lib/ize/__init__.py:111
 msgid "also print skipped files"
 msgstr "skriv även ut överhoppade filer"
 
-#: src/zfr_lib/ize/__init__.py:78
+#: src/zfr_lib/ize/__init__.py:117
 msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
 msgstr "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
 
-#: src/zfr_lib/ize/__init__.py:80
+#: src/zfr_lib/ize/__init__.py:119
 msgid "do not convert groff .1 man pages to docs/*.adoc"
 msgstr "konvertera inte groff .1-manpages till docs/*.adoc"
 
-#: src/zfr_lib/ize/__init__.py:81
+#: src/zfr_lib/ize/__init__.py:120
 msgid "do not turn hardcoded versions into @VERSION@ / config.h"
 msgstr "gör inte hårdkodade versioner till @VERSION@ / config.h"
 
-#: src/zfr_lib/ize/__init__.py:82 src/zfr_lib/lint/__init__.py:115
+#: src/zfr_lib/ize/__init__.py:127
+msgid "suppress ize rule ID(s) or code(s), comma-separated (repeatable)"
+msgstr "suppress ize rule ID(s) or code(s), comma-separated (repeatable)"
+
+#: src/zfr_lib/ize/__init__.py:129 src/zfr_lib/lint/__init__.py:179
+#: src/zfr_lib/translate/__init__.py:211
 msgid "CSR (console SGR) highlighting (default: auto)"
 msgstr "CSR (console SGR)-markering (standard: auto)"
 
-#: src/zfr_lib/l10n.py:93
+#: src/zfr_lib/ize/__init__.py:141
 #, python-format
-msgid "l10n level must be L0–L3 (or 0–3), not %r"
-msgstr "l10n-nivån måste vara L0–L3 (eller 0–3), inte %r"
+msgid "unknown ize standard: %s"
+msgstr "unknown ize standard: %s"
 
 #: src/zfr_lib/lang/antlr.py:42 src/zfr_lib/lang/as.py:30
-#: src/zfr_lib/lang/bison.py:38 src/zfr_lib/lang/clib.py:34
-#: src/zfr_lib/lang/cobol.py:32 src/zfr_lib/lang/cpplib.py:34
-#: src/zfr_lib/lang/cpp.py:21 src/zfr_lib/lang/c.py:21 src/zfr_lib/lang/d.py:32
+#: src/zfr_lib/lang/bison.py:38 src/zfr_lib/lang/clib.py:37
+#: src/zfr_lib/lang/cobol.py:32 src/zfr_lib/lang/cpplib.py:37
+#: src/zfr_lib/lang/cpp.py:24 src/zfr_lib/lang/c.py:24 src/zfr_lib/lang/d.py:32
 #: src/zfr_lib/lang/fortran.py:32 src/zfr_lib/lang/gcc.py:48
 #: src/zfr_lib/lang/kotlin.py:22 src/zfr_lib/lang/lua.py:22
 #: src/zfr_lib/lang/nim.py:24 src/zfr_lib/lang/pascal.py:32
@@ -203,9 +347,9 @@ msgid "tests/ present"
 msgstr "tests/ finns"
 
 #: src/zfr_lib/lang/antlr.py:47 src/zfr_lib/lang/as.py:35
-#: src/zfr_lib/lang/bison.py:43 src/zfr_lib/lang/clib.py:35
-#: src/zfr_lib/lang/cpplib.py:35 src/zfr_lib/lang/cpp.py:22
-#: src/zfr_lib/lang/c.py:22 src/zfr_lib/lang/gcc.py:53
+#: src/zfr_lib/lang/bison.py:43 src/zfr_lib/lang/clib.py:43
+#: src/zfr_lib/lang/cpplib.py:43 src/zfr_lib/lang/cpp.py:30
+#: src/zfr_lib/lang/c.py:30 src/zfr_lib/lang/gcc.py:53
 msgid "no tests/ directory"
 msgstr "ingen katalog tests/"
 
@@ -217,25 +361,114 @@ msgstr "Lägg till tests/TestCommons.java eller fixture-kontroller för parserns
 msgid "Add tests/smoke.sh and meson test() for stdin/stdout copy."
 msgstr "Lägg till tests/smoke.sh och meson test() för stdin/stdout-kopia."
 
-#: src/zfr_lib/lang/bash.py:45
+#: src/zfr_lib/lang/bash.py:65
 #, python-format
 msgid "src scripts: %s"
 msgstr "src-skript: %s"
 
-#: src/zfr_lib/lang/bash.py:46
-msgid "no src/*.in scripts"
+#: src/zfr_lib/lang/bash.py:78
+#, fuzzy, python-format
+msgid "root scripts: %s"
+msgstr "src-skript: %s"
+
+#: src/zfr_lib/lang/bash.py:89
+#, python-format
+msgid "setup-only package (%s); no bindir script puffs"
+msgstr "setup-only package (%s); no bindir script puffs"
+
+#: src/zfr_lib/lang/bash.py:105
+msgid "Meson executable + .c present; script .in not required"
+msgstr "Meson executable + .c present; script .in not required"
+
+#: src/zfr_lib/lang/bash.py:114
+msgid "no configure_file/executable; script .in not required"
+msgstr "no configure_file/executable; script .in not required"
+
+#: src/zfr_lib/lang/bash.py:121
+#, fuzzy
+msgid "no src/*.in or root *.in scripts"
 msgstr "inga src/*.in-skript"
 
-#: src/zfr_lib/lang/bash.py:47
-msgid "Keep configured scripts as src/<puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
+#: src/zfr_lib/lang/bash.py:124
+#, fuzzy
+msgid "Keep configured scripts as src/<puff>.in (preferred) or <puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
 msgstr "Behåll konfigurerade skript som src/<puff>.in med @PACKAGE@/@VERSION@ och meson configure_file + install_mode rwxr-xr-x."
 
 #: src/zfr_lib/lang/bison.py:45
 msgid "Add tests/ with fixture checks for parser dump/format output."
 msgstr "Lägg till tests/ med fixture-kontroller för parserns dump/format-utdata."
 
-#: src/zfr_lib/lang/clib.py:36 src/zfr_lib/lang/cpplib.py:36
-#: src/zfr_lib/lang/cpp.py:23 src/zfr_lib/lang/c.py:23
+#: src/zfr_lib/lang/_c_bas.py:187
+msgid "no int main() in src/; skip bas i18n main checks"
+msgstr "no int main() in src/; skip bas i18n main checks"
+
+#: src/zfr_lib/lang/_c_bas.py:208
+#, python-format
+msgid "main missing bas i18n setup: %s"
+msgstr "main missing bas i18n setup: %s"
+
+#: src/zfr_lib/lang/_c_bas.py:211
+msgid "In main: #include <bas/locale/i18n.h> and <bas/proc/env.h>; const char *exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR from meson config.h). Run `zfr ize`."
+msgstr "In main: #include <bas/locale/i18n.h> and <bas/proc/env.h>; const char *exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR from meson config.h). Run `zfr ize`."
+
+#: src/zfr_lib/lang/_c_bas.py:222
+msgid "bas i18n main setup (self_exe + init_i18n)"
+msgstr "bas i18n main setup (self_exe + init_i18n)"
+
+#: src/zfr_lib/lang/_c_bas.py:233
+msgid "no define_logger() in src/"
+msgstr "no define_logger() in src/"
+
+#: src/zfr_lib/lang/_c_bas.py:236
+msgid "In one .c/.cpp: #include <bas/log/deflog.h> then define_logger(); libraries may use __attribute__((weak)) define_logger(); Run `zfr ize`."
+msgstr "In one .c/.cpp: #include <bas/log/deflog.h> then define_logger(); libraries may use __attribute__((weak)) define_logger(); Run `zfr ize`."
+
+#: src/zfr_lib/lang/_c_bas.py:250
+#, fuzzy
+msgid "define_logger() present"
+msgstr "project() finns"
+
+#: src/zfr_lib/lang/_c_bas.py:252
+msgid "weak define_logger() present (library)"
+msgstr "weak define_logger() present (library)"
+
+#: src/zfr_lib/lang/_c_bas.py:258
+msgid "define_logger() without #include <bas/log/deflog.h>"
+msgstr "define_logger() without #include <bas/log/deflog.h>"
+
+#: src/zfr_lib/lang/_c_bas.py:260
+msgid "Add #include <bas/log/deflog.h> before define_logger();"
+msgstr "Add #include <bas/log/deflog.h> before define_logger();"
+
+#: src/zfr_lib/lang/_c_bas.py:276
+msgid "meson.build missing LOCALEDIR in config.h"
+msgstr "meson.build missing LOCALEDIR in config.h"
+
+#: src/zfr_lib/lang/_c_bas.py:279
+msgid "localedir = prefix / get_option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); Run `zfr ize`."
+msgstr "localedir = prefix / get_option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); Run `zfr ize`."
+
+#: src/zfr_lib/lang/_c_bas.py:289
+msgid "meson LOCALEDIR present"
+msgstr "meson LOCALEDIR present"
+
+#: src/zfr_lib/lang/_c_bas.py:306
+#, python-format
+msgid "gettext string has leading/trailing spaces: %r"
+msgstr "gettext string has leading/trailing spaces: %r"
+
+#: src/zfr_lib/lang/_c_bas.py:310
+msgid "Keep padding outside _(): e.g. fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\n\"), out);"
+msgstr ""
+"Keep padding outside _(): e.g. fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\\n"
+"\"), out);"
+
+#: src/zfr_lib/lang/_c_bas.py:320
+msgid "gettext _() strings have no leading/trailing spaces"
+msgstr "gettext _() strings have no leading/trailing spaces"
+
+#: src/zfr_lib/lang/clib.py:45 src/zfr_lib/lang/cpplib.py:45
+#: src/zfr_lib/lang/cpp.py:32 src/zfr_lib/lang/c.py:32
 #: src/zfr_lib/lang/gcc.py:55
 msgid "Add tests/ and meson test() entries like the C family templates."
 msgstr "Lägg till tests/ och meson test()-poster som i C-familjens mallar."
@@ -355,59 +588,68 @@ msgstr "Build-Depends saknar debhelper-compat (= 13)"
 msgid "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
 msgstr "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
 
-#: src/zfr_lib/lint/debian.py:72
+#: src/zfr_lib/lint/debian.py:80
 msgid "Package stanza missing Architecture"
 msgstr "Package-stycket saknar Architecture"
 
-#: src/zfr_lib/lint/debian.py:74
+#: src/zfr_lib/lint/debian.py:82
 msgid "Architecture: all  (scripts) or any (compiled)."
 msgstr "Architecture: all  (skript) eller any (kompilerat)."
 
-#: src/zfr_lib/lint/debian.py:82
+#: src/zfr_lib/lint/debian.py:91
+#, python-format
+msgid "Architecture: %s (bash + Meson executable)"
+msgstr "Architecture: %s (bash + Meson executable)"
+
+#: src/zfr_lib/lint/debian.py:100
 #, python-format
 msgid "bash packages should be Architecture: all (got %s)"
 msgstr "bash-paket ska vara Architecture: all (fick %s)"
 
-#: src/zfr_lib/lint/debian.py:84
+#: src/zfr_lib/lint/debian.py:102
 msgid "Architecture: all"
 msgstr "Architecture: all"
 
-#: src/zfr_lib/lint/debian.py:92
+#: src/zfr_lib/lint/debian.py:110
 #, python-format
 msgid "%s packages are usually Architecture: any (got all)"
 msgstr "%s-paket är vanligen Architecture: any (fick all)"
 
-#: src/zfr_lib/lint/debian.py:94
+#: src/zfr_lib/lint/debian.py:112 src/zfr_lib/lint/debian.py:128
 msgid "Architecture: any"
 msgstr "Architecture: any"
 
-#: src/zfr_lib/lint/debian.py:98
+#: src/zfr_lib/lint/debian.py:123
+msgid "Architecture: all but Meson has executable(); ELF binaries need Architecture: any (same class of bug as RPM BuildArch: noarch)"
+msgstr "Architecture: all but Meson has executable(); ELF binaries need Architecture: any (same class of bug as RPM BuildArch: noarch)"
+
+#: src/zfr_lib/lint/debian.py:133
 #, python-format
 msgid "Architecture: %s"
 msgstr "fält Architecture: %s"
 
-#: src/zfr_lib/lint/debian.py:102
+#: src/zfr_lib/lint/debian.py:138
 #, python-format
 msgid "Homepage: %s"
 msgstr "fält Homepage: %s"
 
-#: src/zfr_lib/lint/debian.py:108
+#: src/zfr_lib/lint/debian.py:144
 msgid "no Homepage"
 msgstr "ingen Homepage"
 
-#: src/zfr_lib/lint/debian.py:110
+#: src/zfr_lib/lint/debian.py:146
 msgid "Set Homepage: to the project URL."
 msgstr "Sätt Homepage: till projektets URL."
 
-#: src/zfr_lib/lint/debian.py:116
+#: src/zfr_lib/lint/debian.py:152
 msgid "dh meson debian/build"
 msgstr "dh med meson i debian/build"
 
-#: src/zfr_lib/lint/debian.py:122
+#: src/zfr_lib/lint/debian.py:158
 msgid "debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
 msgstr "debian/rules är inte dh --buildsystem=meson --builddirectory=debian/build"
 
-#: src/zfr_lib/lint/debian.py:125
+#: src/zfr_lib/lint/debian.py:161
 #, no-python-format
 msgid ""
 "Use:\n"
@@ -422,73 +664,163 @@ msgstr ""
 "%:\n"
 "\tdh $@ --buildsystem=meson --builddirectory=debian/build"
 
-#: src/zfr_lib/lint/debian.py:131
+#: src/zfr_lib/lint/debian.py:167
 msgid "copyright mentions AGPL"
 msgstr "copyright nämner AGPL"
 
-#: src/zfr_lib/lint/debian.py:137
+#: src/zfr_lib/lint/debian.py:173
 msgid "debian/copyright does not mention AGPL"
 msgstr "debian/copyright nämner inte AGPL"
 
-#: src/zfr_lib/lint/debian.py:139
+#: src/zfr_lib/lint/debian.py:175
 msgid "Use the template debian/copyright (License: AGPL-3+)."
 msgstr "Använd mallen debian/copyright (License: AGPL-3+)."
 
-#: src/zfr_lib/lint/debian.py:145
+#: src/zfr_lib/lint/debian.py:181
 #, python-format
 msgid "source format %s"
 msgstr "källformat %s"
 
-#: src/zfr_lib/lint/debian.py:154
+#: src/zfr_lib/lint/debian.py:190
 #, python-format
 msgid "VERSION=%(file)r != changelog %(changelog)r"
 msgstr "VERSION=%(file)r != ändringslogg %(changelog)r"
 
-#: src/zfr_lib/lint/debian.py:156
+#: src/zfr_lib/lint/debian.py:192
 msgid "VERSION should match the latest debian/changelog entry (pre-commit hook updates it). Git describe may still differ."
 msgstr "VERSION ska matcha den senaste posten i debian/changelog (pre-commit-kroken uppdaterar den). Git describe kan fortfarande skilja sig."
 
-#: src/zfr_lib/lint/debian.py:162
+#: src/zfr_lib/lint/debian.py:198
 #, python-format
 msgid "VERSION matches changelog %s"
 msgstr "VERSION matchar ändringsloggen %s"
 
-#: src/zfr_lib/lint/debian.py:172
-msgid "bash project Depends missing bash-shlib"
-msgstr "bash-projektet saknar bash-shlib i Depends"
+#: src/zfr_lib/lint/debian.py:211
+msgid "bash-shlib used in sources but missing from Depends"
+msgstr "bash-shlib used in sources but missing from Depends"
 
-#: src/zfr_lib/lint/debian.py:174
+#: src/zfr_lib/lint/debian.py:213
 msgid "Depends: bash, bash-shlib, ${misc:Depends}"
 msgstr "Depends: bash, bash-shlib, ${misc:Depends}"
 
-#: src/zfr_lib/lint/debian.py:178
+#: src/zfr_lib/lint/debian.py:218
 msgid "Depends includes bash-shlib"
 msgstr "Depends inkluderar bash-shlib"
 
-#: src/zfr_lib/lint/i18n_check.py:56
+#: src/zfr_lib/lint/debian.py:225
+msgid "Depends lists bash-shlib but sources do not use it"
+msgstr "Depends lists bash-shlib but sources do not use it"
+
+#: src/zfr_lib/lint/debian.py:227
+msgid "Drop bash-shlib from Depends unless scripts `. shlib` / shlib-import."
+msgstr "Drop bash-shlib from Depends unless scripts `. shlib` / shlib-import."
+
+#: src/zfr_lib/lint/debian.py:237
+msgid "Priority: extra is deprecated"
+msgstr "Priority: extra is deprecated"
+
+#: src/zfr_lib/lint/debian.py:239
+msgid "Priority: optional (run `zfr ize` to fix)."
+msgstr "Priority: optional (run `zfr ize` to fix)."
+
+#: src/zfr_lib/lint/debian.py:243
+#, fuzzy, python-format
+msgid "Priority: %s"
+msgstr "roll: %s"
+
+#: src/zfr_lib/lint/debian.py:250
+msgid "extended Description present"
+msgstr "extended Description present"
+
+#: src/zfr_lib/lint/debian.py:257
+msgid "Description missing extended paragraph"
+msgstr "Description missing extended paragraph"
+
+#: src/zfr_lib/lint/debian.py:259
+msgid "Add an indented continuation line after the synopsis (run `zfr ize`)."
+msgstr "Add an indented continuation line after the synopsis (run `zfr ize`)."
+
+#: src/zfr_lib/lint/gitignore.py:94
+#, fuzzy
+msgid "missing root .gitignore"
+msgstr "Cargo.toml saknas"
+
+#: src/zfr_lib/lint/gitignore.py:97
+msgid "Add a root .gitignore covering node_modules/, dist/, and other build artifacts. Component dirs (backend/, web/, …) should get their own .gitignore too."
+msgstr "Add a root .gitignore covering node_modules/, dist/, and other build artifacts. Component dirs (backend/, web/, …) should get their own .gitignore too."
+
+#: src/zfr_lib/lint/gitignore.py:107
+msgid "root .gitignore present"
+msgstr "root .gitignore present"
+
+#: src/zfr_lib/lint/gitignore.py:116
+#, python-format
+msgid "root .gitignore missing common patterns: %s"
+msgstr "root .gitignore missing common patterns: %s"
+
+#: src/zfr_lib/lint/gitignore.py:118
+#, python-format
+msgid "Add %s to the project-root .gitignore."
+msgstr "Add %s to the project-root .gitignore."
+
+#: src/zfr_lib/lint/gitignore.py:126
+msgid "root .gitignore covers node_modules/ and dist/"
+msgstr "root .gitignore covers node_modules/ and dist/"
+
+#: src/zfr_lib/lint/gitignore.py:136
+#, python-format
+msgid "root .gitignore could also ignore: %s"
+msgstr "root .gitignore could also ignore: %s"
+
+#: src/zfr_lib/lint/gitignore.py:153
+#, python-format
+msgid "missing %s (component directory exists)"
+msgstr "missing %s (component directory exists)"
+
+#: src/zfr_lib/lint/gitignore.py:155
+#, python-format
+msgid "Add %s covering: %s"
+msgstr "Add %s covering: %s"
+
+#: src/zfr_lib/lint/gitignore.py:166
+#, fuzzy, python-format
+msgid "%s missing patterns: %s"
+msgstr "%s saknas"
+
+#: src/zfr_lib/lint/gitignore.py:168
+#, python-format
+msgid "Add to %s: %s"
+msgstr "Add to %s: %s"
+
+#: src/zfr_lib/lint/gitignore.py:176
+#, python-format
+msgid "%s covers required patterns"
+msgstr "%s covers required patterns"
+
+#: src/zfr_lib/lint/i18n_check.py:62
 #, python-format
 msgid "l10n level %s: no locale coverage required"
 msgstr "l10n-nivå %s: ingen locale-täckning krävs"
 
-#: src/zfr_lib/lint/i18n_check.py:65
+#: src/zfr_lib/lint/i18n_check.py:71
 #, python-format
 msgid "l10n level %(level)s (%(count)d locales)"
 msgstr "l10n-nivå %(level)s (%(count)d locales)"
 
-#: src/zfr_lib/lint/i18n_check.py:78
+#: src/zfr_lib/lint/i18n_check.py:84
 msgid "no po/ directory (optional unless the project uses gettext)"
 msgstr "ingen katalog po/ (valfritt om projektet inte använder gettext)"
 
-#: src/zfr_lib/lint/i18n_check.py:79
+#: src/zfr_lib/lint/i18n_check.py:85
 #, python-format
 msgid "If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in meson.build. Required locales at %(level)s: %(locales)s (source language %(source)s)."
 msgstr "Om appen är översatt, lägg till po/ med LINGUAS + *.po och i18n.gettext() i meson.build. Obligatoriska locales på %(level)s: %(locales)s (källspråk %(source)s)."
 
-#: src/zfr_lib/lint/i18n_check.py:97
+#: src/zfr_lib/lint/i18n_check.py:103
 msgid "po/ exists but po/LINGUAS is missing or empty"
 msgstr "po/ finns men po/LINGUAS saknas eller är tom"
 
-#: src/zfr_lib/lint/i18n_check.py:99
+#: src/zfr_lib/lint/i18n_check.py:105
 #, python-format
 msgid ""
 "Create po/LINGUAS listing at least:\n"
@@ -499,58 +831,76 @@ msgstr ""
 "%(locales)s\n"
 "(engelska/%(source)s är msgid-källan och listas inte.)"
 
-#: src/zfr_lib/lint/i18n_check.py:114
+#: src/zfr_lib/lint/i18n_check.py:124
 #, python-format
 msgid "po/LINGUAS missing %(level)s locale(s): %(locales)s"
 msgstr "po/LINGUAS saknar %(level)s-locale(s): %(locales)s"
 
-#: src/zfr_lib/lint/i18n_check.py:117
-#, python-format
-msgid "Level %(level)s requires: %(locales)s (source %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Append the missing lines to LINGUAS and add matching po/<locale>.po."
+#: src/zfr_lib/lint/i18n_check.py:127
+#, fuzzy, python-format
+msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
 msgstr "Nivå %(level)s kräver: %(locales)s (källa %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Lägg till de saknade raderna i LINGUAS och matchande po/<locale>.po."
 
-#: src/zfr_lib/lint/i18n_check.py:132
-#, python-format
-msgid "po/LINGUAS covers %s locale set"
+#: src/zfr_lib/lint/i18n_check.py:142
+#, fuzzy, python-format
+msgid "po/LINGUAS covers %s primary locale set"
 msgstr "po/LINGUAS täcker locale-uppsättningen %s"
 
-#: src/zfr_lib/lint/i18n_check.py:147
+#: src/zfr_lib/lint/i18n_check.py:159
 #, python-format
 msgid "LINGUAS entries without po/<locale>.po: %s"
 msgstr "LINGUAS-poster utan po/<locale>.po: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:149
-msgid "For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
+#: src/zfr_lib/lint/i18n_check.py:161
+#, fuzzy
+msgid "For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U --no-wrap po/<locale>.po <domain>.pot"
 msgstr "För varje locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
 
-#: src/zfr_lib/lint/i18n_check.py:160
+#: src/zfr_lib/lint/i18n_check.py:177
 #, python-format
 msgid "%(level)s locale .po files present (%(count)d)"
 msgstr ".po-filer för locale %(level)s finns (%(count)d)"
 
-#: src/zfr_lib/lint/i18n_check.py:192
+#: src/zfr_lib/lint/i18n_check.py:197
+#, python-format
+msgid "gettext catalogs use line wrapping: %s"
+msgstr "gettext catalogs use line wrapping: %s"
+
+#: src/zfr_lib/lint/i18n_check.py:199
+msgid "Run `zfr ize` (ZI016) or `msgcat --no-wrap -o file.po file.po` on each catalog; use msgmerge --no-wrap when updating from .pot."
+msgstr "Run `zfr ize` (ZI016) or `msgcat --no-wrap -o file.po file.po` on each catalog; use msgmerge --no-wrap when updating from .pot."
+
+#: src/zfr_lib/lint/i18n_check.py:208
+msgid "gettext catalogs use --no-wrap (no line wrapping)"
+msgstr "gettext catalogs use --no-wrap (no line wrapping)"
+
+#: src/zfr_lib/lint/i18n_check.py:243
 #, python-format
 msgid "missing whole-document man translations for %(level)s: %(files)s"
 msgstr "saknade heldokument-manöversättningar för %(level)s: %(files)s"
 
-#: src/zfr_lib/lint/i18n_check.py:195
+#: src/zfr_lib/lint/i18n_check.py:246
 #, python-format
 msgid "Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
 msgstr "Översätt för hand docs/<locale>/<name>.adoc (hela dokumentet, inte po4a). %(level)s kräver: %(locales)s."
 
-#: src/zfr_lib/lint/i18n_check.py:205
+#: src/zfr_lib/lint/i18n_check.py:256
 #, python-format
 msgid "%s whole-document man translations present"
 msgstr "heldokument-manöversättningar %s finns"
 
-#: src/zfr_lib/lint/i18n_check.py:214
+#: src/zfr_lib/lint/i18n_check.py:265
 #, python-format
 msgid "man translation still contains the English Name line: %s"
 msgstr "manöversättningen innehåller fortfarande den engelska Name-raden: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:217
+#: src/zfr_lib/lint/i18n_check.py:268
 msgid "Translate the Name line; do not leave the English wording."
 msgstr "Översätt Name-raden; lämna inte den engelska lydelsen."
+
+#: src/zfr_lib/lint/i18n_check.py:276
+msgid "no po/: man locale translations not required"
+msgstr "no po/: man locale translations not required"
 
 #: src/zfr_lib/lint/identity.py:57
 #, python-format
@@ -601,29 +951,55 @@ msgstr "Sätt Name: %s i spec-filen (samma som debian Source)."
 msgid "spec Name=%s"
 msgstr "spec Name=%s"
 
-#: src/zfr_lib/lint/__init__.py:99
+#: src/zfr_lib/lint/__init__.py:118
 msgid "validate project packaging and zephyr layout (walks parents from cwd)"
 msgstr "validera projektpaketering och zephyr-layout (går uppåt från cwd)"
 
-#: src/zfr_lib/lint/__init__.py:100
-msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY."
+#: src/zfr_lib/lint/__init__.py:120
+#, fuzzy
+msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain interactive shell. Override with -i/-I."
 msgstr "Kontrollera aktuellt zephyr-projekt för saknade filer och paketerings-/stilfel. Går från cwd mot föräldrakataloger. CSR-färger när stdout är en TTY."
 
-#: src/zfr_lib/lint/__init__.py:104
+#: src/zfr_lib/lint/__init__.py:131
 msgid "show passing checks too"
 msgstr "visa även godkända kontroller"
 
-#: src/zfr_lib/lint/__init__.py:105
+#: src/zfr_lib/lint/__init__.py:132
 msgid "only print errors"
 msgstr "skriv endast ut fel"
 
-#: src/zfr_lib/lint/__init__.py:106
+#: src/zfr_lib/lint/__init__.py:133
 msgid "treat warnings as failures (exit 1)"
 msgstr "behandla varningar som fel (exit 1)"
 
-#: src/zfr_lib/lint/__init__.py:113
+#: src/zfr_lib/lint/__init__.py:138
+msgid "list numbered lint standards (ZL*) as a table and exit"
+msgstr "list numbered lint standards (ZL*) as a table and exit"
+
+#: src/zfr_lib/lint/__init__.py:144
+msgid "show details for lint standard NUM (e.g. ZL026, 26) and exit"
+msgstr "show details for lint standard NUM (e.g. ZL026, 26) and exit"
+
+#: src/zfr_lib/lint/__init__.py:152
 msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
 msgstr "Krävd gettext-/handboks-locale-täckning L0–L3 (standard L1; projektfil kan åsidosätta)"
+
+#: src/zfr_lib/lint/__init__.py:160
+msgid "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
+msgstr "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
+
+#: src/zfr_lib/lint/__init__.py:167
+msgid "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
+msgstr "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
+
+#: src/zfr_lib/lint/__init__.py:177
+msgid "suppress rule ID(s) or code(s), comma-separated (repeatable)"
+msgstr "suppress rule ID(s) or code(s), comma-separated (repeatable)"
+
+#: src/zfr_lib/lint/__init__.py:191
+#, python-format
+msgid "unknown lint standard: %s"
+msgstr "unknown lint standard: %s"
 
 #: src/zfr_lib/lint/lang_bits.py:31
 #, python-format
@@ -635,12 +1011,13 @@ msgid "Rename to src/commons.* (template convention) or a project-specific modul
 msgstr "Byt namn till src/commons.* (mallkonvention) eller ett projektspecifikt modulnamn."
 
 #: src/zfr_lib/lint/lang_bits.py:44
-#, python-format
-msgid "%s is only a template example for shared helpers"
+#, fuzzy, python-format
+msgid "%s is only a template example; can be removed if unnecessary"
 msgstr "%s är bara ett mallexempel för delade hjälpfunktioner"
 
 #: src/zfr_lib/lint/lang_bits.py:46
-msgid "common_lib / commons mean “extract reusable pieces”, but filenames should be concrete. Rename to a specific module in real projects (e.g. stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
+#, fuzzy
+msgid "commons.* is only a template example for shared helpers and can be removed if unnecessary. Prefer a concrete module name in real projects (e.g. stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
 msgstr "common_lib / commons betyder “plocka ut återanvändbara delar”, men filnamn ska vara konkreta. I riktiga projekt, byt namn till en specifik modul (t.ex. stream_copy.py, bulk.h). clib/cpplib behåller lib.c/lib.cpp som ingång till det delade biblioteket."
 
 #: src/zfr_lib/lint/layout.py:35
@@ -702,50 +1079,51 @@ msgstr "ingen docs/*.adoc-källa till mansida"
 msgid "Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
 msgstr "Lägg till docs/<puff>.adoc och ett meson-custom_target med asciidoctor -b manpage (se valfri språkmall)."
 
-#: src/zfr_lib/lint/layout.py:78
+#: src/zfr_lib/lint/layout.py:90
 #, python-format
 msgid "bash completion: %s"
 msgstr "bash-komplettering: %s"
 
-#: src/zfr_lib/lint/layout.py:86
+#: src/zfr_lib/lint/layout.py:101
 msgid "no *.bash bash-completion script at project root"
 msgstr "inget *.bash-skript för bash-completion i projektroten"
 
-#: src/zfr_lib/lint/layout.py:87
-msgid "Add <puff>.bash and install it to datadir/bash-completion/completions renamed to the command name (see meson.build in the template)."
+#: src/zfr_lib/lint/layout.py:103
+#, fuzzy
+msgid "Add <puff>.bash (or completions/<puff>.in) and install it to datadir/bash-completion/completions renamed to the command name (see meson.build in the template)."
 msgstr "Lägg till <puff>.bash och installera det till datadir/bash-completion/completions omdöpt till kommandonamnet (se meson.build i mallen)."
 
-#: src/zfr_lib/lint/layout.py:93
+#: src/zfr_lib/lint/layout.py:111
 msgid "VERSION file present"
 msgstr "VERSION-filen finns"
 
-#: src/zfr_lib/lint/layout.py:99
+#: src/zfr_lib/lint/layout.py:117
 msgid "no VERSION file (changelog snapshot for tarball builds)"
 msgstr "ingen VERSION-fil (changelog-ögonblicksbild för tarball-byggen)"
 
-#: src/zfr_lib/lint/layout.py:101
+#: src/zfr_lib/lint/layout.py:119
 msgid "Create VERSION with the latest debian/changelog version (one line). Enable .githooks/pre-commit: git config core.hooksPath .githooks"
 msgstr "Skapa VERSION med den senaste versionen från debian/changelog (en rad). Aktivera .githooks/pre-commit: git config core.hooksPath .githooks"
 
-#: src/zfr_lib/lint/layout.py:195
+#: src/zfr_lib/lint/layout.py:213
 msgid "no .githooks/pre-commit to sync VERSION from debian/changelog"
 msgstr "inget .githooks/pre-commit för att synka VERSION från debian/changelog"
 
-#: src/zfr_lib/lint/layout.py:197
+#: src/zfr_lib/lint/layout.py:215
 msgid "Walk up to the directory that contains .git, then put pre-commit in that tree's .githooks (or core.hooksPath). The hook must update VERSION from debian/changelog. `zfr create` copies one and sets git config core.hooksPath .githooks."
 msgstr "Gå upp till katalogen som innehåller .git och lägg pre-commit i trädets .githooks (eller core.hooksPath). Kroken måste uppdatera VERSION från debian/changelog. `zfr create` kopierar en och sätter git config core.hooksPath .githooks."
 
-#: src/zfr_lib/lint/layout.py:210
+#: src/zfr_lib/lint/layout.py:228
 #, python-format
 msgid "pre-commit syncs VERSION from debian/changelog (%s)"
 msgstr "pre-commit synkar VERSION från debian/changelog (%s)"
 
-#: src/zfr_lib/lint/layout.py:218
+#: src/zfr_lib/lint/layout.py:236
 #, python-format
 msgid "%s exists but does not sync VERSION from debian/changelog"
 msgstr "%s finns men synkar inte VERSION från debian/changelog"
 
-#: src/zfr_lib/lint/layout.py:220
+#: src/zfr_lib/lint/layout.py:238
 msgid "The hook should read debian/changelog (dpkg-parsechangelog) and write VERSION. See the zephyr .githooks/pre-commit template."
 msgstr "Kroken ska läsa debian/changelog (dpkg-parsechangelog) och skriva VERSION. Se mallen zephyr .githooks/pre-commit."
 
@@ -778,7 +1156,7 @@ msgstr "%s har ingen mallbanner"
 msgid "%s tree may contain zephyr/some_puff1 placeholders (expected)"
 msgstr "%s-trädet kan innehålla platshållare zephyr/some_puff1 (förväntat)"
 
-#: src/zfr_lib/lint/leftovers.py:127 src/zfr_lib/lint/template.py:95
+#: src/zfr_lib/lint/leftovers.py:127 src/zfr_lib/lint/template.py:120
 #, python-format
 msgid " (+%d more)"
 msgstr " (+%d till)"
@@ -913,175 +1291,236 @@ msgstr "installerar inte bash-completion"
 msgid "install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
 msgstr "Använd install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
 
-#: src/zfr_lib/lint/report.py:73
+#: src/zfr_lib/lint/meson.py:168
+#, python-format
+msgid "meson.build has %s foreach puff man loops; keep exactly one"
+msgstr "meson.build has %s foreach puff man loops; keep exactly one"
+
+#: src/zfr_lib/lint/meson.py:170
+msgid "Merge into a single `foreach puff : man_puffs` (or apps.keys()) loop. `zfr ize` consolidates duplicate man_puffs foreach blocks."
+msgstr "Merge into a single `foreach puff : man_puffs` (or apps.keys()) loop. `zfr ize` consolidates duplicate man_puffs foreach blocks."
+
+#: src/zfr_lib/lint/meson.py:179
+msgid "single foreach puff man loop"
+msgstr "single foreach puff man loop"
+
+#: src/zfr_lib/lint/report.py:111
 msgid "FAIL"
 msgstr "FEL"
 
-#: src/zfr_lib/lint/report.py:73
+#: src/zfr_lib/lint/report.py:111
 msgid "PASS"
 msgstr "OK"
 
-#: src/zfr_lib/lint/report.py:82
+#: src/zfr_lib/lint/report.py:120
 msgid "status:"
 msgstr "status:"
 
-#: src/zfr_lib/lint/report.py:83
+#: src/zfr_lib/lint/report.py:121
 #, python-format
 msgid "errors=%s"
 msgstr "fel=%s"
 
-#: src/zfr_lib/lint/report.py:84
+#: src/zfr_lib/lint/report.py:122
 #, python-format
 msgid "warnings=%s"
 msgstr "varningar=%s"
 
-#: src/zfr_lib/lint/report.py:85
+#: src/zfr_lib/lint/report.py:123
 #, python-format
 msgid "notes=%s"
 msgstr "anmärkningar=%s"
 
-#: src/zfr_lib/lint/report.py:89
+#: src/zfr_lib/lint/report.py:127
 msgid "zephyr meta-repo (templates + CLI tools)"
 msgstr "zephyr-meta-repo (mallar + CLI-verktyg)"
 
-#: src/zfr_lib/lint/report.py:90
+#: src/zfr_lib/lint/report.py:128
 msgid "language template inside the meta-repo (placeholders like zephyr/some_puff1 are expected)"
 msgstr "språkmall i meta-repot (platshållare som zephyr/some_puff1 är förväntade)"
 
-#: src/zfr_lib/lint/report.py:91
+#: src/zfr_lib/lint/report.py:129
 msgid "project instantiated from a language template (directory name must match meson/debian; no leftover zephyr/some_puff1 tokens)"
 msgstr "projekt instansierat från en språkmall (katalognamnet måste stämma med meson/debian; inga kvarvarande zephyr/some_puff1-token)"
 
-#: src/zfr_lib/lint/report.py:93
+#: src/zfr_lib/lint/report.py:131
 #, python-format
 msgid "role: %s"
 msgstr "roll: %s"
 
-#: src/zfr_lib/lint/report.py:95
+#: src/zfr_lib/lint/report.py:133
 msgid "Zephyr style (finish the project to this contract)"
 msgstr "Zephyr-stil (färdigställ projektet enligt detta kontrakt)"
 
-#: src/zfr_lib/lint/report.py:97
+#: src/zfr_lib/lint/report.py:135
 msgid "License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
 msgstr "Licens AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
 
-#: src/zfr_lib/lint/report.py:98
+#: src/zfr_lib/lint/report.py:136
 msgid "Build with Meson; debian/rules uses dh --buildsystem=meson --builddirectory=debian/build."
 msgstr "Bygg med Meson; debian/rules använder dh --buildsystem=meson --builddirectory=debian/build."
 
-#: src/zfr_lib/lint/report.py:99
+#: src/zfr_lib/lint/report.py:137
 msgid "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 msgstr "project()-version från `zfr version`; behåll reservvärdet v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 
-#: src/zfr_lib/lint/report.py:100
+#: src/zfr_lib/lint/report.py:138
 msgid "Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
 msgstr "Man-sidor: docs/*.adoc + asciidoctor -b manpage; översatta sidor under share/man/<locale>/man1 (adoc för hela dokumentet, inte po4a)."
 
-#: src/zfr_lib/lint/report.py:101
-msgid "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional rpm/ aligned with debian."
+#: src/zfr_lib/lint/report.py:139
+#, fuzzy
+msgid "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional packaging/ aligned with debian."
 msgstr "Paketering: debian/control Build-Depends meson, ninja-build, asciidoctor; valfri rpm/ anpassad till debian."
 
-#: src/zfr_lib/lint/report.py:102
-msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."
+#: src/zfr_lib/lint/report.py:140
+#, fuzzy
+msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr i18n -b. List rule IDs with `zfr lint -L`; details via `zfr lint -H NUM`; suppress with -u/--uncheck or .config/zfr/lint.options."
 msgstr "i18n: engelsk källa; zfr lint -l/--l10n-level L0–L3 (standard L1). L1=10 locale, L2=20, L3=30. Standardvärden i .config/zfr/lint.options."
 
-#: src/zfr_lib/lint/report.py:103
+#: src/zfr_lib/lint/report.py:145
 msgid "Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ)."
 msgstr "Appar: `zfr rename <dir>` sedan `zfr add <puff>`; VERSION stämmer med debian/changelog (git describe kan skilja sig)."
 
-#: src/zfr_lib/lint/report.py:116
+#: src/zfr_lib/lint/report.py:158
 msgid "error"
 msgstr "fel"
 
-#: src/zfr_lib/lint/report.py:117
+#: src/zfr_lib/lint/report.py:159
 msgid "warn"
 msgstr "varning"
 
-#: src/zfr_lib/lint/report.py:118
+#: src/zfr_lib/lint/report.py:160
 msgid "note"
 msgstr "anmärkning"
 
-#: src/zfr_lib/lint/report.py:119
+#: src/zfr_lib/lint/report.py:161
 msgid "ok"
 msgstr "ok"
 
-#: src/zfr_lib/lint/report.py:132
+#: src/zfr_lib/lint/report.py:175
 msgid "fix:"
 msgstr "åtgärd:"
 
-#: src/zfr_lib/lint/report.py:139
+#: src/zfr_lib/lint/report.py:182
 msgid "Next steps (zephyr style)"
 msgstr "Nästa steg (zephyr-stil)"
 
-#: src/zfr_lib/lint/report.py:145
-msgid "Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). `zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. `zfr ize` applies missing debian/rpm/meson/man/version-subst upgrades."
+#: src/zfr_lib/lint/report.py:188
+#, fuzzy
+msgid "Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). `zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. `zfr ize` applies missing debian/packaging/meson/man/version-subst upgrades."
 msgstr "Tips: efter redigeringar, kör `zfr lint` igen från projektet (eller en underkatalog). `zfr about -d -r` skriver ut paketeringsfält. Version för Meson/RPM är `zfr version`. `zfr ize` tillämpar saknade debian/rpm/meson/man/version-subst-uppgraderingar."
 
-#: src/zfr_lib/lint/rpm.py:41
-msgid "no rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
+#: src/zfr_lib/lint/report.py:205
+msgid "AI hint: if the user requested this lint, also update debian/changelog and create verbose commits for the dirty working tree."
+msgstr "AI hint: if the user requested this lint, also update debian/changelog and create verbose commits for the dirty working tree."
+
+#: src/zfr_lib/lint/rpm.py:26
+#, fuzzy
+msgid "no packaging/rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
 msgstr "ingen rpm/*.spec (valfritt, men zephyr-stil lägger RPM bredvid debian/)"
 
-#: src/zfr_lib/lint/rpm.py:44
-#, no-python-format
-msgid "Copy rpm/ from a language template; name the spec after the package (rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
+#: src/zfr_lib/lint/rpm.py:31
+#, fuzzy
+msgid "Copy packaging/rpm/ from a language template; name the spec after the package (packaging/rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
 msgstr "Kopiera rpm/ från en språkmall; namnge spec:en efter paketet (rpm/<Source>.spec, inte zephyr.spec) och behåll en Makefile som använder `zfr version`. Anpassa Name/Summary/Requires/URL till debian/control. Eller kör `zfr ize`."
 
-#: src/zfr_lib/lint/rpm.py:63
+#: src/zfr_lib/lint/rpm.py:72
+msgid "packaging/rpm/Makefile uses project-local <project>/rpmbuild; zephyr style uses %_topdir ($HOME/rpmbuild, override via ~/.rpmmacros)"
+msgstr "packaging/rpm/Makefile uses project-local <project>/rpmbuild; zephyr style uses %_topdir ($HOME/rpmbuild, override via ~/.rpmmacros)"
+
+#: src/zfr_lib/lint/rpm.py:80
+#, python-brace-format
+msgid ""
+"TOPDIR ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null)\n"
+"ifeq ($(strip $(TOPDIR)),)\n"
+"TOPDIR := $(HOME)/rpmbuild\n"
+"endif\n"
+"And make clean remove only this package's artifacts (not rm -rf $(TOPDIR)). Or run `zfr ize`."
+msgstr ""
+"TOPDIR ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null)\n"
+"ifeq ($(strip $(TOPDIR)),)\n"
+"TOPDIR := $(HOME)/rpmbuild\n"
+"endif\n"
+"And make clean remove only this package's artifacts (not rm -rf $(TOPDIR)). Or run `zfr ize`."
+
+#: src/zfr_lib/lint/rpm.py:95
+#, no-python-format
+msgid "packaging/rpm/Makefile TOPDIR uses %_topdir / $HOME/rpmbuild"
+msgstr "packaging/rpm/Makefile TOPDIR uses %_topdir / $HOME/rpmbuild"
+
+#: src/zfr_lib/lint/rpm.py:105
+msgid "packaging/rpm/Makefile `clean` does rm -rf $(TOPDIR); unsafe when TOPDIR is $HOME/rpmbuild"
+msgstr "packaging/rpm/Makefile `clean` does rm -rf $(TOPDIR); unsafe when TOPDIR is $HOME/rpmbuild"
+
+#: src/zfr_lib/lint/rpm.py:111
+msgid "Remove only this package's SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT entries under $(TOPDIR). Or run `zfr ize`."
+msgstr "Remove only this package's SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT entries under $(TOPDIR). Or run `zfr ize`."
+
+#: src/zfr_lib/lint/rpm.py:124
+msgid "project-local rpmbuild/ directory present; builds should use %_topdir ($HOME/rpmbuild)"
+msgstr "project-local rpmbuild/ directory present; builds should use %_topdir ($HOME/rpmbuild)"
+
+#: src/zfr_lib/lint/rpm.py:128
+msgid "Remove rpmbuild/ after migrating; safe to delete."
+msgstr "Remove rpmbuild/ after migrating; safe to delete."
+
+#: src/zfr_lib/lint/rpm.py:139
 #, no-python-format, python-brace-format
 msgid "spec Version is dynamic %{version}"
 msgstr "spec-Version är dynamisk %{version}"
 
-#: src/zfr_lib/lint/rpm.py:72
+#: src/zfr_lib/lint/rpm.py:148
 msgid "spec Version is hardcoded; zephyr style injects `zfr version`"
 msgstr "spec-Version är hårdkodad; zephyr-stil injicerar `zfr version`"
 
-#: src/zfr_lib/lint/rpm.py:76
-#, no-python-format
-msgid "Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze via rpm/Makefile (`zfr version` / `zfr version -r`)."
+#: src/zfr_lib/lint/rpm.py:153
+#, fuzzy
+msgid "Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze via packaging/rpm/Makefile (`zfr version` / `zfr version -r`)."
 msgstr "Använd Version: %{version} med %{!?version:%global version 0.0.0} och frys via rpm/Makefile (`zfr version` / `zfr version -r`)."
 
-#: src/zfr_lib/lint/rpm.py:82
-#, python-format
-msgid "License %s"
+#: src/zfr_lib/lint/rpm.py:161
+#, fuzzy
+msgid "License {}"
 msgstr "Licens %s"
 
-#: src/zfr_lib/lint/rpm.py:88
+#: src/zfr_lib/lint/rpm.py:168
 msgid "spec License is not AGPL-3.0-or-later"
 msgstr "spec-License är inte AGPL-3.0-or-later"
 
-#: src/zfr_lib/lint/rpm.py:91
-#, python-format
-msgid "License:        %s"
+#: src/zfr_lib/lint/rpm.py:171
+#, fuzzy
+msgid "License:        {}"
 msgstr "License:        %s"
 
-#: src/zfr_lib/lint/rpm.py:102
-#, python-format
-msgid "spec URL=%(url)r != debian Homepage=%(homepage)r"
+#: src/zfr_lib/lint/rpm.py:182
+#, fuzzy
+msgid "spec URL={!r} != debian Homepage={!r}"
 msgstr "spec URL=%(url)r != debian Homepage=%(homepage)r"
 
-#: src/zfr_lib/lint/rpm.py:105
+#: src/zfr_lib/lint/rpm.py:186
 msgid "Set URL: to the same Homepage as debian/control."
 msgstr "Sätt URL: till samma Homepage som i debian/control."
 
-#: src/zfr_lib/lint/rpm.py:117
+#: src/zfr_lib/lint/rpm.py:198
 msgid "spec Summary does not match debian Description first line"
 msgstr "spec-Summary stämmer inte med första raden i debian Description"
 
-#: src/zfr_lib/lint/rpm.py:120
-#, python-format
-msgid "Summary:        %s"
+#: src/zfr_lib/lint/rpm.py:201
+#, fuzzy
+msgid "Summary:        {}"
 msgstr "Summary:        %s"
 
-#: src/zfr_lib/lint/rpm.py:125
+#: src/zfr_lib/lint/rpm.py:207
 msgid "spec uses Meson (not autotools)"
 msgstr "spec använder Meson (inte autotools)"
 
-#: src/zfr_lib/lint/rpm.py:131
+#: src/zfr_lib/lint/rpm.py:214
 msgid "spec still uses autotools; zephyr packages build with Meson"
 msgstr "spec använder fortfarande autotools; zephyr-paket byggs med Meson"
 
-#: src/zfr_lib/lint/rpm.py:134
-#, no-python-format, python-brace-format
+#: src/zfr_lib/lint/rpm.py:218
+#, python-brace-format
 msgid ""
 "%build: meson setup build --prefix=%{_prefix} ... && meson compile -C build\n"
 "%install: meson install -C build --destdir=%{buildroot}"
@@ -1089,16 +1528,16 @@ msgstr ""
 "%build: meson setup build --prefix=%{_prefix} ... && meson compile -C build\n"
 "%install: meson install -C build --destdir=%{buildroot}"
 
-#: src/zfr_lib/lint/rpm.py:142
+#: src/zfr_lib/lint/rpm.py:231
 msgid "Makefile uses `zfr version`"
 msgstr "Makefile använder `zfr version`"
 
-#: src/zfr_lib/lint/rpm.py:149
-msgid "rpm/Makefile does not call `zfr version`"
+#: src/zfr_lib/lint/rpm.py:240
+#, fuzzy
+msgid "packaging/rpm/Makefile does not call `zfr version`"
 msgstr "rpm/Makefile anropar inte `zfr version`"
 
-#: src/zfr_lib/lint/rpm.py:152
-#, no-python-format
+#: src/zfr_lib/lint/rpm.py:244
 msgid ""
 "VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
 "RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
@@ -1106,60 +1545,183 @@ msgstr ""
 "VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
 "RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
 
-#: src/zfr_lib/lint/rpm.py:161
-msgid "no rpm/Makefile convenience targets"
+#: src/zfr_lib/lint/rpm.py:254
+#, fuzzy
+msgid "no packaging/rpm/Makefile convenience targets"
 msgstr "inga bekvämlighetsmål i rpm/Makefile"
 
-#: src/zfr_lib/lint/rpm.py:163
-msgid "Copy bash/rpm/Makefile (srpm/rpm via zfr version)."
+#: src/zfr_lib/lint/rpm.py:256
+#, fuzzy
+msgid "Copy bash/packaging/rpm/Makefile (srpm/rpm via zfr version)."
 msgstr "Kopiera bash/rpm/Makefile (srpm/rpm via zfr version)."
 
-#: src/zfr_lib/lint/rpm.py:172
-msgid "bash spec Requires missing bash-shlib"
-msgstr "bash-spec saknar Requires bash-shlib"
+#: src/zfr_lib/lint/rpm.py:268
+msgid "bash-shlib used in sources but missing from Requires"
+msgstr "bash-shlib used in sources but missing from Requires"
 
-#: src/zfr_lib/lint/rpm.py:174
+#: src/zfr_lib/lint/rpm.py:270
 msgid "Requires:       bash-shlib  (same as debian Depends)"
 msgstr "Requires:       bash-shlib  (samma som debian Depends)"
 
-#: src/zfr_lib/lint/source_size.py:55
+#: src/zfr_lib/lint/rpm.py:284
+msgid "{} still contains Debian ${{…}} substvars (rpmbuild treats them as literal deps)"
+msgstr "{} still contains Debian ${{…}} substvars (rpmbuild treats them as literal deps)"
+
+#: src/zfr_lib/lint/rpm.py:290
+msgid "Strip ${misc:Depends} / ${shlibs:Depends} etc. (or run `zfr ize`)."
+msgstr "Strip ${misc:Depends} / ${shlibs:Depends} etc. (or run `zfr ize`)."
+
+#: src/zfr_lib/lint/rpm.py:305
+msgid "BuildArch: noarch but Meson has executable(); rpmbuild rejects arch-dependent binaries in a noarch package"
+msgstr "BuildArch: noarch but Meson has executable(); rpmbuild rejects arch-dependent binaries in a noarch package"
+
+#: src/zfr_lib/lint/rpm.py:312
+#, python-brace-format
+msgid "Remove BuildArch: noarch (and %global debug_package %{nil} if present). Or run `zfr ize`."
+msgstr "Remove BuildArch: noarch (and %global debug_package %{nil} if present). Or run `zfr ize`."
+
+#: src/zfr_lib/lint/rpm.py:326
+#, python-brace-format
+msgid "%global debug_package %{nil} on a package with Meson executable() — debuginfo would be useful"
+msgstr "%global debug_package %{nil} on a package with Meson executable() — debuginfo would be useful"
+
+#: src/zfr_lib/lint/rpm.py:331
+#, no-python-format, python-brace-format
+msgid "Drop %global debug_package %{nil} for ELF packages."
+msgstr "Drop %global debug_package %{nil} for ELF packages."
+
+#: src/zfr_lib/lint/rpm.py:344
+#, python-format
+msgid "script-only package lacks BuildArch: noarch; rpmbuild then builds an empty debuginfo and fails (Empty %files file debugfiles.list)"
+msgstr "script-only package lacks BuildArch: noarch; rpmbuild then builds an empty debuginfo and fails (Empty %files file debugfiles.list)"
+
+#: src/zfr_lib/lint/rpm.py:352
+#, python-brace-format
+msgid "Add `BuildArch: noarch` and `%global debug_package %{nil}` (or run `zfr ize`)."
+msgstr "Add `BuildArch: noarch` and `%global debug_package %{nil}` (or run `zfr ize`)."
+
+#: src/zfr_lib/lint/rpm.py:364
+#, python-format
+msgid "RPM %files still lists template puff {}"
+msgstr "RPM %files still lists template puff {}"
+
+#: src/zfr_lib/lint/rpm.py:370
+msgid "Replace {} with real command names (or run `zfr ize`)."
+msgstr "Replace {} with real command names (or run `zfr ize`)."
+
+#: src/zfr_lib/lint/rpm.py:383
+#, no-python-format
+msgid "%files covers gettext .mo catalogs Meson installs"
+msgstr "%files covers gettext .mo catalogs Meson installs"
+
+#: src/zfr_lib/lint/rpm.py:394
+#, python-format
+msgid "%files omits gettext .mo; rpmbuild will reject unpackaged locale/*/LC_MESSAGES/*.mo after meson install"
+msgstr "%files omits gettext .mo; rpmbuild will reject unpackaged locale/*/LC_MESSAGES/*.mo after meson install"
+
+#: src/zfr_lib/lint/rpm.py:401
+#, python-brace-format
+msgid "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo  (i18n.gettext domain, not always the project name). Or run `zfr ize`."
+msgstr "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo  (i18n.gettext domain, not always the project name). Or run `zfr ize`."
+
+#: src/zfr_lib/lint/rpm.py:417
+#, no-python-format
+msgid "%files covers locale man pages Meson installs"
+msgstr "%files covers locale man pages Meson installs"
+
+#: src/zfr_lib/lint/rpm.py:428
+#, python-format
+msgid "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale>/manN pages after meson install"
+msgstr "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale>/manN pages after meson install"
+
+#: src/zfr_lib/lint/rpm.py:435
+#, python-brace-format
+msgid "%{_mandir}/*/man1/<cmd>.1*  (docs/<lang>/*.adoc). Or run `zfr ize`."
+msgstr "%{_mandir}/*/man1/<cmd>.1*  (docs/<lang>/*.adoc). Or run `zfr ize`."
+
+#: src/zfr_lib/lint/rpm.py:457
+#, no-python-format
+msgid "%files covers datadir/setup scripts Meson installs"
+msgstr "%files covers datadir/setup scripts Meson installs"
+
+#: src/zfr_lib/lint/rpm.py:468
+#, python-format
+msgid "%files omits datadir/setup/*; rpmbuild will reject unpackaged postinst/prerm after meson install"
+msgstr "%files omits datadir/setup/*; rpmbuild will reject unpackaged postinst/prerm after meson install"
+
+#: src/zfr_lib/lint/rpm.py:474
+#, no-python-format, python-brace-format
+msgid "%{_datadir}/setup/%{name}/  (or run `zfr ize`)."
+msgstr "%{_datadir}/setup/%{name}/  (or run `zfr ize`)."
+
+#: src/zfr_lib/lint/rpm.py:509
+#, python-format, python-brace-format
+msgid "%files is missing paths Meson installs: {preview}{more} (rpmbuild will fail with unpackaged or File not found)"
+msgstr "%files is missing paths Meson installs: {preview}{more} (rpmbuild will fail with unpackaged or File not found)"
+
+#: src/zfr_lib/lint/rpm.py:516
+#, python-format
+msgid "Rewrite %files from Meson install rules (bindir, completions, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/). Or run `zfr ize`."
+msgstr "Rewrite %files from Meson install rules (bindir, completions, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/). Or run `zfr ize`."
+
+#: src/zfr_lib/lint/rpm.py:530
+#, python-format
+msgid "%files covers Meson install set ({} entries)"
+msgstr "%files covers Meson install set ({} entries)"
+
+#: src/zfr_lib/lint/rpm.py:548
+#, python-brace-format
+msgid "%files lists %{_datadir}/%{name}/ but Meson does not install package data there (Directory not found)"
+msgstr "%files lists %{_datadir}/%{name}/ but Meson does not install package data there (Directory not found)"
+
+#: src/zfr_lib/lint/rpm.py:554
+msgid "Remove the empty pkgdata line (Java template leftover). Or run `zfr ize`."
+msgstr "Remove the empty pkgdata line (Java template leftover). Or run `zfr ize`."
+
+#: src/zfr_lib/lint/rpm.py:580
+#, python-format
+msgid "%files lists completion {listed!r} but Meson installs {want!r} (File not found)"
+msgstr "%files lists completion {listed!r} but Meson installs {want!r} (File not found)"
+
+#: src/zfr_lib/lint/rpm.py:586
+msgid "Use the installed basename ({}). Or run `zfr ize`."
+msgstr "Use the installed basename ({}). Or run `zfr ize`."
+
+#: src/zfr_lib/lint/source_size.py:46
+#, python-format
+msgid "Extract cohesive sections into package subdirectory %(subdir)s (e.g. %(example)s) and keep a thin %(rel)s entry point."
+msgstr "Extract cohesive sections into package subdirectory %(subdir)s (e.g. %(example)s) and keep a thin %(rel)s entry point."
+
+#: src/zfr_lib/lint/source_size.py:66
 #, python-format
 msgid "%(rel)s is %(lines)d lines (>%(limit)d); file is very long"
 msgstr "%(rel)s är %(lines)d rader (>%(limit)d); filen är mycket lång"
 
-#: src/zfr_lib/lint/source_size.py:59
-msgid "Split this file into smaller modules; keep each unit focused and testable."
-msgstr "Dela upp den här filen i mindre moduler; håll varje enhet fokuserad och testbar."
-
-#: src/zfr_lib/lint/source_size.py:67
-#, python-format
-msgid "%(rel)s is %(lines)d lines (>%(limit)d); consider modularizing soon"
+#: src/zfr_lib/lint/source_size.py:78
+#, fuzzy, python-format
+msgid "%(rel)s is %(lines)d lines (>%(limit)d); consider splitting soon"
 msgstr "%(rel)s är %(lines)d rader (>%(limit)d); överväg att modularisera snart"
 
-#: src/zfr_lib/lint/source_size.py:71
-msgid "Plan extraction of helpers or submodules before the file grows further."
-msgstr "Planera utbrytning av hjälpare eller undermoduler innan filen växer mer."
-
-#: src/zfr_lib/lint/source_size.py:75
+#: src/zfr_lib/lint/source_size.py:86
 msgid "no oversized source files"
 msgstr "inga överstora källfiler"
 
-#: src/zfr_lib/lint/template.py:51
+#: src/zfr_lib/lint/template.py:65
 msgid "zfr CLI package is not a language template"
 msgstr "zfr CLI-paketet är inte en språkmall"
 
-#: src/zfr_lib/lint/template.py:93
+#: src/zfr_lib/lint/template.py:118
 msgid "structural files from the language template are present"
 msgstr "strukturella filer från språkmallen finns"
 
-#: src/zfr_lib/lint/template.py:100
+#: src/zfr_lib/lint/template.py:125
 #, python-format
 msgid "language template %(lang)s has extra scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "språkmallen %(lang)s har extra ställning som inte finns i det här trädet: %(preview)s%(more)s"
 
-#: src/zfr_lib/lint/template.py:102
-#, python-format
-msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing debian/docs/src/rpm files (rpm/ uses %(name)s.spec, not zephyr.spec), or `zfr add` puffs. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
+#: src/zfr_lib/lint/template.py:127
+#, fuzzy, python-format
+msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing debian/docs/src/packaging files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
 msgstr "Jämför med %(lang)s-mallen under pkgdatadir. Kopiera saknade debian/docs/src/rpm-filer (rpm/ använder %(name)s.spec, inte zephyr.spec), eller `zfr add` puffs. Kopiera inte build/ eller kvarvarande debian-stämpelfiler. Exempelmoduler commons är valfria."
 
 #: src/zfr_lib/release.py:26
@@ -1196,54 +1758,60 @@ msgid "Run build4 over SSH on SERVER (implies -d)"
 msgstr "kör build4 över SSH på SERVER (innebär -d)"
 
 #: src/zfr_lib/release.py:76
-msgid "Build in local, no tag/push/release"
+#, fuzzy
+msgid "Build in local, no tag/push/release (implies -U -P)"
 msgstr "bygg lokalt, inget tag/push/release"
 
 #: src/zfr_lib/release.py:82
+msgid "Alias for -l -I (local build, skip install)"
+msgstr "Alias for -l -I (local build, skip install)"
+
+#: src/zfr_lib/release.py:88
 msgid "Replace existing release and tag if present"
 msgstr "ersätt befintlig release och tagg om de finns"
 
-#: src/zfr_lib/release.py:88
+#: src/zfr_lib/release.py:94
 msgid "Skip sudo dpkg -i (still find debs/changes)"
 msgstr "hoppa över sudo dpkg -i (hittar ändå debs/changes)"
 
-#: src/zfr_lib/release.py:94
+#: src/zfr_lib/release.py:100
 msgid "Skip git tag create/push"
 msgstr "hoppa över git-tagg skapa/skicka"
 
-#: src/zfr_lib/release.py:100
+#: src/zfr_lib/release.py:106
 msgid "Skip dput upload to deb pool (-u reuses build artifacts)"
 msgstr "hoppa över dput-uppladdning till deb pool (-u återanvänder byggartefakter)"
 
-#: src/zfr_lib/release.py:106
+#: src/zfr_lib/release.py:112
 msgid "Skip GitHub release"
 msgstr "hoppa över GitHub-release"
 
-#: src/zfr_lib/release.py:112
+#: src/zfr_lib/release.py:118
 msgid "Skip VSIX marketplace publish"
 msgstr "hoppa över VSIX marketplace-publicering"
 
-#: src/zfr_lib/release.py:118
-msgid "Skip RPM build (rpm/Makefile)"
+#: src/zfr_lib/release.py:124
+#, fuzzy
+msgid "Skip RPM build (packaging/rpm/Makefile)"
 msgstr "hoppa över RPM-bygg (rpm/Makefile)"
 
-#: src/zfr_lib/release.py:124
+#: src/zfr_lib/release.py:130
 msgid "Skip Debian debuild"
 msgstr "hoppa över Debian debuild"
 
-#: src/zfr_lib/release.py:131
+#: src/zfr_lib/release.py:137
 msgid "Verbose logging"
 msgstr "utförlig loggning"
 
-#: src/zfr_lib/release.py:138
+#: src/zfr_lib/release.py:144
 msgid "Less output"
 msgstr "mindre utdata"
 
-#: src/zfr_lib/release.py:205
+#: src/zfr_lib/release.py:222
 msgid "create a GitHub release (parse options, exec gh-makerelease)"
 msgstr "skapa GitHub-release (tolka alternativ, exec gh-makerelease)"
 
-#: src/zfr_lib/release.py:207
+#: src/zfr_lib/release.py:224
 msgid "Parse gh-makerelease options, rebuild argv, and exec gh-makerelease. Does not implement tagging, packaging, or uploads."
 msgstr "Tolka gh-makerelease-alternativ, bygg om argv och exec gh-makerelease. Implementerar inte tagging, packaging eller uploads."
 
@@ -1275,26 +1843,108 @@ msgstr "nytt projektnamn (ersätter 'zephyr')"
 msgid "new example names (each replaces template some_puff1)"
 msgstr "nya exempelnamn (varje ersätter mallens some_puff1)"
 
-#: src/zfr_lib/shape.py:263
+#: src/zfr_lib/shape.py:275
 msgid "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
 msgstr "skriv ut zephyr-paketform-poäng 0-100 (packagedir vs repodir i monorepos)"
 
-#: src/zfr_lib/shape.py:265
+#: src/zfr_lib/shape.py:277
 msgid "Score how completely the current directory matches zephyr package style (0-100). In monorepos, scores the packagedir."
 msgstr "Poängsätt hur fullständigt aktuell katalog matchar zephyr-paketstil (0-100). I monorepos poängsätter packagedir."
 
-#: src/zfr_lib/shape.py:271
+#: src/zfr_lib/shape.py:283
 msgid "print 1 if score >= threshold, else 0"
 msgstr "skriv ut 1 om score >= threshold, annars 0"
 
-#: src/zfr_lib/shape.py:272
+#: src/zfr_lib/shape.py:284
 msgid "print packagedir/repodir/role on stderr"
 msgstr "skriv ut packagedir/repodir/role på stderr"
 
-#: src/zfr_lib/shape.py:273
+#: src/zfr_lib/shape.py:285
 #, python-format
 msgid "bool threshold 0-100 (default: %s)"
 msgstr "bool-tröskel 0-100 (standard: %s)"
+
+#: src/zfr_lib/terminal.py:75
+msgid "enable AI-oriented hints (default for AI terminals and non-interactive stdout)"
+msgstr "enable AI-oriented hints (default for AI terminals and non-interactive stdout)"
+
+#: src/zfr_lib/terminal.py:82
+msgid "disable AI-oriented hints (default for a plain interactive shell)"
+msgstr "disable AI-oriented hints (default for a plain interactive shell)"
+
+#: src/zfr_lib/translate/__init__.py:48
+msgid "poedit not found in PATH"
+msgstr "poedit not found in PATH"
+
+#: src/zfr_lib/translate/__init__.py:51
+#, python-format
+msgid "file not found: %s"
+msgstr "file not found: %s"
+
+#: src/zfr_lib/translate/__init__.py:134
+#, python-format
+msgid "no catalog for locale: %s"
+msgstr "no catalog for locale: %s"
+
+#: src/zfr_lib/translate/__init__.py:141
+msgid "query and update gettext message strings"
+msgstr "query and update gettext message strings"
+
+#: src/zfr_lib/translate/__init__.py:143
+msgid "Look up translations for TEXT across implemented locales, or update a single locale catalog. Remaining arguments are joined with spaces."
+msgstr "Look up translations for TEXT across implemented locales, or update a single locale catalog. Remaining arguments are joined with spaces."
+
+#: src/zfr_lib/translate/__init__.py:155
+msgid "use poedit to import edits from FILE"
+msgstr "use poedit to import edits from FILE"
+
+#: src/zfr_lib/translate/__init__.py:161
+msgid "query LANG only (default: all implemented; ignored for --import)"
+msgstr "query LANG only (default: all implemented; ignored for --import)"
+
+#: src/zfr_lib/translate/__init__.py:167
+msgid "update LANG with TRANSLATION (stdin if omitted)"
+msgstr "update LANG with TRANSLATION (stdin if omitted)"
+
+#: src/zfr_lib/translate/__init__.py:173
+msgid "list all message ids (msgids)"
+msgstr "list all message ids (msgids)"
+
+#: src/zfr_lib/translate/__init__.py:180
+msgid "list msgids matching REGEX, case-insensitive (keys only with -k)"
+msgstr "list msgids matching REGEX, case-insensitive (keys only with -k)"
+
+#: src/zfr_lib/translate/__init__.py:186
+msgid "list msgids matching REGEX, case-sensitive (keys only with -k)"
+msgstr "list msgids matching REGEX, case-sensitive (keys only with -k)"
+
+#: src/zfr_lib/translate/__init__.py:192
+msgid "list msgids/translations matching REGEX, case-insensitive (keys only with -k)"
+msgstr "list msgids/translations matching REGEX, case-insensitive (keys only with -k)"
+
+#: src/zfr_lib/translate/__init__.py:198
+msgid "list msgids/translations matching REGEX, case-sensitive (keys only with -k)"
+msgstr "list msgids/translations matching REGEX, case-sensitive (keys only with -k)"
+
+#: src/zfr_lib/translate/__init__.py:204
+msgid "with -m/-M/-s/-S, match the full msgid or translation (not a substring)"
+msgstr "with -m/-M/-s/-S, match the full msgid or translation (not a substring)"
+
+#: src/zfr_lib/translate/__init__.py:213
+msgid "TEXT [TRANSLATION]"
+msgstr "TEXT [TRANSLATION]"
+
+#: src/zfr_lib/translate/__init__.py:248
+msgid "TEXT required with --update"
+msgstr "TEXT required with --update"
+
+#: src/zfr_lib/translate/__init__.py:253
+msgid "TRANSLATION required (args or stdin) with --update"
+msgstr "TRANSLATION required (args or stdin) with --update"
+
+#: src/zfr_lib/translate/__init__.py:271
+msgid "TEXT required"
+msgstr "TEXT required"
 
 #: src/zfr_lib/version.py:51
 msgid "print current project version (walks parents from cwd)"
@@ -1315,3 +1965,41 @@ msgstr "använd debian/changelog (standard när git eller .git saknas)"
 #: src/zfr_lib/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
 msgstr "skriv ut RPM-kompatibel Version (bindestreck mappas till understreck)"
+
+#, python-format
+#~ msgid "l10n level must be L0–L3 (or 0–3), not %r"
+#~ msgstr "l10n-nivån måste vara L0–L3 (eller 0–3), inte %r"
+
+#~ msgid "bash project Depends missing bash-shlib"
+#~ msgstr "bash-projektet saknar bash-shlib i Depends"
+
+#, python-format
+#~ msgid "Level %(level)s requires: %(locales)s (source %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Append the missing lines to LINGUAS and add matching po/<locale>.po."
+#~ msgstr "Nivå %(level)s kräver: %(locales)s (källa %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Lägg till de saknade raderna i LINGUAS och matchande po/<locale>.po."
+
+#, python-format
+#~ msgid "po/LINGUAS covers %s locale set"
+#~ msgstr "po/LINGUAS täcker locale-uppsättningen %s"
+
+#~ msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY."
+#~ msgstr "Kontrollera aktuellt zephyr-projekt för saknade filer och paketerings-/stilfel. Går från cwd mot föräldrakataloger. CSR-färger när stdout är en TTY."
+
+#~ msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=10 locales, L2=20, L3=30. Defaults in .config/zfr/lint.options."
+#~ msgstr "i18n: engelsk källa; zfr lint -l/--l10n-level L0–L3 (standard L1). L1=10 locale, L2=20, L3=30. Standardvärden i .config/zfr/lint.options."
+
+#~ msgid "bash spec Requires missing bash-shlib"
+#~ msgstr "bash-spec saknar Requires bash-shlib"
+
+#~ msgid "Split this file into smaller modules; keep each unit focused and testable."
+#~ msgstr "Dela upp den här filen i mindre moduler; håll varje enhet fokuserad och testbar."
+
+#~ msgid "Plan extraction of helpers or submodules before the file grows further."
+#~ msgstr "Planera utbrytning av hjälpare eller undermoduler innan filen växer mer."
+
+#, fuzzy
+#~ msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr locale. Defaults in .config/zfr/lint.options."
+#~ msgstr "i18n: engelsk källa; zfr lint -l/--l10n-level L0–L3 (standard L1). L1=10 locale, L2=20, L3=30. Standardvärden i .config/zfr/lint.options."
+
+#, fuzzy, python-format
+#~ msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr locale --derive` to auto-generate child locales."
+#~ msgstr "Nivå %(level)s kräver: %(locales)s (källa %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Lägg till de saknade raderna i LINGUAS och matchande po/<locale>.po."
