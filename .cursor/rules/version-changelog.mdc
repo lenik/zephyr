@@ -1,0 +1,14 @@
+---
+description: VERSION and debian/changelog workflow relative to git release tags
+alwaysApply: true
+---
+
+# Version / changelog after a release tag
+
+Canonical text: **`AGENTS.md`** at the zephyr repo root (section *Version and changelog vs git tags*).
+
+Summary:
+
+- **Untagged** current `VERSION`: do not bump unless the user asks for release/bump.
+- **Tag already exists** for current `VERSION` (e.g. `v2.8.9`): any further change **must** open the next version (`VERSION` + new changelog stanza). That is **not** a release — no `Release …` commit title, no new tag until the user requests a release.
+- **Release**: user-requested; commit `Release X.Y.Z: …` then tag `vX.Y.Z`.
