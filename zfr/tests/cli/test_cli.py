@@ -231,8 +231,9 @@ class ZephyrDetectTests(unittest.TestCase):
             ["-l", "--unsigned", "-I", "-vv", "-p", "mentors", "-B", "b4f-debian:sid"]
         )
         argv = compose_makerelease_argv(ns)
+        self.assertEqual(argv[0:2], ["-j", str(ns.jobs)])
         self.assertEqual(
-            argv,
+            argv[2:],
             [
                 "--unsigned",
                 "--dput-host",
@@ -257,8 +258,9 @@ class ZephyrDetectTests(unittest.TestCase):
         add_release_arguments(p)
         ns = p.parse_args(["--test", "--unsigned"])
         argv = compose_makerelease_argv(ns)
+        self.assertEqual(argv[0:2], ["-j", str(ns.jobs)])
         self.assertEqual(
-            argv,
+            argv[2:],
             [
                 "--unsigned",
                 "--local",

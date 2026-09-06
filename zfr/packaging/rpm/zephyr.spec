@@ -35,10 +35,11 @@ zephyr ships language templates for small command-line utilities under
 /usr/share/zephyr/<lang>/ (bash, c, clib, cpp, cpplib, csharp, erlang, go,
 haskell, java, perl, python, ruby, rust, smalltalk, swift, typescript), plus
 cmdline tools (zfr, zfr-create, zfr-rename, zfr-add, zfr-remove,
-zfr-about, zfr-version, zfr-lint, zfr-shape, zfr-dist, zfr-ize,
-zfr-release) to create projects, manage puffs (example apps), validate
-packaging against zephyr style, build source tarballs, upgrade existing
-trees (`zfr ize`), and publish GitHub releases (`zfr release`).
+zfr-about, zfr-version, zfr-lint, zfr-shape, zfr-dist, zfr-build,
+zfr-package, zfr-lasterror, zfr-ize, zfr-release) to create projects, manage puffs
+(example apps), validate packaging against zephyr style, build source
+tarballs, compile/package projects (`zfr build` / `zfr package`), upgrade
+existing trees (`zfr ize`), and publish GitHub releases (`zfr release`).
 
 %prep
 %setup -q -n %{name}-%{srcversion}
@@ -79,6 +80,9 @@ meson install -C build --destdir=%{buildroot}
 %{_bindir}/zfr-i18n
 %{_bindir}/zfr-translate
 %{_bindir}/zfr-shape
+%{_bindir}/zfr-build
+%{_bindir}/zfr-package
+%{_bindir}/zfr-lasterror
 %{_bindir}/zfr-release
 %{_datadir}/bash-completion/completions/zfr
 %{_datadir}/bash-completion/completions/zfr-create
@@ -93,6 +97,9 @@ meson install -C build --destdir=%{buildroot}
 %{_datadir}/bash-completion/completions/zfr-i18n
 %{_datadir}/bash-completion/completions/zfr-translate
 %{_datadir}/bash-completion/completions/zfr-shape
+%{_datadir}/bash-completion/completions/zfr-build
+%{_datadir}/bash-completion/completions/zfr-package
+%{_datadir}/bash-completion/completions/zfr-lasterror
 %{_datadir}/bash-completion/completions/zfr-release
 %{_mandir}/man1/zfr.1*
 %{_datadir}/zephyr/

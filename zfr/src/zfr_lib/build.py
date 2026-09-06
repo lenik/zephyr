@@ -9,6 +9,7 @@ from pathlib import Path
 from .buildsys import build_project, detect_build_system
 from .cli import register_command
 from .i18n import _
+from .jobs import add_job_argument, resolve_jobs
 
 NAME = "build"
 HELP = _("detect build system and compile the project")
@@ -33,6 +34,7 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         default="",
         help=_("build directory (default: <project>/build)"),
     )
+    add_job_argument(p)
     p.add_argument(
         "-n",
         "--dry-run",
@@ -68,7 +70,13 @@ def run(args: argparse.Namespace) -> int:
     builddir = Path(args.builddir).expanduser() if args.builddir else None
     if builddir is not None and not builddir.is_absolute():
         builddir = root / builddir
-    build_project(root, builddir=builddir, dry_run=args.dry_run, verbose=args.verbose)
+    build_project(
+        root,
+        builddir=builddir,
+        dry_run=args.dry_run,
+        verbose=args.verbose,
+        jobs=resolve_jobs(getattr(args, "jobs", None)),
+    )
     return 0
 
 

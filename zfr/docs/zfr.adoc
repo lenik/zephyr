@@ -34,9 +34,11 @@ zfr - multi-language CLI project templates and helper tools
 *zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
             [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
 
-*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *build* [*-C* _DIR_] [*-b* _DIR_] [*-n*] [*-v*] [*--detect-only*]
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *build* [*-C* _DIR_] [*-b* _DIR_] [*-j* _N_] [*-n*] [*-v*] [*--detect-only*]
 
-*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *package* [*-C* _DIR_] [*-u*|*-U*] [*-p* _HOST_] [*-D*] [*-Y*] [_OPTIONS_]
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *package* [*-C* _DIR_] [*-j* _N_] [*-u*|*-U*] [*-p* _HOST_] [*-D*] [*-Y*] [_OPTIONS_]
+
+*zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *lasterror* [*-f*] [*-n*] [*--replay* _KIND_]
 
 *zfr* [*--for-ai-purpose*|*--no-for-ai-purpose*] *ize* [*-l* _LANG_] [*-m*|*--no-mesonize*] [*-n*] [*-v*]
            [*--no-man*] [*--no-subst*] [*--color* _WHEN_]
@@ -49,7 +51,8 @@ zfr - multi-language CLI project templates and helper tools
 
 *zfr-create*, *zfr-rename*, *zfr-add*, *zfr-remove*,
 *zfr-about*, *zfr-version*, *zfr-lint*, *zfr-dist*, *zfr-build*, *zfr-package*,
-*zfr-ize*, *zfr-shape*, and *zfr-release* are thin wrappers around the same subcommands.
+*zfr-lasterror*, *zfr-ize*, *zfr-shape*, and *zfr-release* are thin wrappers
+around the same subcommands.
 
 == Description
 
@@ -191,14 +194,23 @@ Commands that walk from the current directory resolve *packagedir* first.
 
 *build*::
   Detect the project build system (*meson*, *cmake*, *autotools*, *cargo*,
-  *go*, *npm*, or *make*) and compile locally. *--detect-only* prints the
+  *go*, *npm*, or *make*) and compile locally. *\-j* / *--job* _N_ sets
+  parallel jobs (default: number of CPU cores). *--detect-only* prints the
   detected system name. Used by *gh-makerelease*(1) before packaging.
 
 *package*::
   Detect packaging types (*deb*, *rpm*, *npm*/*vsix*, *mingw*, …) and build
-  packages. Upload is on by default (*\-u* / *--upload*); use *\-U* /
-  *--no-upload* to skip *dput* / registry publish. *gh-makerelease*(1)
-  invokes this for Debian/RPM/installer packaging.
+  them in parallel. *\-j* / *--job* _N_ is the max concurrent packagers
+  (default: CPU cores); each packager still gets a share of make/debuild
+  parallelism. Stdout/stderr per packager is captured with *<out>*/*<err>*
+  marks and shown on a live status board. On failure, an interactive picker
+  (same as *lasterror*) lets you inspect a failed packager. Upload is on by
+  default (*\-u*); use *\-U* to skip *dput* / registry publish.
+
+*lasterror*::
+  Browse the last *zfr package* run. ↑/↓ select a packager; *Tab* opens the
+  full captured stream; *Enter* replays that packager's stdout/stderr in
+  original order; *q* quits. *--replay* _KIND_ replays non-interactively.
 
 *release*::
   Parse the same options as *gh-makerelease*(1), rebuild argv, and *exec*
@@ -356,6 +368,8 @@ Options for *dist*:
 
 Options for *release* (parsed here, passed through to *gh-makerelease*):
 
+*-j, --job* _N_::
+  Parallel jobs passed to *zfr-build* / *zfr-package* (default: CPU cores).
 *-b, --build-binary*::
   Debian binary-only build (*-b*); no _.dsc_.
 *-n, --no-pre-clean*::

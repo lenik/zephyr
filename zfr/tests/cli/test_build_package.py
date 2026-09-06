@@ -14,7 +14,8 @@ from support import add_src_to_path
 add_src_to_path()
 
 from zfr_lib.buildsys import detect_build_system  # noqa: E402
-from zfr_lib.pkg import detect_packaging_kinds  # noqa: E402
+from zfr_lib.pkg import detect_packaging_kinds, package_deb  # noqa: E402
+from zfr_lib.pkg_docker import debian_build_inner  # noqa: E402
 
 
 class BuildsysDetectTests(unittest.TestCase):
@@ -62,6 +63,26 @@ class PackagingDetectTests(unittest.TestCase):
             (root / "package.json").write_text('{"name":"x"}\n', encoding="utf-8")
             kinds = [k.name for k in detect_packaging_kinds(root)]
             self.assertEqual(kinds, ["npm"])
+
+
+class DockerDebianExtractTests(unittest.TestCase):
+    def test_inner_script_uses_debuild(self) -> None:
+        script = debian_build_inner("zephyr", ["-us", "-uc"], jobs=4)
+        self.assertIn("cd zephyr", script)
+        self.assertIn("debuild", script)
+        self.assertIn("-j4", script)
+        self.assertIn("parallel=4", script)
+        self.assertIn("-us", script)
+        self.assertIn("mk-build-deps", script)
+
+    def test_package_deb_docker_dry_run(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "proj"
+            root.mkdir()
+            (root / "debian").mkdir()
+            (root / "debian" / "control").write_text("Source: x\n", encoding="utf-8")
+            # dry-run must not require build4/docker on PATH
+            package_deb(root, docker=True, dry_run=True)
 
 
 if __name__ == "__main__":

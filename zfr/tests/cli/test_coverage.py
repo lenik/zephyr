@@ -32,6 +32,7 @@ WRAPPERS = (
     "zfr-translate",
     "zfr-build",
     "zfr-package",
+    "zfr-lasterror",
     "zfr-release",
 )
 
@@ -47,6 +48,7 @@ SUBCOMMANDS = (
     "dist",
     "build",
     "package",
+    "lasterror",
     "release",
     "ize",
     "i18n",
@@ -168,16 +170,21 @@ class ZephyrDispatcherTests(unittest.TestCase):
         add_release_arguments(p)
         ns = p.parse_args(["-l", "--unsigned"])
         argv = compose_makerelease_argv(ns)
+        self.assertEqual(argv[0:2], ["-j", str(ns.jobs)])
         self.assertIn("--local", argv)
         self.assertIn("--unsigned", argv)
         self.assertIn("--no-upload", argv)
         self.assertIn("--no-publish", argv)
         ns_test = p.parse_args(["-t"])
         argv_test = compose_makerelease_argv(ns_test)
+        self.assertEqual(argv_test[0:2], ["-j", str(ns_test.jobs)])
         self.assertIn("--local", argv_test)
         self.assertIn("--no-install", argv_test)
         self.assertIn("--no-upload", argv_test)
         self.assertIn("--no-publish", argv_test)
+        ns_j = p.parse_args(["-j", "3", "-t"])
+        argv_j = compose_makerelease_argv(ns_j)
+        self.assertEqual(argv_j[0:2], ["-j", "3"])
 
 
 class ZephyrLangScoreTests(unittest.TestCase):

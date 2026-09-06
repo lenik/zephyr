@@ -12,13 +12,17 @@ import argparse
 import os
 import shutil
 import sys
+from collections.abc import Sequence
+
 from .i18n import _
+from .jobs import add_job_argument, resolve_jobs
 
 _DEFAULT_BASE_IMAGE = "b4f-debian:trixie"
 
 
 def add_release_arguments(p: argparse.ArgumentParser) -> None:
     """Attach gh-makerelease options (parsed here, implemented there)."""
+    add_job_argument(p)
     p.add_argument(
         "-b",
         "--build-binary",
@@ -159,6 +163,8 @@ def compose_makerelease_argv(ns: argparse.Namespace) -> list[str]:
     """Rebuild gh-makerelease argv from a parsed namespace (no defaults)."""
     apply_release_implications(ns)
     argv: list[str] = []
+    jobs = resolve_jobs(getattr(ns, "jobs", None))
+    argv.extend(["-j", str(jobs)])
     if ns.build_binary:
         argv.append("--build-binary")
     if ns.no_pre_clean:

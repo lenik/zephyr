@@ -12,15 +12,19 @@ is used. Unspecified ``build_dir`` means a remote temporary directory
 (not preserved). A set ``build_dir`` implies ``preserved: true`` unless
 overridden.
 
-Remote sync/build/fetch is performed by **gh-makerelease**, not by
-``packaging/lib/host.sh`` (which only checks local capability).
+Remote sync/build/fetch is implemented here (``remote_build``).
+``packaging/lib/host.sh`` only checks local capability.
 """
 
 from __future__ import annotations
 
 import os
+import shlex
 import shutil
+import subprocess
 import sys
+import tempfile
+import threading
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -311,3 +315,260 @@ def innosetup_search_dirs() -> list[Path]:
         ]
     )
     return dirs
+
+
+_RSYNC_EXCLUDES = (
+    ".git",
+    ".hg",
+    ".svn",
+    "build",
+    "builddir",
+    "rpmbuild",
+    "__pycache__",
+    ".cache",
+    "meson-private",
+    "meson-logs",
+    "meson-info",
+    "dist",
+    "node_modules",
+    "target",
+    "cargo-target",
+    ".cursor",
+    ".vscode",
+    "packaging/win32/mingw/out",
+    "packaging/win32/innosetup/out",
+    "packaging/win32/wix/out",
+    "packaging/macos/out",
+    "packaging/freebsd/out",
+    "packaging/arch/out",
+    "packaging/rpm/out",
+    "rpm/out",
+)
+
+_OUT_RELS = (
+    "packaging/win32/mingw/out",
+    "packaging/win32/innosetup/out",
+    "packaging/win32/wix/out",
+    "packaging/macos/out",
+    "packaging/freebsd/out",
+    "packaging/arch/out",
+    "packaging/rpm/out",
+    "rpm/out",
+)
+
+
+def _ssh_base(cfg: Path, hosts: list[BuildHost]) -> list[str]:
+    last = hosts[-1]
+    cmd = ["ssh", "-F", str(cfg)]
+    if last.password and shutil.which("sshpass"):
+        return ["env", f"SSHPASS={last.password}", "sshpass", "-e", *cmd]
+    return cmd
+
+
+def _run(
+    cmd: list[str],
+    *,
+    check: bool = True,
+    capture: bool = True,
+) -> subprocess.CompletedProcess[str]:
+    from .stream_mark import get_recorder, log_line
+
+    log_line("+ " + " ".join(shlex.quote(c) for c in cmd))
+    rec = get_recorder()
+    if capture:
+        proc = subprocess.run(cmd, check=check, text=True, capture_output=True)
+        if rec is not None:
+            if proc.stdout:
+                rec.write("out", proc.stdout if proc.stdout.endswith("\n") else proc.stdout + "\n")
+            if proc.stderr:
+                rec.write("err", proc.stderr if proc.stderr.endswith("\n") else proc.stderr + "\n")
+        return proc
+    if rec is None:
+        return subprocess.run(cmd, check=check, text=True)
+
+    proc = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        bufsize=0,
+    )
+    assert proc.stdout is not None and proc.stderr is not None
+
+    def _pump(stream, which: str) -> None:
+        try:
+            while True:
+                chunk = stream.read(4096)
+                if not chunk:
+                    break
+                rec.write(which, chunk)  # type: ignore[arg-type]
+        finally:
+            try:
+                stream.close()
+            except OSError:
+                pass
+
+    t_out = threading.Thread(target=_pump, args=(proc.stdout, "out"), daemon=True)
+    t_err = threading.Thread(target=_pump, args=(proc.stderr, "err"), daemon=True)
+    t_out.start()
+    t_err.start()
+    rc = proc.wait()
+    t_out.join(timeout=30)
+    t_err.join(timeout=30)
+    result = subprocess.CompletedProcess(cmd, rc, "", "")
+    if check and rc != 0:
+        raise subprocess.CalledProcessError(rc, cmd)
+    return result
+
+
+def _remote_shell_cmd(
+    kind: str,
+    shell: str,
+    remote: str,
+    *,
+    local_cmd: list[str] | None = None,
+) -> str:
+    """Command string executed on the remote host."""
+    if kind == "innosetup" and shell in {"powershell", "cmd"}:
+        if shell == "cmd":
+            return (
+                f'cmd.exe /c "cd /d {remote}\\packaging\\win32\\innosetup '
+                f'&& set ZEPHYR_FORCE_LOCAL=1 && build.cmd"'
+            )
+        return (
+            "powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -Command "
+            f"\"Set-Location -LiteralPath '{remote}\\packaging\\win32\\innosetup'; "
+            "$env:ZEPHYR_FORCE_LOCAL='1'; & .\\build.ps1\""
+        )
+    if kind == "wix" and shell in {"powershell", "cmd"}:
+        if shell == "cmd":
+            return (
+                f'cmd.exe /c "cd /d {remote}\\packaging\\win32\\wix '
+                f'&& set ZEPHYR_FORCE_LOCAL=1 && build.cmd"'
+            )
+        return (
+            "powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -Command "
+            f"\"Set-Location -LiteralPath '{remote}\\packaging\\win32\\wix'; "
+            "$env:ZEPHYR_FORCE_LOCAL='1'; & .\\build.ps1\""
+        )
+    if local_cmd:
+        # Single "!..." entry is a raw shell fragment (e.g. TOPDIR=...).
+        if len(local_cmd) == 1 and local_cmd[0].startswith("!"):
+            inner = local_cmd[0][1:]
+        else:
+            inner = " ".join(shlex.quote(c) for c in local_cmd)
+    else:
+        inner = "true"
+    return (
+        f"cd {shlex.quote(remote)} && "
+        f"export ZEPHYR_FORCE_LOCAL=1 ZEPHYR_SRCDIR={shlex.quote(remote)} && {inner}"
+    )
+
+
+def remote_build(
+    root: Path,
+    kind: str,
+    *,
+    local_cmd: list[str],
+    out_rels: tuple[str, ...] | None = None,
+) -> None:
+    """Sync *root* to remote, run build, copy ``out/`` artifacts back, clean if needed."""
+    hosts = load_build_hosts(root, kind)
+    if not hosts:
+        raise FileNotFoundError(f"no .build-host for packaging kind {kind!r}")
+
+    last = hosts[-1]
+    shell = last.effective_shell(kind)
+    preserved = last.effective_preserved()
+    out_rels = out_rels if out_rels is not None else _OUT_RELS
+
+    with tempfile.TemporaryDirectory(prefix="zfr-build-host-") as tmp:
+        cfg = Path(tmp) / "ssh_config"
+        cfg.write_text(ssh_config_text(hosts), encoding="utf-8")
+        ssh = _ssh_base(cfg, hosts)
+        alias = last_ssh_alias(hosts)
+        rsh = " ".join(shlex.quote(c) for c in ssh)
+
+        if last.build_dir:
+            remote = last.build_dir
+        elif shell in {"powershell", "cmd"}:
+            mk = (
+                "powershell.exe -NoLogo -NoProfile -Command "
+                f"\"$d = Join-Path $env:TEMP ('zephyr-{kind}.' + "
+                "[guid]::NewGuid().ToString('N').Substring(0,8)); "
+                "New-Item -ItemType Directory -Path $d | Out-Null; Write-Output $d\""
+            )
+            proc = _run([*ssh, alias, mk])
+            remote = proc.stdout.strip().splitlines()[-1].strip()
+        else:
+            proc = _run([*ssh, alias, f"mktemp -d /tmp/zephyr-{kind}.XXXXXX"])
+            remote = proc.stdout.strip().splitlines()[-1].strip()
+
+        from .stream_mark import log_line
+
+        log_line(
+            f"zfr package: remote {kind} → {alias}:{remote} "
+            f"(shell={shell} preserved={preserved})"
+        )
+
+        if shell in {"powershell", "cmd"}:
+            _run(
+                [
+                    *ssh,
+                    alias,
+                    "powershell.exe -NoLogo -NoProfile -Command "
+                    f"\"New-Item -ItemType Directory -Force -Path '{remote}' | Out-Null\"",
+                ]
+            )
+        else:
+            _run([*ssh, alias, f"mkdir -p {shlex.quote(remote)}"])
+
+        rsync = ["rsync", "-a", "--delete"]
+        for ex in _RSYNC_EXCLUDES:
+            rsync.append(f"--exclude={ex}")
+        rsync.extend(["-e", rsh, f"{root}/", f"{alias}:{remote}/"])
+        _run(rsync)
+
+        remote_cmd = _remote_shell_cmd(kind, shell, remote, local_cmd=local_cmd)
+        proc = _run([*ssh, alias, remote_cmd], check=False, capture=False)
+        if proc.returncode != 0:
+            raise subprocess.CalledProcessError(proc.returncode, remote_cmd)
+
+        for rel in out_rels:
+            remote_out = f"{remote}/{rel}".replace("\\", "/")
+            if shell in {"powershell", "cmd"}:
+                test = _run(
+                    [
+                        *ssh,
+                        alias,
+                        "powershell.exe -NoLogo -NoProfile -Command "
+                        f"\"if (Test-Path -LiteralPath '{remote_out}' -PathType Container) "
+                        "{ exit 0 } else { exit 1 }\"",
+                    ],
+                    check=False,
+                )
+            else:
+                test = _run(
+                    [*ssh, alias, f"test -d {shlex.quote(remote_out)}"],
+                    check=False,
+                )
+            if test.returncode != 0:
+                continue
+            dest = root / rel
+            dest.mkdir(parents=True, exist_ok=True)
+            _run(["rsync", "-a", "-e", rsh, f"{alias}:{remote_out}/", f"{dest}/"])
+
+        if not preserved:
+            if shell in {"powershell", "cmd"}:
+                _run(
+                    [
+                        *ssh,
+                        alias,
+                        "powershell.exe -NoLogo -NoProfile -Command "
+                        f"\"Remove-Item -Recurse -Force -LiteralPath '{remote}' "
+                        "-ErrorAction SilentlyContinue\"",
+                    ],
+                    check=False,
+                )
+            else:
+                _run([*ssh, alias, f"rm -rf {shlex.quote(remote)}"], check=False)

@@ -61,16 +61,20 @@ def build_project(
     builddir: Path | None = None,
     dry_run: bool = False,
     verbose: bool = False,
+    jobs: int = 0,
 ) -> BuildSystem:
     """Detect and build *root*. Raises SystemExit on failure / unknown system."""
+    from .jobs import resolve_jobs
+
     root = root.resolve()
     sysinfo = detect_build_system(root)
     if sysinfo is None:
         raise SystemExit(f"zfr build: no known build system under {root}")
 
+    jobs = resolve_jobs(jobs)
     builddir = (builddir or (root / "build")).resolve()
     name = sysinfo.name
-    print(f"zfr build: detected {name} ({sysinfo.detail})", flush=True)
+    print(f"zfr build: detected {name} ({sysinfo.detail}); jobs={jobs}", flush=True)
 
     if name == "meson":
         meson = _which("meson")
@@ -78,7 +82,7 @@ def build_project(
             raise SystemExit("zfr build: meson not found in PATH")
         if not (builddir / "build.ninja").is_file() and not (builddir / "Makefile").is_file():
             _run([meson, "setup", str(builddir)], cwd=root, dry_run=dry_run)
-        compile_cmd = [meson, "compile", "-C", str(builddir)]
+        compile_cmd = [meson, "compile", "-C", str(builddir), "-j", str(jobs)]
         if verbose:
             compile_cmd.append("-v")
         _run(compile_cmd, cwd=root, dry_run=dry_run)
@@ -91,7 +95,7 @@ def build_project(
         builddir.mkdir(parents=True, exist_ok=True)
         if not (builddir / "CMakeCache.txt").is_file():
             _run([cmake, "-S", str(root), "-B", str(builddir)], cwd=root, dry_run=dry_run)
-        build_cmd = [cmake, "--build", str(builddir)]
+        build_cmd = [cmake, "--build", str(builddir), "--parallel", str(jobs)]
         if verbose:
             build_cmd.append("--verbose")
         _run(build_cmd, cwd=root, dry_run=dry_run)
@@ -108,7 +112,7 @@ def build_project(
             configure = root / "configure"
             _run([str(configure), f"--prefix={root / 'stage'}"], cwd=builddir, dry_run=dry_run)
         make = _which("make") or "make"
-        cmd = [make, "-C", str(builddir)]
+        cmd = [make, "-C", str(builddir), f"-j{jobs}"]
         if verbose:
             cmd.append("V=1")
         _run(cmd, cwd=root, dry_run=dry_run)
@@ -118,7 +122,7 @@ def build_project(
         cargo = _which("cargo")
         if not cargo:
             raise SystemExit("zfr build: cargo not found in PATH")
-        cmd = [cargo, "build", "--release"]
+        cmd = [cargo, "build", "--release", "-j", str(jobs)]
         if verbose:
             cmd.append("-v")
         _run(cmd, cwd=root, dry_run=dry_run)
@@ -128,7 +132,11 @@ def build_project(
         go = _which("go")
         if not go:
             raise SystemExit("zfr build: go not found in PATH")
-        _run([go, "build", "./..."], cwd=root, dry_run=dry_run)
+        env = os.environ.copy()
+        env["GOMAXPROCS"] = str(jobs)
+        print("+", " ".join([go, "build", "./..."]), flush=True)
+        if not dry_run:
+            subprocess.run([go, "build", "./..."], cwd=root, env=env, check=True)
         return sysinfo
 
     if name == "npm":
@@ -146,7 +154,7 @@ def build_project(
 
     if name == "make":
         make = _which("make") or "make"
-        cmd = [make]
+        cmd = [make, f"-j{jobs}"]
         if verbose:
             cmd.append("V=1")
         _run(cmd, cwd=root, dry_run=dry_run)

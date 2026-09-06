@@ -8,13 +8,16 @@ from pathlib import Path
 
 from .cli import register_command
 from .i18n import _
+from .jobs import add_job_argument, resolve_jobs
 from .pkg import detect_packaging_kinds, package_project
 
 NAME = "package"
 HELP = _("detect packaging type and build packages")
 DESCRIPTION = _(
-    "Detect packaging types (deb, rpm, npm/vsix, mingw, …) and build packages. "
-    "Upload is on by default (-u); use -U/--no-upload to skip dput/registry publish."
+    "Detect packaging types (deb, rpm, npm/vsix, mingw, …) and build them in "
+    "parallel (-j). Each packager's stdout/stderr is captured with <out>/<err> "
+    "marks; live status lines show progress. On failure, browse with "
+    "`zfr lasterror`. Upload is on by default (-u); use -U/--no-upload to skip."
 )
 
 _DEFAULT_BASE_IMAGE = "b4f-debian:trixie"
@@ -28,6 +31,7 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         default="",
         help=_("change to DIR before detecting packaging"),
     )
+    add_job_argument(p)
     upload = p.add_mutually_exclusive_group()
     upload.add_argument(
         "-u",
@@ -157,6 +161,7 @@ def run(args: argparse.Namespace) -> int:
         docker_server=args.docker_server or "",
         base_image=args.base_image,
         dry_run=bool(args.dry_run),
+        jobs=resolve_jobs(getattr(args, "jobs", None)),
     )
     return 0
 
