@@ -1,3 +1,22 @@
+zephyr (2.8.9) testing; urgency=medium
+
+  * zfr release: -l implies -U/-P; add -t/--test as alias for -l -I.
+  * lint/ize: ZL063 commons.* optional; ZL084 merge duplicate foreach man
+    loops; zfr add fills from template after empty create; bash-shlib
+    Depends only when used; MinGW packaging IGNORED without cross tools.
+  * lint/ize: C-family bas i18n/logger/LOCALEDIR and gettext spacing
+    (ZL085–ZL088, ZI021); update c/cpp templates.
+  * i18n: refresh pot and catalogs; hand-fix zh_TW (no OpenCC for fills).
+  * Extract build/packaging from gh-makerelease into zfr build / zfr package
+    (buildsys detect+compile; packaging deb/rpm/npm + remote .build-host +
+    build4 docker); gh-makerelease reuses those CLIs.
+  * zfr build/package/release: -j/--job N (default: CPU cores); package runs
+    packagers in parallel with <out>/<err> marked capture and a live status
+    board (✓/✗).
+  * Add zfr lasterror / zfr-lasterror: ↑/↓ select, Tab detail, Enter replay.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 06 Sep 2026 20:30:00 +0800
+
 zephyr (2.8.8) testing; urgency=medium
 
   * i18n derive: treat equal mtimes as fresh (>=), matching msgfmt 0.23 which
