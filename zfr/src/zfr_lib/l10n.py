@@ -377,7 +377,10 @@ def apply_lint_option_file(
         args.l10n_level = getattr(cfg, "l10n_level", None) or "L1"
     args.verbose = bool(args.verbose or cfg.verbose)
     args.quiet = bool(args.quiet or cfg.quiet)
-    args.strict = bool(args.strict or cfg.strict)
+    if getattr(args, "warning_level", None) is None and getattr(cfg, "warning_level", None) is not None:
+        args.warning_level = cfg.warning_level
+    if getattr(args, "error_level", None) is None and getattr(cfg, "error_level", None) is not None:
+        args.error_level = cfg.error_level
     if args.color == "auto" and cfg.color != "auto":
         args.color = cfg.color
     if getattr(cfg, "uncheck", None):

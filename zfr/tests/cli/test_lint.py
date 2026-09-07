@@ -244,5 +244,78 @@ class ZephyrLintSourceTests(unittest.TestCase):
         self.assertEqual(notes, [], "\n".join(f"{f.file}: {f.message}" for f in notes))
 
 
+class SeverityRemapTests(unittest.TestCase):
+    def _findings(self):
+        from zfr_lib.finding import Finding
+
+        return [
+            Finding("note", "a", "n"),
+            Finding("warn", "b", "w"),
+            Finding("error", "c", "e"),
+            Finding("ok", "d", "o"),
+        ]
+
+    def test_warning_note_promotes_note(self) -> None:
+        from zfr_lib.lint.severity import remap_severities
+
+        fs = self._findings()
+        remap_severities(fs, as_warning="note")
+        self.assertEqual([f.severity for f in fs], ["warn", "warn", "error", "ok"])
+
+    def test_warning_error_demotes_error(self) -> None:
+        from zfr_lib.lint.severity import remap_severities
+
+        fs = self._findings()
+        remap_severities(fs, as_warning="error")
+        self.assertEqual([f.severity for f in fs], ["note", "warn", "warn", "ok"])
+
+    def test_warning_warn_noop(self) -> None:
+        from zfr_lib.lint.severity import remap_severities
+
+        fs = self._findings()
+        remap_severities(fs, as_warning="warn")
+        self.assertEqual([f.severity for f in fs], ["note", "warn", "error", "ok"])
+
+    def test_error_warn_promotes_warn(self) -> None:
+        from zfr_lib.lint.severity import remap_severities
+
+        fs = self._findings()
+        remap_severities(fs, as_error="warn")
+        self.assertEqual([f.severity for f in fs], ["note", "error", "error", "ok"])
+
+    def test_error_note_promotes_note_and_warn(self) -> None:
+        from zfr_lib.lint.severity import remap_severities
+
+        fs = self._findings()
+        remap_severities(fs, as_error="note")
+        self.assertEqual([f.severity for f in fs], ["error", "error", "error", "ok"])
+
+    def test_error_wins_over_warning(self) -> None:
+        from zfr_lib.lint.severity import remap_severities
+
+        fs = self._findings()
+        remap_severities(fs, as_warning="note", as_error="note")
+        self.assertEqual([f.severity for f in fs], ["error", "error", "error", "ok"])
+
+    def test_cli_parse_levels_and_strict_alias(self) -> None:
+        import argparse
+
+        from zfr_lib.lint import add_arguments
+
+        p = argparse.ArgumentParser()
+        add_arguments(p)
+        a = p.parse_args(["-w", "-e"])
+        self.assertEqual(a.warning_level, "note")
+        self.assertEqual(a.error_level, "warn")
+        b = p.parse_args(["--strict"])
+        self.assertEqual(b.error_level, "warn")
+        c = p.parse_args(["-w=error", "-e=note"])
+        self.assertEqual(c.warning_level, "error")
+        self.assertEqual(c.error_level, "note")
+        # legacy alias
+        d = p.parse_args(["-w=info"])
+        self.assertEqual(d.warning_level, "note")
+
+
 if __name__ == "__main__":
     unittest.main()

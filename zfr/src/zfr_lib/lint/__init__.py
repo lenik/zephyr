@@ -16,6 +16,7 @@ from ..l10n import apply_lint_option_file, parse_l10n_level
 from ..packaging import _meson_project_fields
 from .filtering import filter_findings
 from .report import format_report
+from .severity import parse_severity_level, remap_severities
 from .util import _control, _role
 
 # collect_findings / cmd_lint live below if not imported from util
@@ -77,7 +78,8 @@ def cmd_lint(
     verbose: bool = False,
     quiet: bool = False,
     color: str = "auto",
-    strict: bool = False,
+    warning_level: str | None = None,
+    error_level: str | None = None,
     l10n_level: str = "L1",
     style_info: bool | None = None,
     for_ai_purpose: bool | None = None,
@@ -89,6 +91,7 @@ def cmd_lint(
     root = _resolve_lint_root(find_project_dir(workdir))
     name, lang, role, findings = collect_findings(root, l10n_level=l10n_level)
     findings = filter_findings(findings, uncheck)
+    remap_severities(findings, as_warning=warning_level, as_error=error_level)
     ai = resolve_for_ai_purpose(for_ai_purpose)
     sys.stdout.write(
         format_report(
@@ -105,11 +108,7 @@ def cmd_lint(
         )
     )
     sys.stdout.flush()
-    errors = sum(1 for f in findings if f.severity == "error")
-    warns = sum(1 for f in findings if f.severity == "warn")
-    if errors:
-        return 1
-    if strict and warns:
+    if any(f.severity == "error" for f in findings):
         return 1
     return 0
 
@@ -130,7 +129,41 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
 
     p.add_argument("-v", "--verbose", action="store_true", help=_("show passing checks too"))
     p.add_argument("-q", "--quiet", action="store_true", help=_("only print errors"))
-    p.add_argument("--strict", action="store_true", help=_("treat warnings as failures (exit 1)"))
+    p.add_argument(
+        "-w",
+        "--warning",
+        nargs="?",
+        const="note",
+        default=None,
+        type=parse_severity_level,
+        metavar="LEVEL",
+        dest="warning_level",
+        help=_(
+            "treat LEVEL as warning (LEVEL=note|warn|error; default note: "
+            "note→warn; warn=no-op; error→warn)"
+        ),
+    )
+    p.add_argument(
+        "-e",
+        "--error",
+        nargs="?",
+        const="warn",
+        default=None,
+        type=parse_severity_level,
+        metavar="LEVEL",
+        dest="error_level",
+        help=_(
+            "treat LEVEL as error (LEVEL=note|warn|error; default warn: "
+            "warn→error; note→note+warn→error; error=no-op)"
+        ),
+    )
+    p.add_argument(
+        "--strict",
+        action="store_const",
+        const="warn",
+        dest="error_level",
+        help=_("alias for -e/--error=warn (treat warnings as errors)"),
+    )
     p.add_argument(
         "-L",
         "--list-std",
@@ -200,7 +233,8 @@ def run(args: argparse.Namespace) -> int:
         verbose=args.verbose,
         quiet=args.quiet,
         color=args.color,
-        strict=args.strict,
+        warning_level=getattr(args, "warning_level", None),
+        error_level=getattr(args, "error_level", None),
         l10n_level=args.l10n_level or "L1",
         style_info=args.style_info,
         for_ai_purpose=getattr(args, "for_ai_purpose", None),
