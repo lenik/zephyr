@@ -1,34 +1,20 @@
-zephyr (2.8.14) testing; urgency=medium
-
-  * version.mdc: [release] prefix only for in-loop zfr release/publish
-    fixes.
-  * Land 2.8.13 work on master: unified version.mdc, stdfiles, lint -w/-
-    e, alphabetical COMMAND help; drop LICENSE/.githooks from language
-    templates.
-  * zfr: rename --for-ai-purpose to --chat / --no-chat (completion
-    updated).
-
- -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 07 Sep 2026 16:13:15 +0800
-
 zephyr (2.8.13) testing; urgency=medium
 
   * Merge version-changelog and version-control-refactor Cursor rules
     into version.mdc; ship/install that name.
-  * version.mdc: never edit solidified changelog stanzas (bump instead);
-    before large changes commit a dirty tree, then bump minor.
+  * version.mdc: changelog sync, solidified stanzas, verbose commits,
+    large-change minor bumps; release process with optional single
+    ``[release]`` amend commit; ``[release]`` only for in-process
+    release/publish fixes (not pre-release prep).
   * Drop LICENSE, .githooks, .cursor from language templates;
     install/reset via zfr create and zfr ize (stdfiles).
   * zfr lint: -w/--warning and -e/--error severity remaps; --strict
     aliases -e=warn (LEVEL=note|warn|error).
-  * version.mdc: sync changelog for most work; verbose commits at
-    natural checkpoints.
   * zfr -h: show COMMAND list alphabetically (no brace-blob usage).
-  * version.mdc: release loop (lint -w, [release] commit, publish -f,
-    amend on failure).
-  * version.mdc: release loop keeps a single [release] commit; no
-    version bump during release.
+  * zfr: rename --for-ai-purpose to --chat / --no-chat (completion
+    updated).
 
- -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 07 Sep 2026 14:37:09 +0800
+ -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 07 Sep 2026 16:17:00 +0800
 
 zephyr (2.8.12) testing; urgency=medium
 
