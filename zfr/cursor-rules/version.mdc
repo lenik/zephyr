@@ -1,0 +1,46 @@
+---
+description: debian/changelog vs git tags; commits, release, large-change bumps
+alwaysApply: true
+---
+
+# Version
+
+`VERSION` is written by the pre-commit hook from `debian/changelog` — never edit
+it by hand. Prefer `dch` for changelog edits.
+
+- **Most work**: keep `debian/changelog` in sync (add bullets as you go).
+- **Solidified** (matching `vX.Y.Z` tag exists): never edit that stanza. Bump /
+  open the next version when you need changelog room.
+- **Open (untagged)**: add bullets under the current stanza.
+- After a solidified tag, the next real change opens the next semver in the same
+  feature commit(s). No standalone “open version” commit; no tag until Release.
+- **Release**: only when the user asks — follow **Release** below.
+
+## Commits
+
+- Always commit **verbosely** (`git commit -v` / a detailed message).
+- Not after every edit — at natural checkpoints (e.g. after a related test suite
+  passes). Prefer doing that commit proactively when the moment fits.
+
+## Release
+
+Only when the user asks to release/publish. **Do not bump the version** during
+release (ship the current open changelog version as-is).
+
+1. Commit any prep work **verbosely** with a normal subject (never `[release]`
+   here — that prefix is only for in-loop release fixes below).
+2. Loop — leave **exactly one** `[release]` commit for *zfr release/publish*
+   process fixes (failures **amend** that same commit; do not create extras):
+   - Satisfy `zfr lint -w` (fix until it passes).
+   - If the tree is dirty with release-process fixes: commit/amend as
+     `[release] …` (verbose body). Skip a new commit when already clean.
+   - Run `zfr publish -f`.
+   - If publish **fails**: fix errors and **amend** the `[release]` commit, then
+     continue the loop.
+   - If publish **succeeds**: stop.
+
+## Large changes
+
+- If the tree is dirty, commit that work first (under the open version, or bump
+  if the current stanza is solidified — never edit a solidified stanza).
+- Then bump **minor** for the large change itself.
