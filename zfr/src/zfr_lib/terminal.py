@@ -43,7 +43,7 @@ def is_ai_terminal_context() -> bool:
 
 
 def default_for_ai_purpose() -> bool:
-    """Default for the global ``--for-ai-purpose`` flag.
+    """Default for the global ``--chat`` flag.
 
     On when an AI-integrated editor is detected, or when stdout is
     non-interactive (pipes/CI) — the same situations where lint ``--info``
@@ -63,12 +63,12 @@ def resolve_for_ai_purpose(value: bool | None) -> bool:
 
 
 def add_for_ai_purpose_arguments(parser: argparse.ArgumentParser) -> None:
-    """Register global ``--for-ai-purpose`` / ``--no-for-ai-purpose``."""
+    """Register global ``--chat`` / ``--no-chat``."""
     from .i18n import _
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
-        "--for-ai-purpose",
+        "--chat",
         dest="for_ai_purpose",
         action="store_true",
         help=_(
@@ -76,7 +76,7 @@ def add_for_ai_purpose_arguments(parser: argparse.ArgumentParser) -> None:
         ),
     )
     group.add_argument(
-        "--no-for-ai-purpose",
+        "--no-chat",
         dest="for_ai_purpose",
         action="store_false",
         help=_("disable AI-oriented hints (default for a plain interactive shell)"),

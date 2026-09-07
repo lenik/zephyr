@@ -22,7 +22,7 @@ _zfr()
 
 	if [[ -z $cmd ]]; then
 		if [[ $cur == -* ]]; then
-			COMPREPLY=($(compgen -W '--help --version --for-ai-purpose --no-for-ai-purpose' -- "$cur"))
+			COMPREPLY=($(compgen -W '--help --version --chat --no-chat' -- "$cur"))
 		else
 			COMPREPLY=($(compgen -W "$_zfr_cmds" -- "$cur"))
 		fi
@@ -79,7 +79,7 @@ _zfr()
 					;;
 			esac
 			if [[ $cur == -* ]]; then
-				COMPREPLY=($(compgen -W '-v --verbose -q --quiet --strict -i --info -I --no-info --for-ai-purpose --no-for-ai-purpose -u --uncheck -l --l10n-level -L --list-std -H --help-std --color --help' -- "$cur"))
+				COMPREPLY=($(compgen -W '-v --verbose -q --quiet --strict -i --info -I --no-info --chat --no-chat -u --uncheck -l --l10n-level -L --list-std -H --help-std --color --help' -- "$cur"))
 			fi
 			;;
 		shape)
@@ -256,7 +256,7 @@ _zfr_lint()
 			;;
 	esac
 	if [[ $cur == -* ]]; then
-		COMPREPLY=($(compgen -W '-v --verbose -q --quiet --strict -i --info -I --no-info --for-ai-purpose --no-for-ai-purpose -u --uncheck -l --l10n-level -L --list-std -H --help-std --color --help' -- "$cur"))
+		COMPREPLY=($(compgen -W '-v --verbose -q --quiet --strict -i --info -I --no-info --chat --no-chat -u --uncheck -l --l10n-level -L --list-std -H --help-std --color --help' -- "$cur"))
 	fi
 }
 

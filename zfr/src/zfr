@@ -53,6 +53,7 @@ def resolve_command_prefix(argv: list[str]) -> list[str]:
 
 
 def build_parser() -> argparse.ArgumentParser:
+    from zfr_lib.cli import SubcommandHelpFormatter
     from zfr_lib.terminal import add_for_ai_purpose_arguments
 
     init_i18n()
@@ -63,6 +64,7 @@ def build_parser() -> argparse.ArgumentParser:
             "Create projects and manage example puffs. "
             "Instantiated trees keep calling zfr; zfr is not a rename token."
         ),
+        formatter_class=SubcommandHelpFormatter,
     )
     p.add_argument(
         "-V",
@@ -71,10 +73,18 @@ def build_parser() -> argparse.ArgumentParser:
         version="%(prog)s " + cli_version(),
     )
     add_for_ai_purpose_arguments(p)
-    sub = p.add_subparsers(dest="cmd", required=True)
-    for mod in COMMANDS:
-        mod.register(sub)
-    sub.add_parser("help", help=_("show this help"))
+    sub = p.add_subparsers(
+        dest="cmd",
+        required=True,
+        metavar="COMMAND",
+        title="COMMAND",
+    )
+    by_name = {mod.NAME: mod for mod in COMMANDS}
+    for name in sorted({*by_name, "help"}):
+        if name == "help":
+            sub.add_parser("help", help=_("show this help"))
+        else:
+            by_name[name].register(sub)
     return p
 
 

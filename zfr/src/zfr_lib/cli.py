@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import sys
 from collections.abc import Callable, Sequence
 from typing import Any
 
@@ -12,6 +11,18 @@ from .i18n import init_i18n
 
 AddArguments = Callable[[argparse.ArgumentParser], None]
 RunFn = Callable[[argparse.Namespace], int | None]
+
+
+class SubcommandHelpFormatter(argparse.HelpFormatter):
+    """Usage shows ``COMMAND``; help lists subcommands without a brace blob."""
+
+    def _format_action(self, action: argparse.Action) -> str:
+        if isinstance(action, argparse._SubParsersAction):
+            parts: list[str] = []
+            for sub in self._iter_indented_subactions(action):
+                parts.append(super()._format_action(sub))
+            return "".join(parts)
+        return super()._format_action(action)
 
 
 def standalone_main(
