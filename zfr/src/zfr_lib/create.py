@@ -23,7 +23,6 @@ from . import (
     instantiation_pairs,
     is_probably_text,
     iter_files,
-    pkgdatadir,
     project_version,
     relative_to,
     remove_meson_list_entry,
@@ -33,10 +32,10 @@ from . import (
 )
 from .add import cmd_add
 from .cli import register_command
-from .cursor_rules import install_cursor_rules
 from .i18n import _
 from .puff import _leftover_template_lines
 from .remove import cmd_remove
+from .stdfiles import install_std_files
 
 DEFAULT_DISTRIBUTION = "unstable"
 DEFAULT_INIT_VERSION = "0.0.1"
@@ -47,6 +46,7 @@ _COPY_IGNORE = shutil.ignore_patterns(
     ".cache",
     ".cursor",
     ".git",
+    ".githooks",
     ".hg",
     ".svn",
     ".vscode",
@@ -63,6 +63,7 @@ _COPY_IGNORE = shutil.ignore_patterns(
     "obj",
     "target",
     "CLAUDE.md",
+    "LICENSE",
     "*.pyc",
     "debhelper-build-stamp",
     "*.substvars",
@@ -148,42 +149,6 @@ def _default_author_email() -> tuple[str, str]:
         _git_config_value("user.name") or DEFAULT_AUTHOR,
         _git_config_value("user.email") or DEFAULT_EMAIL,
     )
-
-
-def _githooks_pre_commit_src() -> Path | None:
-    """Canonical pre-commit hook: repo .githooks, pkgdatadir, or language template."""
-    candidates = [
-        pkgdatadir() / "githooks" / "pre-commit",
-        pkgdatadir() / ".githooks" / "pre-commit",
-    ]
-    here = Path(__file__).resolve()
-    if here.parent.name == "zfr_lib":
-        zfr_root = here.parents[2]
-        repo = zfr_root.parent
-        candidates.extend(
-            [
-                repo / ".githooks" / "pre-commit",
-                repo / "bash" / ".githooks" / "pre-commit",
-            ]
-        )
-    for path in candidates:
-        if path.is_file():
-            return path
-    return None
-
-
-def _install_githooks(dest: Path) -> None:
-    """Copy .githooks/pre-commit into *dest* (chmod +x) if a source hook exists."""
-    src = _githooks_pre_commit_src()
-    hook_dir = dest / ".githooks"
-    dest_hook = hook_dir / "pre-commit"
-    if src is None:
-        if dest_hook.is_file():
-            dest_hook.chmod(dest_hook.stat().st_mode | 0o111)
-        return
-    hook_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(src, dest_hook)
-    dest_hook.chmod(dest_hook.stat().st_mode | 0o111)
 
 
 def _git_init_commit_tag(
@@ -290,10 +255,8 @@ def cmd_create(
         author=author,
         email=email,
     )
-    _install_githooks(dest)
-    rule = install_cursor_rules(dest)
-    if rule is not None:
-        print(f".cursor/rules ← {rule.name}")
+    for path in install_std_files(dest):
+        print(f"std ← {path.relative_to(dest)}")
 
     print(f"git init + commit + tag v{init_version.lstrip('v')}")
     print("git config core.hooksPath .githooks")

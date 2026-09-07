@@ -77,6 +77,7 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
         ".git",
         "CLAUDE.md",
         ".cursor",
+        ".githooks",
         ".vscode",
     }
     name = _project_name(root)
@@ -106,9 +107,8 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
         if (root / expected).exists():
             continue
         # only flag well-known scaffolding, not every po locale
-        if expected.parts[0] in {"debian", "docs", "src", "tests", "packaging", ".githooks"} or expected.name in {
+        if expected.parts[0] in {"debian", "docs", "src", "tests", "packaging"} or expected.name in {
             "meson.build",
-            "LICENSE",
             "README.md",
             "README-zh.md",
             "VERSION",

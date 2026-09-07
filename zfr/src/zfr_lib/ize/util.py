@@ -34,12 +34,12 @@ from ..create import (
     DEFAULT_DISTRIBUTION,
     DEFAULT_EMAIL,
     DEFAULT_INIT_VERSION,
-    _install_githooks,
     _write_debian_changelog,
 )
 from ..csr import Csr
 from ..lint.util import _control, _role, _specs
 from ..packaging import _meson_project_fields
+from ..stdfiles import install_std_files, std_file_sources
 
 _AGPL = "AGPL-3.0-or-later"
 
@@ -94,7 +94,6 @@ run_target(
 """
 
 SCAFFOLD = (
-    "LICENSE",
     "README.md",
     "README-zh.md",
     "debian/control",

@@ -8,7 +8,13 @@ from pathlib import Path
 
 from . import pkgdatadir
 
-RULE_NAME = "version-changelog.mdc"
+RULE_NAME = "version.mdc"
+RULE_NAMES = (RULE_NAME,)
+_OBSOLETE_RULE_NAMES = (
+    "version-changelog.mdc",
+    "version-control-refactor.mdc",
+    "std-files.mdc",
+)
 
 
 def cursor_rule_src(name: str = RULE_NAME) -> Path | None:
@@ -27,13 +33,21 @@ def cursor_rule_src(name: str = RULE_NAME) -> Path | None:
 def install_cursor_rules(dest: Path) -> Path | None:
     """Install shipped Cursor rules under *dest*/.cursor/rules/.
 
-    Returns the installed rule path, or None if no source rule is available.
+    Returns the primary rule path, or None if no source rule is available.
     """
-    src = cursor_rule_src()
-    if src is None:
-        return None
     rules_dir = dest / ".cursor" / "rules"
     rules_dir.mkdir(parents=True, exist_ok=True)
-    dest_rule = rules_dir / RULE_NAME
-    shutil.copy2(src, dest_rule)
-    return dest_rule
+    for obsolete in _OBSOLETE_RULE_NAMES:
+        old = rules_dir / obsolete
+        if old.is_file():
+            old.unlink()
+    primary: Path | None = None
+    for name in RULE_NAMES:
+        src = cursor_rule_src(name)
+        if src is None:
+            continue
+        dest_rule = rules_dir / name
+        shutil.copy2(src, dest_rule)
+        if primary is None:
+            primary = dest_rule
+    return primary

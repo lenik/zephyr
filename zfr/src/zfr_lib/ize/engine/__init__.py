@@ -120,8 +120,7 @@ class Ize:
         self._step("ize.debian.rules", self.ensure_debian_rules)
         self._step("ize.debian.docs", self.fix_debian_docs)
         self._step("ize.changelog", self.ensure_changelog_version)
-        self._step("ize.hooks", self.ensure_hooks)
-        self._step("ize.cursor.rules", self.ensure_cursor_rules)
+        self._step("ize.stdfiles", self.ensure_std_files)
         self._step("ize.meson.patch", self.patch_meson)
         if self.do_man:
             self._step("ize.man.convert", self.convert_manpages)
@@ -368,45 +367,35 @@ class Ize:
         if ver and (not version_path.is_file() or version_file_version(self.root) != ver):
             self.write_text(version_path, ver + "\n", "snapshot of debian/changelog")
 
-    def ensure_hooks(self) -> None:
-        hook = self.root / ".githooks" / "pre-commit"
-        if hook.is_file():
-            if self.verbose:
-                self.note("skip", ".githooks/pre-commit", "already present")
+    def ensure_std_files(self) -> None:
+        """Reset LICENSE, .githooks, and .cursor/rules to zfr canonical copies."""
+        sources = std_file_sources()
+        if not sources:
+            return
+        dirty = False
+        for rel, src in sources.items():
+            dest = self.root / rel
+            existed = dest.is_file()
+            same = existed and dest.read_bytes() == src.read_bytes()
+            if same:
+                if self.verbose:
+                    self.note("skip", rel, "already up to date")
+                continue
+            dirty = True
+            action = "update" if existed else "add"
+            self.note(action, rel, "standard file")
+        if not dirty:
             return
         if self.dry_run:
-            self.note("add", ".githooks/pre-commit", "VERSION sync hook")
             return
-        _install_githooks(self.root)
-        if hook.is_file():
-            self.note("add", ".githooks/pre-commit", "VERSION sync hook")
-            git = shutil.which("git")
-            if git and (self.root / ".git").exists():
-                subprocess.run(
-                    [git, "config", "core.hooksPath", ".githooks"],
-                    cwd=self.root,
-                    check=False,
-                )
-
-    def ensure_cursor_rules(self) -> None:
-        from ...cursor_rules import RULE_NAME, cursor_rule_src, install_cursor_rules
-
-        rel = f".cursor/rules/{RULE_NAME}"
-        dest = self.root / ".cursor" / "rules" / RULE_NAME
-        src = cursor_rule_src()
-        if src is None:
-            return
-        existed = dest.is_file()
-        if existed and dest.read_bytes() == src.read_bytes():
-            if self.verbose:
-                self.note("skip", rel, "already up to date")
-            return
-        action = "update" if existed else "add"
-        if self.dry_run:
-            self.note(action, rel, "changelog workflow rule")
-            return
-        install_cursor_rules(self.root)
-        self.note(action, rel, "changelog workflow rule")
+        install_std_files(self.root)
+        git = shutil.which("git")
+        if git and (self.root / ".git").exists():
+            subprocess.run(
+                [git, "config", "core.hooksPath", ".githooks"],
+                cwd=self.root,
+                check=False,
+            )
 
     def patch_meson(self) -> None:
         from .meson import patch_meson_build

@@ -33,7 +33,7 @@ def check_layout(root: Path, lang: str, role: str) -> list[Finding]:
     out: list[Finding] = []
     required = [
         ("meson.build", "meson.build", _("Add a top-level meson.build with project(...).")),
-        ("LICENSE", "LICENSE", _("Copy LICENSE from the language template (AGPL-3.0-or-later).")),
+        ("LICENSE", "LICENSE", _("Run `zfr ize` (or `zfr create`) to install the standard AGPL-3.0 LICENSE.")),
         ("README.md", "README.md", _("Add README.md describing this project.")),
         ("README-zh.md", "README-zh.md", _("Add README-zh.md (Chinese summary), matching other zephyr templates.")),
         ("debian/control", "debian/control", _("Add debian/ packaging (copy debian/ from the language template).")),
@@ -117,7 +117,8 @@ def check_layout(root: Path, lang: str, role: str) -> list[Finding]:
                 _("no VERSION file (changelog snapshot for tarball builds)"),
                 "VERSION",
                 fix=_("Create VERSION with the latest debian/changelog version "
-                "(one line). Enable .githooks/pre-commit: git config core.hooksPath .githooks"),
+                "(one line). Run `zfr ize` for `.githooks/pre-commit`, then "
+                "`git config core.hooksPath .githooks`."),
             )
         )
 
@@ -212,10 +213,9 @@ def _check_pre_commit(root: Path) -> list[Finding]:
                 "layout.pre-commit",
                 _("no .githooks/pre-commit to sync VERSION from debian/changelog"),
                 loc,
-                fix=_("Walk up to the directory that contains .git, then put "
-                "pre-commit in that tree's .githooks (or core.hooksPath). "
-                "The hook must update VERSION from debian/changelog. "
-                "`zfr create` copies one and sets git config core.hooksPath .githooks."),
+                fix=_("Run `zfr ize` (or `zfr create`) to install `.githooks/pre-commit` "
+                "and set `git config core.hooksPath .githooks`. "
+                "The hook syncs VERSION from debian/changelog."),
             )
         ]
 
@@ -235,7 +235,7 @@ def _check_pre_commit(root: Path) -> list[Finding]:
             "layout.pre-commit",
             _("%s exists but does not sync VERSION from debian/changelog") % label,
             label,
-            fix=_("The hook should read debian/changelog (dpkg-parsechangelog) "
-            "and write VERSION. See the zephyr .githooks/pre-commit template."),
+            fix=_("Run `zfr ize` to reset the standard pre-commit hook "
+            "(reads debian/changelog, writes VERSION)."),
         )
     ]

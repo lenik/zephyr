@@ -14,6 +14,7 @@ EXCLUDE_DIRS = {
     ".cache",
     ".cursor",
     ".git",
+    ".githooks",
     ".hg",
     ".svn",
     ".vscode",
@@ -33,6 +34,7 @@ EXCLUDE_DIRS = {
 }
 EXCLUDE_FILES = {
     "CLAUDE.md",
+    "LICENSE",
 }
 # zfr is installed from this project; do not copy it as a language template.
 SKIP_TOP = EXCLUDE_DIRS | {"zfr"}

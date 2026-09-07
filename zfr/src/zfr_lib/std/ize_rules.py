@@ -12,7 +12,7 @@ _IZE_RULES: tuple[StdRule, ...] = (
     StdRule("ZI004", "ize.debian.rules", "Align debian/rules with Meson dh helper"),
     StdRule("ZI005", "ize.debian.docs", "Sync debian/docs with installed mans"),
     StdRule("ZI006", "ize.changelog", "Ensure debian/changelog and VERSION file"),
-    StdRule("ZI007", "ize.hooks", "Install .githooks/pre-commit VERSION sync hook"),
+    StdRule("ZI007", "ize.stdfiles", "Reset LICENSE, .githooks, .cursor/rules to zfr copies"),
     StdRule("ZI008", "ize.meson.patch", "Patch meson.build (version, license, docs, completion)"),
     StdRule("ZI009", "ize.man.convert", "Convert groff man pages to docs/*.adoc"),
     StdRule("ZI010", "ize.man.stub", "Create AsciiDoc man page stubs"),

@@ -218,8 +218,13 @@ install_data(
 )
 
 install_data(
-    'cursor-rules/version-changelog.mdc',
+    'cursor-rules/version.mdc',
     install_dir: pkgdatadir / 'cursor-rules',
+)
+
+install_data(
+    'LICENSE',
+    install_dir: pkgdatadir,
 )
 
 install_data(
