@@ -31,7 +31,7 @@ from .util import *  # noqa: F403
 
 def check_readme(root: Path, role: str) -> list[Finding]:
     out: list[Finding] = []
-    for name in ("README.md", "README-zh.md"):
+    for name in ("README.md", "README-zh_CN.md"):
         path = root / name
         if not path.is_file() and _is_zfr_cli_package(root):
             path = root.parent / name

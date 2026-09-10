@@ -1,0 +1,32 @@
+---
+description: How to update gettext catalogs and document translations (poedit, no patch scripts)
+globs: po/**,**/LINGUAS,docs/**/*.adoc,README*,README-*.md
+alwaysApply: false
+---
+
+# Updating translations
+
+## gettext (`.po`)
+
+- **msgid-copy is not a translation.** Empty `msgstr` or `msgstr == msgid` counts as
+  untranslated (except English variants `en_GB` / `en_AU` / … when msgid is English).
+- **≤20% completion** ⇒ treat the catalog as missing. Rewrite the whole `.po` by hand.
+  Do **not** write patch/sed/Python scripts to “fix” a mostly-empty catalog.
+- **Incremental updates** (a few new msgids): translate them yourself, then batch-apply
+  with **`poedit`** — usually no other tooling is needed:
+
+```bash
+poedit -l ab,de,fg <<EOT
+<msgid>	<ab>	<de>	<fg>
+<msgid>	<ab>	<de>	<fg>
+EOT
+```
+
+  Tabs separate fields. Do not feed poedit msgid copies or placeholders.
+
+## README / man (AsciiDoc)
+
+- Whole-document locale files under `docs/<locale>/`. Prefer hand translation.
+- **`googletranslator`** can help for long adoc/README text — use the local
+  HTTP proxy (`http://localhost:8118`; see **proxy.mdc**). **Do not** use Google
+  Translate for gettext catalogs.

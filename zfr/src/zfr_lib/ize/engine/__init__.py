@@ -225,7 +225,7 @@ class Ize:
                     src = debian_fallback / rel
             if not src.is_file():
                 continue
-            if rel in ("README.md", "README-zh.md"):
+            if rel in ("README.md", "README-zh_CN.md"):
                 raw = src.read_text(encoding="utf-8", errors="ignore")
                 text = strip_readme_banner(raw, self.name)
                 # Also swap template puff placeholders.

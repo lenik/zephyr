@@ -124,6 +124,12 @@ _LINT_RULES: tuple[StdRule, ...] = (
         "gettext _() strings must not have leading/trailing spaces",
         "warn",
     ),
+    StdRule(
+        "ZL089",
+        "i18n.po.quality",
+        "gettext .po completion (msgid-copy counts as untranslated; ≤20% ≈ missing)",
+        "varies",
+    ),
 )
 
 LINT_RULES = RuleRegistry(_LINT_RULES)

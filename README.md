@@ -98,4 +98,4 @@ Set `ZFR_PKGDATADIR` to the zephyr checkout root (parent of `zfr/`) and
 
 - `man 1 zfr`
 - Per-language `README.md` inside each template directory
-- Chinese summary: [README-zh.md](README-zh.md)
+- Chinese summary: [README-zh_CN.md](README-zh_CN.md)

@@ -12,7 +12,7 @@ from ..cmd_run import merge_env, run_cmd
 from ..jobs import resolve_jobs
 from ..packaging import rpm_topdir
 from ..packaging_host import can_build_local, find_build_host_file, remote_build
-from ..stream_mark import log_line
+from ..fdm import log_line
 from .kinds import resolve_rpm_dir, target_meta
 from .provider import PackagerContext
 

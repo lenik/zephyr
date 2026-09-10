@@ -10,10 +10,15 @@ import threading
 import time
 from pathlib import Path
 
+from ..fdm import FdmCapture, log_line, require_fdm_tool, reset_capture, set_capture
 from ..jobs import resolve_jobs
-from ..pkg_last import PackageLastRun, PackagerRecord, save_last_run
+from ..pkg_last import (
+    PackageLastRun,
+    PackagerRecord,
+    prepare_last_package_dir,
+    save_last_run,
+)
 from ..pkg_ui import PackagerState, StatusBoard, interactive_lasterror, print_run_summary
-from ..stream_mark import StreamRecorder, log_line, reset_recorder, set_recorder
 from .kinds import PackagingKind, detect_packaging_kinds
 from .provider import PackagerContext
 from .registry import packager_for
@@ -61,7 +66,7 @@ def _probe_skips(
                 name=kind.name,
                 ok=True,
                 summary="skipped",
-                marked="",
+                fdm="",
                 error="",
             )
         )
@@ -159,6 +164,8 @@ def package_project(
     n = len(active)
     workers = max(1, min(jobs, n))
     inner_jobs = max(1, jobs // workers)
+    require_fdm_tool("fdmux")
+    fdm_dir = prepare_last_package_dir()
 
     board = StatusBoard(
         title="Packaging...",
@@ -176,14 +183,16 @@ def package_project(
     lock = threading.Lock()
 
     def _worker(kind: PackagingKind) -> PackagerRecord:
-        rec = StreamRecorder()
-        token = set_recorder(rec)
+        fdm_path = fdm_dir / f"{kind.name}.fdm"
+        fdm_path.write_bytes(b"")
+        cap = FdmCapture(fdm_path)
+        token = set_capture(cap)
         board.set_running(kind.name)
         done = threading.Event()
 
         def _poll() -> None:
             while not done.wait(0.15):
-                tip = rec.last_line()
+                tip = cap.last_line()
                 if tip:
                     board.set_tip(kind.name, tip)
 
@@ -213,13 +222,13 @@ def package_project(
             summary = f"error: {err}"
         finally:
             done.set()
-            reset_recorder(token)
+            reset_capture(token)
 
         record = PackagerRecord(
             name=kind.name,
             ok=ok,
             summary=summary,
-            marked=rec.marked(),
+            fdm=str(fdm_path),
             error=err,
         )
         with lock:

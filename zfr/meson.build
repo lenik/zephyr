@@ -218,7 +218,11 @@ install_data(
 )
 
 install_data(
-    'cursor-rules/version.mdc',
+    [
+        'cursor-rules/version.mdc',
+        'cursor-rules/translations.mdc',
+        'cursor-rules/proxy.mdc',
+    ],
     install_dir: pkgdatadir / 'cursor-rules',
 )
 
@@ -232,7 +236,7 @@ install_data(
     install_dir: pkgdocdir,
 )
 
-foreach doc : ['README.md', 'README-zh.md']
+foreach doc : ['README.md', 'README-zh_CN.md']
     meson.add_install_script(
         'sh',
         '-c',

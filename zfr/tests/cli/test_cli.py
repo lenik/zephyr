@@ -264,9 +264,10 @@ class ZephyrCreateProjectTests(unittest.TestCase):
         self.assertFalse((ROOT / ".githooks" / "pre-commit").exists())
         self.assertTrue((ROOT / "githooks" / "pre-commit").exists())
         self.assertTrue((REPO / "README.md").is_file())
-        self.assertTrue((REPO / "README-zh.md").is_file())
+        self.assertTrue((REPO / "README-zh_CN.md").is_file())
         self.assertFalse((ROOT / "README.md").exists())
-        self.assertFalse((ROOT / "README-zh.md").exists())
+        self.assertFalse((ROOT / "README-zh_CN.md").exists())
+        self.assertFalse((REPO / "README-zh.md").exists())
 
     tmp: tempfile.TemporaryDirectory[str]
     project: Path

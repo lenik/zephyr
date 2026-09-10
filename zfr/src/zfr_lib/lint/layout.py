@@ -35,7 +35,6 @@ def check_layout(root: Path, lang: str, role: str) -> list[Finding]:
         ("meson.build", "meson.build", _("Add a top-level meson.build with project(...).")),
         ("LICENSE", "LICENSE", _("Run `zfr ize` (or `zfr create`) to install the standard AGPL-3.0 LICENSE.")),
         ("README.md", "README.md", _("Add README.md describing this project.")),
-        ("README-zh.md", "README-zh.md", _("Add README-zh.md (Chinese summary), matching other zephyr templates.")),
         ("debian/control", "debian/control", _("Add debian/ packaging (copy debian/ from the language template).")),
         ("debian/changelog", "debian/changelog", _("Add debian/changelog (zfr create writes one; or use dch).")),
         ("debian/copyright", "debian/copyright", _("Add debian/copyright in machine-readable format, License: AGPL-3+.")),
@@ -49,6 +48,25 @@ def check_layout(root: Path, lang: str, role: str) -> list[Finding]:
             out.append(
                 Finding("error", f"layout.{code.replace('/', '.')}", _("missing %s") % rel, rel, fix=fix)
             )
+
+    zh_readme = "README-zh_CN.md"
+    if _has_file(root, zh_readme):
+        out.append(
+            Finding("ok", "layout.README-zh_CN.md", _("present: %s") % zh_readme, zh_readme)
+        )
+    else:
+        out.append(
+            Finding(
+                "warn",
+                "layout.README-zh_CN.md",
+                _("missing %s") % zh_readme,
+                zh_readme,
+                fix=_(
+                    "Add README-zh_CN.md (Simplified Chinese summary), matching other "
+                    "zephyr templates (legacy README-zh.md was renamed)."
+                ),
+            )
+        )
 
     adocs = list((root / "docs").glob("*.adoc")) if (root / "docs").is_dir() else []
     if adocs:

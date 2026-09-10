@@ -17,6 +17,74 @@ from .logutil import log1, quit
 from .util import read_identity_token
 
 
+def _pnpm_global_bin(name: str) -> Path | None:
+    """Resolve *name* under ``pnpm bin -g`` when present."""
+    if shutil.which("pnpm") is None:
+        return None
+    proc = subprocess.run(
+        ["pnpm", "bin", "-g"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if proc.returncode != 0:
+        return None
+    bin_dir = proc.stdout.strip()
+    if not bin_dir:
+        return None
+    candidate = Path(bin_dir) / name
+    return candidate if candidate.is_file() else None
+
+
+def _pnpm_exec_has(name: str, *, cwd: Path) -> bool:
+    """True when ``pnpm exec *name*`` resolves in *cwd* (local dependency)."""
+    if shutil.which("pnpm") is None:
+        return False
+    proc = subprocess.run(
+        ["pnpm", "exec", name, "--version"],
+        cwd=str(cwd),
+        capture_output=True,
+        check=False,
+    )
+    return proc.returncode == 0
+
+
+def ensure_pnpm_cli(name: str, npm_package: str, *, cwd: Path) -> list[str]:
+    """Return argv to run a VSIX CLI (*name*), installing it globally if needed.
+
+    Prefers PATH, then ``pnpm exec`` (project-local), then ``pnpm add -g`` and
+    PATH / ``pnpm bin -g``.
+    """
+    which = shutil.which(name)
+    if which:
+        return [which]
+    if _pnpm_exec_has(name, cwd=cwd):
+        return ["pnpm", "exec", name]
+
+    if shutil.which("pnpm") is None:
+        quit(f"pnpm not found (required to install {npm_package} / run {name}).")
+
+    log1(f"  {name} not found; installing with: pnpm add -g {npm_package}")
+    inst = subprocess.run(
+        ["pnpm", "add", "-g", npm_package],
+        check=False,
+    )
+    if inst.returncode != 0:
+        quit(f"pnpm add -g {npm_package} failed.")
+
+    which = shutil.which(name)
+    if which:
+        return [which]
+    global_bin = _pnpm_global_bin(name)
+    if global_bin is not None:
+        return [str(global_bin)]
+
+    quit(
+        f"{name} still not on PATH after pnpm add -g {npm_package}. "
+        f"Ensure pnpm's global bin dir is on PATH (pnpm bin -g)."
+    )
+
+
 def publish_vsix_marketplaces(
     projectdir: Path | str,
     pkgname: str,
@@ -39,8 +107,10 @@ def publish_vsix_marketplaces(
     else:
         log1("Publishing to Visual Studio Marketplace...")
         env = {**os.environ, "VSCE_PAT": vs_pat}
+        # Binary is ``vsce``; npm package is ``@vscode/vsce`` (also provides ``vsce``).
+        vsce = ensure_pnpm_cli("vsce", "@vscode/vsce", cwd=projectdir)
         r = subprocess.run(
-            ["pnpm", "exec", "vsce", "publish", "--packagePath", vsix_rel],
+            [*vsce, "publish", "--packagePath", vsix_rel],
             cwd=str(projectdir),
             env=env,
             check=False,
@@ -53,8 +123,9 @@ def publish_vsix_marketplaces(
     else:
         log1("Publishing to Open VSX...")
         env = {**os.environ, "OVSX_PAT": ovsx_pat}
+        ovsx = ensure_pnpm_cli("ovsx", "ovsx", cwd=projectdir)
         r = subprocess.run(
-            ["pnpm", "exec", "ovsx", "publish", vsix_rel],
+            [*ovsx, "publish", vsix_rel],
             cwd=str(projectdir),
             env=env,
             check=False,

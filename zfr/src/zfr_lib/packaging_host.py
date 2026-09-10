@@ -24,7 +24,6 @@ import shutil
 import subprocess
 import sys
 import tempfile
-import threading
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -371,50 +370,26 @@ def _run(
     check: bool = True,
     capture: bool = True,
 ) -> subprocess.CompletedProcess[str]:
-    from .stream_mark import get_recorder, log_line
+    from .fdm import fdmux_capture, get_capture, log_line
 
     log_line("+ " + " ".join(shlex.quote(c) for c in cmd))
-    rec = get_recorder()
+    cap = get_capture()
     if capture:
         proc = subprocess.run(cmd, check=check, text=True, capture_output=True)
-        if rec is not None:
+        if cap is not None:
             if proc.stdout:
-                rec.write("out", proc.stdout if proc.stdout.endswith("\n") else proc.stdout + "\n")
+                cap.append_run(
+                    1, proc.stdout if proc.stdout.endswith("\n") else proc.stdout + "\n"
+                )
             if proc.stderr:
-                rec.write("err", proc.stderr if proc.stderr.endswith("\n") else proc.stderr + "\n")
+                cap.append_run(
+                    2, proc.stderr if proc.stderr.endswith("\n") else proc.stderr + "\n"
+                )
         return proc
-    if rec is None:
+    if cap is None:
         return subprocess.run(cmd, check=check, text=True)
 
-    proc = subprocess.Popen(
-        cmd,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-        bufsize=0,
-    )
-    assert proc.stdout is not None and proc.stderr is not None
-
-    def _pump(stream, which: str) -> None:
-        try:
-            while True:
-                chunk = stream.read(4096)
-                if not chunk:
-                    break
-                rec.write(which, chunk)  # type: ignore[arg-type]
-        finally:
-            try:
-                stream.close()
-            except OSError:
-                pass
-
-    t_out = threading.Thread(target=_pump, args=(proc.stdout, "out"), daemon=True)
-    t_err = threading.Thread(target=_pump, args=(proc.stderr, "err"), daemon=True)
-    t_out.start()
-    t_err.start()
-    rc = proc.wait()
-    t_out.join(timeout=30)
-    t_err.join(timeout=30)
+    rc = fdmux_capture(cmd, cap)
     result = subprocess.CompletedProcess(cmd, rc, "", "")
     if check and rc != 0:
         raise subprocess.CalledProcessError(rc, cmd)
@@ -504,7 +479,7 @@ def remote_build(
             proc = _run([*ssh, alias, f"mktemp -d /tmp/zephyr-{kind}.XXXXXX"])
             remote = proc.stdout.strip().splitlines()[-1].strip()
 
-        from .stream_mark import log_line
+        from .fdm import log_line
 
         log_line(
             f"zfr package: remote {kind} → {alias}:{remote} "

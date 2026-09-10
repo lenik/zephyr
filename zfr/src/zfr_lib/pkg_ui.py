@@ -6,13 +6,13 @@ from __future__ import annotations
 import curses
 import sys
 import threading
-import time
 from dataclasses import dataclass, field
 from typing import Callable
 
 from .csr import Csr, term_columns
-from .pkg_last import PackagerRecord, PackageLastRun
-from .stream_mark import decode_marked, replay_marked
+from .fdm import FDMUX_MISSING, demux_file, page_files, which_fdm_tool
+from .pkg_last import PackagerRecord, PackageLastRun, record_fdm_path
+from .pkg_logview import LIST_HELP_LINES, init_log_colors, wait_help
 
 
 @dataclass
@@ -22,7 +22,7 @@ class PackagerState:
     tip: str = ""
     summary: str = ""
     error: str = ""
-    marked: str = ""
+    fdm: str = ""
 
 
 @dataclass
@@ -135,23 +135,13 @@ def print_run_summary(run: PackageLastRun) -> None:
         print(format_record_line(rec, csr=csr), flush=True)
 
 
-def _detail_text(rec: PackagerRecord) -> str:
-    parts: list[str] = []
-    for which, data in decode_marked(rec.marked):
-        tag = "OUT" if which == "out" else "ERR"
-        parts.append(f"── {tag} ──\n{data}")
-    if not parts:
-        return "(no captured output)\n"
-    return "\n".join(parts)
-
-
 def interactive_lasterror(
     run: PackageLastRun,
     *,
     only_failures: bool = False,
     on_enter: Callable[[PackagerRecord], None] | None = None,
 ) -> int:
-    """Curses UI: list packagers, Tab=detail, Enter=replay, q=quit.
+    """Curses UI: list packagers, Tab=log pager, Enter=replay, q=quit.
 
     Returns 0 on success/quit, 1 if no records.
     """
@@ -169,26 +159,27 @@ def interactive_lasterror(
         return 0
 
     def _default_enter(rec: PackagerRecord) -> None:
-        replay_marked(rec.marked)
+        path = record_fdm_path(rec)
+        if path is None:
+            print(f"zfr lasterror: no FDM capture for {rec.name!r}", file=sys.stderr)
+            return
+        if not which_fdm_tool("fddemux"):
+            print(FDMUX_MISSING, file=sys.stderr)
+            return
+        demux_file(path)
 
     enter_cb = on_enter or _default_enter
     result_hold: list[PackagerRecord | None] = [None]
 
     def _curses_main(stdscr: curses.window) -> None:
         curses.curs_set(0)
-        if curses.has_colors():
-            curses.start_color()
-            curses.use_default_colors()
-            curses.init_pair(1, curses.COLOR_GREEN, -1)
-            curses.init_pair(2, curses.COLOR_RED, -1)
-            curses.init_pair(3, curses.COLOR_CYAN, -1)
-            curses.init_pair(4, curses.COLOR_BLACK, curses.COLOR_CYAN)
+        init_log_colors()
 
         idx = 0
         while True:
             stdscr.erase()
             h, w = stdscr.getmaxyx()
-            title = "zfr lasterror — ↑/↓ select  Tab detail  Enter replay  q quit"
+            title = "zfr lasterror — ↑/↓ select  Tab log  Enter replay  ? help  q quit"
             stdscr.addnstr(0, 0, title, max(0, w - 1), curses.A_BOLD)
             for i, rec in enumerate(records):
                 y = i + 2
@@ -209,39 +200,27 @@ def interactive_lasterror(
                 idx = (idx - 1) % len(records)
             elif ch in (curses.KEY_DOWN, ord("j")):
                 idx = (idx + 1) % len(records)
-            elif ch in (9,):  # Tab → detail
-                _show_detail(stdscr, records[idx])
+            elif ch in (9,):  # Tab → log pager
+                _open_log(stdscr, records[idx])
+            elif ch in (ord("?"), curses.KEY_F1):
+                wait_help(stdscr, LIST_HELP_LINES)
             elif ch in (curses.KEY_ENTER, 10, 13):
                 result_hold[0] = records[idx]
                 return
 
-    def _show_detail(stdscr: curses.window, rec: PackagerRecord) -> None:
-        text = _detail_text(rec)
-        lines = text.splitlines() or [""]
-        top = 0
-        while True:
-            stdscr.erase()
-            h, w = stdscr.getmaxyx()
-            hdr = f"[ {rec.name} ] detail — Esc/q back  ↑/↓ scroll"
-            stdscr.addnstr(0, 0, hdr, max(0, w - 1), curses.A_BOLD)
-            view = h - 2
-            for i in range(view):
-                li = top + i
-                if li >= len(lines):
-                    break
-                stdscr.addnstr(i + 1, 0, lines[li][: w - 1], w - 1)
-            stdscr.refresh()
-            ch = stdscr.getch()
-            if ch in (27, ord("q"), ord("Q")):
-                return
-            if ch in (curses.KEY_UP, ord("k")):
-                top = max(0, top - 1)
-            elif ch in (curses.KEY_DOWN, ord("j")):
-                top = min(max(0, len(lines) - view), top + 1)
-            elif ch == curses.KEY_PPAGE:
-                top = max(0, top - view)
-            elif ch == curses.KEY_NPAGE:
-                top = min(max(0, len(lines) - view), top + view)
+    def _open_log(stdscr: curses.window, rec: PackagerRecord) -> None:
+        curses.endwin()
+        path = record_fdm_path(rec)
+        if path is None:
+            print(f"zfr lasterror: no FDM capture for {rec.name!r}", file=sys.stderr)
+        elif not which_fdm_tool("fdmpager"):
+            print(FDMUX_MISSING, file=sys.stderr)
+        else:
+            page_files([path])
+        stdscr.clear()
+        stdscr.refresh()
+        init_log_colors()
+        curses.curs_set(0)
 
     curses.wrapper(_curses_main)
     chosen = result_hold[0]

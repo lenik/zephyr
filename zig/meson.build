@@ -68,7 +68,7 @@ install_data(
     [
         'LICENSE',
         'README.md',
-        'README-zh.md',
+        'README-zh_CN.md',
         'build.zig',
     ],
     install_dir: pkgdocdir,

@@ -99,8 +99,8 @@ def shape_score(root: Path | None = None) -> int:
         _is_zfr_cli_package(root) and (root.parent / "README.md").is_file()
     ):
         score += 5
-    if (root / "README-zh.md").is_file() or (
-        _is_zfr_cli_package(root) and (root.parent / "README-zh.md").is_file()
+    if (root / "README-zh_CN.md").is_file() or (
+        _is_zfr_cli_package(root) and (root.parent / "README-zh_CN.md").is_file()
     ):
         score += 5
     docs = root / "docs"

@@ -9,7 +9,7 @@ from pathlib import Path
 from . import pkgdatadir
 
 RULE_NAME = "version.mdc"
-RULE_NAMES = (RULE_NAME,)
+RULE_NAMES = (RULE_NAME, "translations.mdc", "proxy.mdc")
 _OBSOLETE_RULE_NAMES = (
     "version-changelog.mdc",
     "version-control-refactor.mdc",

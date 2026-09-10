@@ -258,7 +258,7 @@ def _project_stats(root: Path, lang: str) -> dict[str, str]:
         payload = False
         if rel.parts and rel.parts[0] in {"src", "docs", "po"}:
             payload = True
-        elif rel.name in {"LICENSE", "README.md", "README-zh.md"}:
+        elif rel.name in {"LICENSE", "README.md", "README-zh_CN.md"}:
             payload = True
         elif rel.suffix == ".bash" and len(rel.parts) == 1:
             payload = True

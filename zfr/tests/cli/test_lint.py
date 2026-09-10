@@ -172,7 +172,7 @@ class ZephyrLintSourceTests(unittest.TestCase):
             self.assertFalse(any(f.code == "source.long" for f in findings))
 
     def test_template_coverage_skips_commons_and_renames_spec(self) -> None:
-        from zfr_lib.lint.template import check_template_gaps, _expected_rel
+        from zfr_lib.lint.template import check_template_gaps, _expected_rel, is_optional_scaffold
         from zfr_lib.lint.util import is_example_shared_rel
 
         self.assertTrue(is_example_shared_rel(Path("src/commons.c")))
@@ -180,6 +180,12 @@ class ZephyrLintSourceTests(unittest.TestCase):
         self.assertTrue(is_example_shared_rel(Path("tests/commons_test.c")))
         self.assertTrue(is_example_shared_rel(Path("tests/test_commons.py")))
         self.assertFalse(is_example_shared_rel(Path("src/app.c")))
+        self.assertTrue(is_optional_scaffold("src/Makefile", "clib"))
+        self.assertTrue(is_optional_scaffold("src/bulk.h", "clib"))
+        self.assertTrue(is_optional_scaffold("src/lib.c", "clib"))
+        self.assertTrue(is_optional_scaffold("src/c_pch.h", "clib"))
+        self.assertTrue(is_optional_scaffold("packaging/arch/PKGBUILD", "clib"))
+        self.assertFalse(is_optional_scaffold("debian/control", "clib"))
         self.assertEqual(
             _expected_rel(Path("packaging/rpm/zephyr.spec"), "myproj").as_posix(),
             "packaging/rpm/myproj.spec",
@@ -208,6 +214,28 @@ class ZephyrLintSourceTests(unittest.TestCase):
             self.assertNotIn("substvars", msgs)
             self.assertNotRegex(msgs, r"packaging/rpm/\S+\.spec")
 
+    def test_clib_optional_scaffold_not_required_gap(self) -> None:
+        from zfr_lib.lint.template import check_template_gaps
+
+        with tempfile.TemporaryDirectory(prefix="zfr-clib-opt-") as tmp:
+            root = Path(tmp)
+            # Minimal tree: presence of required debian pieces via empty dirs is
+            # still "missing files"; focus on optional src helpers not being
+            # labeled required when they appear in the message.
+            (root / "meson.build").write_text("project('demo')\n", encoding="utf-8")
+            (root / "debian").mkdir()
+            (root / "debian" / "control").write_text(
+                "Source: demo\n\nPackage: demo\nDescription: demo\n",
+                encoding="utf-8",
+            )
+            findings = check_template_gaps(root, "clib", "app")
+            msgs = " ".join(f.message for f in findings if f.code == "template.coverage")
+            for path in ("src/Makefile", "src/bulk.h", "src/lib.h", "src/c_pch.h", "src/lib.c"):
+                if path in msgs:
+                    self.assertIn(f"{path} [optional]", msgs)
+                    self.assertNotIn(f"{path} [required]", msgs)
+            if "packaging/arch/" in msgs or "packaging/arch" in msgs:
+                self.assertRegex(msgs, r"packaging/arch/\S+ \[optional\]")
     def test_warns_on_very_long_source(self) -> None:
         from zfr_lib.lint.source_size import check_source_size
 

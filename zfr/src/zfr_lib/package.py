@@ -15,8 +15,8 @@ NAME = "package"
 HELP = _("detect packaging type and build packages")
 DESCRIPTION = _(
     "Detect packaging types (deb, rpm, npm/vsix, mingw, …) and build them in "
-    "parallel (-j). Each packager's stdout/stderr is captured with <out>/<err> "
-    "marks; live status lines show progress. On failure, browse with "
+    "parallel (-j). Each packager's stdout/stderr is captured with fdmux into "
+    "an FDM file; live status lines show progress. On failure, browse with "
     "`zfr lasterror`. Upload is on by default (-u); use -U/--no-upload to skip."
 )
 

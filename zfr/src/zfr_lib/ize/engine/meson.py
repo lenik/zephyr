@@ -125,7 +125,7 @@ def patch_meson_build(ize: "Ize") -> None:
         details.append("run_target look")
 
     license_files = [
-        n for n in ("LICENSE", "README.md", "README-zh.md") if (ize.root / n).is_file()
+        n for n in ("LICENSE", "README.md", "README-zh_CN.md") if (ize.root / n).is_file()
     ]
     if license_files and "install_dir: pkgdocdir" not in text:
         quoted = ",\n        ".join(f"'{n}'" for n in license_files)

@@ -181,14 +181,52 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     )
 
             from ..translate.po_format import po_has_line_wrapping, read_po_text
+            from ..translate.po_files import (
+                catalog_completion_ratio,
+                catalog_translation_stats,
+                is_english_locale,
+            )
 
             wrapped: list[str] = []
+            low_completion: list[str] = []
+            ok_stats: list[str] = []
+            # Completion at or below this ratio means "effectively untranslated".
+            _PO_MIN_RATIO = 0.20
+            _POEDIT_HINT = _(
+                "Prefer `poedit` for catalog updates (no custom patch scripts). "
+                "Translate new msgids yourself, then batch-apply:\n"
+                "  poedit -l ab,de,fg <<EOT\n"
+                "  <msgid>\\t<ab>\\t<de>\\t<fg>\n"
+                "  ...\n"
+                "  EOT\n"
+                "For whole-document README/man (adoc), `googletranslator` with "
+                "http-proxy http://localhost:8118 can help; do not use it for gettext."
+            )
             for po_file in sorted(po.glob("*.po")):
                 try:
-                    if po_has_line_wrapping(read_po_text(po_file)):
-                        wrapped.append(po_file.name)
+                    body = read_po_text(po_file)
                 except OSError:
                     continue
+                if po_has_line_wrapping(body):
+                    wrapped.append(po_file.name)
+                loc = po_file.stem
+                eng = is_english_locale(loc)
+                ratio = catalog_completion_ratio(body, english_locale=eng)
+                translated, total, copies = catalog_translation_stats(
+                    body, english_locale=eng
+                )
+                if total <= 0:
+                    continue
+                pct = int(round(ratio * 100))
+                label = f"{po_file.name} ({pct}% {translated}/{total}"
+                if copies and not eng:
+                    label += f", {copies} msgid-copies"
+                label += ")"
+                if not eng and ratio <= _PO_MIN_RATIO:
+                    low_completion.append(label)
+                else:
+                    ok_stats.append(label)
+
             if wrapped:
                 out.append(
                     Finding(
@@ -206,6 +244,39 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                         "ok",
                         "i18n.po.wrap",
                         _("gettext catalogs use --no-wrap (no line wrapping)"),
+                        "po/",
+                    )
+                )
+
+            if low_completion:
+                out.append(
+                    Finding(
+                        "warn",
+                        "i18n.po.quality",
+                        _("gettext catalog(s) effectively untranslated (≤20%%): %s")
+                        % ", ".join(low_completion),
+                        "po/",
+                        fix=_("Empty msgstr and msgid→msgstr copies count as untranslated "
+                        "(English variants en_AU/en_GB/… are exempt when msgid is English). "
+                        "At ≤20%% completion, rewrite the whole .po by hand — do not write "
+                        "patch/sed scripts. %(poedit)s")
+                        % {"poedit": _POEDIT_HINT},
+                    )
+                )
+            elif ok_stats:
+                out.append(
+                    Finding(
+                        "ok",
+                        "i18n.po.quality",
+                        _("gettext catalogs have usable translation coverage (%s)")
+                        % (
+                            ", ".join(ok_stats[:6])
+                            + (
+                                ""
+                                if len(ok_stats) <= 6
+                                else _(" (+%d more)") % (len(ok_stats) - 6)
+                            )
+                        ),
                         "po/",
                     )
                 )
@@ -265,7 +336,9 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     _("man translation still contains the English Name line: %s")
                     % ", ".join(english_copies),
                     "docs/",
-                    fix=_("Translate the Name line; do not leave the English wording."),
+                    fix=_("Translate the Name line; do not leave the English wording. "
+                    "For long adoc, googletranslator with http-proxy "
+                    "http://localhost:8118 can help (not for gettext)."),
                 )
             )
     elif english_adocs and not po.is_dir():

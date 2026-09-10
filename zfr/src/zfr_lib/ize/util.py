@@ -95,7 +95,7 @@ run_target(
 
 SCAFFOLD = (
     "README.md",
-    "README-zh.md",
+    "README-zh_CN.md",
     "debian/control",
     "debian/copyright",
     "debian/rules",

@@ -91,7 +91,7 @@ def _specs(root: Path) -> list[Path]:
 def _has_file(root: Path, rel: str) -> bool:
     if (root / rel).is_file():
         return True
-    if rel in ("README.md", "README-zh.md") and _is_zfr_cli_package(root):
+    if rel in ("README.md", "README-zh_CN.md") and _is_zfr_cli_package(root):
         return (root.parent / rel).is_file()
     return False
 

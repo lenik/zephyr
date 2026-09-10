@@ -150,6 +150,90 @@ def iter_catalog_entries(body: str) -> list[tuple[str, str]]:
     return parse_po_entries(body)
 
 
+def is_english_locale(loc: str) -> bool:
+    """True for English source / English regional variants (en, en_GB, en_AU, …)."""
+    loc = normalize_locale(loc)
+    return loc == "en" or loc.startswith("en_")
+
+
+def parse_po_entry_flags(body: str) -> list[tuple[str, str, bool]]:
+    """Return (msgid, msgstr, fuzzy) for each non-header entry."""
+    lines = body.splitlines()
+    entries: list[tuple[str, str, bool]] = []
+    i = 0
+    pending_fuzzy = False
+    while i < len(lines):
+        line = lines[i]
+        if line.startswith("#,"):
+            pending_fuzzy = "fuzzy" in line.split(",", 1)[1]
+            i += 1
+            continue
+        if line.startswith("#") or not line.strip():
+            if line.startswith("#") and not line.startswith("#,"):
+                # Keep fuzzy across translator comments that follow #, fuzzy
+                pass
+            elif not line.strip():
+                pending_fuzzy = False
+            i += 1
+            continue
+        if line.startswith("msgctxt "):
+            _ctx, i = _read_po_field(lines, i, "msgctxt ")
+            continue
+        if line.startswith("msgid "):
+            fuzzy = pending_fuzzy
+            pending_fuzzy = False
+            mid, i = _read_po_field(lines, i, "msgid ")
+            if i < len(lines) and lines[i].startswith("msgstr "):
+                ms, i = _read_po_field(lines, i, "msgstr ")
+                if mid:
+                    entries.append((mid, ms, fuzzy))
+                continue
+        i += 1
+        pending_fuzzy = False
+    return entries
+
+
+def catalog_translation_stats(
+    body: str,
+    *,
+    english_locale: bool = False,
+) -> tuple[int, int, int]:
+    """Return (translated, total, english_copies).
+
+    An entry counts as translated when msgstr is non-empty and, for non-English
+    locales, differs from msgid (msgid-copy is treated as untranslated). Fuzzy
+    entries count as untranslated. Header msgid \"\" is excluded.
+    """
+    translated = 0
+    total = 0
+    copies = 0
+    for mid, ms, fuzzy in parse_po_entry_flags(body):
+        total += 1
+        if not ms:
+            continue
+        if fuzzy:
+            continue
+        if not english_locale and ms == mid:
+            copies += 1
+            continue
+        translated += 1
+    return translated, total, copies
+
+
+def catalog_completion_ratio(
+    body: str,
+    *,
+    english_locale: bool = False,
+) -> float:
+    """Fraction of catalog entries that count as translated (0.0–1.0)."""
+    translated, total, _copies = catalog_translation_stats(
+        body, english_locale=english_locale
+    )
+    if total <= 0:
+        return 1.0
+    return translated / total
+
+
 def list_msgids(root: Path) -> list[str]:
     pot = root / "po" / "zephyr.pot"
     if not pot.is_file():

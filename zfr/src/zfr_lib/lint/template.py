@@ -17,6 +17,49 @@ from ..packaging import _meson_project_fields
 from .finding import Finding
 from .util import _control, is_example_shared_rel
 
+# Non-rpm packaging trees and convenience src files are optional scaffolding.
+_OPTIONAL_PREFIXES: tuple[str, ...] = (
+    "packaging/arch/",
+    "packaging/freebsd/",
+    "packaging/macos/",
+    "packaging/win32/",
+    "packaging/lib/",
+)
+
+_OPTIONAL_EXACT: frozenset[str] = frozenset(
+    {
+        "packaging/README.md",
+        "src/Makefile",
+    }
+)
+
+# Per-language optional src helpers shipped by templates but not required.
+_OPTIONAL_BY_LANG: dict[str, frozenset[str]] = {
+    "clib": frozenset(
+        {
+            "src/Makefile",
+            "src/bulk.h",
+            "src/c_pch.h",
+            "src/lib.c",
+            "src/lib.h",
+        }
+    ),
+    "cpplib": frozenset(
+        {
+            "src/Makefile",
+            "src/bulk.hpp",
+            "src/cpp_pch.hpp",
+            "src/lib.cpp",
+            "src/lib.hpp",
+        }
+    ),
+    "typescript": frozenset(
+        {
+            "src/i18n.ts",
+        }
+    ),
+}
+
 
 def _project_name(root: Path) -> str:
     src, _pkg, _ctl = _control(root)
@@ -41,6 +84,27 @@ def _expected_rel(rel: Path, project_name: str) -> Path:
         parts[-1] = f"{project_name}.substvars"
         return Path(*parts)
     return rel
+
+
+def is_optional_scaffold(rel_posix: str, lang: str) -> bool:
+    """True when a template-relative path is optional (not required to match)."""
+    if rel_posix in _OPTIONAL_EXACT:
+        return True
+    if any(rel_posix.startswith(prefix) for prefix in _OPTIONAL_PREFIXES):
+        return True
+    name = Path(rel_posix).name
+    if name.endswith(".example"):
+        return True
+    lang_opts = _OPTIONAL_BY_LANG.get(lang)
+    if lang_opts and rel_posix in lang_opts:
+        return True
+    return False
+
+
+def _is_noise_scaffold(rel_posix: str) -> bool:
+    """VCS / editor noise that should not appear in coverage reports."""
+    name = Path(rel_posix).name
+    return name in {".gitignore", ".gitattributes", ".DS_Store"}
 
 
 # debian/ leftovers that may appear under language templates but are not scaffolding.
@@ -81,7 +145,8 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
         ".vscode",
     }
     name = _project_name(root)
-    missing: list[str] = []
+    required_missing: list[str] = []
+    optional_missing: list[str] = []
     for path in iter_files(tmpl):
         rel = path.relative_to(tmpl)
         if rel.parts and rel.parts[0] in skip_top:
@@ -107,26 +172,61 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
         if (root / expected).exists():
             continue
         # only flag well-known scaffolding, not every po locale
-        if expected.parts[0] in {"debian", "docs", "src", "tests", "packaging"} or expected.name in {
-            "meson.build",
-            "README.md",
-            "README-zh.md",
-            "VERSION",
-        }:
-            missing.append(expected.as_posix())
-    if not missing:
+        top = expected.parts[0] if expected.parts else ""
+        root_names = {"meson.build", "README.md", "README-zh_CN.md", "VERSION"}
+        if top in {"debian", "docs", "src", "tests", "packaging"} or (
+            len(expected.parts) == 1 and expected.name in root_names
+        ):
+            rel_s = expected.as_posix()
+            if _is_noise_scaffold(rel_s):
+                continue
+            if is_optional_scaffold(rel_s, lang):
+                optional_missing.append(rel_s)
+            else:
+                required_missing.append(rel_s)
+
+    if not required_missing and not optional_missing:
         return [Finding("ok", "template.coverage", _("structural files from the language template are present"))]
-    preview = ", ".join(missing[:12])
-    more = "" if len(missing) <= 12 else _(" (+%d more)") % (len(missing) - 12)
+
+    # Only optional gaps: informational, not a real coverage problem.
+    if not required_missing:
+        preview = ", ".join(f"{p} [optional]" for p in optional_missing[:12])
+        more = "" if len(optional_missing) <= 12 else _(" (+%d more)") % (len(optional_missing) - 12)
+        return [
+            Finding(
+                "ok",
+                "template.coverage",
+                _("language template %(lang)s optional scaffolding not in this tree: %(preview)s%(more)s")
+                % {"lang": lang, "preview": preview, "more": more},
+                fix=_("Optional only (safe to omit): non-rpm packaging/*, src/Makefile, "
+                "and language helpers such as clib src/{bulk.h,c_pch.h,lib.c,lib.h}. "
+                "Do not copy build/ or debian leftover stamp files."),
+            )
+        ]
+
+    # Required gaps drive the note; optional listed separately (not mixed into preview).
+    preview = ", ".join(f"{p} [required]" for p in required_missing[:12])
+    more = "" if len(required_missing) <= 12 else _(" (+%d more)") % (len(required_missing) - 12)
+    opt_note = ""
+    if optional_missing:
+        opt_bits = [f"{p} [optional]" for p in optional_missing[:8]]
+        opt_note = _(" Also absent (optional, not required): %(opts)s.") % {
+            "opts": ", ".join(opt_bits)
+            + ("" if len(optional_missing) <= 8 else _(" (+%d more)") % (len(optional_missing) - 8))
+        }
     return [
         Finding(
             "note",
             "template.coverage",
             _("language template %(lang)s has extra scaffolding not in this tree: %(preview)s%(more)s")
-            % {"lang": lang, "preview": preview, "more": more},
-            fix=_("Compare with the %(lang)s template under pkgdatadir. Copy missing debian/docs/src/packaging "
-            "files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; "
+            % {"lang": lang, "preview": preview, "more": more}
+            + opt_note,
+            fix=_("Compare with the %(lang)s template under pkgdatadir. Copy missing "
+            "[required] debian/docs/src/tests/packaging/rpm files "
+            "(packaging/rpm/ uses %(name)s.spec, not zephyr.spec; "
             "debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. "
+            "[optional] items (non-rpm packaging/*, src/Makefile, clib/cpplib "
+            "bulk/pch/lib helpers, …) may be omitted. "
             "Do not copy build/ or debian leftover stamp files. "
             "Example commons modules are optional.") % {"lang": lang, "name": name},
         )

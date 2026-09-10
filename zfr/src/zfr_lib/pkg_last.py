@@ -5,8 +5,9 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import time
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from pathlib import Path
 
 
@@ -15,7 +16,7 @@ class PackagerRecord:
     name: str
     ok: bool
     summary: str
-    marked: str = ""
+    fdm: str = ""
     error: str = ""
 
 
@@ -38,15 +39,68 @@ def cache_path(*, home: Path | None = None) -> Path:
     return base / "zfr" / "last-package.json"
 
 
+def last_package_dir(*, home: Path | None = None) -> Path:
+    return cache_path(home=home).parent / "last-package.d"
+
+
+def prepare_last_package_dir(*, home: Path | None = None) -> Path:
+    dest = last_package_dir(home=home)
+    dest.mkdir(parents=True, exist_ok=True)
+    for old in dest.glob("*.fdm"):
+        try:
+            old.unlink()
+        except OSError:
+            pass
+    return dest
+
+
+def record_fdm_path(rec: PackagerRecord, *, home: Path | None = None) -> Path | None:
+    if not rec.fdm:
+        return None
+    p = Path(rec.fdm)
+    if p.is_file():
+        return p
+    cand = last_package_dir(home=home) / rec.fdm
+    if cand.is_file():
+        return cand
+    return None
+
+
 def save_last_run(run: PackageLastRun, *, path: Path | None = None) -> Path:
     dest = path or cache_path()
     dest.parent.mkdir(parents=True, exist_ok=True)
+    fdm_dir = dest.parent / "last-package.d"
+    fdm_dir.mkdir(parents=True, exist_ok=True)
+    stored: list[dict[str, object]] = []
+    for rec in run.records:
+        fdm_name = ""
+        src: Path | None = None
+        if rec.fdm:
+            p = Path(rec.fdm)
+            src = p if p.is_file() else fdm_dir / p.name
+            if not src.is_file():
+                src = None
+        if src is not None:
+            fdm_name = f"{rec.name}.fdm"
+            target = fdm_dir / fdm_name
+            if src.resolve() != target.resolve():
+                shutil.copy2(src, target)
+        rec.fdm = fdm_name
+        stored.append(
+            {
+                "name": rec.name,
+                "ok": rec.ok,
+                "summary": rec.summary,
+                "fdm": rec.fdm,
+                "error": rec.error,
+            }
+        )
     payload = {
         "root": run.root,
         "started": run.started,
         "finished": run.finished,
         "jobs": run.jobs,
-        "records": [asdict(r) for r in run.records],
+        "records": stored,
     }
     dest.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return dest
@@ -65,7 +119,7 @@ def load_last_run(*, path: Path | None = None) -> PackageLastRun | None:
             name=str(r.get("name", "")),
             ok=bool(r.get("ok")),
             summary=str(r.get("summary", "")),
-            marked=str(r.get("marked", "")),
+            fdm=str(r.get("fdm", "")),
             error=str(r.get("error", "")),
         )
         for r in data.get("records") or []

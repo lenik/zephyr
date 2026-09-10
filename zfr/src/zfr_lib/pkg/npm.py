@@ -7,7 +7,7 @@ import shutil
 from pathlib import Path
 
 from ..cmd_run import run_cmd
-from ..stream_mark import log_line
+from ..fdm import log_line
 from .provider import PackagerContext
 
 

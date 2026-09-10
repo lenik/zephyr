@@ -96,7 +96,7 @@ install_data(
     [
         'LICENSE',
         'README.md',
-        'README-zh.md',
+        'README-zh_CN.md',
     ],
     install_dir: pkgdocdir,
 )

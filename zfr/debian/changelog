@@ -1,3 +1,26 @@
+zephyr (2.8.14) testing; urgency=medium
+
+  * zfr package: capture packager stdout/stderr with fdmux into per-kind
+    ``.fdm`` files (no stream_mark); parallel runs use ``fdmux -n``.
+  * zfr lasterror: Tab/Enter/-p/--replay use fdmpager/fddemux on those
+    files (fdmux required).
+  * lint template.coverage: label required vs optional scaffolding
+    (clib/cpplib bulk/pch/lib helpers, non-rpm packaging/, src/Makefile
+    optional).
+  * lint i18n.po.quality (ZL089): msgid-copy counts as untranslated;
+    warn when catalog completion <=20%; suggest hand rewrite + poedit
+    (not patch scripts); googletranslator+proxy hint for adoc.
+  * Ship/install cursor-rules/translations.mdc for gettext and document
+    translation workflow.
+  * cursor-rules: add proxy.mdc (http://localhost:8118 for
+    Google/Twitter/YouTube and other sites commonly blocked in China).
+  * zfr publish: if ovsx/vsce missing, pnpm add -g then run from PATH /
+    pnpm bin -g (fixes Open VSX publish when ovsx is not a project dep).
+  * lint layout: expect README-zh_CN.md (rename from README-zh.md);
+    missing Chinese README is warn (ZL003), not error.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 07 Sep 2026 17:30:00 +0800
+
 zephyr (2.8.13) testing; urgency=medium
 
   * Merge version-changelog and version-control-refactor Cursor rules
