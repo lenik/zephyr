@@ -18,6 +18,8 @@ zephyr (2.8.14) testing; urgency=medium
     pnpm bin -g (fixes Open VSX publish when ovsx is not a project dep).
   * lint layout: expect README-zh_CN.md (rename from README-zh.md);
     missing Chinese README is warn (ZL003), not error.
+  * mingw: let meson create the build dir; retry setup once after wipe
+    (fixes parallel-package build.ninja rename race).
 
  -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 07 Sep 2026 17:30:00 +0800
 

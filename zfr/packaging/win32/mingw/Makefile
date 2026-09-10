@@ -23,18 +23,27 @@ local: $(ARTIFACT)
 
 stage:
 	rm -rf "$(STAGE)" "$(BUILD)"
-	mkdir -p "$(STAGE)" "$(BUILD)"
+	mkdir -p "$(STAGE)"
 	@set -e; \
 	cd "$(SRCDIR)"; \
-	if [ -n "$$OS" ] && [ "$$OS" = Windows_NT ]; then \
-		meson setup "$(BUILD)" --prefix=/ --buildtype=release; \
-	elif [ -n "$(MINGW_CC)" ]; then \
-		meson setup "$(BUILD)" --cross-file "$(CROSS)" --prefix=/ --buildtype=release; \
-	else \
-		echo "mingw: IGNORED — need MSYS/MinGW or x86_64-w64-mingw32-gcc" >&2; \
-		touch "$(STAGE)/.mingw-ignored"; \
-		exit 0; \
+	_setup() { \
+		if [ -n "$$OS" ] && [ "$$OS" = Windows_NT ]; then \
+			meson setup "$(BUILD)" --prefix=/ --buildtype=release; \
+		elif [ -n "$(MINGW_CC)" ]; then \
+			meson setup "$(BUILD)" --cross-file "$(CROSS)" --prefix=/ --buildtype=release; \
+		else \
+			echo "mingw: IGNORED — need MSYS/MinGW or x86_64-w64-mingw32-gcc" >&2; \
+			mkdir -p "$(STAGE)"; \
+			touch "$(STAGE)/.mingw-ignored"; \
+			return 0; \
+		fi; \
+	}; \
+	if ! _setup; then \
+		echo "mingw: meson setup failed; wiping build and retrying once" >&2; \
+		rm -rf "$(BUILD)"; \
+		_setup; \
 	fi
+	@if [ -f "$(STAGE)/.mingw-ignored" ]; then exit 0; fi
 	meson compile -C "$(BUILD)"
 	DESTDIR="$(STAGE)" meson install -C "$(BUILD)"
 
