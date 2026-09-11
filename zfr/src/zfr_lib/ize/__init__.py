@@ -117,7 +117,7 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         help=_("run 2meson to convert Autotools/CMake to Meson when present (default: on)"),
     )
     p.add_argument("--no-man", action="store_true", help=_("do not convert groff .1 man pages to docs/*.adoc"))
-    p.add_argument("--no-subst", action="store_true", help=_("do not turn hardcoded versions into @VERSION@ / config.h"))
+    p.add_argument("--no-subst", action="store_true", help=_("do not turn hardcoded versions/paths into @VERSION@/@PREFIX@ / config.h"))
     p.add_argument(
         "-u",
         "--uncheck",

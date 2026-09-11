@@ -15,6 +15,19 @@ _NOTE_LINES = 600
 
 _SOURCE_PREFIXES = ("src/", "tests/", "apps/", "lib/")
 
+# Documentation and shell completions are not subject to source.long (ZL001).
+_DOC_OR_COMPLETION_SUFFIXES = {".adoc", ".md", ".txt", ".rst", ".bash"}
+_DOC_OR_COMPLETION_NAMES = {
+    "README",
+    "README.md",
+    "README-zh.md",
+    "README-zh_CN.md",
+    "CHANGELOG",
+    "CHANGELOG.md",
+    "NEWS",
+    "NEWS.md",
+}
+
 
 def _count_lines(path: Path) -> int:
     try:
@@ -22,6 +35,25 @@ def _count_lines(path: Path) -> int:
             return sum(1 for _line in fh)
     except OSError:
         return 0
+
+
+def _is_doc_or_completion(rel: str, path: Path) -> bool:
+    """True for README/man/docs and bash-completion scripts (length not linted)."""
+    parts = Path(rel).parts
+    if not parts:
+        return False
+    if parts[0] in {"docs", "completions", "man"}:
+        return True
+    name = path.name
+    if name in _DOC_OR_COMPLETION_NAMES or name.startswith("README"):
+        return True
+    if path.suffix.lower() in _DOC_OR_COMPLETION_SUFFIXES:
+        # Root or tools/*.bash completion; docs/*.adoc; any *.md under tree.
+        if path.suffix.lower() == ".bash":
+            return True
+        if path.suffix.lower() in {".adoc", ".md", ".rst", ".txt"}:
+            return True
+    return False
 
 
 def _is_source_candidate(root: Path, path: Path) -> bool:
@@ -34,6 +66,8 @@ def _is_source_candidate(root: Path, path: Path) -> bool:
     except ValueError:
         return False
     if rel.startswith("debian/") or rel.startswith("po/") or rel.startswith("docs/"):
+        return False
+    if _is_doc_or_completion(rel, path):
         return False
     return rel.startswith(_SOURCE_PREFIXES)
 

@@ -21,6 +21,9 @@ it by hand. Prefer `dch` for changelog edits.
 - Always commit **verbosely** (`git commit -v` / a detailed message).
 - Not after every edit — at natural checkpoints (e.g. after a related test suite
   passes). Prefer doing that commit proactively when the moment fits.
+- Do **not** put version numbers in ordinary commit subjects (e.g. avoid
+  `Open 0.0.3:` / `Open vX.Y.Z:`). Opening a changelog stanza is enough; only
+  **Release** commits need to call out the version being shipped.
 
 ## Release
 

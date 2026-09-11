@@ -197,19 +197,21 @@ def catalog_translation_stats(
     body: str,
     *,
     english_locale: bool = False,
-) -> tuple[int, int, int]:
-    """Return (translated, total, english_copies).
+) -> tuple[int, int, int, int]:
+    """Return (translated, total, msgid_copies, empty).
 
     An entry counts as translated when msgstr is non-empty and, for non-English
     locales, differs from msgid (msgid-copy is treated as untranslated). Fuzzy
-    entries count as untranslated. Header msgid \"\" is excluded.
+    and empty msgstr count as untranslated. Header msgid \"\" is excluded.
     """
     translated = 0
     total = 0
     copies = 0
+    empty = 0
     for mid, ms, fuzzy in parse_po_entry_flags(body):
         total += 1
         if not ms:
+            empty += 1
             continue
         if fuzzy:
             continue
@@ -217,7 +219,7 @@ def catalog_translation_stats(
             copies += 1
             continue
         translated += 1
-    return translated, total, copies
+    return translated, total, copies, empty
 
 
 def catalog_completion_ratio(
@@ -226,7 +228,7 @@ def catalog_completion_ratio(
     english_locale: bool = False,
 ) -> float:
     """Fraction of catalog entries that count as translated (0.0–1.0)."""
-    translated, total, _copies = catalog_translation_stats(
+    translated, total, _copies, _empty = catalog_translation_stats(
         body, english_locale=english_locale
     )
     if total <= 0:

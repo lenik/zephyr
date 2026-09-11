@@ -70,6 +70,9 @@ def collect_findings(
     findings.extend(check_leftovers(root, role))
     findings.extend(check_lang_bits(root, lang))
     findings.extend(check_source_size(root, role))
+    from .hardcoded import check_hardcoded
+
+    findings.extend(check_hardcoded(root, role))
     findings.extend(check_template_gaps(root, lang, role))
     return name, lang, role, findings
 

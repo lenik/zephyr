@@ -17,13 +17,30 @@ _OBSOLETE_RULE_NAMES = (
 )
 
 
-def cursor_rule_src(name: str = RULE_NAME) -> Path | None:
-    """Canonical Cursor rule file: pkgdatadir, then source-tree fallback."""
-    candidates = [pkgdatadir() / "cursor-rules" / name]
+def _zfr_source_root() -> Path | None:
+    """``zfr/`` directory adjacent to this module when running from a checkout."""
     here = Path(__file__).resolve()
-    if here.parent.name == "zfr_lib":
-        zfr_root = here.parents[2]
+    if here.parent.name != "zfr_lib":
+        return None
+    # …/zfr/src/zfr_lib/cursor_rules.py → zfr/
+    return here.parents[2]
+
+
+def cursor_rule_src(name: str = RULE_NAME) -> Path | None:
+    """Canonical Cursor rule file.
+
+    Prefer the copy shipped next to this ``zfr_lib`` (source tree or
+    ``$prefix/share/zephyr/zfr``), then ``pkgdatadir()/cursor-rules/``.
+    That way ``zfr ize`` refreshes projects from the rules that match the
+    running zfr, not a stale earlier install.
+    """
+    candidates: list[Path] = []
+    zfr_root = _zfr_source_root()
+    if zfr_root is not None:
         candidates.append(zfr_root / "cursor-rules" / name)
+        # Installed layout: share/zephyr/cursor-rules (sibling of zfr/).
+        candidates.append(zfr_root.parent / "cursor-rules" / name)
+    candidates.append(pkgdatadir() / "cursor-rules" / name)
     for path in candidates:
         if path.is_file():
             return path
@@ -33,6 +50,7 @@ def cursor_rule_src(name: str = RULE_NAME) -> Path | None:
 def install_cursor_rules(dest: Path) -> Path | None:
     """Install shipped Cursor rules under *dest*/.cursor/rules/.
 
+    Always overwrites known rule files so ``zfr ize`` picks up updates.
     Returns the primary rule path, or None if no source rule is available.
     """
     rules_dir = dest / ".cursor" / "rules"

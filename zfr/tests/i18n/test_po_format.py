@@ -76,15 +76,19 @@ class PoQualityStatsTests(unittest.TestCase):
             'msgid "X"\n'
             'msgstr "Y"\n'
         )
-        translated, total, copies = catalog_translation_stats(body, english_locale=False)
+        translated, total, copies, empty = catalog_translation_stats(
+            body, english_locale=False
+        )
         self.assertEqual(total, 3)
         self.assertEqual(translated, 1)
         self.assertEqual(copies, 1)
+        self.assertEqual(empty, 1)
         self.assertAlmostEqual(catalog_completion_ratio(body), 1 / 3)
         # English variants may keep msgstr == msgid.
-        t2, _tot2, c2 = catalog_translation_stats(body, english_locale=True)
+        t2, _tot2, c2, e2 = catalog_translation_stats(body, english_locale=True)
         self.assertEqual(t2, 2)
         self.assertEqual(c2, 0)
+        self.assertEqual(e2, 1)
         self.assertTrue(is_english_locale("en_AU"))
         self.assertTrue(is_english_locale("en_GB"))
         self.assertFalse(is_english_locale("de"))
@@ -100,9 +104,10 @@ class PoQualityStatsTests(unittest.TestCase):
             'msgid "B"\n'
             'msgstr "b"\n'
         )
-        translated, total, _copies = catalog_translation_stats(body)
+        translated, total, _copies, empty = catalog_translation_stats(body)
         self.assertEqual(total, 2)
         self.assertEqual(translated, 1)
+        self.assertEqual(empty, 0)
 
     def test_i18n_lint_warns_on_low_completion(self) -> None:
         import tempfile
@@ -129,6 +134,39 @@ class PoQualityStatsTests(unittest.TestCase):
             self.assertTrue(quals)
             self.assertEqual(quals[0].severity, "warn")
             self.assertIn("poedit", (quals[0].fix or "").lower())
+            ph = [f for f in findings if f.code == "i18n.po.placeholder"]
+            self.assertTrue(ph)
+            self.assertEqual(ph[0].severity, "warn")
+
+    def test_i18n_lint_warns_on_placeholder_even_when_mostly_done(self) -> None:
+        import tempfile
+
+        from zfr_lib.lint.i18n_check import check_i18n
+
+        with tempfile.TemporaryDirectory(prefix="zfr-po-ph-") as tmp:
+            root = Path(tmp)
+            po = root / "po"
+            po.mkdir()
+            (po / "LINGUAS").write_text("de\n", encoding="utf-8")
+            lines = [
+                'msgid ""\n',
+                'msgstr "Content-Type: text/plain; charset=UTF-8\\n"\n',
+                "\n",
+            ]
+            for i in range(8):
+                lines.append(f'msgid "msg{i}"\nmsgstr "übersetzt{i}"\n\n')
+            lines.append('msgid "copy"\nmsgstr "copy"\n\n')
+            lines.append('msgid "blank"\nmsgstr ""\n')
+            (po / "de.po").write_text("".join(lines), encoding="utf-8")
+            findings = check_i18n(root, "app", l10n_level="L1")
+            quals = [f for f in findings if f.code == "i18n.po.quality"]
+            self.assertTrue(quals)
+            self.assertEqual(quals[0].severity, "ok")
+            ph = [f for f in findings if f.code == "i18n.po.placeholder"]
+            self.assertTrue(ph)
+            self.assertEqual(ph[0].severity, "warn")
+            self.assertIn("msgid-copy", ph[0].message)
+            self.assertIn("empty", ph[0].message)
 
 
 if __name__ == "__main__":

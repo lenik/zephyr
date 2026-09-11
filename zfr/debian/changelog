@@ -1,3 +1,21 @@
+zephyr (2.8.15) testing; urgency=medium
+
+  * lint source.long: never flag README, man (adoc/docs), or bash-
+    completion length.
+  * ize: prefer in-tree cursor-rules and refresh .cursor/rules from
+    shipped copies.
+  * lint+ize: detect hardcoded install paths and version strings in src;
+    convert to .in + meson configure_file (@PREFIX@/@DATADIR@/@VERSION@
+    …).
+  * zfr dist: honor project .tarignore (gitignore-style) when packing
+    source tarballs.
+  * zfr.bash: complete i18n/translate; sync lint -w/-e, ize -L/-H/-c/-
+    a/-u, lasterror -p.
+  * lint i18n.po.placeholder (ZL093): warn on empty msgstr or msgid-copy
+    even when catalog is above 20%.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Fri, 11 Sep 2026 23:46:29 +0800
+
 zephyr (2.8.14) testing; urgency=medium
 
   * zfr package: capture packager stdout/stderr with fdmux into per-kind

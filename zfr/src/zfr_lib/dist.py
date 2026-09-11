@@ -20,6 +20,7 @@ from . import (
 from .cli import register_command
 from .i18n import _
 from .packaging import _meson_project_fields, _parse_control_stanzas, rpm_topdir
+from .tarignore import TarIgnore
 
 _FORMATS = {
     "xz": ("xztar", ".tar.xz"),
@@ -235,11 +236,32 @@ def _meson_dist(
     return matches[0]
 
 
-def _copy_ignore(directory: str, names: list[str]) -> set[str]:
-    ignored = {n for n in names if n in _SKIP_DIR_NAMES}
-    if Path(directory).name == "debian":
-        ignored.update(n for n in names if n in _DEBIAN_SKIP_NAMES)
-    return ignored
+def _copy_ignore_with_tarignore(
+    tarignore: TarIgnore,
+    root: Path,
+):
+    """Build a copytree ignore callable that applies builtins + ``.tarignore``."""
+
+    def _ignore(directory: str, names: list[str]) -> set[str]:
+        ignored = {n for n in names if n in _SKIP_DIR_NAMES}
+        dir_path = Path(directory)
+        if dir_path.name == "debian":
+            ignored.update(n for n in names if n in _DEBIAN_SKIP_NAMES)
+        try:
+            rel_dir = dir_path.resolve().relative_to(root.resolve()).as_posix()
+        except ValueError:
+            rel_dir = ""
+        for name in names:
+            if name in ignored:
+                continue
+            rel = name if not rel_dir or rel_dir == "." else f"{rel_dir}/{name}"
+            child = dir_path / name
+            is_dir = child.is_dir()
+            if tarignore.match(rel, is_dir=is_dir):
+                ignored.add(name)
+        return ignored
+
+    return _ignore
 
 
 def _directory_archive(
@@ -248,16 +270,18 @@ def _directory_archive(
     inner_dir: str,
     *,
     fmt: str,
+    tarignore: TarIgnore | None = None,
 ) -> None:
     dest.parent.mkdir(parents=True, exist_ok=True)
     if dest.exists():
         dest.unlink()
+    ignore = _copy_ignore_with_tarignore(tarignore or TarIgnore(), root)
     with tempfile.TemporaryDirectory(prefix="zfr-dist-") as tmp:
         inner = Path(tmp) / inner_dir
         shutil.copytree(
             root,
             inner,
-            ignore=_copy_ignore,
+            ignore=ignore,
             symlinks=True,
         )
         if fmt == "zip":
@@ -316,6 +340,7 @@ def cmd_dist(
 
     git_root = _git_toplevel(root)
     archive_root = root
+    tarignore = TarIgnore.load(root)
     if (
         _is_zfr_cli_package(root)
         and git_root is not None
@@ -324,6 +349,8 @@ def cmd_dist(
         # Meta-package tarball must include sibling language templates.
         archive_root = git_root
         use_meson = False
+        # Meta-repo .tarignore (if any) applies to the whole tree pack.
+        tarignore = TarIgnore.load(archive_root)
     else:
         use_meson = git_root is not None and git_root.resolve() == root.resolve()
 
@@ -334,6 +361,15 @@ def cmd_dist(
         print(
             "meson.build not tracked in git; packing project tree "
             "(commit ize results to use meson dist)",
+            file=sys.stderr,
+        )
+        use_meson = False
+
+    # ``.tarignore`` is applied by the directory packer; meson dist only
+    # follows git and cannot honor it — prefer the tree pack when present.
+    if use_meson and tarignore:
+        print(
+            ".tarignore present; packing project tree (gitignore-style excludes)",
             file=sys.stderr,
         )
         use_meson = False
@@ -368,7 +404,13 @@ def cmd_dist(
         bdir = resolve_builddir(root, builddir)
         outdir = bdir / "meson-dist"
     dest = outdir / tarball_name
-    _directory_archive(archive_root, dest, f"{name}-{version}", fmt=fmt)
+    _directory_archive(
+        archive_root,
+        dest,
+        f"{name}-{version}",
+        fmt=fmt,
+        tarignore=tarignore,
+    )
     print(dest, flush=True)
     return 0
 
@@ -379,7 +421,9 @@ DESCRIPTION = _(
     "(walks from cwd toward parent directories). Uses meson dist when "
     "this directory is the git project root; otherwise packs this "
     "project only so nested language templates do not ship the parent "
-    "meta-repo. Prints the archive path on stdout."
+    "meta-repo. When ``.tarignore`` exists (gitignore-style), always pack "
+    "the project tree and apply those excludes. Prints the archive path "
+    "on stdout."
 )
 
 add_arguments = add_dist_arguments

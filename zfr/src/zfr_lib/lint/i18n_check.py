@@ -189,6 +189,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
 
             wrapped: list[str] = []
             low_completion: list[str] = []
+            placeholder_locales: list[str] = []
             ok_stats: list[str] = []
             # Completion at or below this ratio means "effectively untranslated".
             _PO_MIN_RATIO = 0.20
@@ -212,7 +213,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                 loc = po_file.stem
                 eng = is_english_locale(loc)
                 ratio = catalog_completion_ratio(body, english_locale=eng)
-                translated, total, copies = catalog_translation_stats(
+                translated, total, copies, empty = catalog_translation_stats(
                     body, english_locale=eng
                 )
                 if total <= 0:
@@ -221,7 +222,18 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                 label = f"{po_file.name} ({pct}% {translated}/{total}"
                 if copies and not eng:
                     label += f", {copies} msgid-copies"
+                if empty:
+                    label += f", {empty} empty"
                 label += ")"
+                if not eng and (copies or empty):
+                    bits: list[str] = []
+                    if empty:
+                        bits.append(_("%d empty") % empty)
+                    if copies:
+                        bits.append(_("%d msgid-copy") % copies)
+                    placeholder_locales.append(
+                        f"{po_file.name} ({', '.join(bits)}; {pct}% done)"
+                    )
                 if not eng and ratio <= _PO_MIN_RATIO:
                     low_completion.append(label)
                 else:
@@ -248,6 +260,26 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     )
                 )
 
+            if placeholder_locales:
+                out.append(
+                    Finding(
+                        "warn",
+                        "i18n.po.placeholder",
+                        _("gettext catalog(s) have empty msgstr or msgid-copy placeholders: %s")
+                        % ", ".join(placeholder_locales[:8])
+                        + (
+                            ""
+                            if len(placeholder_locales) <= 8
+                            else _(" (+%d more)") % (len(placeholder_locales) - 8)
+                        ),
+                        "po/",
+                        fix=_("Empty msgstr and msgstr identical to msgid are not "
+                        "translations (English variants en_* are exempt). Fill real "
+                        "msgstr values. %(poedit)s")
+                        % {"poedit": _POEDIT_HINT},
+                    )
+                )
+
             if low_completion:
                 out.append(
                     Finding(
@@ -263,12 +295,30 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                         % {"poedit": _POEDIT_HINT},
                     )
                 )
-            elif ok_stats:
+            elif ok_stats and not placeholder_locales:
                 out.append(
                     Finding(
                         "ok",
                         "i18n.po.quality",
                         _("gettext catalogs have usable translation coverage (%s)")
+                        % (
+                            ", ".join(ok_stats[:6])
+                            + (
+                                ""
+                                if len(ok_stats) <= 6
+                                else _(" (+%d more)") % (len(ok_stats) - 6)
+                            )
+                        ),
+                        "po/",
+                    )
+                )
+            elif ok_stats:
+                # Placeholders already warned; still note overall coverage.
+                out.append(
+                    Finding(
+                        "ok",
+                        "i18n.po.quality",
+                        _("gettext catalogs above 20%% completion (%s)")
                         % (
                             ", ".join(ok_stats[:6])
                             + (

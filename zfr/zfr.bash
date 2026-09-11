@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 _zfr_langs='antlr as bash bison c clib cobol cpp cpplib csharp d elixir erlang fortran gcc go haskell java kotlin lua nim ocaml pascal perl python ruby rust smalltalk swift typescript zig'
-_zfr_cmds='create rename add remove about version lint shape dist build package lasterror ize release publish detect help'
+_zfr_cmds='create rename add remove about version lint shape dist build package lasterror ize i18n translate release publish detect help'
 
 _zfr()
 {
@@ -13,7 +13,7 @@ _zfr()
 	local i
 	for ((i = 1; i < cword; i++)); do
 		case "${words[i]}" in
-			create|rename|add|remove|about|version|lint|shape|dist|build|package|lasterror|ize|release|publish|detect|help)
+			create|rename|add|remove|about|version|lint|shape|dist|build|package|lasterror|ize|i18n|translate|release|publish|detect|help)
 				cmd="${words[i]}"
 				break
 				;;
@@ -77,9 +77,13 @@ _zfr()
 					COMPREPLY=($(compgen -W 'auto always never' -- "$cur"))
 					return
 					;;
+				-w|--warning|-e|--error)
+					COMPREPLY=($(compgen -W 'note warn error' -- "$cur"))
+					return
+					;;
 			esac
 			if [[ $cur == -* ]]; then
-				COMPREPLY=($(compgen -W '-v --verbose -q --quiet --strict -i --info -I --no-info --chat --no-chat -u --uncheck -l --l10n-level -L --list-std -H --help-std --color --help' -- "$cur"))
+				COMPREPLY=($(compgen -W '-v --verbose -q --quiet -w --warning -e --error --strict -i --info -I --no-info --chat --no-chat -u --uncheck -l --l10n-level -L --list-std -H --help-std --color --help' -- "$cur"))
 			fi
 			;;
 		shape)
@@ -132,7 +136,7 @@ _zfr()
 					;;
 			esac
 			if [[ $cur == -* ]]; then
-				COMPREPLY=($(compgen -W '-f --failures -n --non-interactive --replay --help' -- "$cur"))
+				COMPREPLY=($(compgen -W '-f --failures -n --non-interactive -p --pager --replay --help' -- "$cur"))
 			fi
 			;;
 		ize)
@@ -147,7 +151,45 @@ _zfr()
 					;;
 			esac
 			if [[ $cur == -* ]]; then
-				COMPREPLY=($(compgen -W '-l --lang -m --mesonize --no-mesonize -n --dry-run -v --verbose --no-man --no-subst --color --help' -- "$cur"))
+				COMPREPLY=($(compgen -W '-l --lang -m --mesonize --no-mesonize -n --dry-run -v --verbose -c --commit -a --author -u --uncheck -L --list-std -H --help-std --no-man --no-subst --color --help' -- "$cur"))
+			fi
+			;;
+		i18n)
+			case $prev in
+				-d|--delete|-i|--insert|--domain|--localedir)
+					COMPREPLY=()
+					return
+					;;
+				--po-dir)
+					_filedir -d
+					return
+					;;
+				--stamp)
+					_filedir
+					return
+					;;
+			esac
+			if [[ $cur == -* ]]; then
+				COMPREPLY=($(compgen -W '-a --all -d --delete -i --insert -b --build --po-dir --stamp --compile-mo --domain --install-derived --localedir -n --dry-run -f --force --help' -- "$cur"))
+			fi
+			;;
+		translate)
+			case $prev in
+				-i|--import)
+					_filedir
+					return
+					;;
+				-l|--lang|-u|--update|-m|--match|-M|--match-cs|-s|--search|-S|--search-cs)
+					COMPREPLY=()
+					return
+					;;
+				-c|--color)
+					COMPREPLY=($(compgen -W 'auto always never' -- "$cur"))
+					return
+					;;
+			esac
+			if [[ $cur == -* ]]; then
+				COMPREPLY=($(compgen -W '-i --import -l --lang -u --update -k --keys -m --match -M --match-cs -s --search -S --search-cs -E --entire -c --color --help' -- "$cur"))
 			fi
 			;;
 		release)
@@ -254,9 +296,13 @@ _zfr_lint()
 			COMPREPLY=($(compgen -W 'auto always never' -- "$cur"))
 			return
 			;;
+		-w|--warning|-e|--error)
+			COMPREPLY=($(compgen -W 'note warn error' -- "$cur"))
+			return
+			;;
 	esac
 	if [[ $cur == -* ]]; then
-		COMPREPLY=($(compgen -W '-v --verbose -q --quiet --strict -i --info -I --no-info --chat --no-chat -u --uncheck -l --l10n-level -L --list-std -H --help-std --color --help' -- "$cur"))
+		COMPREPLY=($(compgen -W '-v --verbose -q --quiet -w --warning -e --error --strict -i --info -I --no-info --chat --no-chat -u --uncheck -l --l10n-level -L --list-std -H --help-std --color --help' -- "$cur"))
 	fi
 }
 
@@ -315,11 +361,61 @@ _zfr_ize()
 			;;
 	esac
 	if [[ $cur == -* ]]; then
-		COMPREPLY=($(compgen -W '-l --lang -m --mesonize --no-mesonize -n --dry-run -v --verbose --no-man --no-subst --color --help' -- "$cur"))
+		COMPREPLY=($(compgen -W '-l --lang -m --mesonize --no-mesonize -n --dry-run -v --verbose -c --commit -a --author -u --uncheck -L --list-std -H --help-std --no-man --no-subst --color --help' -- "$cur"))
 	fi
 }
 
 complete -F _zfr_ize zfr-ize
+
+_zfr_i18n()
+{
+	local cur prev words cword
+	_init_completion || return
+	case $prev in
+		-d|--delete|-i|--insert|--domain|--localedir)
+			COMPREPLY=()
+			return
+			;;
+		--po-dir)
+			_filedir -d
+			return
+			;;
+		--stamp)
+			_filedir
+			return
+			;;
+	esac
+	if [[ $cur == -* ]]; then
+		COMPREPLY=($(compgen -W '-a --all -d --delete -i --insert -b --build --po-dir --stamp --compile-mo --domain --install-derived --localedir -n --dry-run -f --force --help' -- "$cur"))
+	fi
+}
+
+complete -F _zfr_i18n zfr-i18n
+
+_zfr_translate()
+{
+	local cur prev words cword
+	_init_completion || return
+	case $prev in
+		-i|--import)
+			_filedir
+			return
+			;;
+		-l|--lang|-u|--update|-m|--match|-M|--match-cs|-s|--search|-S|--search-cs)
+			COMPREPLY=()
+			return
+			;;
+		-c|--color)
+			COMPREPLY=($(compgen -W 'auto always never' -- "$cur"))
+			return
+			;;
+	esac
+	if [[ $cur == -* ]]; then
+		COMPREPLY=($(compgen -W '-i --import -l --lang -u --update -k --keys -m --match -M --match-cs -s --search -S --search-cs -E --entire -c --color --help' -- "$cur"))
+	fi
+}
+
+complete -F _zfr_translate zfr-translate
 
 _zfr_release()
 {
@@ -400,7 +496,7 @@ _zfr_lasterror()
 			;;
 	esac
 	if [[ $cur == -* ]]; then
-		COMPREPLY=($(compgen -W '-f --failures -n --non-interactive --replay --help' -- "$cur"))
+		COMPREPLY=($(compgen -W '-f --failures -n --non-interactive -p --pager --replay --help' -- "$cur"))
 	fi
 }
 

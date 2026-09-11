@@ -130,6 +130,30 @@ _LINT_RULES: tuple[StdRule, ...] = (
         "gettext .po completion (msgid-copy counts as untranslated; ≤20% ≈ missing)",
         "varies",
     ),
+    StdRule(
+        "ZL090",
+        "source.hardcoded.path",
+        "Hardcoded FHS install paths in sources (use @DATADIR@ / configure_file)",
+        "warn",
+    ),
+    StdRule(
+        "ZL091",
+        "source.hardcoded.version",
+        "Hardcoded project version in sources (use @VERSION@ / PROJECT_VERSION)",
+        "warn",
+    ),
+    StdRule(
+        "ZL092",
+        "source.hardcoded",
+        "No hardcoded install paths or project version strings",
+        "ok",
+    ),
+    StdRule(
+        "ZL093",
+        "i18n.po.placeholder",
+        "gettext .po has empty msgstr or msgid-copy placeholders",
+        "warn",
+    ),
 )
 
 LINT_RULES = RuleRegistry(_LINT_RULES)

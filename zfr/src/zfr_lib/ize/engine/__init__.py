@@ -368,7 +368,11 @@ class Ize:
             self.write_text(version_path, ver + "\n", "snapshot of debian/changelog")
 
     def ensure_std_files(self) -> None:
-        """Reset LICENSE, .githooks, and .cursor/rules to zfr canonical copies."""
+        """Reset LICENSE, .githooks, and .cursor/rules to zfr canonical copies.
+
+        Cursor rules are always refreshed from the running zfr's shipped
+        ``cursor-rules/`` so projects pick up rule updates on ``zfr ize``.
+        """
         sources = std_file_sources()
         if not sources:
             return
@@ -383,7 +387,8 @@ class Ize:
                 continue
             dirty = True
             action = "update" if existed else "add"
-            self.note(action, rel, "standard file")
+            detail = "cursor-rules" if rel.startswith(".cursor/rules/") else "standard file"
+            self.note(action, rel, detail)
         if not dirty:
             return
         if self.dry_run:
