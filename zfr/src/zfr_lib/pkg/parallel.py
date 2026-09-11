@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""Parallel packaging orchestration over :class:`~.provider.Packager` providers."""
+"""Sequential packaging orchestration over :class:`~.provider.Packager` providers."""
 
 from __future__ import annotations
 
-import concurrent.futures
 import subprocess
 import sys
 import threading
@@ -49,8 +48,8 @@ def _probe_skips(
 ) -> tuple[list[PackagingKind], list[PackagerRecord]]:
     """Split *planned* into runnable kinds vs pre-skipped records.
 
-    Skipped packagers are excluded before worker/job sizing so they do not
-    dilute ``jobs // N``.
+    Skipped packagers are excluded before the sequential run so the status
+    board and last-run summary still list them as skipped.
     """
     active: list[PackagingKind] = []
     skipped: list[PackagerRecord] = []
@@ -89,7 +88,12 @@ def package_project(
     jobs: int = 0,
     interactive_errors: bool = True,
 ) -> list[PackagingKind]:
-    """Detect kinds, run packager providers in parallel, optionally upload."""
+    """Detect kinds, run packagers one after another, optionally upload.
+
+    Packagers (deb, rpm, mingw, …) always run sequentially in detection
+    order. ``jobs`` is the per-packager build parallelism (debuild ``-j``,
+    make ``-j``, …), not the number of concurrent packagers.
+    """
     root = root.resolve()
     jobs = resolve_jobs(jobs)
     kinds = detect_packaging_kinds(root)
@@ -103,10 +107,10 @@ def package_project(
     if not planned:
         raise SystemExit("zfr package: nothing to package after --no-deb/--no-rpm filters")
 
-    def _ctx(inner_jobs: int, *, is_dry: bool) -> PackagerContext:
+    def _ctx(*, is_dry: bool) -> PackagerContext:
         return PackagerContext(
             root=root,
-            jobs=inner_jobs,
+            jobs=jobs,
             dry_run=is_dry,
             dpkg_buildopts=list(dpkg_buildopts or []),
             docker=docker,
@@ -114,7 +118,7 @@ def package_project(
             base_image=base_image,
         )
 
-    probe_ctx = _ctx(jobs, is_dry=dry_run)
+    probe_ctx = _ctx(is_dry=dry_run)
     active, skipped_records = _probe_skips(planned, probe_ctx)
     if not active and not dry_run:
         # All skipped: still persist a run summary.
@@ -143,15 +147,12 @@ def package_project(
             if skipped_records
             else f"; active={len(active)}"
         )
-        + f"; parallel packagers≤{jobs}"
+        + f"; sequential (jobs={jobs} per packager)"
     )
 
     if dry_run:
         built: list[PackagingKind] = []
-        n = max(1, len(active))
-        workers = max(1, min(jobs, n))
-        inner_jobs = max(1, jobs // workers)
-        ctx = _ctx(inner_jobs, is_dry=True)
+        ctx = _ctx(is_dry=True)
         for kind in active:
             if packager_for(kind).build(ctx):
                 built.append(kind)
@@ -161,9 +162,6 @@ def package_project(
             log_line("zfr package: upload skipped (--no-upload)")
         return built
 
-    n = len(active)
-    workers = max(1, min(jobs, n))
-    inner_jobs = max(1, jobs // workers)
     require_fdm_tool("fdmux")
     fdm_dir = prepare_last_package_dir()
 
@@ -180,9 +178,8 @@ def package_project(
     records: list[PackagerRecord] = list(skipped_records)
     built_map: dict[str, PackagingKind] = {}
     started = time.time()
-    lock = threading.Lock()
 
-    def _worker(kind: PackagingKind) -> PackagerRecord:
+    for kind in active:
         fdm_path = fdm_dir / f"{kind.name}.fdm"
         fdm_path.write_bytes(b"")
         cap = FdmCapture(fdm_path)
@@ -201,7 +198,7 @@ def package_project(
         summary = "packaged"
         ok = False
         try:
-            did = packager_for(kind).build(_ctx(inner_jobs, is_dry=False))
+            did = packager_for(kind).build(_ctx(is_dry=False))
             ok = True
             summary = "packaged" if did else "skipped"
             board.set_ok(kind.name, summary)
@@ -224,24 +221,17 @@ def package_project(
             done.set()
             reset_capture(token)
 
-        record = PackagerRecord(
-            name=kind.name,
-            ok=ok,
-            summary=summary,
-            fdm=str(fdm_path),
-            error=err,
+        records.append(
+            PackagerRecord(
+                name=kind.name,
+                ok=ok,
+                summary=summary,
+                fdm=str(fdm_path),
+                error=err,
+            )
         )
-        with lock:
-            records.append(record)
-            if ok and summary == "packaged":
-                built_map[kind.name] = kind
-        return record
-
-    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
-        futs = [pool.submit(_worker, k) for k in active]
-        concurrent.futures.wait(futs)
-        for f in futs:
-            f.result()
+        if ok and summary == "packaged":
+            built_map[kind.name] = kind
 
     board.finish()
     finished = time.time()

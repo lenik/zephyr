@@ -14,10 +14,12 @@ from .pkg import detect_packaging_kinds, package_project
 NAME = "package"
 HELP = _("detect packaging type and build packages")
 DESCRIPTION = _(
-    "Detect packaging types (deb, rpm, npm/vsix, mingw, …) and build them in "
-    "parallel (-j). Each packager's stdout/stderr is captured with fdmux into "
-    "an FDM file; live status lines show progress. On failure, browse with "
-    "`zfr lasterror`. Upload is on by default (-u); use -U/--no-upload to skip."
+    "Detect packaging types (deb, rpm, npm/vsix, mingw, …) and build them "
+    "sequentially (deb, then rpm, …). -j/--job is per-packager build "
+    "parallelism (debuild/make -j), not concurrent packagers. Each "
+    "packager's stdout/stderr is captured with fdmux into an FDM file; live "
+    "status lines show progress. On failure, browse with `zfr lasterror`. "
+    "Upload is on by default (-u); use -U/--no-upload to skip."
 )
 
 _DEFAULT_BASE_IMAGE = "b4f-debian:trixie"

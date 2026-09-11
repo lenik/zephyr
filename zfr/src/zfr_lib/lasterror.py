@@ -15,7 +15,7 @@ from .pkg_ui import interactive_lasterror, print_run_summary
 NAME = "lasterror"
 HELP = _("browse the last zfr package output interactively")
 DESCRIPTION = _(
-    "Show the last parallel packaging run. Arrow keys select a packager; "
+    "Show the last packaging run. Arrow keys select a packager; "
     "Tab opens the captured log in fdmpager; Enter replays that packager's "
     "stdout/stderr with fddemux; q quits."
 )

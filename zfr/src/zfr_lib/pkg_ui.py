@@ -27,7 +27,7 @@ class PackagerState:
 
 @dataclass
 class StatusBoard:
-    """Multi-line live status for parallel packagers (TTY only)."""
+    """Multi-line live status for packagers (TTY only)."""
 
     title: str = "Packaging..."
     states: list[PackagerState] = field(default_factory=list)

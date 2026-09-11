@@ -25,7 +25,7 @@ def add_job_argument(p: argparse.ArgumentParser) -> None:
         type=int,
         default=n,
         dest="jobs",
-        help=_("parallel jobs / concurrent packagers (default: %s CPU cores)") % n,
+        help=_("parallel jobs within each packager (default: %s CPU cores)") % n,
     )
 
 

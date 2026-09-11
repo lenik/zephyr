@@ -201,9 +201,9 @@ Commands that walk from the current directory resolve *packagedir* first.
 
 *package*::
   Detect packaging types (*deb*, *rpm*, *npm*/*vsix*, *mingw*, …) and build
-  them in parallel. *\-j* / *--job* _N_ is the max concurrent packagers
-  (default: CPU cores); each packager still gets a share of make/debuild
-  parallelism. Stdout/stderr per packager is captured with *fdmux*(1) into
+  them sequentially (deb, then rpm, …). *\-j* / *--job* _N_ is per-packager
+  build parallelism for make/debuild (default: CPU cores), not concurrent
+  packagers. Stdout/stderr per packager is captured with *fdmux*(1) into
   a `.fdm` file and shown on a live status board. On failure, an interactive
   picker (same as *lasterror*) lets you inspect a failed packager. Upload is
   on by default (*\-u*); use *\-U* to skip *dput* / registry publish.
