@@ -18,6 +18,10 @@ zephyr (2.8.16) testing; urgency=medium
   * tests: expect zfr self-lint warnings=0 again after PO fill.
   * zfr package: run deb/rpm/… packagers sequentially; -j is per-
     packager build jobs only.
+  * release: attach only version-matching packaging/*/out artifacts
+    (stale mingw/Inno/… no longer uploaded).
+  * packaging: wipe prior versioned outs before writing
+    mingw/Inno/WiX/macos/arch/freebsd artifacts.
 
  -- Lenik (谢继雷) <lenik@bodz.net>  Sat, 12 Sep 2026 00:25:54 +0800
 

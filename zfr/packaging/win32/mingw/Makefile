@@ -49,6 +49,8 @@ stage:
 
 $(ARTIFACT): stage
 	mkdir -p "$(OUTDIR)"
+	# Drop stale portable builds so release attach only sees this VERSION.
+	rm -f "$(OUTDIR)/$(NAME)_mingw-"*.exe
 	@set -e; \
 	if [ -f "$(STAGE)/.mingw-ignored" ]; then \
 		echo "mingw: IGNORED — skip pack (cross tools unavailable)" >&2; \

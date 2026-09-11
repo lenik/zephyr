@@ -28,6 +28,8 @@ stage:
 
 $(ARTIFACT): stage
 	mkdir -p "$(OUTDIR)"
+	# Drop stale pkgs so release attach only sees this VERSION.
+	rm -f "$(OUTDIR)/$(NAME)-"*.pkg
 	pkgbuild --root "$(STAGE)/usr/local" \
 		--identifier "$(IDENTIFIER)" \
 		--version "$(VERSION)" \

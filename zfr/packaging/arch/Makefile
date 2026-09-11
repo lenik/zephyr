@@ -19,6 +19,8 @@ local: pkg
 
 pkg:
 	mkdir -p "$(OUTDIR)"
+	# Drop stale packages so release attach only sees this VERSION.
+	rm -f "$(OUTDIR)/$(NAME)-"*.pkg.tar.*
 	@set -e; \
 	ver=$(VERSION); \
 	sed -i.bak -e "s/^pkgver=.*/pkgver=$$ver/" "$(PKGBUILD)" && rm -f "$(PKGBUILD).bak"; \

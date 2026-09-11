@@ -23,8 +23,32 @@ _PACKAGING_OUT_DIRS = (
 )
 
 
-def find_packaging_out_artifacts(projectdir: Path | str) -> list[str]:
-    """Collect files under packaging/*/out produced by optional packaging builds."""
+def artifact_name_matches_version(name: str, version: str) -> bool:
+    """True when *name* embeds *version* as a version token (not a prefix of another).
+
+    Examples for version ``2.8.16``: ``zephyr_mingw-2.8.16.exe`` matches;
+    ``zephyr_mingw-2.8.1.exe`` does not.
+    """
+    import re
+
+    if not version or not name:
+        return False
+    ver = re.escape(version)
+    return bool(re.search(rf"(?:^|[_-]){ver}(?:[_.\-]|$)", name))
+
+
+def find_packaging_out_artifacts(
+    projectdir: Path | str,
+    *,
+    version: str,
+    pkg: str = "",
+) -> list[str]:
+    """Collect version-scoped files under packaging/*/out.
+
+    Only files whose basename embeds *version* (see
+    :func:`artifact_name_matches_version`) are returned, so stale mingw/Inno
+    builds for older versions are not attached to the current release.
+    """
     projectdir = Path(projectdir)
     found: list[str] = []
     for rel in _PACKAGING_OUT_DIRS:
@@ -32,8 +56,11 @@ def find_packaging_out_artifacts(projectdir: Path | str) -> list[str]:
         if not out.is_dir():
             continue
         for f in sorted(out.rglob("*")):
-            if f.is_file() and not f.name.startswith("."):
-                found.append(str(f))
+            if not f.is_file() or f.name.startswith("."):
+                continue
+            if not artifact_name_matches_version(f.name, version):
+                continue
+            found.append(str(f))
     return found
 
 
@@ -307,7 +334,11 @@ def step_collect_artifacts(ctx: Context) -> None:
         )
     )
     ctx.attachments.extend(rpm_artifacts)
-    ctx.attachments.extend(find_packaging_out_artifacts(ctx.projectdir))
+    ctx.attachments.extend(
+        find_packaging_out_artifacts(
+            ctx.projectdir, version=ctx.version, pkg=ctx.pkgname
+        )
+    )
 
     tarball = ""
     if ctx.project_type == "debian" and ctx.builddir is not None:

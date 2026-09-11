@@ -30,6 +30,8 @@ wine: $(ARTIFACT)
 
 $(ARTIFACT): $(ISS)
 	mkdir -p "$(OUTDIR)" "$(STAGE)"
+	# Drop stale installers so release attach only sees this VERSION.
+	rm -f "$(OUTDIR)/$(NAME)-"*.exe
 	@set -e; \
 	if [ -d "$(CURDIR)/../mingw/stage" ] && [ -n "$$(find "$(CURDIR)/../mingw/stage" -type f 2>/dev/null | head -1)" ]; then \
 		rm -rf "$(STAGE)" && mkdir -p "$(STAGE)" && cp -a "$(CURDIR)/../mingw/stage/." "$(STAGE)/"; \
