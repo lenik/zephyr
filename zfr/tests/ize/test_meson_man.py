@@ -72,7 +72,7 @@ class MesonManForeachTests(unittest.TestCase):
     def test_adds_foreach_when_missing(self) -> None:
         text = "project('demo')\nasciidoctor = find_program('asciidoctor')\n"
         new, details = ensure_meson_man_targets(text, ["tool-a", "tool-b"])
-        self.assertIn("man_puffs", new)
+        self.assertIn("puffs", new)
         self.assertIn("puff + '-man'", new)
         self.assertIn("'tool-a'", new)
         self.assertTrue(any("foreach" in d for d in details))
@@ -85,10 +85,10 @@ class MesonManForeachTests(unittest.TestCase):
 
     def test_man_foreach_block_shape(self) -> None:
         block = man_foreach_block(["a", "b"])
-        self.assertIn("foreach puff : man_puffs", block)
+        self.assertIn("foreach puff : puffs", block)
         self.assertIn("puff + '-man'", block)
 
-    def test_merges_duplicate_man_puffs_foreach(self) -> None:
+    def test_merges_duplicate_puffs_foreach(self) -> None:
         from zfr_lib.ize.man import count_foreach_puff_man_loops
 
         text = (

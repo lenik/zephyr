@@ -169,6 +169,8 @@ def _git_init_commit_tag(
     run(["git", "init"])
     run(["git", "config", "core.hooksPath", ".githooks"])
     run(["git", "add", "-A"])
+    if (dest / ".cursor").exists():
+        run(["git", "add", "-f", "--", ".cursor/"])
     ver = version.lstrip("v")
     msg = f"Initial release {ver}\n"
     run(["git", *ident, "commit", "-m", msg])
@@ -255,7 +257,7 @@ def cmd_create(
         author=author,
         email=email,
     )
-    for path in install_std_files(dest):
+    for path in install_std_files(dest, project=package):
         print(f"std ← {path.relative_to(dest)}")
 
     print(f"git init + commit + tag v{init_version.lstrip('v')}")

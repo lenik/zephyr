@@ -47,10 +47,11 @@ class IzeI18nCoverageTests(unittest.TestCase):
             ize.ensure_man_locale_coverage()
             paths = {c.path for c in ize.changes}
             self.assertTrue(any(p.startswith("po/") and "ar" in p for p in paths))
-            self.assertTrue(any(p.startswith("docs/ar/") for p in paths))
+            # ize no longer scaffolds docs/<locale>/ copies.
+            self.assertFalse(any(p.startswith("docs/ar/") for p in paths))
             self.assertFalse((root / "docs" / "ar" / "tool.adoc").exists())
 
-    def test_apply_adds_linguas_po_and_man(self) -> None:
+    def test_apply_adds_linguas_po_not_man_scaffold(self) -> None:
         import tempfile
 
         with tempfile.TemporaryDirectory() as td:
@@ -61,9 +62,7 @@ class IzeI18nCoverageTests(unittest.TestCase):
             linguas = (root / "po" / "LINGUAS").read_text(encoding="utf-8")
             self.assertIn("ar", linguas)
             self.assertTrue((root / "po" / "ar.po").is_file())
-            self.assertTrue((root / "docs" / "ar" / "tool.adoc").is_file())
-            # Legacy es covers es_MX; docs/es should be scaffolded if missing.
-            self.assertTrue((root / "docs" / "es" / "tool.adoc").is_file() or "es" in linguas)
+            self.assertFalse((root / "docs" / "ar" / "tool.adoc").is_file())
 
 
 if __name__ == "__main__":

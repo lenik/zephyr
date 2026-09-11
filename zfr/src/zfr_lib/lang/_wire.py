@@ -18,7 +18,7 @@ from ._spec import LangSpec, WireSpec
 def append_man_custom_target(meson: Path, name: str) -> None:
     """Register *name* for man page build.
 
-    Prefer appending to an existing ``man_puffs`` / foreach man loop so Meson
+    Prefer appending to an existing ``puffs`` / foreach man loop so Meson
     keeps a single foreach. Fall back to an individual ``custom_target``.
     """
     if not meson.is_file():
@@ -30,9 +30,9 @@ def append_man_custom_target(meson: Path, name: str) -> None:
     if re.search(r"""\+\s*['"]-man['"]""", text) and (
         f"'{name}'" in text or f'"{name}"' in text
     ):
-        # Name may already be in apps dict / list; if man_puffs exists, ensure listed.
+        # Name may already be in apps dict / list; if puffs exists, ensure listed.
         pass
-    m = re.search(r"man_puffs\s*=\s*\[([^\]]*)\]", text, re.S)
+    m = re.search(r"(?:man_)?puffs\s*=\s*\[([^\]]*)\]", text, re.S)
     if m:
         body = m.group(1)
         if re.search(rf"['\"]{re.escape(name)}['\"]", body):
@@ -44,7 +44,7 @@ def append_man_custom_target(meson: Path, name: str) -> None:
         meson.write_text(text[:insert] + addition + text[insert:], encoding="utf-8")
         return
     if re.search(r"""\+\s*['"]-man['"]""", text):
-        # Foreach without man_puffs (e.g. apps.keys()) — apps list wiring is
+        # Foreach without puffs (e.g. apps.keys()) — apps list wiring is
         # handled separately; do not add a duplicate individual target.
         return
     block = f"""

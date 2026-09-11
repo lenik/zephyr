@@ -126,6 +126,9 @@ def commit_changes(ize: "Ize") -> None:
     bump_for_commit(ize)
 
     git("add", "-A")
+    # Cursor rules must be force-added when a prior .gitignore ignored .cursor/.
+    if (ize.root / ".cursor").exists():
+        git("add", "-f", "--", ".cursor/")
     staged = git("diff", "--cached", "--quiet", check=False)
     if staged.returncode == 0:
         print(

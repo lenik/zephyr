@@ -193,21 +193,14 @@ class ZephyrDetectTests(unittest.TestCase):
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
         self.assertIn("lang=python", proc.stdout)
         self.assertIn("role=package", proc.stdout)
-        self.assertRegex(proc.stdout, r"errors=0\s+warnings=\d+")
-        # Catalogs may still carry msgid-copy placeholders (ZL093 warn only).
-        self.assertNotRegex(proc.stdout, r"^error\s+", proc.stdout)
+        self.assertRegex(proc.stdout, r"errors=0\s+warnings=0")
 
     def test_lint_zfr_cli_is_clean(self) -> None:
         proc = run_zephyr("lint", cwd=ROOT, check=False)
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
         self.assertIn("lang=python", proc.stdout)
         self.assertIn("role=package", proc.stdout)
-        self.assertRegex(proc.stdout, r"status: PASS\s+errors=0")
-        # No hard errors; optional warn is i18n.po.placeholder (msgid-copy/empty).
-        for line in proc.stdout.splitlines():
-            if line.startswith("warn"):
-                self.assertIn("i18n.po.placeholder", line)
-            self.assertFalse(line.startswith("error"))
+        self.assertRegex(proc.stdout, r"status: PASS\s+errors=0\s+warnings=0")
 
     def test_detect_zfr_cli_python(self) -> None:
         proc = run_zephyr("detect", cwd=ROOT)

@@ -167,8 +167,9 @@ def check_meson(root: Path, lang: str) -> list[Finding]:
                 "meson.foreach_puff",
                 _("meson.build has %s foreach puff man loops; keep exactly one") % n_foreach,
                 rel,
-                fix=_("Merge into a single `foreach puff : man_puffs` (or apps.keys()) loop. "
-                "`zfr ize` consolidates duplicate man_puffs foreach blocks."),
+                fix=_("Merge into a single `foreach puff : puffs` (or apps.keys()) loop. "
+                "`zfr ize` consolidates duplicate puffs foreach blocks "
+                "(legacy man_puffs is rewritten to puffs)."),
             )
         )
     elif n_foreach == 1:

@@ -3,6 +3,19 @@ zephyr (2.8.16) testing; urgency=medium
   * lint ZL093: msgid-copy is intentional for packaging field/snippet
     literals (same as zh_CN keep-English); warn only on empty msgstr or
     real omissions (msgid-copy where a primary locale translated).
+  * ize: do not create locale-suffixed bash completions; remove mistaken
+    stubs.
+  * ize: stop scaffolding docs/<locale>/*.adoc copies (missing man
+    translations are lint-only).
+  * ize/create: drop .cursor from .gitignore; git add -f .cursor/ when
+    installing rules.
+  * ize/create: substitute project name into LICENSE (fix unsubstituted
+    zephyr@ email).
+  * ize/meson: rename man_puffs foreach list to puffs (legacy man_puffs
+    still merged).
+  * i18n: fill omitted gettext msgstr across non-zh catalogs (ZL093
+    clean).
+  * tests: expect zfr self-lint warnings=0 again after PO fill.
 
  -- Lenik (谢继雷) <lenik@bodz.net>  Sat, 12 Sep 2026 00:25:54 +0800
 

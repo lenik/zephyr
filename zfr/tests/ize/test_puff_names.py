@@ -70,6 +70,29 @@ class PuffNamesTests(unittest.TestCase):
             self.assertFalse(any(root.glob("helper.bash")))
             self.assertFalse(any(root.rglob("libtool*.bash")))
 
+    def test_locale_suffixed_stems_are_not_puffs(self) -> None:
+        from zfr_lib.ize.engine import Ize
+        from zfr_lib.ize.util import _puff_names
+
+        with tempfile.TemporaryDirectory(prefix="zfr-locpuff-") as tmp:
+            root = Path(tmp)
+            docs = root / "docs"
+            docs.mkdir()
+            (docs / "tool.adoc").write_text("= tool(1)\n\n== NAME\ntool\n", encoding="utf-8")
+            (docs / "tool-ar.adoc").write_text("= tool(1)\n\n== NAME\ntool\n", encoding="utf-8")
+            (docs / "tool-zh_CN.adoc").write_text(
+                "= tool(1)\n\n== NAME\ntool\n", encoding="utf-8"
+            )
+            comp = root / "completions"
+            comp.mkdir()
+            (comp / "tool-ar.bash").write_text("complete -F _longopt tool-ar\n", encoding="utf-8")
+            (comp / "tool.bash").write_text("complete -F _longopt tool\n", encoding="utf-8")
+            self.assertEqual(_puff_names(root), ["tool"])
+            ize = Ize(root, lang="python", dry_run=False)
+            ize.ensure_completion()
+            self.assertFalse((comp / "tool-ar.bash").is_file())
+            self.assertTrue((comp / "tool.bash").is_file())
+
 
 if __name__ == "__main__":
     unittest.main()

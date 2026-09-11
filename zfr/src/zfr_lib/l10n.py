@@ -259,6 +259,34 @@ def all_locales() -> tuple[str, ...]:
     return (SOURCE_LOCALE,) + primary_locales() + derived_locales()
 
 
+def _locale_tag_set() -> frozenset[str]:
+    """All known gettext locale tags (including legacy aliases)."""
+    tags: set[str] = set(all_locales())
+    tags.update(LEGACY_LOCALE_ALIASES)
+    tags.update(LEGACY_LOCALE_ALIASES.values())
+    tags.update(DERIVE_PARENT)
+    tags.update(DERIVE_PARENT.values())
+    tags.discard(SOURCE_LOCALE)
+    tags.discard("")
+    return frozenset(tags)
+
+
+def stem_locale_suffix(stem: str) -> tuple[str, str] | None:
+    """If *stem* is ``cmd-LOCALE`` (e.g. ``tool-zh_CN``), return ``(cmd, locale)``.
+
+    Used so ize does not treat locale-suffixed man/completion stems as CLI puffs.
+    """
+    if not stem or "-" not in stem:
+        return None
+    for tag in sorted(_locale_tag_set(), key=len, reverse=True):
+        suffix = f"-{tag}"
+        if stem.endswith(suffix) and len(stem) > len(suffix):
+            base = stem[: -len(suffix)]
+            if base and not base.endswith("-"):
+                return base, tag
+    return None
+
+
 def canonical_locale(tag: str) -> str:
     """Resolve legacy aliases to canonical primary names."""
     loc = normalize_locale(tag)

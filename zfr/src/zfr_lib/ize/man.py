@@ -88,7 +88,7 @@ def has_foreach_man_targets(text: str) -> bool:
 def count_foreach_puff_man_loops(text: str) -> int:
     """Count Meson ``foreach`` loops that build *puff* man pages.
 
-    Counts ``foreach puff : man_puffs`` / ``apps.keys()`` style loops that use
+    Counts ``foreach puff : puffs`` / ``apps.keys()`` style loops that use
     ``puff + '-man'``. Ignores locale i18n loops (``foreach lang : …``) and
     unrelated configure/completion foreach blocks.
     """
@@ -104,21 +104,21 @@ def count_foreach_puff_man_loops(text: str) -> int:
         if re.search(rf"""\b{re.escape(var)}\s*\+\s*['"]-man['"]""", body):
             count += 1
             continue
-        if re.search(r"\bman_puffs\b", source) and "custom_target" in body:
+        if re.search(r"\b(?:man_)?puffs\b", source) and "custom_target" in body:
             count += 1
     return count
 
 
 _MAN_PUFFS_FOREACH_RE = re.compile(
-    r"\nman_puffs\s*=\s*\[(?P<body>[^\]]*)\]\s*\n"
-    r"foreach\s+\w+\s*:\s*man_puffs\s*\n"
+    r"\n(?:man_)?puffs\s*=\s*\[(?P<body>[^\]]*)\]\s*\n"
+    r"foreach\s+\w+\s*:\s*(?:man_)?puffs\s*\n"
     r"(?P<loop>.*?)\bendforeach\b",
     re.DOTALL,
 )
 
 
 def merge_foreach_man_loops(text: str, stems: list[str] | None = None) -> tuple[str, list[str]]:
-    """Collapse multiple ``man_puffs`` foreach blocks into one.
+    """Collapse multiple ``puffs`` foreach blocks into one.
 
     Also folds leftover individual ``'stem-man'`` targets into that single loop.
     """
@@ -137,10 +137,10 @@ def merge_foreach_man_loops(text: str, stems: list[str] | None = None) -> tuple[
                     collected.append(stem)
             if loop_body is None:
                 loop_body = m.group("loop")
-        # Drop all man_puffs foreach blocks; we'll re-append one.
+        # Drop all puffs foreach blocks; we'll re-append one.
         text = _MAN_PUFFS_FOREACH_RE.sub("\n", text)
         if len(matches) > 1:
-            details.append(f"merge {len(matches)} man_puffs foreach loops")
+            details.append(f"merge {len(matches)} puffs foreach loops")
 
     text, removed = strip_individual_man_targets(text)
     for stem in removed:
@@ -149,7 +149,7 @@ def merge_foreach_man_loops(text: str, stems: list[str] | None = None) -> tuple[
     if removed:
         details.append("fold individual man targets into foreach")
 
-    # Also count non-man_puffs foreach man loops (apps.keys()); do not duplicate.
+    # Also count non-puffs foreach man loops (apps.keys()); do not duplicate.
     other = count_foreach_puff_man_loops(text)
     if other:
         # Already have a foreach man loop (e.g. apps.keys()) — just strip individuals.
@@ -184,10 +184,10 @@ def man_foreach_block(stems: list[str], *, section: str = "1") -> str:
         return ""
     quoted = ",\n    ".join(f"'{s}'" for s in stems)
     return f"""
-man_puffs = [
+puffs = [
     {quoted},
 ]
-foreach puff : man_puffs
+foreach puff : puffs
   custom_target(
     puff + '-man',
     input: 'docs' / (puff + '.adoc'),
@@ -213,13 +213,15 @@ endforeach
 def ensure_meson_man_targets(text: str, stems: list[str], *, section: str = "1") -> tuple[str, list[str]]:
     """Ensure English man custom_targets exist; prefer one foreach, never duplicate.
 
-    Merges multiple ``man_puffs`` foreach blocks and folds individual
+    Merges multiple ``puffs`` foreach blocks and folds individual
     ``'stem-man'`` targets into a single loop. Leaves an existing
     ``apps.keys()``-style foreach alone (aside from stripping individuals).
     """
     details: list[str] = []
 
-    if "man_puffs" in text or len(list(_MAN_PUFFS_FOREACH_RE.finditer(text))) > 1:
+    if re.search(r"\b(?:man_)?puffs\s*=", text) or len(
+        list(_MAN_PUFFS_FOREACH_RE.finditer(text))
+    ) > 1:
         merged, merge_notes = merge_foreach_man_loops(text, stems=stems)
         details.extend(merge_notes)
         return merged, details

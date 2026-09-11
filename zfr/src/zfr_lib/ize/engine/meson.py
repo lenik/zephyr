@@ -202,6 +202,8 @@ endforeach
         ize.write_text(path, text if text.endswith("\n") else text + "\n", ", ".join(details))
 
 def convert_manpages(ize: "Ize") -> None:
+    from ...l10n import stem_locale_suffix
+
     docs = ize.root / "docs"
     man_re = re.compile(r"^(?P<stem>.+)\.(?P<section>[1-9][a-zA-Z]*)(?:\.in)?$")
     for path in list(iter_files(ize.root)):
@@ -213,13 +215,21 @@ def convert_manpages(ize: "Ize") -> None:
             continue
         stem = m.group("stem")
         section = m.group("section")
-        dest = docs / f"{stem}.adoc"
+        # Locale-named groff (cmd-ar.1) → docs/<locale>/cmd.adoc, not docs/cmd-ar.adoc.
+        loc_split = stem_locale_suffix(stem)
+        if loc_split is not None:
+            base, loc = loc_split
+            dest = docs / loc / f"{base}.adoc"
+            man_stem = base
+        else:
+            dest = docs / f"{stem}.adoc"
+            man_stem = stem
         if dest.is_file():
             if ize.verbose:
                 ize.note("skip", _rel(ize.root, dest), "adoc already exists")
             continue
         try:
-            adoc = convert_man_file(path, stem, section=section)
+            adoc = convert_man_file(path, man_stem, section=section)
         except OSError as e:
             ize.note("skip", _rel(ize.root, path), f"convert failed: {e}")
             continue

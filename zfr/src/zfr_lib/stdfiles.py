@@ -44,12 +44,23 @@ def githooks_pre_commit_src() -> Path | None:
     return None
 
 
-def install_license(dest: Path) -> Path | None:
+def install_license(dest: Path, *, project: str | None = None) -> Path | None:
+    """Install LICENSE, substituting template ``zephyr`` tokens for *project*."""
+    from . import apply_name_replacements, instantiation_pairs
+
     src = license_src()
     if src is None:
         return None
     dest_file = dest / "LICENSE"
-    shutil.copy2(src, dest_file)
+    text = src.read_text(encoding="utf-8")
+    name = project or dest.name
+    if name and name != "zephyr":
+        text = apply_name_replacements(text, instantiation_pairs(name))
+    dest_file.write_text(text, encoding="utf-8")
+    try:
+        shutil.copystat(src, dest_file)
+    except OSError:
+        pass
     return dest_file
 
 
@@ -65,10 +76,13 @@ def install_githooks(dest: Path) -> Path | None:
     return dest_hook
 
 
-def install_std_files(dest: Path) -> list[Path]:
+def install_std_files(dest: Path, *, project: str | None = None) -> list[Path]:
     """Install/overwrite LICENSE, .githooks/pre-commit, and cursor rules."""
     installed: list[Path] = []
-    for fn in (install_license, install_githooks, install_cursor_rules):
+    lic = install_license(dest, project=project or dest.name)
+    if lic is not None:
+        installed.append(lic)
+    for fn in (install_githooks, install_cursor_rules):
         path = fn(dest)
         if path is not None:
             installed.append(path)

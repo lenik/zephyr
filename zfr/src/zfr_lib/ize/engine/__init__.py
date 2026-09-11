@@ -132,7 +132,6 @@ class Ize:
             self._step("ize.subst", self.subst_versions)
         self._step("ize.c.bas", self.ensure_c_bas)
         self._step("ize.i18n.coverage", self.ensure_i18n_coverage)
-        self._step("ize.i18n.man-locale", self.ensure_man_locale_coverage)
         self._step("ize.i18n.po-nowrap", self.ensure_po_no_wrap)
         self._step("ize.i18n.derive", self.derive_i18n_locales)
         self._step("ize.rpm", self.ensure_rpm)
@@ -322,10 +321,33 @@ class Ize:
         """Ensure a bash-completion stub exists for each command puff.
 
         Stubs live under ``completions/`` so a root ``*.bash`` file does not
-        flip language detection toward bash.
+        flip language detection toward bash. Locale-suffixed names
+        (``cmd-ar.bash``) are never created — bash completion is not translated.
         """
+        from ...l10n import stem_locale_suffix
+
+        # Drop mistaken locale-suffixed stubs from older ize runs.
+        comp = self.root / "completions"
+        if comp.is_dir():
+            for p in sorted(comp.iterdir()):
+                if not p.is_file():
+                    continue
+                stem = p.stem
+                if stem.endswith(".bash"):
+                    stem = Path(stem).stem
+                if stem_locale_suffix(stem) is None:
+                    continue
+                rel = str(p.relative_to(self.root))
+                if self.dry_run:
+                    self.note("would-update", rel, "remove locale-suffixed completion")
+                    continue
+                p.unlink(missing_ok=True)
+                self.note("update", rel, "remove locale-suffixed completion")
+
         puffs = _puff_names(self.root) or [self.name]
         for puff in puffs:
+            if stem_locale_suffix(puff) is not None:
+                continue
             dest = self.root / f"{puff}.bash"
             if dest.is_file():
                 continue
@@ -372,7 +394,14 @@ class Ize:
 
         Cursor rules are always refreshed from the running zfr's shipped
         ``cursor-rules/`` so projects pick up rule updates on ``zfr ize``.
+        Also drops ``.cursor`` from ``.gitignore`` and ``git add -f`` the
+        installed rules so they are trackable.
         """
+        from ... import apply_name_replacements, instantiation_pairs
+        from .gitignore import ensure_gitignore_tracks_cursor
+
+        ensure_gitignore_tracks_cursor(self)
+
         sources = std_file_sources()
         if not sources:
             return
@@ -380,20 +409,32 @@ class Ize:
         for rel, src in sources.items():
             dest = self.root / rel
             existed = dest.is_file()
-            same = existed and dest.read_bytes() == src.read_bytes()
+            if rel == "LICENSE":
+                expected = src.read_text(encoding="utf-8")
+                if self.name and self.name != "zephyr":
+                    expected = apply_name_replacements(
+                        expected, instantiation_pairs(self.name)
+                    )
+                same = existed and dest.read_text(encoding="utf-8") == expected
+            else:
+                same = existed and dest.read_bytes() == src.read_bytes()
             if same:
                 if self.verbose:
                     self.note("skip", rel, "already up to date")
                 continue
             dirty = True
             action = "update" if existed else "add"
-            detail = "cursor-rules" if rel.startswith(".cursor/rules/") else "standard file"
+            if rel == "LICENSE":
+                detail = "standard file (name-substituted)"
+            elif rel.startswith(".cursor/rules/"):
+                detail = "cursor-rules"
+            else:
+                detail = "standard file"
             self.note(action, rel, detail)
-        if not dirty:
-            return
         if self.dry_run:
             return
-        install_std_files(self.root)
+        if dirty:
+            install_std_files(self.root, project=self.name)
         git = shutil.which("git")
         if git and (self.root / ".git").exists():
             subprocess.run(
@@ -401,6 +442,15 @@ class Ize:
                 cwd=self.root,
                 check=False,
             )
+            if (self.root / ".cursor" / "rules").is_dir():
+                subprocess.run(
+                    [git, "add", "-f", "--", ".cursor/"],
+                    cwd=self.root,
+                    check=False,
+                    capture_output=True,
+                )
+                if self.verbose or dirty:
+                    self.note("update", ".cursor/", "git add -f")
 
     def patch_meson(self) -> None:
         from .meson import patch_meson_build

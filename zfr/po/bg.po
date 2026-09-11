@@ -106,7 +106,6 @@ msgid "Print the detected language of the current project and layout details on 
 msgstr "Извежда разпознатия език на текущия проект и подробности за оформлението на stderr."
 
 #: src/zfr_lib/dist.py:60
-#, fuzzy, python-format
 msgid "write the archive into DIR (default: meson-dist, or %%_topdir/SOURCES with --rpm; usually $HOME/rpmbuild)"
 msgstr "запис на архива в DIR (по подразбиране: meson-dist или %_topdir/SOURCES ($HOME/rpmbuild) с --rpm)"
 
@@ -119,7 +118,6 @@ msgid "archive format (default: xz)"
 msgstr "формат на архива (по подразбиране: xz)"
 
 #: src/zfr_lib/dist.py:86
-#, fuzzy, python-format
 msgid "name the archive NAME-VERSION.tar.xz and write it to %%_topdir/SOURCES ($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr "именува архива NAME-VERSION.tar.xz и го записва в %_topdir/SOURCES ($HOME/rpmbuild), освен ако е зададено -o"
 
@@ -141,130 +139,129 @@ msgstr "Създава изходен архив на текущия zephyr пр
 
 #: src/zfr_lib/i18n/cmd.py:42
 msgid "no implemented locales (po/LINGUAS + po/*.po)"
-msgstr "no implemented locales (po/LINGUAS + po/*.po)"
+msgstr "няма прилаган локали (po/LINGUAS + po/*.po)"
 
 #: src/zfr_lib/i18n/cmd.py:47
 msgid "  [derived]"
-msgstr "  [derived]"
+msgstr "  [производен]"
 
 #: src/zfr_lib/i18n/cmd.py:57
 #, python-format
 msgid "tier %(tier)s"
-msgstr "tier %(tier)s"
+msgstr "Ниво %(tier)s"
 
 #: src/zfr_lib/i18n/cmd.py:60
 #, python-format
 msgid "derived from: %(parent)s"
-msgstr "derived from: %(parent)s"
+msgstr "от: %(parent)s"
 
 #: src/zfr_lib/i18n/cmd.py:63
 #, python-format
 msgid "fallback chain: %(chain)s"
-msgstr "fallback chain: %(chain)s"
+msgstr "ланцовка за презход: %(chain)s"
 
 #: src/zfr_lib/i18n/cmd.py:66
 #, python-format
 msgid "children (->): %(kids)s"
-msgstr "children (->): %(kids)s"
+msgstr "Деца (->): %(kids)s"
 
 #: src/zfr_lib/i18n/cmd.py:70
 #, python-format
 msgid "catalog: %(path)s"
-msgstr "catalog: %(path)s"
+msgstr "Каталог: %(path)s"
 
 #: src/zfr_lib/i18n/cmd.py:72
 #, python-format
 msgid "po stats: %(translated)d/%(total)d translated, %(missing)d missing"
-msgstr "po stats: %(translated)d/%(total)d translated, %(missing)d missing"
+msgstr "po статистики: %(translated)d/%(total)d преведен, %(missing)d липсва"
 
 #: src/zfr_lib/i18n/cmd.py:75
 msgid "no .po catalog in this project"
-msgstr "no .po catalog in this project"
+msgstr "не .po каталога в този проект"
 
 #: src/zfr_lib/i18n/cmd.py:93
 #, python-format
 msgid "locale not found: %s"
-msgstr "locale not found: %s"
+msgstr "локално не е намерено: %s"
 
 #: src/zfr_lib/i18n/cmd.py:147
 #, python-format
 msgid "would build %d derived locale file(s)"
-msgstr "would build %d derived locale file(s)"
+msgstr "бих изградил %d достигнато локално(и) файл(и)"
 
 #: src/zfr_lib/i18n/cmd.py:167
 msgid "manage implemented gettext locales"
-msgstr "manage implemented gettext locales"
+msgstr "управляване на изпълнени gettext локали"
 
 #: src/zfr_lib/i18n/cmd.py:169
 msgid "List, add, delete, and build derived locales in the current project. Use zfr translate to query or update message strings."
-msgstr "List, add, delete, and build derived locales in the current project. Use zfr translate to query or update message strings."
+msgstr "Списък, добавяне, изтриване и изградяне на използвани локали в текущия проект. Използвайте zfr преводите за запитване или обновяване на низите на съобщенията."
 
 #: src/zfr_lib/i18n/cmd.py:179
 msgid "list all implemented locales in this project"
-msgstr "list all implemented locales in this project"
+msgstr "списък на всички изпълнени локали в този проект"
 
 #: src/zfr_lib/i18n/cmd.py:185
 msgid "delete a locale (LINGUAS, .po, docs/)"
-msgstr "delete a locale (LINGUAS, .po, docs/)"
+msgstr "изтриване на локална локална (LINGUAS, .po, docs/)"
 
 #: src/zfr_lib/i18n/cmd.py:191
 msgid "add a new locale"
-msgstr "add a new locale"
+msgstr "Добавяне на нов локал"
 
 #: src/zfr_lib/i18n/cmd.py:197
 msgid "build derived locale PO/man files from parents (skip locales in LINGUAS)"
-msgstr "build derived locale PO/man files from parents (skip locales in LINGUAS)"
+msgstr "изгради локално PO/man файлове от родителите (скопирани локали в LINGUAS)"
 
 #: src/zfr_lib/i18n/cmd.py:202
 msgid "output directory for derived .po files (default: build/po or $MESON_BUILD_ROOT/po)"
-msgstr "output directory for derived .po files (default: build/po or $MESON_BUILD_ROOT/po)"
+msgstr "директориен изход за изпълнени файлове .po (подразделен: build/po или $MESON_BUILD_ROOT/po)"
 
 #: src/zfr_lib/i18n/cmd.py:207
 msgid "write a stamp file listing derived paths (for Meson custom_target)"
-msgstr "write a stamp file listing derived paths (for Meson custom_target)"
+msgstr "записване на списъка на лента на файловете на излизани пътувания (за Meson custom_target)"
 
 #: src/zfr_lib/i18n/cmd.py:212
 msgid "with --build, also msgfmt derived .po into LC_MESSAGES (for Meson)"
-msgstr "with --build, also msgfmt derived .po into LC_MESSAGES (for Meson)"
+msgstr "с --build, също msgfmt, изглеждано .po в LC_MESSAGES (за Meson)"
 
 #: src/zfr_lib/i18n/cmd.py:217
 msgid "gettext domain for --compile-mo / --install-derived"
-msgstr "gettext domain for --compile-mo / --install-derived"
+msgstr "Домен gettext за --compile-mo / --install-derived"
 
 #: src/zfr_lib/i18n/cmd.py:223
 msgid "install derived .mo from --po-dir into $MESON_INSTALL_DESTDIR_PREFIX (Meson add_install_script)"
-msgstr "install derived .mo from --po-dir into $MESON_INSTALL_DESTDIR_PREFIX (Meson add_install_script)"
+msgstr "инсталиране .mo от --po-dir в $MESON_INSTALL_DESTDIR_PREFIX (Meson add_install_script)"
 
 #: src/zfr_lib/i18n/cmd.py:231
 msgid "with --install-derived, locale subdirectory under prefix (default: share/locale)"
-msgstr "with --install-derived, locale subdirectory under prefix (default: share/locale)"
+msgstr "с --install-derived, локална поддиректура под prefix (предвиден: share/locale)"
 
 #: src/zfr_lib/i18n/cmd.py:233
 msgid "with --build, print only"
-msgstr "with --build, print only"
+msgstr "С --build, само отпечатък"
 
 #: src/zfr_lib/i18n/cmd.py:234
 msgid "with --build, overwrite existing"
-msgstr "with --build, overwrite existing"
+msgstr "с --build, препишете съществуващи"
 
 #: src/zfr_lib/i18n/cmd.py:235
 msgid "locale to inspect"
-msgstr "locale to inspect"
+msgstr "локално за проверка"
 
 #: src/zfr_lib/i18n/cmd.py:241
 msgid "--install-derived requires --po-dir and --domain"
-msgstr "--install-derived requires --po-dir and --domain"
+msgstr "--install-derived изисква --po-dir и --domain"
 
 #: src/zfr_lib/ize/engine/__init__.py:85
 msgid "suppressed via -u/--uncheck"
-msgstr "suppressed via -u/--uncheck"
+msgstr "потиснато чрез -u/--uncheck"
 
 #: src/zfr_lib/ize/__init__.py:74
 msgid "refactor this project to current zephyr style"
 msgstr "рефакториране на този проект към текущия zephyr стил"
 
 #: src/zfr_lib/ize/__init__.py:75
-#, fuzzy
 msgid "Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, Meson version substitutions, and lint-level gettext/man locale coverage (LINGUAS, .po, docs/<locale>). Walks from cwd toward parents."
 msgstr "Рефакторира текущия проект според актуалния zephyr стил: липсващи debian/rpm файлове, meson цели, AsciiDoc man страници и Meson замествания на версии. Търси нагоре от cwd."
 
@@ -279,19 +276,19 @@ msgstr "извеждане на планираните промени без з�
 
 #: src/zfr_lib/ize/__init__.py:85
 msgid "list numbered ize standards (ZI*) as a table and exit"
-msgstr "list numbered ize standards (ZI*) as a table and exit"
+msgstr "списък на номерирани стандарти на изиза (ZI*) като таблица и изход"
 
 #: src/zfr_lib/ize/__init__.py:91
 msgid "show details for ize standard NUM (e.g. ZI015, 15) and exit"
-msgstr "show details for ize standard NUM (e.g. ZI015, 15) and exit"
+msgstr "показате подробности за изизане стандарт NUM (например ZI015, 15) и излез"
 
 #: src/zfr_lib/ize/__init__.py:98
 msgid "bump patch version (debian/changelog + VERSION), git add -A, and commit ize changes with a verbose message"
-msgstr "bump patch version (debian/changelog + VERSION), git add -A, and commit ize changes with a verbose message"
+msgstr "версия на bump plash (debian/changelog + VERSION), git добавя -A и издаване на промени с словно съобщение"
 
 #: src/zfr_lib/ize/__init__.py:107
 msgid "changelog author for --commit (Name or 'Name <email>'); default: reuse the previous debian/changelog trailer"
-msgstr "changelog author for --commit (Name or 'Name <email>'); default: reuse the previous debian/changelog trailer"
+msgstr "автор на изменение за --commit (Име или 'Име <email>'); размер: възстановяване на предишния debian/changelog приема"
 
 #: src/zfr_lib/ize/__init__.py:111
 msgid "also print skipped files"
@@ -299,7 +296,7 @@ msgstr "извеждане и на пропуснатите файлове"
 
 #: src/zfr_lib/ize/__init__.py:117
 msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
-msgstr "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgstr "изпълнявайте 2meson за превъртане Autotools/CMake на Meson, когато имате (предвиден: on)"
 
 #: src/zfr_lib/ize/__init__.py:119
 msgid "do not convert groff .1 man pages to docs/*.adoc"
@@ -311,7 +308,7 @@ msgstr "без преобразуване на твърдо кодирани в�
 
 #: src/zfr_lib/ize/__init__.py:127
 msgid "suppress ize rule ID(s) or code(s), comma-separated (repeatable)"
-msgstr "suppress ize rule ID(s) or code(s), comma-separated (repeatable)"
+msgstr "ID(и) правила или код(и), кома-separated (възможно)"
 
 #: src/zfr_lib/ize/__init__.py:129 src/zfr_lib/lint/__init__.py:179
 #: src/zfr_lib/translate/__init__.py:211
@@ -321,7 +318,7 @@ msgstr "CSR (console SGR) подчертаване (по подразбиран�
 #: src/zfr_lib/ize/__init__.py:141
 #, python-format
 msgid "unknown ize standard: %s"
-msgstr "unknown ize standard: %s"
+msgstr "неизвестен ize стандарт: %s"
 
 #: src/zfr_lib/lang/antlr.py:42 src/zfr_lib/lang/as.py:30
 #: src/zfr_lib/lang/bison.py:38 src/zfr_lib/lang/clib.py:37
@@ -355,30 +352,27 @@ msgid "src scripts: %s"
 msgstr "скриптове в src: %s"
 
 #: src/zfr_lib/lang/bash.py:78
-#, fuzzy, python-format
 msgid "root scripts: %s"
 msgstr "скриптове в src: %s"
 
 #: src/zfr_lib/lang/bash.py:89
 #, python-format
 msgid "setup-only package (%s); no bindir script puffs"
-msgstr "setup-only package (%s); no bindir script puffs"
+msgstr "настройване -only пакет (%s); без bindir скриптни бройки"
 
 #: src/zfr_lib/lang/bash.py:105
 msgid "Meson executable + .c present; script .in not required"
-msgstr "Meson executable + .c present; script .in not required"
+msgstr "Meson executable + .c приложение; сценарий .не е необходимо"
 
 #: src/zfr_lib/lang/bash.py:114
 msgid "no configure_file/executable; script .in not required"
-msgstr "no configure_file/executable; script .in not required"
+msgstr "не е нужно configure_file/executable; сценария .in"
 
 #: src/zfr_lib/lang/bash.py:121
-#, fuzzy
 msgid "no src/*.in or root *.in scripts"
 msgstr "няма скриптове src/*.in"
 
 #: src/zfr_lib/lang/bash.py:124
-#, fuzzy
 msgid "Keep configured scripts as src/<puff>.in (preferred) or <puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
 msgstr "Дръжте конфигурираните скриптове като src/<puff>.in с @PACKAGE@/@VERSION@ и meson configure_file + install_mode rwxr-xr-x."
 
@@ -388,72 +382,71 @@ msgstr "Добавете tests/ с проверки на фикстури за d
 
 #: src/zfr_lib/lang/_c_bas.py:187
 msgid "no int main() in src/; skip bas i18n main checks"
-msgstr "no int main() in src/; skip bas i18n main checks"
+msgstr "няма инт майн () в src/; прескачайте основни проверки на бас i18n"
 
 #: src/zfr_lib/lang/_c_bas.py:208
 #, python-format
 msgid "main missing bas i18n setup: %s"
-msgstr "main missing bas i18n setup: %s"
+msgstr "основна липсваща баз i18n настройка: %s"
 
 #: src/zfr_lib/lang/_c_bas.py:211
 msgid "In main: #include <bas/locale/i18n.h> and <bas/proc/env.h>; const char *exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR from meson config.h). Run `zfr ize`."
-msgstr "In main: #include <bas/locale/i18n.h> and <bas/proc/env.h>; const char *exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR from meson config.h). Run `zfr ize`."
+msgstr "В главно: #include <bas/locale/i18n.h> и <bas/proc/env.h>; конст знак * exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR от meson config.h). Изпълни `zfr ize`."
 
 #: src/zfr_lib/lang/_c_bas.py:222
 msgid "bas i18n main setup (self_exe + init_i18n)"
-msgstr "bas i18n main setup (self_exe + init_i18n)"
+msgstr "основна настройка на баз i18n (self_exe + init_i18n)"
 
 #: src/zfr_lib/lang/_c_bas.py:233
 msgid "no define_logger() in src/"
-msgstr "no define_logger() in src/"
+msgstr "няма define_logger() в src/"
 
 #: src/zfr_lib/lang/_c_bas.py:236
 msgid "In one .c/.cpp: #include <bas/log/deflog.h> then define_logger(); libraries may use __attribute__((weak)) define_logger(); Run `zfr ize`."
-msgstr "In one .c/.cpp: #include <bas/log/deflog.h> then define_logger(); libraries may use __attribute__((weak)) define_logger(); Run `zfr ize`."
+msgstr "В един .c/.cpp: #include <bas/log/deflog.h> след това define_logger(); библиотеки могат да използват _attribute_(feak) define_logger(); Изпълни `zfr ize`."
 
 #: src/zfr_lib/lang/_c_bas.py:250
-#, fuzzy
 msgid "define_logger() present"
 msgstr "project() е налице"
 
 #: src/zfr_lib/lang/_c_bas.py:252
 msgid "weak define_logger() present (library)"
-msgstr "weak define_logger() present (library)"
+msgstr "има weak define_logger() (библиотека)"
 
 #: src/zfr_lib/lang/_c_bas.py:258
 msgid "define_logger() without #include <bas/log/deflog.h>"
-msgstr "define_logger() without #include <bas/log/deflog.h>"
+msgstr "define_logger () без #include <bas/log/deflog.h>"
 
 #: src/zfr_lib/lang/_c_bas.py:260
 msgid "Add #include <bas/log/deflog.h> before define_logger();"
-msgstr "Add #include <bas/log/deflog.h> before define_logger();"
+msgstr "Добавяне #include <bas/log/deflog.h> преди define_logger();"
 
 #: src/zfr_lib/lang/_c_bas.py:276
 msgid "meson.build missing LOCALEDIR in config.h"
-msgstr "meson.build missing LOCALEDIR in config.h"
+msgstr "meson.build липсва LOCALEDIR в конфигурация.h"
 
 #: src/zfr_lib/lang/_c_bas.py:279
 msgid "localedir = prefix / get_option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); Run `zfr ize`."
-msgstr "localedir = prefix / get_option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); Run `zfr ize`."
+msgstr "localedir = prefix / get_option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); Изпълни `zfr ize`."
 
 #: src/zfr_lib/lang/_c_bas.py:289
 msgid "meson LOCALEDIR present"
-msgstr "meson LOCALEDIR present"
+msgstr "има meson LOCALEDIR"
 
 #: src/zfr_lib/lang/_c_bas.py:306
 #, python-format
 msgid "gettext string has leading/trailing spaces: %r"
-msgstr "gettext string has leading/trailing spaces: %r"
+msgstr "gettext Структура има leading/trailing простори: %r"
 
 #: src/zfr_lib/lang/_c_bas.py:310
 msgid "Keep padding outside _(): e.g. fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\n\"), out);"
 msgstr ""
-"Keep padding outside _(): e.g. fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\\n"
+"Дръжте на падификация във _(): например fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\\n"
 "\"), out);"
 
 #: src/zfr_lib/lang/_c_bas.py:320
 msgid "gettext _() strings have no leading/trailing spaces"
-msgstr "gettext _() strings have no leading/trailing spaces"
+msgstr "gettext _ () нитове няма leading/trailing простори"
 
 #: src/zfr_lib/lang/clib.py:45 src/zfr_lib/lang/cpplib.py:45
 #: src/zfr_lib/lang/cpp.py:32 src/zfr_lib/lang/c.py:32
@@ -587,7 +580,7 @@ msgstr "Architecture: all  (скриптове) или any (компилиран
 #: src/zfr_lib/lint/debian.py:91
 #, python-format
 msgid "Architecture: %s (bash + Meson executable)"
-msgstr "Architecture: %s (bash + Meson executable)"
+msgstr "Architecture: %s (баш + Meson executable)"
 
 #: src/zfr_lib/lint/debian.py:100
 #, python-format
@@ -609,7 +602,7 @@ msgstr "Architecture: any"
 
 #: src/zfr_lib/lint/debian.py:123
 msgid "Architecture: all but Meson has executable(); ELF binaries need Architecture: any (same class of bug as RPM BuildArch: noarch)"
-msgstr "Architecture: all but Meson has executable(); ELF binaries need Architecture: any (same class of bug as RPM BuildArch: noarch)"
+msgstr "Architecture: всичко, освен Meson, има executable(); ELF бинарите трябва Architecture: всяка (в същото клас на буба като RPM BuildArch: noarch)"
 
 #: src/zfr_lib/lint/debian.py:133
 #, python-format
@@ -685,7 +678,7 @@ msgstr "VERSION съвпада с журнала %s"
 
 #: src/zfr_lib/lint/debian.py:211
 msgid "bash-shlib used in sources but missing from Depends"
-msgstr "bash-shlib used in sources but missing from Depends"
+msgstr "bash-shlib, използвано в източници, но липсва от Depends"
 
 #: src/zfr_lib/lint/debian.py:213
 msgid "Depends: bash, bash-shlib, ${misc:Depends}"
@@ -697,93 +690,90 @@ msgstr "Depends включва bash-shlib"
 
 #: src/zfr_lib/lint/debian.py:225
 msgid "Depends lists bash-shlib but sources do not use it"
-msgstr "Depends lists bash-shlib but sources do not use it"
+msgstr "Depends списък bash-shlib, но източници не го използват"
 
 #: src/zfr_lib/lint/debian.py:227
 msgid "Drop bash-shlib from Depends unless scripts `. shlib` / shlib-import."
-msgstr "Drop bash-shlib from Depends unless scripts `. shlib` / shlib-import."
+msgstr "Спускай bash-shlib от Depends освен списъци `. shlib` / shlib-import."
 
 #: src/zfr_lib/lint/debian.py:237
 msgid "Priority: extra is deprecated"
-msgstr "Priority: extra is deprecated"
+msgstr "Priority: extra е остаряло"
 
 #: src/zfr_lib/lint/debian.py:239
 msgid "Priority: optional (run `zfr ize` to fix)."
-msgstr "Priority: optional (run `zfr ize` to fix)."
+msgstr "Priority: факулирано (поправяне на `zfr ize`)."
 
 #: src/zfr_lib/lint/debian.py:243
-#, fuzzy, python-format
 msgid "Priority: %s"
 msgstr "роля: %s"
 
 #: src/zfr_lib/lint/debian.py:250
 msgid "extended Description present"
-msgstr "extended Description present"
+msgstr "има разширен Description"
 
 #: src/zfr_lib/lint/debian.py:257
 msgid "Description missing extended paragraph"
-msgstr "Description missing extended paragraph"
+msgstr "Description няма разширен абзац"
 
 #: src/zfr_lib/lint/debian.py:259
 msgid "Add an indented continuation line after the synopsis (run `zfr ize`)."
-msgstr "Add an indented continuation line after the synopsis (run `zfr ize`)."
+msgstr "Добавяне на вграден продължаване след синопсиса (първи `zfr ize`)."
 
 #: src/zfr_lib/lint/gitignore.py:94
-#, fuzzy
 msgid "missing root .gitignore"
 msgstr "липсва Cargo.toml"
 
 #: src/zfr_lib/lint/gitignore.py:97
 msgid "Add a root .gitignore covering node_modules/, dist/, and other build artifacts. Component dirs (backend/, web/, …) should get their own .gitignore too."
-msgstr "Add a root .gitignore covering node_modules/, dist/, and other build artifacts. Component dirs (backend/, web/, …) should get their own .gitignore too."
+msgstr "Добавяне на корен .gitignore, покриващ node_modules/, dist/ и други артефакти за изгради. Компонентни директори (backend/, web/, ...) трябва да получат собствени си .gitignore."
 
 #: src/zfr_lib/lint/gitignore.py:107
 msgid "root .gitignore present"
-msgstr "root .gitignore present"
+msgstr "има root .gitignore"
 
 #: src/zfr_lib/lint/gitignore.py:116
 #, python-format
 msgid "root .gitignore missing common patterns: %s"
-msgstr "root .gitignore missing common patterns: %s"
+msgstr "корен .gitignore липсващи общи шаблони: %s"
 
 #: src/zfr_lib/lint/gitignore.py:118
 #, python-format
 msgid "Add %s to the project-root .gitignore."
-msgstr "Add %s to the project-root .gitignore."
+msgstr "Добавяне %s в проекта-root .gitignore."
 
 #: src/zfr_lib/lint/gitignore.py:126
 msgid "root .gitignore covers node_modules/ and dist/"
-msgstr "root .gitignore covers node_modules/ and dist/"
+msgstr "корен .gitignore покрива node_modules/ и dist/"
 
 #: src/zfr_lib/lint/gitignore.py:136
 #, python-format
 msgid "root .gitignore could also ignore: %s"
-msgstr "root .gitignore could also ignore: %s"
+msgstr "корен .gitignore може да игнорира: %s"
 
 #: src/zfr_lib/lint/gitignore.py:153
 #, python-format
 msgid "missing %s (component directory exists)"
-msgstr "missing %s (component directory exists)"
+msgstr "липсва %s (съвместното директорие съществува)"
 
 #: src/zfr_lib/lint/gitignore.py:155
 #, python-format
 msgid "Add %s covering: %s"
-msgstr "Add %s covering: %s"
+msgstr "Добави %s покриване: %s"
 
 #: src/zfr_lib/lint/gitignore.py:166
-#, fuzzy, python-format
 msgid "%s missing patterns: %s"
 msgstr "липсва %s"
 
 #: src/zfr_lib/lint/gitignore.py:168
 #, python-format
 msgid "Add to %s: %s"
-msgstr "Add to %s: %s"
+msgstr "Добавяне на %s: %s"
 
 #: src/zfr_lib/lint/gitignore.py:176
 #, python-format
 msgid "%s covers required patterns"
-msgstr "%s covers required patterns"
+msgstr "%s покрива изисквани шаблони"
 
 #: src/zfr_lib/lint/i18n_check.py:62
 #, python-format
@@ -825,12 +815,10 @@ msgid "po/LINGUAS missing %(level)s locale(s): %(locales)s"
 msgstr "в po/LINGUAS липсват локали за %(level)s: %(locales)s"
 
 #: src/zfr_lib/lint/i18n_check.py:127
-#, fuzzy, python-format
 msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
 msgstr "Ниво %(level)s изисква: %(locales)s (източник %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Добавете липсващите редове към LINGUAS и съответните po/<locale>.po."
 
 #: src/zfr_lib/lint/i18n_check.py:142
-#, fuzzy, python-format
 msgid "po/LINGUAS covers %s primary locale set"
 msgstr "po/LINGUAS покрива набора локали %s"
 
@@ -840,7 +828,6 @@ msgid "LINGUAS entries without po/<locale>.po: %s"
 msgstr "записи в LINGUAS без po/<locale>.po: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:161
-#, fuzzy
 msgid "For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U --no-wrap po/<locale>.po <domain>.pot"
 msgstr "За всеки локал: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
 
@@ -852,15 +839,15 @@ msgstr "налични .po файлове за локали %(level)s (%(count)d
 #: src/zfr_lib/lint/i18n_check.py:197
 #, python-format
 msgid "gettext catalogs use line wrapping: %s"
-msgstr "gettext catalogs use line wrapping: %s"
+msgstr "gettext Каталогите използват прекъсване на линия: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:199
 msgid "Run `zfr ize` (ZI016) or `msgcat --no-wrap -o file.po file.po` on each catalog; use msgmerge --no-wrap when updating from .pot."
-msgstr "Run `zfr ize` (ZI016) or `msgcat --no-wrap -o file.po file.po` on each catalog; use msgmerge --no-wrap when updating from .pot."
+msgstr "Изпълни `zfr ize` (ZI016) или `msgcat --no-wrap -o file.po file.po` на всяка каталога; използвайте msgmerge --no-wrap при обновяване от .pot."
 
 #: src/zfr_lib/lint/i18n_check.py:208
 msgid "gettext catalogs use --no-wrap (no line wrapping)"
-msgstr "gettext catalogs use --no-wrap (no line wrapping)"
+msgstr "gettext Каталогите използват --no-wrap (без препълнение на линията)"
 
 #: src/zfr_lib/lint/i18n_check.py:243
 #, python-format
@@ -888,7 +875,7 @@ msgstr "Преведете реда Name; не оставяйте английс
 
 #: src/zfr_lib/lint/i18n_check.py:276
 msgid "no po/: man locale translations not required"
-msgstr "no po/: man locale translations not required"
+msgstr "неpo/: Man locale преводите не се нуждае"
 
 #: src/zfr_lib/lint/identity.py:57
 #, python-format
@@ -944,7 +931,6 @@ msgid "validate project packaging and zephyr layout (walks parents from cwd)"
 msgstr "проверка на пакетирането и оформлението zephyr (търси нагоре от cwd)"
 
 #: src/zfr_lib/lint/__init__.py:120
-#, fuzzy
 msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain interactive shell. Override with -i/-I."
 msgstr "Проверява текущия zephyr проект за липсващи файлове и грешки в пакетирането/стила. Търси нагоре от cwd. CSR цветове, когато stdout е TTY."
 
@@ -962,11 +948,11 @@ msgstr "предупрежденията се третират като греш
 
 #: src/zfr_lib/lint/__init__.py:138
 msgid "list numbered lint standards (ZL*) as a table and exit"
-msgstr "list numbered lint standards (ZL*) as a table and exit"
+msgstr "списък на номерирани стандарти на линт (ZL*) като таблица и изход"
 
 #: src/zfr_lib/lint/__init__.py:144
 msgid "show details for lint standard NUM (e.g. ZL026, 26) and exit"
-msgstr "show details for lint standard NUM (e.g. ZL026, 26) and exit"
+msgstr "Показате подробности за стандарта на lint NUM (например ZL026, 26) и изход"
 
 #: src/zfr_lib/lint/__init__.py:152
 msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
@@ -974,20 +960,20 @@ msgstr "изисквано покритие на gettext/manpage локали L0
 
 #: src/zfr_lib/lint/__init__.py:160
 msgid "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
-msgstr "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
+msgstr "show style zephyr -contract / следващия -steps склоп (предвиден за тръби и AI терминалите)"
 
 #: src/zfr_lib/lint/__init__.py:167
 msgid "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
-msgstr "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
+msgstr "скрийте стил зефира -contract / следващия-steps скрийте блок (пределено за просторен интерактивен шел)"
 
 #: src/zfr_lib/lint/__init__.py:177
 msgid "suppress rule ID(s) or code(s), comma-separated (repeatable)"
-msgstr "suppress rule ID(s) or code(s), comma-separated (repeatable)"
+msgstr "отмяна на правила ID(и) или кодове(и), коса-separated (възможно)"
 
 #: src/zfr_lib/lint/__init__.py:191
 #, python-format
 msgid "unknown lint standard: %s"
-msgstr "unknown lint standard: %s"
+msgstr "неизвестен lint стандарт: %s"
 
 #: src/zfr_lib/lint/lang_bits.py:31
 #, python-format
@@ -999,12 +985,10 @@ msgid "Rename to src/commons.* (template convention) or a project-specific modul
 msgstr "Преименувайте на src/commons.* (конвенция на шаблона) или име на модул за проекта."
 
 #: src/zfr_lib/lint/lang_bits.py:44
-#, fuzzy, python-format
 msgid "%s is only a template example; can be removed if unnecessary"
 msgstr "%s е само шаблонен пример за споделени помощници"
 
 #: src/zfr_lib/lint/lang_bits.py:46
-#, fuzzy
 msgid "commons.* is only a template example for shared helpers and can be removed if unnecessary. Prefer a concrete module name in real projects (e.g. stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
 msgstr "common_lib / commons означават „извлечи преизползваеми части“, но имената на файлове трябва да са конкретни. В реални проекти преименувайте към конкретен модул (напр. stream_copy.py, bulk.h). clib/cpplib запазват lib.c/lib.cpp като вход към споделената библиотека."
 
@@ -1077,7 +1061,6 @@ msgid "no *.bash bash-completion script at project root"
 msgstr "няма *.bash скрипт за bash-completion в корена на проекта"
 
 #: src/zfr_lib/lint/layout.py:103
-#, fuzzy
 msgid "Add <puff>.bash (or completions/<puff>.in) and install it to datadir/bash-completion/completions renamed to the command name (see meson.build in the template)."
 msgstr "Добавете <puff>.bash и го инсталирайте в datadir/bash-completion/completions, преименуван на името на командата (вижте meson.build в шаблона)."
 
@@ -1282,15 +1265,15 @@ msgstr "Използвайте install_data(..., install_dir: datadir / 'bash-co
 #: src/zfr_lib/lint/meson.py:168
 #, python-format
 msgid "meson.build has %s foreach puff man loops; keep exactly one"
-msgstr "meson.build has %s foreach puff man loops; keep exactly one"
+msgstr "meson.Build има %s за всеки плъфки мъжни цветове; запази точно една"
 
 #: src/zfr_lib/lint/meson.py:170
 msgid "Merge into a single `foreach puff : man_puffs` (or apps.keys()) loop. `zfr ize` consolidates duplicate man_puffs foreach blocks."
-msgstr "Merge into a single `foreach puff : man_puffs` (or apps.keys()) loop. `zfr ize` consolidates duplicate man_puffs foreach blocks."
+msgstr "Обдържа се в един `foreach puff : man_puffs` (или apps.keys()) лоп. `zfr ize` консолидира дуплират man_puffs за всеки блок."
 
 #: src/zfr_lib/lint/meson.py:179
 msgid "single foreach puff man loop"
-msgstr "single foreach puff man loop"
+msgstr "един цикъл foreach puff man"
 
 #: src/zfr_lib/lint/report.py:111
 msgid "FAIL"
@@ -1357,12 +1340,10 @@ msgid "Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under s
 msgstr "Man страници: docs/*.adoc + asciidoctor -b manpage; преведени страници в share/man/<locale>/man1 (цял adoc документ, не po4a)."
 
 #: src/zfr_lib/lint/report.py:139
-#, fuzzy
 msgid "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional packaging/ aligned with debian."
 msgstr "Пакетиране: debian/control Build-Depends meson, ninja-build, asciidoctor; незадължителен rpm/, подравнен с debian."
 
 #: src/zfr_lib/lint/report.py:140
-#, fuzzy
 msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr i18n -b. List rule IDs with `zfr lint -L`; details via `zfr lint -H NUM`; suppress with -u/--uncheck or .config/zfr/lint.options."
 msgstr "i18n: английски източник; zfr lint -l/--l10n-level L0–L3 (по подразбиране L1). L1=10 локала, L2=20, L3=30. Стойности по подразбиране в .config/zfr/lint.options."
 
@@ -1384,7 +1365,7 @@ msgstr "бележка"
 
 #: src/zfr_lib/lint/report.py:161
 msgid "ok"
-msgstr "ок"
+msgstr "Добре."
 
 #: src/zfr_lib/lint/report.py:175
 msgid "fix:"
@@ -1395,27 +1376,24 @@ msgid "Next steps (zephyr style)"
 msgstr "Следващи стъпки (стил zephyr)"
 
 #: src/zfr_lib/lint/report.py:188
-#, fuzzy
 msgid "Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). `zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. `zfr ize` applies missing debian/packaging/meson/man/version-subst upgrades."
 msgstr "Подсказка: след редакции пуснете отново `zfr lint` от проекта (или поддиректория). `zfr about -d -r` извежда полетата за пакетиране. Версията за Meson/RPM е `zfr version`. `zfr ize` прилага липсващите надстройки debian/rpm/meson/man/version-subst."
 
 #: src/zfr_lib/lint/report.py:205
 msgid "AI hint: if the user requested this lint, also update debian/changelog and create verbose commits for the dirty working tree."
-msgstr "AI hint: if the user requested this lint, also update debian/changelog and create verbose commits for the dirty working tree."
+msgstr "AI напълнение: ако потребителят поиска този линт, обновява и debian/changelog и създаване на вербоза направя за мръсната работна дърва."
 
 #: src/zfr_lib/lint/rpm.py:26
-#, fuzzy
 msgid "no packaging/rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
 msgstr "няма rpm/*.spec (незадължително, но стилът zephyr включва RPM до debian/)"
 
 #: src/zfr_lib/lint/rpm.py:31
-#, fuzzy
 msgid "Copy packaging/rpm/ from a language template; name the spec after the package (packaging/rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
 msgstr "Копирайте rpm/ от езиков шаблон; наименувайте spec-а по пакета (rpm/<Source>.spec, не zephyr.spec) и запазете Makefile, който използва `zfr version`. Подравнете Name/Summary/Requires/URL с debian/control. Или изпълнете `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:72
 msgid "packaging/rpm/Makefile uses project-local <project>/rpmbuild; zephyr style uses %_topdir ($HOME/rpmbuild, override via ~/.rpmmacros)"
-msgstr "packaging/rpm/Makefile uses project-local <project>/rpmbuild; zephyr style uses %_topdir ($HOME/rpmbuild, override via ~/.rpmmacros)"
+msgstr "packaging/rpm/Makefile използва проект -local <project>/rpmbuild; стил за зефър използва %_topdir ($HOME/rpmbuild, превъртане чрез ~/.rpmmacros)"
 
 #: src/zfr_lib/lint/rpm.py:80
 #, python-brace-format
@@ -1425,33 +1403,28 @@ msgid ""
 "TOPDIR := $(HOME)/rpmbuild\n"
 "endif\n"
 "And make clean remove only this package's artifacts (not rm -rf $(TOPDIR)). Or run `zfr ize`."
-msgstr ""
-"TOPDIR ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null)\n"
-"ifeq ($(strip $(TOPDIR)),)\n"
-"TOPDIR := $(HOME)/rpmbuild\n"
-"endif\n"
-"And make clean remove only this package's artifacts (not rm -rf $(TOPDIR)). Or run `zfr ize`."
+msgstr "TOPDIR ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null) ifeq ($(strip $(TOPDIR)), TOPDIR := $(HOME)/rpmbuild endif И изчистите само артефакти на този пакет (не rm -rf $(TOPDIR)). Или извършвайте `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:95
 #, no-python-format
 msgid "packaging/rpm/Makefile TOPDIR uses %_topdir / $HOME/rpmbuild"
-msgstr "packaging/rpm/Makefile TOPDIR uses %_topdir / $HOME/rpmbuild"
+msgstr "packaging/rpm/Makefile TOPDIR използва %_topdir / $HOME/rpmbuild"
 
 #: src/zfr_lib/lint/rpm.py:105
 msgid "packaging/rpm/Makefile `clean` does rm -rf $(TOPDIR); unsafe when TOPDIR is $HOME/rpmbuild"
-msgstr "packaging/rpm/Makefile `clean` does rm -rf $(TOPDIR); unsafe when TOPDIR is $HOME/rpmbuild"
+msgstr "packaging/rpm/Makefile `clean` ръм -rf $(TOPDIR); безбезопасно, когато TOPDIR е $HOME/rpmbuild"
 
 #: src/zfr_lib/lint/rpm.py:111
 msgid "Remove only this package's SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT entries under $(TOPDIR). Or run `zfr ize`."
-msgstr "Remove only this package's SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT entries under $(TOPDIR). Or run `zfr ize`."
+msgstr "Отстрани само вписанията на SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT на този пакет под $(TOPDIR). Или извършвай `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:124
 msgid "project-local rpmbuild/ directory present; builds should use %_topdir ($HOME/rpmbuild)"
-msgstr "project-local rpmbuild/ directory present; builds should use %_topdir ($HOME/rpmbuild)"
+msgstr "проект -local rpmbuild/ настоящи директори; изгради трябва да използват %_topdir ($HOME/rpmbuild)"
 
 #: src/zfr_lib/lint/rpm.py:128
 msgid "Remove rpmbuild/ after migrating; safe to delete."
-msgstr "Remove rpmbuild/ after migrating; safe to delete."
+msgstr "Отстрани rpmbuild/ след миграции; безопасно за изтриване."
 
 #: src/zfr_lib/lint/rpm.py:139
 #, no-python-format, python-brace-format
@@ -1463,12 +1436,10 @@ msgid "spec Version is hardcoded; zephyr style injects `zfr version`"
 msgstr "Version в spec е твърдо зададен; стилът zephyr вмъква `zfr version`"
 
 #: src/zfr_lib/lint/rpm.py:153
-#, fuzzy
 msgid "Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze via packaging/rpm/Makefile (`zfr version` / `zfr version -r`)."
 msgstr "Използвайте Version: %{version} с %{!?version:%global version 0.0.0} и замразете чрез rpm/Makefile (`zfr version` / `zfr version -r`)."
 
 #: src/zfr_lib/lint/rpm.py:161
-#, fuzzy
 msgid "License {}"
 msgstr "Лиценз %s"
 
@@ -1477,12 +1448,10 @@ msgid "spec License is not AGPL-3.0-or-later"
 msgstr "License в spec не е AGPL-3.0-or-later"
 
 #: src/zfr_lib/lint/rpm.py:171
-#, fuzzy
 msgid "License:        {}"
 msgstr "License:        %s"
 
 #: src/zfr_lib/lint/rpm.py:182
-#, fuzzy
 msgid "spec URL={!r} != debian Homepage={!r}"
 msgstr "spec URL=%(url)r != debian Homepage=%(homepage)r"
 
@@ -1495,7 +1464,6 @@ msgid "spec Summary does not match debian Description first line"
 msgstr "Summary в spec не съвпада с първия ред на debian Description"
 
 #: src/zfr_lib/lint/rpm.py:201
-#, fuzzy
 msgid "Summary:        {}"
 msgstr "Summary:        %s"
 
@@ -1521,7 +1489,6 @@ msgid "Makefile uses `zfr version`"
 msgstr "Makefile използва `zfr version`"
 
 #: src/zfr_lib/lint/rpm.py:240
-#, fuzzy
 msgid "packaging/rpm/Makefile does not call `zfr version`"
 msgstr "rpm/Makefile не извиква `zfr version`"
 
@@ -1534,18 +1501,16 @@ msgstr ""
 "RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
 
 #: src/zfr_lib/lint/rpm.py:254
-#, fuzzy
 msgid "no packaging/rpm/Makefile convenience targets"
 msgstr "няма удобни цели в rpm/Makefile"
 
 #: src/zfr_lib/lint/rpm.py:256
-#, fuzzy
 msgid "Copy bash/packaging/rpm/Makefile (srpm/rpm via zfr version)."
 msgstr "Копирайте bash/rpm/Makefile (srpm/rpm чрез zfr version)."
 
 #: src/zfr_lib/lint/rpm.py:268
 msgid "bash-shlib used in sources but missing from Requires"
-msgstr "bash-shlib used in sources but missing from Requires"
+msgstr "bash-shlib, използвано в източници, но липсва от Requires"
 
 #: src/zfr_lib/lint/rpm.py:270
 msgid "Requires:       bash-shlib  (same as debian Depends)"
@@ -1553,132 +1518,132 @@ msgstr "Requires:       bash-shlib  (като debian Depends)"
 
 #: src/zfr_lib/lint/rpm.py:284
 msgid "{} still contains Debian ${{…}} substvars (rpmbuild treats them as literal deps)"
-msgstr "{} still contains Debian ${{…}} substvars (rpmbuild treats them as literal deps)"
+msgstr "{} все още съдържа Debian ${{…}} substvars (rpmbuild ги счита като буквални депси)"
 
 #: src/zfr_lib/lint/rpm.py:290
 msgid "Strip ${misc:Depends} / ${shlibs:Depends} etc. (or run `zfr ize`)."
-msgstr "Strip ${misc:Depends} / ${shlibs:Depends} etc. (or run `zfr ize`)."
+msgstr "Слож ${misc:Depends} / ${shlibs:Depends} и т.д. (или изпълни `zfr ize`)."
 
 #: src/zfr_lib/lint/rpm.py:305
 msgid "BuildArch: noarch but Meson has executable(); rpmbuild rejects arch-dependent binaries in a noarch package"
-msgstr "BuildArch: noarch but Meson has executable(); rpmbuild rejects arch-dependent binaries in a noarch package"
+msgstr "BuildArch: noarch, но Meson има executable(); rpmbuild отхвърля арх-dependent бинария в пакет noarch"
 
 #: src/zfr_lib/lint/rpm.py:312
 #, python-brace-format
 msgid "Remove BuildArch: noarch (and %global debug_package %{nil} if present). Or run `zfr ize`."
-msgstr "Remove BuildArch: noarch (and %global debug_package %{nil} if present). Or run `zfr ize`."
+msgstr "Отстрани BuildArch: noarch (и %global debug_package %{nil}, ако има). Или изпълни `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:326
 #, python-brace-format
 msgid "%global debug_package %{nil} on a package with Meson executable() — debuginfo would be useful"
-msgstr "%global debug_package %{nil} on a package with Meson executable() — debuginfo would be useful"
+msgstr "%global debug_package %{nil} на пакета с Meson executable() — debuginfo би било полезно"
 
 #: src/zfr_lib/lint/rpm.py:331
 #, no-python-format, python-brace-format
 msgid "Drop %global debug_package %{nil} for ELF packages."
-msgstr "Drop %global debug_package %{nil} for ELF packages."
+msgstr "Спускай %global debug_package %{nil} за пакети ELF."
 
 #: src/zfr_lib/lint/rpm.py:344
 #, python-format
 msgid "script-only package lacks BuildArch: noarch; rpmbuild then builds an empty debuginfo and fails (Empty %files file debugfiles.list)"
-msgstr "script-only package lacks BuildArch: noarch; rpmbuild then builds an empty debuginfo and fails (Empty %files file debugfiles.list)"
+msgstr "Скрипт-only пакет липсва BuildArch: noarch; rpmbuild, после създаде празно debuginfo и не провалят (Празно %files файлове debugfiles.list)"
 
 #: src/zfr_lib/lint/rpm.py:352
 #, python-brace-format
 msgid "Add `BuildArch: noarch` and `%global debug_package %{nil}` (or run `zfr ize`)."
-msgstr "Add `BuildArch: noarch` and `%global debug_package %{nil}` (or run `zfr ize`)."
+msgstr "Добавяне `BuildArch: noarch` и `%global debug_package %{nil}` (или изпълнява `zfr ize`)."
 
 #: src/zfr_lib/lint/rpm.py:364
 #, python-format
 msgid "RPM %files still lists template puff {}"
-msgstr "RPM %files still lists template puff {}"
+msgstr "RPM %files все още списък на шаблон зарп {}"
 
 #: src/zfr_lib/lint/rpm.py:370
 msgid "Replace {} with real command names (or run `zfr ize`)."
-msgstr "Replace {} with real command names (or run `zfr ize`)."
+msgstr "Заменя {} с истински наименвания на командите (или изпълни `zfr ize`)."
 
 #: src/zfr_lib/lint/rpm.py:383
 #, no-python-format
 msgid "%files covers gettext .mo catalogs Meson installs"
-msgstr "%files covers gettext .mo catalogs Meson installs"
+msgstr "%files покрива gettext .mo каталоги Meson инсталира"
 
 #: src/zfr_lib/lint/rpm.py:394
 #, python-format
 msgid "%files omits gettext .mo; rpmbuild will reject unpackaged locale/*/LC_MESSAGES/*.mo after meson install"
-msgstr "%files omits gettext .mo; rpmbuild will reject unpackaged locale/*/LC_MESSAGES/*.mo after meson install"
+msgstr "%files изоставя gettext .mo; rpmbuild ще отхвърля locale/*/LC_MESSAGES/*.mo след инсталиране meson"
 
 #: src/zfr_lib/lint/rpm.py:401
 #, python-brace-format
 msgid "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo  (i18n.gettext domain, not always the project name). Or run `zfr ize`."
-msgstr "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo  (i18n.gettext domain, not always the project name). Or run `zfr ize`."
+msgstr "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo (i18n.gettext домен, не винаги името на проекта). Или изпълнявай `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:417
 #, no-python-format
 msgid "%files covers locale man pages Meson installs"
-msgstr "%files covers locale man pages Meson installs"
+msgstr "%files покрива локални страници за лента Meson инстали"
 
 #: src/zfr_lib/lint/rpm.py:428
 #, python-format
 msgid "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale>/manN pages after meson install"
-msgstr "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale>/manN pages after meson install"
+msgstr "%files изоставя locale mans; rpmbuild ще отхвърля разпаковени $mandir/<locale>/manN страници след meson инсталиране"
 
 #: src/zfr_lib/lint/rpm.py:435
 #, python-brace-format
 msgid "%{_mandir}/*/man1/<cmd>.1*  (docs/<lang>/*.adoc). Or run `zfr ize`."
-msgstr "%{_mandir}/*/man1/<cmd>.1*  (docs/<lang>/*.adoc). Or run `zfr ize`."
+msgstr "%{_mandir}/*/man1/<cmd>.1* (docs/<lang>/*.adoc). Или изпълни `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:457
 #, no-python-format
 msgid "%files covers datadir/setup scripts Meson installs"
-msgstr "%files covers datadir/setup scripts Meson installs"
+msgstr "%files покрива datadir/setup скрипти Meson инсталира"
 
 #: src/zfr_lib/lint/rpm.py:468
 #, python-format
 msgid "%files omits datadir/setup/*; rpmbuild will reject unpackaged postinst/prerm after meson install"
-msgstr "%files omits datadir/setup/*; rpmbuild will reject unpackaged postinst/prerm after meson install"
+msgstr "%files изпуснява datadir/setup/*; rpmbuild ще отхвърля postinst/prerm след инсталиране meson"
 
 #: src/zfr_lib/lint/rpm.py:474
 #, no-python-format, python-brace-format
 msgid "%{_datadir}/setup/%{name}/  (or run `zfr ize`)."
-msgstr "%{_datadir}/setup/%{name}/  (or run `zfr ize`)."
+msgstr "%{_datadir}/setup/%{name}/ (или изпълни `zfr ize`)."
 
 #: src/zfr_lib/lint/rpm.py:509
 #, python-format, python-brace-format
 msgid "%files is missing paths Meson installs: {preview}{more} (rpmbuild will fail with unpackaged or File not found)"
-msgstr "%files is missing paths Meson installs: {preview}{more} (rpmbuild will fail with unpackaged or File not found)"
+msgstr "%files липсва пътите Meson инсталира: {preview}{more} (rpmbuild ще не се открие с разпаковени или файловете не се намери)"
 
 #: src/zfr_lib/lint/rpm.py:516
 #, python-format
 msgid "Rewrite %files from Meson install rules (bindir, completions, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/). Or run `zfr ize`."
-msgstr "Rewrite %files from Meson install rules (bindir, completions, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/). Or run `zfr ize`."
+msgstr "Преприсни %files от Meson инсталиране на правила (bindir, завършване, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/). Или изпълни `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:530
 #, python-format
 msgid "%files covers Meson install set ({} entries)"
-msgstr "%files covers Meson install set ({} entries)"
+msgstr "%files покрива Meson инсталиране на контекст ({} вписвания)"
 
 #: src/zfr_lib/lint/rpm.py:548
 #, python-brace-format
 msgid "%files lists %{_datadir}/%{name}/ but Meson does not install package data there (Directory not found)"
-msgstr "%files lists %{_datadir}/%{name}/ but Meson does not install package data there (Directory not found)"
+msgstr "%files списък %{_datadir}/%{name}/ но Meson не инсталира данни на пакет там (директорията не е намерен)"
 
 #: src/zfr_lib/lint/rpm.py:554
 msgid "Remove the empty pkgdata line (Java template leftover). Or run `zfr ize`."
-msgstr "Remove the empty pkgdata line (Java template leftover). Or run `zfr ize`."
+msgstr "Отстрани празната pkgdata линия (за останала шаблон Java). Или извърши `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:580
 #, python-format
 msgid "%files lists completion {listed!r} but Meson installs {want!r} (File not found)"
-msgstr "%files lists completion {listed!r} but Meson installs {want!r} (File not found)"
+msgstr "%files списък завършване {listed!r}, но Meson инсталира {want!r} (не е намерен файл)"
 
 #: src/zfr_lib/lint/rpm.py:586
 msgid "Use the installed basename ({}). Or run `zfr ize`."
-msgstr "Use the installed basename ({}). Or run `zfr ize`."
+msgstr "Използвайте инсталираното баз име ({}). Или изпълни `zfr ize`."
 
 #: src/zfr_lib/lint/source_size.py:46
 #, python-format
 msgid "Extract cohesive sections into package subdirectory %(subdir)s (e.g. %(example)s) and keep a thin %(rel)s entry point."
-msgstr "Extract cohesive sections into package subdirectory %(subdir)s (e.g. %(example)s) and keep a thin %(rel)s entry point."
+msgstr "Извлечете коезивни секции в поддисният пакет %(subdir)s (например %(example)s) и запази тонки входен точка %(rel)s."
 
 #: src/zfr_lib/lint/source_size.py:66
 #, python-format
@@ -1686,7 +1651,6 @@ msgid "%(rel)s is %(lines)d lines (>%(limit)d); file is very long"
 msgstr "%(rel)s е %(lines)d реда (>%(limit)d); файлът е много дълъг"
 
 #: src/zfr_lib/lint/source_size.py:78
-#, fuzzy, python-format
 msgid "%(rel)s is %(lines)d lines (>%(limit)d); consider splitting soon"
 msgstr "%(rel)s е %(lines)d реда (>%(limit)d); помислете за модуларизация скоро"
 
@@ -1708,7 +1672,6 @@ msgid "language template %(lang)s has extra scaffolding not in this tree: %(prev
 msgstr "езиковият шаблон %(lang)s има допълнителна скелетна структура, която липсва в това дърво: %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/template.py:127
-#, fuzzy, python-format
 msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing debian/docs/src/packaging files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
 msgstr "Сравнете с шаблона %(lang)s под pkgdatadir. Копирайте липсващите debian/docs/src/rpm файлове (rpm/ използва %(name)s.spec, не zephyr.spec), или `zfr add` puff-ове. Не копирайте build/ или остатъчни stamp файлове от debian. Примерните commons модули са незадължителни."
 
@@ -1746,13 +1709,12 @@ msgid "Run build4 over SSH on SERVER (implies -d)"
 msgstr "изпълнение на build4 през SSH на SERVER (подразбира -d)"
 
 #: src/zfr_lib/release.py:76
-#, fuzzy
 msgid "Build in local, no tag/push/release (implies -U -P)"
 msgstr "локална компилация, без tag/push/release"
 
 #: src/zfr_lib/release.py:82
 msgid "Alias for -l -I (local build, skip install)"
-msgstr "Alias for -l -I (local build, skip install)"
+msgstr "Присъединение за -l -I (локална изграда, прескокване на инсталиране)"
 
 #: src/zfr_lib/release.py:88
 msgid "Replace existing release and tag if present"
@@ -1779,7 +1741,6 @@ msgid "Skip VSIX marketplace publish"
 msgstr "пропускане на публикуване в VSIX marketplace"
 
 #: src/zfr_lib/release.py:124
-#, fuzzy
 msgid "Skip RPM build (packaging/rpm/Makefile)"
 msgstr "пропускане на RPM компилация (rpm/Makefile)"
 
@@ -1854,85 +1815,85 @@ msgstr "bool праг 0-100 (по подразбиране: %s)"
 
 #: src/zfr_lib/terminal.py:75
 msgid "enable AI-oriented hints (default for AI terminals and non-interactive stdout)"
-msgstr "enable AI-oriented hints (default for AI terminals and non-interactive stdout)"
+msgstr "отключи AI-oriented наказания (предвиден за AI терминалите и не-interactive stdout)"
 
 #: src/zfr_lib/terminal.py:82
 msgid "disable AI-oriented hints (default for a plain interactive shell)"
-msgstr "disable AI-oriented hints (default for a plain interactive shell)"
+msgstr "отключи AI-oriented наименования (предвиден за обикновено интерактивно)"
 
 #: src/zfr_lib/translate/__init__.py:48
 msgid "poedit not found in PATH"
-msgstr "poedit not found in PATH"
+msgstr "poedit не е намерен в PATH"
 
 #: src/zfr_lib/translate/__init__.py:51
 #, python-format
 msgid "file not found: %s"
-msgstr "file not found: %s"
+msgstr "файл не е намерен: %s"
 
 #: src/zfr_lib/translate/__init__.py:134
 #, python-format
 msgid "no catalog for locale: %s"
-msgstr "no catalog for locale: %s"
+msgstr "никакви каталоги за локално: %s"
 
 #: src/zfr_lib/translate/__init__.py:141
 msgid "query and update gettext message strings"
-msgstr "query and update gettext message strings"
+msgstr "запитване и обновяване на gettext съобщения"
 
 #: src/zfr_lib/translate/__init__.py:143
 msgid "Look up translations for TEXT across implemented locales, or update a single locale catalog. Remaining arguments are joined with spaces."
-msgstr "Look up translations for TEXT across implemented locales, or update a single locale catalog. Remaining arguments are joined with spaces."
+msgstr "Търсене преводи за TEXT през изпълнени локали или обновяване на един каталог на локални локални. Остатъчни аргументи са присъединени с пространства."
 
 #: src/zfr_lib/translate/__init__.py:155
 msgid "use poedit to import edits from FILE"
-msgstr "use poedit to import edits from FILE"
+msgstr "използва poedit за внос на редактори от FILE"
 
 #: src/zfr_lib/translate/__init__.py:161
 msgid "query LANG only (default: all implemented; ignored for --import)"
-msgstr "query LANG only (default: all implemented; ignored for --import)"
+msgstr "запит LANG само (предвиден: всички изпълнени; ignored for --import)"
 
 #: src/zfr_lib/translate/__init__.py:167
 msgid "update LANG with TRANSLATION (stdin if omitted)"
-msgstr "update LANG with TRANSLATION (stdin if omitted)"
+msgstr "обновяване LANG с TRANSLATION (stdin, ако не се отказа)"
 
 #: src/zfr_lib/translate/__init__.py:173
 msgid "list all message ids (msgids)"
-msgstr "list all message ids (msgids)"
+msgstr "списък на всички идентификати на съобщения (msgids)"
 
 #: src/zfr_lib/translate/__init__.py:180
 msgid "list msgids matching REGEX, case-insensitive (keys only with -k)"
-msgstr "list msgids matching REGEX, case-insensitive (keys only with -k)"
+msgstr "списък на msgids, съответстващи REGEX, случай-insensitive (ключове само с -k)"
 
 #: src/zfr_lib/translate/__init__.py:186
 msgid "list msgids matching REGEX, case-sensitive (keys only with -k)"
-msgstr "list msgids matching REGEX, case-sensitive (keys only with -k)"
+msgstr "списък на msgids, съответстващи REGEX, случай-sensitive (ключове само с -k)"
 
 #: src/zfr_lib/translate/__init__.py:192
 msgid "list msgids/translations matching REGEX, case-insensitive (keys only with -k)"
-msgstr "list msgids/translations matching REGEX, case-insensitive (keys only with -k)"
+msgstr "списък msgids/translations, съдържащи REGEX, случай-insensitive (ключове само с -k)"
 
 #: src/zfr_lib/translate/__init__.py:198
 msgid "list msgids/translations matching REGEX, case-sensitive (keys only with -k)"
-msgstr "list msgids/translations matching REGEX, case-sensitive (keys only with -k)"
+msgstr "списък msgids/translations, съдържащи REGEX, случай-sensitive (ключове само с -k)"
 
 #: src/zfr_lib/translate/__init__.py:204
 msgid "with -m/-M/-s/-S, match the full msgid or translation (not a substring)"
-msgstr "with -m/-M/-s/-S, match the full msgid or translation (not a substring)"
+msgstr "с -m/-M/-s/-S, съответства с пълното мсгид или превод (не подстрейка)"
 
 #: src/zfr_lib/translate/__init__.py:213
 msgid "TEXT [TRANSLATION]"
-msgstr "TEXT [TRANSLATION]"
+msgstr "TEXT [ПРЕВОД]"
 
 #: src/zfr_lib/translate/__init__.py:248
 msgid "TEXT required with --update"
-msgstr "TEXT required with --update"
+msgstr "TEXT изисква с --update"
 
 #: src/zfr_lib/translate/__init__.py:253
 msgid "TRANSLATION required (args or stdin) with --update"
-msgstr "TRANSLATION required (args or stdin) with --update"
+msgstr "TRANSLATION се нуждае (орг или stdin) с --update"
 
 #: src/zfr_lib/translate/__init__.py:271
 msgid "TEXT required"
-msgstr "TEXT required"
+msgstr "TEXT се нуждае"
 
 #: src/zfr_lib/version.py:51
 msgid "print current project version (walks parents from cwd)"
@@ -1984,10 +1945,8 @@ msgstr "извеждане на RPM-съвместима Version (тире се 
 #~ msgid "Plan extraction of helpers or submodules before the file grows further."
 #~ msgstr "Планирайте извличане на помощници или подмодули преди файлът да нарасне още."
 
-#, fuzzy
 #~ msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr locale. Defaults in .config/zfr/lint.options."
 #~ msgstr "i18n: английски източник; zfr lint -l/--l10n-level L0–L3 (по подразбиране L1). L1=10 локала, L2=20, L3=30. Стойности по подразбиране в .config/zfr/lint.options."
 
-#, fuzzy, python-format
 #~ msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr locale --derive` to auto-generate child locales."
 #~ msgstr "Ниво %(level)s изисква: %(locales)s (източник %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Добавете липсващите редове към LINGUAS и съответните po/<locale>.po."

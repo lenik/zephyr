@@ -400,6 +400,11 @@ def _is_command_puff_name(name: str) -> bool:
         return False
     if name.endswith(("_pch", "_test", "_tests")) or name.startswith("test_"):
         return False
+    # Locale-suffixed stems (audiocfg-ar, tool-zh_CN) are man/doc locales, not CLIs.
+    from ..l10n import stem_locale_suffix
+
+    if stem_locale_suffix(name) is not None:
+        return False
     return bool(_CMD_NAME_RE.match(name))
 
 

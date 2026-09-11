@@ -70,57 +70,18 @@ def ensure_i18n_coverage(ize: "Ize") -> None:
 
 
 def ensure_man_locale_coverage(ize: "Ize") -> None:
-    """Scaffold docs/<locale>/*.adoc for the project's lint l10n level.
+    """No-op: missing man locale translations are not ize's job (lint ZL055).
 
-    Copies the English whole-document man source when a locale file is
-    missing so ZL055 is cleared; translators should replace the scaffold.
+    Older ize versions copied English ``docs/*.adoc`` into ``docs/<locale>/``
+    to clear lint; that scaffold is no longer created.
     """
-    from ...l10n import (
-        canonical_locale,
-        linguas_for_level,
-        project_l10n_level,
-        resolve_present_locale,
-    )
-    from ...translate.po_files import parse_linguas
-
-    docs = ize.root / "docs"
-    if not docs.is_dir():
-        return
-    english = sorted(p for p in docs.glob("*.adoc") if p.is_file())
-    if not english:
-        return
-    po_dir = ize.root / "po"
-    if not po_dir.is_dir():
-        return
-    level = project_l10n_level(ize.root)
-    required = linguas_for_level(level)
-    if not required:
-        return
-    present = set(parse_linguas(po_dir / "LINGUAS"))
-    for adoc in english:
-        try:
-            body = adoc.read_text(encoding="utf-8")
-        except OSError:
-            continue
-        for loc in required:
-            resolved = resolve_present_locale(loc, present) or canonical_locale(loc)
-            dest = docs / resolved / adoc.name
-            if dest.is_file():
-                continue
-            rel = str(dest.relative_to(ize.root))
-            if ize.dry_run:
-                ize.note(
-                    "would-add",
-                    rel,
-                    f"{level} man locale scaffold from English",
-                    rule="ize.i18n.man-locale",
-                )
-                continue
-            ize.write_text(
-                dest,
-                body,
-                f"{level} man locale scaffold from English",
-            )
+    if ize.verbose:
+        ize.note(
+            "skip",
+            "docs/",
+            "man locale scaffolds not created by ize (translate docs/<locale>/ by hand)",
+            rule="ize.i18n.man-locale",
+        )
 
 
 def derive_i18n_locales(ize: "Ize") -> None:

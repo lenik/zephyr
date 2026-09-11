@@ -24,7 +24,11 @@ _IZE_RULES: tuple[StdRule, ...] = (
     StdRule("ZI016", "ize.i18n.po-nowrap", "Rewrite source .po catalogs without line wrapping"),
     StdRule("ZI017", "ize.commit", "Bump patch version and git commit (--commit)"),
     StdRule("ZI018", "ize.i18n.coverage", "Ensure LINGUAS + .po for lint l10n level"),
-    StdRule("ZI019", "ize.i18n.man-locale", "Scaffold docs/<locale>/*.adoc for lint l10n level"),
+    StdRule(
+        "ZI019",
+        "ize.i18n.man-locale",
+        "Do not scaffold docs/<locale>/*.adoc (missing man translations are lint-only)",
+    ),
     StdRule("ZI020", "ize.rpm.leftover", "Remove project-local rpmbuild/ leftover tree"),
     StdRule(
         "ZI021",

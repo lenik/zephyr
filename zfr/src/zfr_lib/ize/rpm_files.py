@@ -355,7 +355,7 @@ def meson_rpm_files(root: Path, name: str) -> list[str]:
         stem, sec = man.rsplit(".", 1)
         add(f"%{{_mandir}}/man{sec[0]}/{stem}.{sec}*")
 
-    # foreach puff : man_puffs → custom_target(output: puff + '.1', install_dir: mandir/…)
+    # foreach puff : puffs → custom_target(output: puff + '.1', install_dir: mandir/…)
     for m in re.finditer(
         r"foreach\s+(\w+)\s*:\s*(\w+|\[)(.*?)\bendforeach\b",
         text,

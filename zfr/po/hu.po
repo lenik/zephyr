@@ -106,7 +106,6 @@ msgid "Print the detected language of the current project and layout details on 
 msgstr "Kiírja az aktuális projekt felismert nyelvét és az elrendezés részleteit a stderr-re."
 
 #: src/zfr_lib/dist.py:60
-#, fuzzy, python-format
 msgid "write the archive into DIR (default: meson-dist, or %%_topdir/SOURCES with --rpm; usually $HOME/rpmbuild)"
 msgstr "archívum írása DIR könyvtárba (alapértelmezés: meson-dist vagy rpmbuild/SOURCES --rpm-mel)"
 
@@ -119,7 +118,6 @@ msgid "archive format (default: xz)"
 msgstr "archívum formátum (alapértelmezés: xz)"
 
 #: src/zfr_lib/dist.py:86
-#, fuzzy, python-format
 msgid "name the archive NAME-VERSION.tar.xz and write it to %%_topdir/SOURCES ($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr "NAME-VERSION.tar.xz néven nevezi az archívumot és %_topdir/SOURCES ($HOME/rpmbuild)-be írja, hacsak nincs megadva -o"
 
@@ -141,130 +139,129 @@ msgstr "Forrásarchívumot készít az aktuális zephyr projektből (felfelé ke
 
 #: src/zfr_lib/i18n/cmd.py:42
 msgid "no implemented locales (po/LINGUAS + po/*.po)"
-msgstr "no implemented locales (po/LINGUAS + po/*.po)"
+msgstr "nincs végrehajtás (po/LINGUAS + po/*.po)"
 
 #: src/zfr_lib/i18n/cmd.py:47
 msgid "  [derived]"
-msgstr "  [derived]"
+msgstr "  [származtatott]"
 
 #: src/zfr_lib/i18n/cmd.py:57
 #, python-format
 msgid "tier %(tier)s"
-msgstr "tier %(tier)s"
+msgstr "Szín %(tier)s"
 
 #: src/zfr_lib/i18n/cmd.py:60
 #, python-format
 msgid "derived from: %(parent)s"
-msgstr "derived from: %(parent)s"
+msgstr "A %(parent)s-től előírt:"
 
 #: src/zfr_lib/i18n/cmd.py:63
 #, python-format
 msgid "fallback chain: %(chain)s"
-msgstr "fallback chain: %(chain)s"
+msgstr "a rendkívüli lánd: %(chain)s"
 
 #: src/zfr_lib/i18n/cmd.py:66
 #, python-format
 msgid "children (->): %(kids)s"
-msgstr "children (->): %(kids)s"
+msgstr "gyermekek (->): %(kids)s"
 
 #: src/zfr_lib/i18n/cmd.py:70
 #, python-format
 msgid "catalog: %(path)s"
-msgstr "catalog: %(path)s"
+msgstr "Katalógus: %(path)s"
 
 #: src/zfr_lib/i18n/cmd.py:72
 #, python-format
 msgid "po stats: %(translated)d/%(total)d translated, %(missing)d missing"
-msgstr "po stats: %(translated)d/%(total)d translated, %(missing)d missing"
+msgstr "po statisztika: %(translated)d/%(total)d fordítás, %(missing)d hiányzik"
 
 #: src/zfr_lib/i18n/cmd.py:75
 msgid "no .po catalog in this project"
-msgstr "no .po catalog in this project"
+msgstr "nem .po katalógus e projektben"
 
 #: src/zfr_lib/i18n/cmd.py:93
 #, python-format
 msgid "locale not found: %s"
-msgstr "locale not found: %s"
+msgstr "a locale nem talált: %s"
 
 #: src/zfr_lib/i18n/cmd.py:147
 #, python-format
 msgid "would build %d derived locale file(s)"
-msgstr "would build %d derived locale file(s)"
+msgstr "emelkedésre foglalkozhatja %d előírt szokális fájl(ok)"
 
 #: src/zfr_lib/i18n/cmd.py:167
 msgid "manage implemented gettext locales"
-msgstr "manage implemented gettext locales"
+msgstr "a végrehajtás gettext localiumok kezelés"
 
 #: src/zfr_lib/i18n/cmd.py:169
 msgid "List, add, delete, and build derived locales in the current project. Use zfr translate to query or update message strings."
-msgstr "List, add, delete, and build derived locales in the current project. Use zfr translate to query or update message strings."
+msgstr "Listája, hozzáadja, törlése és építeni a jelenlegi projektben a legjobb szállások. Használja zfr fordítása a kérdés vagy a választozás."
 
 #: src/zfr_lib/i18n/cmd.py:179
 msgid "list all implemented locales in this project"
-msgstr "list all implemented locales in this project"
+msgstr "jegyzék a projektben minden végrehajtással történő lokációk"
 
 #: src/zfr_lib/i18n/cmd.py:185
 msgid "delete a locale (LINGUAS, .po, docs/)"
-msgstr "delete a locale (LINGUAS, .po, docs/)"
+msgstr "eltűnt a localiációt (LINGUAS, .po, docs/)"
 
 #: src/zfr_lib/i18n/cmd.py:191
 msgid "add a new locale"
-msgstr "add a new locale"
+msgstr "egy új lokaciót hozzáadása"
 
 #: src/zfr_lib/i18n/cmd.py:197
 msgid "build derived locale PO/man files from parents (skip locales in LINGUAS)"
-msgstr "build derived locale PO/man files from parents (skip locales in LINGUAS)"
+msgstr "épített állás PO/man fájlok szülekkel (kip locatees LINGUAS in)"
 
 #: src/zfr_lib/i18n/cmd.py:202
 msgid "output directory for derived .po files (default: build/po or $MESON_BUILD_ROOT/po)"
-msgstr "output directory for derived .po files (default: build/po or $MESON_BUILD_ROOT/po)"
+msgstr "A .po fájl kiállító .fo-ára (alapján: build/po vagy $MESON_BUILD_ROOT/po)"
 
 #: src/zfr_lib/i18n/cmd.py:207
 msgid "write a stamp file listing derived paths (for Meson custom_target)"
-msgstr "write a stamp file listing derived paths (for Meson custom_target)"
+msgstr "írja egy címzett fájl felsorolását a jellegű útok ( Meson custom_target)"
 
 #: src/zfr_lib/i18n/cmd.py:212
 msgid "with --build, also msgfmt derived .po into LC_MESSAGES (for Meson)"
-msgstr "with --build, also msgfmt derived .po into LC_MESSAGES (for Meson)"
+msgstr "--build-vel is msgfmt .po-t LC_MESSAGES-ben kizárt ( Meson számára)"
 
 #: src/zfr_lib/i18n/cmd.py:217
 msgid "gettext domain for --compile-mo / --install-derived"
-msgstr "gettext domain for --compile-mo / --install-derived"
+msgstr "gettext domain --compile-mo / --install-derived"
 
 #: src/zfr_lib/i18n/cmd.py:223
 msgid "install derived .mo from --po-dir into $MESON_INSTALL_DESTDIR_PREFIX (Meson add_install_script)"
-msgstr "install derived .mo from --po-dir into $MESON_INSTALL_DESTDIR_PREFIX (Meson add_install_script)"
+msgstr ".mo --po-dir-től $MESON_INSTALL_DESTDIR_PREFIX-re (Meson Add_install_script)"
 
 #: src/zfr_lib/i18n/cmd.py:231
 msgid "with --install-derived, locale subdirectory under prefix (default: share/locale)"
-msgstr "with --install-derived, locale subdirectory under prefix (default: share/locale)"
+msgstr "--install-derived, prefix alatt a szobális aldirectory alatt (használt: share/locale)"
 
 #: src/zfr_lib/i18n/cmd.py:233
 msgid "with --build, print only"
-msgstr "with --build, print only"
+msgstr "csak --build-vel, tissza"
 
 #: src/zfr_lib/i18n/cmd.py:234
 msgid "with --build, overwrite existing"
-msgstr "with --build, overwrite existing"
+msgstr "--build-vel, megjelenítése meglévő"
 
 #: src/zfr_lib/i18n/cmd.py:235
 msgid "locale to inspect"
-msgstr "locale to inspect"
+msgstr "ellenőrzésére a locale"
 
 #: src/zfr_lib/i18n/cmd.py:241
 msgid "--install-derived requires --po-dir and --domain"
-msgstr "--install-derived requires --po-dir and --domain"
+msgstr "--install-derived a --po-dir és --domain-t szükséges"
 
 #: src/zfr_lib/ize/engine/__init__.py:85
 msgid "suppressed via -u/--uncheck"
-msgstr "suppressed via -u/--uncheck"
+msgstr "elnyomva -u/--uncheck-kel"
 
 #: src/zfr_lib/ize/__init__.py:74
 msgid "refactor this project to current zephyr style"
 msgstr "projekt refaktorálása az aktuális zephyr stílusra"
 
 #: src/zfr_lib/ize/__init__.py:75
-#, fuzzy
 msgid "Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, Meson version substitutions, and lint-level gettext/man locale coverage (LINGUAS, .po, docs/<locale>). Walks from cwd toward parents."
 msgstr "Az aktuális projektet az aktuális zephyr stílushoz igazítja: hiányzó debian/rpm fájlok, meson célok, AsciiDoc man oldalak és Meson verzióhelyettesítések. Felfelé keres cwd-től."
 
@@ -279,19 +276,19 @@ msgstr "tervezett változások kiírása fájlok írása nélkül"
 
 #: src/zfr_lib/ize/__init__.py:85
 msgid "list numbered ize standards (ZI*) as a table and exit"
-msgstr "list numbered ize standards (ZI*) as a table and exit"
+msgstr "a táblázat és kifejezésként számlált az iza-szabályok (ZI*) listája"
 
 #: src/zfr_lib/ize/__init__.py:91
 msgid "show details for ize standard NUM (e.g. ZI015, 15) and exit"
-msgstr "show details for ize standard NUM (e.g. ZI015, 15) and exit"
+msgstr "a szerelmező NUM szabályozásra (pl. ZI015, 15) és kifelé"
 
 #: src/zfr_lib/ize/__init__.py:98
 msgid "bump patch version (debian/changelog + VERSION), git add -A, and commit ize changes with a verbose message"
-msgstr "bump patch version (debian/changelog + VERSION), git add -A, and commit ize changes with a verbose message"
+msgstr "bump plaster verzió (debian/changelog + VERSION), git hozzáadja -A, és változások egy verbozsó üzenettel"
 
 #: src/zfr_lib/ize/__init__.py:107
 msgid "changelog author for --commit (Name or 'Name <email>'); default: reuse the previous debian/changelog trailer"
-msgstr "changelog author for --commit (Name or 'Name <email>'); default: reuse the previous debian/changelog trailer"
+msgstr "a --commit (neve vagy 'Neve <email>'); a szabályozás: a korábbi debian/changelog karácsolat felhasználása"
 
 #: src/zfr_lib/ize/__init__.py:111
 msgid "also print skipped files"
@@ -299,7 +296,7 @@ msgstr "kihagyott fájlok kiírása is"
 
 #: src/zfr_lib/ize/__init__.py:117
 msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
-msgstr "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgstr "2meson-t a jelenlegi változás Autotools/CMake Meson-ra (alapján: on)"
 
 #: src/zfr_lib/ize/__init__.py:119
 msgid "do not convert groff .1 man pages to docs/*.adoc"
@@ -311,7 +308,7 @@ msgstr "ne alakítsa át a beégetett verziókat @VERSION@ / config.h formátumr
 
 #: src/zfr_lib/ize/__init__.py:127
 msgid "suppress ize rule ID(s) or code(s), comma-separated (repeatable)"
-msgstr "suppress ize rule ID(s) or code(s), comma-separated (repeatable)"
+msgstr "a szabályzat ID(k) vagy kód(k), a koma-separated (újtárható)"
 
 #: src/zfr_lib/ize/__init__.py:129 src/zfr_lib/lint/__init__.py:179
 #: src/zfr_lib/translate/__init__.py:211
@@ -321,7 +318,7 @@ msgstr "CSR (console SGR) kiemelés (alapértelmezés: auto)"
 #: src/zfr_lib/ize/__init__.py:141
 #, python-format
 msgid "unknown ize standard: %s"
-msgstr "unknown ize standard: %s"
+msgstr "ismeretlen ize szabvány: %s"
 
 #: src/zfr_lib/lang/antlr.py:42 src/zfr_lib/lang/as.py:30
 #: src/zfr_lib/lang/bison.py:38 src/zfr_lib/lang/clib.py:37
@@ -355,30 +352,27 @@ msgid "src scripts: %s"
 msgstr "src parancsfájlok: %s"
 
 #: src/zfr_lib/lang/bash.py:78
-#, fuzzy, python-format
 msgid "root scripts: %s"
 msgstr "src parancsfájlok: %s"
 
 #: src/zfr_lib/lang/bash.py:89
 #, python-format
 msgid "setup-only package (%s); no bindir script puffs"
-msgstr "setup-only package (%s); no bindir script puffs"
+msgstr "a változás -only csomag (%s); nem bindir szírpők"
 
 #: src/zfr_lib/lang/bash.py:105
 msgid "Meson executable + .c present; script .in not required"
-msgstr "Meson executable + .c present; script .in not required"
+msgstr "Meson executable + .c tájékoztató; szípés .in nem szükséges"
 
 #: src/zfr_lib/lang/bash.py:114
 msgid "no configure_file/executable; script .in not required"
-msgstr "no configure_file/executable; script .in not required"
+msgstr "nem configure_file/executable; szípés .in nem szükséges"
 
 #: src/zfr_lib/lang/bash.py:121
-#, fuzzy
 msgid "no src/*.in or root *.in scripts"
 msgstr "nincsenek src/*.in parancsfájlok"
 
 #: src/zfr_lib/lang/bash.py:124
-#, fuzzy
 msgid "Keep configured scripts as src/<puff>.in (preferred) or <puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
 msgstr "A konfigurált parancsfájlokat src/<puff>.in formában tartsa @PACKAGE@/@VERSION@ helyettesítőkkel és meson configure_file + install_mode rwxr-xr-x beállítással."
 
@@ -388,72 +382,71 @@ msgstr "Adjon hozzá tests/ könyvtárat fixture-ellenőrzésekkel a parser dump
 
 #: src/zfr_lib/lang/_c_bas.py:187
 msgid "no int main() in src/; skip bas i18n main checks"
-msgstr "no int main() in src/; skip bas i18n main checks"
+msgstr "nincs int main() src/; elkapcsolat a bas i18n fő ellenőrzése"
 
 #: src/zfr_lib/lang/_c_bas.py:208
 #, python-format
 msgid "main missing bas i18n setup: %s"
-msgstr "main missing bas i18n setup: %s"
+msgstr "a fő hiányzik a bas i18n settment: %s"
 
 #: src/zfr_lib/lang/_c_bas.py:211
 msgid "In main: #include <bas/locale/i18n.h> and <bas/proc/env.h>; const char *exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR from meson config.h). Run `zfr ize`."
-msgstr "In main: #include <bas/locale/i18n.h> and <bas/proc/env.h>; const char *exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR from meson config.h). Run `zfr ize`."
+msgstr "Főbb: #include <bas/locale/i18n.h> és <bas/proc/env.h>; const chara * exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR meson konfiguracióból.h). Fut `zfr ize`."
 
 #: src/zfr_lib/lang/_c_bas.py:222
 msgid "bas i18n main setup (self_exe + init_i18n)"
-msgstr "bas i18n main setup (self_exe + init_i18n)"
+msgstr "bas i18n fő változás (self_exe + init_i18n)"
 
 #: src/zfr_lib/lang/_c_bas.py:233
 msgid "no define_logger() in src/"
-msgstr "no define_logger() in src/"
+msgstr "nincs define_logger() a src/-ben"
 
 #: src/zfr_lib/lang/_c_bas.py:236
 msgid "In one .c/.cpp: #include <bas/log/deflog.h> then define_logger(); libraries may use __attribute__((weak)) define_logger(); Run `zfr ize`."
-msgstr "In one .c/.cpp: #include <bas/log/deflog.h> then define_logger(); libraries may use __attribute__((weak)) define_logger(); Run `zfr ize`."
+msgstr "Egy .c/.cppben: #include <bas/log/deflog.h> akkor define_logger(); könyvtárk használhatja __attribute_((feak)) define_logger(); Rund `zfr ize`."
 
 #: src/zfr_lib/lang/_c_bas.py:250
-#, fuzzy
 msgid "define_logger() present"
 msgstr "project() megvan"
 
 #: src/zfr_lib/lang/_c_bas.py:252
 msgid "weak define_logger() present (library)"
-msgstr "weak define_logger() present (library)"
+msgstr "weak define_logger() megvan (könyvtár)"
 
 #: src/zfr_lib/lang/_c_bas.py:258
 msgid "define_logger() without #include <bas/log/deflog.h>"
-msgstr "define_logger() without #include <bas/log/deflog.h>"
+msgstr "define_logger() #include <bas/log/deflog.h> nélkül"
 
 #: src/zfr_lib/lang/_c_bas.py:260
 msgid "Add #include <bas/log/deflog.h> before define_logger();"
-msgstr "Add #include <bas/log/deflog.h> before define_logger();"
+msgstr "define_logger() előtt #include <bas/log/deflog.h> hozzáadja;"
 
 #: src/zfr_lib/lang/_c_bas.py:276
 msgid "meson.build missing LOCALEDIR in config.h"
-msgstr "meson.build missing LOCALEDIR in config.h"
+msgstr "meson.build hiányzik LOCALEDIR konfiguracióban.h"
 
 #: src/zfr_lib/lang/_c_bas.py:279
 msgid "localedir = prefix / get_option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); Run `zfr ize`."
-msgstr "localedir = prefix / get_option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); Run `zfr ize`."
+msgstr "localedir = prefix / get_ option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); Fut `zfr ize`."
 
 #: src/zfr_lib/lang/_c_bas.py:289
 msgid "meson LOCALEDIR present"
-msgstr "meson LOCALEDIR present"
+msgstr "meson LOCALEDIR megvan"
 
 #: src/zfr_lib/lang/_c_bas.py:306
 #, python-format
 msgid "gettext string has leading/trailing spaces: %r"
-msgstr "gettext string has leading/trailing spaces: %r"
+msgstr "gettext szöveg leading/trailing helyek van: %r"
 
 #: src/zfr_lib/lang/_c_bas.py:310
 msgid "Keep padding outside _(): e.g. fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\n\"), out);"
 msgstr ""
-"Keep padding outside _(): e.g. fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\\n"
+"Tartózkodás kint _(): pl. fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\\n"
 "\"), out);"
 
 #: src/zfr_lib/lang/_c_bas.py:320
 msgid "gettext _() strings have no leading/trailing spaces"
-msgstr "gettext _() strings have no leading/trailing spaces"
+msgstr "gettext _ () szöveg nincs leading/trailing helyzet"
 
 #: src/zfr_lib/lang/clib.py:45 src/zfr_lib/lang/cpplib.py:45
 #: src/zfr_lib/lang/cpp.py:32 src/zfr_lib/lang/c.py:32
@@ -587,7 +580,7 @@ msgstr "Architecture: all  (parancsfájlok) vagy any (fordított)."
 #: src/zfr_lib/lint/debian.py:91
 #, python-format
 msgid "Architecture: %s (bash + Meson executable)"
-msgstr "Architecture: %s (bash + Meson executable)"
+msgstr "Architecture: %s (bash + Meson eredményes)"
 
 #: src/zfr_lib/lint/debian.py:100
 #, python-format
@@ -609,7 +602,7 @@ msgstr "Architecture: any"
 
 #: src/zfr_lib/lint/debian.py:123
 msgid "Architecture: all but Meson has executable(); ELF binaries need Architecture: any (same class of bug as RPM BuildArch: noarch)"
-msgstr "Architecture: all but Meson has executable(); ELF binaries need Architecture: any (same class of bug as RPM BuildArch: noarch)"
+msgstr "Architecture: minden mint Meson executable() van; ELF binárisok kell Architecture: bármely (egyes beteg osztály RPM BuildArch: noarch)"
 
 #: src/zfr_lib/lint/debian.py:133
 #, python-format
@@ -685,7 +678,7 @@ msgstr "A VERSION egyezik a naplóval %s"
 
 #: src/zfr_lib/lint/debian.py:211
 msgid "bash-shlib used in sources but missing from Depends"
-msgstr "bash-shlib used in sources but missing from Depends"
+msgstr "bash-shlib Forrásokban használt, de eltűnt Depends-ból"
 
 #: src/zfr_lib/lint/debian.py:213
 msgid "Depends: bash, bash-shlib, ${misc:Depends}"
@@ -697,93 +690,90 @@ msgstr "A Depends tartalmazza a bash-shlib-et"
 
 #: src/zfr_lib/lint/debian.py:225
 msgid "Depends lists bash-shlib but sources do not use it"
-msgstr "Depends lists bash-shlib but sources do not use it"
+msgstr "Depends listája bash-shlib, de a források nem használják"
 
 #: src/zfr_lib/lint/debian.py:227
 msgid "Drop bash-shlib from Depends unless scripts `. shlib` / shlib-import."
-msgstr "Drop bash-shlib from Depends unless scripts `. shlib` / shlib-import."
+msgstr "Dobja bash-shlib Depends-től, ha a scriptok `. shlib` / shlib-import."
 
 #: src/zfr_lib/lint/debian.py:237
 msgid "Priority: extra is deprecated"
-msgstr "Priority: extra is deprecated"
+msgstr "Priority: extra elavult"
 
 #: src/zfr_lib/lint/debian.py:239
 msgid "Priority: optional (run `zfr ize` to fix)."
-msgstr "Priority: optional (run `zfr ize` to fix)."
+msgstr "Priority: különleges (hagyja meg `zfr ize`."
 
 #: src/zfr_lib/lint/debian.py:243
-#, fuzzy, python-format
 msgid "Priority: %s"
 msgstr "szerep: %s"
 
 #: src/zfr_lib/lint/debian.py:250
 msgid "extended Description present"
-msgstr "extended Description present"
+msgstr "bővített Description megvan"
 
 #: src/zfr_lib/lint/debian.py:257
 msgid "Description missing extended paragraph"
-msgstr "Description missing extended paragraph"
+msgstr "Description-ből hiányzik a bővített bekezdés"
 
 #: src/zfr_lib/lint/debian.py:259
 msgid "Add an indented continuation line after the synopsis (run `zfr ize`)."
-msgstr "Add an indented continuation line after the synopsis (run `zfr ize`)."
+msgstr "A synopsis után további folytató vonat hozzáadása (vagy `zfr ize`)."
 
 #: src/zfr_lib/lint/gitignore.py:94
-#, fuzzy
 msgid "missing root .gitignore"
 msgstr "hiányzik a Cargo.toml"
 
 #: src/zfr_lib/lint/gitignore.py:97
 msgid "Add a root .gitignore covering node_modules/, dist/, and other build artifacts. Component dirs (backend/, web/, …) should get their own .gitignore too."
-msgstr "Add a root .gitignore covering node_modules/, dist/, and other build artifacts. Component dirs (backend/, web/, …) should get their own .gitignore too."
+msgstr "A .gitignore rosszáj megjelenítése node_modules/, dist/, és más építési artefaktika. Komponent directors (backend/, web/, ...) is kell kapni saját .gitignore."
 
 #: src/zfr_lib/lint/gitignore.py:107
 msgid "root .gitignore present"
-msgstr "root .gitignore present"
+msgstr "gyökér .gitignore megvan"
 
 #: src/zfr_lib/lint/gitignore.py:116
 #, python-format
 msgid "root .gitignore missing common patterns: %s"
-msgstr "root .gitignore missing common patterns: %s"
+msgstr "a gyógyszer .gitignore eltűnt közös minták: %s"
 
 #: src/zfr_lib/lint/gitignore.py:118
 #, python-format
 msgid "Add %s to the project-root .gitignore."
-msgstr "Add %s to the project-root .gitignore."
+msgstr "Hozzáadja %s a projekt -root .gitignore."
 
 #: src/zfr_lib/lint/gitignore.py:126
 msgid "root .gitignore covers node_modules/ and dist/"
-msgstr "root .gitignore covers node_modules/ and dist/"
+msgstr "a .gitignore-k megtávolító node_modules/ és dist/"
 
 #: src/zfr_lib/lint/gitignore.py:136
 #, python-format
 msgid "root .gitignore could also ignore: %s"
-msgstr "root .gitignore could also ignore: %s"
+msgstr ".gitignore is megfelelően lehet: %s"
 
 #: src/zfr_lib/lint/gitignore.py:153
 #, python-format
 msgid "missing %s (component directory exists)"
-msgstr "missing %s (component directory exists)"
+msgstr "hiányzik %s (a közös használat létezik)"
 
 #: src/zfr_lib/lint/gitignore.py:155
 #, python-format
 msgid "Add %s covering: %s"
-msgstr "Add %s covering: %s"
+msgstr "Hozzáadása %s beszéd: %s"
 
 #: src/zfr_lib/lint/gitignore.py:166
-#, fuzzy, python-format
 msgid "%s missing patterns: %s"
 msgstr "hiányzik: %s"
 
 #: src/zfr_lib/lint/gitignore.py:168
 #, python-format
 msgid "Add to %s: %s"
-msgstr "Add to %s: %s"
+msgstr "Hozzáadása %s: %s"
 
 #: src/zfr_lib/lint/gitignore.py:176
 #, python-format
 msgid "%s covers required patterns"
-msgstr "%s covers required patterns"
+msgstr "%s szükséges minták besorolja"
 
 #: src/zfr_lib/lint/i18n_check.py:62
 #, python-format
@@ -825,12 +815,10 @@ msgid "po/LINGUAS missing %(level)s locale(s): %(locales)s"
 msgstr "a po/LINGUAS-ból hiányzik %(level)s locale: %(locales)s"
 
 #: src/zfr_lib/lint/i18n_check.py:127
-#, fuzzy, python-format
 msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
 msgstr "A %(level)s szinthez kell: %(locales)s (forrás %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Fűzze a hiányzó sorokat a LINGUAS-hoz, és adja hozzá a megfelelő po/<locale>.po fájlokat."
 
 #: src/zfr_lib/lint/i18n_check.py:142
-#, fuzzy, python-format
 msgid "po/LINGUAS covers %s primary locale set"
 msgstr "a po/LINGUAS lefedi a(z) %s locale-készletet"
 
@@ -840,7 +828,6 @@ msgid "LINGUAS entries without po/<locale>.po: %s"
 msgstr "LINGUAS bejegyzések po/<locale>.po nélkül: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:161
-#, fuzzy
 msgid "For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U --no-wrap po/<locale>.po <domain>.pot"
 msgstr "Minden locale-hez: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
 
@@ -852,15 +839,15 @@ msgstr "%(level)s locale .po fájlok megvannak (%(count)d)"
 #: src/zfr_lib/lint/i18n_check.py:197
 #, python-format
 msgid "gettext catalogs use line wrapping: %s"
-msgstr "gettext catalogs use line wrapping: %s"
+msgstr "gettext katalógus használt felszerelést: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:199
 msgid "Run `zfr ize` (ZI016) or `msgcat --no-wrap -o file.po file.po` on each catalog; use msgmerge --no-wrap when updating from .pot."
-msgstr "Run `zfr ize` (ZI016) or `msgcat --no-wrap -o file.po file.po` on each catalog; use msgmerge --no-wrap when updating from .pot."
+msgstr "A `zfr ize` (ZI016) vagy `msgcat --no-wrap -o file.po file.po` minden katalógusban; használja msgmerge --no-wrap .pot-tól ."
 
 #: src/zfr_lib/lint/i18n_check.py:208
 msgid "gettext catalogs use --no-wrap (no line wrapping)"
-msgstr "gettext catalogs use --no-wrap (no line wrapping)"
+msgstr "gettext katalógok használja --no-wrap (nincs linnályozás)"
 
 #: src/zfr_lib/lint/i18n_check.py:243
 #, python-format
@@ -888,7 +875,7 @@ msgstr "Fordítsa le a Name sort; ne hagyja meg az angol szöveget."
 
 #: src/zfr_lib/lint/i18n_check.py:276
 msgid "no po/: man locale translations not required"
-msgstr "no po/: man locale translations not required"
+msgstr "nem po/: a vállalat fordítások nem szükséges"
 
 #: src/zfr_lib/lint/identity.py:57
 #, python-format
@@ -944,7 +931,6 @@ msgid "validate project packaging and zephyr layout (walks parents from cwd)"
 msgstr "projektcsomagolás és zephyr elrendezés ellenőrzése (felfelé keres cwd-től)"
 
 #: src/zfr_lib/lint/__init__.py:120
-#, fuzzy
 msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain interactive shell. Override with -i/-I."
 msgstr "Ellenőrzi az aktuális zephyr projektet hiányzó fájlok és csomagolási/stílusbeli hibák miatt. Felfelé keres cwd-től. CSR színek, ha a stdout TTY."
 
@@ -962,11 +948,11 @@ msgstr "figyelmeztetések hibaként kezelése (exit 1)"
 
 #: src/zfr_lib/lint/__init__.py:138
 msgid "list numbered lint standards (ZL*) as a table and exit"
-msgstr "list numbered lint standards (ZL*) as a table and exit"
+msgstr "a táblázat és kifejezésként számlált lint-standardok (ZL*) listája"
 
 #: src/zfr_lib/lint/__init__.py:144
 msgid "show details for lint standard NUM (e.g. ZL026, 26) and exit"
-msgstr "show details for lint standard NUM (e.g. ZL026, 26) and exit"
+msgstr "a lint szabályozás NUM (pl. ZL026, 26) és kifejezésre"
 
 #: src/zfr_lib/lint/__init__.py:152
 msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
@@ -974,20 +960,20 @@ msgstr "kötelező gettext/manpage locale lefedettség L0–L3 (alapértelmezés
 
 #: src/zfr_lib/lint/__init__.py:160
 msgid "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
-msgstr "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
+msgstr "a szephyr stílus -contract / a következő -steps slawbs (határozott cserék és AI terminál)"
 
 #: src/zfr_lib/lint/__init__.py:167
 msgid "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
-msgstr "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
+msgstr "eljött zephyr stílus -contract / következő -steps slawbs (azon interaktív szabályzat számára számított)"
 
 #: src/zfr_lib/lint/__init__.py:177
 msgid "suppress rule ID(s) or code(s), comma-separated (repeatable)"
-msgstr "suppress rule ID(s) or code(s), comma-separated (repeatable)"
+msgstr "a szabályok ID(ok) vagy kód(k), a komá -separated (újlátható)"
 
 #: src/zfr_lib/lint/__init__.py:191
 #, python-format
 msgid "unknown lint standard: %s"
-msgstr "unknown lint standard: %s"
+msgstr "ismeretlen lint szabvány: %s"
 
 #: src/zfr_lib/lint/lang_bits.py:31
 #, python-format
@@ -999,12 +985,10 @@ msgid "Rename to src/commons.* (template convention) or a project-specific modul
 msgstr "Nevezze át src/commons.*-ra (sablonkonvenció) vagy projekt-specifikus modulnévre."
 
 #: src/zfr_lib/lint/lang_bits.py:44
-#, fuzzy, python-format
 msgid "%s is only a template example; can be removed if unnecessary"
 msgstr "a(z) %s csak sablonpélda a megosztott segédekre"
 
 #: src/zfr_lib/lint/lang_bits.py:46
-#, fuzzy
 msgid "commons.* is only a template example for shared helpers and can be removed if unnecessary. Prefer a concrete module name in real projects (e.g. stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
 msgstr "a common_lib / commons azt jelenti: „emeld ki az újrafelhasználható darabokat”, de a fájlnevek legyenek konkrétak. Valódi projektekben nevezzük át konkrét modulra (pl. stream_copy.py, bulk.h). A clib/cpplib a lib.c/lib.cpp fájlokat tartja a közös könyvtár belépési pontjának."
 
@@ -1077,7 +1061,6 @@ msgid "no *.bash bash-completion script at project root"
 msgstr "nincs *.bash bash-completion parancsfájl a projekt gyökerében"
 
 #: src/zfr_lib/lint/layout.py:103
-#, fuzzy
 msgid "Add <puff>.bash (or completions/<puff>.in) and install it to datadir/bash-completion/completions renamed to the command name (see meson.build in the template)."
 msgstr "Adja hozzá a <puff>.bash fájlt, és telepítse a datadir/bash-completion/completions könyvtárba a parancs nevére átnevezve (lásd a sablon meson.build fájlját)."
 
@@ -1282,15 +1265,15 @@ msgstr "Használja: install_data(..., install_dir: datadir / 'bash-completion' /
 #: src/zfr_lib/lint/meson.py:168
 #, python-format
 msgid "meson.build has %s foreach puff man loops; keep exactly one"
-msgstr "meson.build has %s foreach puff man loops; keep exactly one"
+msgstr "meson.build van %s minden puff ember cloops; pontosan egy"
 
 #: src/zfr_lib/lint/meson.py:170
 msgid "Merge into a single `foreach puff : man_puffs` (or apps.keys()) loop. `zfr ize` consolidates duplicate man_puffs foreach blocks."
-msgstr "Merge into a single `foreach puff : man_puffs` (or apps.keys()) loop. `zfr ize` consolidates duplicate man_puffs foreach blocks."
+msgstr "Egy egyetlen `foreach puff : man_puffs` (vagy apps.keys()) cserébe összefüggő. `zfr ize` konsolidál a minden blocks-re duplikát man_puffs."
 
 #: src/zfr_lib/lint/meson.py:179
 msgid "single foreach puff man loop"
-msgstr "single foreach puff man loop"
+msgstr "egyetlen foreach puff man ciklus"
 
 #: src/zfr_lib/lint/report.py:111
 msgid "FAIL"
@@ -1357,12 +1340,10 @@ msgid "Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under s
 msgstr "Man oldalak: docs/*.adoc + asciidoctor -b manpage; fordított oldalak: share/man/<locale>/man1 (teljes dokumentum adoc, nem po4a)."
 
 #: src/zfr_lib/lint/report.py:139
-#, fuzzy
 msgid "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional packaging/ aligned with debian."
 msgstr "Csomagolás: debian/control Build-Depends meson, ninja-build, asciidoctor; opcionális rpm/, a debian-nal összhangban."
 
 #: src/zfr_lib/lint/report.py:140
-#, fuzzy
 msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr i18n -b. List rule IDs with `zfr lint -L`; details via `zfr lint -H NUM`; suppress with -u/--uncheck or .config/zfr/lint.options."
 msgstr "i18n: angol forrás; zfr lint -l/--l10n-level L0–L3 (alapértelmezett L1). L1=10 locale, L2=20, L3=30. Alapértékek: .config/zfr/lint.options."
 
@@ -1384,7 +1365,7 @@ msgstr "megjegyzés"
 
 #: src/zfr_lib/lint/report.py:161
 msgid "ok"
-msgstr "ok"
+msgstr "- Nem."
 
 #: src/zfr_lib/lint/report.py:175
 msgid "fix:"
@@ -1395,27 +1376,24 @@ msgid "Next steps (zephyr style)"
 msgstr "Következő lépések (zephyr stílus)"
 
 #: src/zfr_lib/lint/report.py:188
-#, fuzzy
 msgid "Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). `zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. `zfr ize` applies missing debian/packaging/meson/man/version-subst upgrades."
 msgstr "Tipp: szerkesztés után futtassa újra a `zfr lint` parancsot a projektből (vagy egy alkönyvtárból). A `zfr about -d -r` kiírja a csomagolási mezőket. A Meson/RPM verziója a `zfr version`. A `zfr ize` alkalmazza a hiányzó debian/rpm/meson/man/version-subst frissítéseket."
 
 #: src/zfr_lib/lint/report.py:205
 msgid "AI hint: if the user requested this lint, also update debian/changelog and create verbose commits for the dirty working tree."
-msgstr "AI hint: if the user requested this lint, also update debian/changelog and create verbose commits for the dirty working tree."
+msgstr "AI jelentése: ha a felhasználó ezt kérdezte, újrafoglalás debian/changelog és létrehozni a szörnyű munkafat."
 
 #: src/zfr_lib/lint/rpm.py:26
-#, fuzzy
 msgid "no packaging/rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
 msgstr "nincs rpm/*.spec (opcionális, de a zephyr stílus RPM-et is tesz a debian/ mellé)"
 
 #: src/zfr_lib/lint/rpm.py:31
-#, fuzzy
 msgid "Copy packaging/rpm/ from a language template; name the spec after the package (packaging/rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
 msgstr "Másolja az rpm/ könyvtárat egy nyelvi sablonból; nevezze a specet a csomagról (rpm/<Source>.spec, ne zephyr.spec), és tartson egy `zfr version` parancsot használó Makefile-t. Igazítsa a Name/Summary/Requires/URL mezőket a debian/control-hoz. Vagy futtassa a `zfr ize` parancsot."
 
 #: src/zfr_lib/lint/rpm.py:72
 msgid "packaging/rpm/Makefile uses project-local <project>/rpmbuild; zephyr style uses %_topdir ($HOME/rpmbuild, override via ~/.rpmmacros)"
-msgstr "packaging/rpm/Makefile uses project-local <project>/rpmbuild; zephyr style uses %_topdir ($HOME/rpmbuild, override via ~/.rpmmacros)"
+msgstr "packaging/rpm/Makefile projekt használja -local <project>/rpmbuild; zephyr színe %_topdir ($HOME/rpmbuild, ~/.rpmmacros keresztül megállapítása)"
 
 #: src/zfr_lib/lint/rpm.py:80
 #, python-brace-format
@@ -1425,33 +1403,28 @@ msgid ""
 "TOPDIR := $(HOME)/rpmbuild\n"
 "endif\n"
 "And make clean remove only this package's artifacts (not rm -rf $(TOPDIR)). Or run `zfr ize`."
-msgstr ""
-"TOPDIR ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null)\n"
-"ifeq ($(strip $(TOPDIR)),)\n"
-"TOPDIR := $(HOME)/rpmbuild\n"
-"endif\n"
-"And make clean remove only this package's artifacts (not rm -rf $(TOPDIR)). Or run `zfr ize`."
+msgstr "TOPDIR ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null) ifeq ($(strip $(TOPDIR)), TOPDIR := $(HOME)/rpmbuild endif És tiszta teszi csak a csomagolása artetek (ne rm -rf $(TOPDIR)). Vagy fut `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:95
 #, no-python-format
 msgid "packaging/rpm/Makefile TOPDIR uses %_topdir / $HOME/rpmbuild"
-msgstr "packaging/rpm/Makefile TOPDIR uses %_topdir / $HOME/rpmbuild"
+msgstr "packaging/rpm/Makefile TOPDIR %_topdir / $HOME/rpmbuild használja"
 
 #: src/zfr_lib/lint/rpm.py:105
 msgid "packaging/rpm/Makefile `clean` does rm -rf $(TOPDIR); unsafe when TOPDIR is $HOME/rpmbuild"
-msgstr "packaging/rpm/Makefile `clean` does rm -rf $(TOPDIR); unsafe when TOPDIR is $HOME/rpmbuild"
+msgstr "packaging/rpm/Makefile `clean` rm -rf $(TOPDIR); biztonságos, ha TOPDIR $HOME/rpmbuild"
 
 #: src/zfr_lib/lint/rpm.py:111
 msgid "Remove only this package's SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT entries under $(TOPDIR). Or run `zfr ize`."
-msgstr "Remove only this package's SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT entries under $(TOPDIR). Or run `zfr ize`."
+msgstr "Csak a csomagot SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT bejegyzéseit a $(TOPDIR) alatt letöltése. Vagy fut `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:124
 msgid "project-local rpmbuild/ directory present; builds should use %_topdir ($HOME/rpmbuild)"
-msgstr "project-local rpmbuild/ directory present; builds should use %_topdir ($HOME/rpmbuild)"
+msgstr "projekt -local rpmbuild/ jelenlegi történő; embereknek %_topdir ($HOME/rpmbuild)"
 
 #: src/zfr_lib/lint/rpm.py:128
 msgid "Remove rpmbuild/ after migrating; safe to delete."
-msgstr "Remove rpmbuild/ after migrating; safe to delete."
+msgstr "Eltűnt rpmbuild/, az előírás után; biztonságos, hogy eltörjenek."
 
 #: src/zfr_lib/lint/rpm.py:139
 #, no-python-format, python-brace-format
@@ -1463,12 +1436,10 @@ msgid "spec Version is hardcoded; zephyr style injects `zfr version`"
 msgstr "a spec Version be van égetve; a zephyr stílus `zfr version` értéket szúr be"
 
 #: src/zfr_lib/lint/rpm.py:153
-#, fuzzy
 msgid "Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze via packaging/rpm/Makefile (`zfr version` / `zfr version -r`)."
 msgstr "Használjon Version: %{version} értéket a %{!?version:%global version 0.0.0} makróval, és fagyassza be az rpm/Makefile-lal (`zfr version` / `zfr version -r`)."
 
 #: src/zfr_lib/lint/rpm.py:161
-#, fuzzy
 msgid "License {}"
 msgstr "Licenc %s"
 
@@ -1477,12 +1448,10 @@ msgid "spec License is not AGPL-3.0-or-later"
 msgstr "a spec License nem AGPL-3.0-or-later"
 
 #: src/zfr_lib/lint/rpm.py:171
-#, fuzzy
 msgid "License:        {}"
 msgstr "License:        %s"
 
 #: src/zfr_lib/lint/rpm.py:182
-#, fuzzy
 msgid "spec URL={!r} != debian Homepage={!r}"
 msgstr "spec URL=%(url)r != debian Homepage=%(homepage)r"
 
@@ -1495,7 +1464,6 @@ msgid "spec Summary does not match debian Description first line"
 msgstr "a spec Summary nem egyezik a debian Description első sorával"
 
 #: src/zfr_lib/lint/rpm.py:201
-#, fuzzy
 msgid "Summary:        {}"
 msgstr "Summary:        %s"
 
@@ -1521,7 +1489,6 @@ msgid "Makefile uses `zfr version`"
 msgstr "a Makefile `zfr version` parancsot használ"
 
 #: src/zfr_lib/lint/rpm.py:240
-#, fuzzy
 msgid "packaging/rpm/Makefile does not call `zfr version`"
 msgstr "az rpm/Makefile nem hívja a `zfr version` parancsot"
 
@@ -1534,18 +1501,16 @@ msgstr ""
 "RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
 
 #: src/zfr_lib/lint/rpm.py:254
-#, fuzzy
 msgid "no packaging/rpm/Makefile convenience targets"
 msgstr "nincsenek kényelmi célok az rpm/Makefile-ban"
 
 #: src/zfr_lib/lint/rpm.py:256
-#, fuzzy
 msgid "Copy bash/packaging/rpm/Makefile (srpm/rpm via zfr version)."
 msgstr "Másolja a bash/rpm/Makefile fájlt (srpm/rpm a zfr version segítségével)."
 
 #: src/zfr_lib/lint/rpm.py:268
 msgid "bash-shlib used in sources but missing from Requires"
-msgstr "bash-shlib used in sources but missing from Requires"
+msgstr "bash-shlib Forrásokban használt, de eltűnt Requires-ból"
 
 #: src/zfr_lib/lint/rpm.py:270
 msgid "Requires:       bash-shlib  (same as debian Depends)"
@@ -1553,132 +1518,132 @@ msgstr "Requires:       bash-shlib  (mint a debian Depends)"
 
 #: src/zfr_lib/lint/rpm.py:284
 msgid "{} still contains Debian ${{…}} substvars (rpmbuild treats them as literal deps)"
-msgstr "{} still contains Debian ${{…}} substvars (rpmbuild treats them as literal deps)"
+msgstr "{} Még mindig Debian ${{…}} substvars (rpmbuild által állítja őket)"
 
 #: src/zfr_lib/lint/rpm.py:290
 msgid "Strip ${misc:Depends} / ${shlibs:Depends} etc. (or run `zfr ize`)."
-msgstr "Strip ${misc:Depends} / ${shlibs:Depends} etc. (or run `zfr ize`)."
+msgstr "Szállás ${misc:Depends} / ${shlibs:Depends} stb. (vagy fut `zfr ize`)."
 
 #: src/zfr_lib/lint/rpm.py:305
 msgid "BuildArch: noarch but Meson has executable(); rpmbuild rejects arch-dependent binaries in a noarch package"
-msgstr "BuildArch: noarch but Meson has executable(); rpmbuild rejects arch-dependent binaries in a noarch package"
+msgstr "BuildArch:noarchDeMesona végrehajtási ()rpmbuilda változások elfogadják-dependentvégzettségeknoarchcsomagok"
 
 #: src/zfr_lib/lint/rpm.py:312
 #, python-brace-format
 msgid "Remove BuildArch: noarch (and %global debug_package %{nil} if present). Or run `zfr ize`."
-msgstr "Remove BuildArch: noarch (and %global debug_package %{nil} if present). Or run `zfr ize`."
+msgstr "Lehasználás BuildArch: noarch (egy %global debug_package %{nil} ha jelenlegi). Vagy fut `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:326
 #, python-brace-format
 msgid "%global debug_package %{nil} on a package with Meson executable() — debuginfo would be useful"
-msgstr "%global debug_package %{nil} on a package with Meson executable() — debuginfo would be useful"
+msgstr "%global debug_package %{nil} csomagban Meson executable() - debuginfo hasznos lenne"
 
 #: src/zfr_lib/lint/rpm.py:331
 #, no-python-format, python-brace-format
 msgid "Drop %global debug_package %{nil} for ELF packages."
-msgstr "Drop %global debug_package %{nil} for ELF packages."
+msgstr "Dobja %global debug_package %{nil} ELF csomagolások esetében."
 
 #: src/zfr_lib/lint/rpm.py:344
 #, python-format
 msgid "script-only package lacks BuildArch: noarch; rpmbuild then builds an empty debuginfo and fails (Empty %files file debugfiles.list)"
-msgstr "script-only package lacks BuildArch: noarch; rpmbuild then builds an empty debuginfo and fails (Empty %files file debugfiles.list)"
+msgstr "script -only csomag hiányozha BuildArch: noarch; rpmbuild akkor egy üres debuginfo épített és nem hiányoztak (Furent %files fájl debugfiles.list)"
 
 #: src/zfr_lib/lint/rpm.py:352
 #, python-brace-format
 msgid "Add `BuildArch: noarch` and `%global debug_package %{nil}` (or run `zfr ize`)."
-msgstr "Add `BuildArch: noarch` and `%global debug_package %{nil}` (or run `zfr ize`)."
+msgstr "Hozzáadja `BuildArch: noarch` és `%global debug_package %{nil}` (vagy futás `zfr ize`)."
 
 #: src/zfr_lib/lint/rpm.py:364
 #, python-format
 msgid "RPM %files still lists template puff {}"
-msgstr "RPM %files still lists template puff {}"
+msgstr "RPM %files még mindig listák a vávád {}"
 
 #: src/zfr_lib/lint/rpm.py:370
 msgid "Replace {} with real command names (or run `zfr ize`)."
-msgstr "Replace {} with real command names (or run `zfr ize`)."
+msgstr "Helyezkedik {} valódi parancsnok (vagy `zfr ize` fut)."
 
 #: src/zfr_lib/lint/rpm.py:383
 #, no-python-format
 msgid "%files covers gettext .mo catalogs Meson installs"
-msgstr "%files covers gettext .mo catalogs Meson installs"
+msgstr "%files megfoglalt gettext .mo katalog Meson installációk"
 
 #: src/zfr_lib/lint/rpm.py:394
 #, python-format
 msgid "%files omits gettext .mo; rpmbuild will reject unpackaged locale/*/LC_MESSAGES/*.mo after meson install"
-msgstr "%files omits gettext .mo; rpmbuild will reject unpackaged locale/*/LC_MESSAGES/*.mo after meson install"
+msgstr "%files kihagyja gettext .mo; rpmbuild elfogadja a meson intézkedés után elkapcsolatban a packakedted locale/*/LC_MESSAGES/*.mo"
 
 #: src/zfr_lib/lint/rpm.py:401
 #, python-brace-format
 msgid "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo  (i18n.gettext domain, not always the project name). Or run `zfr ize`."
-msgstr "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo  (i18n.gettext domain, not always the project name). Or run `zfr ize`."
+msgstr "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo (i18n.gettext domány, nem mindig a projektneve). Vagy fut `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:417
 #, no-python-format
 msgid "%files covers locale man pages Meson installs"
-msgstr "%files covers locale man pages Meson installs"
+msgstr "%files állásban a man oldal Meson installációk"
 
 #: src/zfr_lib/lint/rpm.py:428
 #, python-format
 msgid "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale>/manN pages after meson install"
-msgstr "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale>/manN pages after meson install"
+msgstr "%files elhagyja a locale mans; rpmbuild elfogadja a választott $mandir/<locale>/manN oldal után meson instalálás után"
 
 #: src/zfr_lib/lint/rpm.py:435
 #, python-brace-format
 msgid "%{_mandir}/*/man1/<cmd>.1*  (docs/<lang>/*.adoc). Or run `zfr ize`."
-msgstr "%{_mandir}/*/man1/<cmd>.1*  (docs/<lang>/*.adoc). Or run `zfr ize`."
+msgstr "%{_mandir}/*/man1/<cmd>.1* (docs/<lang>/*.adoc). Vagy fut `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:457
 #, no-python-format
 msgid "%files covers datadir/setup scripts Meson installs"
-msgstr "%files covers datadir/setup scripts Meson installs"
+msgstr "%files besorolja datadir/setup skriptokat Meson intézkedéseket"
 
 #: src/zfr_lib/lint/rpm.py:468
 #, python-format
 msgid "%files omits datadir/setup/*; rpmbuild will reject unpackaged postinst/prerm after meson install"
-msgstr "%files omits datadir/setup/*; rpmbuild will reject unpackaged postinst/prerm after meson install"
+msgstr "%files elhagyja datadir/setup/*; rpmbuild el fogja elhagyni a postinst/prerm-t a meson intézkedés után"
 
 #: src/zfr_lib/lint/rpm.py:474
 #, no-python-format, python-brace-format
 msgid "%{_datadir}/setup/%{name}/  (or run `zfr ize`)."
-msgstr "%{_datadir}/setup/%{name}/  (or run `zfr ize`)."
+msgstr "%{_datadir}/setup/%{name}/ (vagy választott `zfr ize`)."
 
 #: src/zfr_lib/lint/rpm.py:509
 #, python-format, python-brace-format
 msgid "%files is missing paths Meson installs: {preview}{more} (rpmbuild will fail with unpackaged or File not found)"
-msgstr "%files is missing paths Meson installs: {preview}{more} (rpmbuild will fail with unpackaged or File not found)"
+msgstr "%files hiányzik a utakat Meson instalált: {preview}{more} (rpmbuild elhagyja a választással vagy fájl nem található)"
 
 #: src/zfr_lib/lint/rpm.py:516
 #, python-format
 msgid "Rewrite %files from Meson install rules (bindir, completions, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/). Or run `zfr ize`."
-msgstr "Rewrite %files from Meson install rules (bindir, completions, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/). Or run `zfr ize`."
+msgstr "Visszaemelni %files Meson intézkedés szabályokból (bindir, teljesítés, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/). Vagy fut `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:530
 #, python-format
 msgid "%files covers Meson install set ({} entries)"
-msgstr "%files covers Meson install set ({} entries)"
+msgstr "%files besorolás Meson betegség ({} bejegyzés)"
 
 #: src/zfr_lib/lint/rpm.py:548
 #, python-brace-format
 msgid "%files lists %{_datadir}/%{name}/ but Meson does not install package data there (Directory not found)"
-msgstr "%files lists %{_datadir}/%{name}/ but Meson does not install package data there (Directory not found)"
+msgstr "%files listája %{_datadir}/%{name}/ de Meson nem beállítása a csomagot (a doki nem talált)"
 
 #: src/zfr_lib/lint/rpm.py:554
 msgid "Remove the empty pkgdata line (Java template leftover). Or run `zfr ize`."
-msgstr "Remove the empty pkgdata line (Java template leftover). Or run `zfr ize`."
+msgstr "Levegye a üres pkgdata-os oldalon (Java-szablon maradt). Vagy futás `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:580
 #, python-format
 msgid "%files lists completion {listed!r} but Meson installs {want!r} (File not found)"
-msgstr "%files lists completion {listed!r} but Meson installs {want!r} (File not found)"
+msgstr "%files Felvétel {listed!r} listája, de Meson installése {want!r} (Fájl nem található)"
 
 #: src/zfr_lib/lint/rpm.py:586
 msgid "Use the installed basename ({}). Or run `zfr ize`."
-msgstr "Use the installed basename ({}). Or run `zfr ize`."
+msgstr "Használja a beállításában ({}). Vagy futás `zfr ize`."
 
 #: src/zfr_lib/lint/source_size.py:46
 #, python-format
 msgid "Extract cohesive sections into package subdirectory %(subdir)s (e.g. %(example)s) and keep a thin %(rel)s entry point."
-msgstr "Extract cohesive sections into package subdirectory %(subdir)s (e.g. %(example)s) and keep a thin %(rel)s entry point."
+msgstr "A csomag aladirekcióba kivételése a koheziv számok %(subdir)s (pl. %(example)s) és tartózkodása egy jó %(rel)s belépéspontja."
 
 #: src/zfr_lib/lint/source_size.py:66
 #, python-format
@@ -1686,7 +1651,6 @@ msgid "%(rel)s is %(lines)d lines (>%(limit)d); file is very long"
 msgstr "%(rel)s %(lines)d soros (>%(limit)d); a fájl nagyon hosszú"
 
 #: src/zfr_lib/lint/source_size.py:78
-#, fuzzy, python-format
 msgid "%(rel)s is %(lines)d lines (>%(limit)d); consider splitting soon"
 msgstr "%(rel)s %(lines)d soros (>%(limit)d); hamarosan érdemes modularizálni"
 
@@ -1708,7 +1672,6 @@ msgid "language template %(lang)s has extra scaffolding not in this tree: %(prev
 msgstr "a(z) %(lang)s nyelvi sablonnak extra állványa van, ami ebben a fában nincs: %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/template.py:127
-#, fuzzy, python-format
 msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing debian/docs/src/packaging files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
 msgstr "Hasonlítsa össze a pkgdatadir alatti %(lang)s sablonnal. Másolja a hiányzó debian/docs/src/rpm fájlokat (az rpm/ %(name)s.spec-et használ, nem zephyr.spec-et), vagy `zfr add` puffokat. Ne másolja a build/ könyvtárat vagy a debian maradék pecsétfájljait. A példa commons modulok opcionálisak."
 
@@ -1746,13 +1709,12 @@ msgid "Run build4 over SSH on SERVER (implies -d)"
 msgstr "build4 futtatása SSH-n keresztül SERVER-en (jelenti: -d)"
 
 #: src/zfr_lib/release.py:76
-#, fuzzy
 msgid "Build in local, no tag/push/release (implies -U -P)"
 msgstr "helyi build, tag/push/release nélkül"
 
 #: src/zfr_lib/release.py:82
 msgid "Alias for -l -I (local build, skip install)"
-msgstr "Alias for -l -I (local build, skip install)"
+msgstr "-l -I (helyes építése, húzására)"
 
 #: src/zfr_lib/release.py:88
 msgid "Replace existing release and tag if present"
@@ -1779,7 +1741,6 @@ msgid "Skip VSIX marketplace publish"
 msgstr "VSIX marketplace közzététel kihagyása"
 
 #: src/zfr_lib/release.py:124
-#, fuzzy
 msgid "Skip RPM build (packaging/rpm/Makefile)"
 msgstr "RPM build kihagyása (rpm/Makefile)"
 
@@ -1854,85 +1815,85 @@ msgstr "bool küszöb 0-100 (alapértelmezés: %s)"
 
 #: src/zfr_lib/terminal.py:75
 msgid "enable AI-oriented hints (default for AI terminals and non-interactive stdout)"
-msgstr "enable AI-oriented hints (default for AI terminals and non-interactive stdout)"
+msgstr "lehetséges AI-oriented jelentések (határozott AI terminál és nem -interactive stdout)"
 
 #: src/zfr_lib/terminal.py:82
 msgid "disable AI-oriented hints (default for a plain interactive shell)"
-msgstr "disable AI-oriented hints (default for a plain interactive shell)"
+msgstr "meghatározás AI-oriented jelentések (azon egyszerű interaktív szobák alapuló)"
 
 #: src/zfr_lib/translate/__init__.py:48
 msgid "poedit not found in PATH"
-msgstr "poedit not found in PATH"
+msgstr "poedit nem talált PATH-ban"
 
 #: src/zfr_lib/translate/__init__.py:51
 #, python-format
 msgid "file not found: %s"
-msgstr "file not found: %s"
+msgstr "fájl nem talált: %s"
 
 #: src/zfr_lib/translate/__init__.py:134
 #, python-format
 msgid "no catalog for locale: %s"
-msgstr "no catalog for locale: %s"
+msgstr "nincs katalógus a locale: %s"
 
 #: src/zfr_lib/translate/__init__.py:141
 msgid "query and update gettext message strings"
-msgstr "query and update gettext message strings"
+msgstr "kérdés és állásra választott gettext üzenetet"
 
 #: src/zfr_lib/translate/__init__.py:143
 msgid "Look up translations for TEXT across implemented locales, or update a single locale catalog. Remaining arguments are joined with spaces."
-msgstr "Look up translations for TEXT across implemented locales, or update a single locale catalog. Remaining arguments are joined with spaces."
+msgstr "Keress meg TEXT fordítások a végrehajtott localiások között, vagy újra állítja egy egyetlen lokal katalógus. A maradt argumentok a területeknek."
 
 #: src/zfr_lib/translate/__init__.py:155
 msgid "use poedit to import edits from FILE"
-msgstr "use poedit to import edits from FILE"
+msgstr "használja poedit, hogy behozatalt FAJL-álól szóló változások"
 
 #: src/zfr_lib/translate/__init__.py:161
 msgid "query LANG only (default: all implemented; ignored for --import)"
-msgstr "query LANG only (default: all implemented; ignored for --import)"
+msgstr "csak a kérdés LANG (mennyiben végrehajtás; --import számára eltűnt)"
 
 #: src/zfr_lib/translate/__init__.py:167
 msgid "update LANG with TRANSLATION (stdin if omitted)"
-msgstr "update LANG with TRANSLATION (stdin if omitted)"
+msgstr "a LANG TRANSLATION (stdin ha kijelölt)"
 
 #: src/zfr_lib/translate/__init__.py:173
 msgid "list all message ids (msgids)"
-msgstr "list all message ids (msgids)"
+msgstr "listája az összes üzenetet (msgids)"
 
 #: src/zfr_lib/translate/__init__.py:180
 msgid "list msgids matching REGEX, case-insensitive (keys only with -k)"
-msgstr "list msgids matching REGEX, case-insensitive (keys only with -k)"
+msgstr "listája a REGEX, eset -insensitive (csak -k kulcs)"
 
 #: src/zfr_lib/translate/__init__.py:186
 msgid "list msgids matching REGEX, case-sensitive (keys only with -k)"
-msgstr "list msgids matching REGEX, case-sensitive (keys only with -k)"
+msgstr "listája a REGEX, eset -sensitive (csak -k kulcs)"
 
 #: src/zfr_lib/translate/__init__.py:192
 msgid "list msgids/translations matching REGEX, case-insensitive (keys only with -k)"
-msgstr "list msgids/translations matching REGEX, case-insensitive (keys only with -k)"
+msgstr "listá msgids/translations megfelelő REGEX, esetek -insensitive (csak -k kulcs)"
 
 #: src/zfr_lib/translate/__init__.py:198
 msgid "list msgids/translations matching REGEX, case-sensitive (keys only with -k)"
-msgstr "list msgids/translations matching REGEX, case-sensitive (keys only with -k)"
+msgstr "listá msgids/translations megfelelő REGEX, esetek -sensitive (csak -k kulcs)"
 
 #: src/zfr_lib/translate/__init__.py:204
 msgid "with -m/-M/-s/-S, match the full msgid or translation (not a substring)"
-msgstr "with -m/-M/-s/-S, match the full msgid or translation (not a substring)"
+msgstr "-m/-M/-s/-S-vel, a teljes msgid vagy fordítás (ne al-szerenge)"
 
 #: src/zfr_lib/translate/__init__.py:213
 msgid "TEXT [TRANSLATION]"
-msgstr "TEXT [TRANSLATION]"
+msgstr "TEXT [FORDÍTÁS]"
 
 #: src/zfr_lib/translate/__init__.py:248
 msgid "TEXT required with --update"
-msgstr "TEXT required with --update"
+msgstr "TEXT szükséges --update-vel"
 
 #: src/zfr_lib/translate/__init__.py:253
 msgid "TRANSLATION required (args or stdin) with --update"
-msgstr "TRANSLATION required (args or stdin) with --update"
+msgstr "TRANSLATION szükséges (a tag vagy stdin) --update-vel"
 
 #: src/zfr_lib/translate/__init__.py:271
 msgid "TEXT required"
-msgstr "TEXT required"
+msgstr "TEXT szükséges"
 
 #: src/zfr_lib/version.py:51
 msgid "print current project version (walks parents from cwd)"
@@ -1984,10 +1945,8 @@ msgstr "RPM-kompatibilis Version kiírása (kötőjelek aláhúzásra)"
 #~ msgid "Plan extraction of helpers or submodules before the file grows further."
 #~ msgstr "Tervezze meg a segédek vagy almodulok kiemelését, mielőtt a fájl tovább nőne."
 
-#, fuzzy
 #~ msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr locale. Defaults in .config/zfr/lint.options."
 #~ msgstr "i18n: angol forrás; zfr lint -l/--l10n-level L0–L3 (alapértelmezett L1). L1=10 locale, L2=20, L3=30. Alapértékek: .config/zfr/lint.options."
 
-#, fuzzy, python-format
 #~ msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr locale --derive` to auto-generate child locales."
 #~ msgstr "A %(level)s szinthez kell: %(locales)s (forrás %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). Fűzze a hiányzó sorokat a LINGUAS-hoz, és adja hozzá a megfelelő po/<locale>.po fájlokat."

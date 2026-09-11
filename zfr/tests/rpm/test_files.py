@@ -105,12 +105,12 @@ endforeach
             self.assertIn("%{_bindir}/zfr", files)
             self.assertIn("%{_bindir}/zfr-lint", files)
 
-    def test_foreach_man_puffs_mandir(self) -> None:
+    def test_foreach_puffs_mandir(self) -> None:
         meson = """\
 project('twotree', 'c')
 mandir = prefix / get_option('mandir')
-man_puffs = ['2tree', 'atree']
-foreach puff : man_puffs
+puffs = ['2tree', 'atree']
+foreach puff : puffs
   custom_target(
     puff + '-man',
     input: 'docs' / (puff + '.adoc'),
