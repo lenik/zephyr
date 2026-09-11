@@ -184,6 +184,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
             from ..translate.po_files import (
                 catalog_completion_ratio,
                 catalog_translation_stats,
+                intentional_keep_english_msgids,
                 is_english_locale,
             )
 
@@ -203,6 +204,8 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                 "For whole-document README/man (adoc), `googletranslator` with "
                 "http-proxy http://localhost:8118 can help; do not use it for gettext."
             )
+            # Packaging field/snippet literals kept English in zh_CN/zh_TW.
+            keep_english = intentional_keep_english_msgids(po)
             for po_file in sorted(po.glob("*.po")):
                 try:
                     body = read_po_text(po_file)
@@ -212,16 +215,20 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     wrapped.append(po_file.name)
                 loc = po_file.stem
                 eng = is_english_locale(loc)
-                ratio = catalog_completion_ratio(body, english_locale=eng)
+                # When no zh reference, fall back to structural heuristic per entry.
+                ke: set[str] | None = keep_english if keep_english else None
+                ratio = catalog_completion_ratio(
+                    body, english_locale=eng, keep_english=ke
+                )
                 translated, total, copies, empty = catalog_translation_stats(
-                    body, english_locale=eng
+                    body, english_locale=eng, keep_english=ke
                 )
                 if total <= 0:
                     continue
                 pct = int(round(ratio * 100))
                 label = f"{po_file.name} ({pct}% {translated}/{total}"
                 if copies and not eng:
-                    label += f", {copies} msgid-copies"
+                    label += f", {copies} omitted"
                 if empty:
                     label += f", {empty} empty"
                 label += ")"
@@ -230,7 +237,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     if empty:
                         bits.append(_("%d empty") % empty)
                     if copies:
-                        bits.append(_("%d msgid-copy") % copies)
+                        bits.append(_("%d omitted msgid-copy") % copies)
                     placeholder_locales.append(
                         f"{po_file.name} ({', '.join(bits)}; {pct}% done)"
                     )
@@ -261,21 +268,32 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                 )
 
             if placeholder_locales:
+                keep_n = len(keep_english) if keep_english else 0
+                keep_note = (
+                    _(
+                        " (%d packaging field/snippet msgids are keep-English and not counted)"
+                    )
+                    % keep_n
+                    if keep_n
+                    else ""
+                )
                 out.append(
                     Finding(
                         "warn",
                         "i18n.po.placeholder",
-                        _("gettext catalog(s) have empty msgstr or msgid-copy placeholders: %s")
+                        _("gettext catalog(s) have empty msgstr or omitted translations: %s")
                         % ", ".join(placeholder_locales[:8])
                         + (
                             ""
                             if len(placeholder_locales) <= 8
                             else _(" (+%d more)") % (len(placeholder_locales) - 8)
-                        ),
+                        )
+                        + keep_note,
                         "po/",
-                        fix=_("Empty msgstr and msgstr identical to msgid are not "
-                        "translations (English variants en_* are exempt). Fill real "
-                        "msgstr values. %(poedit)s")
+                        fix=_("Empty msgstr and msgstr identical to msgid are omissions "
+                        "when a primary locale (zh_CN) translated the same msgid. "
+                        "Packaging field literals and code snippets that zh_CN also "
+                        "leaves in English do not need translation. %(poedit)s")
                         % {"poedit": _POEDIT_HINT},
                     )
                 )

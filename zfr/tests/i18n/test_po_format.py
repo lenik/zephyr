@@ -84,6 +84,20 @@ class PoQualityStatsTests(unittest.TestCase):
         self.assertEqual(copies, 1)
         self.assertEqual(empty, 1)
         self.assertAlmostEqual(catalog_completion_ratio(body), 1 / 3)
+        # Packaging field literal: msgstr == msgid counts as translated.
+        from zfr_lib.translate.po_files import is_keep_english_msgid
+
+        self.assertTrue(is_keep_english_msgid("Architecture: all"))
+        self.assertFalse(is_keep_english_msgid("  [derived]"))
+        lit = (
+            'msgid ""\n'
+            'msgstr "Content-Type: text/plain; charset=UTF-8\\n"\n'
+            "\n"
+            'msgid "Architecture: all"\n'
+            'msgstr "Architecture: all"\n'
+        )
+        t3, tot3, c3, e3 = catalog_translation_stats(lit, english_locale=False)
+        self.assertEqual((t3, tot3, c3, e3), (1, 1, 0, 0))
         # English variants may keep msgstr == msgid.
         t2, _tot2, c2, e2 = catalog_translation_stats(body, english_locale=True)
         self.assertEqual(t2, 2)
@@ -165,8 +179,46 @@ class PoQualityStatsTests(unittest.TestCase):
             ph = [f for f in findings if f.code == "i18n.po.placeholder"]
             self.assertTrue(ph)
             self.assertEqual(ph[0].severity, "warn")
-            self.assertIn("msgid-copy", ph[0].message)
+            self.assertIn("omitted", ph[0].message)
             self.assertIn("empty", ph[0].message)
+
+    def test_i18n_lint_skips_keep_english_field_literals(self) -> None:
+        import tempfile
+
+        from zfr_lib.lint.i18n_check import check_i18n
+
+        with tempfile.TemporaryDirectory(prefix="zfr-po-keep-") as tmp:
+            root = Path(tmp)
+            po = root / "po"
+            po.mkdir()
+            (po / "LINGUAS").write_text("de\nzh_CN\n", encoding="utf-8")
+            header = (
+                'msgid ""\n'
+                'msgstr "Content-Type: text/plain; charset=UTF-8\\n"\n'
+                "\n"
+            )
+            # zh_CN leave Architecture: all in English; translate the prose tag.
+            (po / "zh_CN.po").write_text(
+                header
+                + 'msgid "Architecture: all"\nmsgstr "Architecture: all"\n\n'
+                + 'msgid "  [derived]"\nmsgstr "  [派生]"\n',
+                encoding="utf-8",
+            )
+            # de: same keep-English + omit the prose tag.
+            (po / "de.po").write_text(
+                header
+                + 'msgid "Architecture: all"\nmsgstr "Architecture: all"\n\n'
+                + 'msgid "  [derived]"\nmsgstr "  [derived]"\n',
+                encoding="utf-8",
+            )
+            findings = check_i18n(root, "app", l10n_level="L1")
+            ph = [f for f in findings if f.code == "i18n.po.placeholder"]
+            self.assertTrue(ph)
+            self.assertIn("de.po", ph[0].message)
+            self.assertIn("omitted", ph[0].message)
+            # Only the prose omission counts — not Architecture: all.
+            self.assertRegex(ph[0].message, r"1 omitted")
+            self.assertNotIn("zh_CN.po", ph[0].message)
 
 
 if __name__ == "__main__":

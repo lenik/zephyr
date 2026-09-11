@@ -193,16 +193,103 @@ def parse_po_entry_flags(body: str) -> list[tuple[str, str, bool]]:
     return entries
 
 
+def is_keep_english_msgid(msgid: str) -> bool:
+    """True when msgstr == msgid is intentional (code / packaging field literals).
+
+    Examples: ``Architecture: all``, ``Source=%s``, multi-line ``%build`` /
+    Makefile snippets. Prose diagnostics (e.g. ``Architecture: %s (bash + …)``)
+    still need real translations.
+    """
+    s = msgid.strip()
+    if not s:
+        return True
+    # Pure format templates: only placeholders + punctuation remain.
+    stripped = re.sub(
+        r"%\([^)]+\)[-#0-9.]*[sd]|%[-#0-9.]*[sd]|\{[^}]*\}|\$\{[^}]+\}",
+        "",
+        msgid,
+    )
+    stripped = re.sub(r"[\s:=.,;_/<>()\[\]{}\"|'\\+\-*%#]+", "", stripped)
+    if not stripped:
+        return True
+    # Multi-line packaging / make / meson snippets (not running prose).
+    if "\n" in msgid and any(
+        tok in msgid
+        for tok in (
+            "$(",
+            "%{",
+            ":=",
+            "%build",
+            "%install",
+            "ifeq",
+            "meson setup",
+            "meson compile",
+            "meson install",
+        )
+    ):
+        # Exclude long instructional blurbs that embed a snippet.
+        prose = re.search(
+            r"\b(prefer|missing|should|must|add|run|rewrite|extract)\b",
+            msgid,
+            re.I,
+        )
+        if not prose:
+            return True
+    # One-line Debian/RPM field *examples* whose value is tokens, not prose.
+    m = re.match(
+        r"^(Architecture|Depends|Build-Depends|BuildArch|Source|Package):\s*(.*)$",
+        msgid,
+        re.DOTALL,
+    )
+    if m and "\n" not in msgid:
+        rest = m.group(2)
+        if "(" not in rest and not re.search(
+            r"\b(the|and|with|for|from|when|missing|present|should|must|but|has|need|run|or)\b",
+            rest,
+            re.I,
+        ):
+            return True
+    # key=%s / "spec Name=%s"
+    if re.match(r"^(?:[A-Za-z_][\w]*|spec [A-Za-z_][\w]*)=%[sd]$", msgid):
+        return True
+    return False
+
+
+def intentional_keep_english_msgids(po_dir: Path) -> set[str]:
+    """Msgids that primary Chinese catalogs leave as msgid-copy (keep English).
+
+    Used so ZL093 does not flag packaging field literals. When no zh_CN/zh_TW
+    catalog exists, returns an empty set (callers fall back to
+    :func:`is_keep_english_msgid` via catalog_translation_stats).
+    """
+    keep: set[str] = set()
+    for stem in ("zh_CN", "zh_TW"):
+        path = po_dir / f"{stem}.po"
+        if not path.is_file():
+            continue
+        try:
+            body = path.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        for mid, ms, fuzzy in parse_po_entry_flags(body):
+            if mid and not fuzzy and ms == mid:
+                keep.add(mid)
+    return keep
+
+
 def catalog_translation_stats(
     body: str,
     *,
     english_locale: bool = False,
+    keep_english: set[str] | frozenset[str] | None = None,
 ) -> tuple[int, int, int, int]:
     """Return (translated, total, msgid_copies, empty).
 
     An entry counts as translated when msgstr is non-empty and, for non-English
-    locales, differs from msgid (msgid-copy is treated as untranslated). Fuzzy
-    and empty msgstr count as untranslated. Header msgid \"\" is excluded.
+    locales, differs from msgid — unless *msgid* is in *keep_english* (or
+    matches :func:`is_keep_english_msgid` when *keep_english* is None), in which
+    case msgstr == msgid counts as translated. Fuzzy and empty msgstr count as
+    untranslated. Header msgid \"\" is excluded.
     """
     translated = 0
     total = 0
@@ -216,6 +303,13 @@ def catalog_translation_stats(
         if fuzzy:
             continue
         if not english_locale and ms == mid:
+            if keep_english is not None:
+                intentional = mid in keep_english
+            else:
+                intentional = is_keep_english_msgid(mid)
+            if intentional:
+                translated += 1
+                continue
             copies += 1
             continue
         translated += 1
@@ -226,10 +320,11 @@ def catalog_completion_ratio(
     body: str,
     *,
     english_locale: bool = False,
+    keep_english: set[str] | frozenset[str] | None = None,
 ) -> float:
     """Fraction of catalog entries that count as translated (0.0–1.0)."""
     translated, total, _copies, _empty = catalog_translation_stats(
-        body, english_locale=english_locale
+        body, english_locale=english_locale, keep_english=keep_english
     )
     if total <= 0:
         return 1.0

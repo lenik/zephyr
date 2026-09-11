@@ -151,7 +151,7 @@ _LINT_RULES: tuple[StdRule, ...] = (
     StdRule(
         "ZL093",
         "i18n.po.placeholder",
-        "gettext .po has empty msgstr or msgid-copy placeholders",
+        "gettext .po empty msgstr or omitted msgid-copy (keep-English field literals exempt)",
         "warn",
     ),
 )
