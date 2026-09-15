@@ -135,7 +135,7 @@ def format_report(
             _("License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."),
             _("Build with Meson; debian/rules uses dh --buildsystem=meson --builddirectory=debian/build."),
             _('project() version from `zfr version`; keep fallback v="0.0.0" # FIXED TO 0.0.0, DO NOT MODIFY.'),
-            _("Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."),
+            _("Man pages: man/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."),
             _("Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional packaging/ aligned with debian."),
             _("i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). "
               "L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). "

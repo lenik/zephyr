@@ -203,7 +203,7 @@ msgid "list all implemented locales in this project"
 msgstr "এই প্রকল্পের মধ্যে সমস্ত প্রয়োগ করা লোকেইল তালিকাভুক্ত করা হবে"
 
 #: src/zfr_lib/i18n/cmd.py:185
-msgid "delete a locale (LINGUAS, .po, docs/)"
+msgid "delete a locale (LINGUAS, .po, man/)"
 msgstr "একটি লোকেইল মুছে ফেলুন (LINGUAS, .po, docs/)"
 
 #: src/zfr_lib/i18n/cmd.py:191
@@ -300,7 +300,7 @@ msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)
 msgstr "উপস্থিত থাকলে Autotools/CMake-কে Meson-এ রূপান্তর করার জন্য ২মেসন চালু করুন (ডিফল্ট: অন)"
 
 #: src/zfr_lib/ize/__init__.py:119
-msgid "do not convert groff .1 man pages to docs/*.adoc"
+msgid "do not convert groff .1 man pages to man/*.adoc"
 msgstr "groff .1 ম্যানুয়াল পাতাকে docs/*.adoc করো না"
 
 #: src/zfr_lib/ize/__init__.py:120
@@ -857,7 +857,7 @@ msgstr "%(level)s-এর জন্য পূর্ণ নথি man অনুব
 
 #: src/zfr_lib/lint/i18n_check.py:246
 #, python-format
-msgid "Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
+msgid "Hand-translate man/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
 msgstr "হাতে অনুবাদ করুন docs/<locale>/<name>.adoc (সম্পূর্ণ নথি, po4a নয়)। %(level)s প্রয়োজন: %(locales)s।"
 
 #: src/zfr_lib/lint/i18n_check.py:256
@@ -1045,11 +1045,11 @@ msgid "AsciiDoc man sources: %s"
 msgstr "AsciiDoc ম্যান উৎস: %s"
 
 #: src/zfr_lib/lint/layout.py:63
-msgid "no docs/*.adoc man page source"
+msgid "no man/*.adoc man page source"
 msgstr "docs/*.adoc ম্যান পাতার উৎস নেই"
 
 #: src/zfr_lib/lint/layout.py:65
-msgid "Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
+msgid "Add man/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
 msgstr "docs/<puff>.adoc এবং asciidoctor -b manpage সহ একটি meson custom_target যোগ করুন (যেকোনো ভাষার টেমপ্লেট দেখুন)।"
 
 #: src/zfr_lib/lint/layout.py:90
@@ -1337,7 +1337,7 @@ msgid "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED T
 msgstr "project() সংস্করণ `zfr version` থেকে; fallback রাখুন v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 
 #: src/zfr_lib/lint/report.py:138
-msgid "Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
+msgid "Man pages: man/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
 msgstr "ম্যান পৃষ্ঠা: docs/*.adoc + asciidoctor -b manpage; অনুবাদ share/man/<locale>/man1-এ (সম্পূর্ণ-নথি adoc, po4a নয়)।"
 
 #: src/zfr_lib/lint/report.py:139

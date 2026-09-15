@@ -19,6 +19,49 @@ ensure_meson_man_targets = _man.ensure_meson_man_targets
 has_foreach_man_targets = _man.has_foreach_man_targets
 
 
+def _migrate_legacy_docs_man(ize: "Ize") -> None:
+    """Move leftover ``docs/**/*.adoc`` man sources into ``man/`` (zephyr style)."""
+    legacy = ize.root / "docs"
+    man = ize.root / "man"
+    if not legacy.is_dir():
+        return
+    moved = 0
+    for adoc in sorted(legacy.rglob("*.adoc")):
+        if not adoc.is_file():
+            continue
+        rel = adoc.relative_to(legacy)
+        dest = man / rel
+        if dest.exists():
+            continue
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        adoc.rename(dest)
+        ize.note("move", _rel(ize.root, dest), f"from docs/{rel.as_posix()}")
+        moved += 1
+    # Drop empty locale dirs under docs/; keep docs/ if other files remain.
+    for path in sorted(legacy.rglob("*"), reverse=True):
+        if path.is_dir():
+            try:
+                path.rmdir()
+            except OSError:
+                pass
+    try:
+        legacy.rmdir()
+    except OSError:
+        pass
+    if moved:
+        meson = ize.root / "meson.build"
+        if meson.is_file():
+            text = meson.read_text(encoding="utf-8")
+            new = (
+                text.replace("'docs/", "'man/")
+                .replace('"docs/', '"man/')
+                .replace("'docs' /", "'man' /")
+                .replace('"docs" /', '"man" /')
+            )
+            if new != text:
+                ize.write_text(meson, new, "docs/ → man/ in meson man inputs")
+
+
 if TYPE_CHECKING:
     from . import Ize
 
@@ -110,8 +153,8 @@ def patch_meson_build(ize: "Ize") -> None:
     docs = [
         p
         for p in (
-            list((ize.root / "docs").glob("*.adoc"))
-            if (ize.root / "docs").is_dir()
+            list((ize.root / "man").glob("*.adoc"))
+            if (ize.root / "man").is_dir()
             else []
         )
     ]
@@ -204,7 +247,9 @@ endforeach
 def convert_manpages(ize: "Ize") -> None:
     from ...l10n import stem_locale_suffix
 
-    docs = ize.root / "docs"
+    _migrate_legacy_docs_man(ize)
+
+    docs = ize.root / "man"
     man_re = re.compile(r"^(?P<stem>.+)\.(?P<section>[1-9][a-zA-Z]*)(?:\.in)?$")
     for path in list(iter_files(ize.root)):
         m = man_re.match(path.name)
@@ -215,7 +260,7 @@ def convert_manpages(ize: "Ize") -> None:
             continue
         stem = m.group("stem")
         section = m.group("section")
-        # Locale-named groff (cmd-ar.1) → docs/<locale>/cmd.adoc, not docs/cmd-ar.adoc.
+        # Locale-named groff (cmd-ar.1) → man/<locale>/cmd.adoc, not docs/cmd-ar.adoc.
         loc_split = stem_locale_suffix(stem)
         if loc_split is not None:
             base, loc = loc_split
@@ -238,7 +283,7 @@ def convert_manpages(ize: "Ize") -> None:
             continue
         ize.write_text(dest, adoc, f"from {_rel(ize.root, path)}", kind="convert")
         rel_src = _rel(ize.root, path)
-        if path.parent in (ize.root, ize.root / "docs", ize.root / "man"):
+        if path.parent in (ize.root, ize.root / "man", ize.root / "man"):
             ize.note("convert", rel_src, "removed groff source; meson generates manpage")
             if not ize.dry_run:
                 path.unlink(missing_ok=True)
@@ -253,7 +298,7 @@ def convert_manpages(ize: "Ize") -> None:
 
 def patch_meson_man_targets(ize: "Ize") -> None:
     path = ize.root / "meson.build"
-    if not path.is_file() or not (ize.root / "docs").is_dir():
+    if not path.is_file() or not (ize.root / "man").is_dir():
         return
     text = path.read_text(encoding="utf-8")
     orig = text
@@ -272,7 +317,7 @@ def patch_meson_man_targets(ize: "Ize") -> None:
     if cleaned != text:
         text = cleaned
         details.append("remove AsciiDoc paths from install_man")
-    stems = sorted(p.stem for p in (ize.root / "docs").glob("*.adoc") if p.is_file())
+    stems = sorted(p.stem for p in (ize.root / "man").glob("*.adoc") if p.is_file())
     text, man_details = ensure_meson_man_targets(text, stems)
     details.extend(man_details)
     if text != orig:

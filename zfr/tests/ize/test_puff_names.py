@@ -20,7 +20,7 @@ class PuffNamesTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory(prefix="zfr-puffs-") as tmp:
             root = Path(tmp)
-            docs = root / "docs"
+            docs = root / "man"
             docs.mkdir()
             (docs / "audiocfg.adoc").write_text(
                 "= audiocfg(1)\n\n== NAME\naudiocfg\n",
@@ -50,7 +50,7 @@ class PuffNamesTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory(prefix="zfr-comp-") as tmp:
             root = Path(tmp)
-            docs = root / "docs"
+            docs = root / "man"
             docs.mkdir()
             (docs / "tool.adoc").write_text("= tool(1)\n\n== NAME\ntool\n", encoding="utf-8")
             (docs / "libtool.so.adoc").write_text("= libtool.so(3)\n\n", encoding="utf-8")
@@ -76,7 +76,7 @@ class PuffNamesTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory(prefix="zfr-locpuff-") as tmp:
             root = Path(tmp)
-            docs = root / "docs"
+            docs = root / "man"
             docs.mkdir()
             (docs / "tool.adoc").write_text("= tool(1)\n\n== NAME\ntool\n", encoding="utf-8")
             (docs / "tool-ar.adoc").write_text("= tool(1)\n\n== NAME\ntool\n", encoding="utf-8")

@@ -103,7 +103,7 @@ def shape_score(root: Path | None = None) -> int:
         _is_zfr_cli_package(root) and (root.parent / "README-zh_CN.md").is_file()
     ):
         score += 5
-    docs = root / "docs"
+    docs = root / "man"
     if docs.is_dir() and any(docs.glob("*.adoc")):
         score += 5
 

@@ -12,7 +12,7 @@ and dual packaging for **pnpm/npm** and **Debian**.
 
 - `src/` - TypeScript sources (`*.ts`) and the `some_puff1` launcher template
 - `tests/` - unit tests using Node's built-in test runner
-- `docs/` - AsciiDoctor sources for man and info pages
+- `man/` - AsciiDoctor sources for man and info pages
 - `scripts/build-docs.sh` - Asciidoctor → man(1) + info
 - `dist/` - `tsc` output (generated; published by the package registry)
 - `debian/` - Debian packaging metadata
@@ -55,7 +55,7 @@ runtime dependencies). `typescript` and `@types/node` are development dependenci
 
 ## Man and info pages
 
-Documentation is authored in AsciiDoctor ([`docs/some_puff1.adoc`](docs/some_puff1.adoc)):
+Documentation is authored in AsciiDoctor ([`man/some_puff1.adoc`](man/some_puff1.adoc)):
 
 - man page: `asciidoctor -b manpage`
 - info page: AsciiDoctor HTML → Pandoc Texinfo → `makeinfo`

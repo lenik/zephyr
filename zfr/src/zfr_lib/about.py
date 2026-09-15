@@ -256,7 +256,7 @@ def _project_stats(root: Path, lang: str) -> dict[str, str]:
         tree_bytes += size
 
         payload = False
-        if rel.parts and rel.parts[0] in {"src", "docs", "po"}:
+        if rel.parts and rel.parts[0] in {"src", "man", "docs", "po"}:
             payload = True
         elif rel.name in {"LICENSE", "README.md", "README-zh_CN.md"}:
             payload = True

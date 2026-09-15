@@ -16,7 +16,7 @@ from support import ROOT, TOOLS, ZEPHYR, _env, run_zephyr, add_src_to_path
 add_src_to_path()
 
 PO = ROOT / "po"
-DOCS = ROOT / "docs"
+DOCS = ROOT / "man"
 
 
 def _linguas() -> list[str]:

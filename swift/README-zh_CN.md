@@ -9,7 +9,7 @@
 - `tests/` - Swift 冒烟/单元测试
 - `debian/` - Debian 打包元数据
 - `po/` - gettext 翻译目录
-- `docs/` - AsciiDoc man 页源文件（`docs/*.adoc`）
+- `man/` - AsciiDoc man 页源文件（`man/*.adoc`）
 - `meson.build` - 构建、测试、安装与辅助目标
 
 ## 示例应用：`some_puff1`

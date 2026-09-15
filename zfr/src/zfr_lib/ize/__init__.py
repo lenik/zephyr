@@ -72,7 +72,7 @@ def cmd_ize(
 
 NAME = "ize"
 HELP = _('refactor this project to current zephyr style')
-DESCRIPTION = _('Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, Meson version substitutions, and lint-level gettext coverage (LINGUAS + .po). Does not scaffold docs/<locale> man translations. Walks from cwd toward parents.')
+DESCRIPTION = _('Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, Meson version substitutions, and lint-level gettext coverage (LINGUAS + .po). Does not scaffold man/<locale> man translations. Walks from cwd toward parents.')
 
 
 def add_arguments(p: argparse.ArgumentParser) -> None:
@@ -116,7 +116,7 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         default=True,
         help=_("run 2meson to convert Autotools/CMake to Meson when present (default: on)"),
     )
-    p.add_argument("--no-man", action="store_true", help=_("do not convert groff .1 man pages to docs/*.adoc"))
+    p.add_argument("--no-man", action="store_true", help=_("do not convert groff .1 man pages to man/*.adoc"))
     p.add_argument("--no-subst", action="store_true", help=_("do not turn hardcoded versions/paths into @VERSION@/@PREFIX@ / config.h"))
     p.add_argument(
         "-u",

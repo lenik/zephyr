@@ -22,7 +22,7 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
             "src/commons.cob",
             "tests/test_commons.sh",
             "{stem}.bash",
-            "docs/{stem}.adoc",
+            "man/{stem}.adoc",
         )
     )
 

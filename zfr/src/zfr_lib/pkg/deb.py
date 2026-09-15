@@ -6,7 +6,7 @@ from __future__ import annotations
 import shutil
 
 from ..cmd_run import merge_env, run_cmd
-from ..jobs import resolve_jobs
+from ..jobs import deb_build_options_parallel, debuild_jobs_args
 from ..pkg_docker import build4_debian, build4_debian_remote
 from .provider import PackagerContext
 
@@ -20,7 +20,7 @@ class DebPackager:
 
     def build(self, ctx: PackagerContext) -> bool:
         opts = list(ctx.dpkg_buildopts)
-        jobs = resolve_jobs(ctx.jobs)
+        jobs = ctx.jobs
         if ctx.docker or ctx.docker_server:
             if ctx.docker_server:
                 build4_debian_remote(
@@ -41,13 +41,16 @@ class DebPackager:
                 )
             return True
         env = merge_env()
-        prev = env.get("DEB_BUILD_OPTIONS", "").strip()
-        parallel = f"parallel={jobs}"
-        env["DEB_BUILD_OPTIONS"] = f"{prev} {parallel}".strip() if prev else parallel
+        parallel = deb_build_options_parallel(
+            jobs, prev=env.get("DEB_BUILD_OPTIONS", "")
+        )
+        if parallel is not None:
+            env["DEB_BUILD_OPTIONS"] = parallel
+        jargs = debuild_jobs_args(jobs)
         if shutil.which("debuild"):
-            cmd = ["debuild", f"-j{jobs}", *opts]
+            cmd = ["debuild", *jargs, *opts]
         else:
-            cmd = ["dpkg-buildpackage", f"-j{jobs}", *opts]
+            cmd = ["dpkg-buildpackage", *jargs, *opts]
         run_cmd(cmd, cwd=ctx.root, env=env, dry_run=ctx.dry_run)
         return True
 
@@ -59,7 +62,7 @@ def package_deb(
     docker: bool = False,
     docker_server: str = "",
     base_image: str = "b4f-debian:trixie",
-    jobs: int = 0,
+    jobs: int | None = None,
     dry_run: bool = False,
 ) -> None:
     """Backward-compatible function wrapper around :class:`DebPackager`."""

@@ -12,7 +12,7 @@ It builds `libzephyr` (shared + static), installs headers/pkg-config, and ships 
 - `src/` - source code for apps and shared pieces
 - `tests/` - unit tests (`*_unit.c`) using the Check framework
 - `debian/` - Debian packaging metadata
-- `docs/` - AsciiDoc man page sources (`docs/*.adoc`)
+- `man/` - AsciiDoc man page sources (`man/*.adoc`)
 - `meson.build` - top-level build definition and helper targets
 
 ## Example app: `some_puff1`

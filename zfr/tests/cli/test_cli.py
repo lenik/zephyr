@@ -237,7 +237,7 @@ class ZephyrDetectTests(unittest.TestCase):
         self.assertEqual(opts.dput_host, "mentors")
         self.assertEqual(opts.base_image, "b4f-debian:sid")
         self.assertIn("-us", opts.dpkg_buildopts)
-        self.assertGreater(opts.jobs, 0)
+        self.assertIsNone(opts.jobs)
 
     def test_release_test_alias_implies_local_no_install(self) -> None:
         import argparse
@@ -299,7 +299,7 @@ class ZephyrCreateProjectTests(unittest.TestCase):
         self.assertTrue((self.project / "VERSION").is_file())
         self.assertTrue((self.project / ".githooks" / "pre-commit").is_file())
         self.assertTrue((self.project / "src" / "hello.in").is_file())
-        self.assertTrue((self.project / "docs" / "hello.adoc").is_file())
+        self.assertTrue((self.project / "man" / "hello.adoc").is_file())
         self.assertFalse((self.project / "src" / "some_puff1.in").exists())
         control = (self.project / "debian" / "control").read_text(encoding="utf-8")
         self.assertIn("Source: cli_demo", control)
@@ -375,7 +375,7 @@ class ZephyrCreateProjectTests(unittest.TestCase):
         self.assertFalse((self.project / "src" / "world.in").exists())
 
     def test_create_without_puff_then_add(self) -> None:
-        """Empty create deletes some_puff1 files but leaves tokens; add must copy."""
+        """--no-puff deletes some_puff1 files but leaves tokens; add must copy."""
         with tempfile.TemporaryDirectory(prefix="zephyr-add-") as tmp:
             dest = Path(tmp) / "empty_create"
             run_zephyr(
@@ -386,13 +386,52 @@ class ZephyrCreateProjectTests(unittest.TestCase):
                 "0.0.1",
                 "-D",
                 "unstable",
+                "--no-puff",
                 str(dest),
             )
             self.assertFalse((dest / "src" / "some_puff1.c").exists())
             run_zephyr("add", "myapp", cwd=dest)
             self.assertTrue((dest / "src" / "myapp.c").is_file())
-            self.assertTrue((dest / "docs" / "myapp.adoc").is_file())
+            self.assertTrue((dest / "man" / "myapp.adoc").is_file())
             self.assertTrue((dest / "myapp.bash").is_file())
+
+    def test_create_default_puff_matches_package(self) -> None:
+        """With no puff args, instantiate some_puff1 → <package>."""
+        with tempfile.TemporaryDirectory(prefix="zephyr-defpuff-") as tmp:
+            dest = Path(tmp) / "mycerts"
+            run_zephyr(
+                "create",
+                "-l",
+                "python",
+                "-1",
+                "0.0.1",
+                "-D",
+                "unstable",
+                str(dest),
+            )
+            self.assertTrue((dest / "src" / "mycerts.py").is_file())
+            self.assertFalse((dest / "po" / "zephyr.pot").exists())
+            self.assertTrue((dest / "po" / "mycerts.pot").is_file())
+
+    def test_create_puff_same_as_package(self) -> None:
+        """Explicit puff == package must not leave zephyr.pot behind."""
+        with tempfile.TemporaryDirectory(prefix="zephyr-samepuff-") as tmp:
+            dest = Path(tmp) / "mycerts"
+            run_zephyr(
+                "create",
+                "-l",
+                "python",
+                "-1",
+                "0.0.1",
+                "-D",
+                "unstable",
+                str(dest),
+                "mycerts",
+            )
+            self.assertTrue((dest / "src" / "mycerts.py").is_file())
+            self.assertFalse((dest / "po" / "zephyr.pot").exists())
+            self.assertTrue((dest / "po" / "mycerts.pot").is_file())
+            self.assertFalse((dest / "po" / "some_puff1.pot").exists())
 
 
 class ZephyrRenameTests(unittest.TestCase):

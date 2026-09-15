@@ -188,6 +188,7 @@ def cmd_create(
     init_version: str = DEFAULT_INIT_VERSION,
     author: str = DEFAULT_AUTHOR,
     email: str = DEFAULT_EMAIL,
+    no_puff: bool = False,
 ) -> None:
     """Copy a language template into ./<project_name>/ and rename the project."""
     root = (workdir or Path.cwd()).resolve()
@@ -217,7 +218,13 @@ def cmd_create(
     if changelog.is_file():
         changelog.unlink()
 
-    names = list(puff_names or [])
+    if puff_names:
+        names = list(puff_names)
+    elif no_puff:
+        names = []
+    else:
+        # Default: one puff named like the package.
+        names = [package]
     first = names[0] if names else None
     rest = names[1:]
     print(f"instantiate zephyr → {package}" + (f", {TEMPLATE_PUFF} → {first}" if first else ""))
@@ -303,10 +310,21 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         "-e", "--email", default=default_email, metavar="EMAIL",
         help=_("changelog/git author email (default: %s)") % default_email,
     )
+    p.add_argument(
+        "--no-puff",
+        action="store_true",
+        help=_(
+            "do not instantiate a default puff "
+            "(leave some_puff1 tokens for a later zfr add)"
+        ),
+    )
     p.add_argument("project_name", help=_("new project directory name"))
     p.add_argument(
         "puff_names", nargs="*",
-        help=_("optional puff names to add after creating the project"),
+        help=_(
+            "puff names (default: one puff named like the package; "
+            "use --no-puff for none)"
+        ),
     )
 
 
@@ -319,6 +337,7 @@ def run(args: argparse.Namespace) -> int:
         init_version=args.init_version,
         author=args.author,
         email=args.email,
+        no_puff=bool(args.no_puff),
     )
     return 0
 

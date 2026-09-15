@@ -62,7 +62,7 @@ zfr create -l c widgets hello world
 残留模板名、gettext/手册语言覆盖），并给出可执行的修改建议；终端下着色。
 覆盖等级由 `zfr lint -l/--l10n-level` 指定（默认 **L1** 十种语言；**L0**
 无要求；**L2** 二十种；**L3** 三十种）。工程可用 `.config/zephyr/lint.options`
-给出默认参数（本工具 zfr 为 `-l 2`）。手册页是 `docs/<locale>/` 下的整篇
+给出默认参数（本工具 zfr 为 `-l 2`）。手册页是 `man/<locale>/` 下的整篇
 手工翻译，不是 po4a 片段。等级以外的额外语言可以保留。
 `zfr dist` 生成源码包
 （git 根目录用 `meson dist`，否则只打包当前工程），供 `packaging/rpm/Makefile` 与

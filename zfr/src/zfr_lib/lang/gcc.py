@@ -38,7 +38,7 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
             "src/{stem}.c",
             "tests/{stem}_test.c",
             "{stem}.bash",
-            "docs/{stem}.adoc",
+            "man/{stem}.adoc",
         )
     )
 

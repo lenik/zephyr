@@ -14,6 +14,7 @@ _SCORE_SKIP_DIRS = SKIP_DIR_NAMES | {
     "packaging",
     "debian",
     "docs",
+    "man",
     "po",
     "locale",
     "test",

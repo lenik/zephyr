@@ -50,7 +50,7 @@ def append_man_custom_target(meson: Path, name: str) -> None:
     block = f"""
 custom_target(
     '{name}-man',
-    input: 'docs/{name}.adoc',
+    input: 'man/{name}.adoc',
     output: '{name}.1',
     command: [
         asciidoctor,

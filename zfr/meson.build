@@ -151,10 +151,10 @@ subdir('tests')
 subdir('po')
 
 # Man page for zephyr tools (English) plus full-document translations
-# under docs/<lang>/zfr.adoc (no po4a).
+# under man/<lang>/zfr.adoc (no po4a).
 custom_target(
     'zfr-man',
-    input: 'docs/zfr.adoc',
+    input: 'man/zfr.adoc',
     output: 'zfr.1',
     command: [
         asciidoctor,
@@ -179,7 +179,7 @@ man_i18n_langs = [
 foreach lang : man_i18n_langs
     man_i18n = custom_target(
         'zfr-man-' + lang,
-        input: 'docs' / lang / 'zfr.adoc',
+        input: 'man' / lang / 'zfr.adoc',
         output: 'zfr.' + lang + '.1',
         command: [
             asciidoctor,

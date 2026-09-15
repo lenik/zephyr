@@ -9,7 +9,7 @@ _LINT_RULES: tuple[StdRule, ...] = (
     StdRule("ZL001", "source.long", "Source file length; extract to package subdirectory", "varies"),
     StdRule("ZL002", "source.size", "No oversized source files", "ok"),
     StdRule("ZL003", "layout.*", "Required layout file present or missing", "varies"),
-    StdRule("ZL004", "layout.docs", "AsciiDoc man page sources under docs/", "varies"),
+    StdRule("ZL004", "layout.man", "AsciiDoc man page sources under man/", "varies"),
     StdRule("ZL005", "layout.completion", "Bash completion script at project root", "varies"),
     StdRule("ZL006", "layout.VERSION", "VERSION file synced with changelog", "varies"),
     StdRule("ZL007", "layout.pre-commit", "Git pre-commit hook syncs VERSION", "varies"),

@@ -432,7 +432,7 @@ def ensure_debian_docs(root: Path) -> list[str]:
     """Rewrite debian/docs so listed files exist (README -> README.md, drop missing)."""
     from pathlib import Path as _Path
 
-    path = root / "debian" / "docs"
+    path = root / "debian" / "man"
     if not path.is_file():
         return []
     lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()

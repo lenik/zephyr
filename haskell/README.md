@@ -9,7 +9,7 @@
 - `tests/` - Haskell smoke/unit tests
 - `debian/` - Debian packaging metadata
 - `po/` - gettext message catalogs
-- `docs/` - AsciiDoc man page sources (`docs/*.adoc`)
+- `man/` - AsciiDoc man page sources (`man/*.adoc`)
 - `meson.build` - build, test, install, and helper targets
 
 ## Example app: `some_puff1`

@@ -113,7 +113,7 @@ puffs = ['2tree', 'atree']
 foreach puff : puffs
   custom_target(
     puff + '-man',
-    input: 'docs' / (puff + '.adoc'),
+    input: 'man' / (puff + '.adoc'),
     output: puff + '.1',
     command: ['asciidoctor', '@OUTPUT@', '@INPUT@'],
     install: true,

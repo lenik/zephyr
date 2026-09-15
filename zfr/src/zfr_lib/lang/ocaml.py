@@ -14,7 +14,7 @@ NAME = "ocaml"
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
     return merge_puff(
-        puff_paths(tmpl, stem, "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"),
+        puff_paths(tmpl, stem, "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"),
         puff_paths(tmpl, stem, "src/{stem}.ml"),
     )
 

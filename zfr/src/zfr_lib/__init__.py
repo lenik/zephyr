@@ -227,6 +227,14 @@ def rewrite_tree(
                 continue
             dest = path.with_name(new_name)
             if dest.exists():
+                # Puff and project tokens can map to the same name (e.g.
+                # some_puff1.pot and zephyr.pot → mycerts.pot). Drop the
+                # duplicate path; content was already rewritten above.
+                if path.is_dir():
+                    shutil.rmtree(path)
+                else:
+                    path.unlink(missing_ok=True)
+                renamed += 1
                 continue
             path.rename(dest)
             renamed += 1

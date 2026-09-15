@@ -9,7 +9,7 @@
 - `tests/` - Elixir smoke/unit tests (`*.exs`)
 - `debian/` - Debian packaging metadata
 - `po/` - gettext message catalogs
-- `docs/` - AsciiDoc man page sources (`docs/*.adoc`)
+- `man/` - AsciiDoc man page sources (`man/*.adoc`)
 - `meson.build` - build, test, install, and helper targets
 
 Optional: add `mix.exs` for Mix-based workflows; Meson compiles with `elixirc` and installs an escript-style wrapper.

@@ -8,7 +8,7 @@ from pathlib import Path
 
 from .cli import register_command
 from .i18n import _
-from .jobs import add_job_argument, resolve_jobs
+from .jobs import add_job_argument
 from .pkg import detect_packaging_kinds, package_project
 
 NAME = "package"
@@ -16,7 +16,8 @@ HELP = _("detect packaging type and build packages")
 DESCRIPTION = _(
     "Detect packaging types (deb, rpm, npm/vsix, mingw, …) and build them "
     "sequentially (deb, then rpm, …). -j/--job is per-packager build "
-    "parallelism (debuild/make -j), not concurrent packagers. Each "
+    "parallelism (debuild/make -j), not concurrent packagers. Default is "
+    "auto: debuild gets bare -j (no number). Each "
     "packager's stdout/stderr is captured with fdmux into an FDM file; live "
     "status lines show progress. On failure, browse with `zfr lasterror`. "
     "Upload is on by default (-u); use -U/--no-upload to skip."
@@ -163,7 +164,7 @@ def run(args: argparse.Namespace) -> int:
         docker_server=args.docker_server or "",
         base_image=args.base_image,
         dry_run=bool(args.dry_run),
-        jobs=resolve_jobs(getattr(args, "jobs", None)),
+        jobs=getattr(args, "jobs", None),
     )
     return 0
 

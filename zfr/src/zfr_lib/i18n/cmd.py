@@ -182,7 +182,7 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         "-d",
         "--delete",
         metavar="LOCALE",
-        help=_("delete a locale (LINGUAS, .po, docs/)"),
+        help=_("delete a locale (LINGUAS, .po, man/)"),
     )
     p.add_argument(
         "-i",

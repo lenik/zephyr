@@ -51,7 +51,7 @@ def _score_bash(root: Path, scores: dict[str, float], meson_txt: str, depends: s
                 return
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.in", "{stem}.bash", "docs/{stem}.adoc"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.in", "{stem}.bash", "man/{stem}.adoc"))
 
 def _lint(root: Path, role: str) -> list[Finding]:
     ins = list((root / "src").glob("*.in")) if (root / "src").is_dir() else []
@@ -82,7 +82,7 @@ def _lint(root: Path, role: str) -> list[Finding]:
 '''
     c_puff = '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.c", "tests/{stem}_test.c", "{stem}.bash", "docs/{stem}.adoc"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.c", "tests/{stem}_test.c", "{stem}.bash", "man/{stem}.adoc"))
 '''
     w("c", HEADER.format(title="C", name="c") + c_puff + c_lint + '''
 SPEC = LangSpec(
@@ -110,7 +110,7 @@ def _score_clib(root: Path, scores: dict[str, float], meson_txt: str, depends: s
 '''
     w("clib", HEADER.format(title="C library (clib)", name="clib") + clib_score + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.c", "src/{stem}.h", "tests/{stem}_test.c", "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.c", "src/{stem}.h", "tests/{stem}_test.c", "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"))
 ''' + c_lint + '''
 SPEC = LangSpec(
     name=NAME,
@@ -127,7 +127,7 @@ SPEC = LangSpec(
 
     cpp_puff = '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.cpp", "tests/{stem}_test.cpp", "{stem}.bash", "docs/{stem}.adoc"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.cpp", "tests/{stem}_test.cpp", "{stem}.bash", "man/{stem}.adoc"))
 '''
     w("cpp", HEADER.format(title="C++", name="cpp") + cpp_puff + c_lint + '''
 SPEC = LangSpec(
@@ -155,7 +155,7 @@ def _score_cpplib(root: Path, scores: dict[str, float], meson_txt: str, depends:
 '''
     w("cpplib", HEADER.format(title="C++ library (cpplib)", name="cpplib") + cpplib_score + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.cpp", "src/{stem}.hpp", "tests/{stem}_test.cpp", "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.cpp", "src/{stem}.hpp", "tests/{stem}_test.cpp", "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"))
 ''' + c_lint + '''
 SPEC = LangSpec(
     name=NAME,
@@ -172,7 +172,7 @@ SPEC = LangSpec(
 
     w("csharp", HEADER.format(title="C#", name="csharp") + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_dir_if_exists(tmpl, f"apps/{stem}"), puff_paths(tmpl, stem, "{stem}.bash", "docs/{stem}.adoc"))
+    return merge_puff(puff_dir_if_exists(tmpl, f"apps/{stem}"), puff_paths(tmpl, stem, "{stem}.bash", "man/{stem}.adoc"))
 
 SPEC = LangSpec(
     name=NAME,
@@ -185,7 +185,7 @@ SPEC = LangSpec(
 
     w("erlang", HEADER.format(title="Erlang", name="erlang") + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.erl", "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.erl", "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"))
 
 SPEC = LangSpec(
     name=NAME,
@@ -199,7 +199,7 @@ SPEC = LangSpec(
 
     w("go", HEADER.format(title="Go", name="go") + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_dir_if_exists(tmpl, f"cmd/{stem}"), puff_paths(tmpl, stem, "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"))
+    return merge_puff(puff_dir_if_exists(tmpl, f"cmd/{stem}"), puff_paths(tmpl, stem, "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"))
 
 def _lint(root: Path, role: str) -> list[Finding]:
     if (root / "go.mod").is_file():
@@ -220,7 +220,7 @@ SPEC = LangSpec(
 
     w("haskell", HEADER.format(title="Haskell", name="haskell") + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"), puff_paths(tmpl, stem, "src/Main.hs"))
+    return merge_puff(puff_paths(tmpl, stem, "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"), puff_paths(tmpl, stem, "src/Main.hs"))
 
 SPEC = LangSpec(
     name=NAME,
@@ -234,7 +234,7 @@ SPEC = LangSpec(
 
     w("java", HEADER.format(title="Java", name="java") + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/Main.java", "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"))
+    return merge_puff(puff_paths(tmpl, stem, "src/Main.java", "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"))
 
 def _score_java(root: Path, scores: dict[str, float], meson_txt: str, depends: str) -> None:
     if re.search(r"\\bjavac\\b|\\bjava\\b", meson_txt) and ".java" in meson_txt:
@@ -257,7 +257,7 @@ SPEC = LangSpec(
 
     w("perl", HEADER.format(title="Perl", name="perl") + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.pl", "{stem}.bash", "docs/{stem}.adoc"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.pl", "{stem}.bash", "man/{stem}.adoc"))
 
 SPEC = LangSpec(
     name=NAME,
@@ -272,7 +272,7 @@ SPEC = LangSpec(
 
     w("python", HEADER.format(title="Python", name="python") + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.py", "tests/test_{stem}.py", "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.py", "tests/test_{stem}.py", "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"))
 
 def _lint(root: Path, role: str) -> list[Finding]:
     if (root / "tests").is_dir():
@@ -299,7 +299,7 @@ SPEC = LangSpec(
 
     w("ruby", HEADER.format(title="Ruby", name="ruby") + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.rb", "src/commons.rb", "{stem}.bash", "docs/{stem}.adoc"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.rb", "src/commons.rb", "{stem}.bash", "man/{stem}.adoc"))
 
 SPEC = LangSpec(
     name=NAME,
@@ -314,7 +314,7 @@ SPEC = LangSpec(
 
     w("rust", HEADER.format(title="Rust", name="rust") + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/main.rs", "src/lib.rs", "build-aux/cargo-build.sh", "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"))
+    return merge_puff(puff_paths(tmpl, stem, "src/main.rs", "src/lib.rs", "build-aux/cargo-build.sh", "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"))
 
 def _lint(root: Path, role: str) -> list[Finding]:
     if (root / "Cargo.toml").is_file():
@@ -336,7 +336,7 @@ SPEC = LangSpec(
 
     w("smalltalk", HEADER.format(title="GNU Smalltalk", name="smalltalk") + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.st", "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.st", "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"))
 
 SPEC = LangSpec(
     name=NAME,
@@ -349,7 +349,7 @@ SPEC = LangSpec(
 
     w("swift", HEADER.format(title="Swift", name="swift") + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"), puff_paths(tmpl, stem, "src/main.swift"))
+    return merge_puff(puff_paths(tmpl, stem, "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"), puff_paths(tmpl, stem, "src/main.swift"))
 
 SPEC = LangSpec(
     name=NAME,
@@ -363,7 +363,7 @@ SPEC = LangSpec(
 
     w("typescript", HEADER.format(title="TypeScript", name="typescript") + '''
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.ts", "src/{stem}.sh.in", "docs/{stem}.adoc", "{stem}.bash", "po/{stem}.pot"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.ts", "src/{stem}.sh.in", "man/{stem}.adoc", "{stem}.bash", "po/{stem}.pot"))
 
 def _spec_files(puffs: list[str]) -> list[str]:
     p = puffs[0] if puffs else "zephyr"

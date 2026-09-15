@@ -14,7 +14,7 @@ _IZE_RULES: tuple[StdRule, ...] = (
     StdRule("ZI006", "ize.changelog", "Ensure debian/changelog and VERSION file"),
     StdRule("ZI007", "ize.stdfiles", "Refresh LICENSE, .githooks, .cursor/rules from shipped zfr copies"),
     StdRule("ZI008", "ize.meson.patch", "Patch meson.build (version, license, docs, completion)"),
-    StdRule("ZI009", "ize.man.convert", "Convert groff man pages to docs/*.adoc"),
+    StdRule("ZI009", "ize.man.convert", "Convert groff man pages to man/*.adoc"),
     StdRule("ZI010", "ize.man.stub", "Create AsciiDoc man page stubs"),
     StdRule("ZI011", "ize.meson.man", "Add Meson asciidoctor man page targets"),
     StdRule("ZI012", "ize.completion", "Add bash-completion stubs for command puffs"),
@@ -27,7 +27,7 @@ _IZE_RULES: tuple[StdRule, ...] = (
     StdRule(
         "ZI019",
         "ize.i18n.man-locale",
-        "Do not scaffold docs/<locale>/*.adoc (missing man translations are lint-only)",
+        "Do not scaffold man/<locale>/*.adoc (missing man translations are lint-only)",
     ),
     StdRule("ZI020", "ize.rpm.leftover", "Remove project-local rpmbuild/ leftover tree"),
     StdRule(

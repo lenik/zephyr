@@ -214,7 +214,7 @@ msgid "list all implemented locales in this project"
 msgstr "列出此项目中已实现的所有语言环境"
 
 #: src/zfr_lib/i18n/cmd.py:185
-msgid "delete a locale (LINGUAS, .po, docs/)"
+msgid "delete a locale (LINGUAS, .po, man/)"
 msgstr "删除语言环境（LINGUAS、.po、docs/）"
 
 #: src/zfr_lib/i18n/cmd.py:191
@@ -311,7 +311,7 @@ msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)
 msgstr "Autotools/CMake가 있으면 2meson으로 Meson 변환 (기본: 켜짐)"
 
 #: src/zfr_lib/ize/__init__.py:119
-msgid "do not convert groff .1 man pages to docs/*.adoc"
+msgid "do not convert groff .1 man pages to man/*.adoc"
 msgstr "groff .1 man 페이지를 docs/*.adoc로 변환하지 않음"
 
 #: src/zfr_lib/ize/__init__.py:120
@@ -870,7 +870,7 @@ msgstr "%(level)s용 전체 문서 man 번역 없음: %(files)s"
 
 #: src/zfr_lib/lint/i18n_check.py:246
 #, python-format
-msgid "Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
+msgid "Hand-translate man/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
 msgstr "docs/<locale>/<name>.adoc를 직접 번역하세요(전체 문서, po4a 아님). %(level)s에 필요: %(locales)s."
 
 #: src/zfr_lib/lint/i18n_check.py:256
@@ -1058,11 +1058,11 @@ msgid "AsciiDoc man sources: %s"
 msgstr "AsciiDoc man 소스: %s"
 
 #: src/zfr_lib/lint/layout.py:63
-msgid "no docs/*.adoc man page source"
+msgid "no man/*.adoc man page source"
 msgstr "docs/*.adoc man 페이지 소스가 없음"
 
 #: src/zfr_lib/lint/layout.py:65
-msgid "Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
+msgid "Add man/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
 msgstr "docs/<puff>.adoc와 asciidoctor -b manpage를 쓰는 meson custom_target을 추가하세요(아무 언어 템플릿이나 참고)."
 
 #: src/zfr_lib/lint/layout.py:90
@@ -1350,7 +1350,7 @@ msgid "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED T
 msgstr "project() 버전은 `zfr version`에서; 폴백은 v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 
 #: src/zfr_lib/lint/report.py:138
-msgid "Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
+msgid "Man pages: man/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
 msgstr "매뉴얼 페이지: docs/*.adoc + asciidoctor -b manpage; 번역본은 share/man/<locale>/man1 (문서 전체 adoc, po4a 아님)."
 
 #: src/zfr_lib/lint/report.py:139

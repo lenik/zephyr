@@ -13,7 +13,7 @@ NAME = "elixir"
 
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.ex", "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.ex", "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"))
 
 
 SPEC = LangSpec(

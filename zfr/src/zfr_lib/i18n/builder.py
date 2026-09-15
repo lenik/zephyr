@@ -39,13 +39,13 @@ def default_build_po_dir(root: Path) -> Path:
     return root / "build" / "po"
 
 
-def default_build_docs_dir(root: Path, po_dir: Path | None = None) -> Path:
+def default_build_man_dir(root: Path, po_dir: Path | None = None) -> Path:
     if po_dir is not None:
-        return po_dir.parent / "docs"
+        return po_dir.parent / "man"
     meson = os.environ.get("MESON_BUILD_ROOT")
     if meson:
-        return Path(meson) / "docs"
-    return root / "build" / "docs"
+        return Path(meson) / "man"
+    return root / "build" / "man"
 
 
 def _which_opencc() -> str | None:
@@ -225,8 +225,8 @@ def derive_po_file(
 
 
 def derive_man_file(
-    src_docs_dir: Path,
-    out_docs_dir: Path,
+    src_man_dir: Path,
+    out_man_dir: Path,
     stem: str,
     child: str,
     *,
@@ -242,22 +242,22 @@ def derive_man_file(
         return None, False
     if skip_explicit and linguas and _locale_explicitly_used(child, linguas):
         return None, False
-    dest = out_docs_dir / child / stem
-    src = src_docs_dir / parent / stem
+    dest = out_man_dir / child / stem
+    src = src_man_dir / parent / stem
     if not src.is_file():
         for alias, target in LEGACY_LOCALE_ALIASES.items():
             if target == parent:
-                alt = src_docs_dir / alias / stem
+                alt = src_man_dir / alias / stem
                 if alt.is_file():
                     src = alt
                     break
     if not src.is_file():
-        built = out_docs_dir / parent / stem
+        built = out_man_dir / parent / stem
         if built.is_file():
             src = built
-    # English whole-document mans often live at docs/*.adoc (not docs/en/).
+    # English whole-document mans often live at man/*.adoc (not docs/en/).
     if not src.is_file():
-        eng = src_docs_dir / stem
+        eng = src_man_dir / stem
         if eng.is_file():
             src = eng
     if not src.is_file():
@@ -295,8 +295,8 @@ def derive_locales(
     targets = locales or tuple(DERIVE_PARENT)
     src_po_dir = root / "po"
     out_po_dir = po_dir or default_build_po_dir(root)
-    src_docs = root / "docs"
-    out_docs = default_build_docs_dir(root, out_po_dir)
+    src_man = root / "man"
+    out_man = default_build_man_dir(root, out_po_dir)
     written: list[str] = []
     linguas: set[str] = set()
     linguas_path = src_po_dir / "LINGUAS"
@@ -322,11 +322,11 @@ def derive_locales(
             )
             if po is not None and not dry_run and did_write:
                 written.append(_display_path(root, po))
-        if src_docs.is_dir():
-            for adoc in src_docs.glob("*.adoc"):
+        if src_man.is_dir():
+            for adoc in src_man.glob("*.adoc"):
                 man, did_write = derive_man_file(
-                    src_docs,
-                    out_docs,
+                    src_man,
+                    out_man,
                     adoc.name,
                     child,
                     dry_run=dry_run,

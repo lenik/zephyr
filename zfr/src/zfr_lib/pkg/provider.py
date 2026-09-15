@@ -13,7 +13,8 @@ class PackagerContext:
     """Inputs shared by every packager implementation."""
 
     root: Path
-    jobs: int = 1
+    # None or ≤0 means auto (debuild bare -j; make resolves to CPU cores).
+    jobs: int | None = None
     dry_run: bool = False
     dpkg_buildopts: list[str] = field(default_factory=list)
     docker: bool = False

@@ -9,7 +9,7 @@
 - `tests/` - Python unit tests (`unittest`)
 - `debian/` - Debian packaging metadata
 - `po/` - gettext message catalogs
-- `docs/` - AsciiDoc man page sources (`docs/*.adoc`)
+- `man/` - AsciiDoc man page sources (`man/*.adoc`)
 - `meson.build` - install rules, tests, and helper targets
 
 ## Example app: `some_puff1`

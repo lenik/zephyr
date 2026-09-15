@@ -24,7 +24,7 @@ _FOREACH = """
 foreach puff : apps.keys()
     custom_target(
         puff + '-man',
-        input: 'docs' / (puff + '.adoc'),
+        input: 'man' / (puff + '.adoc'),
         output: puff + '.1',
         command: [asciidoctor, '-b', 'manpage', '-o', '@OUTPUT@', '@INPUT@'],
         install: true,
@@ -36,7 +36,7 @@ endforeach
 _INDIVIDUAL = """
 custom_target(
     'gh-makerelease-man',
-    input: 'docs/gh-makerelease.adoc',
+    input: 'man/gh-makerelease.adoc',
     output: 'gh-makerelease.1',
     command: [
         asciidoctor,

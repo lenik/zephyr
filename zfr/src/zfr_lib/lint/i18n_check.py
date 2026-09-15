@@ -349,7 +349,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     )
                 )
 
-    docs = root / "docs"
+    docs = root / "man"
     english_adocs = (
         [p for p in docs.glob("*.adoc") if p.is_file()] if docs.is_dir() else []
     )
@@ -363,7 +363,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                 resolved = resolve_present_locale(loc, set(_parse_linguas(po / "LINGUAS"))) if po.is_dir() else None
                 man_loc = resolved or canonical_locale(loc)
                 path = docs / man_loc / adoc.name
-                rel = f"docs/{man_loc}/{adoc.name}"
+                rel = f"man/{man_loc}/{adoc.name}"
                 if not path.is_file():
                     missing_man.append(rel)
                     continue
@@ -381,8 +381,8 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     "i18n.man.coverage",
                     _("missing whole-document man translations for %(level)s: %(files)s")
                     % {"level": level, "files": ", ".join(missing_man)},
-                    "docs/",
-                    fix=_("Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). "
+                    "man/",
+                    fix=_("Hand-translate man/<locale>/<name>.adoc (full document, not po4a). "
                     "%(level)s requires: %(locales)s.")
                     % {"level": level, "locales": ", ".join(required)},
                 )
@@ -393,7 +393,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     "ok",
                     "i18n.man.coverage",
                     _("%s whole-document man translations present") % level,
-                    "docs/",
+                    "man/",
                 )
             )
         if english_copies:
@@ -403,7 +403,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                     "i18n.man.english-copy",
                     _("man translation still contains the English Name line: %s")
                     % ", ".join(english_copies),
-                    "docs/",
+                    "man/",
                     fix=_("Translate the Name line; do not leave the English wording. "
                     "For long adoc, googletranslator with http-proxy "
                     "http://localhost:8118 can help (not for gettext)."),
@@ -415,7 +415,7 @@ def check_i18n(root: Path, role: str, *, l10n_level: str = "L1") -> list[Finding
                 "ok",
                 "i18n.man.coverage",
                 _("no po/: man locale translations not required"),
-                "docs/",
+                "man/",
             )
         )
 

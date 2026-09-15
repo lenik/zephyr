@@ -20,9 +20,9 @@ class SourceSizeDocSkipTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory(prefix="zfr-srcsize-") as tmp:
             root = Path(tmp)
-            (root / "docs").mkdir()
+            (root / "man").mkdir()
             long = "\n".join(f"line {i}" for i in range(1200))
-            (root / "docs" / "app.adoc").write_text(long, encoding="utf-8")
+            (root / "man" / "app.adoc").write_text(long, encoding="utf-8")
             (root / "README.md").write_text(long, encoding="utf-8")
             (root / "app.bash").write_text(long, encoding="utf-8")
             (root / "src").mkdir()

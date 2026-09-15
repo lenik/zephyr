@@ -40,7 +40,7 @@ endforeach
 
 _zfr_i18n = find_program('zfr', native: true, required: false)
 if _zfr_i18n.found()
-  # Run from project source so zfr can discover package metadata / docs/.
+  # Run from project source so zfr can discover package metadata / man/.
   # Stamp must be absolute: command cds to source, so relative @OUTPUT@ would
   # be written under source po/ and ninja would rebuild every time.
   custom_target(

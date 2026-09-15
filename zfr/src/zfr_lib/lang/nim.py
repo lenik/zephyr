@@ -15,7 +15,7 @@ NAME = "nim"
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
     return merge_puff(
-        puff_paths(tmpl, stem, "src/{stem}.nim", "tests/test_commons.nim", "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot")
+        puff_paths(tmpl, stem, "src/{stem}.nim", "tests/test_commons.nim", "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot")
     )
 
 

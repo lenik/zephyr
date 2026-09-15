@@ -14,7 +14,7 @@ NAME = "lua"
 
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.lua", "tests/test_{stem}.lua", "{stem}.bash", "docs/{stem}.adoc"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.lua", "tests/test_{stem}.lua", "{stem}.bash", "man/{stem}.adoc"))
 
 
 def _lint(root: Path, role: str) -> list[Finding]:

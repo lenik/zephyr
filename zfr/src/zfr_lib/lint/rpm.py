@@ -433,7 +433,7 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                         # xgettext: no-python-format
                         fix=_(
                             "%{_mandir}/*/man1/<cmd>.1*  "
-                            "(docs/<lang>/*.adoc). Or run `zfr ize`."
+                            "(man/<lang>/*.adoc). Or run `zfr ize`."
                         ),
                     )
                 )

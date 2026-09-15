@@ -459,7 +459,7 @@ def _puff_names(root: Path) -> list[str]:
         if stem and stem not in names and _is_command_puff_name(stem):
             names.append(stem)
 
-    docs = root / "docs"
+    docs = root / "man"
     if docs.is_dir():
         for p in sorted(docs.glob("*.adoc")):
             if not _is_command_puff_name(p.stem):

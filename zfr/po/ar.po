@@ -214,7 +214,7 @@ msgid "list all implemented locales in this project"
 msgstr "lister toutes les locales implémentées dans ce projet"
 
 #: src/zfr_lib/i18n/cmd.py:185
-msgid "delete a locale (LINGUAS, .po, docs/)"
+msgid "delete a locale (LINGUAS, .po, man/)"
 msgstr "supprimer une locale (LINGUAS, .po, docs/)"
 
 #: src/zfr_lib/i18n/cmd.py:191
@@ -311,7 +311,7 @@ msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)
 msgstr "ثانيا 2مسون لحويل Autotools/CMake إلى Meson عندما يوجد (المفتوحة:"
 
 #: src/zfr_lib/ize/__init__.py:119
-msgid "do not convert groff .1 man pages to docs/*.adoc"
+msgid "do not convert groff .1 man pages to man/*.adoc"
 msgstr "عدم تحويل صفحات groff .1 man إلى docs/*.adoc"
 
 #: src/zfr_lib/ize/__init__.py:120
@@ -870,7 +870,7 @@ msgstr "ترجمات صفحات الدليل الكاملة ناقصة لـ %(le
 
 #: src/zfr_lib/lint/i18n_check.py:246
 #, python-format
-msgid "Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
+msgid "Hand-translate man/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
 msgstr "ترجم يدويًا docs/<locale>/<name>.adoc (المستند كاملًا، لا po4a). %(level)s يتطلب: %(locales)s."
 
 #: src/zfr_lib/lint/i18n_check.py:256
@@ -1058,11 +1058,11 @@ msgid "AsciiDoc man sources: %s"
 msgstr "مصادر صفحات الدليل AsciiDoc: %s"
 
 #: src/zfr_lib/lint/layout.py:63
-msgid "no docs/*.adoc man page source"
+msgid "no man/*.adoc man page source"
 msgstr "لا يوجد مصدر لصفحة الدليل docs/*.adoc"
 
 #: src/zfr_lib/lint/layout.py:65
-msgid "Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
+msgid "Add man/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
 msgstr "أضف docs/<puff>.adoc وmeson custom_target مع asciidoctor -b manpage (انظر أي قالب لغة)."
 
 #: src/zfr_lib/lint/layout.py:90
@@ -1350,7 +1350,7 @@ msgid "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED T
 msgstr "إصدار project() من `zfr version`؛ أبقِ الاحتياطي v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 
 #: src/zfr_lib/lint/report.py:138
-msgid "Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
+msgid "Man pages: man/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
 msgstr "صفحات الدليل: docs/*.adoc + asciidoctor -b manpage؛ الصفحات المترجمة تحت share/man/<locale>/man1 (مستند adoc كامل، وليس po4a)."
 
 #: src/zfr_lib/lint/report.py:139

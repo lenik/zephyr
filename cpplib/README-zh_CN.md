@@ -12,7 +12,7 @@
 - `src/` - 应用与共享模块源码
 - `tests/` - 使用 Check 框架的单元测试（`*_test.cpp` / `*_unit.cpp`）
 - `debian/` - Debian 打包元数据
-- `docs/` - AsciiDoc man 页源文件（`docs/*.adoc`）
+- `man/` - AsciiDoc man 页源文件（`man/*.adoc`）
 - `meson.build` - 顶层构建定义与辅助目标
 
 ## 示例应用：`some_puff1`

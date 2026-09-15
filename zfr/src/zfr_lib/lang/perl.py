@@ -13,7 +13,7 @@ NAME = "perl"
 
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.pl", "{stem}.bash", "docs/{stem}.adoc"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.pl", "{stem}.bash", "man/{stem}.adoc"))
 
 SPEC = LangSpec(
     name=NAME,

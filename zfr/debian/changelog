@@ -1,3 +1,19 @@
+zephyr (2.8.17) testing; urgency=medium
+
+  * Man pages live under man/ (was docs/); docs/ holds project documents
+    such as docs/parallel-building.md. ize migrates leftover docs/*.adoc.
+  * Document the sequential packager pipeline vs per-packager -j auto in
+    docs/parallel-building.md.
+  * zfr package: default debuild/dpkg-buildpackage -j without a number
+    (auto); -j N still pins an explicit job count.
+  * zfr create: default puff name matches the package; --no-puff keeps
+    the empty-scaffold / later zfr add path.
+  * create/rename: when puff and project rename collide (e.g. puff ==
+    package → both *.pot map to one name), drop the duplicate path
+    instead of leaving zephyr.pot behind.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Tue, 15 Sep 2026 17:47:49 +0800
+
 zephyr (2.8.16) testing; urgency=medium
 
   * lint ZL093: msgid-copy is intentional for packaging field/snippet

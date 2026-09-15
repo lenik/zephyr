@@ -10,7 +10,7 @@ import time
 from pathlib import Path
 
 from ..fdm import FdmCapture, log_line, require_fdm_tool, reset_capture, set_capture
-from ..jobs import resolve_jobs
+from ..jobs import jobs_is_auto
 from ..pkg_last import (
     PackageLastRun,
     PackagerRecord,
@@ -85,17 +85,18 @@ def package_project(
     docker_server: str = "",
     base_image: str = "b4f-debian:trixie",
     dry_run: bool = False,
-    jobs: int = 0,
+    jobs: int | None = None,
     interactive_errors: bool = True,
 ) -> list[PackagingKind]:
     """Detect kinds, run packagers one after another, optionally upload.
 
     Packagers (deb, rpm, mingw, …) always run sequentially in detection
     order. ``jobs`` is the per-packager build parallelism (debuild ``-j``,
-    make ``-j``, …), not the number of concurrent packagers.
+    make ``-j``, …), not the number of concurrent packagers. ``None``/``0``
+    means auto: debuild gets bare ``-j``; make/other resolve to CPU cores.
     """
     root = root.resolve()
-    jobs = resolve_jobs(jobs)
+    # Keep auto (None/≤0) for DebPackager; numeric packagers resolve themselves.
     kinds = detect_packaging_kinds(root)
     if only:
         want = {x.strip().lower() for x in only if x.strip()}
@@ -127,7 +128,7 @@ def package_project(
             root=str(root),
             started=finished,
             finished=finished,
-            jobs=jobs,
+            jobs=0 if jobs_is_auto(jobs) else int(jobs),
             records=skipped_records,
         )
         save_last_run(run)
@@ -139,6 +140,7 @@ def package_project(
             log_line("zfr package: upload skipped (--no-upload)")
         return []
 
+    jobs_label = "auto" if jobs_is_auto(jobs) else str(int(jobs))
     log_line(
         "zfr package: detected "
         + ", ".join(f"{k.name}({k.path})" for k in planned)
@@ -147,7 +149,7 @@ def package_project(
             if skipped_records
             else f"; active={len(active)}"
         )
-        + f"; sequential (jobs={jobs} per packager)"
+        + f"; sequential (jobs={jobs_label} per packager)"
     )
 
     if dry_run:
@@ -241,7 +243,7 @@ def package_project(
         root=str(root),
         started=started,
         finished=finished,
-        jobs=jobs,
+        jobs=0 if jobs_is_auto(jobs) else int(jobs),
         records=ordered,
     )
     save_last_run(run)

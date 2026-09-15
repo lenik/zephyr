@@ -225,7 +225,7 @@ install_data(
 docs_built = custom_target(
     'some_puff1-docs',
     input: [
-        'docs/some_puff1.adoc',
+        'man/some_puff1.adoc',
         'scripts/build-docs.sh',
     ],
     output: ['some_puff1.1', 'some_puff1.info'],

@@ -13,7 +13,7 @@ NAME = "java"
 
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/Main.java", "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"))
+    return merge_puff(puff_paths(tmpl, stem, "src/Main.java", "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"))
 
 def _spec_files(puffs: list[str]) -> list[str]:
     return ["%{_datadir}/%{name}/"]

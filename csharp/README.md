@@ -11,7 +11,7 @@
 - `debian/` - Debian packaging metadata
 - `scripts/emit-strings-resx.py` - optional helper to rewrite `apps/SomePuff1/Resources/Strings*.resx` from the tables in the script
 - `zephyr.sln` - Visual Studio / `dotnet build` solution (Zephyr lib + SomePuff1 + tests)
-- `docs/` - AsciiDoc man page sources (`docs/*.adoc`)
+- `man/` - AsciiDoc man page sources (`man/*.adoc`)
 - `meson.build` - build, test, install, and helper targets
 
 ## Example app: `some_puff1`

@@ -14,7 +14,7 @@ NAME = "rust"
 
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/main.rs", "src/lib.rs", "build-aux/cargo-build.sh", "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"))
+    return merge_puff(puff_paths(tmpl, stem, "src/main.rs", "src/lib.rs", "build-aux/cargo-build.sh", "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"))
 
 def _lint(root: Path, role: str) -> list[Finding]:
     if (root / "Cargo.toml").is_file():

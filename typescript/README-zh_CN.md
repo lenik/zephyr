@@ -7,7 +7,7 @@
 
 - `src/` - TypeScript 源码（`*.ts`）与 `some_puff1` 启动脚本模板
 - `tests/` - 使用 Node 内置测试运行器的单元测试
-- `docs/` - AsciiDoctor 源文件（man / info）
+- `man/` - AsciiDoctor 源文件（man / info）
 - `scripts/build-docs.sh` - Asciidoctor → man(1) + info
 - `dist/` - `tsc` 输出（生成物；由包仓库发布）
 - `debian/` - Debian 打包元数据
@@ -49,7 +49,7 @@ pnpm pack   # 或: pnpm publish
 
 ## Man 与 info 手册
 
-文档使用 AsciiDoctor 编写（[`docs/some_puff1.adoc`](docs/some_puff1.adoc)）：
+文档使用 AsciiDoctor 编写（[`man/some_puff1.adoc`](man/some_puff1.adoc)）：
 
 - man 页：`asciidoctor -b manpage`
 - info 页：AsciiDoctor HTML → Pandoc Texinfo → `makeinfo`

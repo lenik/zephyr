@@ -70,11 +70,11 @@ root, otherwise this project only) and is what `packaging/rpm/Makefile` and
 zephyr style (missing debian/packaging files, meson targets, AsciiDoc man
 pages, Meson version substitutions).
 
-When a project has `po/` or `docs/*.adoc`, `zfr lint -l/--l10n-level`
+When a project has `po/` or `man/*.adoc`, `zfr lint -l/--l10n-level`
 checks coverage. Default is **L1** (10 locales). **L0** requires nothing;
 **L2** is 20 locales; **L3** is 30. Project default arguments live in
 `.config/zephyr/lint.options` (the zfr CLI itself sets `-l 2`). Man pages
-are whole-document hand translations under `docs/<locale>/`, not po4a
+are whole-document hand translations under `man/<locale>/`, not po4a
 fragments. Extra locales beyond the level are allowed.
 
 

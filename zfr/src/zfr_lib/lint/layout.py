@@ -68,19 +68,19 @@ def check_layout(root: Path, lang: str, role: str) -> list[Finding]:
             )
         )
 
-    adocs = list((root / "docs").glob("*.adoc")) if (root / "docs").is_dir() else []
+    adocs = list((root / "man").glob("*.adoc")) if (root / "man").is_dir() else []
     if adocs:
         out.append(
-            Finding("ok", "layout.docs", _("AsciiDoc man sources: %s") % ", ".join(p.name for p in adocs), "docs/")
+            Finding("ok", "layout.man", _("AsciiDoc man sources: %s") % ", ".join(p.name for p in adocs), "man/")
         )
     else:
         out.append(
             Finding(
                 "error",
-                "layout.docs",
-                _("no docs/*.adoc man page source"),
-                "docs/",
-                fix=_("Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage "
+                "layout.man",
+                _("no man/*.adoc man page source"),
+                "man/",
+                fix=_("Add man/<puff>.adoc and a meson custom_target with asciidoctor -b manpage "
                 "(see any language template)."),
             )
         )

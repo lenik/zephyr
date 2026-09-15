@@ -202,7 +202,7 @@ msgid "list all implemented locales in this project"
 msgstr "llista totes les localitzacions implementats en aquest projecte"
 
 #: src/zfr_lib/i18n/cmd.py:185
-msgid "delete a locale (LINGUAS, .po, docs/)"
+msgid "delete a locale (LINGUAS, .po, man/)"
 msgstr "esborra un localitzat (LINGUAS, .po, docs/)"
 
 #: src/zfr_lib/i18n/cmd.py:191
@@ -299,7 +299,7 @@ msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)
 msgstr "executa 2meson per convertir Autotools/CMake a Meson quan està presente (per omissió: on)"
 
 #: src/zfr_lib/ize/__init__.py:119
-msgid "do not convert groff .1 man pages to docs/*.adoc"
+msgid "do not convert groff .1 man pages to man/*.adoc"
 msgstr "no convertir pàgines man groff .1 a docs/*.adoc"
 
 #: src/zfr_lib/ize/__init__.py:120
@@ -856,7 +856,7 @@ msgstr "manquen traduccions man de document sencer per a %(level)s: %(files)s"
 
 #: src/zfr_lib/lint/i18n_check.py:246
 #, python-format
-msgid "Hand-translate docs/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
+msgid "Hand-translate man/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
 msgstr "Traduiu a mà docs/<locale>/<name>.adoc (document sencer, no po4a). %(level)s requereix: %(locales)s."
 
 #: src/zfr_lib/lint/i18n_check.py:256
@@ -1044,11 +1044,11 @@ msgid "AsciiDoc man sources: %s"
 msgstr "Fonts man AsciiDoc: %s"
 
 #: src/zfr_lib/lint/layout.py:63
-msgid "no docs/*.adoc man page source"
+msgid "no man/*.adoc man page source"
 msgstr "cap font de pàgina man docs/*.adoc"
 
 #: src/zfr_lib/lint/layout.py:65
-msgid "Add docs/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
+msgid "Add man/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
 msgstr "Afegiu docs/<puff>.adoc i un custom_target de meson amb asciidoctor -b manpage (vegeu qualsevol plantilla de llenguatge)."
 
 #: src/zfr_lib/lint/layout.py:90
@@ -1336,7 +1336,7 @@ msgid "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED T
 msgstr "versió de project() des de `zfr version`; conserveu el fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 
 #: src/zfr_lib/lint/report.py:138
-msgid "Man pages: docs/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
+msgid "Man pages: man/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
 msgstr "Pàgines man: docs/*.adoc + asciidoctor -b manpage; pàgines traduïdes a share/man/<locale>/man1 (adoc de document sencer, no po4a)."
 
 #: src/zfr_lib/lint/report.py:139

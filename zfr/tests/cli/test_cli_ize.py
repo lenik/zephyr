@@ -29,7 +29,7 @@ class ZephyrIzeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix="zfr-ize-") as tmp:
             root = Path(tmp)
             (root / "src").mkdir()
-            (root / "docs").mkdir()
+            (root / "man").mkdir()
             (root / "debian").mkdir()
             (root / "meson.build").write_text(
                 "project('oldpuff', version: '1.2.3')\n",
@@ -59,7 +59,7 @@ class ZephyrIzeTests(unittest.TestCase):
                 "int main(void) { return 0; }\n",
                 encoding="utf-8",
             )
-            (root / "docs" / "oldpuff.1").write_text(
+            (root / "man" / "oldpuff.1").write_text(
                 ".TH OLDPUFF 1\n.SH NAME\noldpuff \\- demo\n",
                 encoding="utf-8",
             )
@@ -68,8 +68,8 @@ class ZephyrIzeTests(unittest.TestCase):
             meson = (root / "meson.build").read_text(encoding="utf-8")
             self.assertIn("zfr version", meson)
             self.assertIn("run_target", meson)
-            self.assertTrue((root / "docs" / "oldpuff.adoc").is_file())
-            self.assertFalse((root / "docs" / "oldpuff.1").exists())
+            self.assertTrue((root / "man" / "oldpuff.adoc").is_file())
+            self.assertFalse((root / "man" / "oldpuff.1").exists())
             self.assertTrue(
                 (root / "packaging" / "rpm" / "oldpuff.spec").is_file()
                 or (root / "packaging" / "rpm" / "zephyr.spec").is_file()
@@ -84,8 +84,8 @@ class ZephyrIzeTests(unittest.TestCase):
         from zfr_lib.ize.man import strip_install_man_paths
 
         text = (
-            "install_man('docs/foo.adoc')\n"
-            "install_man(['docs/a.adoc', 'man/keep.1'])\n"
+            "install_man('man/foo.adoc')\n"
+            "install_man(['man/a.adoc', 'man/keep.1'])\n"
         )
         out = strip_install_man_paths(text, set())
         self.assertNotIn(".adoc", out)

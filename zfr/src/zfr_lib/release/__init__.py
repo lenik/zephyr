@@ -13,7 +13,7 @@ import argparse
 
 from ..cli import register_command
 from ..i18n import _
-from ..jobs import add_job_argument, resolve_jobs
+from ..jobs import add_job_argument
 from .context import Options
 from .logutil import set_log_level
 from .pipeline import run_release
@@ -201,7 +201,7 @@ def namespace_to_options(ns: argparse.Namespace) -> Options:
         no_deb=bool(ns.no_deb),
         chdir=ns.chdir or "",
         dpkg_buildopts=dpkg_buildopts,
-        jobs=resolve_jobs(getattr(ns, "jobs", None)),
+        jobs=getattr(ns, "jobs", None),
     )
 
 

@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 from ..buildsys import build_project
-from ..jobs import resolve_jobs
+from ..jobs import jobs_is_auto, resolve_jobs
 from ..pkg import package_project
 from .artifacts import have_build_artifacts
 from .context import Context
@@ -28,12 +28,15 @@ def step_build(ctx: Context) -> None:
     if not need_build:
         return
 
-    jobs = resolve_jobs(opts.jobs if opts.jobs and opts.jobs > 0 else None)
+    # Compile needs a concrete -jN; packaging keeps auto for debuild.
+    build_jobs = resolve_jobs(opts.jobs)
+    pkg_jobs = opts.jobs
+    jobs_label = "auto" if jobs_is_auto(pkg_jobs) else str(int(pkg_jobs))
     try:
-        log1(f"Building project (jobs={jobs})")
+        log1(f"Building project (jobs={build_jobs})")
         build_project(
             ctx.projectdir,
-            jobs=jobs,
+            jobs=build_jobs,
             verbose=False,
         )
     except SystemExit:
@@ -46,7 +49,7 @@ def step_build(ctx: Context) -> None:
     try:
         log1(
             f"Packaging project (upload={'yes' if do_upload else 'no'}, "
-            f"jobs={jobs})"
+            f"jobs={jobs_label})"
         )
         package_project(
             ctx.projectdir,
@@ -58,7 +61,7 @@ def step_build(ctx: Context) -> None:
             docker=docker,
             docker_server=opts.docker_server or "",
             base_image=opts.base_image or "b4f-debian:trixie",
-            jobs=jobs,
+            jobs=pkg_jobs,
             interactive_errors=False,
         )
     except SystemExit as exc:

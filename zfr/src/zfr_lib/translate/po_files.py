@@ -551,7 +551,7 @@ def delete_locale(root: Path, lang: str) -> list[str]:
     if po_path.is_file():
         po_path.unlink()
         removed.append(str(po_path.relative_to(root)))
-    docs_loc = root / "docs" / loc
+    docs_loc = root / "man" / loc
     if docs_loc.is_dir():
         for p in sorted(docs_loc.rglob("*"), reverse=True):
             if p.is_file():

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """RPM %files helpers aligned with what Meson actually installs.
 
-Guessing bindir/completion/man from docs/*.adoc caused rpmbuild
+Guessing bindir/completion/man from man/*.adoc caused rpmbuild
 "File not found" / "Installed (but unpackaged)" failures under
 ``zfr release -fI``.  Prefer parsing meson.build install rules.
 """
@@ -59,7 +59,7 @@ def ships_locale_mans(root: Path) -> bool:
         return True
     if re.search(r"get_option\(\s*['\"]mandir['\"]\s*\)\s*/\s*lang\b", text):
         return True
-    docs = root / "docs"
+    docs = root / "man"
     if docs.is_dir():
         for child in docs.iterdir():
             if child.is_dir() and any(child.glob("*.adoc")):
@@ -74,7 +74,7 @@ def man_command_stems(root: Path, name: str) -> list[str]:
     not installable CLI commands.
     """
     stems: list[str] = []
-    docs = root / "docs"
+    docs = root / "man"
     if docs.is_dir():
         for adoc in sorted(docs.glob("*.adoc")):
             stem = adoc.stem
@@ -99,7 +99,7 @@ def locale_man_lines(root: Path, name: str, puffs: list[str] | None = None) -> l
     if not ships_locale_mans(root):
         return []
     translated: set[str] = set()
-    docs = root / "docs"
+    docs = root / "man"
     if docs.is_dir():
         for child in docs.iterdir():
             if child.is_dir():

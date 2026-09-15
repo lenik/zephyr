@@ -13,7 +13,7 @@ class IzeI18nCoverageTests(unittest.TestCase):
     def _project(self, tmp: Path) -> Path:
         root = tmp / "proj"
         (root / "po").mkdir(parents=True)
-        (root / "docs").mkdir()
+        (root / "man").mkdir()
         (root / "po" / "LINGUAS").write_text("fr\nde\n", encoding="utf-8")
         (root / "po" / "proj.pot").write_text(
             'msgid ""\nmsgstr ""\n"Content-Type: text/plain; charset=UTF-8\\n"\n\n'
@@ -26,12 +26,12 @@ class IzeI18nCoverageTests(unittest.TestCase):
                 % loc,
                 encoding="utf-8",
             )
-            (root / "docs" / loc).mkdir()
-            (root / "docs" / loc / "tool.adoc").write_text(
+            (root / "man" / loc).mkdir()
+            (root / "man" / loc / "tool.adoc").write_text(
                 f"= tool(1)\n\n== NAME\n\ntool - {loc}\n",
                 encoding="utf-8",
             )
-        (root / "docs" / "tool.adoc").write_text(
+        (root / "man" / "tool.adoc").write_text(
             "= tool(1)\n\n== NAME\n\ntool - English\n",
             encoding="utf-8",
         )
@@ -47,9 +47,9 @@ class IzeI18nCoverageTests(unittest.TestCase):
             ize.ensure_man_locale_coverage()
             paths = {c.path for c in ize.changes}
             self.assertTrue(any(p.startswith("po/") and "ar" in p for p in paths))
-            # ize no longer scaffolds docs/<locale>/ copies.
-            self.assertFalse(any(p.startswith("docs/ar/") for p in paths))
-            self.assertFalse((root / "docs" / "ar" / "tool.adoc").exists())
+            # ize no longer scaffolds man/<locale>/ copies.
+            self.assertFalse(any(p.startswith("man/ar/") for p in paths))
+            self.assertFalse((root / "man" / "ar" / "tool.adoc").exists())
 
     def test_apply_adds_linguas_po_not_man_scaffold(self) -> None:
         import tempfile
@@ -62,7 +62,7 @@ class IzeI18nCoverageTests(unittest.TestCase):
             linguas = (root / "po" / "LINGUAS").read_text(encoding="utf-8")
             self.assertIn("ar", linguas)
             self.assertTrue((root / "po" / "ar.po").is_file())
-            self.assertFalse((root / "docs" / "ar" / "tool.adoc").is_file())
+            self.assertFalse((root / "man" / "ar" / "tool.adoc").is_file())
 
 
 if __name__ == "__main__":

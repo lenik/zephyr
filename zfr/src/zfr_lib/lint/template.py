@@ -174,7 +174,7 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
         # only flag well-known scaffolding, not every po locale
         top = expected.parts[0] if expected.parts else ""
         root_names = {"meson.build", "README.md", "README-zh_CN.md", "VERSION"}
-        if top in {"debian", "docs", "src", "tests", "packaging"} or (
+        if top in {"debian", "man", "docs", "src", "tests", "packaging"} or (
             len(expected.parts) == 1 and expected.name in root_names
         ):
             rel_s = expected.as_posix()
@@ -222,7 +222,7 @@ def check_template_gaps(root: Path, lang: str, role: str) -> list[Finding]:
             % {"lang": lang, "preview": preview, "more": more}
             + opt_note,
             fix=_("Compare with the %(lang)s template under pkgdatadir. Copy missing "
-            "[required] debian/docs/src/tests/packaging/rpm files "
+            "[required] debian/man/docs/src/tests/packaging/rpm files "
             "(packaging/rpm/ uses %(name)s.spec, not zephyr.spec; "
             "debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. "
             "[optional] items (non-rpm packaging/*, src/Makefile, clib/cpplib "

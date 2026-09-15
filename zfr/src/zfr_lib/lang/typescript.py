@@ -13,7 +13,7 @@ NAME = "typescript"
 
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.ts", "src/{stem}.sh.in", "docs/{stem}.adoc", "{stem}.bash", "po/{stem}.pot"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.ts", "src/{stem}.sh.in", "man/{stem}.adoc", "{stem}.bash", "po/{stem}.pot"))
 
 def _spec_files(puffs: list[str]) -> list[str]:
     p = puffs[0] if puffs else "zephyr"

@@ -48,7 +48,7 @@ def _is_doc_or_completion(rel: str, path: Path) -> bool:
     if name in _DOC_OR_COMPLETION_NAMES or name.startswith("README"):
         return True
     if path.suffix.lower() in _DOC_OR_COMPLETION_SUFFIXES:
-        # Root or tools/*.bash completion; docs/*.adoc; any *.md under tree.
+        # Root or tools/*.bash completion; man/*.adoc; any *.md under tree.
         if path.suffix.lower() == ".bash":
             return True
         if path.suffix.lower() in {".adoc", ".md", ".rst", ".txt"}:
@@ -65,7 +65,12 @@ def _is_source_candidate(root: Path, path: Path) -> bool:
         rel = path.relative_to(root).as_posix()
     except ValueError:
         return False
-    if rel.startswith("debian/") or rel.startswith("po/") or rel.startswith("docs/"):
+    if (
+        rel.startswith("debian/")
+        or rel.startswith("po/")
+        or rel.startswith("man/")
+        or rel.startswith("docs/")
+    ):
         return False
     if _is_doc_or_completion(rel, path):
         return False

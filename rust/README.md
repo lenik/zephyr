@@ -13,7 +13,7 @@ Please rewrite this file to reflect the specific details of the current project.
 - `build-aux/cargo-build.sh` - build hook used by Meson to run `cargo build --release`
 - `po/` - gettext message catalogs
 - `debian/` - Debian packaging metadata
-- `docs/` - AsciiDoc man page sources (`docs/*.adoc`)
+- `man/` - AsciiDoc man page sources (`man/*.adoc`)
 - `meson.build` - data files, man page, `install-symlinks`, and Meson-registered `cargo test`
 - `Cargo.toml` / `Cargo.lock` - the canonical dependency graph and locked dependency versions
 

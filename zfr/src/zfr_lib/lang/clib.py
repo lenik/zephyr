@@ -27,7 +27,7 @@ def _score_clib(root: Path, scores: dict[str, float], meson_txt: str, depends: s
         scores["clib"] *= 0.2
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.c", "src/{stem}.h", "tests/{stem}_test.c", "{stem}.bash", "docs/{stem}.adoc", "po/{stem}.pot"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.c", "src/{stem}.h", "tests/{stem}_test.c", "{stem}.bash", "man/{stem}.adoc", "po/{stem}.pot"))
 
 def _lint(root: Path, role: str) -> list[Finding]:
     from ._c_bas import lint_c_bas

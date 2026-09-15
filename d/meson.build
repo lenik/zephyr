@@ -70,7 +70,7 @@ install_data(
 
 custom_target(
     'some_puff1-man',
-    input: 'docs/some_puff1.adoc',
+    input: 'man/some_puff1.adoc',
     output: 'some_puff1.1',
     command: [
         asciidoctor,

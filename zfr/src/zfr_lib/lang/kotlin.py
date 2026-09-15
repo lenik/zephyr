@@ -14,7 +14,7 @@ NAME = "kotlin"
 
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/Main.kt", "{stem}.bash", "docs/{stem}.adoc"))
+    return merge_puff(puff_paths(tmpl, stem, "src/Main.kt", "{stem}.bash", "man/{stem}.adoc"))
 
 
 def _lint(root: Path, role: str) -> list[Finding]:

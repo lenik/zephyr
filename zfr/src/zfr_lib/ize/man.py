@@ -5,7 +5,7 @@ from __future__ import annotations
 from .util import *  # noqa: F403
 
 def strip_install_man_paths(text: str, remove: set[str]) -> str:
-    """Drop groff (or adoc) paths from install_man() after conversion to docs/*.adoc.
+    """Drop groff (or adoc) paths from install_man() after conversion to man/*.adoc.
 
     Meson install_man() only accepts numeric-section man sources, not AsciiDoc.
     """
@@ -38,7 +38,7 @@ def _man_target(name: str, section: str = "1") -> str:
     return f"""
 custom_target(
     '{name}-man',
-    input: 'docs/{name}.adoc',
+    input: 'man/{name}.adoc',
     output: '{name}.{section}',
     command: [
         asciidoctor,
@@ -60,7 +60,7 @@ custom_target(
 _INDIVIDUAL_MAN_TARGET_RE = re.compile(
     r"\ncustom_target\(\s*"
     r"'(?P<stem>[^']+)-man'\s*,\s*"
-    r"input:\s*'docs/(?P=stem)\.adoc'\s*,"
+    r"input:\s*'man/(?P=stem)\.adoc'\s*,"
     r".*?"
     r"install_dir:\s*mandir\s*/\s*'man[^']+'\s*,\s*"
     r"\)\s*",
@@ -179,7 +179,7 @@ def strip_individual_man_targets(text: str) -> tuple[str, list[str]]:
 
 
 def man_foreach_block(stems: list[str], *, section: str = "1") -> str:
-    """Meson ``foreach`` over English docs/*.adoc man pages (zephyr style)."""
+    """Meson ``foreach`` over English man/*.adoc man pages (zephyr style)."""
     if not stems:
         return ""
     quoted = ",\n    ".join(f"'{s}'" for s in stems)
@@ -190,7 +190,7 @@ puffs = [
 foreach puff : puffs
   custom_target(
     puff + '-man',
-    input: 'docs' / (puff + '.adoc'),
+    input: 'man' / (puff + '.adoc'),
     output: puff + '.{section}',
     command: [
       asciidoctor,
@@ -338,7 +338,7 @@ def convert_man_file(path: Path, name: str, section: str = "1") -> str:
 
 
 def stub_man_adoc(name: str, section: str = "1", summary: str = "") -> str:
-    """Minimal AsciiDoc man page so layout.docs / asciidoctor targets pass lint."""
+    """Minimal AsciiDoc man page so layout.man / asciidoctor targets pass lint."""
     desc = summary.strip() or f"{name} command"
     return (
         f"= {name}({section})\n"
@@ -389,7 +389,7 @@ def discover_man_stems(root: Path, project: str) -> list[tuple[str, str]]:
         found.setdefault(stem, section)
 
     # Existing AsciiDoc already covered.
-    docs = root / "docs"
+    docs = root / "man"
     if docs.is_dir():
         for p in docs.glob("*.adoc"):
             add(p.stem, "1")
@@ -430,7 +430,7 @@ def discover_man_stems(root: Path, project: str) -> list[tuple[str, str]]:
 
     if not found:
         add(project, "1")
-    # Prefer stems that do not yet have docs/*.adoc when returning for stub creation.
+    # Prefer stems that do not yet have man/*.adoc when returning for stub creation.
     return sorted(found.items())
 
 

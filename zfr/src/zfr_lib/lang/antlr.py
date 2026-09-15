@@ -28,7 +28,7 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
             f"src/{pascal}.g4",
             "src/Main.java",
             "{stem}.bash",
-            "docs/{stem}.adoc",
+            "man/{stem}.adoc",
         )
     )
 

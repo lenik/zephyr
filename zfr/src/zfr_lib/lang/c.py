@@ -14,7 +14,7 @@ NAME = "c"
 
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.c", "tests/{stem}_test.c", "{stem}.bash", "docs/{stem}.adoc"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.c", "tests/{stem}_test.c", "{stem}.bash", "man/{stem}.adoc"))
 
 def _lint(root: Path, role: str) -> list[Finding]:
     from ._c_bas import lint_c_bas

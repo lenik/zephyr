@@ -27,6 +27,7 @@ _SKIP_PREFIXES = (
     "debian/",
     "packaging/",
     "po/",
+    "man/",
     "docs/",
     "build/",
     ".git/",

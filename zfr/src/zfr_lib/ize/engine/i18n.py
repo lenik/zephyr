@@ -72,14 +72,14 @@ def ensure_i18n_coverage(ize: "Ize") -> None:
 def ensure_man_locale_coverage(ize: "Ize") -> None:
     """No-op: missing man locale translations are not ize's job (lint ZL055).
 
-    Older ize versions copied English ``docs/*.adoc`` into ``docs/<locale>/``
+    Older ize versions copied English ``man/*.adoc`` into ``man/<locale>/``
     to clear lint; that scaffold is no longer created.
     """
     if ize.verbose:
         ize.note(
             "skip",
-            "docs/",
-            "man locale scaffolds not created by ize (translate docs/<locale>/ by hand)",
+            "man/",
+            "man locale scaffolds not created by ize (translate man/<locale>/ by hand)",
             rule="ize.i18n.man-locale",
         )
 

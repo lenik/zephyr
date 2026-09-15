@@ -1,6 +1,6 @@
 ---
 description: How to update gettext catalogs and document translations (poedit, no patch scripts)
-globs: po/**,**/LINGUAS,docs/**/*.adoc,README*,README-*.md
+globs: po/**,**/LINGUAS,man/**/*.adoc,README*,README-*.md
 alwaysApply: false
 ---
 
@@ -30,7 +30,7 @@ EOT
 
 ## README / man (AsciiDoc)
 
-- Whole-document locale files under `docs/<locale>/`. Prefer hand translation.
+- Whole-document locale files under `man/<locale>/`. Prefer hand translation.
 - **`googletranslator`** can help for long adoc/README text — use the local
   HTTP proxy (`http://localhost:8118`; see **proxy.mdc**). **Do not** use Google
   Translate for gettext catalogs.

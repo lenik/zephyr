@@ -52,7 +52,7 @@ def _score_bash(root: Path, scores: dict[str, float], meson_txt: str, depends: s
                 return
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.in", "{stem}.bash", "docs/{stem}.adoc"))
+    return merge_puff(puff_paths(tmpl, stem, "src/{stem}.in", "{stem}.bash", "man/{stem}.adoc"))
 
 def _lint(root: Path, role: str) -> list[Finding]:
     src = root / "src"

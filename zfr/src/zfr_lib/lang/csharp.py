@@ -13,7 +13,7 @@ NAME = "csharp"
 
 
 def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
-    return merge_puff(puff_dir_if_exists(tmpl, f"apps/{stem}"), puff_paths(tmpl, stem, "{stem}.bash", "docs/{stem}.adoc"))
+    return merge_puff(puff_dir_if_exists(tmpl, f"apps/{stem}"), puff_paths(tmpl, stem, "{stem}.bash", "man/{stem}.adoc"))
 
 SPEC = LangSpec(
     name=NAME,

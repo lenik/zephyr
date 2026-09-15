@@ -75,6 +75,12 @@ class DockerDebianExtractTests(unittest.TestCase):
         self.assertIn("-us", script)
         self.assertIn("mk-build-deps", script)
 
+    def test_inner_script_auto_jobs_bare_j(self) -> None:
+        script = debian_build_inner("zephyr", ["-us", "-uc"], jobs=None)
+        self.assertIn("debuild -j ", script)
+        self.assertNotIn("-j4", script)
+        self.assertNotIn("parallel=", script)
+
     def test_package_deb_docker_dry_run(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp) / "proj"

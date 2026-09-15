@@ -20,7 +20,7 @@ def _puff(tmpl: Path, stem: str, pascal: str) -> list[Path]:
             stem,
             "src/{stem}.asm",
             "{stem}.bash",
-            "docs/{stem}.adoc",
+            "man/{stem}.adoc",
         )
     )
 

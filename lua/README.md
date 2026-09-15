@@ -7,7 +7,7 @@
 
 - `src/` - Lua sources (`some_puff1.lua` example app and `commons.lua` shared helpers)
 - `tests/` - Lua unit tests (`lua tests/test_commons.lua`)
-- `docs/` - AsciiDoc man page sources (`docs/*.adoc`)
+- `man/` - AsciiDoc man page sources (`man/*.adoc`)
 - `meson.build` - install rules, tests, and helper targets
 
 ## Example app: `some_puff1`

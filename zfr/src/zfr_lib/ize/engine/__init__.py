@@ -279,8 +279,8 @@ class Ize:
         if notes:
             self.note("update", "debian/docs", ", ".join(notes))
     def ensure_man_stubs(self) -> None:
-        """Create docs/*.adoc stubs when Autotools mans were help2man-only."""
-        docs = self.root / "docs"
+        """Create man/*.adoc stubs when Autotools mans were help2man-only."""
+        docs = self.root / "man"
         existing = list(docs.glob("*.adoc")) if docs.is_dir() else []
         stems = discover_man_stems(self.root, self.name)
         # Only create stubs for stems that lack adoc.

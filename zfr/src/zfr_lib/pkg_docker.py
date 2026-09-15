@@ -35,14 +35,26 @@ def prepare_build4_image(src: str) -> str:
     return dst
 
 
-def debian_build_inner(name: str, dpkg_buildopts: list[str], *, jobs: int = 1) -> str:
+def debian_build_inner(
+    name: str, dpkg_buildopts: list[str], *, jobs: int | None = None
+) -> str:
+    from .jobs import deb_build_options_parallel, debuild_jobs_args
+
     opts_q = " ".join(shlex.quote(o) for o in dpkg_buildopts)
     if opts_q:
         opts_q += " "
-    jobs = max(1, int(jobs))
+    jflag = " ".join(debuild_jobs_args(jobs))
+    parallel = deb_build_options_parallel(jobs)
+    if parallel is not None:
+        deb_opts_line = (
+            f'export DEB_BUILD_OPTIONS="${{DEB_BUILD_OPTIONS:+$DEB_BUILD_OPTIONS }}{parallel}"'
+        )
+    else:
+        # Bare -j: let dpkg choose parallelism; do not pin parallel=N.
+        deb_opts_line = "# DEB_BUILD_OPTIONS parallel left to debuild -j"
     return f"""set -euo pipefail
 cd {shlex.quote(name)}
-export DEB_BUILD_OPTIONS="${{DEB_BUILD_OPTIONS:+$DEB_BUILD_OPTIONS }}parallel={jobs}"
+{deb_opts_line}
 if ! command -v debuild >/dev/null 2>&1 && ! command -v dpkg-buildpackage >/dev/null 2>&1; then
   export DEBIAN_FRONTEND=noninteractive
   apt-get update -qq
@@ -52,9 +64,9 @@ if command -v mk-build-deps >/dev/null 2>&1 && [ -f debian/control ]; then
   mk-build-deps -i -r -t 'apt-get -y --no-install-recommends' || true
 fi
 if command -v debuild >/dev/null 2>&1; then
-  debuild -j{jobs} {opts_q}
+  debuild {jflag} {opts_q}
 else
-  dpkg-buildpackage -j{jobs} {opts_q}
+  dpkg-buildpackage {jflag} {opts_q}
 fi"""
 
 
@@ -63,20 +75,22 @@ def build4_debian(
     *,
     base_image: str,
     dpkg_buildopts: list[str] | None = None,
-    jobs: int = 1,
+    jobs: int | None = None,
     dry_run: bool = False,
 ) -> None:
     """build4 mounts cwd at -w; cd to package parent and run from /workspace/<name>."""
+    from .jobs import debuild_jobs_args
+
     projectdir = projectdir.resolve()
     parent = projectdir.parent
     name = projectdir.name
     opts = list(dpkg_buildopts or [])
-    jobs = max(1, int(jobs))
+    jlabel = " ".join(debuild_jobs_args(jobs))
 
     if dry_run:
         print(f"+ prepare build4 image from {base_image}", flush=True)
         print(
-            f"+ build4 -t <image>-build4 -w /workspace -- bash -lc <debuild -j{jobs}> (cwd={parent})",
+            f"+ build4 -t <image>-build4 -w /workspace -- bash -lc <debuild {jlabel}> (cwd={parent})",
             flush=True,
         )
         return
@@ -102,19 +116,21 @@ def build4_debian_remote(
     docker_server: str,
     base_image: str,
     dpkg_buildopts: list[str] | None = None,
-    jobs: int = 1,
+    jobs: int | None = None,
     dry_run: bool = False,
 ) -> None:
+    from .jobs import debuild_jobs_args
+
     projectdir = projectdir.resolve()
     server = docker_server
     parent = projectdir.parent
     name = projectdir.name
     opts = list(dpkg_buildopts or [])
-    jobs = max(1, int(jobs))
+    jlabel = " ".join(debuild_jobs_args(jobs))
 
     print(f"zfr package: build4 remote ssh={server} base-image={base_image}", flush=True)
     if dry_run:
-        print(f"+ ssh {server} mktemp / rsync / build4 -j{jobs} / fetch artifacts", flush=True)
+        print(f"+ ssh {server} mktemp / rsync / build4 {jlabel} / fetch artifacts", flush=True)
         return
 
     if not shutil.which("rsync"):

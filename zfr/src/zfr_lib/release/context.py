@@ -29,7 +29,8 @@ class Options:
     no_deb: bool = False
     chdir: str = ""
     dpkg_buildopts: list[str] = field(default_factory=list)
-    jobs: int = 0
+    # None/≤0 = auto (debuild bare -j); positive = pinned job count.
+    jobs: int | None = None
 
 
 @dataclass
