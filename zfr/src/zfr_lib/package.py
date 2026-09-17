@@ -15,10 +15,10 @@ NAME = "package"
 HELP = _("detect packaging type and build packages")
 DESCRIPTION = _(
     "Detect packaging types (deb, rpm, npm/vsix, mingw, …) and build them "
-    "sequentially (deb, then rpm, …). -j/--job is per-packager build "
-    "parallelism (debuild/make -j), not concurrent packagers. Default is "
-    "auto: debuild gets bare -j (no number). Each "
-    "packager's stdout/stderr is captured with fdmux into an FDM file; live "
+    "sequentially (deb, then rpm, …). -j/--job is a job budget: omit or pass "
+    "-j alone for auto (debuild gets bare -j, no number); -j N is split across "
+    "concurrent planned workers (sequential plan ⇒ each packager gets full N). "
+    "Each packager's stdout/stderr is captured with fdmux into an FDM file; live "
     "status lines show progress. On failure, browse with `zfr lasterror`. "
     "Upload is on by default (-u); use -U/--no-upload to skip."
 )

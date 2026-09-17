@@ -45,8 +45,12 @@ Debian or RPM build use the machine fully.
   integer): `zfr` resolves auto to `os.cpu_count()` (at least 1) and passes
   `-jN`, `--parallel N`, or the equivalent.
 
-Explicit `-j 4` (or any positive `N`) pins that count everywhere, including
-debuild (`-j4`) and `DEB_BUILD_OPTIONS=parallel=4`.
+Explicit `-j 4` (or any positive `N`) is a **total job budget**. When the
+package *plan* runs workers concurrently, `split_job_budget(N, K)` divides
+`N` across those `K` workers. Today's packager pipeline is **sequential**
+(`K=1`), so each packager receives the full `N` (debuild `-j4`,
+`DEB_BUILD_OPTIONS=parallel=4`, make `-j4`, …). Bare `-j` / omitted `-j`
+stays auto for every worker.
 
 ### Why bare `-j` for Debian
 
@@ -150,7 +154,11 @@ parallelism *across* packagers is avoided so those streams stay attributable.
 zfr package
 
 # Pin eight jobs for every packager that honors -j
+# (sequential plan ⇒ each gets the full budget of 8)
 zfr package -j 8
+
+# Bare -j is the same as omitting it (auto / debuild -j)
+zfr package -j
 
 # Only Debian, unsigned, no upload, see the planned -j
 zfr package --only deb --unsigned -U --dry-run

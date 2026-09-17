@@ -39,7 +39,7 @@ zfr - multi-language CLI project templates and helper tools
 
 *zfr* [*--chat*|*--no-chat*] *build* [*-C* _DIR_] [*-b* _DIR_] [*-j* _N_] [*-n*] [*-v*] [*--detect-only*]
 
-*zfr* [*--chat*|*--no-chat*] *package* [*-C* _DIR_] [*-j* _N_] [*-u*|*-U*] [*-p* _HOST_] [*-D*] [*-Y*] [_OPTIONS_]
+*zfr* [*--chat*|*--no-chat*] *package* [*-C* _DIR_] [*-j* [_N_]] [*-u*|*-U*] [*-p* _HOST_] [*-D*] [*-Y*] [_OPTIONS_]
 
 *zfr* [*--chat*|*--no-chat*] *lasterror* [*-f*] [*-n*] [*-p*] [*--replay* _KIND_]
 
@@ -203,9 +203,11 @@ Commands that walk from the current directory resolve *packagedir* first.
 
 *package*::
   Detect packaging types (*deb*, *rpm*, *npm*/*vsix*, *mingw*, …) and build
-  them sequentially (deb, then rpm, …). *\-j* / *--job* _N_ is per-packager
-  build parallelism for make/debuild (default: CPU cores), not concurrent
-  packagers. Stdout/stderr per packager is captured with *fdmux*(1) into
+  them sequentially (deb, then rpm, …). *\-j* / *--job* without a number (or
+  omitted) is **auto**: *debuild*/*dpkg-buildpackage* get a bare *\-j* (no
+  digit). *\-j* _N_ is a total job budget split across concurrent planned
+  workers; the current plan is sequential, so each packager receives the full
+  _N_. Stdout/stderr per packager is captured with *fdmux*(1) into
   a `.fdm` file and shown on a live status board. On failure, an interactive
   picker (same as *lasterror*) lets you inspect a failed packager. Upload is
   on by default (*\-u*); use *\-U* to skip *dput* / registry publish.
@@ -399,8 +401,11 @@ Options for *dist*:
 
 Options for *release* / *zfr-release* / *publish* / *zfr-publish*:
 
-*-j, --job* _N_::
-  Parallel jobs for build and packaging (default: CPU cores).
+*-j, --job* [_N_]::
+  Job budget for build and packaging. Omit or pass *\-j* alone for **auto**
+  (packaging: debuild bare *\-j*; compile: CPU cores). Explicit *\-j* _N_
+  pins a total budget; concurrent planned workers share _N_ (sequential
+  packaging ⇒ each packager gets full _N_).
 *-C, --chdir* _DIR_::
   Change to _DIR_ before detecting the project.
 *-b, --build-binary*::

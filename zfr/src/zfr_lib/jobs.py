@@ -16,17 +16,20 @@ def default_job_count() -> int:
 
 
 def add_job_argument(p: argparse.ArgumentParser) -> None:
-    """Add ``-j`` / ``--job N`` (default: auto — debuild ``-j`` without a number)."""
+    """Add ``-j`` / ``--job [N]`` (default/bare: auto — debuild ``-j``)."""
     p.add_argument(
         "-j",
         "--job",
         metavar="N",
+        nargs="?",
+        const=None,
         type=int,
         default=None,
         dest="jobs",
         help=_(
-            "parallel jobs within each packager "
-            "(default: auto; debuild/dpkg-buildpackage -j without a number)"
+            "job budget: omit or pass -j alone for auto "
+            "(debuild/dpkg-buildpackage get bare -j); "
+            "-j N pins a total budget split across concurrent planned workers"
         ),
     )
 
@@ -45,6 +48,27 @@ def resolve_jobs(value: int | None) -> int:
     if jobs_is_auto(value):
         return default_job_count()
     return int(value)
+
+
+def split_job_budget(total: int | None, n_workers: int) -> list[int | None]:
+    """Split a job budget across *n_workers* concurrent planned workers.
+
+    Auto (``None`` / ≤0): every worker stays auto (``None``) — debuild keeps
+    bare ``-j``; make/other resolve locally.
+
+    Explicit ``N``: divide ``N`` as evenly as possible (each share at least 1).
+    Sequential plans use ``n_workers=1`` so the single worker receives full ``N``.
+    """
+    n = max(1, int(n_workers))
+    if jobs_is_auto(total):
+        return [None] * n
+    budget = max(1, int(total))
+    base, rem = divmod(budget, n)
+    out: list[int | None] = []
+    for i in range(n):
+        share = base + (1 if i < rem else 0)
+        out.append(max(1, share))
+    return out
 
 
 def debuild_jobs_args(value: int | None) -> list[str]:

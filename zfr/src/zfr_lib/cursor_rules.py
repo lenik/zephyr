@@ -9,7 +9,7 @@ from pathlib import Path
 from . import pkgdatadir
 
 RULE_NAME = "version.mdc"
-RULE_NAMES = (RULE_NAME, "translations.mdc", "proxy.mdc")
+RULE_NAMES = (RULE_NAME, "author.mdc", "translations.mdc", "proxy.mdc")
 _OBSOLETE_RULE_NAMES = (
     "version-changelog.mdc",
     "version-control-refactor.mdc",
@@ -29,17 +29,24 @@ def _zfr_source_root() -> Path | None:
 def cursor_rule_src(name: str = RULE_NAME) -> Path | None:
     """Canonical Cursor rule file.
 
-    Prefer the copy shipped next to this ``zfr_lib`` (source tree or
-    ``$prefix/share/zephyr/zfr``), then ``pkgdatadir()/cursor-rules/``.
-    That way ``zfr ize`` refreshes projects from the rules that match the
-    running zfr, not a stale earlier install.
+    Prefer the monorepo ``.cursor/rules`` (single source of truth), then the
+    installed ``$prefix/share/zephyr/.cursor/rules``, then legacy
+    ``cursor-rules/`` paths. That way ``zfr ize`` refreshes projects from the
+    rules that match the running zfr, not a stale earlier install.
     """
     candidates: list[Path] = []
     zfr_root = _zfr_source_root()
     if zfr_root is not None:
+        # Checkout: monorepo .cursor/rules next to zfr/.
+        candidates.append(zfr_root.parent / ".cursor" / "rules" / name)
+        candidates.append(zfr_root / ".cursor" / "rules" / name)
+        # Legacy checkout path (removed).
         candidates.append(zfr_root / "cursor-rules" / name)
-        # Installed layout: share/zephyr/cursor-rules (sibling of zfr/).
+        # Installed tree when zfr_lib lives under share/zephyr/zfr/: sibling
+        # share/zephyr/.cursor/rules (same as parent/.cursor/rules above when
+        # zfr_root.parent is share/zephyr).
         candidates.append(zfr_root.parent / "cursor-rules" / name)
+    candidates.append(pkgdatadir() / ".cursor" / "rules" / name)
     candidates.append(pkgdatadir() / "cursor-rules" / name)
     for path in candidates:
         if path.is_file():

@@ -1,0 +1,54 @@
+---
+description: Changelog/Maintainer/Homepage/Copyright identity from GPG + login
+alwaysApply: true
+---
+
+# Author / packaging identity
+
+When writing or updating `debian/changelog`, `debian/control`, `debian/copyright`,
+or matching packaging fields (RPM Packager/URL, …), resolve identity as follows.
+
+## Changelog trailer (`-- Name (comment) <email>`)
+
+1. Take the current login name (`id -un` / `$USER`, e.g. `lenik`).
+2. From `gpg -k` / `gpg --list-secret-keys`, pick a key that:
+   - has a **secret** key available, and
+   - whose **uid name** matches the login (**case-insensitive**; compare the
+     name part before `(` / `<`, e.g. login `lenik` ↔ uid `Lenik (…)`).
+3. If several match, prefer:
+   - **no passphrase** on the secret key (gpg-agent `KEYINFO` protection `-`,
+     not `P`), then
+   - the **most recently created/updated** key.
+4. From that uid:
+   - **name** → uid name field
+   - **(comment)** → uid comment field (omit `()` if empty)
+   - **email** → uid email field
+
+Example: uid `Lenik (谢继雷) <lenik@bodz.net>` →
+`Lenik (谢继雷) <lenik@bodz.net>`.
+
+## Maintainer (`debian/control`)
+
+Same display name (and comment) as the changelog trailer.
+
+**Exception — login `lenik`:** keep the name/comment, but set email to
+`<PACKAGE@bodz.net>` where `PACKAGE` is the Debian source/package name
+(lowercase), e.g. `Lenik (谢继雷) <zephyr@bodz.net>`. This splits traffic across
+many packages.
+
+## Homepage
+
+All lowercase:
+
+```text
+https://github.com/<user>/<package>
+```
+
+`<user>` is the login (or GitHub handle in lowercase); `<package>` is the
+package/project name in lowercase.
+
+## Copyright / license
+
+**AGPL-3** (AGPL-3.0-or-later / Debian `AGPL-3+`) **with the anti-AI supplemental
+restriction** as in the project `LICENSE` (and the note in `debian/copyright`).
+Do not drop the anti-AI block when scaffolding or ize-ing packaging files.

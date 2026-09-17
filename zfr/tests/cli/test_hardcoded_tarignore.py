@@ -124,8 +124,21 @@ class CursorRulesPreferSourceTests(unittest.TestCase):
             self.assertIsNotNone(src, name)
             assert src is not None
             self.assertTrue(src.is_file(), name)
-            # Running from the checkout → zfr/cursor-rules/
-            self.assertIn("cursor-rules", src.as_posix())
+            # Checkout → monorepo .cursor/rules (single source of truth).
+            resolved = src.resolve()
+            self.assertEqual(resolved.name, name)
+            self.assertEqual(resolved.parent.name, "rules")
+            self.assertEqual(resolved.parent.parent.name, ".cursor")
+
+    def test_ships_author_rule(self) -> None:
+        from zfr_lib.cursor_rules import cursor_rule_src
+
+        src = cursor_rule_src("author.mdc")
+        self.assertIsNotNone(src)
+        assert src is not None
+        text = src.read_text(encoding="utf-8")
+        self.assertIn("Maintainer", text)
+        self.assertIn("PACKAGE@bodz.net", text)
 
 
 if __name__ == "__main__":

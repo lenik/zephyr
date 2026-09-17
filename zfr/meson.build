@@ -252,14 +252,16 @@ install_data(
     install_mode: 'rwxr-xr-x',
 )
 
-install_data(
-    [
-        'cursor-rules/version.mdc',
-        'cursor-rules/translations.mdc',
-        'cursor-rules/proxy.mdc',
-    ],
-    install_dir: pkgdatadir / 'cursor-rules',
-)
+# Shared with the monorepo agent rules (../.cursor/rules); not duplicated under zfr/.
+foreach rule : ['version.mdc', 'author.mdc', 'translations.mdc', 'proxy.mdc']
+    meson.add_install_script(
+        'sh',
+        '-c',
+        'install -D -m644 "$0" "${MESON_INSTALL_DESTDIR_PREFIX}/$1"',
+        meson.project_source_root() / '..' / '.cursor' / 'rules' / rule,
+        get_option('datadir') / meson.project_name() / '.cursor' / 'rules' / rule,
+    )
+endforeach
 
 install_data(
     'LICENSE',

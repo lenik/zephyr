@@ -393,7 +393,9 @@ class Ize:
         """Reset LICENSE, .githooks, and .cursor/rules to zfr canonical copies.
 
         Cursor rules are always refreshed from the running zfr's shipped
-        ``cursor-rules/`` so projects pick up rule updates on ``zfr ize``.
+        copies of monorepo ``.cursor/rules`` (installed as
+        ``share/zephyr/.cursor/rules/``) so projects pick up rule updates on
+        ``zfr ize``.
         Also drops ``.cursor`` from ``.gitignore`` and ``git add -f`` the
         installed rules so they are trackable.
         """

@@ -10,7 +10,7 @@ import time
 from pathlib import Path
 
 from ..fdm import FdmCapture, log_line, require_fdm_tool, reset_capture, set_capture
-from ..jobs import jobs_is_auto
+from ..jobs import jobs_is_auto, split_job_budget
 from ..pkg_last import (
     PackageLastRun,
     PackagerRecord,
@@ -91,12 +91,16 @@ def package_project(
     """Detect kinds, run packagers one after another, optionally upload.
 
     Packagers (deb, rpm, mingw, …) always run sequentially in detection
-    order. ``jobs`` is the per-packager build parallelism (debuild ``-j``,
-    make ``-j``, …), not the number of concurrent packagers. ``None``/``0``
-    means auto: debuild gets bare ``-j``; make/other resolve to CPU cores.
+    order. ``jobs`` is a *total* job budget: auto (``None``/≤0) → debuild gets
+    bare ``-j``; make/other resolve to CPU cores. Explicit ``-j N`` is split
+    across *concurrent* planned workers via :func:`split_job_budget`. Today's
+    plan is sequential (one worker), so each packager receives the full ``N``.
     """
     root = root.resolve()
     # Keep auto (None/≤0) for DebPackager; numeric packagers resolve themselves.
+    # Sequential pipeline ⇒ one concurrent worker ⇒ full budget per packager.
+    concurrent_workers = 1
+    worker_jobs = split_job_budget(jobs, concurrent_workers)[0]
     kinds = detect_packaging_kinds(root)
     if only:
         want = {x.strip().lower() for x in only if x.strip()}
@@ -111,7 +115,7 @@ def package_project(
     def _ctx(*, is_dry: bool) -> PackagerContext:
         return PackagerContext(
             root=root,
-            jobs=jobs,
+            jobs=worker_jobs,
             dry_run=is_dry,
             dpkg_buildopts=list(dpkg_buildopts or []),
             docker=docker,
