@@ -16,7 +16,7 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zfr_lib import cli_version  # noqa: E402
+from zfr_lib import format_cli_version_banner  # noqa: E402
 from zfr_lib.i18n import _, init_i18n  # noqa: E402
 
 init_i18n()
@@ -70,7 +70,7 @@ def build_parser() -> argparse.ArgumentParser:
         "-V",
         "--version",
         action="version",
-        version="%(prog)s " + cli_version(),
+        version=format_cli_version_banner(),
     )
     add_for_ai_purpose_arguments(p)
     sub = p.add_subparsers(
@@ -94,7 +94,7 @@ def main(argv: list[str] | None = None) -> int:
         build_parser().print_help()
         return 0
     if argv[0] in ("-V", "--version"):
-        print("zfr " + cli_version(), flush=True)
+        print(format_cli_version_banner(), flush=True)
         return 0
 
     parser = build_parser()

@@ -13,8 +13,10 @@ zfr - multi-language CLI project templates and helper tools
 
 == Synopsis
 
+*zfr* *-V*|*--version*
+
 *zfr* [*--chat*|*--no-chat*] *create* [*-l* _LANG_] [*-D* _DIST_] [*-1* _VER_] [*-a* _AUTHOR_]
-              [*-e* _EMAIL_] _PROJECT_NAME_ [_PUFF_NAME_]...
+              [*-e* _EMAIL_] [_--no-puff_] _PROJECT_NAME_ [_PUFF_NAME_]...
 
 *zfr* [*--chat*|*--no-chat*] *rename* _PROJECT_NAME_ [_PUFF_NAME_]...
 
@@ -255,6 +257,12 @@ Commands that walk from the current directory resolve *packagedir* first.
 
 Global options (before the subcommand, or on *zfr-lint*):
 
+*-V*, *--version*::
+  Print the zfr CLI version, the release date from the latest
+  *debian/changelog* (baked into Meson *paths_config* for installed trees),
+  and versions of important tools (Python, Meson, Ninja, Asciidoctor, Git,
+  fdmux, OpenCC, gettext) when present on *PATH*.
+
 *--chat*, *--no-chat*::
   Enable or disable AI-oriented hints. Default *on* in AI-integrated
   terminals (*TERM_PROGRAM* *cursor* / *vscode* / *windsurf*, …) and when
@@ -284,6 +292,10 @@ Options for *create*:
 
 *-e, --email* _EMAIL_::
   Changelog and git author email (default: *lenik@bodz.net*).
+
+*--no-puff*::
+  Do not instantiate a default puff (leave *some_puff1* tokens for a later
+  *zfr add*). Without this, the default puff name matches the package name.
 
 Options for *about*:
 

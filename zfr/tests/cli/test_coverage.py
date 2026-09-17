@@ -68,10 +68,18 @@ class ZephyrDispatcherTests(unittest.TestCase):
 
     def test_cli_version_matches_runtime(self) -> None:
         sys.path.insert(0, str(TOOLS))
-        from zfr_lib import cli_version
+        from zfr_lib import cli_version, format_cli_version_banner
 
         proc = run_zephyr("--version")
+        self.assertEqual(proc.returncode, 0, proc.stderr)
         self.assertIn(cli_version(), proc.stdout)
+        self.assertTrue(proc.stdout.startswith("zfr "))
+        # Release date from changelog (dev tree) or Meson-baked paths_config.
+        self.assertRegex(proc.stdout.splitlines()[0], r"zfr \S+( \(\d{4}-\d{2}-\d{2}\))?")
+        self.assertIn("Python ", proc.stdout)
+        banner = format_cli_version_banner()
+        self.assertIn(cli_version(), banner)
+        self.assertIn("Python ", banner)
 
     def test_every_subcommand_help(self) -> None:
         for name in SUBCOMMANDS:

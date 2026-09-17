@@ -92,6 +92,41 @@ install_subdir(
 
 paths_cfg = configuration_data()
 paths_cfg.set_quoted('PKGDATADIR', pkgdatadir)
+paths_cfg.set_quoted('VERSION', meson.project_version())
+# Bake the top debian/changelog Date as YYYY-MM-DD for installed --version
+# (share/zephyr has VERSION but not debian/changelog).
+_release_date = run_command(
+    py,
+    '-c',
+    '''
+import re, sys
+from email.utils import parsedate_to_datetime
+from pathlib import Path
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8", errors="ignore")
+raw = ""
+# Prefer trailer date on the first stanza.
+for line in text.splitlines():
+    if line.startswith(" -- "):
+        m = re.search(r"  ([A-Z][a-z]{2}, .+)$", line)
+        if m:
+            raw = m.group(1).strip()
+        break
+if not raw:
+    print("", end="")
+    raise SystemExit(0)
+try:
+    print(parsedate_to_datetime(raw).date().isoformat(), end="")
+except (TypeError, ValueError, IndexError):
+    print("", end="")
+''',
+    meson.current_source_dir() / 'debian' / 'changelog',
+    check: false,
+).stdout().strip()
+if _release_date == ''
+    _release_date = 'unknown'
+endif
+paths_cfg.set_quoted('RELEASE_DATE', _release_date)
 configure_file(
     input: 'src/zfr_lib/paths_config.py.in',
     output: 'paths_config.py',

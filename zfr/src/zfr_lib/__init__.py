@@ -455,6 +455,55 @@ def changelog_version(root: Path) -> str | None:
     return m.group(1).split(":", 1)[-1]
 
 
+def changelog_date(root: Path) -> str | None:
+    """ISO date (YYYY-MM-DD) from the top debian/changelog stanza trailer."""
+    path = root / "debian" / "changelog"
+    if not path.is_file():
+        return None
+    raw = ""
+    if shutil.which("dpkg-parsechangelog"):
+        proc = subprocess.run(
+            ["dpkg-parsechangelog", "-l", str(path), "-S", "Date"],
+            capture_output=True,
+            text=True,
+        )
+        if proc.returncode == 0:
+            raw = proc.stdout.strip()
+    if not raw:
+        for line in path.read_text(encoding="utf-8", errors="ignore").splitlines():
+            if line.startswith(" -- "):
+                m = re.search(r"  ([A-Z][a-z]{2}, .+)$", line)
+                if m:
+                    raw = m.group(1).strip()
+                break
+    if not raw:
+        return None
+    try:
+        from email.utils import parsedate_to_datetime
+
+        return parsedate_to_datetime(raw).date().isoformat()
+    except (TypeError, ValueError, IndexError, OverflowError):
+        return None
+
+
+def _paths_config_str(name: str) -> str | None:
+    """Read a Meson-substituted string from paths_config (installed builds)."""
+    try:
+        from . import paths_config  # type: ignore
+    except Exception:
+        return None
+    value = getattr(paths_config, name, None)
+    if not isinstance(value, str):
+        return None
+    value = value.strip()
+    if not value or value in {"@VERSION@", "@RELEASE_DATE@", "unknown"}:
+        return None
+    # Unsubstituted leftover from a broken configure.
+    if value.startswith("@") and value.endswith("@"):
+        return None
+    return value
+
+
 def version_file_version(root: Path) -> str | None:
     path = root / "VERSION"
     if not path.is_file():
@@ -524,6 +573,8 @@ def cli_version(*, rpm: bool = False) -> str:
     root = cli_root()
     v = git_describe_version(root)
     if not v:
+        v = _paths_config_str("VERSION")
+    if not v:
         v = changelog_version(root)
     if not v:
         v = changelog_version(root.parent)
@@ -535,6 +586,77 @@ def cli_version(*, rpm: bool = False) -> str:
     if rpm:
         v = rpm_compatible_version(v)
     return v
+
+
+def cli_release_date() -> str | None:
+    """Release date for this zfr CLI (Meson-baked, else latest changelog)."""
+    baked = _paths_config_str("RELEASE_DATE")
+    if baked:
+        return baked
+    root = cli_root()
+    return changelog_date(root) or changelog_date(root.parent)
+
+
+def _tool_version_line(label: str, argv: list[str], *, regex: str = r"(\d[\w.+-]*)") -> str | None:
+    """Return ``Label X.Y`` from a tool's --version output, or None if missing."""
+    if not argv or shutil.which(argv[0]) is None:
+        return None
+    try:
+        proc = subprocess.run(
+            argv,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    text = (proc.stdout or "") + (proc.stderr or "")
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    if not lines:
+        return None
+    # Prefer an explicit "Version: …" line (OpenCC, …).
+    for ln in lines:
+        m = re.search(r"(?i)\bversion\s*[:=]\s*(\d[\w.+-]*)", ln)
+        if m:
+            return f"{label} {m.group(1)}"
+    for ln in lines:
+        m = re.search(regex, ln)
+        if m:
+            return f"{label} {m.group(1)}"
+    return f"{label} {lines[0]}"
+
+
+def cli_dependency_versions() -> list[str]:
+    """Important runtime/tool versions for ``zfr --version``."""
+    import sys
+
+    lines: list[str] = []
+    py = sys.version.split()[0]
+    lines.append(f"Python {py}")
+    for label, argv in (
+        ("Meson", ["meson", "--version"]),
+        ("Ninja", ["ninja", "--version"]),
+        ("Asciidoctor", ["asciidoctor", "--version"]),
+        ("Git", ["git", "--version"]),
+        ("fdmux", ["fdmux", "--version"]),
+        ("OpenCC", ["opencc", "--version"]),
+        ("gettext", ["msgfmt", "--version"]),
+    ):
+        line = _tool_version_line(label, argv)
+        if line:
+            lines.append(line)
+    return lines
+
+
+def format_cli_version_banner() -> str:
+    """Multi-line ``zfr --version`` text: version, release date, deps."""
+    ver = cli_version()
+    date = cli_release_date()
+    head = f"zfr {ver}" + (f" ({date})" if date else "")
+    deps = cli_dependency_versions()
+    if not deps:
+        return head
+    return head + "\n" + "\n".join(deps)
 
 
 def append_meson_list_entry(meson_path: Path, list_name: str, entry: str) -> bool:
