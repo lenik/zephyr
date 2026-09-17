@@ -138,7 +138,9 @@ class CursorRulesPreferSourceTests(unittest.TestCase):
         assert src is not None
         text = src.read_text(encoding="utf-8")
         self.assertIn("Maintainer", text)
-        self.assertIn("PACKAGE@bodz.net", text)
+        self.assertIn("bodz.net", text)
+        self.assertIn("<package>@bodz.net", text)
+        self.assertNotIn("Lenik (谢继雷)", text)
 
 
 if __name__ == "__main__":

@@ -4,14 +4,17 @@ zephyr (2.8.19) testing; urgency=medium
     -j N is a total budget split across concurrent planned workers
     (sequential packagers ⇒ each still gets full N). Document in man page
     and docs/parallel-building.md.
-  * Cursor rule author.mdc: resolve changelog/Maintainer from GPG (login
-    name match, secret key, prefer passphrase-less / newest); lenik
-    Maintainer email PACKAGE@bodz.net; Homepage
-    https://github.com/<user>/<package>; AGPL-3 + anti-AI copyright.
+  * Cursor rule author.mdc: resolve changelog identity from GPG (login
+    name match); Maintainer rewrites *@bodz.net to <package>@bodz.net;
+    Homepage https://github.com/<user>/<package>; AGPL-3 + anti-AI
+    copyright. Do not hardcode a personal name/email.
   * Share a single cursor-rules tree from monorepo .cursor/rules (drop
     zfr/cursor-rules duplicate); meson installs those files to
     share/zephyr/.cursor/rules; debian source no longer tar-ignores .cursor;
     ize/create refresh author.mdc with the other rules.
+  * zfr dist / remote packaging: stop excluding .cursor so RPM/source
+    tarballs include .cursor/rules (meson install needs them).
+  * translations.mdc: shorten msgid-copy note (exception is msgid "").
 
  -- Lenik (谢继雷) <lenik@bodz.net>  Thu, 17 Sep 2026 17:44:04 +0800
 

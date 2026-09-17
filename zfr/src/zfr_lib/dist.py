@@ -35,7 +35,7 @@ _SKIP_DIR_NAMES = {
     ".hg",
     ".svn",
     ".cache",
-    ".cursor",
+    # Keep .cursor/rules (shipped agent rules); only IDE noise is skipped.
     ".vscode",
     "__pycache__",
     "meson-info",

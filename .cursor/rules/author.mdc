@@ -7,14 +7,16 @@ alwaysApply: true
 
 When writing or updating `debian/changelog`, `debian/control`, `debian/copyright`,
 or matching packaging fields (RPM Packager/URL, …), resolve identity as follows.
+Do **not** hardcode a particular person’s name or email — always derive from the
+current login + GPG (or existing package fields when only refreshing).
 
 ## Changelog trailer (`-- Name (comment) <email>`)
 
-1. Take the current login name (`id -un` / `$USER`, e.g. `lenik`).
+1. Take the current login name (`id -un` / `$USER`).
 2. From `gpg -k` / `gpg --list-secret-keys`, pick a key that:
    - has a **secret** key available, and
    - whose **uid name** matches the login (**case-insensitive**; compare the
-     name part before `(` / `<`, e.g. login `lenik` ↔ uid `Lenik (…)`).
+     name part before `(` / `<`).
 3. If several match, prefer:
    - **no passphrase** on the secret key (gpg-agent `KEYINFO` protection `-`,
      not `P`), then
@@ -24,17 +26,21 @@ or matching packaging fields (RPM Packager/URL, …), resolve identity as follow
    - **(comment)** → uid comment field (omit `()` if empty)
    - **email** → uid email field
 
-Example: uid `Lenik (谢继雷) <lenik@bodz.net>` →
-`Lenik (谢继雷) <lenik@bodz.net>`.
+Format: `Name (comment) <email>` (omit `(comment)` when empty).
 
 ## Maintainer (`debian/control`)
 
 Same display name (and comment) as the changelog trailer.
 
-**Exception — login `lenik`:** keep the name/comment, but set email to
-`<PACKAGE@bodz.net>` where `PACKAGE` is the Debian source/package name
-(lowercase), e.g. `Lenik (谢继雷) <zephyr@bodz.net>`. This splits traffic across
-many packages.
+**Exception — email domain `bodz.net`:** keep the name/comment, but replace the
+local part of the address with the Debian source/package name (lowercase):
+
+```text
+<local>@bodz.net  →  <package>@bodz.net
+```
+
+Example: changelog email `someone@bodz.net` for package `zephyr` → Maintainer
+email `zephyr@bodz.net`. Non-`bodz.net` addresses are left unchanged.
 
 ## Homepage
 

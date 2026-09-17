@@ -332,7 +332,6 @@ _RSYNC_EXCLUDES = (
     "node_modules",
     "target",
     "cargo-target",
-    ".cursor",
     ".vscode",
     "packaging/win32/mingw/out",
     "packaging/win32/innosetup/out",
