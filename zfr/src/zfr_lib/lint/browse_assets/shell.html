@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$title</title>
+<style>
+$css
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="left meta" id="meta"></div>
+  <div class="center counts" id="counts"></div>
+  <div class="right">
+    <button type="button" id="theme" title="Theme"></button>
+    <button type="button" id="refresh"></button>
+    <select id="locale" title="Language"></select>
+  </div>
+</header>
+<div class="wrap">
+  <div class="toolbar">
+    <div class="left">
+      <label><input type="checkbox" id="show-all"> <span id="lbl-show-all"></span></label>
+    </div>
+    <div class="right">
+      <label><span id="lbl-sort"></span>
+        <select id="sort">
+          <option value="id">ID</option>
+          <option value="status">Status</option>
+          <option value="name">Name</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <table class="findings" id="findings"><tbody id="main"></tbody></table>
+  <div class="request-box" id="request-box">
+    <h3 id="lbl-request"></h3>
+    <div class="existing" id="request-existing"></div>
+    <textarea id="request-text"></textarea>
+    <div class="row2">
+      <label><input type="checkbox" id="request-proj"> <span id="lbl-request-proj"></span></label>
+      <span>
+        <button type="button" id="request-submit"></button>
+        <span class="code" id="request-status"></span>
+      </span>
+    </div>
+  </div>
+  <p class="empty" id="empty-hint" hidden></p>
+</div>
+<footer class="statusbar">
+  <div class="sb-left">
+    <span class="bar" id="sb-bar" title="pass / warn / error"><i class="ok" style="width:0%"></i><i class="warn" style="width:0%"></i><i class="err" style="width:0%"></i></span>
+    <span id="sb-rates"></span>
+  </div>
+  <div class="sb-center" id="sb-ver"></div>
+  <div class="sb-right" id="sb-author"></div>
+</footer>
+<div id="modal" hidden></div>
+<script>
+$js
+</script>
+</body>
+</html>

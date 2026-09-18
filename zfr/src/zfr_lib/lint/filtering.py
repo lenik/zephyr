@@ -10,13 +10,18 @@ from ..std import is_suppressed, lint_rule_id, parse_uncheck
 def filter_findings(
     findings: list[Finding],
     uncheck: list[str] | None,
+    always: list[str] | None = None,
 ) -> list[Finding]:
     suppressed = parse_uncheck(uncheck)
-    if not suppressed:
+    forced = parse_uncheck(always)
+    if not suppressed and not forced:
         return findings
     out: list[Finding] = []
     for finding in findings:
         rid = lint_rule_id(finding.code)
+        if forced and is_suppressed(rule_id=rid, code=finding.code, suppressed=forced):
+            out.append(finding)
+            continue
         if is_suppressed(rule_id=rid, code=finding.code, suppressed=suppressed):
             continue
         out.append(finding)

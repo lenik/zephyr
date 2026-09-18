@@ -15,7 +15,7 @@ _NOTE_LINES = 600
 
 _SOURCE_PREFIXES = ("src/", "tests/", "apps/", "lib/")
 
-# Documentation and shell completions are not subject to source.long (ZL001).
+# Documentation and shell completions are not subject to source.long (ZL0001).
 _DOC_OR_COMPLETION_SUFFIXES = {".adoc", ".md", ".txt", ".rst", ".bash"}
 _DOC_OR_COMPLETION_NAMES = {
     "README",
