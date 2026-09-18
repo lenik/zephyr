@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 21:52+0800\n"
+"POT-Creation-Date: 2026-09-19 00:16+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Telugu\n"
@@ -17,886 +17,940 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/zfr_lib/about.py:498
+#: src/about.py:498
 msgid "print current project information (walks parents from cwd)"
 msgstr "ప్రస్తుత ప్రాజెక్టు సమాచారం చూపించు (ప్రస్తుత సంచయం నుండి పైకి వెతుకుతుంది)"
 
-#: src/zfr_lib/about.py:500
+#: src/about.py:500
 msgid "Print information about the current zephyr project (walks from cwd toward parent directories). CSR colors when stdout is a TTY. Common packaging fields are parsed from debian or RPM."
 msgstr "ప్రస్తుత zephyr ప్రాజెక్టు గురించి సమాచారం చూపిస్తుంది (ప్రస్తుత సంచయం నుండి పై సంచయాల వైపు వెతుకుతుంది). stdout టెర్మినల్ అయితే CSR రంగులు. సాధారణ ప్యాకేజింగ్ క్షేత్రాలు debian లేదా RPM నుండి చదవబడతాయి."
 
-#: src/zfr_lib/about.py:507
+#: src/about.py:507
 msgid "show parsed Debian packaging fields"
 msgstr "Debian ప్యాకేజింగ్ క్షేత్రాలను చూపించు"
 
-#: src/zfr_lib/about.py:508
+#: src/about.py:508
 msgid "show parsed RPM packaging fields"
 msgstr "RPM ప్యాకేజింగ్ క్షేత్రాలను చూపించు"
 
-#: src/zfr_lib/about.py:513
+#: src/about.py:513
 msgid "CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)"
 msgstr "CSR (కన్సోల్ SGR) రంగులు (అప్రమేయం: auto = టెర్మినల్ మరియు NO_COLOR లేదు)"
 
-#: src/zfr_lib/add.py:20
+#: src/add.py:20
 msgid "instantiate puff(s) from the language template"
 msgstr "భాషా మూస నుండి puffలను జోడించు"
 
-#: src/zfr_lib/add.py:21
+#: src/add.py:21
 msgid "Detect language and add puff(s) from pkgdatadir/<lang>."
 msgstr "భాషను గుర్తించి pkgdatadir/<lang> నుండి puffలను జోడించు."
 
-#: src/zfr_lib/add.py:25
+#: src/add.py:25
 msgid "new puff name(s) (snake_case recommended)"
 msgstr "కొత్త puff పేర్లు (snake_case సూచించబడింది)"
 
-#: src/zfr_lib/build.py:15
+#: src/build.py:15
 msgid "detect build system and compile the project"
 msgstr "బిల్డ్ సిస్టమ్‌ను గుర్తించి ప్రాజెక్ట్‌ను కంపైల్ చేయండి"
 
-#: src/zfr_lib/build.py:17
+#: src/build.py:17
 msgid "Detect the project build system (meson, cmake, autotools, cargo, go, npm, make) and run a local compile."
 msgstr "ప్రాజెక్ట్ నిర్మాణ వ్యవస్థ (మెసన్, సిమేక్, ఆటోటూల్స్, కార్గో, గో, ఎన్‌పీఎం, మేక్) ను గుర్తించి స్థానిక కంపైల్ ను నడపండి."
 
-#: src/zfr_lib/build.py:28
+#: src/build.py:28
 msgid "change to DIR before detecting the build system"
 msgstr "బిల్డ్ సిస్టమ్‌ను గుర్తించే ముందు DIR కు మార్చండి"
 
-#: src/zfr_lib/build.py:35
-#, fuzzy
+#: src/build.py:35
 msgid "build directory (default: <project>/build)"
 msgstr "Meson నిర్మాణ సంచయం (ఈ మూల వృక్షంతో సరిపోతే అప్రమేయం /build, లేకపోతే <project>/build)"
 
-#: src/zfr_lib/build.py:42 src/zfr_lib/package.py:120
-#, fuzzy
+#: src/build.py:42 src/package.py:120
 msgid "print planned commands without running them"
 msgstr "ఫైళ్లు రాయకుండా ప్రణాళికను చూపించు"
 
-#: src/zfr_lib/build.py:48
+#: src/build.py:48
 msgid "verbose build output where supported"
 msgstr "మద్దతు ఉన్న చోట మరిన్ని వివరాలు ఉన్న నిర్మాణ అవుట్‌పుట్"
 
-#: src/zfr_lib/build.py:53
+#: src/build.py:53
 msgid "print detected build system and exit"
 msgstr "గమనించిన నిర్మాణ వ్యవస్థను ముద్రించి, బయటకు వెళ్ళండి"
 
-#: src/zfr_lib/comments_cmd.py:20
+#: src/build.py:58
+msgid "preview files meson would install (DESTDIR tree; replaces scripts/look.sh)"
+msgstr ""
+
+#: src/build.py:67
+msgid "with --look, limit tree depth to N levels (implies --look; default is unlimited)"
+msgstr ""
+
+#: src/comments_cmd.py:20
 msgid "print or delete project/user lint.comments with an AI work hint"
 msgstr "AI పని సూచనతో ప్రాజెక్ట్/వినియోగదారి లింట్.commentsను ప్రింట్ చేయండి లేదా తొలగించండి"
 
-#: src/zfr_lib/comments_cmd.py:22
+#: src/comments_cmd.py:22
 msgid "Print lint suggestion comments from .config/zfr/lint.comments (project) and ~/.config/zfr/lint.comments (user), then an AI hint to apply the suggestions and delete the consumed comments files. Optional ZLxxxx arguments filter which sections to show. Typical prompt: “do zfr-comments work.”"
 msgstr ".config/zfr/lint.comments (ప్రాజెక్ట్) మరియు ~/.config/zfr/lint.comments (యూజర్) నుండి లింట్ సూచన వ్యాఖ్యలను ముద్రించండి, తర్వాత సూచనలను అమలు చేయడానికి మరియు వినియోగించిన వ్యాఖ్యల ఫైళ్ళను తీసివేయడానికి AI సూచన అందిస్తుంది. ఐచ్చికంగా, ZLxxxx ఆర్గుమెంట్లు ఏ విభాగాలను చూపించాలని ఫిల్టర్ చేస్తాయి. సాధారణ ప్రాంప్ట్: “zfr-comments పనిచేస్తాయా”."
 
-#: src/zfr_lib/comments_cmd.py:35
-#, fuzzy
+#: src/comments_cmd.py:35
 msgid "only these rule ids (default: all)"
 msgstr "బూలియన్ గడువు 0–100 (అప్రమేయం: %s)"
 
-#: src/zfr_lib/comments_cmd.py:42 src/zfr_lib/lintsel.py:284
+#: src/comments_cmd.py:42 src/lintsel.py:284
 msgid "project directory (default: walk from cwd)"
 msgstr "ప్రాజెక్ట్ డైరెక్టరీ (డిఫావల్ట్: cwd నుండి నడవండి)"
 
-#: src/zfr_lib/comments_cmd.py:49
+#: src/comments_cmd.py:49
 msgid "user comments only (~/.config/zfr/lint.comments)"
 msgstr "వాడుకరి వ్యాఖ్యలు మాత్రమే (~/.config/zfr/lint.comments)"
 
-#: src/zfr_lib/comments_cmd.py:55
+#: src/comments_cmd.py:55
 msgid "project comments only (.config/zfr/lint.comments)"
 msgstr "ప్రాజెక్ట్ వ్యాఖ్యలు మాత్రమే (.config/zfr/lint.comments)"
 
-#: src/zfr_lib/comments_cmd.py:61
+#: src/comments_cmd.py:61
 msgid "delete matching comments (files or selected sections)"
 msgstr "సమానమైన వ్యాఖ్యలను తొలగించండి (ఫైళ్లు లేదా ఎంపిక చేసిన విభాగాలు)"
 
-#: src/zfr_lib/comments_cmd.py:67
+#: src/comments_cmd.py:67
 msgid "omit the AI hint trailer"
 msgstr "AI సూచన ట్రైలర్‌ను వదిలివేయండి"
 
-#: src/zfr_lib/comments_cmd.py:93
+#: src/comments_cmd.py:93
 msgid "No matching lint.comments to delete."
 msgstr "తొలగించడానికి సరిపోయే lint.comments ఏవీ లేవు."
 
-#: src/zfr_lib/comments_cmd.py:96
-#, fuzzy, python-format
+#: src/comments_cmd.py:96
 msgid "Deleted: %s"
 msgstr "ఉంది: %s"
 
-#: src/zfr_lib/create.py:287
+#: src/create.py:287
 msgid "create a new project from a language template"
 msgstr "భాషా మూస నుండి కొత్త ప్రాజెక్టు సృష్టించు"
 
-#: src/zfr_lib/create.py:288
+#: src/create.py:288
 msgid "Create a new project directory from pkgdatadir/<lang>."
 msgstr "pkgdatadir/<lang> నుండి కొత్త ప్రాజెక్టు సంచయం సృష్టించు."
 
-#: src/zfr_lib/create.py:295
+#: src/create.py:295
 #, python-format
 msgid "template language (default: python; one of: %s)"
 msgstr "మూస భాష (అప్రమేయం: python; వీటిలో ఒకటి: %s)"
 
-#: src/zfr_lib/create.py:299
+#: src/create.py:299
 #, python-format
 msgid "debian changelog distribution (default: %s)"
 msgstr "debian changelog పంపిణీ (అప్రమేయం: %s)"
 
-#: src/zfr_lib/create.py:303
+#: src/create.py:303
 #, python-format
 msgid "initial package version and git tag (default: %s)"
 msgstr "మొదటి ప్యాకేజీ సంస్కరణ మరియు git ట్యాగ్ (అప్రమేయం: %s)"
 
-#: src/zfr_lib/create.py:307
+#: src/create.py:307
 #, python-format
 msgid "changelog/git author name (default: %s)"
 msgstr "changelog/git రచయిత పేరు (అప్రమేయం: %s)"
 
-#: src/zfr_lib/create.py:311
+#: src/create.py:311
 #, python-format
 msgid "changelog/git author email (default: %s)"
 msgstr "changelog/git రచయిత ఈమెయిల్ (అప్రమేయం: %s)"
 
-#: src/zfr_lib/create.py:317
+#: src/create.py:317
 msgid "do not instantiate a default puff (leave some_puff1 tokens for a later zfr add)"
 msgstr "డిఫాల్ట్ పఫ్‌ని ఉత్పత్తి చేయకండి (తరవాత zfr చేర్పుకు కొంచెం some_puff1 టోకెన్లను వదిలివేయండి)"
 
-#: src/zfr_lib/create.py:321
+#: src/create.py:321
 msgid "new project directory name"
 msgstr "కొత్త ప్రాజెక్టు సంచయం పేరు"
 
-#: src/zfr_lib/create.py:325
+#: src/create.py:325
 msgid "puff names (default: one puff named like the package; use --no-puff for none)"
 msgstr "పఫ్ఫ్ పేర్లు (డీఫాల్ట్: ప్యాకేజీలా పేరు గల ఒక పఫ్ఫ్; ఎటువంటి పఫ్ఫ్ అవసరమంటే --no-puff ఉపయోగించండి)"
 
-#: src/zfr_lib/detect.py:15
+#: src/detect.py:15
 msgid "print detected language for the current directory"
 msgstr "ప్రస్తుత సంచయానికి గుర్తించిన భాషను చూపించు"
 
-#: src/zfr_lib/detect.py:16
+#: src/detect.py:16
 msgid "Print the detected language of the current project and layout details on stderr."
 msgstr "ప్రస్తుత ప్రాజెక్టు యొక్క గుర్తించిన భాషను మరియు అమరిక వివరాలను stderrపై చూపించు."
 
-#: src/zfr_lib/dist.py:61
-#, fuzzy, python-format
+#: src/dist.py:61
 msgid "write the archive into DIR (default: meson-dist, or %%_topdir/SOURCES with --rpm; usually $HOME/rpmbuild)"
 msgstr "ఆర్కైవ్‌ను DIRలో రాయి (అప్రమేయం: meson-dist, లేదా --rpmతో %_topdir/SOURCES ($HOME/rpmbuild))"
 
-#: src/zfr_lib/dist.py:71
+#: src/dist.py:71
 msgid "Meson build directory (default: /build when it matches this source tree, else <project>/build)"
 msgstr "Meson నిర్మాణ సంచయం (ఈ మూల వృక్షంతో సరిపోతే అప్రమేయం /build, లేకపోతే <project>/build)"
 
-#: src/zfr_lib/dist.py:81
+#: src/dist.py:81
 msgid "archive format (default: xz)"
 msgstr "ఆర్కైవ్ రూపం (అప్రమేయం: xz)"
 
-#: src/zfr_lib/dist.py:87
-#, fuzzy, python-format
+#: src/dist.py:87
 msgid "name the archive NAME-VERSION.tar.xz and write it to %%_topdir/SOURCES ($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr "ఆర్కైవ్ పేరు NAME-VERSION.tar.xz; -o ఇవ్వకపోతే %_topdir/SOURCES ($HOME/rpmbuild)లో రాయి"
 
-#: src/zfr_lib/dist.py:96
+#: src/dist.py:96
 msgid "pass --allow-dirty to meson dist (default: allow)"
 msgstr "meson distకు --allow-dirty పంపు (అప్రమేయం: అనుమతించు)"
 
-#: src/zfr_lib/dist.py:101
+#: src/dist.py:101
 msgid "run tests during meson dist (default: --no-tests)"
 msgstr "meson dist సమయంలో పరీక్షలు నడుపు (అప్రమేయం: --no-tests)"
 
-#: src/zfr_lib/dist.py:418
+#: src/dist.py:418
 msgid "build a source tarball (meson dist, or this project only)"
 msgstr "మూల టార్‌బాల్ నిర్మించు (meson dist, లేదా ఈ ప్రాజెక్టు మాత్రమే)"
 
-#: src/zfr_lib/dist.py:420
-#, fuzzy
+#: src/dist.py:420
 msgid "Build a source archive of the current zephyr project (walks from cwd toward parent directories). Uses meson dist when this directory is the git project root; otherwise packs this project only so nested language templates do not ship the parent meta-repo. When ``.tarignore`` exists (gitignore-style), always pack the project tree and apply those excludes. Prints the archive path on stdout."
 msgstr "ప్రస్తుత zephyr ప్రాజెక్టు యొక్క మూల ఆర్కైవ్ నిర్మిస్తుంది (ప్రస్తుత సంచయం నుండి పైకి వెతుకుతుంది). ఈ సంచయం git ప్రాజెక్టు మూలమైతే meson dist వాడుతుంది; లేకపోతే ఈ ప్రాజెక్టును మాత్రమే కట్టి, లోపలి భాషా మూసలు తల్లి మెటా-నిల్వను పంపకుండా చూస్తుంది. ఆర్కైవ్ మార్గాన్ని stdoutపై చూపిస్తుంది."
 
-#: src/zfr_lib/i18n/cmd.py:42
+#: src/i18n/cmd.py:42
 msgid "no implemented locales (po/LINGUAS + po/*.po)"
 msgstr "ఏ స్థానమునైనా లేదు (po/LINGUAS + po/*.po)"
 
-#: src/zfr_lib/i18n/cmd.py:47
+#: src/i18n/cmd.py:47
 msgid "  [derived]"
 msgstr "  [దైరివ్"
 
-#: src/zfr_lib/i18n/cmd.py:57
+#: src/i18n/cmd.py:57
 #, python-format
 msgid "tier %(tier)s"
 msgstr "స్థాయి %(tier)s"
 
-#: src/zfr_lib/i18n/cmd.py:60
+#: src/i18n/cmd.py:60
 #, python-format
 msgid "derived from: %(parent)s"
 msgstr "నుండి పొందబడినది: %(parent)s"
 
-#: src/zfr_lib/i18n/cmd.py:63
+#: src/i18n/cmd.py:63
 #, python-format
 msgid "fallback chain: %(chain)s"
 msgstr "ఫాల్బెక్ చెన్: %(chain)s"
 
-#: src/zfr_lib/i18n/cmd.py:66
+#: src/i18n/cmd.py:66
 #, python-format
 msgid "children (->): %(kids)s"
 msgstr "పిల్లలు (->): %(kids)s"
 
-#: src/zfr_lib/i18n/cmd.py:70
+#: src/i18n/cmd.py:70
 #, python-format
 msgid "catalog: %(path)s"
 msgstr "క్యాటాల్గల్: %(path)s"
 
-#: src/zfr_lib/i18n/cmd.py:72
+#: src/i18n/cmd.py:72
 #, python-format
 msgid "po stats: %(translated)d/%(total)d translated, %(missing)d missing"
 msgstr "పో స్టాట్స్: %(translated)d/%(total)d అనువాదించబడింది, %(missing)d లేదు"
 
-#: src/zfr_lib/i18n/cmd.py:75
+#: src/i18n/cmd.py:75
 msgid "no .po catalog in this project"
 msgstr "ఈ ప్రోజెక్టులో ఏ .po క్యాటాల్గోగ్"
 
-#: src/zfr_lib/i18n/cmd.py:93
+#: src/i18n/cmd.py:93
 #, python-format
 msgid "locale not found: %s"
 msgstr "స్థానము కనుగొనబడలేదు: %s"
 
-#: src/zfr_lib/i18n/cmd.py:147
+#: src/i18n/cmd.py:147
 #, python-format
 msgid "would build %d derived locale file(s)"
 msgstr "%d పొందిన లోకెల్ ఫైలు(లు)ను కట్టెతుంది"
 
-#: src/zfr_lib/i18n/cmd.py:167
+#: src/i18n/cmd.py:167
 msgid "manage implemented gettext locales"
 msgstr "ప్రవహించబడిన gettext స్థానములను నిర్వహించు"
 
-#: src/zfr_lib/i18n/cmd.py:169
+#: src/i18n/cmd.py:169
 msgid "List, add, delete, and build derived locales in the current project. Use zfr translate to query or update message strings."
 msgstr "ప్రస్తుత ప్రోజెక్టులో తీసివేయబడిన స్థానాలు జాబితా, జతచేయుము, తొలగించుము, మరియు బయటచేసిన స్థానములను జాబితా. zfr అనువాదం లేదా సందేశ స్ట్రి"
 
-#: src/zfr_lib/i18n/cmd.py:179
+#: src/i18n/cmd.py:179
 msgid "list all implemented locales in this project"
 msgstr "ఈ ప్రోజెక్టులో ప్రవచించబడిన అన్ని స్థానములను జాబితాచేయి"
 
-#: src/zfr_lib/i18n/cmd.py:185
+#: src/i18n/cmd.py:185
 msgid "delete a locale (LINGUAS, .po, man/)"
 msgstr "లోకెల్‌ను తొలగించుము (LINGUAS, .po, docs/)"
 
-#: src/zfr_lib/i18n/cmd.py:191
+#: src/i18n/cmd.py:191
 msgid "add a new locale"
 msgstr "కొత్త లోకెల్‌ను జతచేయుము"
 
-#: src/zfr_lib/i18n/cmd.py:197
+#: src/i18n/cmd.py:197
 msgid "build derived locale PO/man files from parents (skip locales in LINGUAS)"
 msgstr "తల్లిదండ్రులు నుండి తీసుకువెళ్ళబడిన స్థానము PO/man ఫైళ్ళు (LINGUASలో స్కీప్ స్థానాలు) బైల్డ్"
 
-#: src/zfr_lib/i18n/cmd.py:202
+#: src/i18n/cmd.py:202
 msgid "output directory for derived .po files (default: build/po or $MESON_BUILD_ROOT/po)"
 msgstr ".po ఫైళ్ళకు ఆపుట్‌పీట్ డైరెక్టరీ (అప్రమేయ: build/po లేదా $MESON_BUILD_ROOT/po)"
 
-#: src/zfr_lib/i18n/cmd.py:207
+#: src/i18n/cmd.py:207
 msgid "write a stamp file listing derived paths (for Meson custom_target)"
 msgstr "స్టాంక్ ఫైలు జాబితా వ్రాయండి, దారిని రూపించుము (Meson custom_target)"
 
-#: src/zfr_lib/i18n/cmd.py:212
+#: src/i18n/cmd.py:212
 msgid "with --build, also msgfmt derived .po into LC_MESSAGES (for Meson)"
 msgstr "దీనితో--build, మరియుmsgfmt.po ఇక్కడ పొందినదిLC_MESSAGES(అవునుMeson)"
 
-#: src/zfr_lib/i18n/cmd.py:217
+#: src/i18n/cmd.py:217
 msgid "gettext domain for --compile-mo / --install-derived"
 msgstr "--compile-mo / --install-derived కొరకు gettext డొమైన్"
 
-#: src/zfr_lib/i18n/cmd.py:223
+#: src/i18n/cmd.py:223
 msgid "install derived .mo from --po-dir into $MESON_INSTALL_DESTDIR_PREFIX (Meson add_install_script)"
 msgstr "--po-dir నుండి $MESON_INSTALL_DESTDIR_PREFIX నుండి .mo ను స్థాపించుము (Meson Add_install_script)"
 
-#: src/zfr_lib/i18n/cmd.py:231
+#: src/i18n/cmd.py:231
 msgid "with --install-derived, locale subdirectory under prefix (default: share/locale)"
 msgstr "--install-derived తో, prefix క్రింద స్థాన శబ్డైక్టుతో (అప్రమేయ: share/locale)"
 
-#: src/zfr_lib/i18n/cmd.py:233
+#: src/i18n/cmd.py:233
 msgid "with --build, print only"
 msgstr "--buildతో, మాత్రమే ప్రచురించు"
 
-#: src/zfr_lib/i18n/cmd.py:234
+#: src/i18n/cmd.py:234
 msgid "with --build, overwrite existing"
 msgstr "--buildతో, స్థానము లభించిన పైకి తిరిగి దాచుము"
 
-#: src/zfr_lib/i18n/cmd.py:235
+#: src/i18n/cmd.py:235
 msgid "locale to inspect"
 msgstr "పరిశీలించుటకు స్థానం"
 
-#: src/zfr_lib/i18n/cmd.py:241
+#: src/i18n/cmd.py:241
 msgid "--install-derived requires --po-dir and --domain"
 msgstr "--install-derived --po-dir మరియు --domain అవసరం"
 
-#: src/zfr_lib/ize/engine/__init__.py:86
-msgid "not selected via --only"
-msgstr "--only ద్వారా ఎంచుకోబడలేదు"
-
-#: src/zfr_lib/ize/engine/__init__.py:90
-msgid "suppressed via -u/--uncheck"
-msgstr "-u/--uncheck ద్వారా ముద్రించబడింది"
-
-#: src/zfr_lib/ize/engine/scripts.py:171
-#, python-format
-msgid "run_target('%s') → scripts/%s.sh"
-msgstr "run_target('%s') → scripts/%s.sh"
-
-#: src/zfr_lib/ize/__init__.py:76
+#: src/ize/__init__.py:76
 msgid "refactor this project to current zephyr style"
 msgstr "ఈ ప్రాజెక్టును ప్రస్తుత zephyr శైలికి సరిపోయేలా మార్చు"
 
-#: src/zfr_lib/ize/__init__.py:77
-#, fuzzy
+#: src/ize/__init__.py:77
 msgid "Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, Meson version substitutions, and lint-level gettext coverage (LINGUAS + .po). Does not scaffold man/<locale> man translations. Walks from cwd toward parents."
 msgstr "ప్రస్తుత ప్రాజెక్టును zephyr శైలికి సరిపోయేలా మారుస్తుంది: లేని debian/rpm ఫైళ్లు, meson లక్ష్యాలు, AsciiDoc మాన్యువల్ పేజీలు, Meson సంస్కరణ భర్తీలు. ప్రస్తుత సంచయం నుండి పైకి వెతుకుతుంది."
 
-#: src/zfr_lib/ize/__init__.py:81
+#: src/ize/__init__.py:81
 #, python-format
 msgid "language template to align with (default: detect; one of: %s)"
 msgstr "సరిపోల్చాల్సిన భాషా మూస (అప్రమేయం: గుర్తించు; వీటిలో ఒకటి: %s)"
 
-#: src/zfr_lib/ize/__init__.py:82
+#: src/ize/__init__.py:82
 msgid "print planned changes without writing files"
 msgstr "ఫైళ్లు రాయకుండా ప్రణాళికను చూపించు"
 
-#: src/zfr_lib/ize/__init__.py:87
+#: src/ize/__init__.py:87
 msgid "list numbered ize standards (ZI*) as a table and exit"
 msgstr "టేబ్లగా సంఖ్య లైజ ప్రమాణములను (ZI*) జాబితా మరియు బయటకు వెళ్ళి"
 
-#: src/zfr_lib/ize/__init__.py:93
-#, fuzzy
+#: src/ize/__init__.py:93
 msgid "show details for ize standard NUM (e.g. ZI0015, 15) and exit"
 msgstr "ize స్మాంటర్ NUM కొరకు వివరములు చూపుము (వీద. ZI0015, 15) మరియు బయటకు వెళ్ళు"
 
-#: src/zfr_lib/ize/__init__.py:100
+#: src/ize/__init__.py:100
 msgid "bump patch version (debian/changelog + VERSION), git add -A, and commit ize changes with a verbose message"
 msgstr "bump pack వర్షన్ (debian/changelog + VERSION), git -Aను జతచేయుము, మరియు వర్బోషన్ సందేశంతో ize మార్పులను కమ్సెంట్"
 
-#: src/zfr_lib/ize/__init__.py:109
+#: src/ize/__init__.py:109
 msgid "changelog author for --commit (Name or 'Name <email>'); default: reuse the previous debian/changelog trailer"
 msgstr "--commit కొరకు మాన్జలోగ్ మూలకర్త (నామము లేదా 'నామము <email>'; అప్రమేయ: ముందు debian/changelog ట్రైలర్‌ను పునఃస్థాపించుము"
 
-#: src/zfr_lib/ize/__init__.py:113
+#: src/ize/__init__.py:113
 msgid "also print skipped files"
 msgstr "దాటవేసిన ఫైళ్లను కూడా చూపించు"
 
-#: src/zfr_lib/ize/__init__.py:119
+#: src/ize/__init__.py:119
 msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
 msgstr "Autotools/CMake ప్రస్తుతంనప్పుడు Meson కు మార్పుచేయుటకు 2meson నడుపుము (అప్రమేయ: ఆన్)"
 
-#: src/zfr_lib/ize/__init__.py:121
+#: src/ize/__init__.py:121
 msgid "do not convert groff .1 man pages to man/*.adoc"
 msgstr "groff .1 మాన్యువల్ పేజీలను docs/*.adocగా మార్చవద్దు"
 
-#: src/zfr_lib/ize/__init__.py:122
-#, fuzzy
+#: src/ize/__init__.py:122
 msgid "do not turn hardcoded versions/paths into @VERSION@/@PREFIX@ / config.h"
 msgstr "కఠినంగా రాసిన సంస్కరణలను @VERSION@ / config.hగా మార్చవద్దు"
 
-#: src/zfr_lib/ize/__init__.py:129
+#: src/ize/__init__.py:129
 msgid "suppress ize rule ID(s) or code(s), comma-separated (repeatable)"
 msgstr "రూల్ ID లేదా కోడ్ ను దాచిపెట్టుము, కమ్ -separated (పునఃప్రారంభించగలదు)"
 
-#: src/zfr_lib/ize/__init__.py:137
-#, fuzzy
+#: src/ize/__init__.py:137
 msgid "run only these ize rule ID(s) or code(s), comma-separated (repeatable)"
 msgstr "రూల్ ID లేదా కోడ్ ను దాచిపెట్టుము, కమ్ -separated (పునఃప్రారంభించగలదు)"
 
-#: src/zfr_lib/ize/__init__.py:139 src/zfr_lib/lint/__init__.py:248
-#: src/zfr_lib/translate/__init__.py:211
+#: src/ize/__init__.py:139 src/lint/__init__.py:248
+#: src/translate/__init__.py:223
 msgid "CSR (console SGR) highlighting (default: auto)"
 msgstr "CSR (కన్సోల్ SGR) రంగులు (అప్రమేయం: auto)"
 
-#: src/zfr_lib/ize/__init__.py:151
+#: src/ize/__init__.py:151
 #, python-format
 msgid "unknown ize standard: %s"
 msgstr "తెలియని ize స్థితి: %s"
 
-#: src/zfr_lib/jobs.py:30
+#: src/ize/engine/__init__.py:86
+msgid "not selected via --only"
+msgstr "--only ద్వారా ఎంచుకోబడలేదు"
+
+#: src/ize/engine/__init__.py:90
+msgid "suppressed via -u/--uncheck"
+msgstr "-u/--uncheck ద్వారా ముద్రించబడింది"
+
+#: src/ize/engine/scripts.py:178
+msgid "run_target('%s') → %s"
+msgstr "run_target('%s') → scripts/%s.sh"
+
+#: src/ize/engine/scripts.py:212
+#, python-format
+msgid "run_target('%s') → scripts/%s.sh"
+msgstr "run_target('%s') → scripts/%s.sh"
+
+#: src/jobs.py:30
 msgid "job budget: omit or pass -j alone for auto (debuild/dpkg-buildpackage get bare -j); -j N pins a total budget split across concurrent planned workers"
 msgstr "జాబ్ బడ్జెట్: ఆటో కి ఒంటరిగా -j ను మినహాయించండి లేదా వెళ్ళించండి (debuild/dpkg-buildpackage -j ను పొందుతుంది); -j N ఫ్లాన్ చేసిన ఉద్యోగుల మధ్య మొత్తం బడ్జెట్ ను విభజిస్తుంది"
 
-#: src/zfr_lib/lang/antlr.py:42 src/zfr_lib/lang/as.py:30
-#: src/zfr_lib/lang/bison.py:38 src/zfr_lib/lang/clib.py:37
-#: src/zfr_lib/lang/cobol.py:32 src/zfr_lib/lang/cpplib.py:37
-#: src/zfr_lib/lang/cpp.py:24 src/zfr_lib/lang/c.py:24 src/zfr_lib/lang/d.py:32
-#: src/zfr_lib/lang/fortran.py:32 src/zfr_lib/lang/gcc.py:48
-#: src/zfr_lib/lang/kotlin.py:22 src/zfr_lib/lang/lua.py:22
-#: src/zfr_lib/lang/nim.py:24 src/zfr_lib/lang/pascal.py:32
-#: src/zfr_lib/lang/python.py:21
-msgid "tests/ present"
-msgstr "tests/ ఉంది"
-
-#: src/zfr_lib/lang/antlr.py:47 src/zfr_lib/lang/as.py:35
-#: src/zfr_lib/lang/bison.py:43 src/zfr_lib/lang/clib.py:43
-#: src/zfr_lib/lang/cpplib.py:43 src/zfr_lib/lang/cpp.py:30
-#: src/zfr_lib/lang/c.py:30 src/zfr_lib/lang/gcc.py:53
-msgid "no tests/ directory"
-msgstr "tests/ డైరెక్టరీ లేదు"
-
-#: src/zfr_lib/lang/antlr.py:49
-msgid "Add tests/TestCommons.java or fixture checks for parser output."
-msgstr "పార్సర్ అవుట్‌పుట్ కోసం tests/TestCommons.java లేదా fixture తనిఖీలు జోడించండి."
-
-#: src/zfr_lib/lang/as.py:37
-msgid "Add tests/smoke.sh and meson test() for stdin/stdout copy."
-msgstr "stdin/stdout కాపీ కోసం tests/smoke.sh మరియు meson test() జోడించండి."
-
-#: src/zfr_lib/lang/bash.py:65
-#, python-format
-msgid "src scripts: %s"
-msgstr "src స్క్రిప్ట్‌లు: %s"
-
-#: src/zfr_lib/lang/bash.py:78
-#, python-format
-msgid "root scripts: %s"
-msgstr "src స్క్రిప్ట్‌లు: %s"
-
-#: src/zfr_lib/lang/bash.py:89
-#, python-format
-msgid "setup-only package (%s); no bindir script puffs"
-msgstr "-only ప్యాకేజీ (%s); bindir స్క్రిప్ట్ పుఫ్స్ లేదు"
-
-#: src/zfr_lib/lang/bash.py:105
-msgid "Meson executable + .c present; script .in not required"
-msgstr "Meson క్రియాశీలము + .c ప్రస్తుతము; స్క్రిప్ట్ .in అవసరం లేదు"
-
-#: src/zfr_lib/lang/bash.py:114
-msgid "no configure_file/executable; script .in not required"
-msgstr "configure_file/executable; స్క్రిప్ట్ .in అవసరం లేదు"
-
-#: src/zfr_lib/lang/bash.py:121
-msgid "no src/*.in or root *.in scripts"
-msgstr "src/*.in స్క్రిప్ట్‌లు లేవు"
-
-#: src/zfr_lib/lang/bash.py:124
-msgid "Keep configured scripts as src/<puff>.in (preferred) or <puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
-msgstr "కాన్ఫిగర్ చేసిన స్క్రిప్ట్‌లను src/<puff>.inగా @PACKAGE@/@VERSION@తో ఉంచి meson configure_file + install_mode rwxr-xr-x వాడండి."
-
-#: src/zfr_lib/lang/bison.py:45
-msgid "Add tests/ with fixture checks for parser dump/format output."
-msgstr "పార్సర్ dump/format అవుట్‌పుట్ కోసం fixture తనిఖీలతో tests/ జోడించండి."
-
-#: src/zfr_lib/lang/_c_bas.py:187
+#: src/lang/_c_bas.py:187
 msgid "no int main() in src/; skip bas i18n main checks"
 msgstr "src/ నందు యిన్ట్ మైన్() లేదు; బస్ i18n ముఖ్య సెక్స్ ను దాటవేయండి"
 
-#: src/zfr_lib/lang/_c_bas.py:208
+#: src/lang/_c_bas.py:208
 #, python-format
 msgid "main missing bas i18n setup: %s"
 msgstr "ముఖ్యమైన బేస్ ఇ18n అమర్పు: %s"
 
-#: src/zfr_lib/lang/_c_bas.py:211
+#: src/lang/_c_bas.py:211
 msgid "In main: #include <bas/locale/i18n.h> and <bas/proc/env.h>; const char *exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR from meson config.h). Run `zfr ize`."
 msgstr "ముఖ్యమైన: #include <bas/locale/i18n.h> మరియు <bas/proc/env.h>; కన్స్ట్ అక్షరము * exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR meson ఆకృతీకరణ.h నుండి. `zfr ize` నడుపుము."
 
-#: src/zfr_lib/lang/_c_bas.py:222
+#: src/lang/_c_bas.py:222
 msgid "bas i18n main setup (self_exe + init_i18n)"
 msgstr "బేస్ i18n ముఖ్య అమర్పు (self_exe + init_i18n)"
 
-#: src/zfr_lib/lang/_c_bas.py:233
+#: src/lang/_c_bas.py:233
 msgid "no define_logger() in src/"
 msgstr "define_logger () src/ నందు లేదు"
 
-#: src/zfr_lib/lang/_c_bas.py:236
+#: src/lang/_c_bas.py:236
 msgid "In one .c/.cpp: #include <bas/log/deflog.h> then define_logger(); libraries may use __attribute__((weak)) define_logger(); Run `zfr ize`."
 msgstr "ఒక .c/.cppలో: #include <bas/log/deflog.h> తరువాత define_logger(); లైబ్రరీలు __(feak) define_logger(); `zfr ize` నడుపుము."
 
-#: src/zfr_lib/lang/_c_bas.py:250
+#: src/lang/_c_bas.py:250
 msgid "define_logger() present"
 msgstr "project() ఉంది"
 
-#: src/zfr_lib/lang/_c_bas.py:252
+#: src/lang/_c_bas.py:252
 msgid "weak define_logger() present (library)"
 msgstr "బలహీన define_logger () ప్రస్తుతం (లైబ్రరీ)"
 
-#: src/zfr_lib/lang/_c_bas.py:258
+#: src/lang/_c_bas.py:258
 msgid "define_logger() without #include <bas/log/deflog.h>"
 msgstr "define_logger () #include <bas/log/deflog.h> లేకుండా"
 
-#: src/zfr_lib/lang/_c_bas.py:260
+#: src/lang/_c_bas.py:260
 msgid "Add #include <bas/log/deflog.h> before define_logger();"
 msgstr "define_logger() ముందు #include <bas/log/deflog.h> జతచేయుము;"
 
-#: src/zfr_lib/lang/_c_bas.py:276
+#: src/lang/_c_bas.py:276
 msgid "meson.build missing LOCALEDIR in config.h"
 msgstr "meson.build LOCALEDIR కలిగిపోయింది ఆన్ఫిగ్ లో.h"
 
-#: src/zfr_lib/lang/_c_bas.py:279
+#: src/lang/_c_bas.py:279
 msgid "localedir = prefix / get_option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); Run `zfr ize`."
 msgstr "localedir = prefix / get_ option('localedir'); config_h.set_quoted('LOCALEDIR', localedir; `zfr ize` నడుపుము."
 
-#: src/zfr_lib/lang/_c_bas.py:289
+#: src/lang/_c_bas.py:289
 msgid "meson LOCALEDIR present"
 msgstr "meson LOCALEDIR వుపయోగించు"
 
-#: src/zfr_lib/lang/_c_bas.py:306
+#: src/lang/_c_bas.py:306
 #, python-format
 msgid "gettext string has leading/trailing spaces: %r"
 msgstr "gettext స్టీంగ్ leading/trailing ఖాళీలు ఉన్నాయి: %r"
 
-#: src/zfr_lib/lang/_c_bas.py:310
+#: src/lang/_c_bas.py:310
 msgid "Keep padding outside _(): e.g. fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\n\"), out);"
 msgstr ""
 "పాడ్‌డింగ్‌ను బయటకు పెట్టండి (_(): ఉదాహరణకు fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\\n"
 "\"), out);"
 
-#: src/zfr_lib/lang/_c_bas.py:320
+#: src/lang/_c_bas.py:320
 msgid "gettext _() strings have no leading/trailing spaces"
 msgstr "gettext _() స్టీంగ్లు leading/trailing స్పేస్లులేకపోయాయి"
 
-#: src/zfr_lib/lang/clib.py:45 src/zfr_lib/lang/cpplib.py:45
-#: src/zfr_lib/lang/cpp.py:32 src/zfr_lib/lang/c.py:32
-#: src/zfr_lib/lang/gcc.py:55
+#: src/lang/antlr.py:42 src/lang/as.py:30 src/lang/bison.py:38 src/lang/c.py:24
+#: src/lang/clib.py:37 src/lang/cobol.py:32 src/lang/cpp.py:24
+#: src/lang/cpplib.py:37 src/lang/d.py:32 src/lang/fortran.py:32
+#: src/lang/gcc.py:48 src/lang/kotlin.py:22 src/lang/lua.py:22
+#: src/lang/nim.py:24 src/lang/pascal.py:32 src/lang/python.py:21
+msgid "tests/ present"
+msgstr "tests/ ఉంది"
+
+#: src/lang/antlr.py:47 src/lang/as.py:35 src/lang/bison.py:43 src/lang/c.py:30
+#: src/lang/clib.py:43 src/lang/cpp.py:30 src/lang/cpplib.py:43
+#: src/lang/gcc.py:53
+msgid "no tests/ directory"
+msgstr "tests/ డైరెక్టరీ లేదు"
+
+#: src/lang/antlr.py:49
+msgid "Add tests/TestCommons.java or fixture checks for parser output."
+msgstr "పార్సర్ అవుట్‌పుట్ కోసం tests/TestCommons.java లేదా fixture తనిఖీలు జోడించండి."
+
+#: src/lang/as.py:37
+msgid "Add tests/smoke.sh and meson test() for stdin/stdout copy."
+msgstr "stdin/stdout కాపీ కోసం tests/smoke.sh మరియు meson test() జోడించండి."
+
+#: src/lang/bash.py:65
+#, python-format
+msgid "src scripts: %s"
+msgstr "src స్క్రిప్ట్‌లు: %s"
+
+#: src/lang/bash.py:78
+#, python-format
+msgid "root scripts: %s"
+msgstr "src స్క్రిప్ట్‌లు: %s"
+
+#: src/lang/bash.py:89
+#, python-format
+msgid "setup-only package (%s); no bindir script puffs"
+msgstr "-only ప్యాకేజీ (%s); bindir స్క్రిప్ట్ పుఫ్స్ లేదు"
+
+#: src/lang/bash.py:105
+msgid "Meson executable + .c present; script .in not required"
+msgstr "Meson క్రియాశీలము + .c ప్రస్తుతము; స్క్రిప్ట్ .in అవసరం లేదు"
+
+#: src/lang/bash.py:114
+msgid "no configure_file/executable; script .in not required"
+msgstr "configure_file/executable; స్క్రిప్ట్ .in అవసరం లేదు"
+
+#: src/lang/bash.py:121
+msgid "no src/*.in or root *.in scripts"
+msgstr "src/*.in స్క్రిప్ట్‌లు లేవు"
+
+#: src/lang/bash.py:124
+msgid "Keep configured scripts as src/<puff>.in (preferred) or <puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
+msgstr "కాన్ఫిగర్ చేసిన స్క్రిప్ట్‌లను src/<puff>.inగా @PACKAGE@/@VERSION@తో ఉంచి meson configure_file + install_mode rwxr-xr-x వాడండి."
+
+#: src/lang/bison.py:45
+msgid "Add tests/ with fixture checks for parser dump/format output."
+msgstr "పార్సర్ dump/format అవుట్‌పుట్ కోసం fixture తనిఖీలతో tests/ జోడించండి."
+
+#: src/lang/c.py:32 src/lang/clib.py:45 src/lang/cpp.py:32
+#: src/lang/cpplib.py:45 src/lang/gcc.py:55
 msgid "Add tests/ and meson test() entries like the C family templates."
 msgstr "C కుటుంబ టెంప్లేట్ల మాదిరిగా tests/ మరియు meson test() ఎంట్రీలు జోడించండి."
 
-#: src/zfr_lib/lang/cobol.py:37
+#: src/lang/cobol.py:37
 msgid "no tests/ (cobol template uses cobc + meson test)"
 msgstr "tests/ లేదు (cobol టెంప్లేట్ cobc + meson test వాడుతుంది)"
 
-#: src/zfr_lib/lang/cobol.py:39
+#: src/lang/cobol.py:39
 msgid "Add tests/test_commons.sh or similar smoke test for cobc."
 msgstr "cobc కోసం tests/test_commons.sh లేదా ఇలాంటి స్మోక్ పరీక్ష జోడించండి."
 
-#: src/zfr_lib/lang/d.py:37
+#: src/lang/d.py:37
 msgid "no tests/ (D template uses ldc/dmd + meson test)"
 msgstr "tests/ లేదు (D టెంప్లేట్ ldc/dmd + meson test వాడుతుంది)"
 
-#: src/zfr_lib/lang/d.py:39
+#: src/lang/d.py:39
 msgid "Add tests/test_commons.d and meson test() executable."
 msgstr "tests/test_commons.d మరియు meson test() ఎగ్జిక్యూటబుల్ జోడించండి."
 
-#: src/zfr_lib/lang/fortran.py:37
+#: src/lang/fortran.py:37
 msgid "no tests/ (fortran template uses gfortran + meson test)"
 msgstr "tests/ లేదు (fortran టెంప్లేట్ gfortran + meson test వాడుతుంది)"
 
-#: src/zfr_lib/lang/fortran.py:39
+#: src/lang/fortran.py:39
 msgid "Add tests/test_commons.f90 and meson test() executable."
 msgstr "tests/test_commons.f90 మరియు meson test() ఎగ్జిక్యూటబుల్ జోడించండి."
 
-#: src/zfr_lib/lang/go.py:22
+#: src/lang/go.py:22
 msgid "missing go.mod"
 msgstr "go.mod లేదు"
 
-#: src/zfr_lib/lang/go.py:23
+#: src/lang/go.py:23
 msgid "Add go.mod; meson should `go build` with -X main.buildVersion from meson.project_version()."
 msgstr "go.mod జోడించండి; meson meson.project_version() నుండి -X main.buildVersionతో `go build` నడపాలి."
 
-#: src/zfr_lib/lang/kotlin.py:23
+#: src/lang/kotlin.py:23
 msgid "no tests/ (kotlin template uses kotlinc + meson test)"
 msgstr "tests/ లేదు (kotlin టెంప్లేట్ kotlinc + meson test వాడుతుంది)"
 
-#: src/zfr_lib/lang/kotlin.py:24
+#: src/lang/kotlin.py:24
 msgid "Add tests/Test*.kt and meson test() compiling with kotlinc."
 msgstr "kotlincతో కంపైల్ చేసే tests/Test*.kt మరియు meson test() జోడించండి."
 
-#: src/zfr_lib/lang/lua.py:23
+#: src/lang/lua.py:23
 msgid "no tests/ (lua template uses lua tests + meson test)"
 msgstr "tests/ లేదు (lua టెంప్లేట్ lua పరీక్షలు + meson test వాడుతుంది)"
 
-#: src/zfr_lib/lang/lua.py:24
+#: src/lang/lua.py:24
 msgid "Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
 msgstr "LUA_PATH=src/?.luaతో luaను నడిపే tests/test_*.lua మరియు meson test() జోడించండి."
 
-#: src/zfr_lib/lang/nim.py:25
+#: src/lang/nim.py:25
 msgid "no tests/ (nim template uses unittest + meson test)"
 msgstr "tests/ లేదు (nim టెంప్లేట్ unittest + meson test వాడుతుంది)"
 
-#: src/zfr_lib/lang/nim.py:26
+#: src/lang/nim.py:26
 msgid "Add tests/test_*.nim and meson test() with nim r."
 msgstr "nim rతో tests/test_*.nim మరియు meson test() జోడించండి."
 
-#: src/zfr_lib/lang/pascal.py:37
+#: src/lang/pascal.py:37
 msgid "no tests/ (pascal template uses fpc + meson test)"
 msgstr "tests/ లేదు (pascal టెంప్లేట్ fpc + meson test వాడుతుంది)"
 
-#: src/zfr_lib/lang/pascal.py:39
+#: src/lang/pascal.py:39
 msgid "Add tests/test_commons.pas and meson test() with fpc."
 msgstr "fpcతో tests/test_commons.pas మరియు meson test() జోడించండి."
 
-#: src/zfr_lib/lang/python.py:22
+#: src/lang/python.py:22
 msgid "no tests/ (python template uses unittest + meson test)"
 msgstr "tests/ లేదు (python టెంప్లేట్ unittest + meson test వాడుతుంది)"
 
-#: src/zfr_lib/lang/python.py:23
+#: src/lang/python.py:23
 msgid "Add tests/test_*.py and meson test() with PYTHONPATH=src."
 msgstr "PYTHONPATH=srcతో tests/test_*.py మరియు meson test() జోడించండి."
 
-#: src/zfr_lib/lang/rust.py:22
+#: src/lang/rust.py:22
 msgid "missing Cargo.toml"
 msgstr "Cargo.toml లేదు"
 
-#: src/zfr_lib/lang/rust.py:23
+#: src/lang/rust.py:23
 msgid "Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
 msgstr "Rust zephyr ప్రాజెక్టులు బైనరీ కోసం Cargo.tomlతో పాటు meson custom_target ఉంచుతాయి."
 
-#: src/zfr_lib/lang/zig.py:23
+#: src/lang/zig.py:23
 msgid "missing build.zig"
 msgstr "build.zig లేదు"
 
-#: src/zfr_lib/lang/zig.py:24
+#: src/lang/zig.py:24
 msgid "Add build.zig; meson should invoke `zig build -Doptimize=ReleaseFast`."
 msgstr "build.zig జోడించండి; meson `zig build -Doptimize=ReleaseFast`ను నడపాలి."
 
-#: src/zfr_lib/lasterror.py:16
+#: src/lasterror.py:16
 msgid "browse the last zfr package output interactively"
 msgstr "గత zfr ప్యాకేజ్ అవుట్పుట్‌ను ఇంటరాక్టివ్‌గా బ్రౌజ్ చేయండి"
 
-#: src/zfr_lib/lasterror.py:18
+#: src/lasterror.py:18
 msgid "Show the last packaging run. Arrow keys select a packager; Tab opens the captured log in fdmpager; Enter replays that packager's stdout/stderr with fddemux; q quits."
 msgstr "చివరి ప్యాకేజింగ్ రన్‌ను చూపించండి. ఎర్రో కీలు ఒక ప్యాకేజర్‌ని ఎంచుకుంటాయి; Tab fdmpagerలో పొందిన లాగ్‌ను తెరిచేస్తుంది; Enter ఆ ప్యాకేజర్ యొక్క stdout/stderr ను fddemux తో తిరిగి ఆడుస్తుంది; q నిష్క్రమిస్తుంది."
 
-#: src/zfr_lib/lasterror.py:29
-#, fuzzy
+#: src/lasterror.py:29
 msgid "list only failed packagers"
 msgstr "సంతకం లేని ప్యాకేజీలు నిర్మించు"
 
-#: src/zfr_lib/lasterror.py:35
+#: src/lasterror.py:35
 msgid "print a summary and exit (no curses UI)"
 msgstr "సారాంశాన్ని ప్రింట్ చేసి రావడం (కర్సెస్ UI లేదు)"
 
-#: src/zfr_lib/lasterror.py:41
+#: src/lasterror.py:41
 msgid "view captured logs with fdmpager (requires fdmux)"
 msgstr "fdmpager తో దర్జా చేసిన లాగ్‌లను చూడండి (fdmux అవసరం)"
 
-#: src/zfr_lib/lasterror.py:47
+#: src/lasterror.py:47
 msgid "non-interactively replay KIND (deb, rpm, …) to stdout/stderr"
 msgstr "నాన్-ఇంటరాక్టివ్‌గా KIND (deb, rpm, …) ను stdout/stderr కు తిరిగి ఆడించండి"
 
-#: src/zfr_lib/lint/browse.py:39
+#: src/lint/__init__.py:136
+msgid "validate project packaging and zephyr layout (walks parents from cwd)"
+msgstr "ప్రాజెక్టు ప్యాకేజింగ్ మరియు zephyr అమరికను తనిఖీ చేయి (ప్రస్తుత సంచయం నుండి పైకి వెతుకుతుంది)"
+
+#: src/lint/__init__.py:138
+msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain interactive shell. Override with -i/-I."
+msgstr "ప్రస్తుత zephyr ప్రాజెక్టులో లేని ఫైళ్లు మరియు ప్యాకేజింగ్/శైలి తప్పులను చూస్తుంది. ప్రస్తుత సంచయం నుండి పైకి వెతుకుతుంది. stdout టెర్మినల్ అయితే CSR రంగులు."
+
+#: src/lint/__init__.py:149
+msgid "show passing checks too"
+msgstr "విజయవంతమైన తనిఖీలను కూడా చూపించు"
+
+#: src/lint/__init__.py:150
+msgid "only print errors"
+msgstr "లోపాలు మాత్రమే చూపించు"
+
+#: src/lint/__init__.py:156
+msgid "open a local web UI with maximum-verbosity lint results, locale switcher, and per-finding [ize] actions"
+msgstr "గరిష్ట-వెerbosity లింట్ ఫలితాలతో, లోకల్ వెబ్ UI, లోకేల్ స్విచ్చర్, మరియు ప్రతి ఫైండ్ల కోసం [ize] చర్యలను తెరవండి"
+
+#: src/lint/__init__.py:170
+msgid "treat LEVEL as warning (LEVEL=note|warn|error; default note: note→warn; warn=no-op; error→warn)"
+msgstr "LEVEL ను హెచ్చరికగా పరిగణించండి (LEVEL=note|warn|error; డిఫాల్ట్ నోట్: note→warn; warn=no-op; error→warn)"
+
+#: src/lint/__init__.py:184
+msgid "treat LEVEL as error (LEVEL=note|warn|error; default warn: warn→error; note→note+warn→error; error=no-op)"
+msgstr "LEVEL ను తప్పుగా (error) పరిగణించండి (LEVEL=note|warn|error; డిఫాల్ట్ warn: warn→error; note→note+warn→error; error=no-op)"
+
+#: src/lint/__init__.py:193
+msgid "alias for -e/--error=warn (treat warnings as errors)"
+msgstr "-e/--error=warn కోసం భేదపేర్లను (హెచ్చరికలను తప్పిదాలుగా తీసుకోవాలి)"
+
+#: src/lint/__init__.py:199
+msgid "list numbered lint standards (ZL*) as a table and exit"
+msgstr "అంఖ్య లీంట్ ప్రమాణములను (ZL*) జాబితాను పెట్టుకొని బయటకు తీసుకుని"
+
+#: src/lint/__init__.py:205
+msgid "show details for lint standard NUM (e.g. ZL0026, 26) and exit"
+msgstr "lint స్మాంటర్ NUM కొరకు వివరాలను చూపుము (उ. యు. ZL0026, 26) మరియు బయటకు వెళ్ళు"
+
+#: src/lint/__init__.py:213
+msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
+msgstr "అవసరమైన gettext/మాన్యువల్ locale కవరేజ్ L0–L3 (డిఫాల్ట్ L1; ప్రాజెక్టు ఫైల్ భర్తీ చేయవచ్చు)"
+
+#: src/lint/__init__.py:221
+msgid "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
+msgstr "zephyr శైలి -contract / తరువాత-steps బలాబ్స్ (పైపులు మరియు AI టెర్మినల్లు కొరకు అప్రమేయము) చూపుము"
+
+#: src/lint/__init__.py:228
+msgid "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
+msgstr "zephyr శైలిని దాచించుము-contract / తరువాత-steps స్లేబ్స్ (సాధారణ ఇంటెరెక్టెక్షన్ షెల్ కొరకు అప్రమేయ)"
+
+#: src/lint/__init__.py:238
+msgid "suppress rule ID(s) or code(s), comma-separated (repeatable)"
+msgstr "నియమా ID(లు) లేదా కోడ్(లు)ను దిగుమతిచేయుము, కమ్ -separated (పునఃప్రారంభించగల)"
+
+#: src/lint/__init__.py:246
+msgid "force-enable rule ID(s) or code(s) even if unchecked (repeatable)"
+msgstr "నియమా ID(లు) లేదా కోడ్(లు)ను దిగుమతిచేయుము, కమ్ -separated (పునఃప్రారంభించగల)"
+
+#: src/lint/__init__.py:260
+#, python-format
+msgid "unknown lint standard: %s"
+msgstr "తెలియని lint ప్రమాణము: %s"
+
+#: src/lint/browse.py:43
 msgid "zfr lint"
 msgstr "zfr lint"
 
-#: src/zfr_lib/lint/browse.py:40
+#: src/lint/browse.py:44
 msgid "Show all rules (including passed)"
 msgstr "అన్ని నియమాలు చూపు (పాస్‌తో సహా)"
 
-#: src/zfr_lib/lint/browse.py:41
+#: src/lint/browse.py:45
 msgid "Language"
 msgstr "భాష"
 
-#: src/zfr_lib/lint/browse.py:42
+#: src/lint/browse.py:46
 msgid "Re-lint"
 msgstr "మళ్లీ తనిఖీ"
 
-#: src/zfr_lib/lint/browse.py:43
-#, fuzzy
+#: src/lint/browse.py:47
 msgid "status"
 msgstr "స్థితి"
 
-#: src/zfr_lib/lint/browse.py:44
-#, fuzzy
+#: src/lint/browse.py:48
 msgid "errors"
 msgstr "దోషాలు"
 
-#: src/zfr_lib/lint/browse.py:45
-#, fuzzy
+#: src/lint/browse.py:49
 msgid "warnings"
 msgstr "హెచ్చరికలు"
 
-#: src/zfr_lib/lint/browse.py:46
-#, fuzzy
+#: src/lint/browse.py:50
 msgid "notes"
 msgstr "గమనికలు"
 
-#: src/zfr_lib/lint/browse.py:47 src/zfr_lib/lint/report.py:163
+#: src/lint/browse.py:51 src/lint/report.py:163
 msgid "ok"
 msgstr "సరే"
 
-#: src/zfr_lib/lint/browse.py:48 src/zfr_lib/lint/docs.py:141
+#: src/lint/browse.py:52
 msgid "Solve"
 msgstr "పరిష్కరించు"
 
-#: src/zfr_lib/lint/browse.py:49
+#: src/lint/browse.py:53
 msgid "Show"
 msgstr "చూపు"
 
-#: src/zfr_lib/lint/browse.py:50
+#: src/lint/browse.py:54
 msgid "Output"
 msgstr "అవుట్‌పుట్"
 
-#: src/zfr_lib/lint/browse.py:51
-#, fuzzy
+#: src/lint/browse.py:55
 msgid "fix"
 msgstr "పరిష్కారం"
 
-#: src/zfr_lib/lint/browse.py:53
+#: src/lint/browse.py:57
 msgid "No findings to display (toggle “show all” for passed checks)."
 msgstr "చూపించడానికి ఫలితాలు లేవు (పాస్‌కు “అన్నీ చూపు” ఆన్ చేయండి)."
 
-#: src/zfr_lib/lint/browse.py:55
+#: src/lint/browse.py:59
 msgid "Running…"
 msgstr "నడుస్తోంది…"
 
-#: src/zfr_lib/lint/browse.py:56
+#: src/lint/browse.py:60
 msgid "fdmux is required (install the fdmux package)."
 msgstr "fdmux అవసరం (fdmux ప్యాకేజీని ఇన్‌స్టాల్ చేయండి)."
 
-#: src/zfr_lib/lint/browse.py:57
+#: src/lint/browse.py:61 src/lint/docs.py:101
 msgid "Documentation"
 msgstr "డాక్యుమెంటేషన్"
 
-#: src/zfr_lib/lint/browse.py:58
+#: src/lint/browse.py:62
 msgid "Add Comment"
 msgstr "వ్యాఖ్య జోడించు"
 
-#: src/zfr_lib/lint/browse.py:59
+#: src/lint/browse.py:63
 msgid "Enter comments…"
 msgstr "వ్యాఖ్యలు నమోదు చేయండి…"
 
-#: src/zfr_lib/lint/browse.py:60
+#: src/lint/browse.py:64
 msgid "This project only"
 msgstr "ఈ ప్రాజెక్ట్ మాత్రమే"
 
-#: src/zfr_lib/lint/browse.py:61
+#: src/lint/browse.py:65
 msgid "Submit"
 msgstr "సమర్పించు"
 
-#: src/zfr_lib/lint/browse.py:62
+#: src/lint/browse.py:66
 msgid "Rule"
 msgstr "నియమం"
 
-#: src/zfr_lib/lint/browse.py:63
+#: src/lint/browse.py:67
 msgid "Saved"
 msgstr "సేవ్ అయింది"
 
-#: src/zfr_lib/lint/browse.py:64
+#: src/lint/browse.py:68
 msgid "Close"
 msgstr "మూసివేయి"
 
-#: src/zfr_lib/lint/browse.py:65
+#: src/lint/browse.py:69
 msgid "pass"
 msgstr "పాస్"
 
-#: src/zfr_lib/lint/browse.py:66
+#: src/lint/browse.py:70
 msgid "Light"
 msgstr "లైట్"
 
-#: src/zfr_lib/lint/browse.py:67
+#: src/lint/browse.py:71
 msgid "Dark"
 msgstr "డార్క్"
 
-#: src/zfr_lib/lint/browse.py:68
+#: src/lint/browse.py:72
 msgid "Sort"
 msgstr "క్రమబద్ధీకరించు"
 
-#: src/zfr_lib/lint/browse.py:69
+#: src/lint/browse.py:73
 msgid "ID"
 msgstr "ID"
 
-#: src/zfr_lib/lint/browse.py:70
-#, fuzzy
+#: src/lint/browse.py:74
 msgid "Status"
 msgstr "స్థితి"
 
-#: src/zfr_lib/lint/browse.py:71
+#: src/lint/browse.py:75
 msgid "Name"
 msgstr "పేరు"
 
-#: src/zfr_lib/lint/browse.py:72
+#: src/lint/browse.py:76
 msgid "Request for new"
 msgstr "కొత్త అభ్యర్థన"
 
-#: src/zfr_lib/lint/browse.py:74
+#: src/lint/browse.py:78
 msgid "Suggest a new lint rule (what to check, why, how)…"
 msgstr "కొత్త lint నియమం సూచించండి (ఏమి, ఎందుకు, ఎలా)…"
 
-#: src/zfr_lib/lint/browse.py:455
+#: src/lint/browse.py:552
 #, python-format
 msgid "zfr lint browse: %s"
 msgstr "zfr lint బ్రౌజ్: %s"
 
-#: src/zfr_lib/lint/browse.py:456
+#: src/lint/browse.py:553
 msgid "Press Ctrl+C to stop."
 msgstr "ఆపడానికి Ctrl+C నొక్కండి."
 
-#: src/zfr_lib/lint/debian.py:42
+#: src/lint/debian.py:42
 #, python-format
 msgid "Build-Depends has %s"
 msgstr "Build-Dependsలో %s ఉంది"
 
-#: src/zfr_lib/lint/debian.py:48
+#: src/lint/debian.py:48
 #, python-format
 msgid "Build-Depends missing %s"
 msgstr "Build-Dependsలో %s లేదు"
 
-#: src/zfr_lib/lint/debian.py:50
+#: src/lint/debian.py:50
 #, python-format
 msgid "Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man pages)."
 msgstr "Build-Dependsకు %s జోడించండి (zephyr ప్యాకేజీలు Meson + AsciiDoc man పేజీలతో నిర్మితమవుతాయి)."
 
-#: src/zfr_lib/lint/debian.py:54
+#: src/lint/debian.py:54
 msgid "debhelper-compat present"
 msgstr "debhelper-compat ఉంది"
 
-#: src/zfr_lib/lint/debian.py:60
+#: src/lint/debian.py:60
 msgid "Build-Depends missing debhelper-compat (= 13)"
 msgstr "Build-Dependsలో debhelper-compat (= 13) లేదు"
 
-#: src/zfr_lib/lint/debian.py:62
+#: src/lint/debian.py:62
 msgid "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
 msgstr "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
 
-#: src/zfr_lib/lint/debian.py:80
+#: src/lint/debian.py:80
 msgid "Package stanza missing Architecture"
 msgstr "Package స్టాన్జాలో Architecture లేదు"
 
-#: src/zfr_lib/lint/debian.py:82
+#: src/lint/debian.py:82
 msgid "Architecture: all  (scripts) or any (compiled)."
 msgstr "Architecture: all  (స్క్రిప్ట్‌లు) లేదా any (కంపైల్ చేసినవి)."
 
-#: src/zfr_lib/lint/debian.py:91
+#: src/lint/debian.py:91
 #, python-format
 msgid "Architecture: %s (bash + Meson executable)"
 msgstr "Architecture: %s (బష్ + Meson క్రియాశీల)"
 
-#: src/zfr_lib/lint/debian.py:100
+#: src/lint/debian.py:100
 #, python-format
 msgid "bash packages should be Architecture: all (got %s)"
 msgstr "bash ప్యాకేజీలు Architecture: all అయి ఉండాలి (వచ్చింది %s)"
 
-#: src/zfr_lib/lint/debian.py:102
+#: src/lint/debian.py:102
 msgid "Architecture: all"
 msgstr "Architecture: all"
 
-#: src/zfr_lib/lint/debian.py:110
+#: src/lint/debian.py:110
 #, python-format
 msgid "%s packages are usually Architecture: any (got all)"
 msgstr "%s ప్యాకేజీలు సాధారణంగా Architecture: any (వచ్చింది all)"
 
-#: src/zfr_lib/lint/debian.py:112 src/zfr_lib/lint/debian.py:128
+#: src/lint/debian.py:112 src/lint/debian.py:128
 msgid "Architecture: any"
 msgstr "Architecture: any"
 
-#: src/zfr_lib/lint/debian.py:123
+#: src/lint/debian.py:123
 msgid "Architecture: all but Meson has executable(); ELF binaries need Architecture: any (same class of bug as RPM BuildArch: noarch)"
 msgstr "Architecture: అన్ని లేక Mesonను కలిగినది (); ELF బనరీలు అవసరం Architecture: ఏదైనా (RPM BuildArch వరకు బాగ్ యొక్క ఒకే క్లాస్: noarch)"
 
-#: src/zfr_lib/lint/debian.py:133
+#: src/lint/debian.py:133
 #, python-format
 msgid "Architecture: %s"
 msgstr "ఫీల్డ్ Architecture: %s"
 
-#: src/zfr_lib/lint/debian.py:138
+#: src/lint/debian.py:138
 #, python-format
 msgid "Homepage: %s"
 msgstr "ఫీల్డ్ Homepage: %s"
 
-#: src/zfr_lib/lint/debian.py:144
+#: src/lint/debian.py:144
 msgid "no Homepage"
 msgstr "Homepage లేదు"
 
-#: src/zfr_lib/lint/debian.py:146
+#: src/lint/debian.py:146
 msgid "Set Homepage: to the project URL."
 msgstr "Homepage:ను ప్రాజెక్ట్ URLకు సెట్ చేయండి."
 
-#: src/zfr_lib/lint/debian.py:152
+#: src/lint/debian.py:152
 msgid "dh meson debian/build"
 msgstr "dh meson debian/build వాడుతోంది"
 
-#: src/zfr_lib/lint/debian.py:158
+#: src/lint/debian.py:158
 msgid "debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
 msgstr "debian/rules dh --buildsystem=meson --builddirectory=debian/build కాదు"
 
-#: src/zfr_lib/lint/debian.py:161
+#: src/lint/debian.py:161
 #, no-python-format
 msgid ""
 "Use:\n"
@@ -911,243 +965,104 @@ msgstr ""
 "%:\n"
 "\tdh $@ --buildsystem=meson --builddirectory=debian/build"
 
-#: src/zfr_lib/lint/debian.py:167
+#: src/lint/debian.py:167
 msgid "copyright mentions AGPL"
 msgstr "కాపీరైట్ AGPLను పేర్కొంటుంది"
 
-#: src/zfr_lib/lint/debian.py:173
+#: src/lint/debian.py:173
 msgid "debian/copyright does not mention AGPL"
 msgstr "debian/copyright AGPLను పేర్కొనడం లేదు"
 
-#: src/zfr_lib/lint/debian.py:175
+#: src/lint/debian.py:175
 msgid "Use the template debian/copyright (License: AGPL-3+)."
 msgstr "టెంప్లేట్ debian/copyrightను ఉపయోగించండి (License: AGPL-3+)."
 
-#: src/zfr_lib/lint/debian.py:181
+#: src/lint/debian.py:181
 #, python-format
 msgid "source format %s"
 msgstr "మూల ఆకృతి %s"
 
-#: src/zfr_lib/lint/debian.py:190
+#: src/lint/debian.py:190
 #, python-format
 msgid "VERSION=%(file)r != changelog %(changelog)r"
 msgstr "VERSION=%(file)r != చేంజ్‌లాగ్ %(changelog)r"
 
-#: src/zfr_lib/lint/debian.py:192
+#: src/lint/debian.py:192
 msgid "VERSION should match the latest debian/changelog entry (pre-commit hook updates it). Git describe may still differ."
 msgstr "VERSION తాజా debian/changelog ఎంట్రీతో సరిపోలాలి (pre-commit హుక్ దాన్ని నవీకరిస్తుంది). Git describe ఇంకా భిన్నంగా ఉండవచ్చు."
 
-#: src/zfr_lib/lint/debian.py:198
+#: src/lint/debian.py:198
 #, python-format
 msgid "VERSION matches changelog %s"
 msgstr "VERSION చేంజ్‌లాగ్ %sతో సరిపోలుతుంది"
 
-#: src/zfr_lib/lint/debian.py:211
+#: src/lint/debian.py:211
 msgid "bash-shlib used in sources but missing from Depends"
 msgstr "bash-shlib మూలాల్లో వుపయోగించబడింది కానీ Depends నుండి లేదు"
 
-#: src/zfr_lib/lint/debian.py:213
+#: src/lint/debian.py:213
 msgid "Depends: bash, bash-shlib, ${misc:Depends}"
 msgstr "Depends: bash, bash-shlib, ${misc:Depends}"
 
-#: src/zfr_lib/lint/debian.py:218
+#: src/lint/debian.py:218
 msgid "Depends includes bash-shlib"
 msgstr "Dependsలో bash-shlib ఉంది"
 
-#: src/zfr_lib/lint/debian.py:225
+#: src/lint/debian.py:225
 msgid "Depends lists bash-shlib but sources do not use it"
 msgstr "Depends bash-shlib జాబితాలుగానీ మూలములను దానిని వుపయోగించరు"
 
-#: src/zfr_lib/lint/debian.py:227
+#: src/lint/debian.py:227
 msgid "Drop bash-shlib from Depends unless scripts `. shlib` / shlib-import."
 msgstr "డ్రాప్bash-shlibనుండిDependsస్క్రిప్ట్లు కాదు`. shlib`/shlib-import."
 
-#: src/zfr_lib/lint/debian.py:237
+#: src/lint/debian.py:237
 msgid "Priority: extra is deprecated"
 msgstr "Priority: అదనపు ముఖ్యమైనది"
 
-#: src/zfr_lib/lint/debian.py:239
+#: src/lint/debian.py:239
 msgid "Priority: optional (run `zfr ize` to fix)."
 msgstr "Priority: ఐచ్చికమైనది (సరిచేయుటకు `zfr ize` నడుపుము)."
 
-#: src/zfr_lib/lint/debian.py:243
+#: src/lint/debian.py:243
 #, python-format
 msgid "Priority: %s"
 msgstr "పాత్ర: %s"
 
-#: src/zfr_lib/lint/debian.py:250
+#: src/lint/debian.py:250
 msgid "extended Description present"
 msgstr "విస్తరించిన Description వుంది"
 
-#: src/zfr_lib/lint/debian.py:257
+#: src/lint/debian.py:257
 msgid "Description missing extended paragraph"
 msgstr "Description విస్తరించిన పేరా లేదు"
 
-#: src/zfr_lib/lint/debian.py:259
+#: src/lint/debian.py:259
 msgid "Add an indented continuation line after the synopsis (run `zfr ize`)."
 msgstr "సైనోప్సుస్ తర్వాత ఇన్‌పీంటెడ్ కొనసాగించు వరుస జతచేయుము (`zfr ize` నడుపుము)."
 
-#: src/zfr_lib/lint/docs.py:25
-msgid "Long files fight ownership"
-msgstr "పొడవైన ఫైల్స్ యాజమాన్యాన్ని కష్టతరం చేస్తాయి"
+#: src/lint/docs.py:236
+#, python-format
+msgid "Checker `%s` in `zfr lint`."
+msgstr "`zfr lint`లో చెకర్ `%s`."
 
-#: src/zfr_lib/lint/docs.py:27
-msgid "Very long source files are hard to review, test, and own. Zephyr prefers cohesive modules under a package subdirectory with a thin entry-point file — the same shape create/ize expect."
-msgstr "చాలా పొడవైన సోర్స్ ఫైళ్లను సమీక్షించడం, పరీక్షించడం మరియు యాజమాన్యం చేయడం కష్టం. Zephyr ప్యాకేజ్ ఉపడైరెక్టరీలో సమన్వయ మాడ్యూల్స్ మరియు సన్నని ఎంట్రీ-పాయింట్ ఫైల్‌ను ఇష్టపడుతుంది — create/ize ఆశించే అదే ఆకారం."
+#: src/lint/docs.py:237
+msgid "varies"
+msgstr "మారుతుంది"
 
-#: src/zfr_lib/lint/docs.py:33
-msgid "What improving it buys you"
-msgstr "దీన్ని మెరుగుపరచడం వల్ల లభించేవి"
-
-#: src/zfr_lib/lint/docs.py:35
-msgid "Smaller review diffs, clearer module boundaries, easier unit tests, and fewer merge conflicts on busy files."
-msgstr "చిన్న సమీక్షా డిఫ్స్, స్పష్టమైన మాడ్యూల్ సరిహద్దులు, సులభమైన యూనిట్ టెస్టులు, మరియు బిజీ ఫైళ్లపై తక్కువ మెర్జ్ కాన్ఫ్లిక్టులు."
-
-#: src/zfr_lib/lint/docs.py:40
-msgid "Thresholds"
-msgstr "పరిమితులు"
-
-#: src/zfr_lib/lint/docs.py:42
-msgid "Lint counts non-empty lines (skipping build/debian/po/…). A note appears around ~600 lines; a warning around ~1000. Template example modules are skipped."
-msgstr "Lint ఖాళీ కాని పంక్తులను లెక్కిస్తుంది (build/debian/po/…ని దాటవేస్తుంది). ~600 పంక్తుల వద్ద గమనిక కనిపిస్తుంది; ~1000 వద్ద హెచ్చరిక. టెంప్లేట్ ఉదాహరణ మాడ్యూల్స్ దాటవేయబడతాయి."
-
-#: src/zfr_lib/lint/docs.py:48
-msgid "Fixing is manual"
-msgstr "సరిదిద్దడం మాన్యువల్"
-
-#: src/zfr_lib/lint/docs.py:50
-msgid "Split the file and update meson/install/import lists yourself. `zfr ize` does not auto-split sources."
-msgstr "ఫైల్‌ను విభజించి meson/ఇన్‌స్టాల్/ఇంపోర్ట్ జాబితాలను మీరే నవీకరించండి. `zfr ize` సోర్సులను స్వయంచాలకంగా విభజించదు."
-
-#: src/zfr_lib/lint/docs.py:57
-msgid "Hardcoded /usr breaks prefixes"
-msgstr "హార్డ్‌కోడ్ చేసిన /usr ప్రిఫిక్స్‌ను విచ్ఛిన్నం చేస్తుంది"
-
-#: src/zfr_lib/lint/docs.py:59
-msgid "Absolute FHS paths (/usr/share, /usr/bin, …) fail under DESTDIR, non-standard prefixes, and Meson configure_file staging."
-msgstr "సంపూర్ణ FHS మార్గాలు (/usr/share, /usr/bin, …) DESTDIR, అప్రామాణిక ప్రిఫిక్స్ మరియు Meson configure_file స్టేజింగ్ కింద విఫలమవుతాయి."
-
-#: src/zfr_lib/lint/docs.py:64
-msgid "Preferred shape"
-msgstr "ఇష్టపడే ఆకారం"
-
-#: src/zfr_lib/lint/docs.py:66
-msgid "Scripts use @PREFIX@ / @DATADIR@ / @LOCALEDIR@ (or equivalent) and are installed from *.in via Meson."
-msgstr "స్క్రిప్టులు @PREFIX@ / @DATADIR@ / @LOCALEDIR@ (లేదా సమానమైనవి) ఉపయోగించి Meson ద్వారా *.in నుండి ఇన్‌స్టాల్ అవుతాయి."
-
-#: src/zfr_lib/lint/docs.py:71
-msgid "What Solve does"
-msgstr "Solve ఏమి చేస్తుంది"
-
-#: src/zfr_lib/lint/docs.py:73
-msgid "Ize renames affected scripts to *.in and wires configure_file. Re-check shebangs and any tests that assumed live paths."
-msgstr "Ize ప్రభావిత స్క్రిప్టులను *.inగా పేరు మార్చి configure_fileను కనెక్ట్ చేస్తుంది. shebangలు మరియు ప్రత్యక్ష మార్గాలను అనుమానించిన పరీక్షలను మళ్లీ తనిఖీ చేయండి."
-
-#: src/zfr_lib/lint/docs.py:80
-msgid "Version literals drift"
-msgstr "వెర్షన్ లిటరల్స్ విచలనం చెందుతాయి"
-
-#: src/zfr_lib/lint/docs.py:82
-msgid "A hardcoded release string diverges from debian/changelog and Meson project_version() the moment you bump."
-msgstr "హార్డ్‌కోడ్ చేసిన రిలీజ్ స్ట్రింగ్ మీరు బంప్ చేసిన వెంటనే debian/changelog మరియు Meson project_version() నుండి విడిపోతుంది."
-
-#: src/zfr_lib/lint/docs.py:87
-msgid "Single source of truth"
-msgstr "ఏకైక నిజ మూలం"
-
-#: src/zfr_lib/lint/docs.py:89
-msgid "Prefer @VERSION@ / PROJECT_VERSION substituted at build time so `--version`, wrappers, and packages stay aligned."
-msgstr "`--version`, ర్యాపర్లు మరియు ప్యాకేజీలు సమలేఖనంలో ఉండేలా బిల్డ్ సమయంలో ప్రత్యామ్నాయం చేయబడే @VERSION@ / PROJECT_VERSIONను ఇష్టపడండి."
-
-#: src/zfr_lib/lint/docs.py:94
-msgid "Risks when converting"
-msgstr "మార్చేటప్పుడు నష్టాలు"
-
-#: src/zfr_lib/lint/docs.py:96
-msgid "C/C++ usually needs config.h; scripts need *.in. Dry-run ize (`-n`) on large trees before writing."
-msgstr "C/C++ సాధారణంగా config.h అవసరం; స్క్రిప్టులకు *.in అవసరం. రాయడానికి ముందు పెద్ద ట్రీలపై izeను dry-run (`-n`) చేయండి."
-
-#: src/zfr_lib/lint/docs.py:103
-msgid "Substitution without a consumer is incomplete"
-msgstr "వినియోగదారు లేని ప్రత్యామ్నాయం అసంపూర్ణం"
-
-#: src/zfr_lib/lint/docs.py:105
-msgid "Meson must both define VERSION/PROJECT_VERSION and have sources that actually read it — otherwise packaged binaries still lie."
-msgstr "Meson VERSION/PROJECT_VERSIONను నిర్వచించి దాన్ని నిజంగా చదివే సోర్సులను కూడా కలిగి ఉండాలి — లేకపోతే ప్యాకేజ్ చేసిన బైనరీలు ఇంకా అబద్ధం చెబుతాయి."
-
-#: src/zfr_lib/lint/docs.py:110
-msgid "How it is checked"
-msgstr "ఇది ఎలా తనిఖీ చేయబడుతుంది"
-
-#: src/zfr_lib/lint/docs.py:112
-msgid "Looks for configuration_data keys and for @VERSION@ / PROJECT_VERSION usage in installed sources."
-msgstr "configuration_data కీలు మరియు ఇన్‌స్టాల్ చేసిన సోర్సులలో @VERSION@ / PROJECT_VERSION వినియోగం కోసం చూస్తుంది."
-
-#: src/zfr_lib/lint/docs.py:117
-msgid "Closing the loop"
-msgstr "లూప్‌ను మూసివేయడం"
-
-#: src/zfr_lib/lint/docs.py:119
-msgid "Add the missing half (subst or consumer). Solve maps to the subst ize steps when available."
-msgstr "తప్పిపోయిన సగాన్ని జోడించండి (subst లేదా వినియోగదారు). అందుబాటులో ఉన్నప్పుడు Solve subst ize దశలకు మ్యాప్ అవుతుంది."
-
-#: src/zfr_lib/lint/docs.py:126
-msgid "Inline posync is unmaintainable"
-msgstr "ఇన్‌లైన్ posync నిర్వహించలేనిది"
-
-#: src/zfr_lib/lint/docs.py:128
-msgid "A bash -euc heredoc inside meson.build duplicates across templates and is painful to debug. The contract is scripts/posync.sh + run_target('posync')."
-msgstr "meson.build లోని bash -euc heredoc టెంప్లేట్లలో నకలు అవుతుంది మరియు డీబగ్ చేయడం బాధాకరం. ఒప్పందం scripts/posync.sh + run_target('posync')."
-
-#: src/zfr_lib/lint/docs.py:134
-msgid "Payoff"
-msgstr "ప్రయోజనం"
-
-#: src/zfr_lib/lint/docs.py:136
-msgid "One script to run msgmerge/xgettext locally; ninja posync stays short; CI can call the script directly."
-msgstr "స్థానికంగా msgmerge/xgettext నడపడానికి ఒకే స్క్రిప్ట్; ninja posync చిన్నగా ఉంటుంది; CI స్క్రిప్ట్‌ను నేరుగా పిలవవచ్చు."
-
-#: src/zfr_lib/lint/docs.py:143
-msgid "Ize extracts the body to scripts/posync.sh and points the run_target at it. Verify POTFILES and language flags afterward."
-msgstr "Ize బాడీని scripts/posync.shకు వెలికితీసి run_targetను దానికి సూచిస్తుంది. తర్వాత POTFILES మరియు భాషా ఫ్లాగ్‌లను ధృవీకరించండి."
-
-#: src/zfr_lib/lint/docs.py:150
-msgid "Maintenance scripts belong under scripts/"
-msgstr "నిర్వహణ స్క్రిప్టులు scripts/ కింద ఉండాలి"
-
-#: src/zfr_lib/lint/docs.py:152
-msgid "look / install-symlinks / deploy helpers at the repo root clutter the packaging surface. Zephyr keeps them under scripts/."
-msgstr "రెపో రూట్‌లోని look / install-symlinks / deploy సహాయకులు ప్యాకేజింగ్ ఉపరితలాన్ని గందరగోళపరుస్తాయి. Zephyr వాటిని scripts/ కింద ఉంచుతుంది."
-
-#: src/zfr_lib/lint/docs.py:157
-msgid "Detection"
-msgstr "గుర్తింపు"
-
-#: src/zfr_lib/lint/docs.py:159
-msgid "Flags root *.sh maintenance names and inline run_target bodies that should be externalized."
-msgstr "రూట్ *.sh నిర్వహణ పేర్లు మరియు బాహ్యీకరించాల్సిన ఇన్‌లైన్ run_target బాడీలను ఫ్లాగ్ చేస్తుంది."
-
-#: src/zfr_lib/lint/docs.py:164
-msgid "After moving"
-msgstr "తరలించిన తర్వాత"
-
-#: src/zfr_lib/lint/docs.py:166
-msgid "Update docs and any CI that called the old paths. Solve rewrites Meson run_targets to scripts/…"
-msgstr "పాత మార్గాలను పిలిచిన డాక్స్ మరియు CIని నవీకరించండి. Solve Meson run_targetsను scripts/…కు తిరిగి వ్రాస్తుంది."
-
-#: src/zfr_lib/lint/docs.py:180
+#: src/lint/docs.py:259
 msgid "No Solve mapping"
 msgstr "Solve మ్యాపింగ్ లేదు"
 
-#: src/zfr_lib/lint/docs.py:182
+#: src/lint/docs.py:261
 msgid "This finding has no `zfr ize --only …` shortcut. Follow the fix text (or a broader `zfr ize` if several related gaps exist), then re-lint."
 msgstr "ఈ కనుగొనికి `zfr ize --only …` షార్ట్‌కట్ లేదు. ఫిక్స్ టెక్స్ట్‌ను అనుసరించండి (లేదా సంబంధిత అంతరాలు ఉంటే విస్తృత `zfr ize`), తర్వాత మళ్లీ lint చేయండి."
 
-#: src/zfr_lib/lint/docs.py:190
+#: src/lint/docs.py:272
 msgid "Solve / ize"
 msgstr "పరిష్కరించు / ize"
 
-#: src/zfr_lib/lint/docs.py:192
+#: src/lint/docs.py:274
 #, python-format
 msgid ""
 "Clicking Solve runs only: %(targets)s.\n"
@@ -1158,339 +1073,119 @@ msgstr ""
 "సమానమైన CLI: `%(cmd)s`\n"
 "డ్రై ప్లాన్‌కు `-n` ఉపయోగించండి. అవుట్‌పుట్ fdmuxతో క్యాప్చర్ అవుతుంది (క్రమబద్ధమైన stdout/stderr)."
 
-#: src/zfr_lib/lint/docs.py:206 src/zfr_lib/lint/docs.py:407
-msgid "varies"
-msgstr "మారుతుంది"
-
-#: src/zfr_lib/lint/docs.py:209
-#, python-format
-msgid "Checker `%s` in `zfr lint`."
-msgstr "`zfr lint`లో చెకర్ `%s`."
-
-#: src/zfr_lib/lint/docs.py:212
-msgid "Debian is the APT contract"
-msgstr "Debian అనేది APT ఒప్పందం"
-
-#: src/zfr_lib/lint/docs.py:214
-msgid "control / rules / copyright / source format decide how the package builds and what users install. Zephyr standardizes on Meson + dh `--buildsystem=meson --builddirectory=debian/build`."
-msgstr "control / rules / copyright / source format ప్యాకేజ్ ఎలా బిల్డ్ అవుతుంది మరియు వినియోగదారులు ఏమి ఇన్‌స్టాల్ చేస్తారో నిర్ణయిస్తాయి. Zephyr Meson + dh `--buildsystem=meson --builddirectory=debian/build`పై ప్రామాణీకరిస్తుంది."
-
-#: src/zfr_lib/lint/docs.py:220 src/zfr_lib/lint/docs.py:251
-#: src/zfr_lib/lint/docs.py:273 src/zfr_lib/lint/docs.py:296
-#, python-format
-msgid "This check: %s"
-msgstr "ఈ తనిఖీ: %s"
-
-#: src/zfr_lib/lint/docs.py:221
-#, python-format
-msgid "Default severity hint: %s."
-msgstr "డిఫాల్ట్ తీవ్రత సూచన: %s."
-
-#: src/zfr_lib/lint/docs.py:224
-msgid "Why it matters"
-msgstr "ఇది ఎందుకు ముఖ్యం"
-
-#: src/zfr_lib/lint/docs.py:226
-msgid "Wrong Architecture, missing Build-Depends, or a non-Meson rules file fail debuild or produce unloadable packages even when local compiles succeed."
-msgstr "తప్పు Architecture, తప్పిపోయిన Build-Depends, లేదా Meson కాని rules ఫైల్ debuildను విఫలం చేస్తుంది లేదా స్థానిక కంపైల్ విజయవంతమైనా లోడ్ చేయలేని ప్యాకేజీలను ఉత్పత్తి చేస్తుంది."
-
-#: src/zfr_lib/lint/docs.py:232
-msgid "When editing packaging"
-msgstr "ప్యాకేజింగ్‌ను సవరించేటప్పుడు"
-
-#: src/zfr_lib/lint/docs.py:234
-msgid "Ize may rewrite from templates — always diff Maintainer, Depends, and Architecture before upload."
-msgstr "Ize టెంప్లేట్ల నుండి తిరిగి వ్రాయవచ్చు — అప్‌లోడ్‌కు ముందు ఎల్లప్పుడూ Maintainer, Depends మరియు Architecture డిఫ్ చూడండి."
-
-#: src/zfr_lib/lint/docs.py:240
-#, python-format
-msgid "Checker `%s`."
-msgstr "చెకర్ `%s`."
-
-#: src/zfr_lib/lint/docs.py:243
-msgid "RPM must mirror Meson/Debian"
-msgstr "RPM Meson/Debianను ప్రతిబింబించాలి"
-
-#: src/zfr_lib/lint/docs.py:245
-#, python-format
-msgid "spec %files, BuildArch, and Version have to describe the same payload Meson installs. Project-local rpmbuild TOPDIR and stale file lists are common failure modes."
-msgstr "spec %files, BuildArch మరియు Version Meson ఇన్‌స్టాల్ చేసే అదే పేలోడ్‌ను వివరించాలి. ప్రాజెక్ట్-స్థానిక rpmbuild TOPDIR మరియు పాత ఫైల్ జాబితాలు సాధారణ వైఫల్య మోడ్‌లు."
-
-#: src/zfr_lib/lint/docs.py:252
-#, python-format
-msgid "Severity hint: %s."
-msgstr "తీవ్రత సూచన: %s."
-
-#: src/zfr_lib/lint/docs.py:255
-msgid "Typical fallout"
-msgstr "సాధారణ పరిణామాలు"
-
-#: src/zfr_lib/lint/docs.py:257
-msgid "Unpackaged files, wrong noarch/ELF, leftover rpmbuild/, or Debian substvars copied into Requires."
-msgstr "ప్యాకేజ్ కాని ఫైళ్లు, తప్పు noarch/ELF, మిగిలిన rpmbuild/, లేదా Requiresలోకి కాపీ చేసిన Debian substvars."
-
-#: src/zfr_lib/lint/docs.py:265
-msgid "Meson is the build system of record"
-msgstr "Meson అధికారిక బిల్డ్ సిస్టమ్"
-
-#: src/zfr_lib/lint/docs.py:267
-msgid "Identity, license, version source, man pages, completion, and look/posync targets live in meson.build. Drift here breaks Debian and RPM alike."
-msgstr "గుర్తింపు, లైసెన్స్, వెర్షన్ మూలం, man పేజీలు, completion మరియు look/posync లక్ష్యాలు meson.buildలో ఉంటాయి. ఇక్కడ విచలనం Debian మరియు RPM రెండింటినీ విచ్ఛిన్నం చేస్తుంది."
-
-#: src/zfr_lib/lint/docs.py:275
-#, python-format
-msgid "Parses meson.build for `%s` expectations."
-msgstr "`%s` అంచనాల కోసం meson.buildను పార్స్ చేస్తుంది."
-
-#: src/zfr_lib/lint/docs.py:278
-msgid "Editing tips"
-msgstr "సవరణ చిట్కాలు"
-
-#: src/zfr_lib/lint/docs.py:280
-msgid "Ize patches meson.build; reconcile custom targets with template blocks and re-configure after large edits."
-msgstr "Ize meson.buildను ప్యాచ్ చేస్తుంది; కస్టమ్ లక్ష్యాలను టెంప్లేట్ బ్లాక్‌లతో సయోధ్యపరచి పెద్ద సవరణల తర్వాత మళ్లీ కాన్ఫిగర్ చేయండి."
-
-#: src/zfr_lib/lint/docs.py:288
-msgid "Locales are a product surface"
-msgstr "లొకేల్స్ ఒక ఉత్పత్తి ఉపరితలం"
-
-#: src/zfr_lib/lint/docs.py:290
-msgid "Gettext catalogs and whole-document man/<locale>/ pages gate what users see at the configured l10n level (`-l` / lint.options)."
-msgstr "Gettext కేటలాగ్‌లు మరియు పూర్తి-పత్ర man/<locale>/ పేజీలు కాన్ఫిగర్ చేసిన l10n స్థాయిలో (`-l` / lint.options) వినియోగదారులు ఏమి చూస్తారో నియంత్రిస్తాయి."
-
-#: src/zfr_lib/lint/docs.py:299
-msgid "Looks at LINGUAS, .po wrap/quality, and man coverage."
-msgstr "LINGUAS, .po ర్యాప్/నాణ్యత మరియు man కవరేజ్‌ను చూస్తుంది."
-
-#: src/zfr_lib/lint/docs.py:303
-msgid "Human work remains"
-msgstr "మానవ పని మిగిలి ఉంది"
-
-#: src/zfr_lib/lint/docs.py:305
-msgid "Ize can stub .po files and fix wrap style; real translation and man localization still need people (or `zfr translate`)."
-msgstr "Ize .po ఫైళ్లను స్టబ్ చేసి ర్యాప్ శైలిని సరిదిద్దవచ్చు; నిజమైన అనువాదం మరియు man స్థానికీకరణకు ఇంకా మనుషులు (లేదా `zfr translate`) అవసరం."
-
-#: src/zfr_lib/lint/docs.py:313
-msgid "Shared layout keeps tools oriented"
-msgstr "భాగస్వామ్య లేఅవుట్ సాధనాలను దిశనిర్దేశం చేస్తుంది"
-
-#: src/zfr_lib/lint/docs.py:315
-msgid "LICENSE, man/, VERSION, hooks, completion, and scripts/ are the landmarks create/ize/lint/release expect."
-msgstr "LICENSE, man/, VERSION, hooks, completion మరియు scripts/ create/ize/lint/release ఆశించే మైలురాళ్లు."
-
-#: src/zfr_lib/lint/docs.py:320
-#, python-format
-msgid "Missing or wrong: %s"
-msgstr "తప్పిపోయింది లేదా తప్పు: %s"
-
-#: src/zfr_lib/lint/docs.py:323
-#, python-format
-msgid "`%s` checks presence/content against the language template."
-msgstr "`%s` భాషా టెంప్లేట్‌కు వ్యతిరేకంగా ఉనికి/కంటెంట్‌ను తనిఖీ చేస్తుంది."
-
-#: src/zfr_lib/lint/docs.py:328
-msgid "Scaffold refresh"
-msgstr "స్కాఫోల్డ్ రిఫ్రెష్"
-
-#: src/zfr_lib/lint/docs.py:330
-msgid "Solve may install or refresh files from the template (.githooks, LICENSE, cursor rules, …). Review before commit."
-msgstr "Solve టెంప్లేట్ నుండి ఫైళ్లను ఇన్‌స్టాల్ లేదా రిఫ్రెష్ చేయవచ్చు (.githooks, LICENSE, cursor rules, …). కమిట్‌కు ముందు సమీక్షించండి."
-
-#: src/zfr_lib/lint/docs.py:338
-msgid "Language-template expectations"
-msgstr "భాషా-టెంప్లేట్ అంచనాలు"
-
-#: src/zfr_lib/lint/docs.py:340
-#, python-format
-msgid "%(title)s. Each language keeps idiomatic markers (tests/, Cargo.toml, bas i18n helpers, bash *.in, …) so the tree stays packagable."
-msgstr "%(title)s. ప్రతి భాష ఇడియమాటిక్ మార్కర్లను ఉంచుతుంది (tests/, Cargo.toml, bas i18n helpers, bash *.in, …) తద్వారా ట్రీ ప్యాకేజ్ చేయదగినదిగా ఉంటుంది."
-
-#: src/zfr_lib/lint/docs.py:347
-msgid "Details"
-msgstr "వివరాలు"
-
-#: src/zfr_lib/lint/docs.py:350
-#, python-format
-msgid "Implemented as `%s`; severity hint %s."
-msgstr "`%s`గా అమలు చేయబడింది; తీవ్రత సూచన %s."
-
-#: src/zfr_lib/lint/docs.py:358
-msgid "One name across ecosystems"
-msgstr "పర్యావరణాల్లో ఒకే పేరు"
-
-#: src/zfr_lib/lint/docs.py:360
-msgid "Directory name, meson project(), debian Source, and RPM Name must agree. Mismatches confuse rename, release, and repos."
-msgstr "డైరెక్టరీ పేరు, meson project(), debian Source మరియు RPM Name ఏకీభవించాలి. అసమతుల్యత rename, release మరియు reposను గందరగోళపరుస్తుంది."
-
-#: src/zfr_lib/lint/docs.py:365
-#, python-format
-msgid "Check: %s"
-msgstr "తనిఖీ: %s"
-
-#: src/zfr_lib/lint/docs.py:366
-#, python-format
-msgid "`%s` compares identity fields."
-msgstr "`%s` గుర్తింపు ఫీల్డ్‌లను పోల్చుతుంది."
-
-#: src/zfr_lib/lint/docs.py:372
-msgid "Source hygiene"
-msgstr "సోర్స్ పరిశుభ్రత"
-
-#: src/zfr_lib/lint/docs.py:374
-#, python-format
-msgid "%(title)s. Covers length and hardcoded paths/versions that break relocatable installs."
-msgstr "%(title)s. స్థానమార్పు చేయదగిన ఇన్‌స్టాల్‌లను విచ్ఛిన్నం చేసే పొడవు మరియు హార్డ్‌కోడ్ చేసిన మార్గాలు/వెర్షన్‌లను కవర్ చేస్తుంది."
-
-#: src/zfr_lib/lint/docs.py:380
-msgid "How lint looks"
-msgstr "lint ఎలా చూస్తుంది"
-
-#: src/zfr_lib/lint/docs.py:383
-msgid "Counts lines and/or scans for FHS paths and version tokens."
-msgstr "పంక్తులను లెక్కిస్తుంది మరియు/లేదా FHS మార్గాలు మరియు వెర్షన్ టోకెన్‌లను స్కాన్ చేస్తుంది."
-
-#: src/zfr_lib/lint/docs.py:396
-#, python-format
-msgid "`%s` keeps templates instantiable and apps free of leftover placeholders / banners."
-msgstr "`%s` టెంప్లేట్లను ఇన్‌స్టాన్షియేట్ చేయదగినవిగా మరియు యాప్‌లను మిగిలిన ప్లేస్‌హోల్డర్లు / బ్యానర్ల నుండి విముక్తి చేస్తుంది."
-
-#: src/zfr_lib/lint/docs.py:411
-#, python-format
-msgid "Implemented under `%s` in `zfr lint`. Findings carry a concrete fix string when possible. Remap severity with `-w` / `-e` / `--strict`."
-msgstr "`zfr lint`లో `%s` కింద అమలు చేయబడింది. సాధ్యమైనప్పుడు కనుగొనికలు నిర్దిష్ట ఫిక్స్ స్ట్రింగ్‌ను కలిగి ఉంటాయి. `-w` / `-e` / `--strict`తో తీవ్రతను రీమ్యాప్ చేయండి."
-
-#: src/zfr_lib/lint/docs.py:421
-#, python-format
-msgid "Rule %(id)s (`%(code)s`) is part of the zephyr packaging/layout contract. Default severity hint: %(sev)s."
-msgstr "నియమం %(id)s (`%(code)s`) zephyr ప్యాకేజింగ్/లేఅవుట్ ఒప్పందంలో భాగం. డిఫాల్ట్ తీవ్రత సూచన: %(sev)s."
-
-#: src/zfr_lib/lint/docs.py:427
-msgid "What lint does"
-msgstr "lint ఏమి చేస్తుంది"
-
-#: src/zfr_lib/lint/docs.py:431
-msgid "Changing the tree"
-msgstr "ట్రీని మార్చడం"
-
-#: src/zfr_lib/lint/docs.py:433
-#, python-format
-msgid "Fixes may touch packaging, meson.build, sources, or scaffold copies. Diff Maintainer, Depends, %files, and *.in scripts before upload."
-msgstr "ఫిక్స్‌లు ప్యాకేజింగ్, meson.build, సోర్సులు లేదా స్కాఫోల్డ్ కాపీలను తాకవచ్చు. అప్‌లోడ్‌కు ముందు Maintainer, Depends, %files మరియు *.in స్క్రిప్టుల డిఫ్ చూడండి."
-
-#: src/zfr_lib/lint/gitignore.py:94
+#: src/lint/gitignore.py:94
 msgid "missing root .gitignore"
 msgstr "Cargo.toml లేదు"
 
-#: src/zfr_lib/lint/gitignore.py:97
+#: src/lint/gitignore.py:97
 msgid "Add a root .gitignore covering node_modules/, dist/, and other build artifacts. Component dirs (backend/, web/, …) should get their own .gitignore too."
 msgstr "ఒక మూలం.gitignore కలిగి node_modules/, dist/, మరియు ఇతర కట్టడ భాగములను కలిగిన మూలాన్ని జతచేయుము. భాగం డైరెక్టర్లు (backend/, web/, ...) వారి సొంత .gitignoreను కూడా పొందాలి."
 
-#: src/zfr_lib/lint/gitignore.py:107
+#: src/lint/gitignore.py:107
 msgid "root .gitignore present"
 msgstr "మూలం.gitignore ప్రస్తుతం"
 
-#: src/zfr_lib/lint/gitignore.py:116
+#: src/lint/gitignore.py:116
 #, python-format
 msgid "root .gitignore missing common patterns: %s"
 msgstr "రూట్ .gitignore సాధారణ రూట్లు లేదు: %s"
 
-#: src/zfr_lib/lint/gitignore.py:118
+#: src/lint/gitignore.py:118
 #, python-format
 msgid "Add %s to the project-root .gitignore."
 msgstr "ప్రోజెక్టుకు %s జతచేయుము-root .gitignore."
 
-#: src/zfr_lib/lint/gitignore.py:126
+#: src/lint/gitignore.py:126
 msgid "root .gitignore covers node_modules/ and dist/"
 msgstr "మూలం.gitignore node_modules/ మరియు dist/ కవర్స్"
 
-#: src/zfr_lib/lint/gitignore.py:136
+#: src/lint/gitignore.py:136
 #, python-format
 msgid "root .gitignore could also ignore: %s"
 msgstr "మూట్.gitignore కూడా అలవర్చుకోవచ్చు: %s"
 
-#: src/zfr_lib/lint/gitignore.py:153
+#: src/lint/gitignore.py:153
 #, python-format
 msgid "missing %s (component directory exists)"
 msgstr "లేదు %s (సూచిక డైరెక్టరీ అవుతుంది)"
 
-#: src/zfr_lib/lint/gitignore.py:155
+#: src/lint/gitignore.py:155
 #, python-format
 msgid "Add %s covering: %s"
 msgstr "%s కప్పు: %s"
 
-#: src/zfr_lib/lint/gitignore.py:166
-#, fuzzy, python-format
+#: src/lint/gitignore.py:166
 msgid "%s missing patterns: %s"
 msgstr "%s లేదు"
 
-#: src/zfr_lib/lint/gitignore.py:168
+#: src/lint/gitignore.py:168
 #, python-format
 msgid "Add to %s: %s"
 msgstr "%s కు జతచేయుము: %s"
 
-#: src/zfr_lib/lint/gitignore.py:176
+#: src/lint/gitignore.py:176
 #, python-format
 msgid "%s covers required patterns"
 msgstr "%s అవసరమైన పొడవులను కవర్చుతుంది"
 
-#: src/zfr_lib/lint/hardcoded.py:161
+#: src/lint/hardcoded.py:161
 msgid "zfr CLI package uses configure_file wrappers for install paths"
 msgstr "zfr CLI ప్యాకేజ్ ఇన్‌స్టాల్ మార్గాల కోసం configure_file ర్యాపర్స్‌ను ఉపయోగిస్తుంది"
 
-#: src/zfr_lib/lint/hardcoded.py:191
+#: src/lint/hardcoded.py:191
 #, python-format
 msgid "hardcoded install path %(sample)s in %(rel)s"
 msgstr "హార్డ్కోడెడ్ ఇన్‌స్టాల్ పథం %(sample)s లో %(rel)s"
 
-#: src/zfr_lib/lint/hardcoded.py:196 src/zfr_lib/lint/i18n_check.py:289
-#: src/zfr_lib/lint/i18n_check.py:327 src/zfr_lib/lint/i18n_check.py:345
-#: src/zfr_lib/lint/leftovers.py:127 src/zfr_lib/lint/template.py:194
-#: src/zfr_lib/lint/template.py:209 src/zfr_lib/lint/template.py:215
+#: src/lint/hardcoded.py:196 src/lint/i18n_check.py:289
+#: src/lint/i18n_check.py:327 src/lint/i18n_check.py:345
+#: src/lint/leftovers.py:127 src/lint/template.py:194 src/lint/template.py:209
+#: src/lint/template.py:215
 #, python-format
 msgid " (+%d more)"
 msgstr " (+%d మరిన్ని)"
 
-#: src/zfr_lib/lint/hardcoded.py:205
+#: src/lint/hardcoded.py:205
 msgid "Replace with meson configure_file placeholders (@PREFIX@, @DATADIR@, @BINDIR@, @LIBDIR@, @LOCALEDIR@, @PKGDATADIR@): rename to *.in and run `zfr ize`."
 msgstr "మెసన్ configure_file ప్లేస్‌హోల్డర్లతో (@PREFIX@, @DATADIR@, @BINDIR@, @LIBDIR@, @LOCALEDIR@, @PKGDATADIR@) భర్తీ చేయండి: *.in గా పేరు మార్చి `zfr ize` నడపండి."
 
-#: src/zfr_lib/lint/hardcoded.py:219
+#: src/lint/hardcoded.py:219
 #, python-format
 msgid "hardcoded version %(sample)s in %(rel)s"
 msgstr "హార్డ్‌కోడ్ చేసిన వెర్షన్ %(sample)s లో %(rel)s"
 
-#: src/zfr_lib/lint/hardcoded.py:224
+#: src/lint/hardcoded.py:224
 msgid "Use @VERSION@ (scripts → *.in + configure_file) or PROJECT_VERSION from config.h (C/C++). Run `zfr ize`."
 msgstr "config.h (C/C++) నుండి @VERSION@ (scripts → *.in + configure_file) లేదా PROJECT_VERSION ఉపయోగించండి. `zfr ize` నడపండి."
 
-#: src/zfr_lib/lint/hardcoded.py:236
+#: src/lint/hardcoded.py:236
 msgid "no hardcoded install paths or project version strings in sources"
 msgstr "సోర్స్‌లో ఎలాంటి హార్డ్‌కోడ్ చేయబడిన ఇన్‌స్టాల్ పథాలు లేదా ప్రాజెక్ట్ వెర్షన్ స్ట్రింగ్‌లు లేవు"
 
-#: src/zfr_lib/lint/i18n_check.py:62
+#: src/lint/i18n_check.py:62
 #, python-format
 msgid "l10n level %s: no locale coverage required"
 msgstr "l10n స్థాయి %s: లొకేల్ కవరేజ్ అవసరం లేదు"
 
-#: src/zfr_lib/lint/i18n_check.py:71
+#: src/lint/i18n_check.py:71
 #, python-format
 msgid "l10n level %(level)s (%(count)d locales)"
 msgstr "l10n స్థాయి %(level)s (%(count)d లొకేల్‌లు)"
 
-#: src/zfr_lib/lint/i18n_check.py:84
+#: src/lint/i18n_check.py:84
 msgid "no po/ directory (optional unless the project uses gettext)"
 msgstr "po/ డైరెక్టరీ లేదు (ప్రాజెక్ట్ gettext వాడకపోతే ఐచ్ఛికం)"
 
-#: src/zfr_lib/lint/i18n_check.py:85
+#: src/lint/i18n_check.py:85
 #, python-format
 msgid "If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in meson.build. Required locales at %(level)s: %(locales)s (source language %(source)s)."
 msgstr "యాప్ అనువదించబడితే, meson.buildలో i18n.gettext()తో po/లో LINGUAS + *.po జోడించండి. %(level)s వద్ద అవసరమైన లొకేల్‌లు: %(locales)s (మూల భాష %(source)s)."
 
-#: src/zfr_lib/lint/i18n_check.py:103
+#: src/lint/i18n_check.py:103
 msgid "po/ exists but po/LINGUAS is missing or empty"
 msgstr "po/ ఉంది కానీ po/LINGUAS లేదు లేదా ఖాళీ"
 
-#: src/zfr_lib/lint/i18n_check.py:105
+#: src/lint/i18n_check.py:105
 #, python-format
 msgid ""
 "Create po/LINGUAS listing at least:\n"
@@ -1501,36 +1196,36 @@ msgstr ""
 "%(locales)s\n"
 "(ఆంగ్లం/%(source)s msgid మూలం; జాబితాలో ఉండదు.)"
 
-#: src/zfr_lib/lint/i18n_check.py:124
+#: src/lint/i18n_check.py:124
 #, python-format
 msgid "po/LINGUAS missing %(level)s locale(s): %(locales)s"
 msgstr "po/LINGUASలో %(level)s లొకేల్(లు) లేవు: %(locales)s"
 
-#: src/zfr_lib/lint/i18n_check.py:127
+#: src/lint/i18n_check.py:127
 #, python-format
 msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
 msgstr "స్థాయి %(level)sకు కావాలి: %(locales)s (మూలం %(source)s; zh-cn→zh_CN, zh-tw→zh_TW). లేని పంక్తులను LINGUASకు జోడించి సరిపోలే po/<locale>.po జోడించండి."
 
-#: src/zfr_lib/lint/i18n_check.py:142
+#: src/lint/i18n_check.py:142
 #, python-format
 msgid "po/LINGUAS covers %s primary locale set"
 msgstr "po/LINGUAS %s లొకేల్ సమితిని కవర్ చేస్తుంది"
 
-#: src/zfr_lib/lint/i18n_check.py:159
+#: src/lint/i18n_check.py:159
 #, python-format
 msgid "LINGUAS entries without po/<locale>.po: %s"
 msgstr "po/<locale>.po లేని LINGUAS ఎంట్రీలు: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:161
+#: src/lint/i18n_check.py:161
 msgid "For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U --no-wrap po/<locale>.po <domain>.pot"
 msgstr "ప్రతి లొకేల్‌కు: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
 
-#: src/zfr_lib/lint/i18n_check.py:177
+#: src/lint/i18n_check.py:177
 #, python-format
 msgid "%(level)s locale .po files present (%(count)d)"
 msgstr "%(level)s లొకేల్ .po ఫైళ్లు ఉన్నాయి (%(count)d)"
 
-#: src/zfr_lib/lint/i18n_check.py:198
+#: src/lint/i18n_check.py:198
 msgid ""
 "Prefer `poedit` for catalog updates (no custom patch scripts). Translate new msgids yourself, then batch-apply:\n"
 "  poedit -l ab,de,fg <<EOT\n"
@@ -1540,427 +1235,355 @@ msgid ""
 "For whole-document README/man (adoc), `googletranslator` with http-proxy http://localhost:8118 can help; do not use it for gettext."
 msgstr "క్యాటలాగ్ నవీకరణలకు `poedit`ను మించిపెట్టండి (ఇచ్చిన ప్యాచ్ స్క్రిప్టులు ఉపయోగించవద్దు). కొత్త msgidలను మీరు స్వయంగా అనువదించండి, అప్పుడు బ్యాచ్-అప్లై చేయండి:\\n  poedit -l ab,de,fg <<EOT\\n  <msgid>\\t<ab>\\t<de>\\t<fg>\\n  ...\\n  EOT\\nమొత్తం-డొక్యుమెంట్ README/man (adoc) కోసం, `googletranslator` ను http-proxy http://localhost:8118 తో ఉపయోగించడం సహాయకంగా ఉంటుంది; దాన్ని gettext కోసం ఉపయోగించవద్దు."
 
-#: src/zfr_lib/lint/i18n_check.py:238
+#: src/lint/i18n_check.py:238
 #, python-format
 msgid "%d empty"
 msgstr "%d ఖాళీ"
 
-#: src/zfr_lib/lint/i18n_check.py:240
+#: src/lint/i18n_check.py:240
 #, python-format
 msgid "%d omitted msgid-copy"
 msgstr "%d తొలగించబడిన msgid-కాపీ"
 
-#: src/zfr_lib/lint/i18n_check.py:254
+#: src/lint/i18n_check.py:254
 #, python-format
 msgid "gettext catalogs use line wrapping: %s"
 msgstr "gettext క్యాటోగ్స్ వరుస వైపును వుపయోగించుము: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:256
-#, fuzzy
+#: src/lint/i18n_check.py:256
 msgid "Run `zfr ize` (ZI0016) or `msgcat --no-wrap -o file.po file.po` on each catalog; use msgmerge --no-wrap when updating from .pot."
 msgstr "ప్రతి క్యాటాల్గోగ్ `zfr ize` నడుపుము (ZI0016) లేదా `msgcat --no-wrap -o file.po file.po`; .pot నుండి అప్రదింపునప్పుడు msgmerge --no-wrapను వుపయోగించుము."
 
-#: src/zfr_lib/lint/i18n_check.py:265
+#: src/lint/i18n_check.py:265
 msgid "gettext catalogs use --no-wrap (no line wrapping)"
 msgstr "gettext క్యాటాల్గోల్స్ --no-wrap (వరుస వేరు లేవు)"
 
-#: src/zfr_lib/lint/i18n_check.py:274
+#: src/lint/i18n_check.py:274
 #, python-format
 msgid " (%d packaging field/snippet msgids are keep-English and not counted)"
 msgstr "(%d ప్యాకేజింగ్ ఫీల్డ్/స్నిపెట్ msgids ఇంగ్లీష్‌లో ఉంచబడతాయి మరియు లెక్కించబడవు)"
 
-#: src/zfr_lib/lint/i18n_check.py:284
+#: src/lint/i18n_check.py:284
 #, python-format
 msgid "gettext catalog(s) have empty msgstr or omitted translations: %s"
 msgstr "gettext క్యాటలాగ్(లు) ఖాళీ msgstr లేదా మోసివేసిన అనువాదాలను కలిగి ఉన్నాయి: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:293
+#: src/lint/i18n_check.py:293
 #, python-format
 msgid "Empty msgstr and msgstr identical to msgid are omissions when a primary locale (zh_CN) translated the same msgid. Packaging field literals and code snippets that zh_CN also leaves in English do not need translation. %(poedit)s"
 msgstr "ప్రాథమిక లోకాల్ (zh_CN) అదే msgid ను అనువదించినప్పుడు ఖాళీ msgstr మరియు msgid కి సమానమైన msgstrలు అనవసరాలు. ప్యాకేజింగ్ ఫీల్డ్ లిటరల్స్ మరియు కోడ్ స్నిప్పెట్స్‌ను zh_CN కూడా ఆంగ్లంలోనే ఉంచితే వాటి అనువాదం అవసరం లేదు. %(poedit)s"
 
-#: src/zfr_lib/lint/i18n_check.py:306
+#: src/lint/i18n_check.py:306
 #, python-format
 msgid "gettext catalog(s) effectively untranslated (≤20%%): %s"
 msgstr "gettext క్యాటలాగ్(లు) ప్రభావవంతంగా అనువదించబడలేదు (≤20%%): %s"
 
-#: src/zfr_lib/lint/i18n_check.py:309
+#: src/lint/i18n_check.py:309
 #, python-format
 msgid "Empty msgstr and msgid→msgstr copies count as untranslated (English variants en_AU/en_GB/… are exempt when msgid is English). At ≤20%% completion, rewrite the whole .po by hand — do not write patch/sed scripts. %(poedit)s"
 msgstr "ఖాళీ msgstr మరియు msgid→msgstr నకలులు అనువదించబడని వంటివిగా పరిగణించబడతాయి (msgid ఆంగ్లంలో ఉన్నపుడు ఆంగ్ల వేరియంట్లు en_AU/en_GB/… మినహితంగా ఉంటాయి). ≤20%% పూర్తి స్థాయిలో, మొత్తం .po ఫైల్‌ని చేతితో తిరిగి రాయండి — patch/sed స్క్రిప్టులు రాయవద్దు. %(poedit)s"
 
-#: src/zfr_lib/lint/i18n_check.py:321
-#, fuzzy, python-format
+#: src/lint/i18n_check.py:321
 msgid "gettext catalogs have usable translation coverage (%s)"
 msgstr "gettext క్యాటోగ్స్ వరుస వైపును వుపయోగించుము: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:339
-#, fuzzy, python-format
+#: src/lint/i18n_check.py:339
 msgid "gettext catalogs above 20%% completion (%s)"
 msgstr "gettext క్యాటోగ్స్ వరుస వైపును వుపయోగించుము: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:382
+#: src/lint/i18n_check.py:382
 #, python-format
 msgid "missing whole-document man translations for %(level)s: %(files)s"
 msgstr "%(level)sకు పూర్తి పత్రం man అనువాదాలు లేవు: %(files)s"
 
-#: src/zfr_lib/lint/i18n_check.py:385
+#: src/lint/i18n_check.py:385
 #, python-format
 msgid "Hand-translate man/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
 msgstr "docs/<locale>/<name>.adocను చేతితో అనువదించండి (పూర్తి పత్రం, po4a కాదు). %(level)sకు కావాలి: %(locales)s."
 
-#: src/zfr_lib/lint/i18n_check.py:395
+#: src/lint/i18n_check.py:395
 #, python-format
 msgid "%s whole-document man translations present"
 msgstr "%s పూర్తి పత్రం man అనువాదాలు ఉన్నాయి"
 
-#: src/zfr_lib/lint/i18n_check.py:404
+#: src/lint/i18n_check.py:404
 #, python-format
 msgid "man translation still contains the English Name line: %s"
 msgstr "man అనువాదంలో ఇంకా ఆంగ్ల Name పంక్తి ఉంది: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:407
+#: src/lint/i18n_check.py:407
 msgid "Translate the Name line; do not leave the English wording. For long adoc, googletranslator with http-proxy http://localhost:8118 can help (not for gettext)."
 msgstr "పేరు లైన్‌ను అనువదించండి; ఆంగ్ల పదజాలాన్ని విడిచిపెట్టకండి. పొడవైన adoc కోసం, googletranslator తో http-proxy http://localhost:8118 సహాయం చేయవచ్చు (gettext కోసం కాదు)."
 
-#: src/zfr_lib/lint/i18n_check.py:417
+#: src/lint/i18n_check.py:417
 msgid "no po/: man locale translations not required"
 msgstr "po/ లేదు: మాన్ లోకెల్ అనువాదములు అవసరం లేదు"
 
-#: src/zfr_lib/lint/identity.py:57
+#: src/lint/identity.py:57
 #, python-format
 msgid "%(label)s is %(val)r, expected %(expected)r (directory name)"
 msgstr "%(label)s విలువ %(val)r, ఆశించినది %(expected)r (డైరెక్టరీ పేరు)"
 
-#: src/zfr_lib/lint/identity.py:60
+#: src/lint/identity.py:60
 #, python-format
 msgid "Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename %(expected)s` if leftover template names remain."
 msgstr "%(label)sను %(expected)rకు సెట్ చేయండి, లేదా డైరెక్టరీని పేరు మార్చండి. టెంప్లేట్ పేర్లు మిగిలితే `zfr rename %(expected)s` వాడండి."
 
-#: src/zfr_lib/lint/identity.py:66
+#: src/lint/identity.py:66
 #, python-format
 msgid "%(label)s=%(val)s"
 msgstr "%(label)s=%(val)s"
 
-#: src/zfr_lib/lint/identity.py:69
+#: src/lint/identity.py:69
 #, python-format
 msgid "meson project name=%s"
 msgstr "meson ప్రాజెక్ట్ పేరు=%s"
 
-#: src/zfr_lib/lint/identity.py:75
+#: src/lint/identity.py:75
 #, python-format
 msgid "debian Source=%(source)r != meson project=%(meson)r"
 msgstr "debian Source=%(source)r != meson ప్రాజెక్ట్=%(meson)r"
 
-#: src/zfr_lib/lint/identity.py:78
+#: src/lint/identity.py:78
 msgid "Keep Source, Package, and meson project() name identical."
 msgstr "Source, Package మరియు meson project() పేరును ఒకేలా ఉంచండి."
 
-#: src/zfr_lib/lint/identity.py:82
+#: src/lint/identity.py:82
 #, python-format
 msgid "Source=%s"
 msgstr "Source=%s"
 
-#: src/zfr_lib/lint/identity.py:95
+#: src/lint/identity.py:95
 #, python-format
 msgid "spec Name=%(spec)r != debian/meson name %(want)r"
 msgstr "spec Name=%(spec)r != debian/meson పేరు %(want)r"
 
-#: src/zfr_lib/lint/identity.py:99
+#: src/lint/identity.py:99
 #, python-format
 msgid "Set Name: %s in the spec (same as debian Source)."
 msgstr "specలో Name: %s సెట్ చేయండి (debian Source లాగా)."
 
-#: src/zfr_lib/lint/identity.py:103
+#: src/lint/identity.py:103
 #, python-format
 msgid "spec Name=%s"
 msgstr "spec Name=%s"
 
-#: src/zfr_lib/lint/__init__.py:136
-msgid "validate project packaging and zephyr layout (walks parents from cwd)"
-msgstr "ప్రాజెక్టు ప్యాకేజింగ్ మరియు zephyr అమరికను తనిఖీ చేయి (ప్రస్తుత సంచయం నుండి పైకి వెతుకుతుంది)"
-
-#: src/zfr_lib/lint/__init__.py:138
-msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain interactive shell. Override with -i/-I."
-msgstr "ప్రస్తుత zephyr ప్రాజెక్టులో లేని ఫైళ్లు మరియు ప్యాకేజింగ్/శైలి తప్పులను చూస్తుంది. ప్రస్తుత సంచయం నుండి పైకి వెతుకుతుంది. stdout టెర్మినల్ అయితే CSR రంగులు."
-
-#: src/zfr_lib/lint/__init__.py:149
-msgid "show passing checks too"
-msgstr "విజయవంతమైన తనిఖీలను కూడా చూపించు"
-
-#: src/zfr_lib/lint/__init__.py:150
-msgid "only print errors"
-msgstr "లోపాలు మాత్రమే చూపించు"
-
-#: src/zfr_lib/lint/__init__.py:156
-msgid "open a local web UI with maximum-verbosity lint results, locale switcher, and per-finding [ize] actions"
-msgstr "గరిష్ట-వెerbosity లింట్ ఫలితాలతో, లోకల్ వెబ్ UI, లోకేల్ స్విచ్చర్, మరియు ప్రతి ఫైండ్ల కోసం [ize] చర్యలను తెరవండి"
-
-#: src/zfr_lib/lint/__init__.py:170
-msgid "treat LEVEL as warning (LEVEL=note|warn|error; default note: note→warn; warn=no-op; error→warn)"
-msgstr "LEVEL ను హెచ్చరికగా పరిగణించండి (LEVEL=note|warn|error; డిఫాల్ట్ నోట్: note→warn; warn=no-op; error→warn)"
-
-#: src/zfr_lib/lint/__init__.py:184
-msgid "treat LEVEL as error (LEVEL=note|warn|error; default warn: warn→error; note→note+warn→error; error=no-op)"
-msgstr "LEVEL ను తప్పుగా (error) పరిగణించండి (LEVEL=note|warn|error; డిఫాల్ట్ warn: warn→error; note→note+warn→error; error=no-op)"
-
-#: src/zfr_lib/lint/__init__.py:193
-msgid "alias for -e/--error=warn (treat warnings as errors)"
-msgstr "-e/--error=warn కోసం భేదపేర్లను (హెచ్చరికలను తప్పిదాలుగా తీసుకోవాలి)"
-
-#: src/zfr_lib/lint/__init__.py:199
-msgid "list numbered lint standards (ZL*) as a table and exit"
-msgstr "అంఖ్య లీంట్ ప్రమాణములను (ZL*) జాబితాను పెట్టుకొని బయటకు తీసుకుని"
-
-#: src/zfr_lib/lint/__init__.py:205
-#, fuzzy
-msgid "show details for lint standard NUM (e.g. ZL0026, 26) and exit"
-msgstr "lint స్మాంటర్ NUM కొరకు వివరాలను చూపుము (उ. యు. ZL0026, 26) మరియు బయటకు వెళ్ళు"
-
-#: src/zfr_lib/lint/__init__.py:213
-msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
-msgstr "అవసరమైన gettext/మాన్యువల్ locale కవరేజ్ L0–L3 (డిఫాల్ట్ L1; ప్రాజెక్టు ఫైల్ భర్తీ చేయవచ్చు)"
-
-#: src/zfr_lib/lint/__init__.py:221
-msgid "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
-msgstr "zephyr శైలి -contract / తరువాత-steps బలాబ్స్ (పైపులు మరియు AI టెర్మినల్లు కొరకు అప్రమేయము) చూపుము"
-
-#: src/zfr_lib/lint/__init__.py:228
-msgid "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
-msgstr "zephyr శైలిని దాచించుము-contract / తరువాత-steps స్లేబ్స్ (సాధారణ ఇంటెరెక్టెక్షన్ షెల్ కొరకు అప్రమేయ)"
-
-#: src/zfr_lib/lint/__init__.py:238
-msgid "suppress rule ID(s) or code(s), comma-separated (repeatable)"
-msgstr "నియమా ID(లు) లేదా కోడ్(లు)ను దిగుమతిచేయుము, కమ్ -separated (పునఃప్రారంభించగల)"
-
-#: src/zfr_lib/lint/__init__.py:246
-#, fuzzy
-msgid "force-enable rule ID(s) or code(s) even if unchecked (repeatable)"
-msgstr "నియమా ID(లు) లేదా కోడ్(లు)ను దిగుమతిచేయుము, కమ్ -separated (పునఃప్రారంభించగల)"
-
-#: src/zfr_lib/lint/__init__.py:260
-#, python-format
-msgid "unknown lint standard: %s"
-msgstr "తెలియని lint ప్రమాణము: %s"
-
-#: src/zfr_lib/lint/lang_bits.py:31
+#: src/lint/lang_bits.py:31
 #, python-format
 msgid "legacy example module %s; use commons or a specific name"
 msgstr "పాత ఉదాహరణ మాడ్యూల్ %s; commons లేదా నిర్దిష్ట పేరు వాడండి"
 
-#: src/zfr_lib/lint/lang_bits.py:33
+#: src/lint/lang_bits.py:33
 msgid "Rename to src/commons.* (template convention) or a project-specific module name."
 msgstr "src/commons.* (టెంప్లేట్ సంప్రదాయం) లేదా ప్రాజెక్ట్-నిర్దిష్ట మాడ్యూల్ పేరుకు మార్చండి."
 
-#: src/zfr_lib/lint/lang_bits.py:44
+#: src/lint/lang_bits.py:44
 #, python-format
 msgid "%s is only a template example; can be removed if unnecessary"
 msgstr "%s భాగస్వామ్య సహాయకుల కోసం కేవలం టెంప్లేట్ ఉదాహరణ"
 
-#: src/zfr_lib/lint/lang_bits.py:46
+#: src/lint/lang_bits.py:46
 msgid "commons.* is only a template example for shared helpers and can be removed if unnecessary. Prefer a concrete module name in real projects (e.g. stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
 msgstr "common_lib / commons అంటే “పునర్వినియోగ భాగాలను వేరు చేయడం”, కానీ ఫైల్ పేర్లు నిర్దిష్టంగా ఉండాలి. నిజమైన ప్రాజెక్టుల్లో నిర్దిష్ట మాడ్యూల్‌కు మార్చండి (ఉదా. stream_copy.py, bulk.h). clib/cpplib భాగస్వామ్య లైబ్రరీ ప్రవేశంగా lib.c/lib.cpp ఉంచుతాయి."
 
-#: src/zfr_lib/lint/layout.py:35
+#: src/lint/layout.py:35
 msgid "Add a top-level meson.build with project(...)."
 msgstr "project(...)తో టాప్-లెవల్ meson.build జోడించండి."
 
-#: src/zfr_lib/lint/layout.py:36
+#: src/lint/layout.py:36
 msgid "Run `zfr ize` (or `zfr create`) to install the standard AGPL-3.0 LICENSE."
 msgstr "ప్రామాణిక AGPL-3.0 లైసెన్స్‌ను ఇన్‌స్టాల్ చేయడానికి `zfr ize` (లేదా `zfr create`) నడపండి."
 
-#: src/zfr_lib/lint/layout.py:37
+#: src/lint/layout.py:37
 msgid "Add README.md describing this project."
 msgstr "ఈ ప్రాజెక్ట్‌ను వివరించే README.md జోడించండి."
 
-#: src/zfr_lib/lint/layout.py:38
+#: src/lint/layout.py:38
 msgid "Add debian/ packaging (copy debian/ from the language template)."
 msgstr "debian/ ప్యాకేజింగ్ జోడించండి (భాషా టెంప్లేట్ నుండి debian/ కాపీ చేయండి)."
 
-#: src/zfr_lib/lint/layout.py:39
+#: src/lint/layout.py:39
 msgid "Add debian/changelog (zfr create writes one; or use dch)."
 msgstr "debian/changelog జోడించండి (zfr create రాస్తుంది; లేదా dch వాడండి)."
 
-#: src/zfr_lib/lint/layout.py:40
+#: src/lint/layout.py:40
 msgid "Add debian/copyright in machine-readable format, License: AGPL-3+."
 msgstr "యంత్రం చదవగల ఆకృతిలో debian/copyright జోడించండి, License: AGPL-3+."
 
-#: src/zfr_lib/lint/layout.py:41
+#: src/lint/layout.py:41
 msgid "Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
 msgstr "dh --buildsystem=meson --builddirectory=debian/build ఉపయోగించి debian/rules జోడించండి."
 
-#: src/zfr_lib/lint/layout.py:42
+#: src/lint/layout.py:42
 msgid "Add debian/source/format (typically '3.0 (native)')."
 msgstr "debian/source/format జోడించండి (సాధారణంగా '3.0 (native)')."
 
-#: src/zfr_lib/lint/layout.py:46 src/zfr_lib/lint/layout.py:55
+#: src/lint/layout.py:46 src/lint/layout.py:55
 #, python-format
 msgid "present: %s"
 msgstr "ఉంది: %s"
 
-#: src/zfr_lib/lint/layout.py:49 src/zfr_lib/lint/layout.py:62
+#: src/lint/layout.py:49 src/lint/layout.py:62
 #, python-format
 msgid "missing %s"
 msgstr "%s లేదు"
 
-#: src/zfr_lib/lint/layout.py:65
-#, fuzzy
+#: src/lint/layout.py:65
 msgid "Add README-zh_CN.md (Simplified Chinese summary), matching other zephyr templates (legacy README-zh.md was renamed)."
 msgstr "ఇతర zephyr టెంప్లేట్ల మాదిరిగా README-zh.md (చైనీస్ సారాంశం) జోడించండి."
 
-#: src/zfr_lib/lint/layout.py:74
+#: src/lint/layout.py:74
 #, python-format
 msgid "AsciiDoc man sources: %s"
 msgstr "AsciiDoc man మూలాలు: %s"
 
-#: src/zfr_lib/lint/layout.py:81
+#: src/lint/layout.py:81
 msgid "no man/*.adoc man page source"
 msgstr "docs/*.adoc man పేజీ మూలం లేదు"
 
-#: src/zfr_lib/lint/layout.py:83
+#: src/lint/layout.py:83
 msgid "Add man/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
 msgstr "docs/<puff>.adoc మరియు asciidoctor -b manpage తో meson custom_target జోడించండి (ఏ భాషా టెంప్లేట్ అయినా చూడండి)."
 
-#: src/zfr_lib/lint/layout.py:108
+#: src/lint/layout.py:108
 #, python-format
 msgid "bash completion: %s"
 msgstr "bash పూర్తి: %s"
 
-#: src/zfr_lib/lint/layout.py:119
+#: src/lint/layout.py:119
 msgid "no *.bash bash-completion script at project root"
 msgstr "ప్రాజెక్ట్ మూలంలో *.bash bash-completion స్క్రిప్ట్ లేదు"
 
-#: src/zfr_lib/lint/layout.py:121
+#: src/lint/layout.py:121
 msgid "Add <puff>.bash (or completions/<puff>.in) and install it to datadir/bash-completion/completions renamed to the command name (see meson.build in the template)."
 msgstr "<puff>.bash జోడించి ఆదేశ పేరుకు పేరు మార్చి datadir/bash-completion/completions లో ఇన్‌స్టాల్ చేయండి (టెంప్లేట్‌లోని meson.build చూడండి)."
 
-#: src/zfr_lib/lint/layout.py:129
+#: src/lint/layout.py:129
 msgid "VERSION file present"
 msgstr "VERSION ఫైల్ ఉంది"
 
-#: src/zfr_lib/lint/layout.py:135
+#: src/lint/layout.py:135
 msgid "no VERSION file (changelog snapshot for tarball builds)"
 msgstr "VERSION ఫైల్ లేదు (tarball నిర్మాణాల కోసం changelog స్నాప్‌షాట్)"
 
-#: src/zfr_lib/lint/layout.py:137
-#, fuzzy
+#: src/lint/layout.py:137
 msgid "Create VERSION with the latest debian/changelog version (one line). Run `zfr ize` for `.githooks/pre-commit`, then `git config core.hooksPath .githooks`."
 msgstr "తాజా debian/changelog వెర్షన్‌తో VERSION సృష్టించండి (ఒక పంక్తి). .githooks/pre-commit ప్రారంభించండి: git config core.hooksPath .githooks"
 
-#: src/zfr_lib/lint/layout.py:232
+#: src/lint/layout.py:232
 msgid "no .githooks/pre-commit to sync VERSION from debian/changelog"
 msgstr "debian/changelog నుండి VERSION సమకాలీకరించడానికి .githooks/pre-commit లేదు"
 
-#: src/zfr_lib/lint/layout.py:234
+#: src/lint/layout.py:234
 msgid "Run `zfr ize` (or `zfr create`) to install `.githooks/pre-commit` and set `git config core.hooksPath .githooks`. The hook syncs VERSION from debian/changelog."
 msgstr "`.githooks/pre-commit` ను ఇన్‌స్టాల్ చేయడానికి మరియు `git config core.hooksPath .githooks` ను సెట్ చేయడానికి `zfr ize` (లేదా `zfr create`) ను 실행ించండి. హుక్ debian/changelog నుండి VERSION ను సమకాలీకరించుతుంది."
 
-#: src/zfr_lib/lint/layout.py:246
+#: src/lint/layout.py:246
 #, python-format
 msgid "pre-commit syncs VERSION from debian/changelog (%s)"
 msgstr "pre-commit debian/changelog నుండి VERSION ను సమకాలీకరిస్తుంది (%s)"
 
-#: src/zfr_lib/lint/layout.py:254
+#: src/lint/layout.py:254
 #, python-format
 msgid "%s exists but does not sync VERSION from debian/changelog"
 msgstr "%s ఉంది కానీ debian/changelog నుండి VERSION ను సమకాలీకరించదు"
 
-#: src/zfr_lib/lint/layout.py:256
+#: src/lint/layout.py:256
 msgid "Run `zfr ize` to reset the standard pre-commit hook (reads debian/changelog, writes VERSION)."
 msgstr "స్టాండర్డ్ ప్రీ-కమిట్ హుక్‌ను రీసెట్ చేయడానికి `zfr ize` ను నడపండి (debian/changelogను చదివి, VERSION ను రాస్తుంది)."
 
-#: src/zfr_lib/lint/leftovers.py:49
+#: src/lint/leftovers.py:49
 #, python-format
 msgid "%s keeps the template placeholder banner (apps must rewrite it)"
 msgstr "%s టెంప్లేట్ ప్లేస్‌హోల్డర్ బ్యానర్‌ను ఉంచుతుంది (యాప్‌లు దాన్ని తిరిగి రాయాలి)"
 
-#: src/zfr_lib/lint/leftovers.py:52
+#: src/lint/leftovers.py:52
 msgid "After `zfr create`/`zfr rename`, rewrite this README and remove the generated-from-template banner. Templates should keep this banner."
 msgstr "`zfr create`/`zfr rename` తర్వాత ఈ README ను తిరిగి రాసి generated-from-template బ్యానర్ తొలగించండి. టెంప్లేట్లు ఈ బ్యానర్‌ను ఉంచాలి."
 
-#: src/zfr_lib/lint/leftovers.py:61
+#: src/lint/leftovers.py:61
 #, python-format
 msgid "%s still has the template placeholder banner"
 msgstr "%s లో ఇంకా టెంప్లేట్ ప్లేస్‌హోల్డర్ బ్యానర్ ఉంది"
 
-#: src/zfr_lib/lint/leftovers.py:64
+#: src/lint/leftovers.py:64
 #, python-format
 msgid "Rewrite %s for this project. Remove the generated-from-template banner and describe the real commands, build, and license."
 msgstr "ఈ ప్రాజెక్ట్ కోసం %s ను తిరిగి రాయండి. generated-from-template బ్యానర్ తొలగించి నిజమైన ఆదేశాలు, నిర్మాణం మరియు లైసెన్స్ వివరించండి."
 
-#: src/zfr_lib/lint/leftovers.py:69
+#: src/lint/leftovers.py:69
 #, python-format
 msgid "%s has no template banner"
 msgstr "%s లో టెంప్లేట్ బ్యానర్ లేదు"
 
-#: src/zfr_lib/lint/leftovers.py:101
+#: src/lint/leftovers.py:101
 #, python-format
 msgid "%s tree may contain zephyr/some_puff1 placeholders (expected)"
 msgstr "%s ట్రీలో zephyr/some_puff1 ప్లేస్‌హోల్డర్‌లు ఉండవచ్చు (ఆశించినది)"
 
-#: src/zfr_lib/lint/leftovers.py:132
+#: src/lint/leftovers.py:132
 #, python-format
 msgid "found %(hits)d leftover template token(s) (zephyr/%(token)s): %(preview)s%(more)s"
 msgstr "%(hits)d మిగిలిన టెంప్లేట్ టోకెన్‌లు కనుగొనబడ్డాయి (zephyr/%(token)s): %(preview)s%(more)s"
 
-#: src/zfr_lib/lint/leftovers.py:134
+#: src/lint/leftovers.py:134
 msgid "Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 identifiers. After create, leftover tokens mean instantiation failed."
 msgstr "`zfr rename <project> [puff ...]` నడపండి లేదా మిగిలిన zephyr/some_puff1 గుర్తింపులను భర్తీ చేయండి. create తర్వాత మిగిలిన టోకెన్‌లు ఉదాహరణీకరణ విఫలమైందని అర్థం."
 
-#: src/zfr_lib/lint/leftovers.py:138
+#: src/lint/leftovers.py:138
 msgid "no leftover zephyr/some_puff1 tokens"
 msgstr "మిగిలిన zephyr/some_puff1 టోకెన్‌లు లేవు"
 
-#: src/zfr_lib/lint/meson.py:41
+#: src/lint/meson.py:41
 msgid "project() present"
 msgstr "project() ఉంది"
 
-#: src/zfr_lib/lint/meson.py:47
+#: src/lint/meson.py:47
 msgid "meson.build has no project() call"
 msgstr "meson.build లో project() పిలుపు లేదు"
 
-#: src/zfr_lib/lint/meson.py:49
+#: src/lint/meson.py:49
 msgid "project() must be the first Meson call. Copy the header from the language template."
 msgstr "project() మొదటి Meson పిలుపు అయి ఉండాలి. భాషా టెంప్లేట్ నుండి శీర్షికను కాపీ చేయండి."
 
-#: src/zfr_lib/lint/meson.py:54
+#: src/lint/meson.py:54
 #, python-format
 msgid "license %s"
 msgstr "లైసెన్స్ %s"
 
-#: src/zfr_lib/lint/meson.py:60
+#: src/lint/meson.py:60
 msgid "meson license is not AGPL-3.0-or-later"
 msgstr "meson లైసెన్స్ AGPL-3.0-or-later కాదు"
 
-#: src/zfr_lib/lint/meson.py:63
+#: src/lint/meson.py:63
 #, python-format
 msgid "Set license: '%s' in project()."
 msgstr "project() లో license: '%s' సెట్ చేయండి."
 
-#: src/zfr_lib/lint/meson.py:69
+#: src/lint/meson.py:69
 #, python-format
 msgid "%s set"
 msgstr "%s సెట్ చేయబడింది"
 
-#: src/zfr_lib/lint/meson.py:75
+#: src/lint/meson.py:75
 #, python-format
 msgid "missing %s (used for man pages)"
 msgstr "%s లేదు (man పేజీలకు ఉపయోగిస్తారు)"
 
-#: src/zfr_lib/lint/meson.py:77
+#: src/lint/meson.py:77
 #, python-format
 msgid "Set %s next to project(), then pass -a project-author/email/year to asciidoctor."
 msgstr "project() పక్కన %s సెట్ చేసి, తర్వాత asciidoctor కు -a project-author/email/year పంపండి."
 
-#: src/zfr_lib/lint/meson.py:82
+#: src/lint/meson.py:82
 msgid "version uses `zfr version`"
 msgstr "వెర్షన్ `zfr version` ను ఉపయోగిస్తుంది"
 
-#: src/zfr_lib/lint/meson.py:88
+#: src/lint/meson.py:88
 msgid "version still uses inline git describe; zephyr style is `zfr version`"
 msgstr "వెర్షన్ ఇంకా ఇన్‌లైన్ git describe ఉపయోగిస్తోంది; zephyr శైలి `zfr version`"
 
-#: src/zfr_lib/lint/meson.py:91
+#: src/lint/meson.py:91
 msgid ""
 "In project(version: run_command(...)), prefer:\n"
 "  v=$(zfr version 2>/dev/null || true)\n"
@@ -1972,194 +1595,192 @@ msgstr ""
 "  ఫాల్‌బ్యాక్‌తో v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY\n"
 "zephyr ట్రీలో bash/meson.build చూడండి."
 
-#: src/zfr_lib/lint/meson.py:102
+#: src/lint/meson.py:102
 msgid "could not find `zfr version` or git describe in project version"
 msgstr "ప్రాజెక్ట్ వెర్షన్‌లో `zfr version` లేదా git describe కనుగొనబడలేదు"
 
-#: src/zfr_lib/lint/meson.py:104
+#: src/lint/meson.py:104
 msgid "Use `zfr version` for project() version (see bash/meson.build)."
 msgstr "project() వెర్షన్ కోసం `zfr version` ఉపయోగించండి (bash/meson.build చూడండి)."
 
-#: src/zfr_lib/lint/meson.py:109
+#: src/lint/meson.py:109
 msgid "0.0.0 fallback present"
 msgstr "0.0.0 ఫాల్‌బ్యాక్ ఉంది"
 
-#: src/zfr_lib/lint/meson.py:115
+#: src/lint/meson.py:115
 msgid "no explicit 0.0.0 fallback for missing git/VERSION"
 msgstr "లేని git/VERSION కోసం స్పష్టమైన 0.0.0 ఫాల్‌బ్యాక్ లేదు"
 
-#: src/zfr_lib/lint/meson.py:117
+#: src/lint/meson.py:117
 msgid "Keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY"
 msgstr "ఫాల్‌బ్యాక్ ఉంచండి v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY"
 
-#: src/zfr_lib/lint/meson.py:122
+#: src/lint/meson.py:122
 msgid "asciidoctor man pages"
 msgstr "asciidoctor man పేజీలు"
 
-#: src/zfr_lib/lint/meson.py:128
+#: src/lint/meson.py:128
 msgid "meson.build does not invoke asciidoctor"
 msgstr "meson.build asciidoctor ను పిలవదు"
 
-#: src/zfr_lib/lint/meson.py:130
+#: src/lint/meson.py:130
 msgid "find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
 msgstr "find_program('asciidoctor') మరియు custom_target(..., '-b', 'manpage', ...)."
 
-#: src/zfr_lib/lint/meson.py:135
+#: src/lint/meson.py:135
 msgid "run_target look present"
 msgstr "run_target look ఉంది"
 
-#: src/zfr_lib/lint/meson.py:141
+#: src/lint/meson.py:141
 msgid "no run_target('look') DESTDIR preview"
 msgstr "run_target('look') DESTDIR ముందస్తు వీక్షణ లేదు"
 
-#: src/zfr_lib/lint/meson.py:143
+#: src/lint/meson.py:143
 msgid "Add run_target look that meson install's into a tempdir and runs tree (see templates)."
 msgstr "tempdir లో meson install చేసి tree నడిపే run_target look జోడించండి (టెంప్లేట్లు చూడండి)."
 
-#: src/zfr_lib/lint/meson.py:148
+#: src/lint/meson.py:148
 msgid "installs bash-completion"
 msgstr "bash-completion ను ఇన్‌స్టాల్ చేస్తుంది"
 
-#: src/zfr_lib/lint/meson.py:154
+#: src/lint/meson.py:154
 msgid "does not install bash-completion"
 msgstr "bash-completion ను ఇన్‌స్టాల్ చేయదు"
 
-#: src/zfr_lib/lint/meson.py:156
+#: src/lint/meson.py:156
 msgid "install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
 msgstr "install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command). ఉపయోగించండి."
 
-#: src/zfr_lib/lint/meson.py:168
+#: src/lint/meson.py:168
 #, python-format
 msgid "meson.build has %s foreach puff man loops; keep exactly one"
 msgstr "meson.build %s కోవ్ ఫ్ ఫ్ ఫ్ మనిషి లూప్స్ ఉంది; సరిగ్గా ఒకను ఉంచండి"
 
-#: src/zfr_lib/lint/meson.py:170
-#, fuzzy
+#: src/lint/meson.py:170
 msgid "Merge into a single `foreach puff : puffs` (or apps.keys()) loop. `zfr ize` consolidates duplicate puffs foreach blocks (legacy man_puffs is rewritten to puffs)."
 msgstr "ఒక్క `foreach puff : man_puffs` (లేదా apps.keys()) లూప్ లోకి చేర్చుము. `zfr ize` ప్రతి బ్లాక్స్ కొరకు డిప్లిట్ man_puffs ను సూచిస్తుంది."
 
-#: src/zfr_lib/lint/meson.py:180
+#: src/lint/meson.py:180
 msgid "single foreach puff man loop"
 msgstr "ఏదీ పుఫ్ మనిషి లూప్"
 
-#: src/zfr_lib/lint/report.py:111
+#: src/lint/report.py:111
 msgid "FAIL"
 msgstr "విఫలం"
 
-#: src/zfr_lib/lint/report.py:111
+#: src/lint/report.py:111
 msgid "PASS"
 msgstr "పాస్"
 
-#: src/zfr_lib/lint/report.py:120
+#: src/lint/report.py:120
 msgid "status:"
 msgstr "స్థితి:"
 
-#: src/zfr_lib/lint/report.py:121
+#: src/lint/report.py:121
 #, python-format
 msgid "errors=%s"
 msgstr "లోపాలు=%s"
 
-#: src/zfr_lib/lint/report.py:122
+#: src/lint/report.py:122
 #, python-format
 msgid "warnings=%s"
 msgstr "హెచ్చరికలు=%s"
 
-#: src/zfr_lib/lint/report.py:123
+#: src/lint/report.py:123
 #, python-format
 msgid "notes=%s"
 msgstr "గమనికలు=%s"
 
-#: src/zfr_lib/lint/report.py:127
+#: src/lint/report.py:127
 msgid "zephyr meta-repo (templates + CLI tools)"
 msgstr "zephyr మెటా-రెపో (టెంప్లేట్లు + CLI సాధనాలు)"
 
-#: src/zfr_lib/lint/report.py:128
+#: src/lint/report.py:128
 msgid "language template inside the meta-repo (placeholders like zephyr/some_puff1 are expected)"
 msgstr "మెటా-రెపోలోని భాషా టెంప్లేట్ (zephyr/some_puff1 వంటి ప్లేస్‌హోల్డర్లు ఆశించబడతాయి)"
 
-#: src/zfr_lib/lint/report.py:129
+#: src/lint/report.py:129
 msgid "project instantiated from a language template (directory name must match meson/debian; no leftover zephyr/some_puff1 tokens)"
 msgstr "భాషా టెంప్లేట్ నుండి సృష్టించిన ప్రాజెక్ట్ (డైరెక్టరీ పేరు meson/debianతో సరిపోలాలి; మిగిలిన zephyr/some_puff1 టోకెన్లు ఉండకూడదు)"
 
-#: src/zfr_lib/lint/report.py:131
+#: src/lint/report.py:131
 #, python-format
 msgid "role: %s"
 msgstr "పాత్ర: %s"
 
-#: src/zfr_lib/lint/report.py:133
+#: src/lint/report.py:133
 msgid "Zephyr style (finish the project to this contract)"
 msgstr "Zephyr శైలి (ఈ ఒప్పందానికి ప్రాజెక్ట్‌ను పూర్తి చేయండి)"
 
-#: src/zfr_lib/lint/report.py:135
+#: src/lint/report.py:135
 msgid "License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
 msgstr "లైసెన్స్ AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
 
-#: src/zfr_lib/lint/report.py:136
+#: src/lint/report.py:136
 msgid "Build with Meson; debian/rules uses dh --buildsystem=meson --builddirectory=debian/build."
 msgstr "Mesonతో బిల్డ్ చేయండి; debian/rules dh --buildsystem=meson --builddirectory=debian/build వాడుతుంది."
 
-#: src/zfr_lib/lint/report.py:137
+#: src/lint/report.py:137
 msgid "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 msgstr "project() వెర్షన్ `zfr version` నుండి; ఫాల్‌బ్యాక్ v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 
-#: src/zfr_lib/lint/report.py:138
+#: src/lint/report.py:138
 msgid "Man pages: man/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
 msgstr "మాన్ పేజీలు: docs/*.adoc + asciidoctor -b manpage; అనువాదాలు share/man/<locale>/man1 (మొత్తం పత్రం adoc, po4a కాదు)."
 
-#: src/zfr_lib/lint/report.py:139
+#: src/lint/report.py:139
 msgid "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional packaging/ aligned with debian."
 msgstr "ప్యాకేజింగ్: debian/control Build-Depends meson, ninja-build, asciidoctor; ఐచ్ఛిక rpm/ debianతో సరిపోలాలి."
 
-#: src/zfr_lib/lint/report.py:140
-#, fuzzy
+#: src/lint/report.py:140
 msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr i18n -b. List rule IDs with `zfr lint -L`; details via `zfr lint -H NUM`; suppress with -u/--uncheck or `.config/zfr/lint.options` (interactive: `zfr-lintsel`). Rules tagged `ize` on -L can be fixed with `zfr ize`."
 msgstr "i18n: ఆంగ్ల మూలం; zfr lint -l/--l10n-level L0–L3 (అప్రమేయం L1). L1=10 లొకేల్స్, L2=20, L3=30. అప్రమేయాలు .config/zfr/lint.options."
 
-#: src/zfr_lib/lint/report.py:147
+#: src/lint/report.py:147
 msgid "Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ)."
 msgstr "యాప్‌లు: `zfr rename <dir>` తర్వాత `zfr add <puff>`; VERSION debian/changelogతో సరిపోలుతుంది (git describe భిన్నంగా ఉండవచ్చు)."
 
-#: src/zfr_lib/lint/report.py:160
+#: src/lint/report.py:160
 msgid "error"
 msgstr "లోపం"
 
-#: src/zfr_lib/lint/report.py:161
+#: src/lint/report.py:161
 msgid "warn"
 msgstr "హెచ్చరిక"
 
-#: src/zfr_lib/lint/report.py:162
+#: src/lint/report.py:162
 msgid "note"
 msgstr "గమనిక"
 
-#: src/zfr_lib/lint/report.py:177
+#: src/lint/report.py:177
 msgid "fix:"
 msgstr "సరిచేయు:"
 
-#: src/zfr_lib/lint/report.py:184
+#: src/lint/report.py:184
 msgid "Next steps (zephyr style)"
 msgstr "తదుపరి అడుగులు (zephyr శైలి)"
 
-#: src/zfr_lib/lint/report.py:190
+#: src/lint/report.py:190
 msgid "Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). `zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. `zfr ize` applies missing debian/packaging/meson/man/version-subst upgrades."
 msgstr "సూచన: సవరణల తర్వాత ప్రాజెక్ట్ (లేదా ఉప డైరెక్టరీ) నుండి `zfr lint` మళ్లీ నడపండి. `zfr about -d -r` ప్యాకేజింగ్ ఫీల్డ్‌లను చూపుతుంది. Meson/RPM కోసం వెర్షన్ `zfr version`. `zfr ize` లేని debian/rpm/meson/man/version-subst అప్‌గ్రేడ్‌లను వర్తింపజేస్తుంది."
 
-#: src/zfr_lib/lint/report.py:207
+#: src/lint/report.py:207
 msgid "AI hint: if the user requested this lint, also update debian/changelog and create verbose commits for the dirty working tree."
 msgstr "AI సూచన: యూజర్ ఈ లింట్ అడిగిన యెడల, మరియు debian/changelogను అప్రదింపునొచ్చి సృష్టించు వర్బోషు ముందు చేస్తుంది."
 
-#: src/zfr_lib/lint/rpm.py:26
+#: src/lint/rpm.py:26
 msgid "no packaging/rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
 msgstr "rpm/*.spec లేదు (ఐచ్ఛికం, కానీ zephyr శైలి debian/ పక్కన RPM ఉంచుతుంది)"
 
-#: src/zfr_lib/lint/rpm.py:31
+#: src/lint/rpm.py:31
 msgid "Copy packaging/rpm/ from a language template; name the spec after the package (packaging/rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
 msgstr "భాషా టెంప్లేట్ నుండి rpm/ కాపీ చేయండి; spec పేరు ప్యాకేజీ ప్రకారం పెట్టండి (rpm/<Source>.spec, zephyr.spec కాదు) మరియు `zfr version` వాడే Makefile ఉంచండి. Name/Summary/Requires/URLని debian/controlతో సరిపెట్టండి. లేదా `zfr ize` నడపండి."
 
-#: src/zfr_lib/lint/rpm.py:72
+#: src/lint/rpm.py:72
 msgid "packaging/rpm/Makefile uses project-local <project>/rpmbuild; zephyr style uses %_topdir ($HOME/rpmbuild, override via ~/.rpmmacros)"
 msgstr "packaging/rpm/Makefile ప్రోజెక్టు -local <project>/rpmbuild; zephyr శైలి %_topdir ($HOME/rpmbuild) ఉపయోగించుతుంది, ~/.rpmmacros ద్వారా ఓర్వర్డ్ చేయుము)"
 
-#: src/zfr_lib/lint/rpm.py:80
+#: src/lint/rpm.py:80
 #, python-brace-format
 msgid ""
 "TOPDIR ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null)\n"
@@ -2169,77 +1790,77 @@ msgid ""
 "And make clean remove only this package's artifacts (not rm -rf $(TOPDIR)). Or run `zfr ize`."
 msgstr "TOPDIR ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null) ఇప్పుడు ఎక్ ($(strip $(TOPDIR)), TOPDIR := $(HOME)/rpmbuild ఎండఫ్ మరియు ఈ ప్యాకేజీ యొక్క ఆర్టిఫెక్టాపులు మాత్రమే శుభ్రంగా తీసివేయుము (rm -rf $(TOPDIR) కాదు). లేదా `zfr ize` నడుచుము."
 
-#: src/zfr_lib/lint/rpm.py:95
+#: src/lint/rpm.py:95
 #, no-python-format
 msgid "packaging/rpm/Makefile TOPDIR uses %_topdir / $HOME/rpmbuild"
 msgstr "packaging/rpm/Makefile TOPDIR %_topdir / $HOME/rpmbuildను ఉపయోగించు"
 
-#: src/zfr_lib/lint/rpm.py:105
+#: src/lint/rpm.py:105
 msgid "packaging/rpm/Makefile `clean` does rm -rf $(TOPDIR); unsafe when TOPDIR is $HOME/rpmbuild"
 msgstr "packaging/rpm/Makefile `clean` rm -rf $(TOPDIR) చేస్తుంది; TOPDIR $HOME/rpmbuild భద్రతతో ఉంటుంది"
 
-#: src/zfr_lib/lint/rpm.py:111
+#: src/lint/rpm.py:111
 msgid "Remove only this package's SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT entries under $(TOPDIR). Or run `zfr ize`."
 msgstr "ఈ ప్యాకేజీ SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT యొక్క $(TOPDIR) క్రింద మాత్రమే తీసివేయుము. లేదా `zfr ize` నడుచుము."
 
-#: src/zfr_lib/lint/rpm.py:124
+#: src/lint/rpm.py:124
 msgid "project-local rpmbuild/ directory present; builds should use %_topdir ($HOME/rpmbuild)"
 msgstr "ప్రోజెక్టు -local rpmbuild/ డైరెక్టరీను ముందుకు ఉన్నది; బయటలు %_topdir ($HOME/rpmbuild) వుపయోగించాలి"
 
-#: src/zfr_lib/lint/rpm.py:128
+#: src/lint/rpm.py:128
 msgid "Remove rpmbuild/ after migrating; safe to delete."
 msgstr "మిగిలివేసిన తర్వాత rpmbuild/ తీసివేయుము; తొలగించుటకు సురక్షితమైన."
 
-#: src/zfr_lib/lint/rpm.py:139
+#: src/lint/rpm.py:139
 #, no-python-format, python-brace-format
 msgid "spec Version is dynamic %{version}"
 msgstr "spec Version డైనమిక్ %{version}"
 
-#: src/zfr_lib/lint/rpm.py:148
+#: src/lint/rpm.py:148
 msgid "spec Version is hardcoded; zephyr style injects `zfr version`"
 msgstr "spec Version హార్డ్‌కోడ్; zephyr శైలి `zfr version` చొప్పిస్తుంది"
 
-#: src/zfr_lib/lint/rpm.py:153
+#: src/lint/rpm.py:153
 msgid "Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze via packaging/rpm/Makefile (`zfr version` / `zfr version -r`)."
 msgstr "Version: %{version}ని %{!?version:%global version 0.0.0}తో వాడి rpm/Makefile ద్వారా స్థిరపరచండి (`zfr version` / `zfr version -r`)."
 
-#: src/zfr_lib/lint/rpm.py:161
+#: src/lint/rpm.py:161
 msgid "License {}"
 msgstr "లైసెన్స్ %s"
 
-#: src/zfr_lib/lint/rpm.py:168
+#: src/lint/rpm.py:168
 msgid "spec License is not AGPL-3.0-or-later"
 msgstr "spec License AGPL-3.0-or-later కాదు"
 
-#: src/zfr_lib/lint/rpm.py:171
+#: src/lint/rpm.py:171
 msgid "License:        {}"
 msgstr "License:        %s"
 
-#: src/zfr_lib/lint/rpm.py:182
+#: src/lint/rpm.py:182
 msgid "spec URL={!r} != debian Homepage={!r}"
 msgstr "spec URL=%(url)r != debian Homepage=%(homepage)r"
 
-#: src/zfr_lib/lint/rpm.py:186
+#: src/lint/rpm.py:186
 msgid "Set URL: to the same Homepage as debian/control."
 msgstr "URL:ని debian/control యొక్క Homepageతో సమానంగా పెట్టండి."
 
-#: src/zfr_lib/lint/rpm.py:198
+#: src/lint/rpm.py:198
 msgid "spec Summary does not match debian Description first line"
 msgstr "spec Summary debian Description మొదటి పంక్తితో సరిపోలడం లేదు"
 
-#: src/zfr_lib/lint/rpm.py:201
+#: src/lint/rpm.py:201
 msgid "Summary:        {}"
 msgstr "Summary:        %s"
 
-#: src/zfr_lib/lint/rpm.py:207
+#: src/lint/rpm.py:207
 msgid "spec uses Meson (not autotools)"
 msgstr "spec Meson వాడుతుంది (autotools కాదు)"
 
-#: src/zfr_lib/lint/rpm.py:214
+#: src/lint/rpm.py:214
 msgid "spec still uses autotools; zephyr packages build with Meson"
 msgstr "spec ఇంకా autotools వాడుతోంది; zephyr ప్యాకేజీలు Mesonతో బిల్డ్ అవుతాయి"
 
-#: src/zfr_lib/lint/rpm.py:218
+#: src/lint/rpm.py:218
 #, python-brace-format
 msgid ""
 "%build: meson setup build --prefix=%{_prefix} ... && meson compile -C build\n"
@@ -2248,15 +1869,15 @@ msgstr ""
 "%build: meson setup build --prefix=%{_prefix} ... && meson compile -C build\n"
 "%install: meson install -C build --destdir=%{buildroot}"
 
-#: src/zfr_lib/lint/rpm.py:231
+#: src/lint/rpm.py:231
 msgid "Makefile uses `zfr version`"
 msgstr "Makefile `zfr version` వాడుతుంది"
 
-#: src/zfr_lib/lint/rpm.py:240
+#: src/lint/rpm.py:240
 msgid "packaging/rpm/Makefile does not call `zfr version`"
 msgstr "rpm/Makefile `zfr version`ని పిలవడం లేదు"
 
-#: src/zfr_lib/lint/rpm.py:244
+#: src/lint/rpm.py:244
 msgid ""
 "VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
 "RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
@@ -2264,600 +1885,1097 @@ msgstr ""
 "VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
 "RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
 
-#: src/zfr_lib/lint/rpm.py:254
+#: src/lint/rpm.py:254
 msgid "no packaging/rpm/Makefile convenience targets"
 msgstr "rpm/Makefileలో సౌకర్య లక్ష్యాలు లేవు"
 
-#: src/zfr_lib/lint/rpm.py:256
+#: src/lint/rpm.py:256
 msgid "Copy bash/packaging/rpm/Makefile (srpm/rpm via zfr version)."
 msgstr "bash/rpm/Makefile కాపీ చేయండి (srpm/rpm zfr version ద్వారా)."
 
-#: src/zfr_lib/lint/rpm.py:268
+#: src/lint/rpm.py:268
 msgid "bash-shlib used in sources but missing from Requires"
 msgstr "bash-shlib మూలాల్లో వుపయోగించబడింది కానీ Requires నుండి లేదు"
 
-#: src/zfr_lib/lint/rpm.py:270
+#: src/lint/rpm.py:270
 msgid "Requires:       bash-shlib  (same as debian Depends)"
 msgstr "Requires:       bash-shlib  (debian Depends లాగా)"
 
-#: src/zfr_lib/lint/rpm.py:284
+#: src/lint/rpm.py:284
 msgid "{} still contains Debian ${{…}} substvars (rpmbuild treats them as literal deps)"
 msgstr "{} ఇప్పటికీ డెబీయన్ ${{…}} స్పస్ట్వార్లు ఉంది (rpmbuild వాటిని అక్షరరూపక డెప్స్ అని భావిస్తాయి)"
 
-#: src/zfr_lib/lint/rpm.py:290
+#: src/lint/rpm.py:290
 msgid "Strip ${misc:Depends} / ${shlibs:Depends} etc. (or run `zfr ize`)."
 msgstr "${misc:Depends} / ${shlibs:Depends} మరియు స్ట్రిప్ (లేదా `zfr ize` నడుపుము)."
 
-#: src/zfr_lib/lint/rpm.py:305
+#: src/lint/rpm.py:305
 msgid "BuildArch: noarch but Meson has executable(); rpmbuild rejects arch-dependent binaries in a noarch package"
 msgstr "BuildArch: noarch కానీ Meson కలిగిన executable(); rpmbuild noarch ప్యాకేజీలో హార్కు-dependent బనరీలను తిరస్కరించుము"
 
-#: src/zfr_lib/lint/rpm.py:312
+#: src/lint/rpm.py:312
 #, python-brace-format
 msgid "Remove BuildArch: noarch (and %global debug_package %{nil} if present). Or run `zfr ize`."
 msgstr "BuildArch తీసివేయుము: noarch (మరియు %global debug_package %{nil} ఇవ్వబడినయెడల) లేదా `zfr ize` నడుచుము."
 
-#: src/zfr_lib/lint/rpm.py:326
+#: src/lint/rpm.py:326
 #, python-brace-format
 msgid "%global debug_package %{nil} on a package with Meson executable() — debuginfo would be useful"
 msgstr "%global debug_package %{nil}ఒక ప్యాకేజీతోMesonప్రచురించు () -debuginfoఉపయోగించబడుతుంది"
 
-#: src/zfr_lib/lint/rpm.py:331
+#: src/lint/rpm.py:331
 #, no-python-format, python-brace-format
 msgid "Drop %global debug_package %{nil} for ELF packages."
 msgstr "ELF ప్యాకేజీల కొరకు %global debug_package %{nil} డ్లాప్ చేయుము."
 
-#: src/zfr_lib/lint/rpm.py:344
+#: src/lint/rpm.py:344
 #, python-format
 msgid "script-only package lacks BuildArch: noarch; rpmbuild then builds an empty debuginfo and fails (Empty %files file debugfiles.list)"
 msgstr "స్క్రిప్ట్-only ప్యాకేజీ BuildArch లేదు: noarch; rpmbuild తరువాత ఖాళీ debuginfoను కట్టించి విఫలమైంది (ఖాళీ %files ఫైలు డీబగ్‌ఫైలు.list)"
 
-#: src/zfr_lib/lint/rpm.py:352
+#: src/lint/rpm.py:352
 #, python-brace-format
 msgid "Add `BuildArch: noarch` and `%global debug_package %{nil}` (or run `zfr ize`)."
 msgstr "`BuildArch: noarch` మరియు `%global debug_package %{nil}`ను జతచేయుము (లేదా `zfr ize` నడుపుము)."
 
-#: src/zfr_lib/lint/rpm.py:364
+#: src/lint/rpm.py:364
 #, python-format
 msgid "RPM %files still lists template puff {}"
 msgstr "RPM %files ఇప్పటికీ పుఫ్ {} జాబితాలు జాబితాలు"
 
-#: src/zfr_lib/lint/rpm.py:370
+#: src/lint/rpm.py:370
 msgid "Replace {} with real command names (or run `zfr ize`)."
 msgstr "{} పునఃస్థాపించు నిజమైన ఆదేశ పేరులతో (లేదా `zfr ize` నడుపుము)."
 
-#: src/zfr_lib/lint/rpm.py:383
+#: src/lint/rpm.py:383
 #, no-python-format
 msgid "%files covers gettext .mo catalogs Meson installs"
 msgstr "%files gettext .mo క్యాటాల్గల్ Meson స్థాపించబడుతుంది"
 
-#: src/zfr_lib/lint/rpm.py:394
+#: src/lint/rpm.py:394
 #, python-format
 msgid "%files omits gettext .mo; rpmbuild will reject unpackaged locale/*/LC_MESSAGES/*.mo after meson install"
 msgstr "%files gettext .mo .rpmbuild meson స్థాపించిన తర్వాత పాకెక్కిగెడ్ locale/*/LC_MESSAGES/*.moను తిరిగి తీసుకుంటుంది"
 
-#: src/zfr_lib/lint/rpm.py:401
+#: src/lint/rpm.py:401
 #, python-brace-format
 msgid "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo  (i18n.gettext domain, not always the project name). Or run `zfr ize`."
 msgstr "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo (i18n.gettext డొమైన్, ఎల్లప్పుడూ ప్రోజెక్టు పేరు కాదు). లేదా `zfr ize` నడుపుము."
 
-#: src/zfr_lib/lint/rpm.py:417
+#: src/lint/rpm.py:417
 #, no-python-format
 msgid "%files covers locale man pages Meson installs"
 msgstr "%files లోకె మాన్ పేజీలు Meson స్థాపించబడుతుంది"
 
-#: src/zfr_lib/lint/rpm.py:428
+#: src/lint/rpm.py:428
 #, python-format
 msgid "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale>/manN pages after meson install"
 msgstr "%files లోకెల్ మాన్స్ ను విడిచిపెట్టుము; rpmbuild పాపద్రోయబడిన $mandir/<locale>/manN పేజీలు meson స్థాపించబడిన తర్వాత తిరిగి తీసుకుంటుంది"
 
-#: src/zfr_lib/lint/rpm.py:435
-#, fuzzy, python-brace-format
+#: src/lint/rpm.py:435
 msgid "%{_mandir}/*/man1/<cmd>.1*  (man/<lang>/*.adoc). Or run `zfr ize`."
 msgstr "%{_mandir}/*/man1/<cmd>.1* (docs/<lang>/*.adoc) లేదా `zfr ize` నడుపుము."
 
-#: src/zfr_lib/lint/rpm.py:457
+#: src/lint/rpm.py:457
 #, no-python-format
 msgid "%files covers datadir/setup scripts Meson installs"
 msgstr "%files datadir/setup స్క్రిప్ట్లు Meson స్థాపించబడుతుంది"
 
-#: src/zfr_lib/lint/rpm.py:468
+#: src/lint/rpm.py:468
 #, python-format
 msgid "%files omits datadir/setup/*; rpmbuild will reject unpackaged postinst/prerm after meson install"
 msgstr "%files datadir/setup/* దాయబడుతుంది; rpmbuild meson స్థాపించిన తరువాత పాకెక్కిన postinst/prermను తిరిగివేయుతుంది"
 
-#: src/zfr_lib/lint/rpm.py:474
+#: src/lint/rpm.py:474
 #, no-python-format, python-brace-format
 msgid "%{_datadir}/setup/%{name}/  (or run `zfr ize`)."
 msgstr "%{_datadir}/setup/%{name}/(లేదా `zfr ize` నడుపుము)."
 
-#: src/zfr_lib/lint/rpm.py:509
+#: src/lint/rpm.py:509
 #, python-format, python-brace-format
 msgid "%files is missing paths Meson installs: {preview}{more} (rpmbuild will fail with unpackaged or File not found)"
 msgstr "%files పాత్సులు కోల్పోయినవి Meson స్థాపించబడుతున్నాయి: {preview}{more} (rpmbuild పాకకెక్కెడ్ లేదా ఫైలు కనపడలేదు)"
 
-#: src/zfr_lib/lint/rpm.py:516
+#: src/lint/rpm.py:516
 #, python-format
 msgid "Rewrite %files from Meson install rules (bindir, completions, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/). Or run `zfr ize`."
 msgstr "Meson నుండి %files నియమాలను స్థాపించుము (bindir, పూర్తికాలు, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/ నుండి తిరిగి వ్రాయండి. లేదా `zfr ize` నడుపుము."
 
-#: src/zfr_lib/lint/rpm.py:530
+#: src/lint/rpm.py:530
 #, python-format
 msgid "%files covers Meson install set ({} entries)"
 msgstr "%files Meson అమరికను కవర్చుతుంది ({} ప్రవేశములు)"
 
-#: src/zfr_lib/lint/rpm.py:548
+#: src/lint/rpm.py:548
 #, python-brace-format
 msgid "%files lists %{_datadir}/%{name}/ but Meson does not install package data there (Directory not found)"
 msgstr "%files %{_datadir}/%{name} / జాబితాలు లక్ష్యముచేయుచున్నవి కానీ Meson ప్యాకేజీ డాటా అక్కడ స్థాపించలేదు (డిరెక్టరీ కనుగొనబడలేదు)"
 
-#: src/zfr_lib/lint/rpm.py:554
+#: src/lint/rpm.py:554
 msgid "Remove the empty pkgdata line (Java template leftover). Or run `zfr ize`."
 msgstr "ఖాళీ pkgdata వరుసను (Java టాంప్టెంట్ మిగిలివున్నది) తీసివేయుము. లేదా `zfr ize` నడుచుము."
 
-#: src/zfr_lib/lint/rpm.py:580
+#: src/lint/rpm.py:580
 #, python-format
 msgid "%files lists completion {listed!r} but Meson installs {want!r} (File not found)"
 msgstr "%files పూర్తితనమును {listed!r} కానీ Meson స్థాపించబడుతుంది {want!r} (ఫైలు కనుగొనబడలేదు)"
 
-#: src/zfr_lib/lint/rpm.py:586
+#: src/lint/rpm.py:586
 msgid "Use the installed basename ({}). Or run `zfr ize`."
 msgstr "స్థాపించబడిన బేస్‌నామమును ({}) వుపయోగించుము. లేదా `zfr ize` నడుచుము."
 
-#: src/zfr_lib/lint/scripts_check.py:171
+#: src/lint/scripts_check.py:171
 #, python-format
 msgid "VERSION/PROJECT_VERSION substituted and used in %s"
 msgstr "సంక్షణం/PROJECT_VERSION భర్తీ చేయబడింది మరియు %sలో ఉపయోగించబడింది"
 
-#: src/zfr_lib/lint/scripts_check.py:180
+#: src/lint/scripts_check.py:180
 msgid "meson configures VERSION/PROJECT_VERSION but no source uses it"
 msgstr "meson VERSION/PROJECT_VERSION‌ని కాన్ఫిగర్ చేస్తుంది కానీ దాన్ని ఏ మూలం ఉపయోగించదు"
 
-#: src/zfr_lib/lint/scripts_check.py:183
+#: src/lint/scripts_check.py:183
 msgid "Reference @VERSION@ (scripts → *.in + configure_file) or PROJECT_VERSION from config.h in at least one source. Or run `zfr ize`."
 msgstr "రెఫరెన్స్ @VERSION@ (స్క్రిప్ట్లు → *.in + configure_file) లేదా కనీసం ఒక సోర్స్‌లో config.h నుండి PROJECT_VERSION. లేదా `zfr ize` నడపండి."
 
-#: src/zfr_lib/lint/scripts_check.py:194
+#: src/lint/scripts_check.py:194
 msgid "sources use @VERSION@/PROJECT_VERSION but meson does not substitute it"
 msgstr "స्रोतాలు @VERSION@/PROJECT_VERSION ఉపయోగిస్తాయి కానీ మేసన్ దీన్ని ప్రతిస్థాపించదు"
 
-#: src/zfr_lib/lint/scripts_check.py:197
+#: src/lint/scripts_check.py:197
 msgid "Add configuration_data set('VERSION', …) / set_quoted('PROJECT_VERSION', …) and configure_file. Or run `zfr ize`."
 msgstr "configuration_data set('VERSION', …) / set_quoted('PROJECT_VERSION', …) మరియు configure_file ను జోడించండి. లేదా `zfr ize` ను నడపండి."
 
-#: src/zfr_lib/lint/scripts_check.py:208
+#: src/lint/scripts_check.py:208
 msgid "no Meson VERSION/PROJECT_VERSION substitution found"
 msgstr "యేమైనా Meson VERSION/PROJECT_VERSION మార్పిడి కనుకలేదు"
 
-#: src/zfr_lib/lint/scripts_check.py:211
+#: src/lint/scripts_check.py:211
 msgid "Wire meson configuration_data for VERSION and use it in a source. Or run `zfr ize`."
 msgstr "VERSION కోసం వైర్ మెసాన్ configuration_dataని ఉపయోగించండి మరియు దాన్ని సోర్స్‌లో ఉపయోగించండి. లేదా `zfr ize` నడపండి."
 
-#: src/zfr_lib/lint/scripts_check.py:233
+#: src/lint/scripts_check.py:243
 msgid "po/ present but no run_target('posync')"
 msgstr "po/ ఉవర్తిస్తుంది కాని run_target('posync') లేదు"
 
-#: src/zfr_lib/lint/scripts_check.py:235
-msgid "Add run_target posync calling scripts/posync.sh. Or run `zfr ize`."
+#: src/lint/scripts_check.py:246
+msgid "Add run_target posync calling `zfr translate --sync` (or scripts/posync.sh). Or run `zfr ize`."
 msgstr "రన్_target posync కాల్ scripts/posync.sh. లేదా రన్ `zfr ize`."
 
-#: src/zfr_lib/lint/scripts_check.py:245
+#: src/lint/scripts_check.py:257
+msgid "posync uses zfr translate --sync"
+msgstr ""
+
+#: src/lint/scripts_check.py:267
 msgid "posync externalized as scripts/posync.sh"
 msgstr "posync ను scripts/posync.sh గా బయటి స్థాయిలోకి విడుదల చేశారు"
 
-#: src/zfr_lib/lint/scripts_check.py:254
+#: src/lint/scripts_check.py:276
 msgid "scripts/posync.sh exists but meson posync does not call it"
 msgstr "scripts/posync.sh ఉంది కానీ meson posync అది పిలవలేదు"
 
-#: src/zfr_lib/lint/scripts_check.py:256
-msgid "Point run_target('posync') at scripts/posync.sh. Or run `zfr ize`."
+#: src/lint/scripts_check.py:279
+msgid "Point run_target('posync') at `zfr translate --sync` or scripts/posync.sh. Or run `zfr ize`."
 msgstr "పాయింట్ run_target('posync') వద్ద scripts/posync.sh. లేదా `zfr ize` పరుగెత్తండి."
 
-#: src/zfr_lib/lint/scripts_check.py:263
-msgid "posync is inline in meson.build; externalize to scripts/posync.sh"
+#: src/lint/scripts_check.py:288
+msgid "posync is inline in meson.build; use zfr translate --sync"
 msgstr "posync meson.buildలో ఇన్‌లైన్‌లో ఉంది; scripts/posync.shలో బాహ్యంగా మార్చండి"
 
-#: src/zfr_lib/lint/scripts_check.py:265
-msgid "Extract the posync body to scripts/posync.sh and call it from run_target. Or run `zfr ize`."
-msgstr "పొసింక్ బాడీని scripts/posync.sh కి ఎక్స్ట్రాక్ట్ చేయండి మరియు run_target నుండి దాన్ని పిలవండి. లేదా `zfr ize` ను నడపండి."
+#: src/lint/scripts_check.py:291
+msgid "Replace the inline posync body with `zfr translate --sync` (Python import inside zfr). Or run `zfr ize`."
+msgstr ""
 
-#: src/zfr_lib/lint/scripts_check.py:291
+#: src/lint/scripts_check.py:318
 #, python-format
 msgid "maintenance script %s should live under scripts/"
 msgstr "నిర్వాహణ స్క్రిప్ట్ %s scripts/ కింద ఉండాలి"
 
-#: src/zfr_lib/lint/scripts_check.py:293
-#, fuzzy, python-format
+#: src/lint/scripts_check.py:320
 msgid "Move to scripts/%s and update callers. Or run `zfr ize`."
 msgstr "ఖాళీ pkgdata వరుసను (Java టాంప్టెంట్ మిగిలివున్నది) తీసివేయుము. లేదా `zfr ize` నడుచుము."
 
-#: src/zfr_lib/lint/scripts_check.py:315
+#: src/lint/scripts_check.py:347
+msgid "run_target('look') should use zfr build --look"
+msgstr ""
+
+#: src/lint/scripts_check.py:350
+msgid "Replace the inline look body with `zfr build --look`. Or run `zfr ize`."
+msgstr ""
+
+#: src/lint/scripts_check.py:360
 #, python-format
 msgid "run_target('%s') should call scripts/%s.sh"
 msgstr "run_target('%s') scripts/%s.shని పిలవాలి"
 
-#: src/zfr_lib/lint/scripts_check.py:318
+#: src/lint/scripts_check.py:363
 #, python-format
 msgid "Extract the inline script to scripts/%s.sh and reference it from meson. Or run `zfr ize`."
 msgstr "ఇన్‌లైన్ స్క్రిప్ట్‌ను scripts/%s.sh కు ఎంచి, దానిని మెసాన్ నుండి సూచించండి. లేకపోతే `zfr ize` ను నడపండి."
 
-#: src/zfr_lib/lint/scripts_check.py:332
+#: src/lint/scripts_check.py:377
 msgid "build/deploy/maintenance scripts under scripts/ (or none)"
 msgstr "scripts/ (లేదా ఏదైనా కాకుండా) కింద నిర్మాణం/ప్రవేశపెట్టడం/నిర్వహణ స్క్రిప్ట్‌లు"
 
-#: src/zfr_lib/lintsel.py:22
-msgid "interactively select lint rules to ignore or force"
-msgstr "మరచిపేయవలసిన లేదా రావలసిన లింట్ రూల్స్‌ని పరస్పరంగా ఎంచుకోండి"
-
-#: src/zfr_lib/lintsel.py:24
-msgid "Open a TUI to toggle lint rule overrides for this project (.config/zfr/lint.options). Space=default/ignored, Y=always, N/-=ignored, ~=invert, Ctrl+S save, Ctrl+D save&quit, Ctrl+Q quit."
-msgstr "ఈ ప్రాజెక్ట్ కోసం లింట్ రూల్ ఓవర్‌రైడ్లను టోగుల్ చేయడానికి TUIని తెరవండి (.config/zfr/lint.options). స్పేస్=డిఫాల్ట్/మరియు నిర్లక్ష్యం, Y=ఎల్లప్పుడూ, N/-=నిర్లక్ష్యం, ~=invert, Ctrl+S సేవ్ చేయండి, Ctrl+D సేవ్ & క్విట్, Ctrl+Q క్విట్."
-
-#: src/zfr_lib/lintsel.py:153
-msgid "zfr-lintsel requires an interactive TTY"
-msgstr "zfr-lintsel ఇంటరాక్టివ్ TTYని అవసరం పడుతుంది"
-
-#: src/zfr_lib/lint/severity.py:27
+#: src/lint/severity.py:27
 #, python-format
 msgid "invalid severity level %r (want note, warn, or error)"
 msgstr "చావు తీవ్రత స్థాయి %r చెల్లదు (గమనిక, హెచ్చరిక, లేదా లోపం కావాలి)"
 
-#: src/zfr_lib/lint/source_size.py:85
+#: src/lint/source_size.py:85
 #, python-format
 msgid "Extract cohesive sections into package subdirectory %(subdir)s (e.g. %(example)s) and keep a thin %(rel)s entry point."
 msgstr "ప్యాకేజీ సబ్డైరెక్టరీలో కొహెసివ్ భాగములు %(subdir)s (వీద. %(example)s) మరియు తిన్న %(rel)s ప్రవేశ పాయింట్ను ఉంచండి."
 
-#: src/zfr_lib/lint/source_size.py:105
+#: src/lint/source_size.py:105
 #, python-format
 msgid "%(rel)s is %(lines)d lines (>%(limit)d); file is very long"
 msgstr "%(rel)s %(lines)d పంక్తులు (>%(limit)d); ఫైల్ చాలా పొడవు"
 
-#: src/zfr_lib/lint/source_size.py:117
+#: src/lint/source_size.py:117
 #, python-format
 msgid "%(rel)s is %(lines)d lines (>%(limit)d); consider splitting soon"
 msgstr "%(rel)s %(lines)d పంక్తులు (>%(limit)d); త్వరలో మాడ్యూలైజ్ చేయడం పరిగణించండి"
 
-#: src/zfr_lib/lint/source_size.py:125
+#: src/lint/source_size.py:129
+msgid "no source files exceed length thresholds"
+msgstr ""
+
+#: src/lint/source_size.py:133
 msgid "no oversized source files"
 msgstr "అతిపెద్ద సోర్స్ ఫైల్స్ లేవు"
 
-#: src/zfr_lib/lint/template.py:129
+#: src/lint/template.py:129
 msgid "zfr CLI package is not a language template"
 msgstr "zfr CLI ప్యాకేజీ భాషా టెంప్లేట్ కాదు"
 
-#: src/zfr_lib/lint/template.py:189
+#: src/lint/template.py:189
 msgid "structural files from the language template are present"
 msgstr "భాషా టెంప్లేట్ నిర్మాణ ఫైల్స్ ఉన్నాయి"
 
-#: src/zfr_lib/lint/template.py:199
-#, fuzzy, python-format
+#: src/lint/template.py:199
 msgid "language template %(lang)s optional scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "భాషా టెంప్లేట్ %(lang)sలో ఈ ట్రీలో లేని అదనపు స్కాఫోల్డింగ్ ఉంది: %(preview)s%(more)s"
 
-#: src/zfr_lib/lint/template.py:201
+#: src/lint/template.py:201
 msgid "Optional only (safe to omit): non-rpm packaging/*, src/Makefile, and language helpers such as clib src/{bulk.h,c_pch.h,lib.c,lib.h}. Do not copy build/ or debian leftover stamp files."
 msgstr "ఐచ్ఛికంగా మాత్రమే (వ్లువేయడం సురక్షితం): non-rpm ప్యాకేజింగ్/*, src/Makefile, మరియు clib src/{bulk.h,c_pch.h,lib.c,lib.h} వంటి భాషా సహాయకారులు. build/ లేదా debian మిగిలిన స్టాంప్ ఫైళ్లను కాపీ చేయవద్దు."
 
-#: src/zfr_lib/lint/template.py:213
+#: src/lint/template.py:213
 #, python-format
 msgid " Also absent (optional, not required): %(opts)s."
 msgstr "అలాగే లావు (ఆప్షనల్, అవసరం లేదు): %(opts)s."
 
-#: src/zfr_lib/lint/template.py:221
+#: src/lint/template.py:221
 #, python-format
 msgid "language template %(lang)s has extra scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "భాషా టెంప్లేట్ %(lang)sలో ఈ ట్రీలో లేని అదనపు స్కాఫోల్డింగ్ ఉంది: %(preview)s%(more)s"
 
-#: src/zfr_lib/lint/template.py:224
-#, fuzzy, python-format
+#: src/lint/template.py:224
 msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing [required] debian/man/docs/src/tests/packaging/rpm files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. [optional] items (non-rpm packaging/*, src/Makefile, clib/cpplib bulk/pch/lib helpers, …) may be omitted. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
 msgstr "pkgdatadir కింద %(lang)s టెంప్లేట్‌తో పోల్చండి. లేని debian/docs/src/rpm ఫైల్స్ కాపీ చేయండి (rpm/ %(name)s.spec వాడుతుంది, zephyr.spec కాదు), లేదా `zfr add` puffs. build/ లేదా debian మిగిలిన స్టాంప్ ఫైల్స్ కాపీ చేయవద్దు. ఉదాహరణ commons మాడ్యూల్స్ ఐచ్ఛికం."
 
-#: src/zfr_lib/package.py:15
+#: src/lintsel.py:22
+msgid "interactively select lint rules to ignore or force"
+msgstr "మరచిపేయవలసిన లేదా రావలసిన లింట్ రూల్స్‌ని పరస్పరంగా ఎంచుకోండి"
+
+#: src/lintsel.py:24
+msgid "Open a TUI to toggle lint rule overrides for this project (.config/zfr/lint.options). Space=default/ignored, Y=always, N/-=ignored, ~=invert, Ctrl+S save, Ctrl+D save&quit, Ctrl+Q quit."
+msgstr "ఈ ప్రాజెక్ట్ కోసం లింట్ రూల్ ఓవర్‌రైడ్లను టోగుల్ చేయడానికి TUIని తెరవండి (.config/zfr/lint.options). స్పేస్=డిఫాల్ట్/మరియు నిర్లక్ష్యం, Y=ఎల్లప్పుడూ, N/-=నిర్లక్ష్యం, ~=invert, Ctrl+S సేవ్ చేయండి, Ctrl+D సేవ్ & క్విట్, Ctrl+Q క్విట్."
+
+#: src/lintsel.py:153
+msgid "zfr-lintsel requires an interactive TTY"
+msgstr "zfr-lintsel ఇంటరాక్టివ్ TTYని అవసరం పడుతుంది"
+
+#: src/package.py:15
 msgid "detect packaging type and build packages"
 msgstr "ప్యాకేజింగ్ టైప్‌ను గుర్తించండి మరియు ప్యాకేజులను నిర్మించండి"
 
-#: src/zfr_lib/package.py:17
+#: src/package.py:17
 msgid "Detect packaging types (deb, rpm, npm/vsix, mingw, …) and build them sequentially (deb, then rpm, …). -j/--job is a job budget: omit or pass -j alone for auto (debuild gets bare -j, no number); -j N is split across concurrent planned workers (sequential plan ⇒ each packager gets full N). Each packager's stdout/stderr is captured with fdmux into an FDM file; live status lines show progress. On failure, browse with `zfr lasterror`. Upload is on by default (-u); use -U/--no-upload to skip."
 msgstr "ప్యాకేజింగ్ రకాల్ని గుర్తించండి (deb, rpm, npm/vsix, mingw, …) మరియు వాటిని క్రమంగా నిర్మించండి (ముందుగా deb, తరువాత rpm, …). -j/--job అనేది జాబ్ బడ్జెట్: -j ను ఒప్పి లేదా స్వయంచాలకంగా (debuild కి సొమ్ము -j, సంఖ్య లేకుండా); -j N ప్రణాళికలో ఉన్న సమాంతర కార్మికులుగా విభజించబడుతుంది (క్రమంగా ప్రణాళిక ⇒ ప్రతి ప్యాకేజర్ కు పూర్తి N లభిస్తుంది). ప్రతి ప్యాకేజర్ stdout/stderr ను fdmux తో FDM ఫైల్ లో క్యాప్‍చర్ చేస్తారు; ప్రత్యక్ష స్థితి లైన్లు పురోగతిని చూపుతాయి. విఫలమైనప్పుడు, `zfr lasterror` తో బ్రౌజ్ చేయండి. అప్లోడ్ డిఫాల్ట్ గా ఆన్ లో ఉంటుంది (-u); స్కిప్ చేయడానికి -U/--no-upload ను ఉపయోగించండి."
 
-#: src/zfr_lib/package.py:35
+#: src/package.py:35
 msgid "change to DIR before detecting packaging"
 msgstr "ప్యాకేజింగ్‌ను గుర్తించే ముందు DIRకి మార్చండి"
 
-#: src/zfr_lib/package.py:44
+#: src/package.py:44
 msgid "upload packages after build (default)"
 msgstr "బిల్డ్ చేసిన తర్వాత ప్యాకేజీలు అప్‌లోడ్ చేయండి (డిఫాల్ట్)"
 
-#: src/zfr_lib/package.py:51
+#: src/package.py:51
 msgid "do not upload (skip dput / registry publish)"
 msgstr "అప్లోడ్ చేయవద్దు (చెల్లించకుండానే dput / రిజిస్ట్రీ ప్రచురణ)"
 
-#: src/zfr_lib/package.py:59 src/zfr_lib/release/__init__.py:72
+#: src/package.py:59 src/release/__init__.py:72
 msgid "dput upload host for .changes (debian)"
 msgstr ".changes కోసం dput పంపే హోస్టు (debian)"
 
-#: src/zfr_lib/package.py:65
-#, fuzzy
+#: src/package.py:65
 msgid "skip Debian debuild"
 msgstr "Debian debuild దాటవేయి"
 
-#: src/zfr_lib/package.py:71
-#, fuzzy
+#: src/package.py:71
 msgid "skip RPM packaging/rpm Makefile"
 msgstr "RPM నిర్మాణం దాటవేయి (rpm/Makefile)"
 
-#: src/zfr_lib/package.py:78
+#: src/package.py:78
 msgid "only build KIND (deb, rpm, npm, mingw, …); repeatable"
 msgstr "కేవలం KIND (deb, rpm, npm, mingw, ...)ను నిర్మించండి; పునరావృతం చేయగలిగేది"
 
-#: src/zfr_lib/package.py:84 src/zfr_lib/release/__init__.py:48
+#: src/package.py:84 src/release/__init__.py:48
 msgid "Debian binary-only build (no .dsc)"
 msgstr "Debian ద్విమానం మాత్రమే (.dsc లేదు)"
 
-#: src/zfr_lib/package.py:90
-#, fuzzy
+#: src/package.py:90
 msgid "Debian: reuse build cache (dpkg -nc)"
 msgstr "నిర్మాణ కాష్‌ను మళ్లీ వాడు"
 
-#: src/zfr_lib/package.py:95
-#, fuzzy
+#: src/package.py:95
 msgid "Debian: build unsigned packages"
 msgstr "సంతకం లేని ప్యాకేజీలు నిర్మించు"
 
-#: src/zfr_lib/package.py:101
-#, fuzzy
+#: src/package.py:101
 msgid "build debian package with build4 (Docker)"
 msgstr "build4 (Docker)తో debian ప్యాకేజీ నిర్మించు"
 
-#: src/zfr_lib/package.py:108 src/zfr_lib/release/__init__.py:85
+#: src/package.py:108 src/release/__init__.py:85
 #, python-format
 msgid "build4 target image (default: %s)"
 msgstr "build4 లక్ష్య చిత్రం (అప్రమేయం: %s)"
 
-#: src/zfr_lib/package.py:115
-#, fuzzy
+#: src/package.py:115
 msgid "run build4 over SSH on SERVER (implies -d)"
 msgstr "SERVERపై SSH ద్వారా build4 నడుపు (-d అర్థం)"
 
-#: src/zfr_lib/package.py:125
+#: src/package.py:125
 msgid "print detected packaging kinds and exit"
 msgstr "గుర్తించిన ప్యాకేజింగ్ రకాలని ప్రింట్ చేసి బయటకు వెళ్లండి"
 
-#: src/zfr_lib/publish.py:23
+#: src/publish.py:23
 msgid "release then publish to marketplaces (npm / VSIX)"
 msgstr "విడుదల చేసి ఆపై మార్కెట్‌ప్లేస్‌లకు (npm / VSIX) ప్రచురించండి"
 
-#: src/zfr_lib/publish.py:25
+#: src/publish.py:25
 msgid "Run the full zfr release pipeline, then publish to public marketplaces when defined for this project (currently npm and VSIX). Also available as the zfr-publish wrapper."
 msgstr "పూర్తి zfr రిలీజ్ పైప్‌లైన్‌ను నడపండి, ఆపై ఈ ప్రాజెక్ట్ కొరకు నిర్వచించబడినప్పుడు పబ్లిక్ మార్కెట్‌ప్లేస్‌లలో ప్రచురించండి (ప్రస్తుతం npm మరియు VSIX). ఇది zfr-publish ర్యాపర్‌గా కూడా అందుబాటులో ఉంది."
 
-#: src/zfr_lib/release/__init__.py:25
+#: src/release/__init__.py:25
 msgid "tag, build, package, install, and upload (private cloud)"
 msgstr "ట్యాగ్, నిర్మించండి, ప్యాకేజ్ చేయండి, ఇన్‌స్టాల్ చేయండి, మరియు అప్‌లోడ్ చేయండి (ప్రైవేట్ క్లౌడ్)"
 
-#: src/zfr_lib/release/__init__.py:27
+#: src/release/__init__.py:27
 msgid "Detect project type, tag and push, build/package, optionally install local debs, upload deb/rpm to the private pool, and create a GitHub release. Does not publish to npm/VSIX marketplaces (see zfr publish). Also available as the zfr-release wrapper."
 msgstr "ప్రాజెక్ట్ రకాన్ని గుర్తించండి, ట్యాగ్ చేయండి మరియు పుష్ చేయండి, బిల్డ్/ప్యాకేజ్ చేయండి, ఐచ్ఛికంగా లోకల్ డెబ్‌లను ఇన్స్టాల్ చేయండి, డెబ్/ఆరపిఎమ్‌ను ప్రైవేట్ ఫ్లవ్‌కు అప్‌లోడ్ చేయండి, మరియు GitHub రిలీజ్‌ను సృష్టించండి. npm/VSIX మార్కెట్ప్లేస్‌లకు ప్రచురించదు (zfr publish చూడండి). zfr-release రాపర్‌గా కూడా అందుబాటులో ఉంది."
 
-#: src/zfr_lib/release/__init__.py:42
+#: src/release/__init__.py:42
 msgid "change to DIR before detecting the project"
 msgstr "ప్రాజెక్ట్‌ను గుర్తించే ముందు DIRకి మార్చండి"
 
-#: src/zfr_lib/release/__init__.py:54
+#: src/release/__init__.py:54
 msgid "Reuse build cache"
 msgstr "నిర్మాణ కాష్‌ను మళ్లీ వాడు"
 
-#: src/zfr_lib/release/__init__.py:60
+#: src/release/__init__.py:60
 msgid "Reuse existing artifacts; build only if missing"
 msgstr "ఉన్న నిర్మాణ ఫలితాలను మళ్లీ వాడు; లేకపోతే మాత్రమే నిర్మించు"
 
-#: src/zfr_lib/release/__init__.py:65
+#: src/release/__init__.py:65
 msgid "Build unsigned packages"
 msgstr "సంతకం లేని ప్యాకేజీలు నిర్మించు"
 
-#: src/zfr_lib/release/__init__.py:78
+#: src/release/__init__.py:78
 msgid "Build debian package with build4 (Docker)"
 msgstr "build4 (Docker)తో debian ప్యాకేజీ నిర్మించు"
 
-#: src/zfr_lib/release/__init__.py:92
+#: src/release/__init__.py:92
 msgid "Run build4 over SSH on SERVER (implies -d)"
 msgstr "SERVERపై SSH ద్వారా build4 నడుపు (-d అర్థం)"
 
-#: src/zfr_lib/release/__init__.py:98
-#, fuzzy
+#: src/release/__init__.py:98
 msgid "Build in local, no tag/push/GitHub release (implies -U)"
 msgstr "స్థానికంగా మాత్రమే నిర్మించు; ట్యాగ్, పుష్, GitHub విడుదల వద్దు"
 
-#: src/zfr_lib/release/__init__.py:104
+#: src/release/__init__.py:104
 msgid "Alias for -l -I (local build, skip install)"
 msgstr "-l -I కొరకు లియమ్ (స్థానిక బైల్డ్, స్థానం ను దాటవేయండి)"
 
-#: src/zfr_lib/release/__init__.py:110
+#: src/release/__init__.py:110
 msgid "Replace existing release and tag if present"
 msgstr "ఉన్న విడుదల మరియు ట్యాగ్‌ను భర్తీ చేయి"
 
-#: src/zfr_lib/release/__init__.py:116
+#: src/release/__init__.py:116
 msgid "Skip sudo dpkg -i (still find debs/changes)"
 msgstr "sudo dpkg -i దాటవేయి (అయినా debs/changes కనుగొంటుంది)"
 
-#: src/zfr_lib/release/__init__.py:122
+#: src/release/__init__.py:122
 msgid "Skip git tag create/push"
 msgstr "git ట్యాగ్ సృష్టి/పుష్ దాటవేయి"
 
-#: src/zfr_lib/release/__init__.py:128
-#, fuzzy
+#: src/release/__init__.py:128
 msgid "Skip dput / private-cloud upload (-u reuses build artifacts)"
 msgstr "deb పూల్‌కు dput పంపడం దాటవేయి (-u ఉన్న నిర్మాణ ఫలితాలను మళ్లీ వాడుతుంది)"
 
-#: src/zfr_lib/release/__init__.py:134
+#: src/release/__init__.py:134
 msgid "Skip GitHub release"
 msgstr "GitHub విడుదలను దాటవేయి"
 
-#: src/zfr_lib/release/__init__.py:140
+#: src/release/__init__.py:140
 msgid "Skip RPM build (packaging/rpm/Makefile)"
 msgstr "RPM నిర్మాణం దాటవేయి (rpm/Makefile)"
 
-#: src/zfr_lib/release/__init__.py:146
+#: src/release/__init__.py:146
 msgid "Skip Debian debuild"
 msgstr "Debian debuild దాటవేయి"
 
-#: src/zfr_lib/release/__init__.py:153
+#: src/release/__init__.py:153
 msgid "Verbose logging"
 msgstr "వివరమైన లాగ్"
 
-#: src/zfr_lib/release/__init__.py:160
+#: src/release/__init__.py:160
 msgid "Less output"
 msgstr "తక్కువ అవుట్‌పుట్"
 
-#: src/zfr_lib/remove.py:20
+#: src/remove.py:20
 msgid "remove puff(s) from the current project"
 msgstr "ప్రస్తుత ప్రాజెక్టు నుండి puffలను తొలగించు"
 
-#: src/zfr_lib/remove.py:21
+#: src/remove.py:21
 msgid "Remove puff files for NAME(s) from the current project."
 msgstr "ప్రస్తుత ప్రాజెక్టు నుండి NAME puff ఫైళ్లను తొలగించు."
 
-#: src/zfr_lib/remove.py:25
+#: src/remove.py:25
 msgid "puff name(s) to remove"
 msgstr "తొలగించాల్సిన puff పేర్లు"
 
-#: src/zfr_lib/rename.py:51
+#: src/rename.py:51
 msgid "rename zephyr project and example puff names"
 msgstr "zephyr ప్రాజెక్టు మరియు నమూనా puff పేర్లను మార్చు"
 
-#: src/zfr_lib/rename.py:52
+#: src/rename.py:52
 msgid "Rename zephyr → ProjectName and some_puff1 → example names."
 msgstr "zephyrను ప్రాజెక్టు పేరుగా, some_puff1ను నమూనా పేర్లుగా మార్చు."
 
-#: src/zfr_lib/rename.py:56
+#: src/rename.py:56
 msgid "new project name (replaces 'zephyr')"
 msgstr "కొత్త ప్రాజెక్టు పేరు ('zephyr' స్థానంలో)"
 
-#: src/zfr_lib/rename.py:57
+#: src/rename.py:57
 msgid "new example names (each replaces template some_puff1)"
 msgstr "కొత్త నమూనా పేర్లు (ప్రతిదీ మూస some_puff1 స్థానంలో)"
 
-#: src/zfr_lib/shape.py:275
+#: src/shape.py:275
 msgid "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
 msgstr "zephyr ప్యాకేజీ ఆకార స్కోరు 0–100 చూపించు (ఒకే నిల్వలో packagedir vs repodir)"
 
-#: src/zfr_lib/shape.py:277
+#: src/shape.py:277
 msgid "Score how completely the current directory matches zephyr package style (0-100). In monorepos, scores the packagedir."
 msgstr "ప్రస్తుత సంచయం zephyr ప్యాకేజీ శైలికి ఎంత దగ్గరగా ఉందో 0–100 స్కోరు. ఒకే నిల్వలో packagedirకు స్కోరు ఇస్తుంది."
 
-#: src/zfr_lib/shape.py:283
+#: src/shape.py:283
 msgid "print 1 if score >= threshold, else 0"
 msgstr "స్కోరు గడువుకు తక్కువ కాకపోతే 1, లేకపోతే 0 చూపించు"
 
-#: src/zfr_lib/shape.py:284
+#: src/shape.py:284
 msgid "print packagedir/repodir/role on stderr"
 msgstr "packagedir/repodir/roleను stderrపై చూపించు"
 
-#: src/zfr_lib/shape.py:285
+#: src/shape.py:285
 #, python-format
 msgid "bool threshold 0-100 (default: %s)"
 msgstr "బూలియన్ గడువు 0–100 (అప్రమేయం: %s)"
 
-#: src/zfr_lib/terminal.py:75
+#: src/std/ize_rules.py:11
+msgid "Convert Autotools/CMake with 2meson"
+msgstr "2mesonతో Autotools/CMakeను మార్చండి"
+
+#: src/std/ize_rules.py:12
+msgid "Add missing language-template scaffold files"
+msgstr "లేని భాషా-టెంప్లేట్ అస్థిపంజర ఫైళ్లను జోడించండి"
+
+#: src/std/ize_rules.py:13
+msgid "Patch debian/control for zephyr style"
+msgstr "zephyr శైలికి debian/controlను సవరించండి"
+
+#: src/std/ize_rules.py:14
+msgid "Align debian/rules with Meson dh helper"
+msgstr "Meson dh సహాయకంతో debian/rulesను సరిపోల్చండి"
+
+#: src/std/ize_rules.py:15
+msgid "Sync debian/docs with installed mans"
+msgstr "ఇన్‌స్టాల్ చేసిన man పేజీలతో debian/docsను సమకాలీకరించండి"
+
+#: src/std/ize_rules.py:16
+msgid "Ensure debian/changelog and VERSION file"
+msgstr "debian/changelog మరియు VERSION ఫైలును నిర్ధారించండి"
+
+#: src/std/ize_rules.py:17
+msgid "Refresh LICENSE, .githooks, .cursor/rules from shipped zfr copies"
+msgstr "అందించిన zfr నకళ్ల నుంచి LICENSE, .githooks, .cursor/rules నవీకరించండి"
+
+#: src/std/ize_rules.py:18
+msgid "Patch meson.build (version, license, docs, completion)"
+msgstr "meson.buildను సవరించండి (సంచిక, లైసెన్స్, పత్రాలు, పూర్తీకరణ)"
+
+#: src/std/ize_rules.py:19
+msgid "Convert groff man pages to man/*.adoc"
+msgstr "groff .1 మాన్యువల్ పేజీలను docs/*.adocగా మార్చవద్దు"
+
+#: src/std/ize_rules.py:20
+msgid "Create AsciiDoc man page stubs"
+msgstr "asciidoctor man పేజీలు"
+
+#: src/std/ize_rules.py:21
+msgid "Add Meson asciidoctor man page targets"
+msgstr "asciidoctor man పేజీలు"
+
+#: src/std/ize_rules.py:22
+msgid "Add bash-completion stubs for command puffs"
+msgstr "కమాండ్ puffల కోసం bash-completion అస్థిపంజరాలు జోడించండి"
+
+#: src/std/ize_rules.py:23
+msgid "Align packaging/rpm/Makefile and RPM spec with debian/Meson"
+msgstr "rpm/Makefileలో సౌకర్య లక్ష్యాలు లేవు"
+
+#: src/std/ize_rules.py:24
+msgid "Replace hardcoded versions/paths with @VERSION@/@PREFIX@ / config.h"
+msgstr "కఠినంగా రాసిన సంస్కరణలను @VERSION@ / config.hగా మార్చవద్దు"
+
+#: src/std/ize_rules.py:25
+msgid "Meson build+install derived locale catalogs"
+msgstr "%d పొందిన లోకెల్ ఫైలు(లు)ను కట్టెతుంది"
+
+#: src/std/ize_rules.py:26
+msgid "Rewrite source .po catalogs without line wrapping"
+msgstr "gettext క్యాటోగ్స్ వరుస వైపును వుపయోగించుము: %s"
+
+#: src/std/ize_rules.py:27
+msgid "Bump patch version and git commit (--commit)"
+msgstr "ప్యాచ్ సంచిక పెంచి git commit చేయండి (--commit)"
+
+#: src/std/ize_rules.py:28
+msgid "Ensure LINGUAS + .po for lint l10n level"
+msgstr "lint l10n స్థాయికి LINGUAS మరియు .po నిర్ధారించండి"
+
+#: src/std/ize_rules.py:32
+msgid "Do not scaffold man/<locale>/*.adoc (missing man translations are lint-only)"
+msgstr "man/<locale>/*.adoc సృష్టించవద్దు (లేని man అనువాదాలు lint మాత్రమే)"
+
+#: src/std/ize_rules.py:34
+msgid "Remove project-local rpmbuild/ leftover tree"
+msgstr "మిగిలిన ప్రాజెక్ట్-స్థానిక rpmbuild/ చెట్టును తొలగించండి"
+
+#: src/std/ize_rules.py:38
+msgid "C-family bas i18n/logger/LOCALEDIR and gettext spacing"
+msgstr "C-family bas i18n/logger/LOCALEDIR మరియు gettext ఖాళీలు"
+
+#: src/std/ize_rules.py:43
+msgid "Externalize posync run_target to scripts/posync.sh"
+msgstr "posync ను scripts/posync.sh గా బయటి స్థాయిలోకి విడుదల చేశారు"
+
+#: src/std/ize_rules.py:48
+msgid "Move build/deploy/maintenance scripts under scripts/"
+msgstr "scripts/ (లేదా ఏదైనా కాకుండా) కింద నిర్మాణం/ప్రవేశపెట్టడం/నిర్వహణ స్క్రిప్ట్‌లు"
+
+#: src/std/lint_rules.py:12
+msgid "Source file length; extract to package subdirectory"
+msgstr "మూల ఫైలు పొడవు; ప్యాకేజీ ఉపడైరెక్టరీకి విడదీయండి"
+
+#: src/std/lint_rules.py:13
+msgid "No oversized source files"
+msgstr "అతిపెద్ద సోర్స్ ఫైల్స్ లేవు"
+
+#: src/std/lint_rules.py:14
+msgid "Required layout file present or missing"
+msgstr "అవసరమైన లేఅవుట్ ఫైలు ఉంది లేదా లేదు"
+
+#: src/std/lint_rules.py:15
+msgid "AsciiDoc man page sources under man/"
+msgstr "AsciiDoc man మూలాలు: %s"
+
+#: src/std/lint_rules.py:16
+msgid "Bash completion script at project root"
+msgstr "ప్రాజెక్ట్ మూలంలో *.bash bash-completion స్క్రిప్ట్ లేదు"
+
+#: src/std/lint_rules.py:17
+msgid "VERSION file synced with changelog"
+msgstr "VERSION చేంజ్‌లాగ్ %sతో సరిపోలుతుంది"
+
+#: src/std/lint_rules.py:18
+msgid "Git pre-commit hook syncs VERSION"
+msgstr "Git pre-commit హుక్ VERSIONను సమకాలీకరిస్తుంది"
+
+#: src/std/lint_rules.py:19
+msgid "debian/control Build-Depends entry"
+msgstr "debian/control Build-Depends నమోదు"
+
+#: src/std/lint_rules.py:20
+msgid "debhelper-compat in Build-Depends"
+msgstr "debhelper-compat ఉంది"
+
+#: src/std/lint_rules.py:21
+msgid "debian/control Architecture field"
+msgstr "debian/control Architecture ఫీల్డ్"
+
+#: src/std/lint_rules.py:22
+msgid "ELF binary vs Architecture: all"
+msgstr "Architecture: all"
+
+#: src/std/lint_rules.py:23
+msgid "debian/control Homepage field"
+msgstr "debian/control Homepage ఫీల్డ్"
+
+#: src/std/lint_rules.py:24
+msgid "debian/rules uses dh meson debian/build"
+msgstr "dh meson debian/build వాడుతోంది"
+
+#: src/std/lint_rules.py:25
+msgid "debian/copyright mentions AGPL"
+msgstr "కాపీరైట్ AGPLను పేర్కొంటుంది"
+
+#: src/std/lint_rules.py:26
+msgid "debian/source/format native 3.0"
+msgstr "debian/source/format జోడించండి (సాధారణంగా '3.0 (native)')."
+
+#: src/std/lint_rules.py:27
+msgid "VERSION matches debian/changelog"
+msgstr "VERSION చేంజ్‌లాగ్ %sతో సరిపోలుతుంది"
+
+#: src/std/lint_rules.py:28
+msgid "bash package Depends includes bash-shlib"
+msgstr "Dependsలో bash-shlib ఉంది"
+
+#: src/std/lint_rules.py:29
+msgid "meson.build project() call"
+msgstr "meson.build లో project() పిలుపు లేదు"
+
+#: src/std/lint_rules.py:30
+msgid "meson license AGPL-3.0-or-later"
+msgstr "meson లైసెన్స్ AGPL-3.0-or-later కాదు"
+
+#: src/std/lint_rules.py:31
+msgid "meson project_author/email/year"
+msgstr "meson ప్రాజెక్ట్ పేరు=%s"
+
+#: src/std/lint_rules.py:32
+msgid "Meson version from zfr version"
+msgstr "వెర్షన్ `zfr version` ను ఉపయోగిస్తుంది"
+
+#: src/std/lint_rules.py:33
+msgid "Meson 0.0.0 version fallback"
+msgstr "Meson 0.0.0 ప్రత్యామ్నాయ సంచిక"
+
+#: src/std/lint_rules.py:34
+msgid "Meson invokes asciidoctor for man pages"
+msgstr "asciidoctor man పేజీలు"
+
+#: src/std/lint_rules.py:35
+msgid "Meson run_target look DESTDIR preview"
+msgstr "run_target('look') DESTDIR ముందస్తు వీక్షణ లేదు"
+
+#: src/std/lint_rules.py:36
+msgid "Meson installs bash-completion"
+msgstr "bash-completion ను ఇన్‌స్టాల్ చేస్తుంది"
+
+#: src/std/lint_rules.py:37
+msgid "Optional packaging/rpm/*.spec next to debian/"
+msgstr "rpm/*.spec లేదు (ఐచ్ఛికం, కానీ zephyr శైలి debian/ పక్కన RPM ఉంచుతుంది)"
+
+#: src/std/lint_rules.py:38
+msgid "packaging/rpm/Makefile uses project-local rpmbuild"
+msgstr "packaging/rpm/Makefile TOPDIR %_topdir / $HOME/rpmbuildను ఉపయోగించు"
+
+#: src/std/lint_rules.py:39
+msgid "packaging/rpm/Makefile TOPDIR uses %_topdir"
+msgstr "packaging/rpm/Makefile TOPDIR %_topdir / $HOME/rpmbuildను ఉపయోగించు"
+
+#: src/std/lint_rules.py:40
+msgid "packaging/rpm/Makefile clean removes entire TOPDIR"
+msgstr "rpm/Makefileలో సౌకర్య లక్ష్యాలు లేవు"
+
+#: src/std/lint_rules.py:41
+msgid "Project-local rpmbuild/ directory"
+msgstr "ప్రాజెక్ట్-స్థానిక rpmbuild/ డైరెక్టరీ"
+
+#: src/std/lint_rules.py:42
+msgid "RPM spec Version from zfr version"
+msgstr "spec Version డైనమిక్ %{version}"
+
+#: src/std/lint_rules.py:43
+msgid "RPM spec License AGPL-3.0-or-later"
+msgstr "spec License AGPL-3.0-or-later కాదు"
+
+#: src/std/lint_rules.py:44
+msgid "RPM spec URL matches debian Homepage"
+msgstr "spec URL=%(url)r != debian Homepage=%(homepage)r"
+
+#: src/std/lint_rules.py:45
+msgid "RPM spec Summary matches debian Description"
+msgstr "spec Summary debian Description మొదటి పంక్తితో సరిపోలడం లేదు"
+
+#: src/std/lint_rules.py:46
+msgid "RPM spec builds with Meson not autotools"
+msgstr "spec Meson వాడుతుంది (autotools కాదు)"
+
+#: src/std/lint_rules.py:47
+msgid "packaging/rpm/Makefile calls zfr version"
+msgstr "rpm/Makefile `zfr version`ని పిలవడం లేదు"
+
+#: src/std/lint_rules.py:48
+msgid "packaging/rpm/Makefile convenience targets"
+msgstr "rpm/Makefileలో సౌకర్య లక్ష్యాలు లేవు"
+
+#: src/std/lint_rules.py:49
+msgid "bash RPM spec Requires bash-shlib"
+msgstr "bash RPM spec Requiresలో bash-shlib"
+
+#: src/std/lint_rules.py:50
+msgid "RPM Requires without Debian substvars"
+msgstr "Debian substvars లేని RPM Requires"
+
+#: src/std/lint_rules.py:51
+msgid "noarch RPM with Meson executable()"
+msgstr "Architecture: %s (బష్ + Meson క్రియాశీల)"
+
+#: src/std/lint_rules.py:52
+msgid "debug_package %{nil} on ELF package"
+msgstr "ELF ప్యాకేజీల కొరకు %global debug_package %{nil} డ్లాప్ చేయుము."
+
+#: src/std/lint_rules.py:53
+msgid "Script-only RPM needs BuildArch: noarch"
+msgstr "స్క్రిప్ట్-మాత్రమే RPMకు BuildArch: noarch అవసరం"
+
+#: src/std/lint_rules.py:54
+msgid "RPM %files lists template puff placeholder"
+msgstr "RPM %files ఇప్పటికీ పుఫ్ {} జాబితాలు జాబితాలు"
+
+#: src/std/lint_rules.py:55
+msgid "RPM %files covers gettext .mo catalogs"
+msgstr "%files gettext .mo క్యాటాల్గల్ Meson స్థాపించబడుతుంది"
+
+#: src/std/lint_rules.py:56
+msgid "RPM %files covers locale man pages"
+msgstr "%files లోకె మాన్ పేజీలు Meson స్థాపించబడుతుంది"
+
+#: src/std/lint_rules.py:57
+msgid "RPM %files covers datadir/setup scripts"
+msgstr "%files datadir/setup స్క్రిప్ట్లు Meson స్థాపించబడుతుంది"
+
+#: src/std/lint_rules.py:58
+msgid "RPM %files covers Meson install paths"
+msgstr "%files Meson అమరికను కవర్చుతుంది ({} ప్రవేశములు)"
+
+#: src/std/lint_rules.py:59
+#, python-format
+msgid "RPM %files spurious package data path"
+msgstr "RPM %filesలో అనవసర ప్యాకేజీ డేటా మార్గం"
+
+#: src/std/lint_rules.py:60
+msgid "RPM completion basename matches Meson"
+msgstr "RPM పూర్తీకరణ మూలపేరు Mesonతో సరిపోతుంది"
+
+#: src/std/lint_rules.py:61
+msgid "Configured l10n coverage level"
+msgstr "అమర్చిన l10n కవరేజ్ స్థాయి"
+
+#: src/std/lint_rules.py:62
+msgid "Optional po/ gettext directory"
+msgstr "tests/ డైరెక్టరీ లేదు"
+
+#: src/std/lint_rules.py:63
+msgid "po/LINGUAS present when po/ exists"
+msgstr "po/ ఉంటే po/LINGUAS ఉంది"
+
+#: src/std/lint_rules.py:64
+msgid "LINGUAS covers required locales"
+msgstr "po/LINGUAS %s లొకేల్ సమితిని కవర్ చేస్తుంది"
+
+#: src/std/lint_rules.py:65
+msgid "LINGUAS entries have matching .po files"
+msgstr "LINGUAS నమోదులకు సరిపోలే .po ఫైళ్లు"
+
+#: src/std/lint_rules.py:66
+msgid "Whole-document man translations for level"
+msgstr "%s పూర్తి పత్రం man అనువాదాలు ఉన్నాయి"
+
+#: src/std/lint_rules.py:67
+msgid "Translated man still has English Name line"
+msgstr "man అనువాదంలో ఇంకా ఆంగ్ల Name పంక్తి ఉంది: %s"
+
+#: src/std/lint_rules.py:68
+msgid "Directory name matches packaging identity"
+msgstr "డైరెక్టరీ పేరు ప్యాకేజింగ్ గుర్తింపుతో సరిపోతుంది"
+
+#: src/std/lint_rules.py:69
+msgid "meson project name"
+msgstr "meson ప్రాజెక్ట్ పేరు=%s"
+
+#: src/std/lint_rules.py:70
+msgid "debian Source matches meson project name"
+msgstr "debian Source=%(source)r != meson ప్రాజెక్ట్=%(meson)r"
+
+#: src/std/lint_rules.py:71
+msgid "debian Source field"
+msgstr "Debian Source ఫీల్డ్"
+
+#: src/std/lint_rules.py:72
+msgid "RPM spec Name matches package name"
+msgstr "RPM spec Name ప్యాకేజీ పేరుతో సరిపోతుంది"
+
+#: src/std/lint_rules.py:73
+msgid "Legacy example shared module name"
+msgstr "పాత ఉదాహరణ భాగస్వామ్య మాడ్యూల్ పేరు"
+
+#: src/std/lint_rules.py:74
+msgid "Template-only shared example module"
+msgstr "టెంప్లేట్‌లో మాత్రమే ఉన్న భాగస్వామ్య ఉదాహరణ మాడ్యూల్"
+
+#: src/std/lint_rules.py:75
+msgid "Bash src/*.in scripts"
+msgstr "src/*.in స్క్రిప్ట్‌లు లేవు"
+
+#: src/std/lint_rules.py:76
+msgid "tests/ directory for C/C++ templates"
+msgstr "C/C++ టెంప్లేట్ల కోసం tests/ డైరెక్టరీ"
+
+#: src/std/lint_rules.py:77
+msgid "COBOL tests/ directory"
+msgstr "tests/ డైరెక్టరీ లేదు"
+
+#: src/std/lint_rules.py:78
+msgid "Fortran tests/ directory"
+msgstr "tests/ డైరెక్టరీ లేదు"
+
+#: src/std/lint_rules.py:79
+msgid "Pascal tests/ directory"
+msgstr "tests/ డైరెక్టరీ లేదు"
+
+#: src/std/lint_rules.py:80
+msgid "D tests/ directory"
+msgstr "tests/ డైరెక్టరీ లేదు"
+
+#: src/std/lint_rules.py:81
+msgid "Kotlin tests/ directory"
+msgstr "tests/ డైరెక్టరీ లేదు"
+
+#: src/std/lint_rules.py:82
+msgid "Nim tests/ directory"
+msgstr "tests/ డైరెక్టరీ లేదు"
+
+#: src/std/lint_rules.py:83
+msgid "Lua tests/ directory"
+msgstr "tests/ డైరెక్టరీ లేదు"
+
+#: src/std/lint_rules.py:84
+msgid "Python tests/ directory"
+msgstr "tests/ డైరెక్టరీ లేదు"
+
+#: src/std/lint_rules.py:85
+msgid "Zig build.zig present"
+msgstr "build.zig లేదు"
+
+#: src/std/lint_rules.py:86
+msgid "Rust Cargo.toml present"
+msgstr "run_target look ఉంది"
+
+#: src/std/lint_rules.py:87
+msgid "Go go.mod present"
+msgstr "మూలం.gitignore ప్రస్తుతం"
+
+#: src/std/lint_rules.py:88
+msgid "Template puff tokens expected in meta/template"
+msgstr "meta/templateలో ఊహించిన puff టెంప్లేట్ టోకెన్లు"
+
+#: src/std/lint_rules.py:89
+msgid "No leftover zephyr/some_puff1 tokens in apps"
+msgstr "మిగిలిన zephyr/some_puff1 టోకెన్‌లు లేవు"
+
+#: src/std/lint_rules.py:90
+msgid "Language template structural files present"
+msgstr "భాషా-టెంప్లేట్ అంచనాలు"
+
+#: src/std/lint_rules.py:91
+msgid "README still has template placeholder banner"
+msgstr "%s లో ఇంకా టెంప్లేట్ ప్లేస్‌హోల్డర్ బ్యానర్ ఉంది"
+
+#: src/std/lint_rules.py:92
+msgid "README has no template banner"
+msgstr "%s లో టెంప్లేట్ బ్యానర్ లేదు"
+
+#: src/std/lint_rules.py:96
+msgid "gettext .po catalogs use --no-wrap (no line wrapping)"
+msgstr "gettext క్యాటాల్గోల్స్ --no-wrap (వరుస వేరు లేవు)"
+
+#: src/std/lint_rules.py:103
+msgid "Root and component .gitignore coverage (node_modules/, dist/, backend/src/generated/, …)"
+msgstr "మూలం.gitignore node_modules/ మరియు dist/ కవర్స్"
+
+#: src/std/lint_rules.py:109
+msgid "At most one foreach puff man-page loop in meson.build"
+msgstr "ఏదీ పుఫ్ మనిషి లూప్"
+
+#: src/std/lint_rules.py:116
+msgid "C-family main uses bas i18n.h/env.h, self_exe, init_i18n(LOCALEDIR)"
+msgstr "C-family main bas i18n.h/env.h, self_exe, init_i18n(LOCALEDIR) వాడుతుంది"
+
+#: src/std/lint_rules.py:123
+msgid "C-family sources define_logger() via bas/log/deflog.h"
+msgstr "define_logger () #include <bas/log/deflog.h> లేకుండా"
+
+#: src/std/lint_rules.py:130
+msgid "meson config.h defines LOCALEDIR for init_i18n"
+msgstr "meson config.h init_i18n కోసం LOCALEDIR నిర్వచిస్తుంది"
+
+#: src/std/lint_rules.py:137
+msgid "gettext _() strings must not have leading/trailing spaces"
+msgstr "gettext _() స్టీంగ్లు leading/trailing స్పేస్లులేకపోయాయి"
+
+#: src/std/lint_rules.py:144
+msgid "gettext .po completion (msgid-copy counts as untranslated; ≤20% ≈ missing)"
+msgstr "gettext .po పూర్తితనం (msgid నకలు అనువదించలేదు; ≤20% లేనట్లే)"
+
+#: src/std/lint_rules.py:150
+msgid "Hardcoded FHS install paths in sources (use @DATADIR@ / configure_file)"
+msgstr "మూలంలో స్థిర FHS ఇన్‌స్టాల్ మార్గాలు (@DATADIR@ / configure_file వాడండి)"
+
+#: src/std/lint_rules.py:157
+msgid "Hardcoded project version in sources (use @VERSION@ / PROJECT_VERSION)"
+msgstr "మూలంలో స్థిర ప్రాజెక్ట్ సంచిక (@VERSION@ / PROJECT_VERSION వాడండి)"
+
+#: src/std/lint_rules.py:164
+msgid "No hardcoded install paths or project version strings"
+msgstr "సోర్స్‌లో ఎలాంటి హార్డ్‌కోడ్ చేయబడిన ఇన్‌స్టాల్ పథాలు లేదా ప్రాజెక్ట్ వెర్షన్ స్ట్రింగ్‌లు లేవు"
+
+#: src/std/lint_rules.py:170
+msgid "gettext .po empty msgstr or omitted msgid-copy (keep-English field literals exempt)"
+msgstr "gettext .poలో ఖాళీ msgstr లేదా వదిలిన msgid నకలు (ఆంగ్ల ఫీల్డులకు మినహాయింపు)"
+
+#: src/std/lint_rules.py:176
+msgid "Project version substituted by Meson config and used in at least one source"
+msgstr "Meson అమరికతో మార్చి కనీసం ఒక మూలంలో వాడిన ప్రాజెక్ట్ సంచిక"
+
+#: src/std/lint_rules.py:188
+msgid "posync run_target is externalized as scripts/posync.sh"
+msgstr "posync ను scripts/posync.sh గా బయటి స్థాయిలోకి విడుదల చేశారు"
+
+#: src/std/lint_rules.py:199
+msgid "Build/deploy/maintenance scripts live under scripts/"
+msgstr "scripts/ (లేదా ఏదైనా కాకుండా) కింద నిర్మాణం/ప్రవేశపెట్టడం/నిర్వహణ స్క్రిప్ట్‌లు"
+
+#: src/std/lint_rules.py:211
+msgid "debian/control extended Description present"
+msgstr "విస్తరించిన Description వుంది"
+
+#: src/std/lint_rules.py:218
+msgid "debian/control Priority field"
+msgstr "debian/control Priority ఫీల్డ్"
+
+#: src/terminal.py:75
 msgid "enable AI-oriented hints (default for AI terminals and non-interactive stdout)"
 msgstr "AI-oriented సూచనలను చేతనం చేయుము (AI టెర్మినల్ల కొరకు అప్రమేయ -interactive stdout)"
 
-#: src/zfr_lib/terminal.py:82
+#: src/terminal.py:82
 msgid "disable AI-oriented hints (default for a plain interactive shell)"
 msgstr "AI-oriented సూచనలను అచేతనం చేయుము (సాధారణ ఇంటెరెక్టెక్షన్ షెల్ కొరకు అప్రమేయ)"
 
-#: src/zfr_lib/translate/__init__.py:48
+#: src/translate/__init__.py:48
 msgid "poedit not found in PATH"
 msgstr "poedit పాత్‌లో కనుగొనబడలేదు"
 
-#: src/zfr_lib/translate/__init__.py:51
+#: src/translate/__init__.py:51
 #, python-format
 msgid "file not found: %s"
 msgstr "దస్త్రం కనుగొనబడలేదు: %s"
 
-#: src/zfr_lib/translate/__init__.py:134
+#: src/translate/__init__.py:134
 #, python-format
 msgid "no catalog for locale: %s"
 msgstr "స్థానము కొరకు ఏ క్యాటలాట్‌: %s"
 
-#: src/zfr_lib/translate/__init__.py:141
+#: src/translate/__init__.py:141
 msgid "query and update gettext message strings"
 msgstr "gettext సందేశ స్ట్రింగ్లు ప్రశ్న మరియు అప్రమేయించు"
 
-#: src/zfr_lib/translate/__init__.py:143
+#: src/translate/__init__.py:143
 msgid "Look up translations for TEXT across implemented locales, or update a single locale catalog. Remaining arguments are joined with spaces."
 msgstr "ధరించబడిన స్థానముల కోసం TEXT అనువాదములను శోధించుము, లేదా ఒక ఒక్క లోకెల్‌ క్యాటాల్గోల్ అప్‌‌చేయుము. మిగిలిన ఆర్గ్ర"
 
-#: src/zfr_lib/translate/__init__.py:155
+#: src/translate/__init__.py:152
+msgid "sync gettext catalogs from sources (replaces scripts/posync.sh)"
+msgstr "posync ను scripts/posync.sh గా బయటి స్థాయిలోకి విడుదల చేశారు"
+
+#: src/translate/__init__.py:159
+msgid "project root for --sync (default: walk from cwd / MESON_SOURCE_ROOT)"
+msgstr "ప్రాజెక్ట్ డైరెక్టరీ (డిఫావల్ట్: cwd నుండి నడవండి)"
+
+#: src/translate/__init__.py:167
 msgid "use poedit to import edits from FILE"
 msgstr "ఫైలునుండి సరికూర్చుటకు poedit వుపయోగించుము"
 
-#: src/zfr_lib/translate/__init__.py:161
+#: src/translate/__init__.py:173
 msgid "query LANG only (default: all implemented; ignored for --import)"
 msgstr "query LANG మాత్రమే (అప్రమేయ: అన్ని ప్రవహించబడింది; --import కొరకు అనంగీకరించబడింది)"
 
-#: src/zfr_lib/translate/__init__.py:167
+#: src/translate/__init__.py:179
 msgid "update LANG with TRANSLATION (stdin if omitted)"
 msgstr "TRANSLATIONతో LANG (stdin లేకపోయినయెడల) అప్రవేశించు"
 
-#: src/zfr_lib/translate/__init__.py:173
+#: src/translate/__init__.py:185
 msgid "list all message ids (msgids)"
 msgstr "అన్ని సందేశ ఐడిలను జాబితాచేయి (msgids)"
 
-#: src/zfr_lib/translate/__init__.py:180
+#: src/translate/__init__.py:192
 msgid "list msgids matching REGEX, case-insensitive (keys only with -k)"
 msgstr "చిత్రము REGEXతో సరిపోత msgids జాబితా, కెస్-insensitive (కీలు -k తో మాత్రమే)"
 
-#: src/zfr_lib/translate/__init__.py:186
+#: src/translate/__init__.py:198
 msgid "list msgids matching REGEX, case-sensitive (keys only with -k)"
 msgstr "చిత్రము REGEXతో సరిపోత msgids జాబితా, కెస్-sensitive (కీలు -k తో మాత్రమే)"
 
-#: src/zfr_lib/translate/__init__.py:192
+#: src/translate/__init__.py:204
 msgid "list msgids/translations matching REGEX, case-insensitive (keys only with -k)"
 msgstr "msgids/translations REGEXతో సరిపోతున్న జాబితా, కైస్-insensitive (కీలు -k తో మాత్రమే మాత్రమే)"
 
-#: src/zfr_lib/translate/__init__.py:198
+#: src/translate/__init__.py:210
 msgid "list msgids/translations matching REGEX, case-sensitive (keys only with -k)"
 msgstr "msgids/translations REGEXతో సరిపోతున్న జాబితా, కైస్-sensitive (కీలు -k తో మాత్రమే మాత్రమే)"
 
-#: src/zfr_lib/translate/__init__.py:204
+#: src/translate/__init__.py:216
 msgid "with -m/-M/-s/-S, match the full msgid or translation (not a substring)"
 msgstr "-m/-M/-s/-Sతో, పూర్తి msgid లేదా అనువాదంతో సరిపోతున్నాము (సబ్స్ట్రింగ్ కాదు)"
 
-#: src/zfr_lib/translate/__init__.py:213
+#: src/translate/__init__.py:225
 msgid "TEXT [TRANSLATION]"
 msgstr "TEXT [అనువాదం]"
 
-#: src/zfr_lib/translate/__init__.py:248
+#: src/translate/__init__.py:270
 msgid "TEXT required with --update"
 msgstr "TEXT అవసరం --update తో"
 
-#: src/zfr_lib/translate/__init__.py:253
+#: src/translate/__init__.py:275
 msgid "TRANSLATION required (args or stdin) with --update"
 msgstr "TRANSLATION అవసరం (అర్గములు లేదా stdin) --updateతో"
 
-#: src/zfr_lib/translate/__init__.py:271
+#: src/translate/__init__.py:293
 msgid "TEXT required"
 msgstr "TEXT అవసరం"
 
-#: src/zfr_lib/version.py:51
+#: src/version.py:51
 msgid "print current project version (walks parents from cwd)"
 msgstr "ప్రస్తుత ప్రాజెక్టు సంస్కరణ చూపించు (ప్రస్తుత సంచయం నుండి పైకి వెతుకుతుంది)"
 
-#: src/zfr_lib/version.py:52
+#: src/version.py:52
 msgid "Print the current project version (walks from cwd toward parent directories)."
 msgstr "ప్రస్తుత ప్రాజెక్టు సంస్కరణను చూపిస్తుంది (ప్రస్తుత సంచయం నుండి పై సంచయాల వైపు వెతుకుతుంది)."
 
-#: src/zfr_lib/version.py:57
+#: src/version.py:57
 msgid "use git describe (default when git and .git are available)"
 msgstr "git describe వాడు (git మరియు .git ఉంటే అప్రమేయం)"
 
-#: src/zfr_lib/version.py:58
+#: src/version.py:58
 msgid "use debian/changelog (default when git or .git is unavailable)"
 msgstr "debian/changelog వాడు (git లేదా .git లేకపోతే అప్రమేయం)"
 
-#: src/zfr_lib/version.py:59
+#: src/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
 msgstr "RPMకు సరిపోయే Version చూపించు (హైఫన్లు అండర్‌స్కోర్‌లు)"
 

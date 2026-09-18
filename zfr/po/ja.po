@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 21:52+0800\n"
+"POT-Creation-Date: 2026-09-19 00:16+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Japanese\n"
@@ -28,886 +28,940 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "\n"
 
-#: src/zfr_lib/about.py:498
+#: src/about.py:498
 msgid "print current project information (walks parents from cwd)"
 msgstr "現在のプロジェクト情報を表示（cwd から親ディレクトリをたどる）"
 
-#: src/zfr_lib/about.py:500
+#: src/about.py:500
 msgid "Print information about the current zephyr project (walks from cwd toward parent directories). CSR colors when stdout is a TTY. Common packaging fields are parsed from debian or RPM."
 msgstr "現在の zephyr プロジェクトの情報を表示（cwd から親ディレクトリへたどる）。stdout が TTY のとき CSR 色。debian または RPM から一般的なパッケージングフィールドを解析。"
 
-#: src/zfr_lib/about.py:507
+#: src/about.py:507
 msgid "show parsed Debian packaging fields"
 msgstr "解析済み Debian パッケージングフィールドを表示"
 
-#: src/zfr_lib/about.py:508
+#: src/about.py:508
 msgid "show parsed RPM packaging fields"
 msgstr "解析済み RPM パッケージングフィールドを表示"
 
-#: src/zfr_lib/about.py:513
+#: src/about.py:513
 msgid "CSR (console SGR) highlighting (default: auto = TTY and no NO_COLOR)"
 msgstr "CSR (console SGR) ハイライト（デフォルト: auto = TTY かつ NO_COLOR なし）"
 
-#: src/zfr_lib/add.py:20
+#: src/add.py:20
 msgid "instantiate puff(s) from the language template"
 msgstr "言語テンプレートから puff をインスタンス化"
 
-#: src/zfr_lib/add.py:21
+#: src/add.py:21
 msgid "Detect language and add puff(s) from pkgdatadir/<lang>."
 msgstr "言語を検出し、pkgdatadir/<lang> から puff を追加。"
 
-#: src/zfr_lib/add.py:25
+#: src/add.py:25
 msgid "new puff name(s) (snake_case recommended)"
 msgstr "新しい puff 名（snake_case 推奨）"
 
-#: src/zfr_lib/build.py:15
+#: src/build.py:15
 msgid "detect build system and compile the project"
 msgstr "ビルドシステムを検出しプロジェクトをコンパイルする"
 
-#: src/zfr_lib/build.py:17
+#: src/build.py:17
 msgid "Detect the project build system (meson, cmake, autotools, cargo, go, npm, make) and run a local compile."
 msgstr "プロジェクトのビルドシステム（meson、cmake、autotools、cargo、go、npm、make）を検出し、ローカルでコンパイルします。"
 
-#: src/zfr_lib/build.py:28
+#: src/build.py:28
 msgid "change to DIR before detecting the build system"
 msgstr "ビルドシステム検出前に DIR へ移動する"
 
-#: src/zfr_lib/build.py:35
-#, fuzzy
+#: src/build.py:35
 msgid "build directory (default: <project>/build)"
 msgstr "Meson ビルドディレクトリ（デフォルト: このソースツリーに一致する場合 /build、それ以外 <project>/build）"
 
-#: src/zfr_lib/build.py:42 src/zfr_lib/package.py:120
-#, fuzzy
+#: src/build.py:42 src/package.py:120
 msgid "print planned commands without running them"
 msgstr "ファイルを書き込まずに予定された変更を表示"
 
-#: src/zfr_lib/build.py:48
+#: src/build.py:48
 msgid "verbose build output where supported"
 msgstr "対応している場合は詳細なビルド出力を表示"
 
-#: src/zfr_lib/build.py:53
+#: src/build.py:53
 msgid "print detected build system and exit"
 msgstr "検出したビルドシステムを表示して終了"
 
-#: src/zfr_lib/comments_cmd.py:20
+#: src/build.py:58
+msgid "preview files meson would install (DESTDIR tree; replaces scripts/look.sh)"
+msgstr ""
+
+#: src/build.py:67
+msgid "with --look, limit tree depth to N levels (implies --look; default is unlimited)"
+msgstr ""
+
+#: src/comments_cmd.py:20
 msgid "print or delete project/user lint.comments with an AI work hint"
 msgstr "プロジェクト/ユーザーの lint.comments を表示または削除し、AI 作業ヒントを付ける"
 
-#: src/zfr_lib/comments_cmd.py:22
+#: src/comments_cmd.py:22
 msgid "Print lint suggestion comments from .config/zfr/lint.comments (project) and ~/.config/zfr/lint.comments (user), then an AI hint to apply the suggestions and delete the consumed comments files. Optional ZLxxxx arguments filter which sections to show. Typical prompt: “do zfr-comments work.”"
 msgstr ".config/zfr/lint.comments（プロジェクト）と ~/.config/zfr/lint.comments（ユーザー）から lint 提案コメントを表示し、続けて提案を適用して消費済み comments ファイルを削除する AI ヒントを出します。任意の ZLxxxx 引数で表示するセクションを絞り込めます。典型的なプロンプト: 「do zfr-comments work.」"
 
-#: src/zfr_lib/comments_cmd.py:35
-#, fuzzy
+#: src/comments_cmd.py:35
 msgid "only these rule ids (default: all)"
 msgstr "bool しきい値 0-100（デフォルト: %s）"
 
-#: src/zfr_lib/comments_cmd.py:42 src/zfr_lib/lintsel.py:284
+#: src/comments_cmd.py:42 src/lintsel.py:284
 msgid "project directory (default: walk from cwd)"
 msgstr "プロジェクトディレクトリ（既定: cwd から探索）"
 
-#: src/zfr_lib/comments_cmd.py:49
+#: src/comments_cmd.py:49
 msgid "user comments only (~/.config/zfr/lint.comments)"
 msgstr "ユーザーコメントのみ（~/.config/zfr/lint.comments）"
 
-#: src/zfr_lib/comments_cmd.py:55
+#: src/comments_cmd.py:55
 msgid "project comments only (.config/zfr/lint.comments)"
 msgstr "プロジェクトコメントのみ（.config/zfr/lint.comments）"
 
-#: src/zfr_lib/comments_cmd.py:61
+#: src/comments_cmd.py:61
 msgid "delete matching comments (files or selected sections)"
 msgstr "一致するコメントを削除（ファイルまたは選択したセクション）"
 
-#: src/zfr_lib/comments_cmd.py:67
+#: src/comments_cmd.py:67
 msgid "omit the AI hint trailer"
 msgstr "末尾の AI ヒントを省略する"
 
-#: src/zfr_lib/comments_cmd.py:93
+#: src/comments_cmd.py:93
 msgid "No matching lint.comments to delete."
 msgstr "削除対象の lint.comments はありません。"
 
-#: src/zfr_lib/comments_cmd.py:96
-#, fuzzy, python-format
+#: src/comments_cmd.py:96
 msgid "Deleted: %s"
 msgstr "あり: %s"
 
-#: src/zfr_lib/create.py:287
+#: src/create.py:287
 msgid "create a new project from a language template"
 msgstr "言語テンプレートから新しいプロジェクトを作成"
 
-#: src/zfr_lib/create.py:288
+#: src/create.py:288
 msgid "Create a new project directory from pkgdatadir/<lang>."
 msgstr "pkgdatadir/<lang> から新しいプロジェクトディレクトリを作成。"
 
-#: src/zfr_lib/create.py:295
+#: src/create.py:295
 #, python-format
 msgid "template language (default: python; one of: %s)"
 msgstr "テンプレート言語（デフォルト: python; 次のいずれか: %s）"
 
-#: src/zfr_lib/create.py:299
+#: src/create.py:299
 #, python-format
 msgid "debian changelog distribution (default: %s)"
 msgstr "debian changelog ディストリビューション（デフォルト: %s）"
 
-#: src/zfr_lib/create.py:303
+#: src/create.py:303
 #, python-format
 msgid "initial package version and git tag (default: %s)"
 msgstr "初期パッケージバージョンと git タグ（デフォルト: %s）"
 
-#: src/zfr_lib/create.py:307
+#: src/create.py:307
 #, python-format
 msgid "changelog/git author name (default: %s)"
 msgstr "changelog/git 著者名（デフォルト: %s）"
 
-#: src/zfr_lib/create.py:311
+#: src/create.py:311
 #, python-format
 msgid "changelog/git author email (default: %s)"
 msgstr "changelog/git 著者メール（デフォルト: %s）"
 
-#: src/zfr_lib/create.py:317
+#: src/create.py:317
 msgid "do not instantiate a default puff (leave some_puff1 tokens for a later zfr add)"
 msgstr "デフォルトの puff を生成しない（後の zfr add 用に some_puff1 トークンを残す）"
 
-#: src/zfr_lib/create.py:321
+#: src/create.py:321
 msgid "new project directory name"
 msgstr "新しいプロジェクトディレクトリ名"
 
-#: src/zfr_lib/create.py:325
+#: src/create.py:325
 msgid "puff names (default: one puff named like the package; use --no-puff for none)"
 msgstr "puff 名（既定: パッケージと同名の puff を1つ; 不要なら --no-puff）"
 
-#: src/zfr_lib/detect.py:15
+#: src/detect.py:15
 msgid "print detected language for the current directory"
 msgstr "現在のディレクトリの検出言語を表示"
 
-#: src/zfr_lib/detect.py:16
+#: src/detect.py:16
 msgid "Print the detected language of the current project and layout details on stderr."
 msgstr "現在のプロジェクトの検出言語とレイアウト詳細を stderr に表示。"
 
-#: src/zfr_lib/dist.py:61
-#, fuzzy, python-format
+#: src/dist.py:61
 msgid "write the archive into DIR (default: meson-dist, or %%_topdir/SOURCES with --rpm; usually $HOME/rpmbuild)"
 msgstr "アーカイブを DIR に書き込む（デフォルト: meson-dist、または --rpm で %_topdir/SOURCES ($HOME/rpmbuild)）"
 
-#: src/zfr_lib/dist.py:71
+#: src/dist.py:71
 msgid "Meson build directory (default: /build when it matches this source tree, else <project>/build)"
 msgstr "Meson ビルドディレクトリ（デフォルト: このソースツリーに一致する場合 /build、それ以外 <project>/build）"
 
-#: src/zfr_lib/dist.py:81
+#: src/dist.py:81
 msgid "archive format (default: xz)"
 msgstr "アーカイブ形式（デフォルト: xz）"
 
-#: src/zfr_lib/dist.py:87
-#, fuzzy, python-format
+#: src/dist.py:87
 msgid "name the archive NAME-VERSION.tar.xz and write it to %%_topdir/SOURCES ($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
 msgstr "アーカイブを NAME-VERSION.tar.xz と命名し、-o がなければ %_topdir/SOURCES ($HOME/rpmbuild) に書き込む"
 
-#: src/zfr_lib/dist.py:96
+#: src/dist.py:96
 msgid "pass --allow-dirty to meson dist (default: allow)"
 msgstr "meson dist に --allow-dirty を渡す（デフォルト: allow）"
 
-#: src/zfr_lib/dist.py:101
+#: src/dist.py:101
 msgid "run tests during meson dist (default: --no-tests)"
 msgstr "meson dist 中にテストを実行（デフォルト: --no-tests）"
 
-#: src/zfr_lib/dist.py:418
+#: src/dist.py:418
 msgid "build a source tarball (meson dist, or this project only)"
 msgstr "ソース tarball をビルド（meson dist、またはこのプロジェクトのみ）"
 
-#: src/zfr_lib/dist.py:420
-#, fuzzy
+#: src/dist.py:420
 msgid "Build a source archive of the current zephyr project (walks from cwd toward parent directories). Uses meson dist when this directory is the git project root; otherwise packs this project only so nested language templates do not ship the parent meta-repo. When ``.tarignore`` exists (gitignore-style), always pack the project tree and apply those excludes. Prints the archive path on stdout."
 msgstr "現在の zephyr プロジェクトのソースアーカイブをビルド（cwd から親ディレクトリへたどる）。このディレクトリが git プロジェクトルートのとき meson dist を使用；それ以外はこのプロジェクトのみパックし、ネストした言語テンプレートが親 meta-repo を同梱しないようにする。アーカイブパスを stdout に表示。"
 
-#: src/zfr_lib/i18n/cmd.py:42
+#: src/i18n/cmd.py:42
 msgid "no implemented locales (po/LINGUAS + po/*.po)"
 msgstr "実装済みロケールなし（po/LINGUAS + po/*.po）"
 
-#: src/zfr_lib/i18n/cmd.py:47
+#: src/i18n/cmd.py:47
 msgid "  [derived]"
 msgstr "  [派生]"
 
-#: src/zfr_lib/i18n/cmd.py:57
+#: src/i18n/cmd.py:57
 #, python-format
 msgid "tier %(tier)s"
 msgstr "段階 %(tier)s"
 
-#: src/zfr_lib/i18n/cmd.py:60
+#: src/i18n/cmd.py:60
 #, python-format
 msgid "derived from: %(parent)s"
 msgstr "派生元: %(parent)s"
 
-#: src/zfr_lib/i18n/cmd.py:63
+#: src/i18n/cmd.py:63
 #, python-format
 msgid "fallback chain: %(chain)s"
 msgstr "フォールバック: %(chain)s"
 
-#: src/zfr_lib/i18n/cmd.py:66
+#: src/i18n/cmd.py:66
 #, python-format
 msgid "children (->): %(kids)s"
 msgstr "子 (->): %(kids)s"
 
-#: src/zfr_lib/i18n/cmd.py:70
+#: src/i18n/cmd.py:70
 #, python-format
 msgid "catalog: %(path)s"
 msgstr "カタログ: %(path)s"
 
-#: src/zfr_lib/i18n/cmd.py:72
+#: src/i18n/cmd.py:72
 #, python-format
 msgid "po stats: %(translated)d/%(total)d translated, %(missing)d missing"
 msgstr "PO 統計: %(translated)d/%(total)d 翻訳済み、%(missing)d 未訳"
 
-#: src/zfr_lib/i18n/cmd.py:75
+#: src/i18n/cmd.py:75
 msgid "no .po catalog in this project"
 msgstr "このプロジェクトに .po カタログなし"
 
-#: src/zfr_lib/i18n/cmd.py:93
+#: src/i18n/cmd.py:93
 #, python-format
 msgid "locale not found: %s"
 msgstr "ロケールが見つかりません: %s"
 
-#: src/zfr_lib/i18n/cmd.py:147
+#: src/i18n/cmd.py:147
 #, python-format
 msgid "would build %d derived locale file(s)"
 msgstr "派生ロケールファイルを %d 件生成します"
 
-#: src/zfr_lib/i18n/cmd.py:167
+#: src/i18n/cmd.py:167
 msgid "manage implemented gettext locales"
 msgstr "実装済み gettext ロケールを管理"
 
-#: src/zfr_lib/i18n/cmd.py:169
+#: src/i18n/cmd.py:169
 msgid "List, add, delete, and build derived locales in the current project. Use zfr translate to query or update message strings."
 msgstr "現在のプロジェクトで派生ロケールを一覧・追加・削除・生成します。zfr translate で文字列を照会・更新します。"
 
-#: src/zfr_lib/i18n/cmd.py:179
+#: src/i18n/cmd.py:179
 msgid "list all implemented locales in this project"
 msgstr "このプロジェクトで実装済みのロケールを一覧"
 
-#: src/zfr_lib/i18n/cmd.py:185
+#: src/i18n/cmd.py:185
 msgid "delete a locale (LINGUAS, .po, man/)"
 msgstr "ロケールを削除（LINGUAS、.po、docs/）"
 
-#: src/zfr_lib/i18n/cmd.py:191
+#: src/i18n/cmd.py:191
 msgid "add a new locale"
 msgstr "新しいロケールを追加"
 
-#: src/zfr_lib/i18n/cmd.py:197
+#: src/i18n/cmd.py:197
 msgid "build derived locale PO/man files from parents (skip locales in LINGUAS)"
 msgstr "親から派生 PO/man を生成（LINGUAS に列挙されたロケールはスキップ）"
 
-#: src/zfr_lib/i18n/cmd.py:202
+#: src/i18n/cmd.py:202
 msgid "output directory for derived .po files (default: build/po or $MESON_BUILD_ROOT/po)"
 msgstr ".po ファイルの出力ディレクトリ (デフォルト: build/po や $MESON_BUILD_ROOT/po)"
 
-#: src/zfr_lib/i18n/cmd.py:207
+#: src/i18n/cmd.py:207
 msgid "write a stamp file listing derived paths (for Meson custom_target)"
 msgstr "スタンプファイルのリストを書き込み出したパスを( Meson custom_target)"
 
-#: src/zfr_lib/i18n/cmd.py:212
+#: src/i18n/cmd.py:212
 msgid "with --build, also msgfmt derived .po into LC_MESSAGES (for Meson)"
 msgstr "そして--buildまたmsgfmt.po が 生成LC_MESSAGES「(それから)」 (「これらのこと」)Meson)"
 
-#: src/zfr_lib/i18n/cmd.py:217
+#: src/i18n/cmd.py:217
 msgid "gettext domain for --compile-mo / --install-derived"
 msgstr "gettextドメイン--compile-mo「--install-derived"
 
-#: src/zfr_lib/i18n/cmd.py:223
+#: src/i18n/cmd.py:223
 msgid "install derived .mo from --po-dir into $MESON_INSTALL_DESTDIR_PREFIX (Meson add_install_script)"
 msgstr "--po-dir から $MESON_INSTALL_DESTDIR_PREFIX (Meson Add_install_script) インストールされます"
 
-#: src/zfr_lib/i18n/cmd.py:231
+#: src/i18n/cmd.py:231
 msgid "with --install-derived, locale subdirectory under prefix (default: share/locale)"
 msgstr "そして--install-derivedローカーのサブディレクトリの下prefix(デフォルト:share/locale)"
 
-#: src/zfr_lib/i18n/cmd.py:233
+#: src/i18n/cmd.py:233
 msgid "with --build, print only"
 msgstr "--build 時は表示のみ"
 
-#: src/zfr_lib/i18n/cmd.py:234
+#: src/i18n/cmd.py:234
 msgid "with --build, overwrite existing"
 msgstr "--build 時は既存を上書き"
 
-#: src/zfr_lib/i18n/cmd.py:235
+#: src/i18n/cmd.py:235
 msgid "locale to inspect"
 msgstr "調べるロケール"
 
-#: src/zfr_lib/i18n/cmd.py:241
+#: src/i18n/cmd.py:241
 msgid "--install-derived requires --po-dir and --domain"
 msgstr "--install-derived は --po-dir と --domain を必要とする"
 
-#: src/zfr_lib/ize/engine/__init__.py:86
-msgid "not selected via --only"
-msgstr "--only で選択されていません"
-
-#: src/zfr_lib/ize/engine/__init__.py:90
-msgid "suppressed via -u/--uncheck"
-msgstr "-u/--uncheck で抑制"
-
-#: src/zfr_lib/ize/engine/scripts.py:171
-#, python-format
-msgid "run_target('%s') → scripts/%s.sh"
-msgstr "run_target('%s') → scripts/%s.sh"
-
-#: src/zfr_lib/ize/__init__.py:76
+#: src/ize/__init__.py:76
 msgid "refactor this project to current zephyr style"
 msgstr "このプロジェクトを現在の zephyr スタイルにリファクタリング"
 
-#: src/zfr_lib/ize/__init__.py:77
-#, fuzzy
+#: src/ize/__init__.py:77
 msgid "Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, Meson version substitutions, and lint-level gettext coverage (LINGUAS + .po). Does not scaffold man/<locale> man translations. Walks from cwd toward parents."
 msgstr "現在のプロジェクトを現在の zephyr スタイルに合わせてリファクタリング：不足している debian/rpm ファイル、meson ターゲット、AsciiDoc man ページ、Meson バージョン置換。cwd から親へたどる。"
 
-#: src/zfr_lib/ize/__init__.py:81
+#: src/ize/__init__.py:81
 #, python-format
 msgid "language template to align with (default: detect; one of: %s)"
 msgstr "合わせる言語テンプレート（デフォルト: detect; 次のいずれか: %s）"
 
-#: src/zfr_lib/ize/__init__.py:82
+#: src/ize/__init__.py:82
 msgid "print planned changes without writing files"
 msgstr "ファイルを書き込まずに予定された変更を表示"
 
-#: src/zfr_lib/ize/__init__.py:87
+#: src/ize/__init__.py:87
 msgid "list numbered ize standards (ZI*) as a table and exit"
 msgstr "テーブルとして数字のイズ標準 (ZI*) をリスト、出て行く"
 
-#: src/zfr_lib/ize/__init__.py:93
-#, fuzzy
+#: src/ize/__init__.py:93
 msgid "show details for ize standard NUM (e.g. ZI0015, 15) and exit"
 msgstr "ize 標準 NUM (例えば ZI0015,15) に関する情報を表示します。"
 
-#: src/zfr_lib/ize/__init__.py:100
+#: src/ize/__init__.py:100
 msgid "bump patch version (debian/changelog + VERSION), git add -A, and commit ize changes with a verbose message"
 msgstr "バージョンのバージョン (debian/changelog + VERSION), git -A を追加し、文字通りメッセージで変更を作成します"
 
-#: src/zfr_lib/ize/__init__.py:109
+#: src/ize/__init__.py:109
 msgid "changelog author for --commit (Name or 'Name <email>'); default: reuse the previous debian/changelog trailer"
 msgstr "--commit (名前や「名前 <email>」); デフォルト:前の debian/changelog トレーラーを再用します"
 
-#: src/zfr_lib/ize/__init__.py:113
+#: src/ize/__init__.py:113
 msgid "also print skipped files"
 msgstr "スキップしたファイルも表示"
 
-#: src/zfr_lib/ize/__init__.py:119
+#: src/ize/__init__.py:119
 msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
 msgstr "Autotools/CMake がある場合に 2meson で Meson へ変換する（既定: オン）"
 
-#: src/zfr_lib/ize/__init__.py:121
+#: src/ize/__init__.py:121
 msgid "do not convert groff .1 man pages to man/*.adoc"
 msgstr "groff .1 man ページを docs/*.adoc に変換しない"
 
-#: src/zfr_lib/ize/__init__.py:122
-#, fuzzy
+#: src/ize/__init__.py:122
 msgid "do not turn hardcoded versions/paths into @VERSION@/@PREFIX@ / config.h"
 msgstr "ハードコードされたバージョンを @VERSION@ / config.h に変換しない"
 
-#: src/zfr_lib/ize/__init__.py:129
+#: src/ize/__init__.py:129
 msgid "suppress ize rule ID(s) or code(s), comma-separated (repeatable)"
 msgstr "抑止する規則 ID またはコード（カンマ区切り、繰り返し可）"
 
-#: src/zfr_lib/ize/__init__.py:137
-#, fuzzy
+#: src/ize/__init__.py:137
 msgid "run only these ize rule ID(s) or code(s), comma-separated (repeatable)"
 msgstr "抑止する規則 ID またはコード（カンマ区切り、繰り返し可）"
 
-#: src/zfr_lib/ize/__init__.py:139 src/zfr_lib/lint/__init__.py:248
-#: src/zfr_lib/translate/__init__.py:211
+#: src/ize/__init__.py:139 src/lint/__init__.py:248
+#: src/translate/__init__.py:223
 msgid "CSR (console SGR) highlighting (default: auto)"
 msgstr "CSR (console SGR) ハイライト（デフォルト: auto）"
 
-#: src/zfr_lib/ize/__init__.py:151
+#: src/ize/__init__.py:151
 #, python-format
 msgid "unknown ize standard: %s"
 msgstr "未知の ize 標準: %s"
 
-#: src/zfr_lib/jobs.py:30
+#: src/ize/engine/__init__.py:86
+msgid "not selected via --only"
+msgstr "--only で選択されていません"
+
+#: src/ize/engine/__init__.py:90
+msgid "suppressed via -u/--uncheck"
+msgstr "-u/--uncheck で抑制"
+
+#: src/ize/engine/scripts.py:178
+msgid "run_target('%s') → %s"
+msgstr "run_target('%s') → scripts/%s.sh"
+
+#: src/ize/engine/scripts.py:212
+#, python-format
+msgid "run_target('%s') → scripts/%s.sh"
+msgstr "run_target('%s') → scripts/%s.sh"
+
+#: src/jobs.py:30
 msgid "job budget: omit or pass -j alone for auto (debuild/dpkg-buildpackage get bare -j); -j N pins a total budget split across concurrent planned workers"
 msgstr "ジョブ予算: 省略または -j 単独で自動（debuild/dpkg-buildpackage は裸の -j）；-j N は総予算を固定し、計画された並行ワーカーに分割"
 
-#: src/zfr_lib/lang/antlr.py:42 src/zfr_lib/lang/as.py:30
-#: src/zfr_lib/lang/bison.py:38 src/zfr_lib/lang/clib.py:37
-#: src/zfr_lib/lang/cobol.py:32 src/zfr_lib/lang/cpplib.py:37
-#: src/zfr_lib/lang/cpp.py:24 src/zfr_lib/lang/c.py:24 src/zfr_lib/lang/d.py:32
-#: src/zfr_lib/lang/fortran.py:32 src/zfr_lib/lang/gcc.py:48
-#: src/zfr_lib/lang/kotlin.py:22 src/zfr_lib/lang/lua.py:22
-#: src/zfr_lib/lang/nim.py:24 src/zfr_lib/lang/pascal.py:32
-#: src/zfr_lib/lang/python.py:21
-msgid "tests/ present"
-msgstr "tests/ あり"
-
-#: src/zfr_lib/lang/antlr.py:47 src/zfr_lib/lang/as.py:35
-#: src/zfr_lib/lang/bison.py:43 src/zfr_lib/lang/clib.py:43
-#: src/zfr_lib/lang/cpplib.py:43 src/zfr_lib/lang/cpp.py:30
-#: src/zfr_lib/lang/c.py:30 src/zfr_lib/lang/gcc.py:53
-msgid "no tests/ directory"
-msgstr "tests/ ディレクトリがありません"
-
-#: src/zfr_lib/lang/antlr.py:49
-msgid "Add tests/TestCommons.java or fixture checks for parser output."
-msgstr "tests/TestCommons.java を追加するか、パーサー出力のフィクスチャ検査を入れてください。"
-
-#: src/zfr_lib/lang/as.py:37
-msgid "Add tests/smoke.sh and meson test() for stdin/stdout copy."
-msgstr "stdin/stdout のコピー用に tests/smoke.sh と meson test() を追加してください。"
-
-#: src/zfr_lib/lang/bash.py:65
-#, python-format
-msgid "src scripts: %s"
-msgstr "src のスクリプト: %s"
-
-#: src/zfr_lib/lang/bash.py:78
-#, python-format
-msgid "root scripts: %s"
-msgstr "src のスクリプト: %s"
-
-#: src/zfr_lib/lang/bash.py:89
-#, python-format
-msgid "setup-only package (%s); no bindir script puffs"
-msgstr "設定 -only パッケージ (%s); bindir スクリプトのプップはない"
-
-#: src/zfr_lib/lang/bash.py:105
-msgid "Meson executable + .c present; script .in not required"
-msgstr "Meson 実行的 + .c present; スクリプト .in は必要なことはない"
-
-#: src/zfr_lib/lang/bash.py:114
-msgid "no configure_file/executable; script .in not required"
-msgstr "configure_file/executable からは必要なスクリプト .in"
-
-#: src/zfr_lib/lang/bash.py:121
-msgid "no src/*.in or root *.in scripts"
-msgstr "src/*.in スクリプトがありません"
-
-#: src/zfr_lib/lang/bash.py:124
-msgid "Keep configured scripts as src/<puff>.in (preferred) or <puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
-msgstr "設定対象のスクリプトは src/<puff>.in のまま @PACKAGE@/@VERSION@ を含め、meson configure_file + install_mode rwxr-xr-x を使ってください。"
-
-#: src/zfr_lib/lang/bison.py:45
-msgid "Add tests/ with fixture checks for parser dump/format output."
-msgstr "パーサーの dump/format 出力向けのフィクスチャ検査を tests/ に追加してください。"
-
-#: src/zfr_lib/lang/_c_bas.py:187
+#: src/lang/_c_bas.py:187
 msgid "no int main() in src/; skip bas i18n main checks"
 msgstr "src/ では、バス i18n 主チェックをスキップします。"
 
-#: src/zfr_lib/lang/_c_bas.py:208
+#: src/lang/_c_bas.py:208
 #, python-format
 msgid "main missing bas i18n setup: %s"
 msgstr "メインが失敗したバス i18n 設定: %s"
 
-#: src/zfr_lib/lang/_c_bas.py:211
+#: src/lang/_c_bas.py:211
 msgid "In main: #include <bas/locale/i18n.h> and <bas/proc/env.h>; const char *exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR from meson config.h). Run `zfr ize`."
 msgstr "主には #include <bas/locale/i18n.h> と <bas/proc/env.h>; コンスターカー *exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR meson 設定.h から) 実行します。 `zfr ize`。"
 
-#: src/zfr_lib/lang/_c_bas.py:222
+#: src/lang/_c_bas.py:222
 msgid "bas i18n main setup (self_exe + init_i18n)"
 msgstr "バス i18n 主設定 (self_exe + init_i18n)"
 
-#: src/zfr_lib/lang/_c_bas.py:233
+#: src/lang/_c_bas.py:233
 msgid "no define_logger() in src/"
 msgstr "src/ に define_logger() なし"
 
-#: src/zfr_lib/lang/_c_bas.py:236
+#: src/lang/_c_bas.py:236
 msgid "In one .c/.cpp: #include <bas/log/deflog.h> then define_logger(); libraries may use __attribute__((weak)) define_logger(); Run `zfr ize`."
 msgstr "1 .c/.cpp に: #include <bas/log/deflog.h> から define_logger() を使うことができます; ライブラリーは__(weak) define_logger(); `zfr ize` を実行します。"
 
-#: src/zfr_lib/lang/_c_bas.py:250
+#: src/lang/_c_bas.py:250
 msgid "define_logger() present"
 msgstr "project() あり"
 
-#: src/zfr_lib/lang/_c_bas.py:252
+#: src/lang/_c_bas.py:252
 msgid "weak define_logger() present (library)"
 msgstr "weak define_logger() あり（ライブラリ）"
 
-#: src/zfr_lib/lang/_c_bas.py:258
+#: src/lang/_c_bas.py:258
 msgid "define_logger() without #include <bas/log/deflog.h>"
 msgstr "#include <bas/log/deflog.h> 以外に define_logger ()"
 
-#: src/zfr_lib/lang/_c_bas.py:260
+#: src/lang/_c_bas.py:260
 msgid "Add #include <bas/log/deflog.h> before define_logger();"
 msgstr "define_logger () 前に #include <bas/log/deflog.h> を追加;"
 
-#: src/zfr_lib/lang/_c_bas.py:276
+#: src/lang/_c_bas.py:276
 msgid "meson.build missing LOCALEDIR in config.h"
 msgstr "meson.build LOCALEDIR は設定中.h 失敗します"
 
-#: src/zfr_lib/lang/_c_bas.py:279
+#: src/lang/_c_bas.py:279
 msgid "localedir = prefix / get_option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); Run `zfr ize`."
 msgstr "localedir = prefix / get_option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); `zfr ize` を実行します。"
 
-#: src/zfr_lib/lang/_c_bas.py:289
+#: src/lang/_c_bas.py:289
 msgid "meson LOCALEDIR present"
 msgstr "meson LOCALEDIR あり"
 
-#: src/zfr_lib/lang/_c_bas.py:306
+#: src/lang/_c_bas.py:306
 #, python-format
 msgid "gettext string has leading/trailing spaces: %r"
 msgstr "gettext スターンは leading/trailing スペース: %r"
 
-#: src/zfr_lib/lang/_c_bas.py:310
+#: src/lang/_c_bas.py:310
 msgid "Keep padding outside _(): e.g. fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\n\"), out);"
 msgstr ""
 "パッドを外に保つ(_():例えば fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\\n"
 "\"), out);"
 
-#: src/zfr_lib/lang/_c_bas.py:320
+#: src/lang/_c_bas.py:320
 msgid "gettext _() strings have no leading/trailing spaces"
 msgstr "gettext _() スターンドは leading/trailing スペースがありません"
 
-#: src/zfr_lib/lang/clib.py:45 src/zfr_lib/lang/cpplib.py:45
-#: src/zfr_lib/lang/cpp.py:32 src/zfr_lib/lang/c.py:32
-#: src/zfr_lib/lang/gcc.py:55
+#: src/lang/antlr.py:42 src/lang/as.py:30 src/lang/bison.py:38 src/lang/c.py:24
+#: src/lang/clib.py:37 src/lang/cobol.py:32 src/lang/cpp.py:24
+#: src/lang/cpplib.py:37 src/lang/d.py:32 src/lang/fortran.py:32
+#: src/lang/gcc.py:48 src/lang/kotlin.py:22 src/lang/lua.py:22
+#: src/lang/nim.py:24 src/lang/pascal.py:32 src/lang/python.py:21
+msgid "tests/ present"
+msgstr "tests/ あり"
+
+#: src/lang/antlr.py:47 src/lang/as.py:35 src/lang/bison.py:43 src/lang/c.py:30
+#: src/lang/clib.py:43 src/lang/cpp.py:30 src/lang/cpplib.py:43
+#: src/lang/gcc.py:53
+msgid "no tests/ directory"
+msgstr "tests/ ディレクトリがありません"
+
+#: src/lang/antlr.py:49
+msgid "Add tests/TestCommons.java or fixture checks for parser output."
+msgstr "tests/TestCommons.java を追加するか、パーサー出力のフィクスチャ検査を入れてください。"
+
+#: src/lang/as.py:37
+msgid "Add tests/smoke.sh and meson test() for stdin/stdout copy."
+msgstr "stdin/stdout のコピー用に tests/smoke.sh と meson test() を追加してください。"
+
+#: src/lang/bash.py:65
+#, python-format
+msgid "src scripts: %s"
+msgstr "src のスクリプト: %s"
+
+#: src/lang/bash.py:78
+#, python-format
+msgid "root scripts: %s"
+msgstr "src のスクリプト: %s"
+
+#: src/lang/bash.py:89
+#, python-format
+msgid "setup-only package (%s); no bindir script puffs"
+msgstr "設定 -only パッケージ (%s); bindir スクリプトのプップはない"
+
+#: src/lang/bash.py:105
+msgid "Meson executable + .c present; script .in not required"
+msgstr "Meson 実行的 + .c present; スクリプト .in は必要なことはない"
+
+#: src/lang/bash.py:114
+msgid "no configure_file/executable; script .in not required"
+msgstr "configure_file/executable からは必要なスクリプト .in"
+
+#: src/lang/bash.py:121
+msgid "no src/*.in or root *.in scripts"
+msgstr "src/*.in スクリプトがありません"
+
+#: src/lang/bash.py:124
+msgid "Keep configured scripts as src/<puff>.in (preferred) or <puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
+msgstr "設定対象のスクリプトは src/<puff>.in のまま @PACKAGE@/@VERSION@ を含め、meson configure_file + install_mode rwxr-xr-x を使ってください。"
+
+#: src/lang/bison.py:45
+msgid "Add tests/ with fixture checks for parser dump/format output."
+msgstr "パーサーの dump/format 出力向けのフィクスチャ検査を tests/ に追加してください。"
+
+#: src/lang/c.py:32 src/lang/clib.py:45 src/lang/cpp.py:32
+#: src/lang/cpplib.py:45 src/lang/gcc.py:55
 msgid "Add tests/ and meson test() entries like the C family templates."
 msgstr "C 系テンプレートと同様に tests/ と meson test() エントリを追加してください。"
 
-#: src/zfr_lib/lang/cobol.py:37
+#: src/lang/cobol.py:37
 msgid "no tests/ (cobol template uses cobc + meson test)"
 msgstr "tests/ がありません（cobol テンプレートは cobc + meson test を使います）"
 
-#: src/zfr_lib/lang/cobol.py:39
+#: src/lang/cobol.py:39
 msgid "Add tests/test_commons.sh or similar smoke test for cobc."
 msgstr "cobc 向けに tests/test_commons.sh か同様のスモークテストを追加してください。"
 
-#: src/zfr_lib/lang/d.py:37
+#: src/lang/d.py:37
 msgid "no tests/ (D template uses ldc/dmd + meson test)"
 msgstr "tests/ がありません（D テンプレートは ldc/dmd + meson test を使います）"
 
-#: src/zfr_lib/lang/d.py:39
+#: src/lang/d.py:39
 msgid "Add tests/test_commons.d and meson test() executable."
 msgstr "tests/test_commons.d と meson test() の実行ファイルを追加してください。"
 
-#: src/zfr_lib/lang/fortran.py:37
+#: src/lang/fortran.py:37
 msgid "no tests/ (fortran template uses gfortran + meson test)"
 msgstr "tests/ がありません（fortran テンプレートは gfortran + meson test を使います）"
 
-#: src/zfr_lib/lang/fortran.py:39
+#: src/lang/fortran.py:39
 msgid "Add tests/test_commons.f90 and meson test() executable."
 msgstr "tests/test_commons.f90 と meson test() の実行ファイルを追加してください。"
 
-#: src/zfr_lib/lang/go.py:22
+#: src/lang/go.py:22
 msgid "missing go.mod"
 msgstr "go.mod がありません"
 
-#: src/zfr_lib/lang/go.py:23
+#: src/lang/go.py:23
 msgid "Add go.mod; meson should `go build` with -X main.buildVersion from meson.project_version()."
 msgstr "go.mod を追加し、meson は meson.project_version() 由来の -X main.buildVersion 付きで `go build` を実行してください。"
 
-#: src/zfr_lib/lang/kotlin.py:23
+#: src/lang/kotlin.py:23
 msgid "no tests/ (kotlin template uses kotlinc + meson test)"
 msgstr "tests/ がありません（kotlin テンプレートは kotlinc + meson test を使います）"
 
-#: src/zfr_lib/lang/kotlin.py:24
+#: src/lang/kotlin.py:24
 msgid "Add tests/Test*.kt and meson test() compiling with kotlinc."
 msgstr "kotlinc でコンパイルする tests/Test*.kt と meson test() を追加してください。"
 
-#: src/zfr_lib/lang/lua.py:23
+#: src/lang/lua.py:23
 msgid "no tests/ (lua template uses lua tests + meson test)"
 msgstr "tests/ がありません（lua テンプレートは lua テスト + meson test を使います）"
 
-#: src/zfr_lib/lang/lua.py:24
+#: src/lang/lua.py:24
 msgid "Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
 msgstr "LUA_PATH=src/?.lua で lua を起動する tests/test_*.lua と meson test() を追加してください。"
 
-#: src/zfr_lib/lang/nim.py:25
+#: src/lang/nim.py:25
 msgid "no tests/ (nim template uses unittest + meson test)"
 msgstr "tests/ がありません（nim テンプレートは unittest + meson test を使います）"
 
-#: src/zfr_lib/lang/nim.py:26
+#: src/lang/nim.py:26
 msgid "Add tests/test_*.nim and meson test() with nim r."
 msgstr "nim r を使う tests/test_*.nim と meson test() を追加してください。"
 
-#: src/zfr_lib/lang/pascal.py:37
+#: src/lang/pascal.py:37
 msgid "no tests/ (pascal template uses fpc + meson test)"
 msgstr "tests/ がありません（pascal テンプレートは fpc + meson test を使います）"
 
-#: src/zfr_lib/lang/pascal.py:39
+#: src/lang/pascal.py:39
 msgid "Add tests/test_commons.pas and meson test() with fpc."
 msgstr "fpc を使う tests/test_commons.pas と meson test() を追加してください。"
 
-#: src/zfr_lib/lang/python.py:22
+#: src/lang/python.py:22
 msgid "no tests/ (python template uses unittest + meson test)"
 msgstr "tests/ がありません（python テンプレートは unittest + meson test を使います）"
 
-#: src/zfr_lib/lang/python.py:23
+#: src/lang/python.py:23
 msgid "Add tests/test_*.py and meson test() with PYTHONPATH=src."
 msgstr "PYTHONPATH=src で tests/test_*.py と meson test() を追加してください。"
 
-#: src/zfr_lib/lang/rust.py:22
+#: src/lang/rust.py:22
 msgid "missing Cargo.toml"
 msgstr "Cargo.toml がありません"
 
-#: src/zfr_lib/lang/rust.py:23
+#: src/lang/rust.py:23
 msgid "Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
 msgstr "Rust の zephyr プロジェクトは Cargo.toml に加え、バイナリ用の meson custom_target を置きます。"
 
-#: src/zfr_lib/lang/zig.py:23
+#: src/lang/zig.py:23
 msgid "missing build.zig"
 msgstr "build.zig がありません"
 
-#: src/zfr_lib/lang/zig.py:24
+#: src/lang/zig.py:24
 msgid "Add build.zig; meson should invoke `zig build -Doptimize=ReleaseFast`."
 msgstr "build.zig を追加し、meson は `zig build -Doptimize=ReleaseFast` を実行してください。"
 
-#: src/zfr_lib/lasterror.py:16
+#: src/lasterror.py:16
 msgid "browse the last zfr package output interactively"
 msgstr "直近の zfr パッケージ出力を対話的に閲覧する"
 
-#: src/zfr_lib/lasterror.py:18
+#: src/lasterror.py:18
 msgid "Show the last packaging run. Arrow keys select a packager; Tab opens the captured log in fdmpager; Enter replays that packager's stdout/stderr with fddemux; q quits."
 msgstr "直近のパッケージング実行を表示します。矢印キーで packager を選択; Tab でキャプチャしたログを fdmpager で開く; Enter でその packager の stdout/stderr を fddemux で再生; q で終了。"
 
-#: src/zfr_lib/lasterror.py:29
-#, fuzzy
+#: src/lasterror.py:29
 msgid "list only failed packagers"
 msgstr "未署名パッケージをビルド"
 
-#: src/zfr_lib/lasterror.py:35
+#: src/lasterror.py:35
 msgid "print a summary and exit (no curses UI)"
 msgstr "要約を表示して終了（curses UI なし）"
 
-#: src/zfr_lib/lasterror.py:41
+#: src/lasterror.py:41
 msgid "view captured logs with fdmpager (requires fdmux)"
 msgstr "キャプチャしたログを fdmpager で表示（fdmux が必要）"
 
-#: src/zfr_lib/lasterror.py:47
+#: src/lasterror.py:47
 msgid "non-interactively replay KIND (deb, rpm, …) to stdout/stderr"
 msgstr "KIND（deb、rpm、…）を非対話で stdout/stderr に再生"
 
-#: src/zfr_lib/lint/browse.py:39
+#: src/lint/__init__.py:136
+msgid "validate project packaging and zephyr layout (walks parents from cwd)"
+msgstr "プロジェクトのパッケージングと zephyr レイアウトを検証（cwd から親ディレクトリをたどる）"
+
+#: src/lint/__init__.py:138
+msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain interactive shell. Override with -i/-I."
+msgstr "現在の zephyr プロジェクトの欠落ファイルとパッケージング/スタイルを検査。cwd から親へ。TTY では CSR 色。スタイル契約ブロックは非対話出力と AI 端末で既定オン、通常の対話シェルではオフ。-i/-I で上書き。"
+
+#: src/lint/__init__.py:149
+msgid "show passing checks too"
+msgstr "合格したチェックも表示"
+
+#: src/lint/__init__.py:150
+msgid "only print errors"
+msgstr "エラーのみ表示"
+
+#: src/lint/__init__.py:156
+msgid "open a local web UI with maximum-verbosity lint results, locale switcher, and per-finding [ize] actions"
+msgstr "最大詳細度の lint 結果、ロケール切替、各指摘の [ize] 操作があるローカル Web UI を開く"
+
+#: src/lint/__init__.py:170
+msgid "treat LEVEL as warning (LEVEL=note|warn|error; default note: note→warn; warn=no-op; error→warn)"
+msgstr "LEVEL を警告として扱う（LEVEL=note|warn|error；既定 note: note→warn；warn=no-op；error→warn）"
+
+#: src/lint/__init__.py:184
+msgid "treat LEVEL as error (LEVEL=note|warn|error; default warn: warn→error; note→note+warn→error; error=no-op)"
+msgstr "LEVEL をエラーとして扱う（LEVEL=note|warn|error；既定 warn: warn→error；note→note+warn→error；error=no-op）"
+
+#: src/lint/__init__.py:193
+msgid "alias for -e/--error=warn (treat warnings as errors)"
+msgstr "-e/--error=warn の別名（警告をエラーとして扱う）"
+
+#: src/lint/__init__.py:199
+msgid "list numbered lint standards (ZL*) as a table and exit"
+msgstr "テーブルとしてリストの数字の lint 標準 (ZL*)"
+
+#: src/lint/__init__.py:205
+msgid "show details for lint standard NUM (e.g. ZL0026, 26) and exit"
+msgstr "リント標準 NUM (例えば ZL0026,26) と出てくれ"
+
+#: src/lint/__init__.py:213
+msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
+msgstr "必要な gettext/マニュアルの locale 範囲 L0–L3（既定 L1；プロジェクトファイルで上書き可）"
+
+#: src/lint/__init__.py:221
+msgid "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
+msgstr "zephyr スタイル契約/次の手順の説明を表示（パイプと AI 端末では既定でオン）"
+
+#: src/lint/__init__.py:228
+msgid "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
+msgstr "zephyr スタイル契約/次の手順の説明を非表示（通常の対話シェルでは既定でオフ）"
+
+#: src/lint/__init__.py:238
+msgid "suppress rule ID(s) or code(s), comma-separated (repeatable)"
+msgstr "抑止する規則 ID またはコード（カンマ区切り、繰り返し可）"
+
+#: src/lint/__init__.py:246
+msgid "force-enable rule ID(s) or code(s) even if unchecked (repeatable)"
+msgstr "抑止する規則 ID またはコード（カンマ区切り、繰り返し可）"
+
+#: src/lint/__init__.py:260
+#, python-format
+msgid "unknown lint standard: %s"
+msgstr "未知の lint 標準: %s"
+
+#: src/lint/browse.py:43
 msgid "zfr lint"
 msgstr "zfr lint"
 
-#: src/zfr_lib/lint/browse.py:40
+#: src/lint/browse.py:44
 msgid "Show all rules (including passed)"
 msgstr "すべてのルールを表示（成功含む）"
 
-#: src/zfr_lib/lint/browse.py:41
+#: src/lint/browse.py:45
 msgid "Language"
 msgstr "言語"
 
-#: src/zfr_lib/lint/browse.py:42
+#: src/lint/browse.py:46
 msgid "Re-lint"
 msgstr "再検査"
 
-#: src/zfr_lib/lint/browse.py:43
-#, fuzzy
+#: src/lint/browse.py:47
 msgid "status"
 msgstr "状態"
 
-#: src/zfr_lib/lint/browse.py:44
-#, fuzzy
+#: src/lint/browse.py:48
 msgid "errors"
 msgstr "エラー"
 
-#: src/zfr_lib/lint/browse.py:45
-#, fuzzy
+#: src/lint/browse.py:49
 msgid "warnings"
 msgstr "警告"
 
-#: src/zfr_lib/lint/browse.py:46
-#, fuzzy
+#: src/lint/browse.py:50
 msgid "notes"
 msgstr "メモ"
 
-#: src/zfr_lib/lint/browse.py:47 src/zfr_lib/lint/report.py:163
+#: src/lint/browse.py:51 src/lint/report.py:163
 msgid "ok"
 msgstr "OK"
 
-#: src/zfr_lib/lint/browse.py:48 src/zfr_lib/lint/docs.py:141
+#: src/lint/browse.py:52
 msgid "Solve"
 msgstr "解決"
 
-#: src/zfr_lib/lint/browse.py:49
+#: src/lint/browse.py:53
 msgid "Show"
 msgstr "表示"
 
-#: src/zfr_lib/lint/browse.py:50
+#: src/lint/browse.py:54
 msgid "Output"
 msgstr "出力"
 
-#: src/zfr_lib/lint/browse.py:51
-#, fuzzy
+#: src/lint/browse.py:55
 msgid "fix"
 msgstr "修正方法"
 
-#: src/zfr_lib/lint/browse.py:53
+#: src/lint/browse.py:57
 msgid "No findings to display (toggle “show all” for passed checks)."
 msgstr "表示する指摘がありません（成功分は「すべて表示」をオンに）。"
 
-#: src/zfr_lib/lint/browse.py:55
+#: src/lint/browse.py:59
 msgid "Running…"
 msgstr "実行中…"
 
-#: src/zfr_lib/lint/browse.py:56
+#: src/lint/browse.py:60
 msgid "fdmux is required (install the fdmux package)."
 msgstr "fdmux が必要です（fdmux パッケージをインストール）。"
 
-#: src/zfr_lib/lint/browse.py:57
+#: src/lint/browse.py:61 src/lint/docs.py:101
 msgid "Documentation"
 msgstr "ドキュメント"
 
-#: src/zfr_lib/lint/browse.py:58
+#: src/lint/browse.py:62
 msgid "Add Comment"
 msgstr "コメントを追加"
 
-#: src/zfr_lib/lint/browse.py:59
+#: src/lint/browse.py:63
 msgid "Enter comments…"
 msgstr "コメントを入力…"
 
-#: src/zfr_lib/lint/browse.py:60
+#: src/lint/browse.py:64
 msgid "This project only"
 msgstr "このプロジェクトのみ"
 
-#: src/zfr_lib/lint/browse.py:61
+#: src/lint/browse.py:65
 msgid "Submit"
 msgstr "送信"
 
-#: src/zfr_lib/lint/browse.py:62
+#: src/lint/browse.py:66
 msgid "Rule"
 msgstr "ルール"
 
-#: src/zfr_lib/lint/browse.py:63
+#: src/lint/browse.py:67
 msgid "Saved"
 msgstr "保存しました"
 
-#: src/zfr_lib/lint/browse.py:64
+#: src/lint/browse.py:68
 msgid "Close"
 msgstr "閉じる"
 
-#: src/zfr_lib/lint/browse.py:65
+#: src/lint/browse.py:69
 msgid "pass"
 msgstr "成功"
 
-#: src/zfr_lib/lint/browse.py:66
+#: src/lint/browse.py:70
 msgid "Light"
 msgstr "ライト"
 
-#: src/zfr_lib/lint/browse.py:67
+#: src/lint/browse.py:71
 msgid "Dark"
 msgstr "ダーク"
 
-#: src/zfr_lib/lint/browse.py:68
+#: src/lint/browse.py:72
 msgid "Sort"
 msgstr "並べ替え"
 
-#: src/zfr_lib/lint/browse.py:69
+#: src/lint/browse.py:73
 msgid "ID"
 msgstr "ID"
 
-#: src/zfr_lib/lint/browse.py:70
-#, fuzzy
+#: src/lint/browse.py:74
 msgid "Status"
 msgstr "状態"
 
-#: src/zfr_lib/lint/browse.py:71
+#: src/lint/browse.py:75
 msgid "Name"
 msgstr "名前"
 
-#: src/zfr_lib/lint/browse.py:72
+#: src/lint/browse.py:76
 msgid "Request for new"
 msgstr "新規リクエスト"
 
-#: src/zfr_lib/lint/browse.py:74
+#: src/lint/browse.py:78
 msgid "Suggest a new lint rule (what to check, why, how)…"
 msgstr "新しい lint ルールを提案（何を・なぜ・どう検出し）…"
 
-#: src/zfr_lib/lint/browse.py:455
+#: src/lint/browse.py:552
 #, python-format
 msgid "zfr lint browse: %s"
 msgstr "zfr lint ブラウズ: %s"
 
-#: src/zfr_lib/lint/browse.py:456
+#: src/lint/browse.py:553
 msgid "Press Ctrl+C to stop."
 msgstr "停止するには Ctrl+C を押してください。"
 
-#: src/zfr_lib/lint/debian.py:42
+#: src/lint/debian.py:42
 #, python-format
 msgid "Build-Depends has %s"
 msgstr "Build-Depends に %s があります"
 
-#: src/zfr_lib/lint/debian.py:48
+#: src/lint/debian.py:48
 #, python-format
 msgid "Build-Depends missing %s"
 msgstr "Build-Depends に %s がありません"
 
-#: src/zfr_lib/lint/debian.py:50
+#: src/lint/debian.py:50
 #, python-format
 msgid "Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man pages)."
 msgstr "Build-Depends に %s を追加してください（zephyr パッケージは Meson と AsciiDoc の man ページで構築します）。"
 
-#: src/zfr_lib/lint/debian.py:54
+#: src/lint/debian.py:54
 msgid "debhelper-compat present"
 msgstr "debhelper-compat あり"
 
-#: src/zfr_lib/lint/debian.py:60
+#: src/lint/debian.py:60
 msgid "Build-Depends missing debhelper-compat (= 13)"
 msgstr "Build-Depends に debhelper-compat (= 13) がありません"
 
-#: src/zfr_lib/lint/debian.py:62
+#: src/lint/debian.py:62
 msgid "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
 msgstr "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
 
-#: src/zfr_lib/lint/debian.py:80
+#: src/lint/debian.py:80
 msgid "Package stanza missing Architecture"
 msgstr "Package スタンザに Architecture がありません"
 
-#: src/zfr_lib/lint/debian.py:82
+#: src/lint/debian.py:82
 msgid "Architecture: all  (scripts) or any (compiled)."
 msgstr "Architecture: all  （スクリプト）または any（コンパイル済み）。"
 
-#: src/zfr_lib/lint/debian.py:91
+#: src/lint/debian.py:91
 #, python-format
 msgid "Architecture: %s (bash + Meson executable)"
 msgstr "Architecture: %s (バッシュ + Meson 実行)"
 
-#: src/zfr_lib/lint/debian.py:100
+#: src/lint/debian.py:100
 #, python-format
 msgid "bash packages should be Architecture: all (got %s)"
 msgstr "bash パッケージは Architecture: all であるべきです（実際は %s）"
 
-#: src/zfr_lib/lint/debian.py:102
+#: src/lint/debian.py:102
 msgid "Architecture: all"
 msgstr "Architecture: all"
 
-#: src/zfr_lib/lint/debian.py:110
+#: src/lint/debian.py:110
 #, python-format
 msgid "%s packages are usually Architecture: any (got all)"
 msgstr "%s パッケージは通常 Architecture: any です（実際は all）"
 
-#: src/zfr_lib/lint/debian.py:112 src/zfr_lib/lint/debian.py:128
+#: src/lint/debian.py:112 src/lint/debian.py:128
 msgid "Architecture: any"
 msgstr "Architecture: any"
 
-#: src/zfr_lib/lint/debian.py:123
+#: src/lint/debian.py:123
 msgid "Architecture: all but Meson has executable(); ELF binaries need Architecture: any (same class of bug as RPM BuildArch: noarch)"
 msgstr "Architecture全てMeson実行() を持っています。ELFビナリーが必要Architecture: 何か(RPM としてバグの同じクラスBuildArch:noarch)"
 
-#: src/zfr_lib/lint/debian.py:133
+#: src/lint/debian.py:133
 #, python-format
 msgid "Architecture: %s"
 msgstr "フィールド Architecture: %s"
 
-#: src/zfr_lib/lint/debian.py:138
+#: src/lint/debian.py:138
 #, python-format
 msgid "Homepage: %s"
 msgstr "フィールド Homepage: %s"
 
-#: src/zfr_lib/lint/debian.py:144
+#: src/lint/debian.py:144
 msgid "no Homepage"
 msgstr "Homepage がありません"
 
-#: src/zfr_lib/lint/debian.py:146
+#: src/lint/debian.py:146
 msgid "Set Homepage: to the project URL."
 msgstr "Homepage: をプロジェクトの URL に設定してください。"
 
-#: src/zfr_lib/lint/debian.py:152
+#: src/lint/debian.py:152
 msgid "dh meson debian/build"
 msgstr "dh が meson と debian/build を使用"
 
-#: src/zfr_lib/lint/debian.py:158
+#: src/lint/debian.py:158
 msgid "debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
 msgstr "debian/rules が dh --buildsystem=meson --builddirectory=debian/build ではありません"
 
-#: src/zfr_lib/lint/debian.py:161
+#: src/lint/debian.py:161
 #, no-python-format
 msgid ""
 "Use:\n"
@@ -922,243 +976,104 @@ msgstr ""
 "%:\n"
 "\tdh $@ --buildsystem=meson --builddirectory=debian/build"
 
-#: src/zfr_lib/lint/debian.py:167
+#: src/lint/debian.py:167
 msgid "copyright mentions AGPL"
 msgstr "copyright に AGPL の記載あり"
 
-#: src/zfr_lib/lint/debian.py:173
+#: src/lint/debian.py:173
 msgid "debian/copyright does not mention AGPL"
 msgstr "debian/copyright に AGPL の記載がない"
 
-#: src/zfr_lib/lint/debian.py:175
+#: src/lint/debian.py:175
 msgid "Use the template debian/copyright (License: AGPL-3+)."
 msgstr "テンプレート debian/copyright を使用してください (License: AGPL-3+)。"
 
-#: src/zfr_lib/lint/debian.py:181
+#: src/lint/debian.py:181
 #, python-format
 msgid "source format %s"
 msgstr "ソース形式 %s"
 
-#: src/zfr_lib/lint/debian.py:190
+#: src/lint/debian.py:190
 #, python-format
 msgid "VERSION=%(file)r != changelog %(changelog)r"
 msgstr "VERSION=%(file)r != 変更履歴 %(changelog)r"
 
-#: src/zfr_lib/lint/debian.py:192
+#: src/lint/debian.py:192
 msgid "VERSION should match the latest debian/changelog entry (pre-commit hook updates it). Git describe may still differ."
 msgstr "VERSION は debian/changelog の最新エントリと一致する必要があります（pre-commit フックが更新します）。Git describe はまだ異なる場合があります。"
 
-#: src/zfr_lib/lint/debian.py:198
+#: src/lint/debian.py:198
 #, python-format
 msgid "VERSION matches changelog %s"
 msgstr "VERSION は変更履歴 %s と一致"
 
-#: src/zfr_lib/lint/debian.py:211
+#: src/lint/debian.py:211
 msgid "bash-shlib used in sources but missing from Depends"
 msgstr "bash-shlib 源に使用されますが Depends から失敗します"
 
-#: src/zfr_lib/lint/debian.py:213
+#: src/lint/debian.py:213
 msgid "Depends: bash, bash-shlib, ${misc:Depends}"
 msgstr "Depends: bash, bash-shlib, ${misc:Depends}"
 
-#: src/zfr_lib/lint/debian.py:218
+#: src/lint/debian.py:218
 msgid "Depends includes bash-shlib"
 msgstr "Depends に bash-shlib が含まれる"
 
-#: src/zfr_lib/lint/debian.py:225
+#: src/lint/debian.py:225
 msgid "Depends lists bash-shlib but sources do not use it"
 msgstr "Depends は bash-shlib を列出しますが、ソースは使用しません"
 
-#: src/zfr_lib/lint/debian.py:227
+#: src/lint/debian.py:227
 msgid "Drop bash-shlib from Depends unless scripts `. shlib` / shlib-import."
 msgstr "放棄bash-shlibからDependsスクリプト以外`. shlib`「shlib-importそうだ"
 
-#: src/zfr_lib/lint/debian.py:237
+#: src/lint/debian.py:237
 msgid "Priority: extra is deprecated"
 msgstr "Priority: extra は非推奨です"
 
-#: src/zfr_lib/lint/debian.py:239
+#: src/lint/debian.py:239
 msgid "Priority: optional (run `zfr ize` to fix)."
 msgstr "Priority: 選択的(フィールドに `zfr ize` を実行します)。"
 
-#: src/zfr_lib/lint/debian.py:243
+#: src/lint/debian.py:243
 #, python-format
 msgid "Priority: %s"
 msgstr "役割: %s"
 
-#: src/zfr_lib/lint/debian.py:250
+#: src/lint/debian.py:250
 msgid "extended Description present"
 msgstr "拡張 Description あり"
 
-#: src/zfr_lib/lint/debian.py:257
+#: src/lint/debian.py:257
 msgid "Description missing extended paragraph"
 msgstr "Description に拡張段落がありません"
 
-#: src/zfr_lib/lint/debian.py:259
+#: src/lint/debian.py:259
 msgid "Add an indented continuation line after the synopsis (run `zfr ize`)."
 msgstr "シンオプシス後に追加しました ( `zfr ize` )。"
 
-#: src/zfr_lib/lint/docs.py:25
-msgid "Long files fight ownership"
-msgstr "長いファイルは所有権を争う"
+#: src/lint/docs.py:236
+#, python-format
+msgid "Checker `%s` in `zfr lint`."
+msgstr "`zfr lint` のチェッカー `%s`。"
 
-#: src/zfr_lib/lint/docs.py:27
-msgid "Very long source files are hard to review, test, and own. Zephyr prefers cohesive modules under a package subdirectory with a thin entry-point file — the same shape create/ize expect."
-msgstr "極端に長いソースファイルはレビュー・テスト・所有が難しくなります。Zephyr はパッケージサブディレクトリ配下のまとまったモジュールと薄いエントリポイントファイルを好みます — create/ize が想定する形と同じです。"
+#: src/lint/docs.py:237
+msgid "varies"
+msgstr "場合による"
 
-#: src/zfr_lib/lint/docs.py:33
-msgid "What improving it buys you"
-msgstr "改善で得られるもの"
-
-#: src/zfr_lib/lint/docs.py:35
-msgid "Smaller review diffs, clearer module boundaries, easier unit tests, and fewer merge conflicts on busy files."
-msgstr "レビュー差分が小さくなり、モジュール境界が明確になり、単体テストが書きやすくなり、活発なファイルでのマージ衝突が減ります。"
-
-#: src/zfr_lib/lint/docs.py:40
-msgid "Thresholds"
-msgstr "しきい値"
-
-#: src/zfr_lib/lint/docs.py:42
-msgid "Lint counts non-empty lines (skipping build/debian/po/…). A note appears around ~600 lines; a warning around ~1000. Template example modules are skipped."
-msgstr "Lint は空でない行を数えます（build/debian/po/… は除外）。約 600 行付近で note、約 1000 行付近で warning が出ます。テンプレートの例示モジュールは対象外です。"
-
-#: src/zfr_lib/lint/docs.py:48
-msgid "Fixing is manual"
-msgstr "修正は手動です"
-
-#: src/zfr_lib/lint/docs.py:50
-msgid "Split the file and update meson/install/import lists yourself. `zfr ize` does not auto-split sources."
-msgstr "ファイルを分割し、meson/install/import の一覧は自分で更新してください。`zfr ize` はソースを自動分割しません。"
-
-#: src/zfr_lib/lint/docs.py:57
-msgid "Hardcoded /usr breaks prefixes"
-msgstr "ハードコードされた /usr はプレフィックスを壊す"
-
-#: src/zfr_lib/lint/docs.py:59
-msgid "Absolute FHS paths (/usr/share, /usr/bin, …) fail under DESTDIR, non-standard prefixes, and Meson configure_file staging."
-msgstr "絶対 FHS パス（/usr/share、/usr/bin、…）は DESTDIR、非標準プレフィックス、Meson の configure_file ステージングで失敗します。"
-
-#: src/zfr_lib/lint/docs.py:64
-msgid "Preferred shape"
-msgstr "望ましい形"
-
-#: src/zfr_lib/lint/docs.py:66
-msgid "Scripts use @PREFIX@ / @DATADIR@ / @LOCALEDIR@ (or equivalent) and are installed from *.in via Meson."
-msgstr "スクリプトは @PREFIX@ / @DATADIR@ / @LOCALEDIR@（または同等のもの）を使い、Meson 経由で *.in からインストールされます。"
-
-#: src/zfr_lib/lint/docs.py:71
-msgid "What Solve does"
-msgstr "Solve の動作"
-
-#: src/zfr_lib/lint/docs.py:73
-msgid "Ize renames affected scripts to *.in and wires configure_file. Re-check shebangs and any tests that assumed live paths."
-msgstr "Ize は対象スクリプトを *.in にリネームし、configure_file を接続します。shebang と、実パスを想定していたテストを再確認してください。"
-
-#: src/zfr_lib/lint/docs.py:80
-msgid "Version literals drift"
-msgstr "バージョンリテラルのずれ"
-
-#: src/zfr_lib/lint/docs.py:82
-msgid "A hardcoded release string diverges from debian/changelog and Meson project_version() the moment you bump."
-msgstr "ハードコードされたリリース文字列は、バンプした瞬間に debian/changelog および Meson の project_version() からずれます。"
-
-#: src/zfr_lib/lint/docs.py:87
-msgid "Single source of truth"
-msgstr "唯一の情報源"
-
-#: src/zfr_lib/lint/docs.py:89
-msgid "Prefer @VERSION@ / PROJECT_VERSION substituted at build time so `--version`, wrappers, and packages stay aligned."
-msgstr "ビルド時に置換される @VERSION@ / PROJECT_VERSION を使い、`--version`、ラッパー、パッケージを揃えてください。"
-
-#: src/zfr_lib/lint/docs.py:94
-msgid "Risks when converting"
-msgstr "変換時のリスク"
-
-#: src/zfr_lib/lint/docs.py:96
-msgid "C/C++ usually needs config.h; scripts need *.in. Dry-run ize (`-n`) on large trees before writing."
-msgstr "C/C++ は通常 config.h が必要で、スクリプトは *.in が必要です。大きなツリーでは書き込む前に ize のドライラン（`-n`）を実行してください。"
-
-#: src/zfr_lib/lint/docs.py:103
-msgid "Substitution without a consumer is incomplete"
-msgstr "利用側のない置換は不完全"
-
-#: src/zfr_lib/lint/docs.py:105
-msgid "Meson must both define VERSION/PROJECT_VERSION and have sources that actually read it — otherwise packaged binaries still lie."
-msgstr "Meson は VERSION/PROJECT_VERSION を定義し、実際にそれを読むソースも必要です — さもなければパッケージ化されたバイナリは依然として嘘のバージョンを報告します。"
-
-#: src/zfr_lib/lint/docs.py:110
-msgid "How it is checked"
-msgstr "検査の仕方"
-
-#: src/zfr_lib/lint/docs.py:112
-msgid "Looks for configuration_data keys and for @VERSION@ / PROJECT_VERSION usage in installed sources."
-msgstr "configuration_data のキーと、インストール対象ソース内の @VERSION@ / PROJECT_VERSION の使用を探します。"
-
-#: src/zfr_lib/lint/docs.py:117
-msgid "Closing the loop"
-msgstr "ループを閉じる"
-
-#: src/zfr_lib/lint/docs.py:119
-msgid "Add the missing half (subst or consumer). Solve maps to the subst ize steps when available."
-msgstr "欠けている半分（置換または利用側）を追加します。利用可能なら Solve は subst の ize 手順に対応します。"
-
-#: src/zfr_lib/lint/docs.py:126
-msgid "Inline posync is unmaintainable"
-msgstr "インライン posync は保守不能"
-
-#: src/zfr_lib/lint/docs.py:128
-msgid "A bash -euc heredoc inside meson.build duplicates across templates and is painful to debug. The contract is scripts/posync.sh + run_target('posync')."
-msgstr "meson.build 内の bash -euc ヒアドキュメントはテンプレート間で重複し、デバッグが苦痛です。契約は scripts/posync.sh + run_target('posync') です。"
-
-#: src/zfr_lib/lint/docs.py:134
-msgid "Payoff"
-msgstr "効果"
-
-#: src/zfr_lib/lint/docs.py:136
-msgid "One script to run msgmerge/xgettext locally; ninja posync stays short; CI can call the script directly."
-msgstr "ローカルで msgmerge/xgettext を走らせるスクリプトが一つにまとまり、ninja posync は短く保たれ、CI はスクリプトを直接呼べます。"
-
-#: src/zfr_lib/lint/docs.py:143
-msgid "Ize extracts the body to scripts/posync.sh and points the run_target at it. Verify POTFILES and language flags afterward."
-msgstr "Ize は本体を scripts/posync.sh に抽出し、run_target をそこに向けます。その後 POTFILES と言語フラグを確認してください。"
-
-#: src/zfr_lib/lint/docs.py:150
-msgid "Maintenance scripts belong under scripts/"
-msgstr "保守スクリプトは scripts/ 配下に置く"
-
-#: src/zfr_lib/lint/docs.py:152
-msgid "look / install-symlinks / deploy helpers at the repo root clutter the packaging surface. Zephyr keeps them under scripts/."
-msgstr "リポジトリルートの look / install-symlinks / deploy ヘルパーはパッケージング面を散らかします。Zephyr はそれらを scripts/ 配下に置きます。"
-
-#: src/zfr_lib/lint/docs.py:157
-msgid "Detection"
-msgstr "検出"
-
-#: src/zfr_lib/lint/docs.py:159
-msgid "Flags root *.sh maintenance names and inline run_target bodies that should be externalized."
-msgstr "ルートの保守用 *.sh 名と、外部化すべきインライン run_target 本体にフラグを立てます。"
-
-#: src/zfr_lib/lint/docs.py:164
-msgid "After moving"
-msgstr "移動後"
-
-#: src/zfr_lib/lint/docs.py:166
-msgid "Update docs and any CI that called the old paths. Solve rewrites Meson run_targets to scripts/…"
-msgstr "ドキュメントと旧パスを呼んでいた CI を更新してください。Solve は Meson の run_targets を scripts/… に書き換えます。"
-
-#: src/zfr_lib/lint/docs.py:180
+#: src/lint/docs.py:259
 msgid "No Solve mapping"
 msgstr "Solve の対応なし"
 
-#: src/zfr_lib/lint/docs.py:182
+#: src/lint/docs.py:261
 msgid "This finding has no `zfr ize --only …` shortcut. Follow the fix text (or a broader `zfr ize` if several related gaps exist), then re-lint."
 msgstr "この指摘には `zfr ize --only …` のショートカットがありません。修正文に従うか（関連する不足が複数ある場合は広めの `zfr ize`）、その後再 lint してください。"
 
-#: src/zfr_lib/lint/docs.py:190
+#: src/lint/docs.py:272
 msgid "Solve / ize"
 msgstr "Solve と ize"
 
-#: src/zfr_lib/lint/docs.py:192
+#: src/lint/docs.py:274
 #, python-format
 msgid ""
 "Clicking Solve runs only: %(targets)s.\n"
@@ -1169,339 +1084,119 @@ msgstr ""
 "同等の CLI: `%(cmd)s`\n"
 "ドライプランには `-n` を使います。出力は fdmux（順序付き stdout/stderr）で捕捉されます。"
 
-#: src/zfr_lib/lint/docs.py:206 src/zfr_lib/lint/docs.py:407
-msgid "varies"
-msgstr "場合による"
-
-#: src/zfr_lib/lint/docs.py:209
-#, python-format
-msgid "Checker `%s` in `zfr lint`."
-msgstr "`zfr lint` のチェッカー `%s`。"
-
-#: src/zfr_lib/lint/docs.py:212
-msgid "Debian is the APT contract"
-msgstr "Debian は APT の契約"
-
-#: src/zfr_lib/lint/docs.py:214
-msgid "control / rules / copyright / source format decide how the package builds and what users install. Zephyr standardizes on Meson + dh `--buildsystem=meson --builddirectory=debian/build`."
-msgstr "control / rules / copyright / source format がパッケージのビルド方法とユーザーがインストールするものを決めます。Zephyr は Meson + dh `--buildsystem=meson --builddirectory=debian/build` に標準化しています。"
-
-#: src/zfr_lib/lint/docs.py:220 src/zfr_lib/lint/docs.py:251
-#: src/zfr_lib/lint/docs.py:273 src/zfr_lib/lint/docs.py:296
-#, python-format
-msgid "This check: %s"
-msgstr "この検査: %s"
-
-#: src/zfr_lib/lint/docs.py:221
-#, python-format
-msgid "Default severity hint: %s."
-msgstr "既定の重大度ヒント: %s。"
-
-#: src/zfr_lib/lint/docs.py:224
-msgid "Why it matters"
-msgstr "なぜ重要か"
-
-#: src/zfr_lib/lint/docs.py:226
-msgid "Wrong Architecture, missing Build-Depends, or a non-Meson rules file fail debuild or produce unloadable packages even when local compiles succeed."
-msgstr "誤った Architecture、不足した Build-Depends、Meson 以外の rules ファイルは、ローカルビルドが成功しても debuild を失敗させたり読み込めないパッケージを作ります。"
-
-#: src/zfr_lib/lint/docs.py:232
-msgid "When editing packaging"
-msgstr "パッケージングを編集するとき"
-
-#: src/zfr_lib/lint/docs.py:234
-msgid "Ize may rewrite from templates — always diff Maintainer, Depends, and Architecture before upload."
-msgstr "Ize はテンプレートから書き換えることがあります — アップロード前に必ず Maintainer、Depends、Architecture を diff してください。"
-
-#: src/zfr_lib/lint/docs.py:240
-#, python-format
-msgid "Checker `%s`."
-msgstr "チェッカー `%s`。"
-
-#: src/zfr_lib/lint/docs.py:243
-msgid "RPM must mirror Meson/Debian"
-msgstr "RPM は Meson/Debian を映す必要がある"
-
-#: src/zfr_lib/lint/docs.py:245
-#, python-format
-msgid "spec %files, BuildArch, and Version have to describe the same payload Meson installs. Project-local rpmbuild TOPDIR and stale file lists are common failure modes."
-msgstr "spec の %files、BuildArch、Version は Meson がインストールする同じペイロードを記述する必要があります。プロジェクトローカルの rpmbuild TOPDIR と古いファイル一覧はよくある失敗パターンです。"
-
-#: src/zfr_lib/lint/docs.py:252
-#, python-format
-msgid "Severity hint: %s."
-msgstr "重大度ヒント: %s。"
-
-#: src/zfr_lib/lint/docs.py:255
-msgid "Typical fallout"
-msgstr "典型的な影響"
-
-#: src/zfr_lib/lint/docs.py:257
-msgid "Unpackaged files, wrong noarch/ELF, leftover rpmbuild/, or Debian substvars copied into Requires."
-msgstr "未パッケージ化ファイル、誤った noarch/ELF、残った rpmbuild/、Requires にコピーされた Debian substvars などです。"
-
-#: src/zfr_lib/lint/docs.py:265
-msgid "Meson is the build system of record"
-msgstr "Meson が正式なビルドシステム"
-
-#: src/zfr_lib/lint/docs.py:267
-msgid "Identity, license, version source, man pages, completion, and look/posync targets live in meson.build. Drift here breaks Debian and RPM alike."
-msgstr "識別情報、ライセンス、バージョン源、man ページ、補完、look/posync ターゲットは meson.build にあります。ここでのずれは Debian と RPM の両方を壊します。"
-
-#: src/zfr_lib/lint/docs.py:275
-#, python-format
-msgid "Parses meson.build for `%s` expectations."
-msgstr "meson.build を解析し `%s` の期待を調べます。"
-
-#: src/zfr_lib/lint/docs.py:278
-msgid "Editing tips"
-msgstr "編集のヒント"
-
-#: src/zfr_lib/lint/docs.py:280
-msgid "Ize patches meson.build; reconcile custom targets with template blocks and re-configure after large edits."
-msgstr "Ize は meson.build をパッチします。カスタムターゲットをテンプレートブロックと整合させ、大きな編集の後は再 configure してください。"
-
-#: src/zfr_lib/lint/docs.py:288
-msgid "Locales are a product surface"
-msgstr "ロケールは製品面である"
-
-#: src/zfr_lib/lint/docs.py:290
-msgid "Gettext catalogs and whole-document man/<locale>/ pages gate what users see at the configured l10n level (`-l` / lint.options)."
-msgstr "Gettext カタログと文書全体の man/<locale>/ ページが、設定された l10n レベル（`-l` / lint.options）でユーザーが見る内容を左右します。"
-
-#: src/zfr_lib/lint/docs.py:299
-msgid "Looks at LINGUAS, .po wrap/quality, and man coverage."
-msgstr "LINGUAS、.po の折り返し/品質、man のカバレッジを見ます。"
-
-#: src/zfr_lib/lint/docs.py:303
-msgid "Human work remains"
-msgstr "人手の作業は残る"
-
-#: src/zfr_lib/lint/docs.py:305
-msgid "Ize can stub .po files and fix wrap style; real translation and man localization still need people (or `zfr translate`)."
-msgstr "Ize は .po をスタブ化し折り返しスタイルを直せますが、本格的な翻訳と man のローカライズには人手（または `zfr translate`）が必要です。"
-
-#: src/zfr_lib/lint/docs.py:313
-msgid "Shared layout keeps tools oriented"
-msgstr "共有レイアウトがツールの指針になる"
-
-#: src/zfr_lib/lint/docs.py:315
-msgid "LICENSE, man/, VERSION, hooks, completion, and scripts/ are the landmarks create/ize/lint/release expect."
-msgstr "LICENSE、man/、VERSION、hooks、completion、scripts/ は create/ize/lint/release が期待する目印です。"
-
-#: src/zfr_lib/lint/docs.py:320
-#, python-format
-msgid "Missing or wrong: %s"
-msgstr "欠落または誤り: %s"
-
-#: src/zfr_lib/lint/docs.py:323
-#, python-format
-msgid "`%s` checks presence/content against the language template."
-msgstr "`%s` は言語テンプレートに対して存在/内容を検査します。"
-
-#: src/zfr_lib/lint/docs.py:328
-msgid "Scaffold refresh"
-msgstr "足場の更新"
-
-#: src/zfr_lib/lint/docs.py:330
-msgid "Solve may install or refresh files from the template (.githooks, LICENSE, cursor rules, …). Review before commit."
-msgstr "Solve はテンプレートからファイルをインストールまたは更新することがあります（.githooks、LICENSE、cursor rules、…）。コミット前に確認してください。"
-
-#: src/zfr_lib/lint/docs.py:338
-msgid "Language-template expectations"
-msgstr "言語テンプレートの期待"
-
-#: src/zfr_lib/lint/docs.py:340
-#, python-format
-msgid "%(title)s. Each language keeps idiomatic markers (tests/, Cargo.toml, bas i18n helpers, bash *.in, …) so the tree stays packagable."
-msgstr "%(title)s。各言語は慣用的な目印（tests/、Cargo.toml、bas の i18n ヘルパー、bash *.in、…）を保ち、ツリーをパッケージ可能にします。"
-
-#: src/zfr_lib/lint/docs.py:347
-msgid "Details"
-msgstr "詳細"
-
-#: src/zfr_lib/lint/docs.py:350
-#, python-format
-msgid "Implemented as `%s`; severity hint %s."
-msgstr "`%s` として実装。重大度ヒント %s。"
-
-#: src/zfr_lib/lint/docs.py:358
-msgid "One name across ecosystems"
-msgstr "エコシステム横断で一つの名前"
-
-#: src/zfr_lib/lint/docs.py:360
-msgid "Directory name, meson project(), debian Source, and RPM Name must agree. Mismatches confuse rename, release, and repos."
-msgstr "ディレクトリ名、meson project()、debian Source、RPM Name は一致する必要があります。不一致は rename、release、リポジトリを混乱させます。"
-
-#: src/zfr_lib/lint/docs.py:365
-#, python-format
-msgid "Check: %s"
-msgstr "検査: %s"
-
-#: src/zfr_lib/lint/docs.py:366
-#, python-format
-msgid "`%s` compares identity fields."
-msgstr "`%s` は識別フィールドを比較します。"
-
-#: src/zfr_lib/lint/docs.py:372
-msgid "Source hygiene"
-msgstr "ソースの衛生"
-
-#: src/zfr_lib/lint/docs.py:374
-#, python-format
-msgid "%(title)s. Covers length and hardcoded paths/versions that break relocatable installs."
-msgstr "%(title)s。長さと、再配置可能なインストールを壊すハードコードされたパス/バージョンを扱います。"
-
-#: src/zfr_lib/lint/docs.py:380
-msgid "How lint looks"
-msgstr "Lint の見方"
-
-#: src/zfr_lib/lint/docs.py:383
-msgid "Counts lines and/or scans for FHS paths and version tokens."
-msgstr "行数を数え、および/または FHS パスとバージョントークンを走査します。"
-
-#: src/zfr_lib/lint/docs.py:396
-#, python-format
-msgid "`%s` keeps templates instantiable and apps free of leftover placeholders / banners."
-msgstr "`%s` はテンプレートをインスタンス可能に保ち、アプリから残ったプレースホルダ / バナーを取り除きます。"
-
-#: src/zfr_lib/lint/docs.py:411
-#, python-format
-msgid "Implemented under `%s` in `zfr lint`. Findings carry a concrete fix string when possible. Remap severity with `-w` / `-e` / `--strict`."
-msgstr "`zfr lint` の `%s` 配下で実装されています。指摘には可能な限り具体的な修正文字列が付きます。重大度は `-w` / `-e` / `--strict` で再マップできます。"
-
-#: src/zfr_lib/lint/docs.py:421
-#, python-format
-msgid "Rule %(id)s (`%(code)s`) is part of the zephyr packaging/layout contract. Default severity hint: %(sev)s."
-msgstr "ルール %(id)s（`%(code)s`）は zephyr のパッケージング/レイアウト契約の一部です。既定の重大度ヒント: %(sev)s。"
-
-#: src/zfr_lib/lint/docs.py:427
-msgid "What lint does"
-msgstr "Lint の役割"
-
-#: src/zfr_lib/lint/docs.py:431
-msgid "Changing the tree"
-msgstr "ツリーの変更"
-
-#: src/zfr_lib/lint/docs.py:433
-#, python-format
-msgid "Fixes may touch packaging, meson.build, sources, or scaffold copies. Diff Maintainer, Depends, %files, and *.in scripts before upload."
-msgstr "修正はパッケージング、meson.build、ソース、足場のコピーに触れることがあります。アップロード前に Maintainer、Depends、%files、*.in スクリプトを diff してください。"
-
-#: src/zfr_lib/lint/gitignore.py:94
+#: src/lint/gitignore.py:94
 msgid "missing root .gitignore"
 msgstr "Cargo.toml がありません"
 
-#: src/zfr_lib/lint/gitignore.py:97
+#: src/lint/gitignore.py:97
 msgid "Add a root .gitignore covering node_modules/, dist/, and other build artifacts. Component dirs (backend/, web/, …) should get their own .gitignore too."
 msgstr "gitignore を node_modules/、 dist/ や他の建造物物質を追加します。コンポーントディアルドル(backend/, web/, ...) も自分の.gitignore を受け入れてください。"
 
-#: src/zfr_lib/lint/gitignore.py:107
+#: src/lint/gitignore.py:107
 msgid "root .gitignore present"
 msgstr "ルート .gitignore あり"
 
-#: src/zfr_lib/lint/gitignore.py:116
+#: src/lint/gitignore.py:116
 #, python-format
 msgid "root .gitignore missing common patterns: %s"
 msgstr "ロート .gitignore 一般のパターンを失敗します: %s"
 
-#: src/zfr_lib/lint/gitignore.py:118
+#: src/lint/gitignore.py:118
 #, python-format
 msgid "Add %s to the project-root .gitignore."
 msgstr "追加%sプロジェクトに-rootそうだgitignoreそうだ"
 
-#: src/zfr_lib/lint/gitignore.py:126
+#: src/lint/gitignore.py:126
 msgid "root .gitignore covers node_modules/ and dist/"
 msgstr "ロート .gitignore は node_modules/ と dist/ を覆います"
 
-#: src/zfr_lib/lint/gitignore.py:136
+#: src/lint/gitignore.py:136
 #, python-format
 msgid "root .gitignore could also ignore: %s"
 msgstr "ロート .gitignore も ignora できる: %s"
 
-#: src/zfr_lib/lint/gitignore.py:153
+#: src/lint/gitignore.py:153
 #, python-format
 msgid "missing %s (component directory exists)"
 msgstr "%s (コンポーントディレクトリが存在します)"
 
-#: src/zfr_lib/lint/gitignore.py:155
+#: src/lint/gitignore.py:155
 #, python-format
 msgid "Add %s covering: %s"
 msgstr "%s コップ: %s"
 
-#: src/zfr_lib/lint/gitignore.py:166
-#, fuzzy, python-format
+#: src/lint/gitignore.py:166
 msgid "%s missing patterns: %s"
 msgstr "%s がありません"
 
-#: src/zfr_lib/lint/gitignore.py:168
+#: src/lint/gitignore.py:168
 #, python-format
 msgid "Add to %s: %s"
 msgstr "%s に追加: %s"
 
-#: src/zfr_lib/lint/gitignore.py:176
+#: src/lint/gitignore.py:176
 #, python-format
 msgid "%s covers required patterns"
 msgstr "%s は必要なパターンを覆います"
 
-#: src/zfr_lib/lint/hardcoded.py:161
+#: src/lint/hardcoded.py:161
 msgid "zfr CLI package uses configure_file wrappers for install paths"
 msgstr "zfr CLI パッケージはインストールパスに configure_file ラッパーを使う"
 
-#: src/zfr_lib/lint/hardcoded.py:191
+#: src/lint/hardcoded.py:191
 #, python-format
 msgid "hardcoded install path %(sample)s in %(rel)s"
 msgstr "%(rel)s にハードコードされたインストールパス %(sample)s"
 
-#: src/zfr_lib/lint/hardcoded.py:196 src/zfr_lib/lint/i18n_check.py:289
-#: src/zfr_lib/lint/i18n_check.py:327 src/zfr_lib/lint/i18n_check.py:345
-#: src/zfr_lib/lint/leftovers.py:127 src/zfr_lib/lint/template.py:194
-#: src/zfr_lib/lint/template.py:209 src/zfr_lib/lint/template.py:215
+#: src/lint/hardcoded.py:196 src/lint/i18n_check.py:289
+#: src/lint/i18n_check.py:327 src/lint/i18n_check.py:345
+#: src/lint/leftovers.py:127 src/lint/template.py:194 src/lint/template.py:209
+#: src/lint/template.py:215
 #, python-format
 msgid " (+%d more)"
 msgstr " (他 +%d)"
 
-#: src/zfr_lib/lint/hardcoded.py:205
+#: src/lint/hardcoded.py:205
 msgid "Replace with meson configure_file placeholders (@PREFIX@, @DATADIR@, @BINDIR@, @LIBDIR@, @LOCALEDIR@, @PKGDATADIR@): rename to *.in and run `zfr ize`."
 msgstr "meson の configure_file プレースホルダ（@PREFIX@、@DATADIR@、@BINDIR@、@LIBDIR@、@LOCALEDIR@、@PKGDATADIR@）に置き換え: *.in にリネームして `zfr ize` を実行してください。"
 
-#: src/zfr_lib/lint/hardcoded.py:219
+#: src/lint/hardcoded.py:219
 #, python-format
 msgid "hardcoded version %(sample)s in %(rel)s"
 msgstr "%(rel)s にハードコードされたバージョン %(sample)s"
 
-#: src/zfr_lib/lint/hardcoded.py:224
+#: src/lint/hardcoded.py:224
 msgid "Use @VERSION@ (scripts → *.in + configure_file) or PROJECT_VERSION from config.h (C/C++). Run `zfr ize`."
 msgstr "@VERSION@（スクリプト → *.in + configure_file）または config.h の PROJECT_VERSION（C/C++）を使ってください。`zfr ize` を実行します。"
 
-#: src/zfr_lib/lint/hardcoded.py:236
+#: src/lint/hardcoded.py:236
 msgid "no hardcoded install paths or project version strings in sources"
 msgstr "ソースにハードコードされたインストールパスやプロジェクトバージョン文字列がない"
 
-#: src/zfr_lib/lint/i18n_check.py:62
+#: src/lint/i18n_check.py:62
 #, python-format
 msgid "l10n level %s: no locale coverage required"
 msgstr "l10n レベル %s: ロケール対応は不要"
 
-#: src/zfr_lib/lint/i18n_check.py:71
+#: src/lint/i18n_check.py:71
 #, python-format
 msgid "l10n level %(level)s (%(count)d locales)"
 msgstr "l10n レベル %(level)s（%(count)d ロケール）"
 
-#: src/zfr_lib/lint/i18n_check.py:84
+#: src/lint/i18n_check.py:84
 msgid "no po/ directory (optional unless the project uses gettext)"
 msgstr "po/ ディレクトリなし（プロジェクトが gettext を使わない限り任意）"
 
-#: src/zfr_lib/lint/i18n_check.py:85
+#: src/lint/i18n_check.py:85
 #, python-format
 msgid "If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in meson.build. Required locales at %(level)s: %(locales)s (source language %(source)s)."
 msgstr "アプリが翻訳されている場合は、po/ に LINGUAS + *.po を置き、meson.build で i18n.gettext() を呼び出してください。%(level)s で必要なロケール: %(locales)s（ソース言語 %(source)s）。"
 
-#: src/zfr_lib/lint/i18n_check.py:103
+#: src/lint/i18n_check.py:103
 msgid "po/ exists but po/LINGUAS is missing or empty"
 msgstr "po/ はあるが po/LINGUAS がないか空"
 
-#: src/zfr_lib/lint/i18n_check.py:105
+#: src/lint/i18n_check.py:105
 #, python-format
 msgid ""
 "Create po/LINGUAS listing at least:\n"
@@ -1512,36 +1207,36 @@ msgstr ""
 "%(locales)s\n"
 "（英語/%(source)s は msgid のソースであり、一覧には入れません。）"
 
-#: src/zfr_lib/lint/i18n_check.py:124
+#: src/lint/i18n_check.py:124
 #, python-format
 msgid "po/LINGUAS missing %(level)s locale(s): %(locales)s"
 msgstr "po/LINGUAS に %(level)s のロケールが不足: %(locales)s"
 
-#: src/zfr_lib/lint/i18n_check.py:127
+#: src/lint/i18n_check.py:127
 #, python-format
 msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
 msgstr "レベル %(level)s にはプライマリが必要: %(locales)s（ソース %(source)s; 旧 es→es_MX, pt→pt_BR）。`zfr i18n -b` で子ロケールを自動生成。"
 
-#: src/zfr_lib/lint/i18n_check.py:142
+#: src/lint/i18n_check.py:142
 #, python-format
 msgid "po/LINGUAS covers %s primary locale set"
 msgstr "po/LINGUAS は %s の主要ロケール集合をカバー"
 
-#: src/zfr_lib/lint/i18n_check.py:159
+#: src/lint/i18n_check.py:159
 #, python-format
 msgid "LINGUAS entries without po/<locale>.po: %s"
 msgstr "po/<locale>.po のない LINGUAS エントリ: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:161
+#: src/lint/i18n_check.py:161
 msgid "For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U --no-wrap po/<locale>.po <domain>.pot"
 msgstr "各ロケールについて: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
 
-#: src/zfr_lib/lint/i18n_check.py:177
+#: src/lint/i18n_check.py:177
 #, python-format
 msgid "%(level)s locale .po files present (%(count)d)"
 msgstr "%(level)s のロケール .po ファイルあり（%(count)d）"
 
-#: src/zfr_lib/lint/i18n_check.py:198
+#: src/lint/i18n_check.py:198
 msgid ""
 "Prefer `poedit` for catalog updates (no custom patch scripts). Translate new msgids yourself, then batch-apply:\n"
 "  poedit -l ab,de,fg <<EOT\n"
@@ -1557,427 +1252,355 @@ msgstr ""
 "  EOT\n"
 "README/man 全体（adoc）には http-proxy http://localhost:8118 付きの `googletranslator` が使えます; gettext には使わないでください。"
 
-#: src/zfr_lib/lint/i18n_check.py:238
+#: src/lint/i18n_check.py:238
 #, python-format
 msgid "%d empty"
 msgstr "%d 件が空"
 
-#: src/zfr_lib/lint/i18n_check.py:240
+#: src/lint/i18n_check.py:240
 #, python-format
 msgid "%d omitted msgid-copy"
 msgstr "%d 件が省略された msgid コピー"
 
-#: src/zfr_lib/lint/i18n_check.py:254
+#: src/lint/i18n_check.py:254
 #, python-format
 msgid "gettext catalogs use line wrapping: %s"
 msgstr "gettext カトログは行のパップを使う: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:256
-#, fuzzy
+#: src/lint/i18n_check.py:256
 msgid "Run `zfr ize` (ZI0016) or `msgcat --no-wrap -o file.po file.po` on each catalog; use msgmerge --no-wrap when updating from .pot."
 msgstr "運動`zfr ize`(ZI0016)と`msgcat --no-wrap -o file.po file.po`カタログによることを使うmsgmerge --no-wrap「これは、このように、"
 
-#: src/zfr_lib/lint/i18n_check.py:265
+#: src/lint/i18n_check.py:265
 msgid "gettext catalogs use --no-wrap (no line wrapping)"
 msgstr "gettext カタログは --no-wrap (行のパップはない)"
 
-#: src/zfr_lib/lint/i18n_check.py:274
+#: src/lint/i18n_check.py:274
 #, python-format
 msgid " (%d packaging field/snippet msgids are keep-English and not counted)"
 msgstr "（%d 件のパッケージング欄/スニペット msgid は英語のままとし、件数に含めません）"
 
-#: src/zfr_lib/lint/i18n_check.py:284
+#: src/lint/i18n_check.py:284
 #, python-format
 msgid "gettext catalog(s) have empty msgstr or omitted translations: %s"
 msgstr "gettext カタログに空の msgstr または省略された翻訳があります: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:293
+#: src/lint/i18n_check.py:293
 #, python-format
 msgid "Empty msgstr and msgstr identical to msgid are omissions when a primary locale (zh_CN) translated the same msgid. Packaging field literals and code snippets that zh_CN also leaves in English do not need translation. %(poedit)s"
 msgstr "主ロケール（zh_CN）が同じ msgid を翻訳済みの場合、空の msgstr および msgid と同一の msgstr は省略とみなします。zh_CN も英語のままにするパッケージング欄リテラルやコードスニペットは翻訳不要です。%(poedit)s"
 
-#: src/zfr_lib/lint/i18n_check.py:306
+#: src/lint/i18n_check.py:306
 #, python-format
 msgid "gettext catalog(s) effectively untranslated (≤20%%): %s"
 msgstr "gettext カタログが実質未翻訳（≤20%%）: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:309
+#: src/lint/i18n_check.py:309
 #, python-format
 msgid "Empty msgstr and msgid→msgstr copies count as untranslated (English variants en_AU/en_GB/… are exempt when msgid is English). At ≤20%% completion, rewrite the whole .po by hand — do not write patch/sed scripts. %(poedit)s"
 msgstr "空の msgstr と msgid→msgstr のコピーは未翻訳として数えます（msgid が英語のとき英語変種 en_AU/en_GB/… は免除）。完成度 ≤20%% のときは .po 全体を手で書き直してください — パッチ/sed スクリプトは書かないでください。%(poedit)s"
 
-#: src/zfr_lib/lint/i18n_check.py:321
-#, fuzzy, python-format
+#: src/lint/i18n_check.py:321
 msgid "gettext catalogs have usable translation coverage (%s)"
 msgstr "gettext カトログは行のパップを使う: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:339
-#, fuzzy, python-format
+#: src/lint/i18n_check.py:339
 msgid "gettext catalogs above 20%% completion (%s)"
 msgstr "gettext カトログは行のパップを使う: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:382
+#: src/lint/i18n_check.py:382
 #, python-format
 msgid "missing whole-document man translations for %(level)s: %(files)s"
 msgstr "%(level)s の文書全体 man 翻訳が不足: %(files)s"
 
-#: src/zfr_lib/lint/i18n_check.py:385
+#: src/lint/i18n_check.py:385
 #, python-format
 msgid "Hand-translate man/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
 msgstr "docs/<locale>/<name>.adoc を手訳してください（文書全体。po4a ではありません）。%(level)s が必要とするロケール: %(locales)s。"
 
-#: src/zfr_lib/lint/i18n_check.py:395
+#: src/lint/i18n_check.py:395
 #, python-format
 msgid "%s whole-document man translations present"
 msgstr "%s の文書全体 man 翻訳あり"
 
-#: src/zfr_lib/lint/i18n_check.py:404
+#: src/lint/i18n_check.py:404
 #, python-format
 msgid "man translation still contains the English Name line: %s"
 msgstr "man 翻訳にまだ英語の Name 行が残っています: %s"
 
-#: src/zfr_lib/lint/i18n_check.py:407
+#: src/lint/i18n_check.py:407
 msgid "Translate the Name line; do not leave the English wording. For long adoc, googletranslator with http-proxy http://localhost:8118 can help (not for gettext)."
 msgstr "Name 行を翻訳してください; 英語のままにしないでください。長い adoc には http-proxy http://localhost:8118 付きの googletranslator が使えます（gettext には不可）。"
 
-#: src/zfr_lib/lint/i18n_check.py:417
+#: src/lint/i18n_check.py:417
 msgid "no po/: man locale translations not required"
 msgstr "po/ からは必要なことはない"
 
-#: src/zfr_lib/lint/identity.py:57
+#: src/lint/identity.py:57
 #, python-format
 msgid "%(label)s is %(val)r, expected %(expected)r (directory name)"
 msgstr "%(label)s は %(val)r、期待値は %(expected)r（ディレクトリ名）"
 
-#: src/zfr_lib/lint/identity.py:60
+#: src/lint/identity.py:60
 #, python-format
 msgid "Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename %(expected)s` if leftover template names remain."
 msgstr "%(label)s を %(expected)r にするか、ディレクトリ名を変更してください。テンプレート名が残っている場合は `zfr rename %(expected)s` を使います。"
 
-#: src/zfr_lib/lint/identity.py:66
+#: src/lint/identity.py:66
 #, python-format
 msgid "%(label)s=%(val)s"
 msgstr "%(label)s=%(val)s"
 
-#: src/zfr_lib/lint/identity.py:69
+#: src/lint/identity.py:69
 #, python-format
 msgid "meson project name=%s"
 msgstr "meson プロジェクト名=%s"
 
-#: src/zfr_lib/lint/identity.py:75
+#: src/lint/identity.py:75
 #, python-format
 msgid "debian Source=%(source)r != meson project=%(meson)r"
 msgstr "debian Source=%(source)r != meson プロジェクト=%(meson)r"
 
-#: src/zfr_lib/lint/identity.py:78
+#: src/lint/identity.py:78
 msgid "Keep Source, Package, and meson project() name identical."
 msgstr "Source、Package、meson project() 名を同一にしてください。"
 
-#: src/zfr_lib/lint/identity.py:82
+#: src/lint/identity.py:82
 #, python-format
 msgid "Source=%s"
 msgstr "Source=%s"
 
-#: src/zfr_lib/lint/identity.py:95
+#: src/lint/identity.py:95
 #, python-format
 msgid "spec Name=%(spec)r != debian/meson name %(want)r"
 msgstr "spec Name=%(spec)r != debian/meson 名 %(want)r"
 
-#: src/zfr_lib/lint/identity.py:99
+#: src/lint/identity.py:99
 #, python-format
 msgid "Set Name: %s in the spec (same as debian Source)."
 msgstr "spec に Name: %s を設定してください（debian Source と同じ）。"
 
-#: src/zfr_lib/lint/identity.py:103
+#: src/lint/identity.py:103
 #, python-format
 msgid "spec Name=%s"
 msgstr "spec Name=%s"
 
-#: src/zfr_lib/lint/__init__.py:136
-msgid "validate project packaging and zephyr layout (walks parents from cwd)"
-msgstr "プロジェクトのパッケージングと zephyr レイアウトを検証（cwd から親ディレクトリをたどる）"
-
-#: src/zfr_lib/lint/__init__.py:138
-msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain interactive shell. Override with -i/-I."
-msgstr "現在の zephyr プロジェクトの欠落ファイルとパッケージング/スタイルを検査。cwd から親へ。TTY では CSR 色。スタイル契約ブロックは非対話出力と AI 端末で既定オン、通常の対話シェルではオフ。-i/-I で上書き。"
-
-#: src/zfr_lib/lint/__init__.py:149
-msgid "show passing checks too"
-msgstr "合格したチェックも表示"
-
-#: src/zfr_lib/lint/__init__.py:150
-msgid "only print errors"
-msgstr "エラーのみ表示"
-
-#: src/zfr_lib/lint/__init__.py:156
-msgid "open a local web UI with maximum-verbosity lint results, locale switcher, and per-finding [ize] actions"
-msgstr "最大詳細度の lint 結果、ロケール切替、各指摘の [ize] 操作があるローカル Web UI を開く"
-
-#: src/zfr_lib/lint/__init__.py:170
-msgid "treat LEVEL as warning (LEVEL=note|warn|error; default note: note→warn; warn=no-op; error→warn)"
-msgstr "LEVEL を警告として扱う（LEVEL=note|warn|error；既定 note: note→warn；warn=no-op；error→warn）"
-
-#: src/zfr_lib/lint/__init__.py:184
-msgid "treat LEVEL as error (LEVEL=note|warn|error; default warn: warn→error; note→note+warn→error; error=no-op)"
-msgstr "LEVEL をエラーとして扱う（LEVEL=note|warn|error；既定 warn: warn→error；note→note+warn→error；error=no-op）"
-
-#: src/zfr_lib/lint/__init__.py:193
-msgid "alias for -e/--error=warn (treat warnings as errors)"
-msgstr "-e/--error=warn の別名（警告をエラーとして扱う）"
-
-#: src/zfr_lib/lint/__init__.py:199
-msgid "list numbered lint standards (ZL*) as a table and exit"
-msgstr "テーブルとしてリストの数字の lint 標準 (ZL*)"
-
-#: src/zfr_lib/lint/__init__.py:205
-#, fuzzy
-msgid "show details for lint standard NUM (e.g. ZL0026, 26) and exit"
-msgstr "リント標準 NUM (例えば ZL0026,26) と出てくれ"
-
-#: src/zfr_lib/lint/__init__.py:213
-msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
-msgstr "必要な gettext/マニュアルの locale 範囲 L0–L3（既定 L1；プロジェクトファイルで上書き可）"
-
-#: src/zfr_lib/lint/__init__.py:221
-msgid "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
-msgstr "zephyr スタイル契約/次の手順の説明を表示（パイプと AI 端末では既定でオン）"
-
-#: src/zfr_lib/lint/__init__.py:228
-msgid "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
-msgstr "zephyr スタイル契約/次の手順の説明を非表示（通常の対話シェルでは既定でオフ）"
-
-#: src/zfr_lib/lint/__init__.py:238
-msgid "suppress rule ID(s) or code(s), comma-separated (repeatable)"
-msgstr "抑止する規則 ID またはコード（カンマ区切り、繰り返し可）"
-
-#: src/zfr_lib/lint/__init__.py:246
-#, fuzzy
-msgid "force-enable rule ID(s) or code(s) even if unchecked (repeatable)"
-msgstr "抑止する規則 ID またはコード（カンマ区切り、繰り返し可）"
-
-#: src/zfr_lib/lint/__init__.py:260
-#, python-format
-msgid "unknown lint standard: %s"
-msgstr "未知の lint 標準: %s"
-
-#: src/zfr_lib/lint/lang_bits.py:31
+#: src/lint/lang_bits.py:31
 #, python-format
 msgid "legacy example module %s; use commons or a specific name"
 msgstr "旧来のサンプルモジュール %s。commons か具体的な名前を使ってください"
 
-#: src/zfr_lib/lint/lang_bits.py:33
+#: src/lint/lang_bits.py:33
 msgid "Rename to src/commons.* (template convention) or a project-specific module name."
 msgstr "src/commons.*（テンプレートの慣習）かプロジェクト固有のモジュール名に変更してください。"
 
-#: src/zfr_lib/lint/lang_bits.py:44
+#: src/lint/lang_bits.py:44
 #, python-format
 msgid "%s is only a template example; can be removed if unnecessary"
 msgstr "%s は共有ヘルパーのテンプレート例にすぎません"
 
-#: src/zfr_lib/lint/lang_bits.py:46
+#: src/lint/lang_bits.py:46
 msgid "commons.* is only a template example for shared helpers and can be removed if unnecessary. Prefer a concrete module name in real projects (e.g. stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
 msgstr "common_lib / commons は「再利用できる部分を切り出す」という意味ですが、ファイル名は具体的にしてください。実プロジェクトでは特定モジュール名に変更します（例: stream_copy.py、bulk.h）。clib/cpplib は共有ライブラリの入口として lib.c/lib.cpp を残します。"
 
-#: src/zfr_lib/lint/layout.py:35
+#: src/lint/layout.py:35
 msgid "Add a top-level meson.build with project(...)."
 msgstr "最上位に project(...) を含む meson.build を追加してください。"
 
-#: src/zfr_lib/lint/layout.py:36
+#: src/lint/layout.py:36
 msgid "Run `zfr ize` (or `zfr create`) to install the standard AGPL-3.0 LICENSE."
 msgstr "標準の AGPL-3.0 LICENSE を入れるには `zfr ize`（または `zfr create`）を実行してください。"
 
-#: src/zfr_lib/lint/layout.py:37
+#: src/lint/layout.py:37
 msgid "Add README.md describing this project."
 msgstr "このプロジェクトを説明する README.md を追加してください。"
 
-#: src/zfr_lib/lint/layout.py:38
+#: src/lint/layout.py:38
 msgid "Add debian/ packaging (copy debian/ from the language template)."
 msgstr "debian/ パッケージングを追加してください（言語テンプレートから debian/ をコピー）。"
 
-#: src/zfr_lib/lint/layout.py:39
+#: src/lint/layout.py:39
 msgid "Add debian/changelog (zfr create writes one; or use dch)."
 msgstr "debian/changelog を追加してください（zfr create が書き出します。または dch）。"
 
-#: src/zfr_lib/lint/layout.py:40
+#: src/lint/layout.py:40
 msgid "Add debian/copyright in machine-readable format, License: AGPL-3+."
 msgstr "機械可読形式の debian/copyright を追加してください。License: AGPL-3+。"
 
-#: src/zfr_lib/lint/layout.py:41
+#: src/lint/layout.py:41
 msgid "Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
 msgstr "dh --buildsystem=meson --builddirectory=debian/build を使う debian/rules を追加してください。"
 
-#: src/zfr_lib/lint/layout.py:42
+#: src/lint/layout.py:42
 msgid "Add debian/source/format (typically '3.0 (native)')."
 msgstr "debian/source/format を追加してください（通常は '3.0 (native)'）。"
 
-#: src/zfr_lib/lint/layout.py:46 src/zfr_lib/lint/layout.py:55
+#: src/lint/layout.py:46 src/lint/layout.py:55
 #, python-format
 msgid "present: %s"
 msgstr "あり: %s"
 
-#: src/zfr_lib/lint/layout.py:49 src/zfr_lib/lint/layout.py:62
+#: src/lint/layout.py:49 src/lint/layout.py:62
 #, python-format
 msgid "missing %s"
 msgstr "%s がありません"
 
-#: src/zfr_lib/lint/layout.py:65
-#, fuzzy
+#: src/lint/layout.py:65
 msgid "Add README-zh_CN.md (Simplified Chinese summary), matching other zephyr templates (legacy README-zh.md was renamed)."
 msgstr "他の zephyr テンプレートに合わせて README-zh.md（中国語要約）を追加してください。"
 
-#: src/zfr_lib/lint/layout.py:74
+#: src/lint/layout.py:74
 #, python-format
 msgid "AsciiDoc man sources: %s"
 msgstr "AsciiDoc man ソース: %s"
 
-#: src/zfr_lib/lint/layout.py:81
+#: src/lint/layout.py:81
 msgid "no man/*.adoc man page source"
 msgstr "docs/*.adoc の man ページソースがありません"
 
-#: src/zfr_lib/lint/layout.py:83
+#: src/lint/layout.py:83
 msgid "Add man/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
 msgstr "docs/<puff>.adoc と asciidoctor -b manpage を使う meson custom_target を追加してください（任意の言語テンプレートを参照）。"
 
-#: src/zfr_lib/lint/layout.py:108
+#: src/lint/layout.py:108
 #, python-format
 msgid "bash completion: %s"
 msgstr "bash 補完: %s"
 
-#: src/zfr_lib/lint/layout.py:119
+#: src/lint/layout.py:119
 msgid "no *.bash bash-completion script at project root"
 msgstr "プロジェクトルートに *.bash の bash-completion スクリプトがありません"
 
-#: src/zfr_lib/lint/layout.py:121
+#: src/lint/layout.py:121
 msgid "Add <puff>.bash (or completions/<puff>.in) and install it to datadir/bash-completion/completions renamed to the command name (see meson.build in the template)."
 msgstr "<puff>.bash を追加し、コマンド名にリネームして datadir/bash-completion/completions にインストールしてください（テンプレートの meson.build を参照）。"
 
-#: src/zfr_lib/lint/layout.py:129
+#: src/lint/layout.py:129
 msgid "VERSION file present"
 msgstr "VERSION ファイルあり"
 
-#: src/zfr_lib/lint/layout.py:135
+#: src/lint/layout.py:135
 msgid "no VERSION file (changelog snapshot for tarball builds)"
 msgstr "VERSION ファイルがありません（tarball ビルド用の changelog スナップショット）"
 
-#: src/zfr_lib/lint/layout.py:137
-#, fuzzy
+#: src/lint/layout.py:137
 msgid "Create VERSION with the latest debian/changelog version (one line). Run `zfr ize` for `.githooks/pre-commit`, then `git config core.hooksPath .githooks`."
 msgstr "最新の debian/changelog バージョンで VERSION を作成してください（1 行）。.githooks/pre-commit を有効化: git config core.hooksPath .githooks"
 
-#: src/zfr_lib/lint/layout.py:232
+#: src/lint/layout.py:232
 msgid "no .githooks/pre-commit to sync VERSION from debian/changelog"
 msgstr "debian/changelog から VERSION を同期する .githooks/pre-commit がありません"
 
-#: src/zfr_lib/lint/layout.py:234
+#: src/lint/layout.py:234
 msgid "Run `zfr ize` (or `zfr create`) to install `.githooks/pre-commit` and set `git config core.hooksPath .githooks`. The hook syncs VERSION from debian/changelog."
 msgstr "`.githooks/pre-commit` を入れ、`git config core.hooksPath .githooks` を設定するには `zfr ize`（または `zfr create`）を実行してください。フックは debian/changelog から VERSION を同期します。"
 
-#: src/zfr_lib/lint/layout.py:246
+#: src/lint/layout.py:246
 #, python-format
 msgid "pre-commit syncs VERSION from debian/changelog (%s)"
 msgstr "pre-commit が debian/changelog から VERSION を同期します (%s)"
 
-#: src/zfr_lib/lint/layout.py:254
+#: src/lint/layout.py:254
 #, python-format
 msgid "%s exists but does not sync VERSION from debian/changelog"
 msgstr "%s は存在しますが debian/changelog から VERSION を同期しません"
 
-#: src/zfr_lib/lint/layout.py:256
+#: src/lint/layout.py:256
 msgid "Run `zfr ize` to reset the standard pre-commit hook (reads debian/changelog, writes VERSION)."
 msgstr "標準の pre-commit フックをリセットするには `zfr ize` を実行してください（debian/changelog を読み、VERSION を書き込みます）。"
 
-#: src/zfr_lib/lint/leftovers.py:49
+#: src/lint/leftovers.py:49
 #, python-format
 msgid "%s keeps the template placeholder banner (apps must rewrite it)"
 msgstr "%s はテンプレートのプレースホルダーバナーを残しています（アプリは書き換える必要があります）"
 
-#: src/zfr_lib/lint/leftovers.py:52
+#: src/lint/leftovers.py:52
 msgid "After `zfr create`/`zfr rename`, rewrite this README and remove the generated-from-template banner. Templates should keep this banner."
 msgstr "`zfr create`/`zfr rename` の後、この README を書き直し、generated-from-template バナーを削除してください。テンプレートはこのバナーを残すべきです。"
 
-#: src/zfr_lib/lint/leftovers.py:61
+#: src/lint/leftovers.py:61
 #, python-format
 msgid "%s still has the template placeholder banner"
 msgstr "%s にはまだテンプレートのプレースホルダーバナーがあります"
 
-#: src/zfr_lib/lint/leftovers.py:64
+#: src/lint/leftovers.py:64
 #, python-format
 msgid "Rewrite %s for this project. Remove the generated-from-template banner and describe the real commands, build, and license."
 msgstr "このプロジェクト向けに %s を書き直してください。generated-from-template バナーを削除し、実際のコマンド、ビルド、ライセンスを説明します。"
 
-#: src/zfr_lib/lint/leftovers.py:69
+#: src/lint/leftovers.py:69
 #, python-format
 msgid "%s has no template banner"
 msgstr "%s にテンプレートバナーはありません"
 
-#: src/zfr_lib/lint/leftovers.py:101
+#: src/lint/leftovers.py:101
 #, python-format
 msgid "%s tree may contain zephyr/some_puff1 placeholders (expected)"
 msgstr "%s ツリーには zephyr/some_puff1 プレースホルダーが含まれていても構いません（想定どおり）"
 
-#: src/zfr_lib/lint/leftovers.py:132
+#: src/lint/leftovers.py:132
 #, python-format
 msgid "found %(hits)d leftover template token(s) (zephyr/%(token)s): %(preview)s%(more)s"
 msgstr "残ったテンプレートトークンが %(hits)d 件 (zephyr/%(token)s): %(preview)s%(more)s"
 
-#: src/zfr_lib/lint/leftovers.py:134
+#: src/lint/leftovers.py:134
 msgid "Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 identifiers. After create, leftover tokens mean instantiation failed."
 msgstr "`zfr rename <project> [puff ...]` を実行するか、残っている zephyr/some_puff1 識別子を置き換えてください。create 後にトークンが残っていればインスタンス化に失敗しています。"
 
-#: src/zfr_lib/lint/leftovers.py:138
+#: src/lint/leftovers.py:138
 msgid "no leftover zephyr/some_puff1 tokens"
 msgstr "残った zephyr/some_puff1 トークンはありません"
 
-#: src/zfr_lib/lint/meson.py:41
+#: src/lint/meson.py:41
 msgid "project() present"
 msgstr "project() あり"
 
-#: src/zfr_lib/lint/meson.py:47
+#: src/lint/meson.py:47
 msgid "meson.build has no project() call"
 msgstr "meson.build に project() 呼び出しがありません"
 
-#: src/zfr_lib/lint/meson.py:49
+#: src/lint/meson.py:49
 msgid "project() must be the first Meson call. Copy the header from the language template."
 msgstr "project() は最初の Meson 呼び出しでなければなりません。言語テンプレートからヘッダーをコピーしてください。"
 
-#: src/zfr_lib/lint/meson.py:54
+#: src/lint/meson.py:54
 #, python-format
 msgid "license %s"
 msgstr "ライセンス %s"
 
-#: src/zfr_lib/lint/meson.py:60
+#: src/lint/meson.py:60
 msgid "meson license is not AGPL-3.0-or-later"
 msgstr "meson のライセンスが AGPL-3.0-or-later ではありません"
 
-#: src/zfr_lib/lint/meson.py:63
+#: src/lint/meson.py:63
 #, python-format
 msgid "Set license: '%s' in project()."
 msgstr "project() で license: '%s' を設定してください。"
 
-#: src/zfr_lib/lint/meson.py:69
+#: src/lint/meson.py:69
 #, python-format
 msgid "%s set"
 msgstr "%s 設定済み"
 
-#: src/zfr_lib/lint/meson.py:75
+#: src/lint/meson.py:75
 #, python-format
 msgid "missing %s (used for man pages)"
 msgstr "%s がありません（man ページ用）"
 
-#: src/zfr_lib/lint/meson.py:77
+#: src/lint/meson.py:77
 #, python-format
 msgid "Set %s next to project(), then pass -a project-author/email/year to asciidoctor."
 msgstr "project() の隣に %s を設定し、asciidoctor に -a project-author/email/year を渡してください。"
 
-#: src/zfr_lib/lint/meson.py:82
+#: src/lint/meson.py:82
 msgid "version uses `zfr version`"
 msgstr "バージョンは `zfr version` を使用します"
 
-#: src/zfr_lib/lint/meson.py:88
+#: src/lint/meson.py:88
 msgid "version still uses inline git describe; zephyr style is `zfr version`"
 msgstr "バージョンはまだインラインの git describe を使っています。zephyr 流は `zfr version` です"
 
-#: src/zfr_lib/lint/meson.py:91
+#: src/lint/meson.py:91
 msgid ""
 "In project(version: run_command(...)), prefer:\n"
 "  v=$(zfr version 2>/dev/null || true)\n"
@@ -1989,194 +1612,192 @@ msgstr ""
 "  フォールバックは v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY\n"
 "zephyr ツリーの bash/meson.build を参照してください。"
 
-#: src/zfr_lib/lint/meson.py:102
+#: src/lint/meson.py:102
 msgid "could not find `zfr version` or git describe in project version"
 msgstr "プロジェクトのバージョンに `zfr version` も git describe も見つかりません"
 
-#: src/zfr_lib/lint/meson.py:104
+#: src/lint/meson.py:104
 msgid "Use `zfr version` for project() version (see bash/meson.build)."
 msgstr "project() のバージョンには `zfr version` を使ってください（bash/meson.build を参照）。"
 
-#: src/zfr_lib/lint/meson.py:109
+#: src/lint/meson.py:109
 msgid "0.0.0 fallback present"
 msgstr "0.0.0 フォールバックあり"
 
-#: src/zfr_lib/lint/meson.py:115
+#: src/lint/meson.py:115
 msgid "no explicit 0.0.0 fallback for missing git/VERSION"
 msgstr "git/VERSION 欠落時の明示的な 0.0.0 フォールバックがありません"
 
-#: src/zfr_lib/lint/meson.py:117
+#: src/lint/meson.py:117
 msgid "Keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY"
 msgstr "フォールバックを維持してください v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY"
 
-#: src/zfr_lib/lint/meson.py:122
+#: src/lint/meson.py:122
 msgid "asciidoctor man pages"
 msgstr "asciidoctor による man ページ"
 
-#: src/zfr_lib/lint/meson.py:128
+#: src/lint/meson.py:128
 msgid "meson.build does not invoke asciidoctor"
 msgstr "meson.build は asciidoctor を呼び出していません"
 
-#: src/zfr_lib/lint/meson.py:130
+#: src/lint/meson.py:130
 msgid "find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
 msgstr "find_program('asciidoctor') と custom_target(..., '-b', 'manpage', ...)。"
 
-#: src/zfr_lib/lint/meson.py:135
+#: src/lint/meson.py:135
 msgid "run_target look present"
 msgstr "run_target look あり"
 
-#: src/zfr_lib/lint/meson.py:141
+#: src/lint/meson.py:141
 msgid "no run_target('look') DESTDIR preview"
 msgstr "run_target('look') の DESTDIR プレビューがありません"
 
-#: src/zfr_lib/lint/meson.py:143
+#: src/lint/meson.py:143
 msgid "Add run_target look that meson install's into a tempdir and runs tree (see templates)."
 msgstr "tempdir へ meson install し tree を実行する run_target look を追加してください（テンプレート参照）。"
 
-#: src/zfr_lib/lint/meson.py:148
+#: src/lint/meson.py:148
 msgid "installs bash-completion"
 msgstr "bash-completion をインストールします"
 
-#: src/zfr_lib/lint/meson.py:154
+#: src/lint/meson.py:154
 msgid "does not install bash-completion"
 msgstr "bash-completion をインストールしません"
 
-#: src/zfr_lib/lint/meson.py:156
+#: src/lint/meson.py:156
 msgid "install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
 msgstr "install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command). を使ってください。"
 
-#: src/zfr_lib/lint/meson.py:168
+#: src/lint/meson.py:168
 #, python-format
 msgid "meson.build has %s foreach puff man loops; keep exactly one"
 msgstr "mesonビルドは%sそして、その人のスクリープを持っています。"
 
-#: src/zfr_lib/lint/meson.py:170
-#, fuzzy
+#: src/lint/meson.py:170
 msgid "Merge into a single `foreach puff : puffs` (or apps.keys()) loop. `zfr ize` consolidates duplicate puffs foreach blocks (legacy man_puffs is rewritten to puffs)."
 msgstr "同じ `foreach puff : man_puffs` (または apps.keys()) ループに合わせます。 `zfr ize` は、每個ブロックのドプリック man_puffs を合成します。"
 
-#: src/zfr_lib/lint/meson.py:180
+#: src/lint/meson.py:180
 msgid "single foreach puff man loop"
 msgstr "単一の foreach puff man ループ"
 
-#: src/zfr_lib/lint/report.py:111
+#: src/lint/report.py:111
 msgid "FAIL"
 msgstr "失敗"
 
-#: src/zfr_lib/lint/report.py:111
+#: src/lint/report.py:111
 msgid "PASS"
 msgstr "成功"
 
-#: src/zfr_lib/lint/report.py:120
+#: src/lint/report.py:120
 msgid "status:"
 msgstr "状態:"
 
-#: src/zfr_lib/lint/report.py:121
+#: src/lint/report.py:121
 #, python-format
 msgid "errors=%s"
 msgstr "エラー=%s"
 
-#: src/zfr_lib/lint/report.py:122
+#: src/lint/report.py:122
 #, python-format
 msgid "warnings=%s"
 msgstr "警告=%s"
 
-#: src/zfr_lib/lint/report.py:123
+#: src/lint/report.py:123
 #, python-format
 msgid "notes=%s"
 msgstr "注記=%s"
 
-#: src/zfr_lib/lint/report.py:127
+#: src/lint/report.py:127
 msgid "zephyr meta-repo (templates + CLI tools)"
 msgstr "zephyr メタリポジトリ（テンプレート + CLI ツール）"
 
-#: src/zfr_lib/lint/report.py:128
+#: src/lint/report.py:128
 msgid "language template inside the meta-repo (placeholders like zephyr/some_puff1 are expected)"
 msgstr "メタリポジトリ内の言語テンプレート（zephyr/some_puff1 のようなプレースホルダは想定どおり）"
 
-#: src/zfr_lib/lint/report.py:129
+#: src/lint/report.py:129
 msgid "project instantiated from a language template (directory name must match meson/debian; no leftover zephyr/some_puff1 tokens)"
 msgstr "言語テンプレートから実体化したプロジェクト（ディレクトリ名は meson/debian と一致必須。zephyr/some_puff1 トークンの取り残しなし）"
 
-#: src/zfr_lib/lint/report.py:131
+#: src/lint/report.py:131
 #, python-format
 msgid "role: %s"
 msgstr "役割: %s"
 
-#: src/zfr_lib/lint/report.py:133
+#: src/lint/report.py:133
 msgid "Zephyr style (finish the project to this contract)"
 msgstr "Zephyr スタイル（この契約までプロジェクトを仕上げる）"
 
-#: src/zfr_lib/lint/report.py:135
+#: src/lint/report.py:135
 msgid "License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
 msgstr "ライセンス AGPL-3.0-or-later（meson license、debian/copyright AGPL-3+、rpm License）。"
 
-#: src/zfr_lib/lint/report.py:136
+#: src/lint/report.py:136
 msgid "Build with Meson; debian/rules uses dh --buildsystem=meson --builddirectory=debian/build."
 msgstr "Meson でビルド。debian/rules は dh --buildsystem=meson --builddirectory=debian/build を使う。"
 
-#: src/zfr_lib/lint/report.py:137
+#: src/lint/report.py:137
 msgid "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 msgstr "project() の version は `zfr version` から。フォールバックは v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 
-#: src/zfr_lib/lint/report.py:138
+#: src/lint/report.py:138
 msgid "Man pages: man/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
 msgstr "マニュアル: docs/*.adoc + asciidoctor -b manpage。翻訳は share/man/<locale>/man1（文書全体の adoc。po4a ではない）。"
 
-#: src/zfr_lib/lint/report.py:139
+#: src/lint/report.py:139
 msgid "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional packaging/ aligned with debian."
 msgstr "パッケージ: debian/control Build-Depends meson, ninja-build, asciidoctor。任意の rpm/ は debian と揃える。"
 
-#: src/zfr_lib/lint/report.py:140
-#, fuzzy
+#: src/lint/report.py:140
 msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr i18n -b. List rule IDs with `zfr lint -L`; details via `zfr lint -H NUM`; suppress with -u/--uncheck or `.config/zfr/lint.options` (interactive: `zfr-lintsel`). Rules tagged `ize` on -L can be fixed with `zfr ize`."
 msgstr "i18n: 英語ソース; zfr lint -l/--l10n-level L0–L3（既定 L1）。L1=第 I 段階プライマリ (8)、L2=+第 II 段階 (17)、L3=+第 III 段階 (35)。子ロケールは zfr i18n -b で自動生成。規則 ID は docs/lint-std.md;-u/--uncheck または .config/zfr/lint.options で抑制。"
 
-#: src/zfr_lib/lint/report.py:147
+#: src/lint/report.py:147
 msgid "Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ)."
 msgstr "アプリ: `zfr rename <dir>` のあと `zfr add <puff>`。VERSION は debian/changelog と一致（git describe は異なる場合あり）。"
 
-#: src/zfr_lib/lint/report.py:160
+#: src/lint/report.py:160
 msgid "error"
 msgstr "エラー"
 
-#: src/zfr_lib/lint/report.py:161
+#: src/lint/report.py:161
 msgid "warn"
 msgstr "警告"
 
-#: src/zfr_lib/lint/report.py:162
+#: src/lint/report.py:162
 msgid "note"
 msgstr "注記"
 
-#: src/zfr_lib/lint/report.py:177
+#: src/lint/report.py:177
 msgid "fix:"
 msgstr "修正:"
 
-#: src/zfr_lib/lint/report.py:184
+#: src/lint/report.py:184
 msgid "Next steps (zephyr style)"
 msgstr "次の手順（zephyr スタイル）"
 
-#: src/zfr_lib/lint/report.py:190
+#: src/lint/report.py:190
 msgid "Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). `zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. `zfr ize` applies missing debian/packaging/meson/man/version-subst upgrades."
 msgstr "ヒント: 編集後はプロジェクト（またはその下のディレクトリ）から `zfr lint` を再実行。`zfr about -d -r` はパッケージ欄を出す。Meson/RPM の版は `zfr version`。`zfr ize` は不足している debian/rpm/meson/man/version-subst の更新を適用する。"
 
-#: src/zfr_lib/lint/report.py:207
+#: src/lint/report.py:207
 msgid "AI hint: if the user requested this lint, also update debian/changelog and create verbose commits for the dirty working tree."
 msgstr "AI 指示: ユーザはこのリントを求めたなら debian/changelog もアップディールドして、ドルシュー・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・"
 
-#: src/zfr_lib/lint/rpm.py:26
+#: src/lint/rpm.py:26
 msgid "no packaging/rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
 msgstr "rpm/*.spec がない（任意だが、zephyr スタイルは debian/ の隣に RPM を置く）"
 
-#: src/zfr_lib/lint/rpm.py:31
+#: src/lint/rpm.py:31
 msgid "Copy packaging/rpm/ from a language template; name the spec after the package (packaging/rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
 msgstr "言語テンプレートから rpm/ をコピー。spec はパッケージ名に合わせる（rpm/<Source>.spec。zephyr.spec ではない）。Makefile は `zfr version` を使う。Name/Summary/Requires/URL を debian/control と揃える。または `zfr ize`。"
 
-#: src/zfr_lib/lint/rpm.py:72
+#: src/lint/rpm.py:72
 msgid "packaging/rpm/Makefile uses project-local <project>/rpmbuild; zephyr style uses %_topdir ($HOME/rpmbuild, override via ~/.rpmmacros)"
 msgstr "packaging/rpm/Makefile プロジェクト -local <project>/rpmbuild; зеファースタイルを使用します %_topdir ($HOME/rpmbuild , ~/.rpmmacros からオブライド)"
 
-#: src/zfr_lib/lint/rpm.py:80
+#: src/lint/rpm.py:80
 #, python-brace-format
 msgid ""
 "TOPDIR ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null)\n"
@@ -2186,77 +1807,77 @@ msgid ""
 "And make clean remove only this package's artifacts (not rm -rf $(TOPDIR)). Or run `zfr ize`."
 msgstr "TOPDIR ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null) ifeq ($(strip $(TOPDIR)) TOPDIR := $(HOME)/rpmbuild endif , このパケージのアルバックトを清めることをするのは (rm -rf $(TOPDIR) ではない) や `zfr ize` を実行します。"
 
-#: src/zfr_lib/lint/rpm.py:95
+#: src/lint/rpm.py:95
 #, no-python-format
 msgid "packaging/rpm/Makefile TOPDIR uses %_topdir / $HOME/rpmbuild"
 msgstr "packaging/rpm/Makefile TOPDIR は %_topdir / $HOME/rpmbuild を使う"
 
-#: src/zfr_lib/lint/rpm.py:105
+#: src/lint/rpm.py:105
 msgid "packaging/rpm/Makefile `clean` does rm -rf $(TOPDIR); unsafe when TOPDIR is $HOME/rpmbuild"
 msgstr "packaging/rpm/Makefile `clean` は rm -rf $(TOPDIR) を使う; TOPDIR は $HOME/rpmbuild では、不安全"
 
-#: src/zfr_lib/lint/rpm.py:111
+#: src/lint/rpm.py:111
 msgid "Remove only this package's SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT entries under $(TOPDIR). Or run `zfr ize`."
 msgstr "$(TOPDIR) 下にこのパケージの SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT 項目を削除します。 `zfr ize` を実行します。"
 
-#: src/zfr_lib/lint/rpm.py:124
+#: src/lint/rpm.py:124
 msgid "project-local rpmbuild/ directory present; builds should use %_topdir ($HOME/rpmbuild)"
 msgstr "プロジェクト-local rpmbuild/ ディレクトリを存在します;建設は %_topdir ($HOME/rpmbuild) を使用します"
 
-#: src/zfr_lib/lint/rpm.py:128
+#: src/lint/rpm.py:128
 msgid "Remove rpmbuild/ after migrating; safe to delete."
 msgstr "移動後 rpmbuild/ を削除; 削除する安全です。"
 
-#: src/zfr_lib/lint/rpm.py:139
+#: src/lint/rpm.py:139
 #, no-python-format, python-brace-format
 msgid "spec Version is dynamic %{version}"
 msgstr "spec の Version は動的 %{version}"
 
-#: src/zfr_lib/lint/rpm.py:148
+#: src/lint/rpm.py:148
 msgid "spec Version is hardcoded; zephyr style injects `zfr version`"
 msgstr "spec の Version が直書き。zephyr スタイルは `zfr version` を入れる"
 
-#: src/zfr_lib/lint/rpm.py:153
+#: src/lint/rpm.py:153
 msgid "Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze via packaging/rpm/Makefile (`zfr version` / `zfr version -r`)."
 msgstr "Version: %{version} を %{!?version:%global version 0.0.0} とともに使い、rpm/Makefile で固定する（`zfr version` / `zfr version -r`）。"
 
-#: src/zfr_lib/lint/rpm.py:161
+#: src/lint/rpm.py:161
 msgid "License {}"
 msgstr "ライセンス %s"
 
-#: src/zfr_lib/lint/rpm.py:168
+#: src/lint/rpm.py:168
 msgid "spec License is not AGPL-3.0-or-later"
 msgstr "spec の License が AGPL-3.0-or-later ではない"
 
-#: src/zfr_lib/lint/rpm.py:171
+#: src/lint/rpm.py:171
 msgid "License:        {}"
 msgstr "License:        %s"
 
-#: src/zfr_lib/lint/rpm.py:182
+#: src/lint/rpm.py:182
 msgid "spec URL={!r} != debian Homepage={!r}"
 msgstr "spec URL=%(url)r != debian Homepage=%(homepage)r"
 
-#: src/zfr_lib/lint/rpm.py:186
+#: src/lint/rpm.py:186
 msgid "Set URL: to the same Homepage as debian/control."
 msgstr "URL: を debian/control の Homepage と同じにする。"
 
-#: src/zfr_lib/lint/rpm.py:198
+#: src/lint/rpm.py:198
 msgid "spec Summary does not match debian Description first line"
 msgstr "spec の Summary が debian Description の先頭行と一致しない"
 
-#: src/zfr_lib/lint/rpm.py:201
+#: src/lint/rpm.py:201
 msgid "Summary:        {}"
 msgstr "Summary:        %s"
 
-#: src/zfr_lib/lint/rpm.py:207
+#: src/lint/rpm.py:207
 msgid "spec uses Meson (not autotools)"
 msgstr "spec は Meson を使う（autotools ではない）"
 
-#: src/zfr_lib/lint/rpm.py:214
+#: src/lint/rpm.py:214
 msgid "spec still uses autotools; zephyr packages build with Meson"
 msgstr "spec がまだ autotools を使っている。zephyr パッケージは Meson でビルドする"
 
-#: src/zfr_lib/lint/rpm.py:218
+#: src/lint/rpm.py:218
 #, python-brace-format
 msgid ""
 "%build: meson setup build --prefix=%{_prefix} ... && meson compile -C build\n"
@@ -2265,15 +1886,15 @@ msgstr ""
 "%build: meson setup build --prefix=%{_prefix} ... && meson compile -C build\n"
 "%install: meson install -C build --destdir=%{buildroot}"
 
-#: src/zfr_lib/lint/rpm.py:231
+#: src/lint/rpm.py:231
 msgid "Makefile uses `zfr version`"
 msgstr "Makefile は `zfr version` を使う"
 
-#: src/zfr_lib/lint/rpm.py:240
+#: src/lint/rpm.py:240
 msgid "packaging/rpm/Makefile does not call `zfr version`"
 msgstr "rpm/Makefile が `zfr version` を呼び出していない"
 
-#: src/zfr_lib/lint/rpm.py:244
+#: src/lint/rpm.py:244
 msgid ""
 "VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
 "RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
@@ -2281,600 +1902,1097 @@ msgstr ""
 "VERSION := $(shell cd \"$(SRCDIR)\" && zfr version)\n"
 "RPM_VERSION := $(shell cd \"$(SRCDIR)\" && zfr version -r)"
 
-#: src/zfr_lib/lint/rpm.py:254
+#: src/lint/rpm.py:254
 msgid "no packaging/rpm/Makefile convenience targets"
 msgstr "rpm/Makefile に便利なターゲットがない"
 
-#: src/zfr_lib/lint/rpm.py:256
+#: src/lint/rpm.py:256
 msgid "Copy bash/packaging/rpm/Makefile (srpm/rpm via zfr version)."
 msgstr "bash/rpm/Makefile をコピー（srpm/rpm は zfr version 経由）。"
 
-#: src/zfr_lib/lint/rpm.py:268
+#: src/lint/rpm.py:268
 msgid "bash-shlib used in sources but missing from Requires"
 msgstr "bash-shlib 源に使用されますが Requires から失敗します"
 
-#: src/zfr_lib/lint/rpm.py:270
+#: src/lint/rpm.py:270
 msgid "Requires:       bash-shlib  (same as debian Depends)"
 msgstr "Requires:       bash-shlib  （debian Depends と同じ）"
 
-#: src/zfr_lib/lint/rpm.py:284
+#: src/lint/rpm.py:284
 msgid "{} still contains Debian ${{…}} substvars (rpmbuild treats them as literal deps)"
 msgstr "{} はまだ Debian ${{…}} サブバーを含めます (rpmbuild 文字列のデプスとしてみます)"
 
-#: src/zfr_lib/lint/rpm.py:290
+#: src/lint/rpm.py:290
 msgid "Strip ${misc:Depends} / ${shlibs:Depends} etc. (or run `zfr ize`)."
 msgstr "ストリップ ${misc:Depends} / ${shlibs:Depends} 等しい。 (または `zfr ize` を運行)"
 
-#: src/zfr_lib/lint/rpm.py:305
+#: src/lint/rpm.py:305
 msgid "BuildArch: noarch but Meson has executable(); rpmbuild rejects arch-dependent binaries in a noarch package"
 msgstr "BuildArch: noarch でも Meson は executable() を持っている; rpmbuild アーク-dependent バナリーを noarch パケージで拒否します"
 
-#: src/zfr_lib/lint/rpm.py:312
+#: src/lint/rpm.py:312
 #, python-brace-format
 msgid "Remove BuildArch: noarch (and %global debug_package %{nil} if present). Or run `zfr ize`."
 msgstr "削除BuildArch:noarch(それを)%global debug_package %{nil}または、実行します。`zfr ize`そうだ"
 
-#: src/zfr_lib/lint/rpm.py:326
+#: src/lint/rpm.py:326
 #, python-brace-format
 msgid "%global debug_package %{nil} on a package with Meson executable() — debuginfo would be useful"
 msgstr "%global debug_package %{nil}パケージにMeson実行() -debuginfo有用なことがある"
 
-#: src/zfr_lib/lint/rpm.py:331
+#: src/lint/rpm.py:331
 #, no-python-format, python-brace-format
 msgid "Drop %global debug_package %{nil} for ELF packages."
 msgstr "ELF パッケージに %global debug_package %{nil} を放れます。"
 
-#: src/zfr_lib/lint/rpm.py:344
+#: src/lint/rpm.py:344
 #, python-format
 msgid "script-only package lacks BuildArch: noarch; rpmbuild then builds an empty debuginfo and fails (Empty %files file debugfiles.list)"
 msgstr "スクリプト-only パッケージは BuildArch: noarch; rpmbuild 空白な debuginfo を作成し、失敗します (Empty %files ファイルデバグファイル.list)"
 
-#: src/zfr_lib/lint/rpm.py:352
+#: src/lint/rpm.py:352
 #, python-brace-format
 msgid "Add `BuildArch: noarch` and `%global debug_package %{nil}` (or run `zfr ize`)."
 msgstr "`BuildArch: noarch` と `%global debug_package %{nil}` (または `zfr ize` を実行します)。"
 
-#: src/zfr_lib/lint/rpm.py:364
+#: src/lint/rpm.py:364
 #, python-format
 msgid "RPM %files still lists template puff {}"
 msgstr "RPM %files はまだサイズプフ {}"
 
-#: src/zfr_lib/lint/rpm.py:370
+#: src/lint/rpm.py:370
 msgid "Replace {} with real command names (or run `zfr ize`)."
 msgstr "{} を実際のコマンド名を取り替え (または `zfr ize` を実行します)。"
 
-#: src/zfr_lib/lint/rpm.py:383
+#: src/lint/rpm.py:383
 #, no-python-format
 msgid "%files covers gettext .mo catalogs Meson installs"
 msgstr "%files は gettext .mo カタログ Meson 安装"
 
-#: src/zfr_lib/lint/rpm.py:394
+#: src/lint/rpm.py:394
 #, python-format
 msgid "%files omits gettext .mo; rpmbuild will reject unpackaged locale/*/LC_MESSAGES/*.mo after meson install"
 msgstr "%files gettext .mo . rpmbuild アンストール meson 後に 解散された locale/*/LC_MESSAGES/*.mo を拒否します"
 
-#: src/zfr_lib/lint/rpm.py:401
+#: src/lint/rpm.py:401
 #, python-brace-format
 msgid "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo  (i18n.gettext domain, not always the project name). Or run `zfr ize`."
 msgstr "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo (i18n.gettext ドメイン、プロジェクト名ではなく) や `zfr ize` を実行します。"
 
-#: src/zfr_lib/lint/rpm.py:417
+#: src/lint/rpm.py:417
 #, no-python-format
 msgid "%files covers locale man pages Meson installs"
 msgstr "%files ロージャール man ページ Meson 安裝"
 
-#: src/zfr_lib/lint/rpm.py:428
+#: src/lint/rpm.py:428
 #, python-format
 msgid "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale>/manN pages after meson install"
 msgstr "%filesローカル人を解除します。rpmbuild解除された $を拒否するmandir/<locale>/manNページの後mesonインスタール"
 
-#: src/zfr_lib/lint/rpm.py:435
-#, fuzzy, python-brace-format
+#: src/lint/rpm.py:435
 msgid "%{_mandir}/*/man1/<cmd>.1*  (man/<lang>/*.adoc). Or run `zfr ize`."
 msgstr "%{_mandir}/*/man1/<cmd>.1* (docs/<lang>/*.adoc) や `zfr ize` を実行します。"
 
-#: src/zfr_lib/lint/rpm.py:457
+#: src/lint/rpm.py:457
 #, no-python-format
 msgid "%files covers datadir/setup scripts Meson installs"
 msgstr "%files スクリプト datadir/setup Meson 安装"
 
-#: src/zfr_lib/lint/rpm.py:468
+#: src/lint/rpm.py:468
 #, python-format
 msgid "%files omits datadir/setup/*; rpmbuild will reject unpackaged postinst/prerm after meson install"
 msgstr "%files 失敗 datadir/setup/* ; rpmbuild インストール後 meson 失敗した postinst/prerm を拒否する"
 
-#: src/zfr_lib/lint/rpm.py:474
+#: src/lint/rpm.py:474
 #, no-python-format, python-brace-format
 msgid "%{_datadir}/setup/%{name}/  (or run `zfr ize`)."
 msgstr "%{_datadir}/setup/%{name}/ (または `zfr ize` を実行します)。"
 
-#: src/zfr_lib/lint/rpm.py:509
+#: src/lint/rpm.py:509
 #, python-format, python-brace-format
 msgid "%files is missing paths Meson installs: {preview}{more} (rpmbuild will fail with unpackaged or File not found)"
 msgstr "%files は失敗しているパス Meson 安裝します: {preview}{more} (rpmbuild 失敗されたり ファイルが見つけられません)"
 
-#: src/zfr_lib/lint/rpm.py:516
+#: src/lint/rpm.py:516
 #, python-format
 msgid "Rewrite %files from Meson install rules (bindir, completions, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/). Or run `zfr ize`."
 msgstr "Meson から %files インストールルールを再次書きます (bindir、完整、manN、 pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/ ) や `zfr ize` を運びます。"
 
-#: src/zfr_lib/lint/rpm.py:530
+#: src/lint/rpm.py:530
 #, python-format
 msgid "%files covers Meson install set ({} entries)"
 msgstr "%files は Meson 安装セットをコープします ({} 項目)"
 
-#: src/zfr_lib/lint/rpm.py:548
+#: src/lint/rpm.py:548
 #, python-brace-format
 msgid "%files lists %{_datadir}/%{name}/ but Meson does not install package data there (Directory not found)"
 msgstr "%files は %{_datadir}/%{name}/ でも Meson はここでパッケージデータを安装しません (ディレクトリが見つけられません)"
 
-#: src/zfr_lib/lint/rpm.py:554
+#: src/lint/rpm.py:554
 msgid "Remove the empty pkgdata line (Java template leftover). Or run `zfr ize`."
 msgstr "空白な pkgdata 行を削除します (Java テンプレートオバー) や `zfr ize` を運行します。"
 
-#: src/zfr_lib/lint/rpm.py:580
+#: src/lint/rpm.py:580
 #, python-format
 msgid "%files lists completion {listed!r} but Meson installs {want!r} (File not found)"
 msgstr "%filesリストの完成{listed!r}そうだMesonインストール{want!r}(ファイルが見つかりません)"
 
-#: src/zfr_lib/lint/rpm.py:586
+#: src/lint/rpm.py:586
 msgid "Use the installed basename ({}). Or run `zfr ize`."
 msgstr "安裝したバス名を使う({}) やはり 逃げる`zfr ize`そうだ"
 
-#: src/zfr_lib/lint/scripts_check.py:171
+#: src/lint/scripts_check.py:171
 #, python-format
 msgid "VERSION/PROJECT_VERSION substituted and used in %s"
 msgstr "VERSION/PROJECT_VERSION が置換され %s で使用されています"
 
-#: src/zfr_lib/lint/scripts_check.py:180
+#: src/lint/scripts_check.py:180
 msgid "meson configures VERSION/PROJECT_VERSION but no source uses it"
 msgstr "meson は VERSION/PROJECT_VERSION を設定していますが、使用するソースがありません"
 
-#: src/zfr_lib/lint/scripts_check.py:183
+#: src/lint/scripts_check.py:183
 msgid "Reference @VERSION@ (scripts → *.in + configure_file) or PROJECT_VERSION from config.h in at least one source. Or run `zfr ize`."
 msgstr "少なくとも1つのソースで @VERSION@（スクリプト → *.in + configure_file）または config.h の PROJECT_VERSION を参照してください。または `zfr ize` を実行します。"
 
-#: src/zfr_lib/lint/scripts_check.py:194
+#: src/lint/scripts_check.py:194
 msgid "sources use @VERSION@/PROJECT_VERSION but meson does not substitute it"
 msgstr "ソースは @VERSION@/PROJECT_VERSION を使っていますが、meson が置換していません"
 
-#: src/zfr_lib/lint/scripts_check.py:197
+#: src/lint/scripts_check.py:197
 msgid "Add configuration_data set('VERSION', …) / set_quoted('PROJECT_VERSION', …) and configure_file. Or run `zfr ize`."
 msgstr "configuration_data の set('VERSION', …) / set_quoted('PROJECT_VERSION', …) と configure_file を追加してください。または `zfr ize` を実行します。"
 
-#: src/zfr_lib/lint/scripts_check.py:208
+#: src/lint/scripts_check.py:208
 msgid "no Meson VERSION/PROJECT_VERSION substitution found"
 msgstr "Meson の VERSION/PROJECT_VERSION 置換が見つかりません"
 
-#: src/zfr_lib/lint/scripts_check.py:211
+#: src/lint/scripts_check.py:211
 msgid "Wire meson configuration_data for VERSION and use it in a source. Or run `zfr ize`."
 msgstr "VERSION 用に meson の configuration_data をつなぎ、ソースで使ってください。または `zfr ize` を実行します。"
 
-#: src/zfr_lib/lint/scripts_check.py:233
+#: src/lint/scripts_check.py:243
 msgid "po/ present but no run_target('posync')"
 msgstr "po/ はあるが run_target('posync') がありません"
 
-#: src/zfr_lib/lint/scripts_check.py:235
-msgid "Add run_target posync calling scripts/posync.sh. Or run `zfr ize`."
+#: src/lint/scripts_check.py:246
+msgid "Add run_target posync calling `zfr translate --sync` (or scripts/posync.sh). Or run `zfr ize`."
 msgstr "scripts/posync.sh を呼ぶ run_target posync を追加してください。または `zfr ize` を実行します。"
 
-#: src/zfr_lib/lint/scripts_check.py:245
+#: src/lint/scripts_check.py:257
+msgid "posync uses zfr translate --sync"
+msgstr ""
+
+#: src/lint/scripts_check.py:267
 msgid "posync externalized as scripts/posync.sh"
 msgstr "posync は scripts/posync.sh に外出しされています"
 
-#: src/zfr_lib/lint/scripts_check.py:254
+#: src/lint/scripts_check.py:276
 msgid "scripts/posync.sh exists but meson posync does not call it"
 msgstr "scripts/posync.sh はありますが、meson の posync が呼び出していません"
 
-#: src/zfr_lib/lint/scripts_check.py:256
-msgid "Point run_target('posync') at scripts/posync.sh. Or run `zfr ize`."
+#: src/lint/scripts_check.py:279
+msgid "Point run_target('posync') at `zfr translate --sync` or scripts/posync.sh. Or run `zfr ize`."
 msgstr "run_target('posync') を scripts/posync.sh に向けてください。または `zfr ize` を実行します。"
 
-#: src/zfr_lib/lint/scripts_check.py:263
-msgid "posync is inline in meson.build; externalize to scripts/posync.sh"
+#: src/lint/scripts_check.py:288
+msgid "posync is inline in meson.build; use zfr translate --sync"
 msgstr "posync は meson.build にインラインです; scripts/posync.sh に外出ししてください"
 
-#: src/zfr_lib/lint/scripts_check.py:265
-msgid "Extract the posync body to scripts/posync.sh and call it from run_target. Or run `zfr ize`."
-msgstr "posync 本体を scripts/posync.sh に抽出し、run_target から呼び出してください。または `zfr ize` を実行します。"
+#: src/lint/scripts_check.py:291
+msgid "Replace the inline posync body with `zfr translate --sync` (Python import inside zfr). Or run `zfr ize`."
+msgstr ""
 
-#: src/zfr_lib/lint/scripts_check.py:291
+#: src/lint/scripts_check.py:318
 #, python-format
 msgid "maintenance script %s should live under scripts/"
 msgstr "メンテスクリプト %s は scripts/ 配下にあるべきです"
 
-#: src/zfr_lib/lint/scripts_check.py:293
-#, fuzzy, python-format
+#: src/lint/scripts_check.py:320
 msgid "Move to scripts/%s and update callers. Or run `zfr ize`."
 msgstr "空白な pkgdata 行を削除します (Java テンプレートオバー) や `zfr ize` を運行します。"
 
-#: src/zfr_lib/lint/scripts_check.py:315
+#: src/lint/scripts_check.py:347
+msgid "run_target('look') should use zfr build --look"
+msgstr ""
+
+#: src/lint/scripts_check.py:350
+msgid "Replace the inline look body with `zfr build --look`. Or run `zfr ize`."
+msgstr ""
+
+#: src/lint/scripts_check.py:360
 #, python-format
 msgid "run_target('%s') should call scripts/%s.sh"
 msgstr "run_target('%s') は scripts/%s.sh を呼び出すべきです"
 
-#: src/zfr_lib/lint/scripts_check.py:318
+#: src/lint/scripts_check.py:363
 #, python-format
 msgid "Extract the inline script to scripts/%s.sh and reference it from meson. Or run `zfr ize`."
 msgstr "インラインスクリプトを scripts/%s.sh に抽出し、meson から参照してください。または `zfr ize` を実行します。"
 
-#: src/zfr_lib/lint/scripts_check.py:332
+#: src/lint/scripts_check.py:377
 msgid "build/deploy/maintenance scripts under scripts/ (or none)"
 msgstr "ビルド/デプロイ/メンテスクリプトは scripts/ 配下（またはなし）"
 
-#: src/zfr_lib/lintsel.py:22
-msgid "interactively select lint rules to ignore or force"
-msgstr "無視または強制する lint ルールを対話的に選択"
-
-#: src/zfr_lib/lintsel.py:24
-msgid "Open a TUI to toggle lint rule overrides for this project (.config/zfr/lint.options). Space=default/ignored, Y=always, N/-=ignored, ~=invert, Ctrl+S save, Ctrl+D save&quit, Ctrl+Q quit."
-msgstr "このプロジェクトの lint ルール上書きを切り替える TUI を開きます（.config/zfr/lint.options）。Space=既定/無視、Y=常に、N/-=無視、~=反転、Ctrl+S 保存、Ctrl+D 保存して終了、Ctrl+Q 終了。"
-
-#: src/zfr_lib/lintsel.py:153
-msgid "zfr-lintsel requires an interactive TTY"
-msgstr "zfr-lintsel には対話型 TTY が必要です"
-
-#: src/zfr_lib/lint/severity.py:27
+#: src/lint/severity.py:27
 #, python-format
 msgid "invalid severity level %r (want note, warn, or error)"
 msgstr "無効な重大度レベル %r（note、warn、または error が必要）"
 
-#: src/zfr_lib/lint/source_size.py:85
+#: src/lint/source_size.py:85
 #, python-format
 msgid "Extract cohesive sections into package subdirectory %(subdir)s (e.g. %(example)s) and keep a thin %(rel)s entry point."
 msgstr "パッケージサブディレクトリにコヘシビーションを追加し、 %(subdir)s (例えば %(example)s) タンス %(rel)s 入力点を保存します。"
 
-#: src/zfr_lib/lint/source_size.py:105
+#: src/lint/source_size.py:105
 #, python-format
 msgid "%(rel)s is %(lines)d lines (>%(limit)d); file is very long"
 msgstr "%(rel)s は %(lines)d 行（>%(limit)d）。ファイルが非常に長い"
 
-#: src/zfr_lib/lint/source_size.py:117
+#: src/lint/source_size.py:117
 #, python-format
 msgid "%(rel)s is %(lines)d lines (>%(limit)d); consider splitting soon"
 msgstr "%(rel)s は %(lines)d 行（>%(limit)d）。早めのモジュール化を検討"
 
-#: src/zfr_lib/lint/source_size.py:125
+#: src/lint/source_size.py:129
+msgid "no source files exceed length thresholds"
+msgstr ""
+
+#: src/lint/source_size.py:133
 msgid "no oversized source files"
 msgstr "過大なソースファイルはない"
 
-#: src/zfr_lib/lint/template.py:129
+#: src/lint/template.py:129
 msgid "zfr CLI package is not a language template"
 msgstr "zfr CLI パッケージは言語テンプレートではない"
 
-#: src/zfr_lib/lint/template.py:189
+#: src/lint/template.py:189
 msgid "structural files from the language template are present"
 msgstr "言語テンプレートの構造ファイルは揃っている"
 
-#: src/zfr_lib/lint/template.py:199
-#, fuzzy, python-format
+#: src/lint/template.py:199
 msgid "language template %(lang)s optional scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "言語テンプレート %(lang)s に、このツリーに無い追加の足場がある: %(preview)s%(more)s"
 
-#: src/zfr_lib/lint/template.py:201
+#: src/lint/template.py:201
 msgid "Optional only (safe to omit): non-rpm packaging/*, src/Makefile, and language helpers such as clib src/{bulk.h,c_pch.h,lib.c,lib.h}. Do not copy build/ or debian leftover stamp files."
 msgstr "任意のみ（省略して問題なし）: 非 rpm の packaging/*、src/Makefile、および clib の src/{bulk.h,c_pch.h,lib.c,lib.h} などの言語ヘルパー。build/ や debian の残留 stamp ファイルはコピーしないでください。"
 
-#: src/zfr_lib/lint/template.py:213
+#: src/lint/template.py:213
 #, python-format
 msgid " Also absent (optional, not required): %(opts)s."
 msgstr " さらに不足（任意、必須ではない）: %(opts)s。"
 
-#: src/zfr_lib/lint/template.py:221
+#: src/lint/template.py:221
 #, python-format
 msgid "language template %(lang)s has extra scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "言語テンプレート %(lang)s に、このツリーに無い追加の足場がある: %(preview)s%(more)s"
 
-#: src/zfr_lib/lint/template.py:224
-#, fuzzy, python-format
+#: src/lint/template.py:224
 msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing [required] debian/man/docs/src/tests/packaging/rpm files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. [optional] items (non-rpm packaging/*, src/Makefile, clib/cpplib bulk/pch/lib helpers, …) may be omitted. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
 msgstr "pkgdatadir 下の %(lang)s テンプレートと比較。欠けている debian/docs/src/rpm ファイルをコピー（rpm/ は %(name)s.spec。zephyr.spec ではない）。または `zfr add` で puff。build/ や debian の残りスタンプはコピーしない。例示の commons モジュールは任意。"
 
-#: src/zfr_lib/package.py:15
+#: src/lintsel.py:22
+msgid "interactively select lint rules to ignore or force"
+msgstr "無視または強制する lint ルールを対話的に選択"
+
+#: src/lintsel.py:24
+msgid "Open a TUI to toggle lint rule overrides for this project (.config/zfr/lint.options). Space=default/ignored, Y=always, N/-=ignored, ~=invert, Ctrl+S save, Ctrl+D save&quit, Ctrl+Q quit."
+msgstr "このプロジェクトの lint ルール上書きを切り替える TUI を開きます（.config/zfr/lint.options）。Space=既定/無視、Y=常に、N/-=無視、~=反転、Ctrl+S 保存、Ctrl+D 保存して終了、Ctrl+Q 終了。"
+
+#: src/lintsel.py:153
+msgid "zfr-lintsel requires an interactive TTY"
+msgstr "zfr-lintsel には対話型 TTY が必要です"
+
+#: src/package.py:15
 msgid "detect packaging type and build packages"
 msgstr "パッケージング種別を検出しパッケージをビルドする"
 
-#: src/zfr_lib/package.py:17
+#: src/package.py:17
 msgid "Detect packaging types (deb, rpm, npm/vsix, mingw, …) and build them sequentially (deb, then rpm, …). -j/--job is a job budget: omit or pass -j alone for auto (debuild gets bare -j, no number); -j N is split across concurrent planned workers (sequential plan ⇒ each packager gets full N). Each packager's stdout/stderr is captured with fdmux into an FDM file; live status lines show progress. On failure, browse with `zfr lasterror`. Upload is on by default (-u); use -U/--no-upload to skip."
 msgstr "パッケージング種別（deb、rpm、npm/vsix、mingw、…）を検出し、順にビルドします（deb、次に rpm、…）。-j/--job はジョブ予算: 省略または -j 単独で自動（debuild は数字なしの裸の -j）；-j N は計画された並行ワーカーに分割（順次計画 ⇒ 各 packager が N をフルに得る）。各 packager の stdout/stderr は fdmux で FDM ファイルにキャプチャ; ライブ状態行で進捗を表示。失敗時は `zfr lasterror` で閲覧。アップロードは既定でオン（-u）；-U/--no-upload でスキップ。"
 
-#: src/zfr_lib/package.py:35
+#: src/package.py:35
 msgid "change to DIR before detecting packaging"
 msgstr "パッケージング検出前に DIR へ移動する"
 
-#: src/zfr_lib/package.py:44
+#: src/package.py:44
 msgid "upload packages after build (default)"
 msgstr "ビルド後にパッケージをアップロード（既定）"
 
-#: src/zfr_lib/package.py:51
+#: src/package.py:51
 msgid "do not upload (skip dput / registry publish)"
 msgstr "アップロードしない（dput / レジストリ公開をスキップ）"
 
-#: src/zfr_lib/package.py:59 src/zfr_lib/release/__init__.py:72
+#: src/package.py:59 src/release/__init__.py:72
 msgid "dput upload host for .changes (debian)"
 msgstr ".changes 用 dput アップロードホスト（debian）"
 
-#: src/zfr_lib/package.py:65
-#, fuzzy
+#: src/package.py:65
 msgid "skip Debian debuild"
 msgstr "Debian debuild をスキップ"
 
-#: src/zfr_lib/package.py:71
-#, fuzzy
+#: src/package.py:71
 msgid "skip RPM packaging/rpm Makefile"
 msgstr "RPM ビルドをスキップ（rpm/Makefile）"
 
-#: src/zfr_lib/package.py:78
+#: src/package.py:78
 msgid "only build KIND (deb, rpm, npm, mingw, …); repeatable"
 msgstr "KIND のみビルド（deb、rpm、npm、mingw、…）；繰り返し可"
 
-#: src/zfr_lib/package.py:84 src/zfr_lib/release/__init__.py:48
+#: src/package.py:84 src/release/__init__.py:48
 msgid "Debian binary-only build (no .dsc)"
 msgstr "Debian バイナリのみビルド（.dsc なし）"
 
-#: src/zfr_lib/package.py:90
-#, fuzzy
+#: src/package.py:90
 msgid "Debian: reuse build cache (dpkg -nc)"
 msgstr "ビルドキャッシュを再利用"
 
-#: src/zfr_lib/package.py:95
-#, fuzzy
+#: src/package.py:95
 msgid "Debian: build unsigned packages"
 msgstr "未署名パッケージをビルド"
 
-#: src/zfr_lib/package.py:101
-#, fuzzy
+#: src/package.py:101
 msgid "build debian package with build4 (Docker)"
 msgstr "build4 (Docker) で debian パッケージをビルド"
 
-#: src/zfr_lib/package.py:108 src/zfr_lib/release/__init__.py:85
+#: src/package.py:108 src/release/__init__.py:85
 #, python-format
 msgid "build4 target image (default: %s)"
 msgstr "build4 ターゲットイメージ（デフォルト: %s）"
 
-#: src/zfr_lib/package.py:115
-#, fuzzy
+#: src/package.py:115
 msgid "run build4 over SSH on SERVER (implies -d)"
 msgstr "SERVER で SSH 経由で build4 を実行（-d を含む）"
 
-#: src/zfr_lib/package.py:125
+#: src/package.py:125
 msgid "print detected packaging kinds and exit"
 msgstr "検出したパッケージング種別を表示して終了"
 
-#: src/zfr_lib/publish.py:23
+#: src/publish.py:23
 msgid "release then publish to marketplaces (npm / VSIX)"
 msgstr "リリースしてからマーケットプレイスへ公開（npm / VSIX）"
 
-#: src/zfr_lib/publish.py:25
+#: src/publish.py:25
 msgid "Run the full zfr release pipeline, then publish to public marketplaces when defined for this project (currently npm and VSIX). Also available as the zfr-publish wrapper."
 msgstr "完全な zfr release パイプラインを実行し、このプロジェクトで定義されている場合は公開マーケットプレイスへ公開します（現在は npm と VSIX）。zfr-publish ラッパーとしても利用できます。"
 
-#: src/zfr_lib/release/__init__.py:25
+#: src/release/__init__.py:25
 msgid "tag, build, package, install, and upload (private cloud)"
 msgstr "タグ付け、ビルド、パッケージ化、インストール、アップロード（プライベートクラウド）"
 
-#: src/zfr_lib/release/__init__.py:27
+#: src/release/__init__.py:27
 msgid "Detect project type, tag and push, build/package, optionally install local debs, upload deb/rpm to the private pool, and create a GitHub release. Does not publish to npm/VSIX marketplaces (see zfr publish). Also available as the zfr-release wrapper."
 msgstr "プロジェクト種別を検出し、タグ付けして push、ビルド/パッケージ化し、任意でローカル deb をインストールし、deb/rpm をプライベートプールへアップロードし、GitHub release を作成します。npm/VSIX マーケットプレイスには公開しません（zfr publish を参照）。zfr-release ラッパーとしても利用できます。"
 
-#: src/zfr_lib/release/__init__.py:42
+#: src/release/__init__.py:42
 msgid "change to DIR before detecting the project"
 msgstr "プロジェクト検出前に DIR へ移動する"
 
-#: src/zfr_lib/release/__init__.py:54
+#: src/release/__init__.py:54
 msgid "Reuse build cache"
 msgstr "ビルドキャッシュを再利用"
 
-#: src/zfr_lib/release/__init__.py:60
+#: src/release/__init__.py:60
 msgid "Reuse existing artifacts; build only if missing"
 msgstr "既存のアーティファクトを再利用；不足時のみビルド"
 
-#: src/zfr_lib/release/__init__.py:65
+#: src/release/__init__.py:65
 msgid "Build unsigned packages"
 msgstr "未署名パッケージをビルド"
 
-#: src/zfr_lib/release/__init__.py:78
+#: src/release/__init__.py:78
 msgid "Build debian package with build4 (Docker)"
 msgstr "build4 (Docker) で debian パッケージをビルド"
 
-#: src/zfr_lib/release/__init__.py:92
+#: src/release/__init__.py:92
 msgid "Run build4 over SSH on SERVER (implies -d)"
 msgstr "SERVER で SSH 経由で build4 を実行（-d を含む）"
 
-#: src/zfr_lib/release/__init__.py:98
-#, fuzzy
+#: src/release/__init__.py:98
 msgid "Build in local, no tag/push/GitHub release (implies -U)"
 msgstr "ローカルでビルド、tag/push/release なし"
 
-#: src/zfr_lib/release/__init__.py:104
+#: src/release/__init__.py:104
 msgid "Alias for -l -I (local build, skip install)"
 msgstr "-l -I (ローカルビル,スキップインストール)"
 
-#: src/zfr_lib/release/__init__.py:110
+#: src/release/__init__.py:110
 msgid "Replace existing release and tag if present"
 msgstr "既存の release と tag があれば置き換え"
 
-#: src/zfr_lib/release/__init__.py:116
+#: src/release/__init__.py:116
 msgid "Skip sudo dpkg -i (still find debs/changes)"
 msgstr "sudo dpkg -i をスキップ（debs/changes は検出）"
 
-#: src/zfr_lib/release/__init__.py:122
+#: src/release/__init__.py:122
 msgid "Skip git tag create/push"
 msgstr "git タグ作成/push をスキップ"
 
-#: src/zfr_lib/release/__init__.py:128
-#, fuzzy
+#: src/release/__init__.py:128
 msgid "Skip dput / private-cloud upload (-u reuses build artifacts)"
 msgstr "deb pool への dput アップロードをスキップ（-u はビルドアーティファクトを再利用）"
 
-#: src/zfr_lib/release/__init__.py:134
+#: src/release/__init__.py:134
 msgid "Skip GitHub release"
 msgstr "GitHub release をスキップ"
 
-#: src/zfr_lib/release/__init__.py:140
+#: src/release/__init__.py:140
 msgid "Skip RPM build (packaging/rpm/Makefile)"
 msgstr "RPM ビルドをスキップ（rpm/Makefile）"
 
-#: src/zfr_lib/release/__init__.py:146
+#: src/release/__init__.py:146
 msgid "Skip Debian debuild"
 msgstr "Debian debuild をスキップ"
 
-#: src/zfr_lib/release/__init__.py:153
+#: src/release/__init__.py:153
 msgid "Verbose logging"
 msgstr "詳細ログ"
 
-#: src/zfr_lib/release/__init__.py:160
+#: src/release/__init__.py:160
 msgid "Less output"
 msgstr "出力を減らす"
 
-#: src/zfr_lib/remove.py:20
+#: src/remove.py:20
 msgid "remove puff(s) from the current project"
 msgstr "現在のプロジェクトから puff を削除"
 
-#: src/zfr_lib/remove.py:21
+#: src/remove.py:21
 msgid "Remove puff files for NAME(s) from the current project."
 msgstr "現在のプロジェクトから NAME の puff ファイルを削除。"
 
-#: src/zfr_lib/remove.py:25
+#: src/remove.py:25
 msgid "puff name(s) to remove"
 msgstr "削除する puff 名"
 
-#: src/zfr_lib/rename.py:51
+#: src/rename.py:51
 msgid "rename zephyr project and example puff names"
 msgstr "zephyr プロジェクトとサンプル puff 名をリネーム"
 
-#: src/zfr_lib/rename.py:52
+#: src/rename.py:52
 msgid "Rename zephyr → ProjectName and some_puff1 → example names."
 msgstr "zephyr → ProjectName および some_puff1 → サンプル名にリネーム。"
 
-#: src/zfr_lib/rename.py:56
+#: src/rename.py:56
 msgid "new project name (replaces 'zephyr')"
 msgstr "新しいプロジェクト名（'zephyr' を置換）"
 
-#: src/zfr_lib/rename.py:57
+#: src/rename.py:57
 msgid "new example names (each replaces template some_puff1)"
 msgstr "新しいサンプル名（各々がテンプレート some_puff1 を置換）"
 
-#: src/zfr_lib/shape.py:275
+#: src/shape.py:275
 msgid "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
 msgstr "zephyr パッケージ形状スコア 0-100 を表示（monorepos で packagedir vs repodir）"
 
-#: src/zfr_lib/shape.py:277
+#: src/shape.py:277
 msgid "Score how completely the current directory matches zephyr package style (0-100). In monorepos, scores the packagedir."
 msgstr "現在のディレクトリが zephyr パッケージスタイルにどれだけ一致するかをスコア（0-100）。monorepos では packagedir を評価。"
 
-#: src/zfr_lib/shape.py:283
+#: src/shape.py:283
 msgid "print 1 if score >= threshold, else 0"
 msgstr "score >= threshold なら 1、それ以外 0 を表示"
 
-#: src/zfr_lib/shape.py:284
+#: src/shape.py:284
 msgid "print packagedir/repodir/role on stderr"
 msgstr "packagedir/repodir/role を stderr に表示"
 
-#: src/zfr_lib/shape.py:285
+#: src/shape.py:285
 #, python-format
 msgid "bool threshold 0-100 (default: %s)"
 msgstr "bool しきい値 0-100（デフォルト: %s）"
 
-#: src/zfr_lib/terminal.py:75
+#: src/std/ize_rules.py:11
+msgid "Convert Autotools/CMake with 2meson"
+msgstr "Autotools/CMake を 2meson で変換"
+
+#: src/std/ize_rules.py:12
+msgid "Add missing language-template scaffold files"
+msgstr "不足している言語テンプレートの雛形ファイルを追加"
+
+#: src/std/ize_rules.py:13
+msgid "Patch debian/control for zephyr style"
+msgstr "debian/control を zephyr 形式に修正"
+
+#: src/std/ize_rules.py:14
+msgid "Align debian/rules with Meson dh helper"
+msgstr "debian/rules を Meson dh ヘルパーに合わせる"
+
+#: src/std/ize_rules.py:15
+msgid "Sync debian/docs with installed mans"
+msgstr "debian/docs をインストール済み man と同期"
+
+#: src/std/ize_rules.py:16
+msgid "Ensure debian/changelog and VERSION file"
+msgstr "debian/changelog と VERSION ファイルを用意"
+
+#: src/std/ize_rules.py:17
+msgid "Refresh LICENSE, .githooks, .cursor/rules from shipped zfr copies"
+msgstr "同梱 zfr のコピーから LICENSE、.githooks、.cursor/rules を更新"
+
+#: src/std/ize_rules.py:18
+msgid "Patch meson.build (version, license, docs, completion)"
+msgstr "meson.build を修正（バージョン、ライセンス、文書、補完）"
+
+#: src/std/ize_rules.py:19
+msgid "Convert groff man pages to man/*.adoc"
+msgstr "groff .1 man ページを docs/*.adoc に変換しない"
+
+#: src/std/ize_rules.py:20
+msgid "Create AsciiDoc man page stubs"
+msgstr "asciidoctor による man ページ"
+
+#: src/std/ize_rules.py:21
+msgid "Add Meson asciidoctor man page targets"
+msgstr "asciidoctor による man ページ"
+
+#: src/std/ize_rules.py:22
+msgid "Add bash-completion stubs for command puffs"
+msgstr "コマンド puff 用 bash-completion 雛形を追加"
+
+#: src/std/ize_rules.py:23
+msgid "Align packaging/rpm/Makefile and RPM spec with debian/Meson"
+msgstr "rpm/Makefile に便利なターゲットがない"
+
+#: src/std/ize_rules.py:24
+msgid "Replace hardcoded versions/paths with @VERSION@/@PREFIX@ / config.h"
+msgstr "ハードコードされたバージョンを @VERSION@ / config.h に変換しない"
+
+#: src/std/ize_rules.py:25
+msgid "Meson build+install derived locale catalogs"
+msgstr "派生ロケールファイルを %d 件生成します"
+
+#: src/std/ize_rules.py:26
+msgid "Rewrite source .po catalogs without line wrapping"
+msgstr "gettext カトログは行のパップを使う: %s"
+
+#: src/std/ize_rules.py:27
+msgid "Bump patch version and git commit (--commit)"
+msgstr "パッチバージョンを上げて git commit（--commit）"
+
+#: src/std/ize_rules.py:28
+msgid "Ensure LINGUAS + .po for lint l10n level"
+msgstr "lint l10n レベル用の LINGUAS と .po を用意"
+
+#: src/std/ize_rules.py:32
+msgid "Do not scaffold man/<locale>/*.adoc (missing man translations are lint-only)"
+msgstr "man/<locale>/*.adoc を作成しない（不足する man 翻訳は lint のみ）"
+
+#: src/std/ize_rules.py:34
+msgid "Remove project-local rpmbuild/ leftover tree"
+msgstr "プロジェクト内に残った rpmbuild/ ツリーを削除"
+
+#: src/std/ize_rules.py:38
+msgid "C-family bas i18n/logger/LOCALEDIR and gettext spacing"
+msgstr "C 系 bas の i18n/logger/LOCALEDIR と gettext の空白"
+
+#: src/std/ize_rules.py:43
+msgid "Externalize posync run_target to scripts/posync.sh"
+msgstr "posync は scripts/posync.sh に外出しされています"
+
+#: src/std/ize_rules.py:48
+msgid "Move build/deploy/maintenance scripts under scripts/"
+msgstr "ビルド/デプロイ/メンテスクリプトは scripts/ 配下（またはなし）"
+
+#: src/std/lint_rules.py:12
+msgid "Source file length; extract to package subdirectory"
+msgstr "ソースファイルの長さ；パッケージのサブディレクトリへ分割"
+
+#: src/std/lint_rules.py:13
+msgid "No oversized source files"
+msgstr "過大なソースファイルはない"
+
+#: src/std/lint_rules.py:14
+msgid "Required layout file present or missing"
+msgstr "必要なレイアウトファイルの有無"
+
+#: src/std/lint_rules.py:15
+msgid "AsciiDoc man page sources under man/"
+msgstr "AsciiDoc man ソース: %s"
+
+#: src/std/lint_rules.py:16
+msgid "Bash completion script at project root"
+msgstr "プロジェクトルートに *.bash の bash-completion スクリプトがありません"
+
+#: src/std/lint_rules.py:17
+msgid "VERSION file synced with changelog"
+msgstr "VERSION は変更履歴 %s と一致"
+
+#: src/std/lint_rules.py:18
+msgid "Git pre-commit hook syncs VERSION"
+msgstr "Git pre-commit フックが VERSION を同期"
+
+#: src/std/lint_rules.py:19
+msgid "debian/control Build-Depends entry"
+msgstr "debian/control の Build-Depends 項目"
+
+#: src/std/lint_rules.py:20
+msgid "debhelper-compat in Build-Depends"
+msgstr "debhelper-compat あり"
+
+#: src/std/lint_rules.py:21
+msgid "debian/control Architecture field"
+msgstr "debian/control の Architecture フィールド"
+
+#: src/std/lint_rules.py:22
+msgid "ELF binary vs Architecture: all"
+msgstr "Architecture: all"
+
+#: src/std/lint_rules.py:23
+msgid "debian/control Homepage field"
+msgstr "debian/control の Homepage フィールド"
+
+#: src/std/lint_rules.py:24
+msgid "debian/rules uses dh meson debian/build"
+msgstr "dh が meson と debian/build を使用"
+
+#: src/std/lint_rules.py:25
+msgid "debian/copyright mentions AGPL"
+msgstr "copyright に AGPL の記載あり"
+
+#: src/std/lint_rules.py:26
+msgid "debian/source/format native 3.0"
+msgstr "debian/source/format を追加してください（通常は '3.0 (native)'）。"
+
+#: src/std/lint_rules.py:27
+msgid "VERSION matches debian/changelog"
+msgstr "VERSION は変更履歴 %s と一致"
+
+#: src/std/lint_rules.py:28
+msgid "bash package Depends includes bash-shlib"
+msgstr "Depends に bash-shlib が含まれる"
+
+#: src/std/lint_rules.py:29
+msgid "meson.build project() call"
+msgstr "meson.build に project() 呼び出しがありません"
+
+#: src/std/lint_rules.py:30
+msgid "meson license AGPL-3.0-or-later"
+msgstr "meson のライセンスが AGPL-3.0-or-later ではありません"
+
+#: src/std/lint_rules.py:31
+msgid "meson project_author/email/year"
+msgstr "meson プロジェクト名=%s"
+
+#: src/std/lint_rules.py:32
+msgid "Meson version from zfr version"
+msgstr "バージョンは `zfr version` を使用します"
+
+#: src/std/lint_rules.py:33
+msgid "Meson 0.0.0 version fallback"
+msgstr "Meson の 0.0.0 バージョン代替"
+
+#: src/std/lint_rules.py:34
+msgid "Meson invokes asciidoctor for man pages"
+msgstr "asciidoctor による man ページ"
+
+#: src/std/lint_rules.py:35
+msgid "Meson run_target look DESTDIR preview"
+msgstr "run_target('look') の DESTDIR プレビューがありません"
+
+#: src/std/lint_rules.py:36
+msgid "Meson installs bash-completion"
+msgstr "bash-completion をインストールします"
+
+#: src/std/lint_rules.py:37
+msgid "Optional packaging/rpm/*.spec next to debian/"
+msgstr "rpm/*.spec がない（任意だが、zephyr スタイルは debian/ の隣に RPM を置く）"
+
+#: src/std/lint_rules.py:38
+msgid "packaging/rpm/Makefile uses project-local rpmbuild"
+msgstr "packaging/rpm/Makefile TOPDIR は %_topdir / $HOME/rpmbuild を使う"
+
+#: src/std/lint_rules.py:39
+msgid "packaging/rpm/Makefile TOPDIR uses %_topdir"
+msgstr "packaging/rpm/Makefile TOPDIR は %_topdir / $HOME/rpmbuild を使う"
+
+#: src/std/lint_rules.py:40
+msgid "packaging/rpm/Makefile clean removes entire TOPDIR"
+msgstr "rpm/Makefile に便利なターゲットがない"
+
+#: src/std/lint_rules.py:41
+msgid "Project-local rpmbuild/ directory"
+msgstr "プロジェクト内の rpmbuild/ ディレクトリ"
+
+#: src/std/lint_rules.py:42
+msgid "RPM spec Version from zfr version"
+msgstr "spec の Version は動的 %{version}"
+
+#: src/std/lint_rules.py:43
+msgid "RPM spec License AGPL-3.0-or-later"
+msgstr "spec の License が AGPL-3.0-or-later ではない"
+
+#: src/std/lint_rules.py:44
+msgid "RPM spec URL matches debian Homepage"
+msgstr "spec URL=%(url)r != debian Homepage=%(homepage)r"
+
+#: src/std/lint_rules.py:45
+msgid "RPM spec Summary matches debian Description"
+msgstr "spec の Summary が debian Description の先頭行と一致しない"
+
+#: src/std/lint_rules.py:46
+msgid "RPM spec builds with Meson not autotools"
+msgstr "spec は Meson を使う（autotools ではない）"
+
+#: src/std/lint_rules.py:47
+msgid "packaging/rpm/Makefile calls zfr version"
+msgstr "rpm/Makefile が `zfr version` を呼び出していない"
+
+#: src/std/lint_rules.py:48
+msgid "packaging/rpm/Makefile convenience targets"
+msgstr "rpm/Makefile に便利なターゲットがない"
+
+#: src/std/lint_rules.py:49
+msgid "bash RPM spec Requires bash-shlib"
+msgstr "bash の RPM spec の Requires に bash-shlib"
+
+#: src/std/lint_rules.py:50
+msgid "RPM Requires without Debian substvars"
+msgstr "Debian substvars を含まない RPM Requires"
+
+#: src/std/lint_rules.py:51
+msgid "noarch RPM with Meson executable()"
+msgstr "Architecture: %s (バッシュ + Meson 実行)"
+
+#: src/std/lint_rules.py:52
+msgid "debug_package %{nil} on ELF package"
+msgstr "ELF パッケージに %global debug_package %{nil} を放れます。"
+
+#: src/std/lint_rules.py:53
+msgid "Script-only RPM needs BuildArch: noarch"
+msgstr "スクリプトのみの RPM には BuildArch: noarch が必要"
+
+#: src/std/lint_rules.py:54
+msgid "RPM %files lists template puff placeholder"
+msgstr "RPM %files はまだサイズプフ {}"
+
+#: src/std/lint_rules.py:55
+msgid "RPM %files covers gettext .mo catalogs"
+msgstr "%files は gettext .mo カタログ Meson 安装"
+
+#: src/std/lint_rules.py:56
+msgid "RPM %files covers locale man pages"
+msgstr "%files ロージャール man ページ Meson 安裝"
+
+#: src/std/lint_rules.py:57
+msgid "RPM %files covers datadir/setup scripts"
+msgstr "%files スクリプト datadir/setup Meson 安装"
+
+#: src/std/lint_rules.py:58
+msgid "RPM %files covers Meson install paths"
+msgstr "%files は Meson 安装セットをコープします ({} 項目)"
+
+#: src/std/lint_rules.py:59
+#, python-format
+msgid "RPM %files spurious package data path"
+msgstr "RPM %files の不要なパッケージデータパス"
+
+#: src/std/lint_rules.py:60
+msgid "RPM completion basename matches Meson"
+msgstr "RPM 補完のベース名が Meson と一致"
+
+#: src/std/lint_rules.py:61
+msgid "Configured l10n coverage level"
+msgstr "設定済み l10n カバレッジレベル"
+
+#: src/std/lint_rules.py:62
+msgid "Optional po/ gettext directory"
+msgstr "tests/ ディレクトリがありません"
+
+#: src/std/lint_rules.py:63
+msgid "po/LINGUAS present when po/ exists"
+msgstr "po/ がある場合の po/LINGUAS"
+
+#: src/std/lint_rules.py:64
+msgid "LINGUAS covers required locales"
+msgstr "po/LINGUAS は %s の主要ロケール集合をカバー"
+
+#: src/std/lint_rules.py:65
+msgid "LINGUAS entries have matching .po files"
+msgstr "LINGUAS 項目に対応する .po ファイル"
+
+#: src/std/lint_rules.py:66
+msgid "Whole-document man translations for level"
+msgstr "%s の文書全体 man 翻訳あり"
+
+#: src/std/lint_rules.py:67
+msgid "Translated man still has English Name line"
+msgstr "man 翻訳にまだ英語の Name 行が残っています: %s"
+
+#: src/std/lint_rules.py:68
+msgid "Directory name matches packaging identity"
+msgstr "ディレクトリ名とパッケージ識別子の一致"
+
+#: src/std/lint_rules.py:69
+msgid "meson project name"
+msgstr "meson プロジェクト名=%s"
+
+#: src/std/lint_rules.py:70
+msgid "debian Source matches meson project name"
+msgstr "debian Source=%(source)r != meson プロジェクト=%(meson)r"
+
+#: src/std/lint_rules.py:71
+msgid "debian Source field"
+msgstr "debian の Source フィールド"
+
+#: src/std/lint_rules.py:72
+msgid "RPM spec Name matches package name"
+msgstr "RPM spec の Name とパッケージ名の一致"
+
+#: src/std/lint_rules.py:73
+msgid "Legacy example shared module name"
+msgstr "旧式のサンプル共有モジュール名"
+
+#: src/std/lint_rules.py:74
+msgid "Template-only shared example module"
+msgstr "テンプレート専用の共有サンプルモジュール"
+
+#: src/std/lint_rules.py:75
+msgid "Bash src/*.in scripts"
+msgstr "src/*.in スクリプトがありません"
+
+#: src/std/lint_rules.py:76
+msgid "tests/ directory for C/C++ templates"
+msgstr "C/C++ テンプレート用 tests/ ディレクトリ"
+
+#: src/std/lint_rules.py:77
+msgid "COBOL tests/ directory"
+msgstr "tests/ ディレクトリがありません"
+
+#: src/std/lint_rules.py:78
+msgid "Fortran tests/ directory"
+msgstr "tests/ ディレクトリがありません"
+
+#: src/std/lint_rules.py:79
+msgid "Pascal tests/ directory"
+msgstr "tests/ ディレクトリがありません"
+
+#: src/std/lint_rules.py:80
+msgid "D tests/ directory"
+msgstr "tests/ ディレクトリがありません"
+
+#: src/std/lint_rules.py:81
+msgid "Kotlin tests/ directory"
+msgstr "tests/ ディレクトリがありません"
+
+#: src/std/lint_rules.py:82
+msgid "Nim tests/ directory"
+msgstr "tests/ ディレクトリがありません"
+
+#: src/std/lint_rules.py:83
+msgid "Lua tests/ directory"
+msgstr "tests/ ディレクトリがありません"
+
+#: src/std/lint_rules.py:84
+msgid "Python tests/ directory"
+msgstr "tests/ ディレクトリがありません"
+
+#: src/std/lint_rules.py:85
+msgid "Zig build.zig present"
+msgstr "build.zig がありません"
+
+#: src/std/lint_rules.py:86
+msgid "Rust Cargo.toml present"
+msgstr "run_target look あり"
+
+#: src/std/lint_rules.py:87
+msgid "Go go.mod present"
+msgstr "ルート .gitignore あり"
+
+#: src/std/lint_rules.py:88
+msgid "Template puff tokens expected in meta/template"
+msgstr "meta/template で必要なテンプレート puff トークン"
+
+#: src/std/lint_rules.py:89
+msgid "No leftover zephyr/some_puff1 tokens in apps"
+msgstr "残った zephyr/some_puff1 トークンはありません"
+
+#: src/std/lint_rules.py:90
+msgid "Language template structural files present"
+msgstr "言語テンプレートの期待"
+
+#: src/std/lint_rules.py:91
+msgid "README still has template placeholder banner"
+msgstr "%s にはまだテンプレートのプレースホルダーバナーがあります"
+
+#: src/std/lint_rules.py:92
+msgid "README has no template banner"
+msgstr "%s にテンプレートバナーはありません"
+
+#: src/std/lint_rules.py:96
+msgid "gettext .po catalogs use --no-wrap (no line wrapping)"
+msgstr "gettext カタログは --no-wrap (行のパップはない)"
+
+#: src/std/lint_rules.py:103
+msgid "Root and component .gitignore coverage (node_modules/, dist/, backend/src/generated/, …)"
+msgstr "ロート .gitignore は node_modules/ と dist/ を覆います"
+
+#: src/std/lint_rules.py:109
+msgid "At most one foreach puff man-page loop in meson.build"
+msgstr "単一の foreach puff man ループ"
+
+#: src/std/lint_rules.py:116
+msgid "C-family main uses bas i18n.h/env.h, self_exe, init_i18n(LOCALEDIR)"
+msgstr "C 系 main が bas i18n.h/env.h、self_exe、init_i18n(LOCALEDIR) を使用"
+
+#: src/std/lint_rules.py:123
+msgid "C-family sources define_logger() via bas/log/deflog.h"
+msgstr "#include <bas/log/deflog.h> 以外に define_logger ()"
+
+#: src/std/lint_rules.py:130
+msgid "meson config.h defines LOCALEDIR for init_i18n"
+msgstr "meson config.h が init_i18n 用 LOCALEDIR を定義"
+
+#: src/std/lint_rules.py:137
+msgid "gettext _() strings must not have leading/trailing spaces"
+msgstr "gettext _() スターンドは leading/trailing スペースがありません"
+
+#: src/std/lint_rules.py:144
+msgid "gettext .po completion (msgid-copy counts as untranslated; ≤20% ≈ missing)"
+msgstr "gettext .po の完成度（msgid コピーは未翻訳；≤20% は欠落相当）"
+
+#: src/std/lint_rules.py:150
+msgid "Hardcoded FHS install paths in sources (use @DATADIR@ / configure_file)"
+msgstr "ソース内のハードコードされた FHS インストールパス（@DATADIR@ / configure_file を使用）"
+
+#: src/std/lint_rules.py:157
+msgid "Hardcoded project version in sources (use @VERSION@ / PROJECT_VERSION)"
+msgstr "ソース内のハードコードされたプロジェクトバージョン（@VERSION@ / PROJECT_VERSION を使用）"
+
+#: src/std/lint_rules.py:164
+msgid "No hardcoded install paths or project version strings"
+msgstr "ソースにハードコードされたインストールパスやプロジェクトバージョン文字列がない"
+
+#: src/std/lint_rules.py:170
+msgid "gettext .po empty msgstr or omitted msgid-copy (keep-English field literals exempt)"
+msgstr "gettext .po の空 msgstr または省略された msgid コピー（英語フィールドリテラルは除外）"
+
+#: src/std/lint_rules.py:176
+msgid "Project version substituted by Meson config and used in at least one source"
+msgstr "Meson 設定で置換され、少なくとも一つのソースで使われるプロジェクトバージョン"
+
+#: src/std/lint_rules.py:188
+msgid "posync run_target is externalized as scripts/posync.sh"
+msgstr "posync は scripts/posync.sh に外出しされています"
+
+#: src/std/lint_rules.py:199
+msgid "Build/deploy/maintenance scripts live under scripts/"
+msgstr "ビルド/デプロイ/メンテスクリプトは scripts/ 配下（またはなし）"
+
+#: src/std/lint_rules.py:211
+msgid "debian/control extended Description present"
+msgstr "拡張 Description あり"
+
+#: src/std/lint_rules.py:218
+msgid "debian/control Priority field"
+msgstr "debian/control の Priority フィールド"
+
+#: src/terminal.py:75
 msgid "enable AI-oriented hints (default for AI terminals and non-interactive stdout)"
 msgstr "AI-oriented 指示を使う( AI ターミナルと-interactive stdout からデフォルト)"
 
-#: src/zfr_lib/terminal.py:82
+#: src/terminal.py:82
 msgid "disable AI-oriented hints (default for a plain interactive shell)"
 msgstr "zephyr スタイル契約/次の手順の説明を非表示（通常の対話シェルでは既定でオフ）"
 
-#: src/zfr_lib/translate/__init__.py:48
+#: src/translate/__init__.py:48
 msgid "poedit not found in PATH"
 msgstr "PATH に poedit がありません"
 
-#: src/zfr_lib/translate/__init__.py:51
+#: src/translate/__init__.py:51
 #, python-format
 msgid "file not found: %s"
 msgstr "ファイルが見つかりません: %s"
 
-#: src/zfr_lib/translate/__init__.py:134
+#: src/translate/__init__.py:134
 #, python-format
 msgid "no catalog for locale: %s"
 msgstr "ロケールのカタログなし: %s"
 
-#: src/zfr_lib/translate/__init__.py:141
+#: src/translate/__init__.py:141
 msgid "query and update gettext message strings"
 msgstr "gettext メッセージ文字列の照会と更新"
 
-#: src/zfr_lib/translate/__init__.py:143
+#: src/translate/__init__.py:143
 msgid "Look up translations for TEXT across implemented locales, or update a single locale catalog. Remaining arguments are joined with spaces."
 msgstr "実装済みロケールで TEXT の訳を検索、またはカタログを更新します。残りの引数は空白で連結されます。"
 
-#: src/zfr_lib/translate/__init__.py:155
+#: src/translate/__init__.py:152
+msgid "sync gettext catalogs from sources (replaces scripts/posync.sh)"
+msgstr "posync は scripts/posync.sh に外出しされています"
+
+#: src/translate/__init__.py:159
+msgid "project root for --sync (default: walk from cwd / MESON_SOURCE_ROOT)"
+msgstr "プロジェクトディレクトリ（既定: cwd から探索）"
+
+#: src/translate/__init__.py:167
 msgid "use poedit to import edits from FILE"
 msgstr "poedit で FILE から編集をインポート"
 
-#: src/zfr_lib/translate/__init__.py:161
+#: src/translate/__init__.py:173
 msgid "query LANG only (default: all implemented; ignored for --import)"
 msgstr "LANG のみ照会（既定: すべて; --import では無視）"
 
-#: src/zfr_lib/translate/__init__.py:167
+#: src/translate/__init__.py:179
 msgid "update LANG with TRANSLATION (stdin if omitted)"
 msgstr "LANG を TRANSLATION で更新（省略時は stdin）"
 
-#: src/zfr_lib/translate/__init__.py:173
+#: src/translate/__init__.py:185
 msgid "list all message ids (msgids)"
 msgstr "すべてのメッセージ ID (msgid) を一覧"
 
-#: src/zfr_lib/translate/__init__.py:180
+#: src/translate/__init__.py:192
 msgid "list msgids matching REGEX, case-insensitive (keys only with -k)"
 msgstr "REGEX に一致する msgid を一覧（-k でキーのみ）"
 
-#: src/zfr_lib/translate/__init__.py:186
+#: src/translate/__init__.py:198
 msgid "list msgids matching REGEX, case-sensitive (keys only with -k)"
 msgstr "REGEX に一致する msgid を一覧（-k でキーのみ）"
 
-#: src/zfr_lib/translate/__init__.py:192
+#: src/translate/__init__.py:204
 msgid "list msgids/translations matching REGEX, case-insensitive (keys only with -k)"
 msgstr "REGEX に一致する msgid/訳文を一覧（-k でキーのみ）"
 
-#: src/zfr_lib/translate/__init__.py:198
+#: src/translate/__init__.py:210
 msgid "list msgids/translations matching REGEX, case-sensitive (keys only with -k)"
 msgstr "REGEX に一致する msgid/訳文を一覧（-k でキーのみ）"
 
-#: src/zfr_lib/translate/__init__.py:204
+#: src/translate/__init__.py:216
 msgid "with -m/-M/-s/-S, match the full msgid or translation (not a substring)"
 msgstr "-m/-M/-s/-S と、完全にメートルのmsgid または翻訳 (サブストリングじゃない)"
 
-#: src/zfr_lib/translate/__init__.py:213
+#: src/translate/__init__.py:225
 msgid "TEXT [TRANSLATION]"
 msgstr "TEXT [訳文]"
 
-#: src/zfr_lib/translate/__init__.py:248
+#: src/translate/__init__.py:270
 msgid "TEXT required with --update"
 msgstr "--update には TEXT が必要です"
 
-#: src/zfr_lib/translate/__init__.py:253
+#: src/translate/__init__.py:275
 msgid "TRANSLATION required (args or stdin) with --update"
 msgstr "--update には TRANSLATION が必要です（引数または stdin）"
 
-#: src/zfr_lib/translate/__init__.py:271
+#: src/translate/__init__.py:293
 msgid "TEXT required"
 msgstr "TEXT が必要です"
 
-#: src/zfr_lib/version.py:51
+#: src/version.py:51
 msgid "print current project version (walks parents from cwd)"
 msgstr "現在のプロジェクトバージョンを表示（cwd から親ディレクトリをたどる）"
 
-#: src/zfr_lib/version.py:52
+#: src/version.py:52
 msgid "Print the current project version (walks from cwd toward parent directories)."
 msgstr "現在のプロジェクトバージョンを表示（cwd から親ディレクトリへたどる）。"
 
-#: src/zfr_lib/version.py:57
+#: src/version.py:57
 msgid "use git describe (default when git and .git are available)"
 msgstr "git describe を使用（git と .git が利用可能なときデフォルト）"
 
-#: src/zfr_lib/version.py:58
+#: src/version.py:58
 msgid "use debian/changelog (default when git or .git is unavailable)"
 msgstr "debian/changelog を使用（git または .git が利用不可のときデフォルト）"
 
-#: src/zfr_lib/version.py:59
+#: src/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
 msgstr "RPM 互換 Version を表示（ハイフンをアンダースコアに）"
 
