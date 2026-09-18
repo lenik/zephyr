@@ -58,9 +58,11 @@ class IzeOnlyTests(unittest.TestCase):
 
 class BrowseUiTests(unittest.TestCase):
     def test_shell_has_solve_show_statusbar(self) -> None:
-        from lint.browse import _shell_html, _ui
+        from lint.browse import _ui
+        from lint.browse_page import _shell_html
 
-        html = _shell_html()
+        _shell_html.cache_clear()
+        html = _shell_html("en")
         self.assertIn("a.solve", html)
         self.assertIn("UI.solve", html)
         self.assertIn("add-cmt", html)
@@ -105,11 +107,19 @@ class BrowseUiTests(unittest.TestCase):
         self.assertEqual(fam["sections"][0]["title"], "源码卫生")
 
     def test_shell_reloads_data_on_locale_change(self) -> None:
-        from lint.browse import _shell_html
+        from lint.browse_page import _shell_html
 
-        html = _shell_html()
-        self.assertIn("loadData(lang)", html)
+        _shell_html.cache_clear()
+        html = _shell_html("en")
+        self.assertIn("loadData(lang, { refresh: false })", html)
+        self.assertIn("ZFR_BROWSE_DEFAULT_LANG", html)
         self.assertIn("zfr-lint-lang", html)
+        # theme | lang at top right; Re-lint after show-all
+        header = html[html.index("<header") : html.index("</header>")]
+        self.assertIn('id="theme"', header)
+        self.assertIn('id="locale"', header)
+        self.assertNotIn('id="refresh"', header)
+        self.assertLess(html.index("show-all"), html.index('id="refresh"'))
 
 
 if __name__ == "__main__":
