@@ -14,6 +14,7 @@ class StdRule:
     title: str
     default_severity: str | None = None
     detail: str | None = None
+    izeable: bool = False
 
 
 class RuleRegistry:
@@ -37,16 +38,16 @@ class RuleRegistry:
         return best
 
     def by_id(self, token: str) -> StdRule | None:
-        """Resolve ``ZL026``, ``zl26``, ``26``, or a code like ``rpm.missing``."""
+        """Resolve ``ZL0026``, ``zl26``, ``26``, or a code like ``rpm.missing``."""
         raw = token.strip()
         if not raw:
             return None
         upper = raw.upper()
         if upper in self._by_id:
             return self._by_id[upper]
-        m = re.fullmatch(r"(?:ZL|ZI)?(\d{1,3})", upper)
+        m = re.fullmatch(r"(?:ZL|ZI)?(\d{1,4})", upper)
         if m:
-            cand = f"{self._id_prefix}{int(m.group(1)):03d}"
+            cand = f"{self._id_prefix}{int(m.group(1)):04d}"
             if cand in self._by_id:
                 return self._by_id[cand]
         return self.lookup(raw)
@@ -55,7 +56,7 @@ class RuleRegistry:
         rule = self.lookup(code)
         if rule is not None:
             return rule.id
-        return f"{self._id_prefix}???"
+        return f"{self._id_prefix}????"
 
     def all_rules(self) -> tuple[StdRule, ...]:
         return self._rules
@@ -89,12 +90,39 @@ def is_suppressed(
     return False
 
 
+def is_selected(
+    *,
+    rule_id: str,
+    code: str,
+    only: set[str],
+) -> bool:
+    """True when *only* is empty (run all) or the rule matches a token in *only*."""
+    if not only:
+        return True
+    if is_suppressed(rule_id=rule_id, code=code, suppressed=only):
+        return True
+    for token in only:
+        t = token.strip().rstrip(".*")
+        if not t:
+            continue
+        if code.startswith(t) or rule_id.upper().startswith(t.upper()):
+            return True
+    return False
+
+
 def render_std_table(rules: tuple[StdRule, ...]) -> str:
-    """Plain-text table of standard rules (ID / code / default / title)."""
+    """Plain-text table of standard rules (ID / code / default / ize / title)."""
     rows = [
-        (r.id, r.code, r.default_severity or "varies", r.title) for r in rules
+        (
+            r.id,
+            r.code,
+            r.default_severity or "varies",
+            "ize" if r.izeable else "-",
+            r.title,
+        )
+        for r in rules
     ]
-    headers = ("ID", "Code", "Default", "Title")
+    headers = ("ID", "Code", "Default", "Fix", "Title")
     widths = [len(h) for h in headers]
     for row in rows:
         for i, cell in enumerate(row):
@@ -105,7 +133,9 @@ def render_std_table(rules: tuple[StdRule, ...]) -> str:
         sep,
     ]
     for row in rows:
-        lines.append("  ".join(row[i].ljust(widths[i]) for i in range(4)))
+        lines.append("  ".join(row[i].ljust(widths[i]) for i in range(5)))
+    lines.append("")
+    lines.append("Fix column: `ize` means `zfr ize` can apply this rule.")
     lines.append("")
     return "\n".join(lines)
 
@@ -118,16 +148,22 @@ def render_std_help(rule: StdRule, *, command: str) -> str:
         f"Code:     {rule.code}",
         f"Default:  {sev}",
         f"Title:    {rule.title}",
+        f"Izeable:  {'yes — `zfr ize` is a resolution' if rule.izeable else 'no'}",
     ]
     if rule.detail:
         lines.append("")
         lines.append(rule.detail.rstrip())
     lines.append("")
+    if rule.izeable and command == "lint":
+        lines.append("Resolution: run `zfr ize` (or fix manually).")
+        lines.append("")
     lines.append(
         f"Suppress with `zfr {command} -u {rule.id}` or "
         f"`zfr {command} -u {rule.code}` "
         f"(also `.config/zfr/{command}.options`)."
     )
+    if command == "lint":
+        lines.append("Interactive: `zfr-lintsel` toggles ignored / always rules.")
     lines.append(f"List all: `zfr {command} -L` / `zfr {command} --list-std`.")
     lines.append("")
     return "\n".join(lines)
