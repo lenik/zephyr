@@ -95,13 +95,11 @@ custom_target(
 run_target(
     'look',
     command: [
-        'bash',
-        '-euc', '''
-            tmpdir=$(mktemp -d)
-            DESTDIR=$tmpdir meson install -C "@BUILD_ROOT@"
-            tree "$tmpdir"
-            rm -fr "$tmpdir"
-        ''',
+        find_program('zfr'),
+        'build',
+        '--look',
+        '-C', meson.project_source_root(),
+        '-b', meson.project_build_root(),
     ],
 )
 

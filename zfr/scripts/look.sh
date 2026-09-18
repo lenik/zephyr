@@ -1,10 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # SPDX-License-Identifier: AGPL-3.0-or-later
-# DESTDIR preview install (meson run_target look).
-set -euo pipefail
-SOURCE_ROOT="${1:-${MESON_SOURCE_ROOT:-.}}"
-BUILD_ROOT="${2:-${MESON_BUILD_ROOT:-.}}"
-tmpdir=$(mktemp -d)
-trap 'rm -fr "$tmpdir"' EXIT
-DESTDIR="$tmpdir" meson install -C "$BUILD_ROOT"
-tree -L 6 -I po "$tmpdir" 2>/dev/null || (cd "$tmpdir" && find -maxdepth 6 -name po -prune -o -print)
+# Thin wrapper — prefer `zfr build --look` / import build_look.
+set -e
+ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
+BUILD="${1:-$ROOT/build}"
+export PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}"
+exec python3 -c 'from build_look import look_install; from pathlib import Path; import sys; raise SystemExit(look_install(Path(sys.argv[1]), builddir=Path(sys.argv[2])))' "$ROOT" "$BUILD"

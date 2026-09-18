@@ -252,37 +252,21 @@ assert(makeinfo.found())
 run_target(
     'posync',
     command: [
-        'bash',
-        '-euc', '''
-            cd "@SOURCE_ROOT@/po"
-            xgettext --from-code=UTF-8 --keyword=_ --language=JavaScript --directory=.. --output=zephyr.pot --files-from=POTFILES
-            cp -f zephyr.pot some_puff1.pot
-            while IFS= read -r lang; do
-                [ -n "$lang" ] || continue
-                case "$lang" in
-                    '#'* ) continue ;;
-                esac
-                po_file="$lang.po"
-                if [ ! -f "$po_file" ]; then
-                    msginit --no-translator --input=zephyr.pot --locale="$lang" --output-file="$po_file"
-                fi
-                msgmerge --update --backup=none "$po_file" zephyr.pot
-                msgattrib --no-obsolete --output-file="$po_file" "$po_file"
-            done < LINGUAS
-        ''',
+        find_program('zfr'),
+        'translate',
+        '--sync',
+        '-C', meson.project_source_root(),
     ],
 )
 
 run_target(
     'look',
     command: [
-        'bash',
-        '-euc', '''
-            tmpdir=$(mktemp -d)
-            DESTDIR=$tmpdir meson install -C "@BUILD_ROOT@"
-            tree "$tmpdir"
-            rm -fr "$tmpdir"
-        ''',
+        find_program('zfr'),
+        'build',
+        '--look',
+        '-C', meson.project_source_root(),
+        '-b', meson.project_build_root(),
     ],
 )
 

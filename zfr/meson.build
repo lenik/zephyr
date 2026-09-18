@@ -57,40 +57,36 @@ install_data(
     install_dir: pkgdatadir / 'zfr',
 )
 
-# Python implementation under <pkgdatadir>/zfr/
 install_data(
-    [
-        'src/zfr',
-        'src/zfr-create',
-        'src/zfr-rename',
-        'src/zfr-add',
-        'src/zfr-remove',
-        'src/zfr-about',
-        'src/zfr-version',
-        'src/zfr-lint',
-        'src/zfr-lintsel',
-        'src/zfr-comments',
-        'src/zfr-dist',
-        'src/zfr-ize',
-        'src/zfr-i18n',
-        'src/zfr-translate',
-        'src/zfr-shape',
-        'src/zfr-build',
-        'src/zfr-package',
-        'src/zfr-lasterror',
-        'src/zfr-release',
-        'src/zfr-publish',
-    ],
+    'src/zfr',
     install_dir: pkgdatadir / 'zfr',
     install_mode: 'rwxr-xr-x',
 )
 
-install_subdir(
-    'src/zfr_lib',
+# All top-level *.py under src/ (keeps install complete as modules are added).
+_zfr_py_modules = run_command(
+    py,
+    '-c',
+    'from pathlib import Path; import sys\n'
+    + 'src = Path(sys.argv[1])\n'
+    + 'print("\\n".join(f"src/{p.name}" for p in sorted(src.glob("*.py"))))\n',
+    meson.project_source_root() / 'src',
+    check: true,
+).stdout().strip().split('\n')
+install_data(
+    _zfr_py_modules,
     install_dir: pkgdatadir / 'zfr',
-    exclude_directories: ['__pycache__'],
-    exclude_files: ['paths_config.py.in'],
 )
+
+foreach _pkg : [
+    'i18n', 'ize', 'lang', 'lint', 'pkg', 'release', 'std', 'translate',
+]
+    install_subdir(
+        'src' / _pkg,
+        install_dir: pkgdatadir / 'zfr',
+        exclude_directories: ['__pycache__'],
+    )
+endforeach
 
 paths_cfg = configuration_data()
 paths_cfg.set_quoted('PKGDATADIR', pkgdatadir)
@@ -130,11 +126,11 @@ if _release_date == ''
 endif
 paths_cfg.set_quoted('RELEASE_DATE', _release_date)
 configure_file(
-    input: 'src/zfr_lib/paths_config.py.in',
+    input: 'src/paths_config.py.in',
     output: 'paths_config.py',
     configuration: paths_cfg,
     install: true,
-    install_dir: pkgdatadir / 'zfr' / 'zfr_lib',
+    install_dir: pkgdatadir / 'zfr',
 )
 
 # Builddir wrappers use the source tree (so ninja && /build/zfr picks up
@@ -290,20 +286,23 @@ endforeach
 run_target(
     'posync',
     command: [
-        'bash',
-        meson.project_source_root() / 'scripts' / 'posync.sh',
-        meson.project_source_root(),
-        meson.project_build_root(),
+        py,
+        files('src/zfr'),
+        'translate',
+        '--sync',
+        '-C', meson.project_source_root(),
     ],
 )
 
 run_target(
     'look',
     command: [
-        'bash',
-        meson.project_source_root() / 'scripts' / 'look.sh',
-        meson.project_source_root(),
-        meson.project_build_root(),
+        py,
+        files('src/zfr'),
+        'build',
+        '--look',
+        '-C', meson.project_source_root(),
+        '-b', meson.project_build_root(),
     ],
 )
 
