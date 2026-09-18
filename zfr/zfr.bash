@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 _zfr_langs='antlr as bash bison c clib cobol cpp cpplib csharp d elixir erlang fortran gcc go haskell java kotlin lua nim ocaml pascal perl python ruby rust smalltalk swift typescript zig'
-_zfr_cmds='create rename add remove about version lint shape dist build package lasterror ize i18n translate release publish detect help'
+_zfr_cmds='create rename add remove about version lint lintsel comments shape dist build package lasterror ize i18n translate release publish detect help'
 
 _zfr()
 {
@@ -13,7 +13,7 @@ _zfr()
 	local i
 	for ((i = 1; i < cword; i++)); do
 		case "${words[i]}" in
-			create|rename|add|remove|about|version|lint|shape|dist|build|package|lasterror|ize|i18n|translate|release|publish|detect|help)
+			create|rename|add|remove|about|version|lint|lintsel|comments|shape|dist|build|package|lasterror|ize|i18n|translate|release|publish|detect|help)
 				cmd="${words[i]}"
 				break
 				;;
@@ -83,7 +83,29 @@ _zfr()
 					;;
 			esac
 			if [[ $cur == -* ]]; then
-				COMPREPLY=($(compgen -W '-v --verbose -q --quiet -w --warning -e --error --strict -i --info -I --no-info --chat --no-chat -u --uncheck -l --l10n-level -L --list-std -H --help-std --color --help' -- "$cur"))
+				COMPREPLY=($(compgen -W '-v --verbose -q --quiet -b --browse -w --warning -e --error --strict -i --info -I --no-info --chat --no-chat -u --uncheck -a --always -l --l10n-level -L --list-std -H --help-std --color --help' -- "$cur"))
+			fi
+			;;
+		lintsel)
+			case $prev in
+				-C|--directory)
+					_filedir -d
+					return
+					;;
+			esac
+			if [[ $cur == -* ]]; then
+				COMPREPLY=($(compgen -W '-C --directory --help' -- "$cur"))
+			fi
+			;;
+		comments)
+			case $prev in
+				-C|--directory)
+					_filedir -d
+					return
+					;;
+			esac
+			if [[ $cur == -* ]]; then
+				COMPREPLY=($(compgen -W '-C --directory -u --user -p --project -d --delete -q --quiet --help' -- "$cur"))
 			fi
 			;;
 		shape)
@@ -151,7 +173,7 @@ _zfr()
 					;;
 			esac
 			if [[ $cur == -* ]]; then
-				COMPREPLY=($(compgen -W '-l --lang -m --mesonize --no-mesonize -n --dry-run -v --verbose -c --commit -a --author -u --uncheck -L --list-std -H --help-std --no-man --no-subst --color --help' -- "$cur"))
+				COMPREPLY=($(compgen -W '-l --lang -m --mesonize --no-mesonize -n --dry-run -v --verbose -c --commit -a --author -u --uncheck -o --only -L --list-std -H --help-std --no-man --no-subst --color --help' -- "$cur"))
 			fi
 			;;
 		i18n)
@@ -302,7 +324,7 @@ _zfr_lint()
 			;;
 	esac
 	if [[ $cur == -* ]]; then
-		COMPREPLY=($(compgen -W '-v --verbose -q --quiet -w --warning -e --error --strict -i --info -I --no-info --chat --no-chat -u --uncheck -l --l10n-level -L --list-std -H --help-std --color --help' -- "$cur"))
+		COMPREPLY=($(compgen -W '-v --verbose -q --quiet -b --browse -w --warning -e --error --strict -i --info -I --no-info --chat --no-chat -u --uncheck -a --always -l --l10n-level -L --list-std -H --help-std --color --help' -- "$cur"))
 	fi
 }
 
@@ -333,7 +355,39 @@ complete -F _zfr_remove zfr-remove
 complete -F _zfr_about zfr-about
 complete -F _zfr_version zfr-version
 complete -F _zfr_lint zfr-lint
+complete -F _zfr_lintsel zfr-lintsel
+complete -F _zfr_comments zfr-comments
 complete -F _zfr_dist zfr-dist
+
+_zfr_lintsel()
+{
+	local cur prev words cword
+	_init_completion || return
+	case $prev in
+		-C|--directory)
+			_filedir -d
+			return
+			;;
+	esac
+	if [[ $cur == -* ]]; then
+		COMPREPLY=($(compgen -W '-C --directory --help' -- "$cur"))
+	fi
+}
+
+_zfr_comments()
+{
+	local cur prev words cword
+	_init_completion || return
+	case $prev in
+		-C|--directory)
+			_filedir -d
+			return
+			;;
+	esac
+	if [[ $cur == -* ]]; then
+		COMPREPLY=($(compgen -W '-C --directory -u --user -p --project -d --delete -q --quiet --help' -- "$cur"))
+	fi
+}
 
 _zfr_shape()
 {
@@ -361,7 +415,7 @@ _zfr_ize()
 			;;
 	esac
 	if [[ $cur == -* ]]; then
-		COMPREPLY=($(compgen -W '-l --lang -m --mesonize --no-mesonize -n --dry-run -v --verbose -c --commit -a --author -u --uncheck -L --list-std -H --help-std --no-man --no-subst --color --help' -- "$cur"))
+		COMPREPLY=($(compgen -W '-l --lang -m --mesonize --no-mesonize -n --dry-run -v --verbose -c --commit -a --author -u --uncheck -o --only -L --list-std -H --help-std --no-man --no-subst --color --help' -- "$cur"))
 	fi
 }
 

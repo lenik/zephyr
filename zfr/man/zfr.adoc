@@ -28,9 +28,13 @@ zfr - multi-language CLI project templates and helper tools
 
 *zfr* [*--chat*|*--no-chat*] *version* [*-g*] [*-c*] [*-r*]
 
-*zfr* [*--chat*|*--no-chat*] *lint* [*-l* _LEVEL_] [*-v*] [*-q*]
+*zfr* [*--chat*|*--no-chat*] *lint* [*-l* _LEVEL_] [*-v*] [*-q*] [*-b*]
             [*-w*[=_LEVEL_]] [*-e*[=_LEVEL_]|*--strict*] [*-i*|**-I*] [*--color* _WHEN_]
-            [*-u* _CODE_]…
+            [*-u* _CODE_]… [*-a* _CODE_]…
+
+*zfr* [*--chat*|*--no-chat*] *lintsel* [*-C* _DIR_]
+
+*zfr* [*--chat*|*--no-chat*] *comments* [*-C* _DIR_] [*-u*|*-p*] [*-d*] [*-q*] [_ZLxxxx_]…
 
 *zfr* [*--chat*|*--no-chat*] *shape* [*-b*] [*-v*] [*--threshold* _N_]
 
@@ -176,6 +180,35 @@ Commands that walk from the current directory resolve *packagedir* first.
   Output is meant for humans and AI coders: each finding has a code,
   path, and a concrete fix. Interactive terminals use CSR (console SGR)
   colors unless *NO_COLOR* is set.
+  *\-L* lists standards with a *Fix* column (*ize* = *zfr ize* can apply).
+  *\-a* / *--always* force-enables rules; *\-u* suppresses them.
+  *zfr-lintsel* edits those overrides in a TUI.
+  *\-b* / *--browse* opens a local web UI: compact findings
+  (*[ ]* severity *ZLxxx* code · *[Solve]* *[Show]*; message with ▸/▾
+  expand for rule documentation; *[Add Comment]* for suggestions),
+  lintsel-style rule toggles, comments to *.config/zfr/lint.comments*
+  (This project only) or *~/.config/zfr/lint.comments* (unchecked),
+  locale switch without reload, and a status bar (zfr version,
+  pass/warn/error bar, author). *Solve* runs *zfr ize --only …* via
+  *fdmux*; *Show* opens the captured output (red when errors).
+  A toggle shows passed checks (default off).
+
+*lintsel*::
+  Interactive TUI (also *zfr-lintsel*) to toggle lint rule overrides in
+  *.config/zfr/lint.options*. Marks: space = default (enabled), asterisk =
+  always (force), hyphen = ignored. *SPC* toggles default/ignored; *Y* always;
+  *N* or *-* ignored; *~* inverts default/ignored; mouse click toggles;
+  *Ctrl+S* save; *Ctrl+D* save and quit; *Ctrl+Q* quit.
+
+*comments*::
+  Print or delete project and user *lint.comments* files
+  (*.config/zfr/lint.comments* and *~/.config/zfr/lint.comments*).
+  Optional *ZLxxxx* arguments filter sections (default: all).
+  *\-u* / *--user* — user comments only; *\-p* / *--project* — project only;
+  *\-d* / *--delete* — delete matching comments (whole file(s) or selected
+  sections); *\-q* / *--quiet* omits the AI hint trailer.
+  Typical agent prompt: “do zfr-comments work.” Also *zfr-comments*.
+  Rule ids are four digits (*ZL0001*, …).
 
 *shape*::
   Print a 0–100 *zephyr shape* score for the current *packagedir* (how
@@ -251,6 +284,8 @@ Commands that walk from the current directory resolve *packagedir* first.
   *VERSION*), then ``git add -A`` and commits with a verbose message
   listing each change (changelog author reuses the previous trailer
   unless *--author* is set). Afterward run *zfr lint*.
+  *\-o* / *--only* _CODE_ limits work to selected ize rules (used by
+  *zfr lint --browse* *[ize]* buttons).
 
 *help*::
   Show command-line help.
@@ -476,6 +511,10 @@ Options for *ize*:
 *-v, --verbose*::
   Also print skipped paths that are already present.
 
+*-o, --only* _CODE_::
+  Run only the listed ize rule ID(s) or code(s) (comma-separated,
+  repeatable). Inverse of *\-u* / *--uncheck*.
+
 *--no-man*::
   Do not convert groff *\*.1* sources to *man/\*.adoc*.
 
@@ -518,7 +557,16 @@ root (parent of *zfr/*) and *PYTHONPATH* to *src/*.
 
 *.config/zfr/lint.options*::
   Default *zfr lint* arguments for this project (shell tokens; *#* comments).
-  The zfr CLI itself ships *-l 2*.
+  The zfr CLI itself ships *-l 2*. *zfr-lintsel* (also *zfr lintsel*) edits
+  *-u* / *--always* rule overrides in a TUI.
+
+*.config/zfr/lint.comments*::
+  Per-rule suggestion comments from *zfr lint --browse* (This project only).
+  Sections look like *[ZL0001]* followed by free-form text.
+  *zfr comments* / *zfr-comments* prints these with an AI work hint.
+
+*~/.config/zfr/lint.comments*::
+  User-wide lint comments (All default scope in the browse UI).
 
 */usr/share/zephyr/<lang>/*::
   Installed language templates.

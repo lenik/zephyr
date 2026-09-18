@@ -35,7 +35,7 @@ zephyr ships language templates for small command-line utilities under
 /usr/share/zephyr/<lang>/ (bash, c, clib, cpp, cpplib, csharp, erlang, go,
 haskell, java, perl, python, ruby, rust, smalltalk, swift, typescript), plus
 cmdline tools (zfr, zfr-create, zfr-rename, zfr-add, zfr-remove,
-zfr-about, zfr-version, zfr-lint, zfr-shape, zfr-dist, zfr-build,
+zfr-about, zfr-version, zfr-lint, zfr-lintsel, zfr-comments, zfr-shape, zfr-dist, zfr-build,
 zfr-package, zfr-lasterror, zfr-ize, zfr-release, zfr-publish) to create projects, manage puffs
 (example apps), validate packaging against zephyr style, build source
 tarballs, compile/package projects (`zfr build` / `zfr package`), upgrade
@@ -75,6 +75,8 @@ meson install -C build --destdir=%{buildroot}
 %{_bindir}/zfr-about
 %{_bindir}/zfr-version
 %{_bindir}/zfr-lint
+%{_bindir}/zfr-lintsel
+%{_bindir}/zfr-comments
 %{_bindir}/zfr-dist
 %{_bindir}/zfr-ize
 %{_bindir}/zfr-i18n
@@ -93,6 +95,8 @@ meson install -C build --destdir=%{buildroot}
 %{_datadir}/bash-completion/completions/zfr-about
 %{_datadir}/bash-completion/completions/zfr-version
 %{_datadir}/bash-completion/completions/zfr-lint
+%{_datadir}/bash-completion/completions/zfr-lintsel
+%{_datadir}/bash-completion/completions/zfr-comments
 %{_datadir}/bash-completion/completions/zfr-dist
 %{_datadir}/bash-completion/completions/zfr-ize
 %{_datadir}/bash-completion/completions/zfr-i18n

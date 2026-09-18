@@ -68,6 +68,8 @@ install_data(
         'src/zfr-about',
         'src/zfr-version',
         'src/zfr-lint',
+        'src/zfr-lintsel',
+        'src/zfr-comments',
         'src/zfr-dist',
         'src/zfr-ize',
         'src/zfr-i18n',
@@ -149,6 +151,8 @@ wrapper_names = [
     'zfr-about',
     'zfr-version',
     'zfr-lint',
+    'zfr-lintsel',
+    'zfr-comments',
     'zfr-dist',
     'zfr-ize',
     'zfr-i18n',
@@ -238,7 +242,7 @@ foreach lang : man_i18n_langs
 endforeach
 
 # Bash completion (same script under several command names)
-foreach completion_name : ['zfr', 'zfr-create', 'zfr-rename', 'zfr-add', 'zfr-remove', 'zfr-about', 'zfr-version', 'zfr-lint', 'zfr-dist', 'zfr-ize', 'zfr-i18n', 'zfr-translate', 'zfr-shape', 'zfr-build', 'zfr-package', 'zfr-lasterror', 'zfr-release', 'zfr-publish']
+foreach completion_name : ['zfr', 'zfr-create', 'zfr-rename', 'zfr-add', 'zfr-remove', 'zfr-about', 'zfr-version', 'zfr-lint', 'zfr-lintsel', 'zfr-comments', 'zfr-dist', 'zfr-ize', 'zfr-i18n', 'zfr-translate', 'zfr-shape', 'zfr-build', 'zfr-package', 'zfr-lasterror', 'zfr-release', 'zfr-publish']
     install_data(
         'zfr.bash',
         install_dir: datadir / 'bash-completion' / 'completions',
@@ -284,14 +288,22 @@ foreach doc : ['README.md', 'README-zh_CN.md']
 endforeach
 
 run_target(
+    'posync',
+    command: [
+        'bash',
+        meson.project_source_root() / 'scripts' / 'posync.sh',
+        meson.project_source_root(),
+        meson.project_build_root(),
+    ],
+)
+
+run_target(
     'look',
     command: [
         'bash',
-        '-euc', '''
-            tmpdir=$(mktemp -d)
-            DESTDIR=$tmpdir meson install -C "@BUILD_ROOT@"
-            tree -L 6 -I po "$tmpdir" 2>/dev/null || (cd "$tmpdir" && find -maxdepth 6 -name po -prune -o -print)
-        ''',
+        meson.project_source_root() / 'scripts' / 'look.sh',
+        meson.project_source_root(),
+        meson.project_build_root(),
     ],
 )
 
