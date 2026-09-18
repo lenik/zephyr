@@ -16,12 +16,18 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zfr_lib import format_cli_version_banner  # noqa: E402
 from zfr_lib.i18n import _, init_i18n  # noqa: E402
+from zfr_lib.registry import (  # noqa: E402
+    COMMAND_SPECS,
+    command_names,
+    get_spec,
+    load_command,
+)
 
 init_i18n()
 
-from zfr_lib.registry import COMMANDS  # noqa: E402
+_GLOBAL_BOOL = frozenset({"--chat", "--no-chat"})
+
 
 def resolve_command_prefix(argv: list[str]) -> list[str]:
     """Expand an unambiguous command prefix (e.g. ``t`` -> ``translate``).
@@ -33,13 +39,10 @@ def resolve_command_prefix(argv: list[str]) -> list[str]:
     if not argv or argv[0].startswith("-"):
         return argv
     head = argv[0]
-    names = {mod.NAME for mod in COMMANDS} | {"help"}
+    names = set(command_names()) | {"help"}
     if head in names:
         return argv
-    matches = sorted({mod.NAME for mod in COMMANDS if mod.NAME.startswith(head)})
-    if "help".startswith(head):
-        matches.append("help")
-        matches = sorted(set(matches))
+    matches = sorted({n for n in names if n.startswith(head)})
     if len(matches) == 1:
         return [matches[0], *argv[1:]]
     if len(matches) > 1:
@@ -52,8 +55,19 @@ def resolve_command_prefix(argv: list[str]) -> list[str]:
     return argv
 
 
-def build_parser() -> argparse.ArgumentParser:
-    from zfr_lib.cli import SubcommandHelpFormatter
+def _split_globals(argv: list[str]) -> tuple[list[str], list[str]]:
+    """Peel leading ``--chat`` / ``--no-chat`` from *argv*."""
+    globals_opts: list[str] = []
+    i = 0
+    while i < len(argv) and argv[i] in _GLOBAL_BOOL:
+        globals_opts.append(argv[i])
+        i += 1
+    return globals_opts, argv[i:]
+
+
+def _print_top_help() -> None:
+    """Fast path for ``zfr -h`` / ``zfr help`` — no command module imports."""
+    from zfr_lib.cli import SubcommandHelpFormatter, VersionBannerAction
     from zfr_lib.terminal import add_for_ai_purpose_arguments
 
     init_i18n()
@@ -66,12 +80,7 @@ def build_parser() -> argparse.ArgumentParser:
         ),
         formatter_class=SubcommandHelpFormatter,
     )
-    p.add_argument(
-        "-V",
-        "--version",
-        action="version",
-        version=format_cli_version_banner(),
-    )
+    p.add_argument("-V", "--version", action=VersionBannerAction)
     add_for_ai_purpose_arguments(p)
     sub = p.add_subparsers(
         dest="cmd",
@@ -79,7 +88,45 @@ def build_parser() -> argparse.ArgumentParser:
         metavar="COMMAND",
         title="COMMAND",
     )
-    by_name = {mod.NAME: mod for mod in COMMANDS}
+    for name in sorted({*(s.name for s in COMMAND_SPECS), "help"}):
+        if name == "help":
+            sub.add_parser("help", help=_("show this help"))
+        else:
+            spec = get_spec(name)
+            assert spec is not None
+            sub.add_parser(name, help=_(spec.help))
+    p.print_help()
+
+
+def build_parser(*, commands: list[str] | None = None) -> argparse.ArgumentParser:
+    """Build the CLI parser.
+
+    When *commands* is set, only those modules are imported and registered
+    (used for a single-command dispatch). ``None`` registers every command.
+    """
+    from zfr_lib.cli import SubcommandHelpFormatter, VersionBannerAction
+    from zfr_lib.terminal import add_for_ai_purpose_arguments
+
+    init_i18n()
+    p = argparse.ArgumentParser(
+        prog="zfr",
+        description=_(
+            "Zephyr template helper (CLI name: zfr). "
+            "Create projects and manage example puffs. "
+            "Instantiated trees keep calling zfr; zfr is not a rename token."
+        ),
+        formatter_class=SubcommandHelpFormatter,
+    )
+    p.add_argument("-V", "--version", action=VersionBannerAction)
+    add_for_ai_purpose_arguments(p)
+    sub = p.add_subparsers(
+        dest="cmd",
+        required=True,
+        metavar="COMMAND",
+        title="COMMAND",
+    )
+    wanted = set(commands) if commands is not None else set(command_names())
+    by_name = {name: load_command(name) for name in wanted}
     for name in sorted({*by_name, "help"}):
         if name == "help":
             sub.add_parser("help", help=_("show this help"))
@@ -90,18 +137,49 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
+
     if not argv or argv[0] in ("-h", "--help"):
-        build_parser().print_help()
+        _print_top_help()
         return 0
     if argv[0] in ("-V", "--version"):
+        from zfr_lib.versioning import format_cli_version_banner
+
         print(format_cli_version_banner(), flush=True)
         return 0
 
-    parser = build_parser()
-    args = parser.parse_args(resolve_command_prefix(argv))
+    globals_opts, rest = _split_globals(argv)
+    if not rest or rest[0] in ("-h", "--help"):
+        _print_top_help()
+        return 0
+    if rest[0] in ("-V", "--version"):
+        from zfr_lib.versioning import format_cli_version_banner
+
+        print(format_cli_version_banner(), flush=True)
+        return 0
+
+    rest = resolve_command_prefix(rest)
+    if not rest:
+        _print_top_help()
+        return 0
+
+    if rest[0] == "help":
+        if len(rest) == 1 or rest[1] in ("-h", "--help"):
+            _print_top_help()
+            return 0
+        # ``zfr help lint`` → show that command's help
+        rest = [rest[1], "-h"]
+
+    cmd = rest[0]
+    if get_spec(cmd) is None:
+        print(f"zfr: error: unknown command {cmd!r}", file=sys.stderr)
+        return 2
+
+    # Import only the selected command module.
+    parser = build_parser(commands=[cmd])
+    args = parser.parse_args([*globals_opts, *rest])
 
     if args.cmd == "help":
-        parser.print_help()
+        _print_top_help()
         return 0
     run = getattr(args, "_run", None)
     if run is None:

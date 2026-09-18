@@ -417,6 +417,12 @@ def apply_lint_option_file(
             if item not in merged:
                 merged.append(item)
         args.uncheck = merged
+    if getattr(cfg, "always", None):
+        merged = list(getattr(args, "always", None) or [])
+        for item in cfg.always:
+            if item not in merged:
+                merged.append(item)
+        args.always = merged
     if args.style_info is None and getattr(cfg, "style_info", None) is not None:
         args.style_info = cfg.style_info
     return args

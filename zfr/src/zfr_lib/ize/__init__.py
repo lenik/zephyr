@@ -28,6 +28,7 @@ def cmd_ize(
     verbose: bool = False,
     color: str = "auto",
     uncheck: list[str] | None = None,
+    only: list[str] | None = None,
     workdir: Path | None = None,
 ) -> int:
     if commit and dry_run:
@@ -66,6 +67,7 @@ def cmd_ize(
         verbose=verbose,
         color=color,
         uncheck=uncheck,
+        only=only,
     ).run()
     return 0
 
@@ -88,7 +90,7 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         "-H",
         "--help-std",
         metavar="NUM",
-        help=_("show details for ize standard NUM (e.g. ZI015, 15) and exit"),
+        help=_("show details for ize standard NUM (e.g. ZI0015, 15) and exit"),
     )
     p.add_argument(
         "-c",
@@ -126,6 +128,14 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         default=[],
         help=_("suppress ize rule ID(s) or code(s), comma-separated (repeatable)"),
     )
+    p.add_argument(
+        "-o",
+        "--only",
+        action="append",
+        metavar="CODE",
+        default=[],
+        help=_("run only these ize rule ID(s) or code(s), comma-separated (repeatable)"),
+    )
     p.add_argument("--color", choices=("auto", "always", "never"), default="auto", help=_("CSR (console SGR) highlighting (default: auto)"))
 
 
@@ -145,7 +155,7 @@ def run(args: argparse.Namespace) -> int:
     root = find_project_dir()
     parser = argparse.ArgumentParser(add_help=False)
     add_arguments(parser)
-    args = apply_option_file(root, IZE_OPTIONS_REL, parser, args, merge_flags=("uncheck",))
+    args = apply_option_file(root, IZE_OPTIONS_REL, parser, args, merge_flags=("uncheck", "only"))
     return cmd_ize(
         lang=args.lang,
         dry_run=args.dry_run,
@@ -157,6 +167,7 @@ def run(args: argparse.Namespace) -> int:
         verbose=args.verbose,
         color=args.color,
         uncheck=args.uncheck,
+        only=getattr(args, "only", None),
     )
 
 

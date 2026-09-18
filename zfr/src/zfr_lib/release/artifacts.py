@@ -175,7 +175,7 @@ def _rpm_artifact_topdirs(projectdir: Path) -> list[Path]:
     rpm_dir = resolve_rpm_dir(projectdir)
     if rpm_dir is not None:
         dirs.append(rpm_dir / "out")
-    # Legacy leftover; discovery only (ZL030 when present).
+    # Legacy leftover; discovery only (ZL0030 when present).
     dirs.append(projectdir / "rpmbuild")
     return dirs
 

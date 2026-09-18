@@ -25,6 +25,37 @@ class SubcommandHelpFormatter(argparse.HelpFormatter):
         return super()._format_action(action)
 
 
+class VersionBannerAction(argparse.Action):
+    """``-V`` / ``--version`` without computing the banner at parser build time."""
+
+    def __init__(
+        self,
+        option_strings: list[str],
+        dest: str = argparse.SUPPRESS,
+        default: Any = argparse.SUPPRESS,
+        help: str | None = None,
+    ) -> None:
+        super().__init__(
+            option_strings=option_strings,
+            dest=dest,
+            default=default,
+            nargs=0,
+            help=help,
+        )
+
+    def __call__(
+        self,
+        parser: argparse.ArgumentParser,
+        namespace: argparse.Namespace,
+        values: Any,
+        option_string: str | None = None,
+    ) -> None:
+        from .versioning import format_cli_version_banner
+
+        print(format_cli_version_banner(), flush=True)
+        parser.exit()
+
+
 def standalone_main(
     prog: str,
     description: str,

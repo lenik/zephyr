@@ -481,4 +481,28 @@ def relative_to(path: Path, root: Path) -> Path:
     return path.resolve().relative_to(root.resolve())
 
 
-from .lang import CANDIDATE_LANGS, LANGS, detect_lang, empty_scores, rank_langs, score_langs
+_LANG_EXPORTS = frozenset(
+    {
+        "CANDIDATE_LANGS",
+        "LANGS",
+        "detect_lang",
+        "empty_scores",
+        "rank_langs",
+        "score_langs",
+    }
+)
+
+
+def __getattr__(name: str):
+    """Lazy-load language detection (keeps `zfr -h` / light imports fast)."""
+    if name in _LANG_EXPORTS:
+        from . import lang as _lang
+
+        value = getattr(_lang, name)
+        globals()[name] = value
+        return value
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+def __dir__() -> list[str]:
+    return sorted(set(globals()) | _LANG_EXPORTS)

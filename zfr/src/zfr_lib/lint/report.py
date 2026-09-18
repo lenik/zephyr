@@ -141,7 +141,9 @@ def format_report(
               "L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). "
               "Child locales auto-derive via zfr i18n -b. "
               "List rule IDs with `zfr lint -L`; details via `zfr lint -H NUM`; "
-              "suppress with -u/--uncheck or .config/zfr/lint.options."),
+              "suppress with -u/--uncheck or `.config/zfr/lint.options` "
+              "(interactive: `zfr-lintsel`). Rules tagged `ize` on -L can be "
+              "fixed with `zfr ize`."),
             _("Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ)."),
         ):
             lines.append(f"  - {item}")

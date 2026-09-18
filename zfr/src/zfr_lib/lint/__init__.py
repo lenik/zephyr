@@ -74,6 +74,9 @@ def collect_findings(
 
     findings.extend(check_hardcoded(root, role))
     findings.extend(check_template_gaps(root, lang, role))
+    from .scripts_check import check_scripts_and_version
+
+    findings.extend(check_scripts_and_version(root, role))
     return name, lang, role, findings
 
 def cmd_lint(
@@ -88,12 +91,25 @@ def cmd_lint(
     for_ai_purpose: bool | None = None,
     workdir: Path | None = None,
     uncheck: list[str] | None = None,
+    always: list[str] | None = None,
+    browse: bool = False,
 ) -> int:
     from ..terminal import resolve_for_ai_purpose
 
     root = _resolve_lint_root(find_project_dir(workdir))
+    if browse:
+        from .browse import browse_lint
+
+        return browse_lint(
+            root,
+            l10n_level=l10n_level,
+            uncheck=uncheck,
+            always=always,
+            warning_level=warning_level,
+            error_level=error_level,
+        )
     name, lang, role, findings = collect_findings(root, l10n_level=l10n_level)
-    findings = filter_findings(findings, uncheck)
+    findings = filter_findings(findings, uncheck, always)
     remap_severities(findings, as_warning=warning_level, as_error=error_level)
     ai = resolve_for_ai_purpose(for_ai_purpose)
     sys.stdout.write(
@@ -132,6 +148,15 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
 
     p.add_argument("-v", "--verbose", action="store_true", help=_("show passing checks too"))
     p.add_argument("-q", "--quiet", action="store_true", help=_("only print errors"))
+    p.add_argument(
+        "-b",
+        "--browse",
+        action="store_true",
+        help=_(
+            "open a local web UI with maximum-verbosity lint results, "
+            "locale switcher, and per-finding [ize] actions"
+        ),
+    )
     p.add_argument(
         "-w",
         "--warning",
@@ -177,7 +202,7 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         "-H",
         "--help-std",
         metavar="NUM",
-        help=_("show details for lint standard NUM (e.g. ZL026, 26) and exit"),
+        help=_("show details for lint standard NUM (e.g. ZL0026, 26) and exit"),
     )
     p.add_argument(
         "-l",
@@ -212,6 +237,14 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         default=[],
         help=_("suppress rule ID(s) or code(s), comma-separated (repeatable)"),
     )
+    p.add_argument(
+        "-a",
+        "--always",
+        action="append",
+        metavar="CODE",
+        default=[],
+        help=_("force-enable rule ID(s) or code(s) even if unchecked (repeatable)"),
+    )
     p.add_argument("--color", choices=("auto", "always", "never"), default="auto", help=_("CSR (console SGR) highlighting (default: auto)"))
 
 
@@ -242,6 +275,8 @@ def run(args: argparse.Namespace) -> int:
         style_info=args.style_info,
         for_ai_purpose=getattr(args, "for_ai_purpose", None),
         uncheck=args.uncheck,
+        always=getattr(args, "always", None),
+        browse=bool(getattr(args, "browse", False)),
     )
 
 

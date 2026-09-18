@@ -25,12 +25,6 @@ stub_man_adoc = _man.stub_man_adoc
 discover_man_stems = _man.discover_man_stems
 strip_help2man_blocks = _man.strip_help2man_blocks
 render_spec = _spec.render_spec
-# Names used by Ize methods copied from ize.py:
-convert_man_file = convert_man_file
-groff_to_adoc = groff_to_adoc
-_man_target = _man_target
-strip_install_man_paths = strip_install_man_paths
-render_spec = render_spec
 
 class Ize:
     def __init__(
@@ -47,8 +41,9 @@ class Ize:
         verbose: bool = False,
         color: str = "auto",
         uncheck: list[str] | None = None,
+        only: list[str] | None = None,
     ) -> None:
-        from ...std import is_suppressed, ize_rule_id, parse_uncheck
+        from ...std import is_selected, is_suppressed, ize_rule_id, parse_uncheck
 
         self.root = root
         self.lang = lang
@@ -64,10 +59,16 @@ class Ize:
         self._mesonized = False
         self._current_rule = ""
         self._suppressed = parse_uncheck(uncheck)
+        self._only = parse_uncheck(only)
         self._is_suppressed = lambda code: is_suppressed(
             rule_id=ize_rule_id(code),
             code=code,
             suppressed=self._suppressed,
+        )
+        self._is_selected = lambda code: is_selected(
+            rule_id=ize_rule_id(code),
+            code=code,
+            only=self._only,
         )
         meson = _meson_project_fields(root)
         src, _, _ = _control(root)
@@ -80,6 +81,10 @@ class Ize:
         )
 
     def _step(self, rule: str, fn) -> None:
+        if not self._is_selected(rule):
+            if self.verbose:
+                self.note("skip", rule, _("not selected via --only"), rule=rule)
+            return
         if self._is_suppressed(rule):
             if self.verbose:
                 self.note("skip", rule, _("suppressed via -u/--uncheck"), rule=rule)
@@ -136,11 +141,14 @@ class Ize:
         self._step("ize.i18n.derive", self.derive_i18n_locales)
         self._step("ize.rpm", self.ensure_rpm)
         self._step("ize.rpm.leftover", self.remove_local_rpmbuild)
+        from .scripts import ensure_scripts_externalized as _xs
+
+        self._step("ize.posync", lambda: (self.root / "po").is_dir() and _xs(self, targets=("posync",)))
+        self._step("ize.scripts", lambda: _xs(self, targets=("look", "install-symlinks", "uninstall-symlinks", "deploy")))
         self.report()
         if self.do_commit:
             self._step("ize.commit", self.commit_changes)
         return 0
-
     def mesonize(self) -> None:
         """Convert Autotools/CMake to Meson via 2meson (default on)."""
         from ..mesonize import find_2meson, has_foreign_build, run_2meson
@@ -503,7 +511,7 @@ class Ize:
         _fn(self)
 
     def remove_local_rpmbuild(self) -> None:
-        """Drop project-local ``rpmbuild/`` (ZL030); RPM builds use ``%_topdir``."""
+        """Drop project-local ``rpmbuild/`` (ZL0030); RPM builds use ``%_topdir``."""
         import shutil
 
         local = self.root / "rpmbuild"

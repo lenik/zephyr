@@ -258,7 +258,7 @@ def is_keep_english_msgid(msgid: str) -> bool:
 def intentional_keep_english_msgids(po_dir: Path) -> set[str]:
     """Msgids that primary Chinese catalogs leave as msgid-copy (keep English).
 
-    Used so ZL093 does not flag packaging field literals. When no zh_CN/zh_TW
+    Used so ZL0093 does not flag packaging field literals. When no zh_CN/zh_TW
     catalog exists, returns an empty set (callers fall back to
     :func:`is_keep_english_msgid` via catalog_translation_stats).
     """
