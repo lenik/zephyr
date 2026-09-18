@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 20:48+0800\n"
+"POT-Creation-Date: 2026-09-18 21:52+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Thai\n"
@@ -33,13 +33,8 @@ msgid "print current project information (walks parents from cwd)"
 msgstr "พิมพ์ข้อมูลโปรเจกต์ปัจจุบัน (เดินขึ้นไปจาก cwd)"
 
 #: src/zfr_lib/about.py:500
-msgid ""
-"Print information about the current zephyr project (walks from cwd toward "
-"parent directories). CSR colors when stdout is a TTY. Common packaging "
-"fields are parsed from debian or RPM."
-msgstr ""
-"พิมพ์ข้อมูลโปรเจกต์ zephyr ปัจจุบัน (เดินจาก cwd ไปยังไดเรกทอรีแม่) สี CSR "
-"เมื่อ stdout เป็น TTY ฟิลด์แพ็กเกจทั่วไปถูกแยกจาก debian หรือ RPM"
+msgid "Print information about the current zephyr project (walks from cwd toward parent directories). CSR colors when stdout is a TTY. Common packaging fields are parsed from debian or RPM."
+msgstr "พิมพ์ข้อมูลโปรเจกต์ zephyr ปัจจุบัน (เดินจาก cwd ไปยังไดเรกทอรีแม่) สี CSR เมื่อ stdout เป็น TTY ฟิลด์แพ็กเกจทั่วไปถูกแยกจาก debian หรือ RPM"
 
 #: src/zfr_lib/about.py:507
 msgid "show parsed Debian packaging fields"
@@ -67,24 +62,20 @@ msgstr "ชื่อ puff ใหม่ (แนะนำ snake_case)"
 
 #: src/zfr_lib/build.py:15
 msgid "detect build system and compile the project"
-msgstr ""
+msgstr "ตรวจสอบระบบการสร้างและคอมไพล์โปรเจกต์"
 
 #: src/zfr_lib/build.py:17
-msgid ""
-"Detect the project build system (meson, cmake, autotools, cargo, go, npm, "
-"make) and run a local compile."
-msgstr ""
+msgid "Detect the project build system (meson, cmake, autotools, cargo, go, npm, make) and run a local compile."
+msgstr "ตรวจจับระบบสร้างโครงการ (meson, cmake, autotools, cargo, go, npm, make) และรันการคอมไพล์บนเครื่อง"
 
 #: src/zfr_lib/build.py:28
 msgid "change to DIR before detecting the build system"
-msgstr ""
+msgstr "เปลี่ยนไปที่ DIR ก่อนที่จะตรวจหาระบบการสร้าง"
 
 #: src/zfr_lib/build.py:35
 #, fuzzy
 msgid "build directory (default: <project>/build)"
-msgstr ""
-"ไดเรกทอรี build Meson (ค่าเริ่มต้น: /build เมื่อตรงกับ source tree นี้ "
-"มิฉะนั้น <project>/build)"
+msgstr "ไดเรกทอรี build Meson (ค่าเริ่มต้น: /build เมื่อตรงกับ source tree นี้ มิฉะนั้น <project>/build)"
 
 #: src/zfr_lib/build.py:42 src/zfr_lib/package.py:120
 #, fuzzy
@@ -93,23 +84,19 @@ msgstr "พิมพ์การเปลี่ยนแปลงที่วา
 
 #: src/zfr_lib/build.py:48
 msgid "verbose build output where supported"
-msgstr ""
+msgstr "ผลลัพธ์การสร้างที่มีรายละเอียดมากในกรณีที่รองรับ"
 
 #: src/zfr_lib/build.py:53
 msgid "print detected build system and exit"
-msgstr ""
+msgstr "พิมพ์ระบบการสร้างที่ตรวจพบแล้วออก"
 
 #: src/zfr_lib/comments_cmd.py:20
 msgid "print or delete project/user lint.comments with an AI work hint"
-msgstr ""
+msgstr "พิมพ์หรือ ลบ ความคิดเห็นของโปรเจคต์/ผู้ใช้ lint ด้วยคำแนะนำการทำงานของ AI"
 
 #: src/zfr_lib/comments_cmd.py:22
-msgid ""
-"Print lint suggestion comments from .config/zfr/lint.comments (project) and "
-"~/.config/zfr/lint.comments (user), then an AI hint to apply the suggestions"
-" and delete the consumed comments files. Optional ZLxxxx arguments filter "
-"which sections to show. Typical prompt: “do zfr-comments work.”"
-msgstr ""
+msgid "Print lint suggestion comments from .config/zfr/lint.comments (project) and ~/.config/zfr/lint.comments (user), then an AI hint to apply the suggestions and delete the consumed comments files. Optional ZLxxxx arguments filter which sections to show. Typical prompt: “do zfr-comments work.”"
+msgstr "พิมพ์ความคิดเห็นแนะนำจาก lint จาก .config/zfr/lint.comments (โปรเจกต์) และ ~/.config/zfr/lint.comments (ผู้ใช้) จากนั้นให้คำแนะนำจาก AI เพื่อใช้คำแนะนำเหล่านั้นและลบไฟล์ความคิดเห็นที่ถูกใช้งาน อาร์กิวเมนต์ ZLxxxx เป็นทางเลือกเพื่อกรองว่าจะโชว์ส่วนใด ตัวอย่างคำสั่งปกติ: “do zfr-comments work.”"
 
 #: src/zfr_lib/comments_cmd.py:35
 #, fuzzy
@@ -118,27 +105,27 @@ msgstr "เกณฑ์ bool 0-100 (ค่าเริ่มต้น: %s)"
 
 #: src/zfr_lib/comments_cmd.py:42 src/zfr_lib/lintsel.py:284
 msgid "project directory (default: walk from cwd)"
-msgstr ""
+msgstr "ไดเรกทอรีโปรเจกต์ (ค่าเริ่มต้น: เดินจาก cwd)"
 
 #: src/zfr_lib/comments_cmd.py:49
 msgid "user comments only (~/.config/zfr/lint.comments)"
-msgstr ""
+msgstr "ความคิดเห็นของผู้ใช้เท่านั้น (~/.config/zfr/lint.comments)"
 
 #: src/zfr_lib/comments_cmd.py:55
 msgid "project comments only (.config/zfr/lint.comments)"
-msgstr ""
+msgstr "ความคิดเห็นโครงการเท่านั้น (.config/zfr/lint.comments)"
 
 #: src/zfr_lib/comments_cmd.py:61
 msgid "delete matching comments (files or selected sections)"
-msgstr ""
+msgstr "ลบความคิดเห็นที่ตรงกัน (ไฟล์หรือส่วนที่เลือก)"
 
 #: src/zfr_lib/comments_cmd.py:67
 msgid "omit the AI hint trailer"
-msgstr ""
+msgstr "ละเว้นตัวอย่างแนะนำ AI"
 
 #: src/zfr_lib/comments_cmd.py:93
 msgid "No matching lint.comments to delete."
-msgstr ""
+msgstr "ไม่พบ lint.comments ที่ตรงกันเพื่อลบ"
 
 #: src/zfr_lib/comments_cmd.py:96
 #, fuzzy, python-format
@@ -179,48 +166,33 @@ msgid "changelog/git author email (default: %s)"
 msgstr "อีเมลผู้เขียน changelog/git (ค่าเริ่มต้น: %s)"
 
 #: src/zfr_lib/create.py:317
-msgid ""
-"do not instantiate a default puff (leave some_puff1 tokens for a later zfr "
-"add)"
-msgstr ""
+msgid "do not instantiate a default puff (leave some_puff1 tokens for a later zfr add)"
+msgstr "อย่าสร้างอินสแตนซ์ puff เริ่มต้น (เว้นโทเค็น some_puff1 ไว้สำหรับการเพิ่ม zfr ในภายหลัง)"
 
 #: src/zfr_lib/create.py:321
 msgid "new project directory name"
 msgstr "ชื่อไดเรกทอรีโปรเจกต์ใหม่"
 
 #: src/zfr_lib/create.py:325
-msgid ""
-"puff names (default: one puff named like the package; use --no-puff for "
-"none)"
-msgstr ""
+msgid "puff names (default: one puff named like the package; use --no-puff for none)"
+msgstr "ชื่อพัฟ (ค่าเริ่มต้น: พัฟหนึ่งชื่อเหมือนแพ็กเกจ; ใช้ --no-puff หากไม่มี)"
 
 #: src/zfr_lib/detect.py:15
 msgid "print detected language for the current directory"
 msgstr "พิมพ์ภาษาที่ตรวจพบสำหรับไดเรกทอรีปัจจุบัน"
 
 #: src/zfr_lib/detect.py:16
-msgid ""
-"Print the detected language of the current project and layout details on "
-"stderr."
-msgstr ""
-"พิมพ์ภาษาที่ตรวจพบของโปรเจกต์ปัจจุบันและรายละเอียดเลย์เอาต์ไปที่ stderr"
+msgid "Print the detected language of the current project and layout details on stderr."
+msgstr "พิมพ์ภาษาที่ตรวจพบของโปรเจกต์ปัจจุบันและรายละเอียดเลย์เอาต์ไปที่ stderr"
 
 #: src/zfr_lib/dist.py:61
 #, fuzzy, python-format
-msgid ""
-"write the archive into DIR (default: meson-dist, or %%_topdir/SOURCES with "
-"--rpm; usually $HOME/rpmbuild)"
-msgstr ""
-"เขียนแอร์ไคฟ์ไปที่ DIR (ค่าเริ่มต้น: meson-dist หรือ %_topdir/SOURCES "
-"($HOME/rpmbuild) ด้วย --rpm)"
+msgid "write the archive into DIR (default: meson-dist, or %%_topdir/SOURCES with --rpm; usually $HOME/rpmbuild)"
+msgstr "เขียนแอร์ไคฟ์ไปที่ DIR (ค่าเริ่มต้น: meson-dist หรือ %_topdir/SOURCES ($HOME/rpmbuild) ด้วย --rpm)"
 
 #: src/zfr_lib/dist.py:71
-msgid ""
-"Meson build directory (default: /build when it matches this source tree, "
-"else <project>/build)"
-msgstr ""
-"ไดเรกทอรี build Meson (ค่าเริ่มต้น: /build เมื่อตรงกับ source tree นี้ "
-"มิฉะนั้น <project>/build)"
+msgid "Meson build directory (default: /build when it matches this source tree, else <project>/build)"
+msgstr "ไดเรกทอรี build Meson (ค่าเริ่มต้น: /build เมื่อตรงกับ source tree นี้ มิฉะนั้น <project>/build)"
 
 #: src/zfr_lib/dist.py:81
 msgid "archive format (default: xz)"
@@ -228,12 +200,8 @@ msgstr "รูปแบบแอร์ไคฟ์ (ค่าเริ่มต�
 
 #: src/zfr_lib/dist.py:87
 #, fuzzy, python-format
-msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to %%_topdir/SOURCES "
-"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
-msgstr ""
-"ตั้งชื่อแอร์ไคฟ์ NAME-VERSION.tar.xz และเขียนไป %_topdir/SOURCES "
-"($HOME/rpmbuild) เว้นแต่ระบุ -o"
+msgid "name the archive NAME-VERSION.tar.xz and write it to %%_topdir/SOURCES ($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
+msgstr "ตั้งชื่อแอร์ไคฟ์ NAME-VERSION.tar.xz และเขียนไป %_topdir/SOURCES ($HOME/rpmbuild) เว้นแต่ระบุ -o"
 
 #: src/zfr_lib/dist.py:96
 msgid "pass --allow-dirty to meson dist (default: allow)"
@@ -249,18 +217,8 @@ msgstr "สร้าง source tarball (meson dist หรือเฉพาะ�
 
 #: src/zfr_lib/dist.py:420
 #, fuzzy
-msgid ""
-"Build a source archive of the current zephyr project (walks from cwd toward "
-"parent directories). Uses meson dist when this directory is the git project "
-"root; otherwise packs this project only so nested language templates do not "
-"ship the parent meta-repo. When ``.tarignore`` exists (gitignore-style), "
-"always pack the project tree and apply those excludes. Prints the archive "
-"path on stdout."
-msgstr ""
-"สร้างแอร์ไคฟ์ซอร์สของโปรเจกต์ zephyr ปัจจุบัน (เดินจาก cwd "
-"ไปยังไดเรกทอรีแม่) ใช้ meson dist เมื่อไดเรกทอรีนี้เป็น git project root "
-"มิฉะนั้นบรรจุเฉพาะโปรเจกต์นี้เพื่อไม่ให้เทมเพลตภาษาที่ซ้อนกันส่ง meta-repo "
-"แม่  พิมพ์เส้นทางแอร์ไคฟ์ไป stdout"
+msgid "Build a source archive of the current zephyr project (walks from cwd toward parent directories). Uses meson dist when this directory is the git project root; otherwise packs this project only so nested language templates do not ship the parent meta-repo. When ``.tarignore`` exists (gitignore-style), always pack the project tree and apply those excludes. Prints the archive path on stdout."
+msgstr "สร้างแอร์ไคฟ์ซอร์สของโปรเจกต์ zephyr ปัจจุบัน (เดินจาก cwd ไปยังไดเรกทอรีแม่) ใช้ meson dist เมื่อไดเรกทอรีนี้เป็น git project root มิฉะนั้นบรรจุเฉพาะโปรเจกต์นี้เพื่อไม่ให้เทมเพลตภาษาที่ซ้อนกันส่ง meta-repo แม่  พิมพ์เส้นทางแอร์ไคฟ์ไป stdout"
 
 #: src/zfr_lib/i18n/cmd.py:42
 msgid "no implemented locales (po/LINGUAS + po/*.po)"
@@ -319,12 +277,8 @@ msgid "manage implemented gettext locales"
 msgstr "quản lý locale gettext đã triển khai"
 
 #: src/zfr_lib/i18n/cmd.py:169
-msgid ""
-"List, add, delete, and build derived locales in the current project. Use zfr"
-" translate to query or update message strings."
-msgstr ""
-"Liệt kê, thêm, xóa và tạo locale phái sinh trong dự án. Dùng zfr translate "
-"để truy vấn hoặc cập nhật chuỗi."
+msgid "List, add, delete, and build derived locales in the current project. Use zfr translate to query or update message strings."
+msgstr "Liệt kê, thêm, xóa và tạo locale phái sinh trong dự án. Dùng zfr translate để truy vấn hoặc cập nhật chuỗi."
 
 #: src/zfr_lib/i18n/cmd.py:179
 msgid "list all implemented locales in this project"
@@ -339,46 +293,32 @@ msgid "add a new locale"
 msgstr "thêm locale mới"
 
 #: src/zfr_lib/i18n/cmd.py:197
-msgid ""
-"build derived locale PO/man files from parents (skip locales in LINGUAS)"
+msgid "build derived locale PO/man files from parents (skip locales in LINGUAS)"
 msgstr "tạo PO/man phái sinh từ locale cha (bỏ qua locale có trong LINGUAS)"
 
 #: src/zfr_lib/i18n/cmd.py:202
-msgid ""
-"output directory for derived .po files (default: build/po or "
-"$MESON_BUILD_ROOT/po)"
-msgstr ""
-"โดรกเซอร์พิมพ์สําหรับแฟ้ม .po . (ปากแปรด: build/po หรือ "
-"$MESON_BUILD_ROOT/po)"
+msgid "output directory for derived .po files (default: build/po or $MESON_BUILD_ROOT/po)"
+msgstr "โดรกเซอร์พิมพ์สําหรับแฟ้ม .po . (ปากแปรด: build/po หรือ $MESON_BUILD_ROOT/po)"
 
 #: src/zfr_lib/i18n/cmd.py:207
 msgid "write a stamp file listing derived paths (for Meson custom_target)"
-msgstr ""
-"เขียนรายการแฟ้มแสมม์ที่มีทางที่เกิดขึ้น (สําหรับ Meson custom_ target)"
+msgstr "เขียนรายการแฟ้มแสมม์ที่มีทางที่เกิดขึ้น (สําหรับ Meson custom_ target)"
 
 #: src/zfr_lib/i18n/cmd.py:212
 msgid "with --build, also msgfmt derived .po into LC_MESSAGES (for Meson)"
-msgstr ""
-"ด้วย --build, ด้วย msgfmt พิมพ์ .po เข้าไปใน LC_MESSAGES (สําหรับ Meson)"
+msgstr "ด้วย --build, ด้วย msgfmt พิมพ์ .po เข้าไปใน LC_MESSAGES (สําหรับ Meson)"
 
 #: src/zfr_lib/i18n/cmd.py:217
 msgid "gettext domain for --compile-mo / --install-derived"
 msgstr "ดอเมน gettext สําหรับ --compile-mo / --install-derived"
 
 #: src/zfr_lib/i18n/cmd.py:223
-msgid ""
-"install derived .mo from --po-dir into $MESON_INSTALL_DESTDIR_PREFIX (Meson "
-"add_install_script)"
-msgstr ""
-"ตั้งค่าการสร้าง .mo จาก --po-dir เข้าไป $MESON_INSTALL_DESTDIR_PREFIX (Meson"
-" Add_install_script)"
+msgid "install derived .mo from --po-dir into $MESON_INSTALL_DESTDIR_PREFIX (Meson add_install_script)"
+msgstr "ตั้งค่าการสร้าง .mo จาก --po-dir เข้าไป $MESON_INSTALL_DESTDIR_PREFIX (Meson Add_install_script)"
 
 #: src/zfr_lib/i18n/cmd.py:231
-msgid ""
-"with --install-derived, locale subdirectory under prefix (default: "
-"share/locale)"
-msgstr ""
-"ด้วย --install-derived, เฟร็กเซอร์โลกี้ใต้ prefix (ปปรุง: share/locale)"
+msgid "with --install-derived, locale subdirectory under prefix (default: share/locale)"
+msgstr "ด้วย --install-derived, เฟร็กเซอร์โลกี้ใต้ prefix (ปปรุง: share/locale)"
 
 #: src/zfr_lib/i18n/cmd.py:233
 msgid "with --build, print only"
@@ -398,7 +338,7 @@ msgstr "--install-derived ต้องการ --po-dir และ --domain"
 
 #: src/zfr_lib/ize/engine/__init__.py:86
 msgid "not selected via --only"
-msgstr ""
+msgstr "ไม่ได้เลือกผ่าน --only"
 
 #: src/zfr_lib/ize/engine/__init__.py:90
 msgid "suppressed via -u/--uncheck"
@@ -407,7 +347,7 @@ msgstr "ถูกระงับด้วย -u/--uncheck"
 #: src/zfr_lib/ize/engine/scripts.py:171
 #, python-format
 msgid "run_target('%s') → scripts/%s.sh"
-msgstr ""
+msgstr "run_target('%s') → scripts/%s.sh"
 
 #: src/zfr_lib/ize/__init__.py:76
 msgid "refactor this project to current zephyr style"
@@ -415,15 +355,8 @@ msgstr "รีแฟกเตอร์โปรเจกต์นี้ให้
 
 #: src/zfr_lib/ize/__init__.py:77
 #, fuzzy
-msgid ""
-"Refactor the current project to match current zephyr style: missing "
-"debian/rpm files, meson targets, AsciiDoc man pages, Meson version "
-"substitutions, and lint-level gettext coverage (LINGUAS + .po). Does not "
-"scaffold man/<locale> man translations. Walks from cwd toward parents."
-msgstr ""
-"รีแฟกเตอร์โปรเจกต์ปัจจุบันให้ตรงสไตล์ zephyr ปัจจุบัน: ไฟล์ debian/rpm "
-"ที่หาย meson targets หน้า man AsciiDoc และการแทนที่เวอร์ชัน Meson เดินจาก "
-"cwd ไปยังแม่"
+msgid "Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, Meson version substitutions, and lint-level gettext coverage (LINGUAS + .po). Does not scaffold man/<locale> man translations. Walks from cwd toward parents."
+msgstr "รีแฟกเตอร์โปรเจกต์ปัจจุบันให้ตรงสไตล์ zephyr ปัจจุบัน: ไฟล์ debian/rpm ที่หาย meson targets หน้า man AsciiDoc และการแทนที่เวอร์ชัน Meson เดินจาก cwd ไปยังแม่"
 
 #: src/zfr_lib/ize/__init__.py:81
 #, python-format
@@ -444,31 +377,20 @@ msgid "show details for ize standard NUM (e.g. ZI0015, 15) and exit"
 msgstr "แสดงข้อมูลสําหรับ ize ระดับ NUM (เช่น ZI015, 15) และออกจาก"
 
 #: src/zfr_lib/ize/__init__.py:100
-msgid ""
-"bump patch version (debian/changelog + VERSION), git add -A, and commit ize "
-"changes with a verbose message"
-msgstr ""
-"รูปแพทร์ bup plash (debian/changelog + VERSION), git เพิ่ม -A, และ "
-"ทําการเปลี่ยนแปลงด้วยข้อความที่สุด"
+msgid "bump patch version (debian/changelog + VERSION), git add -A, and commit ize changes with a verbose message"
+msgstr "รูปแพทร์ bup plash (debian/changelog + VERSION), git เพิ่ม -A, และ ทําการเปลี่ยนแปลงด้วยข้อความที่สุด"
 
 #: src/zfr_lib/ize/__init__.py:109
-msgid ""
-"changelog author for --commit (Name or 'Name <email>'); default: reuse the "
-"previous debian/changelog trailer"
-msgstr ""
-"ผู้เขียนแปลงล็อกสําหรับ --commit (ชื่อหรือ 'ชื่อ <email>'); ปั้นปรับปุนมือ: "
-"ปรับใช้แทร็บ debian/changelog ก่อน"
+msgid "changelog author for --commit (Name or 'Name <email>'); default: reuse the previous debian/changelog trailer"
+msgstr "ผู้เขียนแปลงล็อกสําหรับ --commit (ชื่อหรือ 'ชื่อ <email>'); ปั้นปรับปุนมือ: ปรับใช้แทร็บ debian/changelog ก่อน"
 
 #: src/zfr_lib/ize/__init__.py:113
 msgid "also print skipped files"
 msgstr "พิมพ์ไฟล์ที่ข้ามด้วย"
 
 #: src/zfr_lib/ize/__init__.py:119
-msgid ""
-"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
-msgstr ""
-"เรียก 2meson เพื่อเปลี่ยน Autotools/CMake ไปยัง Meson เมื่อมีอยู่อยู่ "
-"(ปัจจุบัน: on)"
+msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgstr "เรียก 2meson เพื่อเปลี่ยน Autotools/CMake ไปยัง Meson เมื่อมีอยู่อยู่ (ปัจจุบัน: on)"
 
 #: src/zfr_lib/ize/__init__.py:121
 msgid "do not convert groff .1 man pages to man/*.adoc"
@@ -476,8 +398,7 @@ msgstr "ไม่แปลงหน้า man groff .1 เป็น docs/*.adoc"
 
 #: src/zfr_lib/ize/__init__.py:122
 #, fuzzy
-msgid ""
-"do not turn hardcoded versions/paths into @VERSION@/@PREFIX@ / config.h"
+msgid "do not turn hardcoded versions/paths into @VERSION@/@PREFIX@ / config.h"
 msgstr "ไม่แปลงเวอร์ชันที่ hardcode เป็น @VERSION@ / config.h"
 
 #: src/zfr_lib/ize/__init__.py:129
@@ -500,19 +421,17 @@ msgid "unknown ize standard: %s"
 msgstr "มาตรฐาน ize ที่ไม่รู้จัก: %s"
 
 #: src/zfr_lib/jobs.py:30
-msgid ""
-"job budget: omit or pass -j alone for auto (debuild/dpkg-buildpackage get "
-"bare -j); -j N pins a total budget split across concurrent planned workers"
-msgstr ""
+msgid "job budget: omit or pass -j alone for auto (debuild/dpkg-buildpackage get bare -j); -j N pins a total budget split across concurrent planned workers"
+msgstr "งบประมาณงาน: ละเว้นหรือปล่อย -j ไว้เพียงอย่างเดียวสำหรับการตั้งค่าอัตโนมัติ (debuild/dpkg-buildpackage จะได้ -j เปลือย); -j N หัวพินแบ่งงบประมาณรวมระหว่างคนงานที่วางแผนพร้อมกัน"
 
 #: src/zfr_lib/lang/antlr.py:42 src/zfr_lib/lang/as.py:30
 #: src/zfr_lib/lang/bison.py:38 src/zfr_lib/lang/clib.py:37
 #: src/zfr_lib/lang/cobol.py:32 src/zfr_lib/lang/cpplib.py:37
-#: src/zfr_lib/lang/cpp.py:24 src/zfr_lib/lang/c.py:24
-#: src/zfr_lib/lang/d.py:32 src/zfr_lib/lang/fortran.py:32
-#: src/zfr_lib/lang/gcc.py:48 src/zfr_lib/lang/kotlin.py:22
-#: src/zfr_lib/lang/lua.py:22 src/zfr_lib/lang/nim.py:24
-#: src/zfr_lib/lang/pascal.py:32 src/zfr_lib/lang/python.py:21
+#: src/zfr_lib/lang/cpp.py:24 src/zfr_lib/lang/c.py:24 src/zfr_lib/lang/d.py:32
+#: src/zfr_lib/lang/fortran.py:32 src/zfr_lib/lang/gcc.py:48
+#: src/zfr_lib/lang/kotlin.py:22 src/zfr_lib/lang/lua.py:22
+#: src/zfr_lib/lang/nim.py:24 src/zfr_lib/lang/pascal.py:32
+#: src/zfr_lib/lang/python.py:21
 msgid "tests/ present"
 msgstr "มี tests/"
 
@@ -525,8 +444,7 @@ msgstr "ไม่มีไดเรกทอรี tests/"
 
 #: src/zfr_lib/lang/antlr.py:49
 msgid "Add tests/TestCommons.java or fixture checks for parser output."
-msgstr ""
-"เพิ่ม tests/TestCommons.java หรือการตรวจ fixture สำหรับเอาต์พุตของ parser"
+msgstr "เพิ่ม tests/TestCommons.java หรือการตรวจ fixture สำหรับเอาต์พุตของ parser"
 
 #: src/zfr_lib/lang/as.py:37
 msgid "Add tests/smoke.sh and meson test() for stdin/stdout copy."
@@ -560,17 +478,12 @@ msgid "no src/*.in or root *.in scripts"
 msgstr "ไม่มีสคริปต์ src/*.in"
 
 #: src/zfr_lib/lang/bash.py:124
-msgid ""
-"Keep configured scripts as src/<puff>.in (preferred) or <puff>.in with "
-"@PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
-msgstr ""
-"คงสคริปต์ที่ตั้งค่าไว้เป็น src/<puff>.in พร้อม @PACKAGE@/@VERSION@ และ meson"
-" configure_file + install_mode rwxr-xr-x"
+msgid "Keep configured scripts as src/<puff>.in (preferred) or <puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
+msgstr "คงสคริปต์ที่ตั้งค่าไว้เป็น src/<puff>.in พร้อม @PACKAGE@/@VERSION@ และ meson configure_file + install_mode rwxr-xr-x"
 
 #: src/zfr_lib/lang/bison.py:45
 msgid "Add tests/ with fixture checks for parser dump/format output."
-msgstr ""
-"เพิ่ม tests/ พร้อมการตรวจ fixture สำหรับเอาต์พุต dump/format ของ parser"
+msgstr "เพิ่ม tests/ พร้อมการตรวจ fixture สำหรับเอาต์พุต dump/format ของ parser"
 
 #: src/zfr_lib/lang/_c_bas.py:187
 msgid "no int main() in src/; skip bas i18n main checks"
@@ -582,14 +495,8 @@ msgid "main missing bas i18n setup: %s"
 msgstr "ปรับแต่งบัส i18n หลักหายไป: %s"
 
 #: src/zfr_lib/lang/_c_bas.py:211
-msgid ""
-"In main: #include <bas/locale/i18n.h> and <bas/proc/env.h>; const char *exe "
-"= self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR from meson config.h). Run "
-"`zfr ize`."
-msgstr ""
-"ในกรณีใหญ่: #include <bas/locale/i18n.h> และ <bas/proc/env.h>; คอนส์แจ้ง "
-"*exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR จากการปรับแต่ง meson.h)."
-" เรียกร้อง `zfr ize`"
+msgid "In main: #include <bas/locale/i18n.h> and <bas/proc/env.h>; const char *exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR from meson config.h). Run `zfr ize`."
+msgstr "ในกรณีใหญ่: #include <bas/locale/i18n.h> และ <bas/proc/env.h>; คอนส์แจ้ง *exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR จากการปรับแต่ง meson.h). เรียกร้อง `zfr ize`"
 
 #: src/zfr_lib/lang/_c_bas.py:222
 msgid "bas i18n main setup (self_exe + init_i18n)"
@@ -600,12 +507,8 @@ msgid "no define_logger() in src/"
 msgstr "ไม่มี define_logger() ใน src/"
 
 #: src/zfr_lib/lang/_c_bas.py:236
-msgid ""
-"In one .c/.cpp: #include <bas/log/deflog.h> then define_logger(); libraries "
-"may use __attribute__((weak)) define_logger(); Run `zfr ize`."
-msgstr ""
-"ในหนึ่ง .c/.cpp: #include <bas/log/deflog.h> แล้ว define_logger(); "
-"ละเอียดสารอาจใช้ _attribute_(feak) define_logger(); เรียก `zfr ize`"
+msgid "In one .c/.cpp: #include <bas/log/deflog.h> then define_logger(); libraries may use __attribute__((weak)) define_logger(); Run `zfr ize`."
+msgstr "ในหนึ่ง .c/.cpp: #include <bas/log/deflog.h> แล้ว define_logger(); ละเอียดสารอาจใช้ _attribute_(feak) define_logger(); เรียก `zfr ize`"
 
 #: src/zfr_lib/lang/_c_bas.py:250
 msgid "define_logger() present"
@@ -628,12 +531,8 @@ msgid "meson.build missing LOCALEDIR in config.h"
 msgstr "meson.buildหาย LOCALEDIR ในการปรับแต่ง.h"
 
 #: src/zfr_lib/lang/_c_bas.py:279
-msgid ""
-"localedir = prefix / get_option('localedir'); "
-"config_h.set_quoted('LOCALEDIR', localedir); Run `zfr ize`."
-msgstr ""
-"localedir = prefix / get_ option('localedir'); "
-"config_h.set_quoted('LOCALEDIR', localedir; เรียก `zfr ize`"
+msgid "localedir = prefix / get_option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); Run `zfr ize`."
+msgstr "localedir = prefix / get_ option('localedir'); config_h.set_quoted('LOCALEDIR', localedir; เรียก `zfr ize`"
 
 #: src/zfr_lib/lang/_c_bas.py:289
 msgid "meson LOCALEDIR present"
@@ -645,9 +544,7 @@ msgid "gettext string has leading/trailing spaces: %r"
 msgstr "gettext สัญญาณมี leading/trailing ส่วน: %r"
 
 #: src/zfr_lib/lang/_c_bas.py:310
-msgid ""
-"Keep padding outside _(): e.g. fputs(\"  -v, --verbose      \", out); "
-"fputs(_(\"repeat for more verbose loggings\\n\"), out);"
+msgid "Keep padding outside _(): e.g. fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\n\"), out);"
 msgstr ""
 "ปาดดิ้งอยู่ข้างนอก _(): เช่น fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\\n"
 "\"), out);"
@@ -691,12 +588,8 @@ msgid "missing go.mod"
 msgstr "ไม่มี go.mod"
 
 #: src/zfr_lib/lang/go.py:23
-msgid ""
-"Add go.mod; meson should `go build` with -X main.buildVersion from "
-"meson.project_version()."
-msgstr ""
-"เพิ่ม go.mod; meson ควรเรียก `go build` พร้อม -X main.buildVersion จาก "
-"meson.project_version()"
+msgid "Add go.mod; meson should `go build` with -X main.buildVersion from meson.project_version()."
+msgstr "เพิ่ม go.mod; meson ควรเรียก `go build` พร้อม -X main.buildVersion จาก meson.project_version()"
 
 #: src/zfr_lib/lang/kotlin.py:23
 msgid "no tests/ (kotlin template uses kotlinc + meson test)"
@@ -711,10 +604,8 @@ msgid "no tests/ (lua template uses lua tests + meson test)"
 msgstr "ไม่มี tests/ (เทมเพลต lua ใช้การทดสอบ lua + meson test)"
 
 #: src/zfr_lib/lang/lua.py:24
-msgid ""
-"Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
-msgstr ""
-"เพิ่ม tests/test_*.lua และ meson test() ที่เรียก lua ด้วย LUA_PATH=src/?.lua"
+msgid "Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
+msgstr "เพิ่ม tests/test_*.lua และ meson test() ที่เรียก lua ด้วย LUA_PATH=src/?.lua"
 
 #: src/zfr_lib/lang/nim.py:25
 msgid "no tests/ (nim template uses unittest + meson test)"
@@ -745,12 +636,8 @@ msgid "missing Cargo.toml"
 msgstr "ไม่มี Cargo.toml"
 
 #: src/zfr_lib/lang/rust.py:23
-msgid ""
-"Rust zephyr projects keep Cargo.toml plus meson custom_target for the "
-"binary."
-msgstr ""
-"โครงการ zephyr ภาษา Rust คง Cargo.toml พร้อม meson custom_target "
-"สำหรับไบนารี"
+msgid "Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
+msgstr "โครงการ zephyr ภาษา Rust คง Cargo.toml พร้อม meson custom_target สำหรับไบนารี"
 
 #: src/zfr_lib/lang/zig.py:23
 msgid "missing build.zig"
@@ -762,14 +649,11 @@ msgstr "เพิ่ม build.zig; meson ควรเรียก `zig build -Do
 
 #: src/zfr_lib/lasterror.py:16
 msgid "browse the last zfr package output interactively"
-msgstr ""
+msgstr "เรียกดูผลลัพธ์แพ็กเกจ zfr ล่าสุดแบบอินเทอร์แอคทีฟ"
 
 #: src/zfr_lib/lasterror.py:18
-msgid ""
-"Show the last packaging run. Arrow keys select a packager; Tab opens the "
-"captured log in fdmpager; Enter replays that packager's stdout/stderr with "
-"fddemux; q quits."
-msgstr ""
+msgid "Show the last packaging run. Arrow keys select a packager; Tab opens the captured log in fdmpager; Enter replays that packager's stdout/stderr with fddemux; q quits."
+msgstr "แสดงการบรรจุครั้งล่าสุด ปุ่มลูกศรเลือกผู้บรรจุ; Tab เปิดบันทึกที่จับมาใน fdmpager; Enter เล่นซ้ำ stdout/stderr ของผู้บรรจุนั้นด้วย fddemux; q ออกจากโปรแกรม."
 
 #: src/zfr_lib/lasterror.py:29
 #, fuzzy
@@ -778,15 +662,15 @@ msgstr "สร้างแพ็กเกจที่ไม่ได้ลงน
 
 #: src/zfr_lib/lasterror.py:35
 msgid "print a summary and exit (no curses UI)"
-msgstr ""
+msgstr "พิมพ์สรุปแล้วออก (ไม่มี UI แบบ curses)"
 
 #: src/zfr_lib/lasterror.py:41
 msgid "view captured logs with fdmpager (requires fdmux)"
-msgstr ""
+msgstr "ดูบันทึกที่จับภาพด้วย fdmpager (ต้องการ fdmux)"
 
 #: src/zfr_lib/lasterror.py:47
 msgid "non-interactively replay KIND (deb, rpm, …) to stdout/stderr"
-msgstr ""
+msgstr "เล่นซ้ำ KIND (deb, rpm, …) แบบไม่โต้ตอบไปที่ stdout/stderr"
 
 #: src/zfr_lib/lint/browse.py:39
 msgid "zfr lint"
@@ -929,7 +813,7 @@ msgstr "เสนอกฎ lint ใหม่ (ตรวจอะไร ทำไ
 #: src/zfr_lib/lint/browse.py:455
 #, python-format
 msgid "zfr lint browse: %s"
-msgstr "zfr lint browse: %s"
+msgstr "zfr lint เรียกดู: %s"
 
 #: src/zfr_lib/lint/browse.py:456
 msgid "Press Ctrl+C to stop."
@@ -947,12 +831,8 @@ msgstr "Build-Depends ไม่มี %s"
 
 #: src/zfr_lib/lint/debian.py:50
 #, python-format
-msgid ""
-"Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man "
-"pages)."
-msgstr ""
-"เพิ่ม %s ใน Build-Depends (แพ็กเกจ zephyr สร้างด้วย Meson และหน้า man ของ "
-"AsciiDoc)"
+msgid "Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man pages)."
+msgstr "เพิ่ม %s ใน Build-Depends (แพ็กเกจ zephyr สร้างด้วย Meson และหน้า man ของ AsciiDoc)"
 
 #: src/zfr_lib/lint/debian.py:54
 msgid "debhelper-compat present"
@@ -963,10 +843,8 @@ msgid "Build-Depends missing debhelper-compat (= 13)"
 msgstr "Build-Depends ไม่มี debhelper-compat (= 13)"
 
 #: src/zfr_lib/lint/debian.py:62
-msgid ""
-"Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
-msgstr ""
-"Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+msgid "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+msgstr "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
 
 #: src/zfr_lib/lint/debian.py:80
 msgid "Package stanza missing Architecture"
@@ -1000,12 +878,8 @@ msgid "Architecture: any"
 msgstr "Architecture: any"
 
 #: src/zfr_lib/lint/debian.py:123
-msgid ""
-"Architecture: all but Meson has executable(); ELF binaries need "
-"Architecture: any (same class of bug as RPM BuildArch: noarch)"
-msgstr ""
-"Architecture: ทุกอย่างที่เว้นจาก Meson มี executable(); ELF เบียร์รีต้องการ "
-"Architecture: ทุกอย่าง (แคลกเดียวของ bug เช่น RPM BuildArch: noarch)"
+msgid "Architecture: all but Meson has executable(); ELF binaries need Architecture: any (same class of bug as RPM BuildArch: noarch)"
+msgstr "Architecture: ทุกอย่างที่เว้นจาก Meson มี executable(); ELF เบียร์รีต้องการ Architecture: ทุกอย่าง (แคลกเดียวของ bug เช่น RPM BuildArch: noarch)"
 
 #: src/zfr_lib/lint/debian.py:133
 #, python-format
@@ -1030,10 +904,8 @@ msgid "dh meson debian/build"
 msgstr "dh ใช้ meson ที่ debian/build"
 
 #: src/zfr_lib/lint/debian.py:158
-msgid ""
-"debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
-msgstr ""
-"debian/rules ไม่ใช่ dh --buildsystem=meson --builddirectory=debian/build"
+msgid "debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
+msgstr "debian/rules ไม่ใช่ dh --buildsystem=meson --builddirectory=debian/build"
 
 #: src/zfr_lib/lint/debian.py:161
 #, no-python-format
@@ -1073,12 +945,8 @@ msgid "VERSION=%(file)r != changelog %(changelog)r"
 msgstr "VERSION=%(file)r != บันทึกการเปลี่ยนแปลง %(changelog)r"
 
 #: src/zfr_lib/lint/debian.py:192
-msgid ""
-"VERSION should match the latest debian/changelog entry (pre-commit hook "
-"updates it). Git describe may still differ."
-msgstr ""
-"VERSION ต้องตรงกับรายการล่าสุดใน debian/changelog (ฮุก pre-commit "
-"เป็นผู้ปรับปรุง) Git describe อาจยังต่างอยู่"
+msgid "VERSION should match the latest debian/changelog entry (pre-commit hook updates it). Git describe may still differ."
+msgstr "VERSION ต้องตรงกับรายการล่าสุดใน debian/changelog (ฮุก pre-commit เป็นผู้ปรับปรุง) Git describe อาจยังต่างอยู่"
 
 #: src/zfr_lib/lint/debian.py:198
 #, python-format
@@ -1135,239 +1003,156 @@ msgid "Long files fight ownership"
 msgstr "ไฟล์ยาวทำให้การเป็นเจ้าของยาก"
 
 #: src/zfr_lib/lint/docs.py:27
-msgid ""
-"Very long source files are hard to review, test, and own. Zephyr prefers "
-"cohesive modules under a package subdirectory with a thin entry-point file —"
-" the same shape create/ize expect."
-msgstr ""
-"ไฟล์ซอร์สที่ยาวมากยากต่อการรีวิว ทดสอบ และเป็นเจ้าของ Zephyr "
-"ชอบโมดูลที่เกาะกลุ่มภายใต้ไดเรกทอรีย่อยของแพ็กเกจพร้อมไฟล์จุดเข้าบาง ๆ — "
-"รูปแบบเดียวกับที่ create/ize คาดหวัง"
+msgid "Very long source files are hard to review, test, and own. Zephyr prefers cohesive modules under a package subdirectory with a thin entry-point file — the same shape create/ize expect."
+msgstr "ไฟล์ซอร์สที่ยาวมากยากต่อการรีวิว ทดสอบ และเป็นเจ้าของ Zephyr ชอบโมดูลที่เกาะกลุ่มภายใต้ไดเรกทอรีย่อยของแพ็กเกจพร้อมไฟล์จุดเข้าบาง ๆ — รูปแบบเดียวกับที่ create/ize คาดหวัง"
 
 #: src/zfr_lib/lint/docs.py:33
 msgid "What improving it buys you"
 msgstr "การปรับปรุงให้ประโยชน์อะไร"
 
 #: src/zfr_lib/lint/docs.py:35
-msgid ""
-"Smaller review diffs, clearer module boundaries, easier unit tests, and "
-"fewer merge conflicts on busy files."
-msgstr ""
-"ดิฟฟ์รีวิวเล็กลง ขอบเขตโมดูลชัดขึ้น ทดสอบยูนิตง่ายขึ้น และความขัดแย้งตอน "
-"merge น้อยลงบนไฟล์ที่ถูกแตะบ่อย"
+msgid "Smaller review diffs, clearer module boundaries, easier unit tests, and fewer merge conflicts on busy files."
+msgstr "ดิฟฟ์รีวิวเล็กลง ขอบเขตโมดูลชัดขึ้น ทดสอบยูนิตง่ายขึ้น และความขัดแย้งตอน merge น้อยลงบนไฟล์ที่ถูกแตะบ่อย"
 
 #: src/zfr_lib/lint/docs.py:40
 msgid "Thresholds"
 msgstr "เกณฑ์"
 
 #: src/zfr_lib/lint/docs.py:42
-msgid ""
-"Lint counts non-empty lines (skipping build/debian/po/…). A note appears "
-"around ~600 lines; a warning around ~1000. Template example modules are "
-"skipped."
-msgstr ""
-"Lint นับบรรทัดที่ไม่ว่าง (ข้าม build/debian/po/…) จะมีโน้ตประมาณ ~600 บรรทัด"
-" และคำเตือนประมาณ ~1000 โมดูลตัวอย่างในเทมเพลตจะถูกข้าม"
+msgid "Lint counts non-empty lines (skipping build/debian/po/…). A note appears around ~600 lines; a warning around ~1000. Template example modules are skipped."
+msgstr "Lint นับบรรทัดที่ไม่ว่าง (ข้าม build/debian/po/…) จะมีโน้ตประมาณ ~600 บรรทัด และคำเตือนประมาณ ~1000 โมดูลตัวอย่างในเทมเพลตจะถูกข้าม"
 
 #: src/zfr_lib/lint/docs.py:48
 msgid "Fixing is manual"
 msgstr "การแก้ต้องทำเอง"
 
 #: src/zfr_lib/lint/docs.py:50
-msgid ""
-"Split the file and update meson/install/import lists yourself. `zfr ize` "
-"does not auto-split sources."
-msgstr ""
-"แยกไฟล์แล้วอัปเดตรายการ meson/install/import เอง `zfr ize` "
-"จะไม่แยกซอร์สให้อัตโนมัติ"
+msgid "Split the file and update meson/install/import lists yourself. `zfr ize` does not auto-split sources."
+msgstr "แยกไฟล์แล้วอัปเดตรายการ meson/install/import เอง `zfr ize` จะไม่แยกซอร์สให้อัตโนมัติ"
 
 #: src/zfr_lib/lint/docs.py:57
 msgid "Hardcoded /usr breaks prefixes"
 msgstr "/usr ที่ฮาร์ดโค้ดทำลายพรีฟิกซ์"
 
 #: src/zfr_lib/lint/docs.py:59
-msgid ""
-"Absolute FHS paths (/usr/share, /usr/bin, …) fail under DESTDIR, non-"
-"standard prefixes, and Meson configure_file staging."
-msgstr ""
-"พาธ FHS แบบสัมบูรณ์ (/usr/share, /usr/bin, …) พังภายใต้ DESTDIR "
-"พรีฟิกซ์นอกมาตรฐาน และการสเตจ Meson configure_file"
+msgid "Absolute FHS paths (/usr/share, /usr/bin, …) fail under DESTDIR, non-standard prefixes, and Meson configure_file staging."
+msgstr "พาธ FHS แบบสัมบูรณ์ (/usr/share, /usr/bin, …) พังภายใต้ DESTDIR พรีฟิกซ์นอกมาตรฐาน และการสเตจ Meson configure_file"
 
 #: src/zfr_lib/lint/docs.py:64
 msgid "Preferred shape"
 msgstr "รูปแบบที่ต้องการ"
 
 #: src/zfr_lib/lint/docs.py:66
-msgid ""
-"Scripts use @PREFIX@ / @DATADIR@ / @LOCALEDIR@ (or equivalent) and are "
-"installed from *.in via Meson."
-msgstr ""
-"สคริปต์ใช้ @PREFIX@ / @DATADIR@ / @LOCALEDIR@ (หรือเทียบเท่า) และติดตั้งจาก "
-"*.in ผ่าน Meson"
+msgid "Scripts use @PREFIX@ / @DATADIR@ / @LOCALEDIR@ (or equivalent) and are installed from *.in via Meson."
+msgstr "สคริปต์ใช้ @PREFIX@ / @DATADIR@ / @LOCALEDIR@ (หรือเทียบเท่า) และติดตั้งจาก *.in ผ่าน Meson"
 
 #: src/zfr_lib/lint/docs.py:71
 msgid "What Solve does"
 msgstr "Solve ทำอะไร"
 
 #: src/zfr_lib/lint/docs.py:73
-msgid ""
-"Ize renames affected scripts to *.in and wires configure_file. Re-check "
-"shebangs and any tests that assumed live paths."
-msgstr ""
-"ize เปลี่ยนชื่อสคริปต์ที่กระทบเป็น *.in และเชื่อม configure_file ตรวจ "
-"shebang และเทสที่สมมติพาธจริงอีกครั้ง"
+msgid "Ize renames affected scripts to *.in and wires configure_file. Re-check shebangs and any tests that assumed live paths."
+msgstr "ize เปลี่ยนชื่อสคริปต์ที่กระทบเป็น *.in และเชื่อม configure_file ตรวจ shebang และเทสที่สมมติพาธจริงอีกครั้ง"
 
 #: src/zfr_lib/lint/docs.py:80
 msgid "Version literals drift"
 msgstr "ลิเทอรัลเวอร์ชันคลาดเคลื่อน"
 
 #: src/zfr_lib/lint/docs.py:82
-msgid ""
-"A hardcoded release string diverges from debian/changelog and Meson "
-"project_version() the moment you bump."
-msgstr ""
-"สตริงรีลีสที่ฮาร์ดโค้ดจะแยกจาก debian/changelog และ Meson project_version() "
-"ทันทีที่คุณ bump"
+msgid "A hardcoded release string diverges from debian/changelog and Meson project_version() the moment you bump."
+msgstr "สตริงรีลีสที่ฮาร์ดโค้ดจะแยกจาก debian/changelog และ Meson project_version() ทันทีที่คุณ bump"
 
 #: src/zfr_lib/lint/docs.py:87
 msgid "Single source of truth"
 msgstr "แหล่งความจริงเดียว"
 
 #: src/zfr_lib/lint/docs.py:89
-msgid ""
-"Prefer @VERSION@ / PROJECT_VERSION substituted at build time so `--version`,"
-" wrappers, and packages stay aligned."
-msgstr ""
-"ใช้ @VERSION@ / PROJECT_VERSION ที่แทนที่ตอนบิลด์ เพื่อให้ `--version` "
-"แรปเปอร์ และแพ็กเกจสอดคล้องกัน"
+msgid "Prefer @VERSION@ / PROJECT_VERSION substituted at build time so `--version`, wrappers, and packages stay aligned."
+msgstr "ใช้ @VERSION@ / PROJECT_VERSION ที่แทนที่ตอนบิลด์ เพื่อให้ `--version` แรปเปอร์ และแพ็กเกจสอดคล้องกัน"
 
 #: src/zfr_lib/lint/docs.py:94
 msgid "Risks when converting"
 msgstr "ความเสี่ยงตอนแปลง"
 
 #: src/zfr_lib/lint/docs.py:96
-msgid ""
-"C/C++ usually needs config.h; scripts need *.in. Dry-run ize (`-n`) on large"
-" trees before writing."
-msgstr ""
-"C/C++ มักต้องมี config.h สคริปต์ต้องเป็น *.in รัน dry-run ize (`-n`) "
-"บนทรีใหญ่ก่อนเขียน"
+msgid "C/C++ usually needs config.h; scripts need *.in. Dry-run ize (`-n`) on large trees before writing."
+msgstr "C/C++ มักต้องมี config.h สคริปต์ต้องเป็น *.in รัน dry-run ize (`-n`) บนทรีใหญ่ก่อนเขียน"
 
 #: src/zfr_lib/lint/docs.py:103
 msgid "Substitution without a consumer is incomplete"
 msgstr "การแทนที่โดยไม่มีผู้บริโภคยังไม่ครบ"
 
 #: src/zfr_lib/lint/docs.py:105
-msgid ""
-"Meson must both define VERSION/PROJECT_VERSION and have sources that "
-"actually read it — otherwise packaged binaries still lie."
-msgstr ""
-"Meson ต้องทั้งนิยาม VERSION/PROJECT_VERSION และมีซอร์สที่อ่านจริง — "
-"มิฉะนั้นไบนารีที่แพ็กจะยังหลอกอยู่"
+msgid "Meson must both define VERSION/PROJECT_VERSION and have sources that actually read it — otherwise packaged binaries still lie."
+msgstr "Meson ต้องทั้งนิยาม VERSION/PROJECT_VERSION และมีซอร์สที่อ่านจริง — มิฉะนั้นไบนารีที่แพ็กจะยังหลอกอยู่"
 
 #: src/zfr_lib/lint/docs.py:110
 msgid "How it is checked"
 msgstr "ตรวจอย่างไร"
 
 #: src/zfr_lib/lint/docs.py:112
-msgid ""
-"Looks for configuration_data keys and for @VERSION@ / PROJECT_VERSION usage "
-"in installed sources."
-msgstr ""
-"ค้นหาคีย์ configuration_data และการใช้ @VERSION@ / PROJECT_VERSION "
-"ในซอร์สที่ติดตั้ง"
+msgid "Looks for configuration_data keys and for @VERSION@ / PROJECT_VERSION usage in installed sources."
+msgstr "ค้นหาคีย์ configuration_data และการใช้ @VERSION@ / PROJECT_VERSION ในซอร์สที่ติดตั้ง"
 
 #: src/zfr_lib/lint/docs.py:117
 msgid "Closing the loop"
 msgstr "ปิดวงจร"
 
 #: src/zfr_lib/lint/docs.py:119
-msgid ""
-"Add the missing half (subst or consumer). Solve maps to the subst ize steps "
-"when available."
-msgstr ""
-"เพิ่มครึ่งที่ขาด (subst หรือผู้บริโภค) Solve จะแมปไปขั้น subst ของ ize "
-"เมื่อมี"
+msgid "Add the missing half (subst or consumer). Solve maps to the subst ize steps when available."
+msgstr "เพิ่มครึ่งที่ขาด (subst หรือผู้บริโภค) Solve จะแมปไปขั้น subst ของ ize เมื่อมี"
 
 #: src/zfr_lib/lint/docs.py:126
 msgid "Inline posync is unmaintainable"
 msgstr "posync แบบอินไลน์ดูแลยาก"
 
 #: src/zfr_lib/lint/docs.py:128
-msgid ""
-"A bash -euc heredoc inside meson.build duplicates across templates and is "
-"painful to debug. The contract is scripts/posync.sh + run_target('posync')."
-msgstr ""
-"heredoc ของ bash -euc ใน meson.build ซ้ำข้ามเทมเพลตและดีบักยาก สัญญาคือ "
-"scripts/posync.sh + run_target('posync')"
+msgid "A bash -euc heredoc inside meson.build duplicates across templates and is painful to debug. The contract is scripts/posync.sh + run_target('posync')."
+msgstr "heredoc ของ bash -euc ใน meson.build ซ้ำข้ามเทมเพลตและดีบักยาก สัญญาคือ scripts/posync.sh + run_target('posync')"
 
 #: src/zfr_lib/lint/docs.py:134
 msgid "Payoff"
 msgstr "ผลที่ได้"
 
 #: src/zfr_lib/lint/docs.py:136
-msgid ""
-"One script to run msgmerge/xgettext locally; ninja posync stays short; CI "
-"can call the script directly."
-msgstr ""
-"สคริปต์เดียวรัน msgmerge/xgettext ในเครื่อง ninja posync สั้นอยู่ CI "
-"เรียกสคริปต์ตรงได้"
+msgid "One script to run msgmerge/xgettext locally; ninja posync stays short; CI can call the script directly."
+msgstr "สคริปต์เดียวรัน msgmerge/xgettext ในเครื่อง ninja posync สั้นอยู่ CI เรียกสคริปต์ตรงได้"
 
 #: src/zfr_lib/lint/docs.py:143
-msgid ""
-"Ize extracts the body to scripts/posync.sh and points the run_target at it. "
-"Verify POTFILES and language flags afterward."
-msgstr ""
-"ize ดึงเนื้อหาไป scripts/posync.sh แล้วชี้ run_target ไปที่นั่น จากนั้นตรวจ "
-"POTFILES และแฟล็กภาษา"
+msgid "Ize extracts the body to scripts/posync.sh and points the run_target at it. Verify POTFILES and language flags afterward."
+msgstr "ize ดึงเนื้อหาไป scripts/posync.sh แล้วชี้ run_target ไปที่นั่น จากนั้นตรวจ POTFILES และแฟล็กภาษา"
 
 #: src/zfr_lib/lint/docs.py:150
 msgid "Maintenance scripts belong under scripts/"
 msgstr "สคริปต์บำรุงรักษาอยู่ใต้ scripts/"
 
 #: src/zfr_lib/lint/docs.py:152
-msgid ""
-"look / install-symlinks / deploy helpers at the repo root clutter the "
-"packaging surface. Zephyr keeps them under scripts/."
-msgstr ""
-"ตัวช่วย look / install-symlinks / deploy ที่รากรีโปทำให้พื้นผิวแพ็กเกจรก "
-"Zephyr เก็บไว้ใต้ scripts/"
+msgid "look / install-symlinks / deploy helpers at the repo root clutter the packaging surface. Zephyr keeps them under scripts/."
+msgstr "ตัวช่วย look / install-symlinks / deploy ที่รากรีโปทำให้พื้นผิวแพ็กเกจรก Zephyr เก็บไว้ใต้ scripts/"
 
 #: src/zfr_lib/lint/docs.py:157
 msgid "Detection"
 msgstr "การตรวจจับ"
 
 #: src/zfr_lib/lint/docs.py:159
-msgid ""
-"Flags root *.sh maintenance names and inline run_target bodies that should "
-"be externalized."
-msgstr ""
-"ทำเครื่องหมายชื่อบำรุงรักษา *.sh ที่ราก และเนื้อหา run_target "
-"แบบอินไลน์ที่ควรแยกออก"
+msgid "Flags root *.sh maintenance names and inline run_target bodies that should be externalized."
+msgstr "ทำเครื่องหมายชื่อบำรุงรักษา *.sh ที่ราก และเนื้อหา run_target แบบอินไลน์ที่ควรแยกออก"
 
 #: src/zfr_lib/lint/docs.py:164
 msgid "After moving"
 msgstr "หลังย้าย"
 
 #: src/zfr_lib/lint/docs.py:166
-msgid ""
-"Update docs and any CI that called the old paths. Solve rewrites Meson "
-"run_targets to scripts/…"
-msgstr ""
-"อัปเดตเอกสารและ CI ที่เรียกพาธเก่า Solve เขียน Meson run_targets ใหม่เป็น "
-"scripts/…"
+msgid "Update docs and any CI that called the old paths. Solve rewrites Meson run_targets to scripts/…"
+msgstr "อัปเดตเอกสารและ CI ที่เรียกพาธเก่า Solve เขียน Meson run_targets ใหม่เป็น scripts/…"
 
 #: src/zfr_lib/lint/docs.py:180
 msgid "No Solve mapping"
 msgstr "ไม่มีแมป Solve"
 
 #: src/zfr_lib/lint/docs.py:182
-msgid ""
-"This finding has no `zfr ize --only …` shortcut. Follow the fix text (or a "
-"broader `zfr ize` if several related gaps exist), then re-lint."
-msgstr ""
-"ผลการตรวจนี้ไม่มีทางลัด `zfr ize --only …` ทำตามข้อความแก้ (หรือ `zfr ize` "
-"กว้างขึ้นถ้ามีช่องว่างเกี่ยวข้องหลายจุด) แล้ว lint ใหม่"
+msgid "This finding has no `zfr ize --only …` shortcut. Follow the fix text (or a broader `zfr ize` if several related gaps exist), then re-lint."
+msgstr "ผลการตรวจนี้ไม่มีทางลัด `zfr ize --only …` ทำตามข้อความแก้ (หรือ `zfr ize` กว้างขึ้นถ้ามีช่องว่างเกี่ยวข้องหลายจุด) แล้ว lint ใหม่"
 
 #: src/zfr_lib/lint/docs.py:190
 msgid "Solve / ize"
@@ -1398,14 +1183,8 @@ msgid "Debian is the APT contract"
 msgstr "Debian คือสัญญา APT"
 
 #: src/zfr_lib/lint/docs.py:214
-msgid ""
-"control / rules / copyright / source format decide how the package builds "
-"and what users install. Zephyr standardizes on Meson + dh "
-"`--buildsystem=meson --builddirectory=debian/build`."
-msgstr ""
-"control / rules / copyright / source format "
-"กำหนดว่าแพ็กเกจสร้างอย่างไรและผู้ใช้ติดตั้งอะไร Zephyr มาตรฐานเป็น Meson + "
-"dh `--buildsystem=meson --builddirectory=debian/build`"
+msgid "control / rules / copyright / source format decide how the package builds and what users install. Zephyr standardizes on Meson + dh `--buildsystem=meson --builddirectory=debian/build`."
+msgstr "control / rules / copyright / source format กำหนดว่าแพ็กเกจสร้างอย่างไรและผู้ใช้ติดตั้งอะไร Zephyr มาตรฐานเป็น Meson + dh `--buildsystem=meson --builddirectory=debian/build`"
 
 #: src/zfr_lib/lint/docs.py:220 src/zfr_lib/lint/docs.py:251
 #: src/zfr_lib/lint/docs.py:273 src/zfr_lib/lint/docs.py:296
@@ -1423,24 +1202,16 @@ msgid "Why it matters"
 msgstr "ทำไมจึงสำคัญ"
 
 #: src/zfr_lib/lint/docs.py:226
-msgid ""
-"Wrong Architecture, missing Build-Depends, or a non-Meson rules file fail "
-"debuild or produce unloadable packages even when local compiles succeed."
-msgstr ""
-"Architecture ผิด Build-Depends ขาด หรือไฟล์ rules ที่ไม่ใช่ Meson ทำให้ "
-"debuild ล้มเหลว หรือได้แพ็กเกจโหลดไม่ได้แม้คอมไพล์ในเครื่องสำเร็จ"
+msgid "Wrong Architecture, missing Build-Depends, or a non-Meson rules file fail debuild or produce unloadable packages even when local compiles succeed."
+msgstr "Architecture ผิด Build-Depends ขาด หรือไฟล์ rules ที่ไม่ใช่ Meson ทำให้ debuild ล้มเหลว หรือได้แพ็กเกจโหลดไม่ได้แม้คอมไพล์ในเครื่องสำเร็จ"
 
 #: src/zfr_lib/lint/docs.py:232
 msgid "When editing packaging"
 msgstr "เมื่อแก้ไขแพ็กเกจ"
 
 #: src/zfr_lib/lint/docs.py:234
-msgid ""
-"Ize may rewrite from templates — always diff Maintainer, Depends, and "
-"Architecture before upload."
-msgstr ""
-"ize อาจเขียนใหม่จากเทมเพลต — ต้อง diff Maintainer, Depends และ Architecture "
-"ก่อนอัปโหลดเสมอ"
+msgid "Ize may rewrite from templates — always diff Maintainer, Depends, and Architecture before upload."
+msgstr "ize อาจเขียนใหม่จากเทมเพลต — ต้อง diff Maintainer, Depends และ Architecture ก่อนอัปโหลดเสมอ"
 
 #: src/zfr_lib/lint/docs.py:240
 #, python-format
@@ -1453,14 +1224,8 @@ msgstr "RPM ต้องสะท้อน Meson/Debian"
 
 #: src/zfr_lib/lint/docs.py:245
 #, python-format
-msgid ""
-"spec %files, BuildArch, and Version have to describe the same payload Meson "
-"installs. Project-local rpmbuild TOPDIR and stale file lists are common "
-"failure modes."
-msgstr ""
-"%files, BuildArch และ Version ใน spec ต้องอธิบายเพย์โหลดเดียวกับที่ Meson "
-"ติดตั้ง TOPDIR ของ rpmbuild "
-"ในโปรเจกต์และรายการไฟล์เก่าเป็นโหมดล้มเหลวที่พบบ่อย"
+msgid "spec %files, BuildArch, and Version have to describe the same payload Meson installs. Project-local rpmbuild TOPDIR and stale file lists are common failure modes."
+msgstr "%files, BuildArch และ Version ใน spec ต้องอธิบายเพย์โหลดเดียวกับที่ Meson ติดตั้ง TOPDIR ของ rpmbuild ในโปรเจกต์และรายการไฟล์เก่าเป็นโหมดล้มเหลวที่พบบ่อย"
 
 #: src/zfr_lib/lint/docs.py:252
 #, python-format
@@ -1472,24 +1237,16 @@ msgid "Typical fallout"
 msgstr "ผลกระทบทั่วไป"
 
 #: src/zfr_lib/lint/docs.py:257
-msgid ""
-"Unpackaged files, wrong noarch/ELF, leftover rpmbuild/, or Debian substvars "
-"copied into Requires."
-msgstr ""
-"ไฟล์ไม่ได้แพ็ก noarch/ELF ผิด rpmbuild/ ค้าง หรือ substvars ของ Debian "
-"ที่คัดลอกเข้า Requires"
+msgid "Unpackaged files, wrong noarch/ELF, leftover rpmbuild/, or Debian substvars copied into Requires."
+msgstr "ไฟล์ไม่ได้แพ็ก noarch/ELF ผิด rpmbuild/ ค้าง หรือ substvars ของ Debian ที่คัดลอกเข้า Requires"
 
 #: src/zfr_lib/lint/docs.py:265
 msgid "Meson is the build system of record"
 msgstr "Meson คือระบบบิลด์หลัก"
 
 #: src/zfr_lib/lint/docs.py:267
-msgid ""
-"Identity, license, version source, man pages, completion, and look/posync "
-"targets live in meson.build. Drift here breaks Debian and RPM alike."
-msgstr ""
-"อัตลักษณ์ ใบอนุญาต แหล่งเวอร์ชัน หน้า man คอมพลีชัน และเป้าหมาย look/posync "
-"อยู่ใน meson.build การคลาดที่นี่ทำลายทั้ง Debian และ RPM"
+msgid "Identity, license, version source, man pages, completion, and look/posync targets live in meson.build. Drift here breaks Debian and RPM alike."
+msgstr "อัตลักษณ์ ใบอนุญาต แหล่งเวอร์ชัน หน้า man คอมพลีชัน และเป้าหมาย look/posync อยู่ใน meson.build การคลาดที่นี่ทำลายทั้ง Debian และ RPM"
 
 #: src/zfr_lib/lint/docs.py:275
 #, python-format
@@ -1501,24 +1258,16 @@ msgid "Editing tips"
 msgstr "เคล็ดลับการแก้ไข"
 
 #: src/zfr_lib/lint/docs.py:280
-msgid ""
-"Ize patches meson.build; reconcile custom targets with template blocks and "
-"re-configure after large edits."
-msgstr ""
-"ize แพตช์ meson.build จับเป้าหมายกำหนดเองให้เข้ากับบล็อกเทมเพลต "
-"และคอนฟิกใหม่หลังแก้ใหญ่"
+msgid "Ize patches meson.build; reconcile custom targets with template blocks and re-configure after large edits."
+msgstr "ize แพตช์ meson.build จับเป้าหมายกำหนดเองให้เข้ากับบล็อกเทมเพลต และคอนฟิกใหม่หลังแก้ใหญ่"
 
 #: src/zfr_lib/lint/docs.py:288
 msgid "Locales are a product surface"
 msgstr "โลเคลเป็นพื้นผิวผลิตภัณฑ์"
 
 #: src/zfr_lib/lint/docs.py:290
-msgid ""
-"Gettext catalogs and whole-document man/<locale>/ pages gate what users see "
-"at the configured l10n level (`-l` / lint.options)."
-msgstr ""
-"แคตตาล็อก Gettext และหน้า man/<locale>/ "
-"ทั้งเอกสารคุมสิ่งที่ผู้ใช้เห็นที่ระดับ l10n ที่ตั้งไว้ (`-l` / lint.options)"
+msgid "Gettext catalogs and whole-document man/<locale>/ pages gate what users see at the configured l10n level (`-l` / lint.options)."
+msgstr "แคตตาล็อก Gettext และหน้า man/<locale>/ ทั้งเอกสารคุมสิ่งที่ผู้ใช้เห็นที่ระดับ l10n ที่ตั้งไว้ (`-l` / lint.options)"
 
 #: src/zfr_lib/lint/docs.py:299
 msgid "Looks at LINGUAS, .po wrap/quality, and man coverage."
@@ -1529,24 +1278,16 @@ msgid "Human work remains"
 msgstr "งานคนยังเหลือ"
 
 #: src/zfr_lib/lint/docs.py:305
-msgid ""
-"Ize can stub .po files and fix wrap style; real translation and man "
-"localization still need people (or `zfr translate`)."
-msgstr ""
-"ize สร้าง .po ชั่วคราวและแก้สไตล์ห่อได้ การแปลจริงและการโลคัลไลซ์ man "
-"ยังต้องคน (หรือ `zfr translate`)"
+msgid "Ize can stub .po files and fix wrap style; real translation and man localization still need people (or `zfr translate`)."
+msgstr "ize สร้าง .po ชั่วคราวและแก้สไตล์ห่อได้ การแปลจริงและการโลคัลไลซ์ man ยังต้องคน (หรือ `zfr translate`)"
 
 #: src/zfr_lib/lint/docs.py:313
 msgid "Shared layout keeps tools oriented"
 msgstr "เลย์เอาต์ร่วมทำให้อุปกรณ์รู้ทิศ"
 
 #: src/zfr_lib/lint/docs.py:315
-msgid ""
-"LICENSE, man/, VERSION, hooks, completion, and scripts/ are the landmarks "
-"create/ize/lint/release expect."
-msgstr ""
-"LICENSE, man/, VERSION, ฮุก, completion และ scripts/ คือจุดสังเกตที่ "
-"create/ize/lint/release คาดหวัง"
+msgid "LICENSE, man/, VERSION, hooks, completion, and scripts/ are the landmarks create/ize/lint/release expect."
+msgstr "LICENSE, man/, VERSION, ฮุก, completion และ scripts/ คือจุดสังเกตที่ create/ize/lint/release คาดหวัง"
 
 #: src/zfr_lib/lint/docs.py:320
 #, python-format
@@ -1563,12 +1304,8 @@ msgid "Scaffold refresh"
 msgstr "รีเฟรชสแคฟโฟลด์"
 
 #: src/zfr_lib/lint/docs.py:330
-msgid ""
-"Solve may install or refresh files from the template (.githooks, LICENSE, "
-"cursor rules, …). Review before commit."
-msgstr ""
-"Solve อาจติดตั้งหรือรีเฟรชไฟล์จากเทมเพลต (.githooks, LICENSE, กฎ cursor, …) "
-"รีวิวก่อน commit"
+msgid "Solve may install or refresh files from the template (.githooks, LICENSE, cursor rules, …). Review before commit."
+msgstr "Solve อาจติดตั้งหรือรีเฟรชไฟล์จากเทมเพลต (.githooks, LICENSE, กฎ cursor, …) รีวิวก่อน commit"
 
 #: src/zfr_lib/lint/docs.py:338
 msgid "Language-template expectations"
@@ -1576,12 +1313,8 @@ msgstr "ความคาดหวังเทมเพลตภาษา"
 
 #: src/zfr_lib/lint/docs.py:340
 #, python-format
-msgid ""
-"%(title)s. Each language keeps idiomatic markers (tests/, Cargo.toml, bas "
-"i18n helpers, bash *.in, …) so the tree stays packagable."
-msgstr ""
-"%(title)s แต่ละภาษามีเครื่องหมายตามสำนวน (tests/, Cargo.toml, ตัวช่วย bas "
-"i18n, bash *.in, …) เพื่อให้ทรีแพ็กเกจได้"
+msgid "%(title)s. Each language keeps idiomatic markers (tests/, Cargo.toml, bas i18n helpers, bash *.in, …) so the tree stays packagable."
+msgstr "%(title)s แต่ละภาษามีเครื่องหมายตามสำนวน (tests/, Cargo.toml, ตัวช่วย bas i18n, bash *.in, …) เพื่อให้ทรีแพ็กเกจได้"
 
 #: src/zfr_lib/lint/docs.py:347
 msgid "Details"
@@ -1597,12 +1330,8 @@ msgid "One name across ecosystems"
 msgstr "ชื่อเดียวข้ามระบบนิเวศ"
 
 #: src/zfr_lib/lint/docs.py:360
-msgid ""
-"Directory name, meson project(), debian Source, and RPM Name must agree. "
-"Mismatches confuse rename, release, and repos."
-msgstr ""
-"ชื่อไดเรกทอรี meson project() debian Source และ RPM Name ต้องตรงกัน "
-"ความไม่ตรงทำให้ rename รีลีส และรีโสงง"
+msgid "Directory name, meson project(), debian Source, and RPM Name must agree. Mismatches confuse rename, release, and repos."
+msgstr "ชื่อไดเรกทอรี meson project() debian Source และ RPM Name ต้องตรงกัน ความไม่ตรงทำให้ rename รีลีส และรีโสงง"
 
 #: src/zfr_lib/lint/docs.py:365
 #, python-format
@@ -1620,12 +1349,8 @@ msgstr "สุขอนามัยซอร์ส"
 
 #: src/zfr_lib/lint/docs.py:374
 #, python-format
-msgid ""
-"%(title)s. Covers length and hardcoded paths/versions that break relocatable"
-" installs."
-msgstr ""
-"%(title)s "
-"ครอบคลุมความยาวและพาธ/เวอร์ชันฮาร์ดโค้ดที่ทำลายการติดตั้งที่ย้ายได้"
+msgid "%(title)s. Covers length and hardcoded paths/versions that break relocatable installs."
+msgstr "%(title)s ครอบคลุมความยาวและพาธ/เวอร์ชันฮาร์ดโค้ดที่ทำลายการติดตั้งที่ย้ายได้"
 
 #: src/zfr_lib/lint/docs.py:380
 msgid "How lint looks"
@@ -1637,59 +1362,39 @@ msgstr "นับบรรทัดและ/หรือสแกนพาธ F
 
 #: src/zfr_lib/lint/docs.py:396
 #, python-format
-msgid ""
-"`%s` keeps templates instantiable and apps free of leftover placeholders / "
-"banners."
-msgstr ""
-"`%s` ทำให้เทมเพลตสร้างอินสแตนซ์ได้ และแอปปราศจากตัวแทน/แบนเนอร์เหลือค้าง"
+msgid "`%s` keeps templates instantiable and apps free of leftover placeholders / banners."
+msgstr "`%s` ทำให้เทมเพลตสร้างอินสแตนซ์ได้ และแอปปราศจากตัวแทน/แบนเนอร์เหลือค้าง"
 
-#: src/zfr_lib/lint/docs.py:412
+#: src/zfr_lib/lint/docs.py:411
 #, python-format
-msgid ""
-"Implemented under `%s` in `zfr lint`. Findings carry a concrete fix string "
-"when possible. Remap severity with `-w` / `-e` / `--strict`."
-msgstr ""
-"ทำภายใต้ `%s` ใน `zfr lint` ผลการตรวจมีสตริงแก้ชัดเมื่อเป็นไปได้ "
-"แมปความรุนแรงใหม่ด้วย `-w` / `-e` / `--strict`"
+msgid "Implemented under `%s` in `zfr lint`. Findings carry a concrete fix string when possible. Remap severity with `-w` / `-e` / `--strict`."
+msgstr "ทำภายใต้ `%s` ใน `zfr lint` ผลการตรวจมีสตริงแก้ชัดเมื่อเป็นไปได้ แมปความรุนแรงใหม่ด้วย `-w` / `-e` / `--strict`"
 
-#: src/zfr_lib/lint/docs.py:420
+#: src/zfr_lib/lint/docs.py:421
 #, python-format
-msgid ""
-"Rule %(id)s (`%(code)s`) is part of the zephyr packaging/layout contract. "
-"Default severity hint: %(sev)s."
-msgstr ""
-"กฎ %(id)s (`%(code)s`) เป็นส่วนของสัญญาแพ็กเกจ/เลย์เอาต์ zephyr "
-"คำใบ้ความรุนแรงเริ่มต้น: %(sev)s"
+msgid "Rule %(id)s (`%(code)s`) is part of the zephyr packaging/layout contract. Default severity hint: %(sev)s."
+msgstr "กฎ %(id)s (`%(code)s`) เป็นส่วนของสัญญาแพ็กเกจ/เลย์เอาต์ zephyr คำใบ้ความรุนแรงเริ่มต้น: %(sev)s"
 
-#: src/zfr_lib/lint/docs.py:426
+#: src/zfr_lib/lint/docs.py:427
 msgid "What lint does"
 msgstr "lint ทำอะไร"
 
-#: src/zfr_lib/lint/docs.py:430
+#: src/zfr_lib/lint/docs.py:431
 msgid "Changing the tree"
 msgstr "การเปลี่ยนทรี"
 
-#: src/zfr_lib/lint/docs.py:432
+#: src/zfr_lib/lint/docs.py:433
 #, python-format
-msgid ""
-"Fixes may touch packaging, meson.build, sources, or scaffold copies. Diff "
-"Maintainer, Depends, %files, and *.in scripts before upload."
-msgstr ""
-"การแก้แตะแพ็กเกจ meson.build ซอร์ส หรือสำเนาสแคฟโฟลด์ได้ ต้อง diff "
-"Maintainer, Depends, %files และสคริปต์ *.in ก่อนอัปโหลด"
+msgid "Fixes may touch packaging, meson.build, sources, or scaffold copies. Diff Maintainer, Depends, %files, and *.in scripts before upload."
+msgstr "การแก้แตะแพ็กเกจ meson.build ซอร์ส หรือสำเนาสแคฟโฟลด์ได้ ต้อง diff Maintainer, Depends, %files และสคริปต์ *.in ก่อนอัปโหลด"
 
 #: src/zfr_lib/lint/gitignore.py:94
 msgid "missing root .gitignore"
 msgstr "ไม่มี Cargo.toml"
 
 #: src/zfr_lib/lint/gitignore.py:97
-msgid ""
-"Add a root .gitignore covering node_modules/, dist/, and other build "
-"artifacts. Component dirs (backend/, web/, …) should get their own "
-".gitignore too."
-msgstr ""
-"เพิ่มรูทgitignoreปิดnode_modules/..dist/แล้วก็มีสร้างสร้างอื่น "
-"ดิร์กเมอร์ส่วน (backend/..web/ควรจะได้รับตัวเองgitignoreเหมือนกัน"
+msgid "Add a root .gitignore covering node_modules/, dist/, and other build artifacts. Component dirs (backend/, web/, …) should get their own .gitignore too."
+msgstr "เพิ่มรูทgitignoreปิดnode_modules/..dist/แล้วก็มีสร้างสร้างอื่น ดิร์กเมอร์ส่วน (backend/..web/ควรจะได้รับตัวเองgitignoreเหมือนกัน"
 
 #: src/zfr_lib/lint/gitignore.py:107
 msgid "root .gitignore present"
@@ -1741,12 +1446,12 @@ msgstr "%s คลุมแนวแบบที่ต้องการ"
 
 #: src/zfr_lib/lint/hardcoded.py:161
 msgid "zfr CLI package uses configure_file wrappers for install paths"
-msgstr ""
+msgstr "แพ็กเกจ zfr CLI ใช้ตัวห่อ configure_file สำหรับเส้นทางการติดตั้ง"
 
 #: src/zfr_lib/lint/hardcoded.py:191
 #, python-format
 msgid "hardcoded install path %(sample)s in %(rel)s"
-msgstr ""
+msgstr "เส้นทางติดตั้งที่ตั้งค่าไว้ล่วงหน้า %(sample)s ใน %(rel)s"
 
 #: src/zfr_lib/lint/hardcoded.py:196 src/zfr_lib/lint/i18n_check.py:289
 #: src/zfr_lib/lint/i18n_check.py:327 src/zfr_lib/lint/i18n_check.py:345
@@ -1757,26 +1462,21 @@ msgid " (+%d more)"
 msgstr " (+อีก %d)"
 
 #: src/zfr_lib/lint/hardcoded.py:205
-msgid ""
-"Replace with meson configure_file placeholders (@PREFIX@, @DATADIR@, "
-"@BINDIR@, @LIBDIR@, @LOCALEDIR@, @PKGDATADIR@): rename to *.in and run `zfr "
-"ize`."
-msgstr ""
+msgid "Replace with meson configure_file placeholders (@PREFIX@, @DATADIR@, @BINDIR@, @LIBDIR@, @LOCALEDIR@, @PKGDATADIR@): rename to *.in and run `zfr ize`."
+msgstr "แทนที่ด้วยตัวแทนเมซอน configure_file (@PREFIX@, @DATADIR@, @BINDIR@, @LIBDIR@, @LOCALEDIR@, @PKGDATADIR@): เปลี่ยนชื่อเป็น *.in และรัน `zfr ize`."
 
 #: src/zfr_lib/lint/hardcoded.py:219
 #, python-format
 msgid "hardcoded version %(sample)s in %(rel)s"
-msgstr ""
+msgstr "เวอร์ชันที่กำหนดค่าไว้ล่วงหน้า %(sample)s ใน %(rel)s"
 
 #: src/zfr_lib/lint/hardcoded.py:224
-msgid ""
-"Use @VERSION@ (scripts → *.in + configure_file) or PROJECT_VERSION from "
-"config.h (C/C++). Run `zfr ize`."
-msgstr ""
+msgid "Use @VERSION@ (scripts → *.in + configure_file) or PROJECT_VERSION from config.h (C/C++). Run `zfr ize`."
+msgstr "ใช้ @VERSION@ (scripts → *.in + configure_file) หรือ PROJECT_VERSION จาก config.h (C/C++) รัน `zfr ize`."
 
 #: src/zfr_lib/lint/hardcoded.py:236
 msgid "no hardcoded install paths or project version strings in sources"
-msgstr ""
+msgstr "ไม่มีเส้นทางติดตั้งหรือตัวอักษรเวอร์ชันของโครงการที่เขียนตายตัวในซอร์ส"
 
 #: src/zfr_lib/lint/i18n_check.py:62
 #, python-format
@@ -1794,13 +1494,8 @@ msgstr "ไม่มีไดเรกทอรี po/ (ทางเลือก
 
 #: src/zfr_lib/lint/i18n_check.py:85
 #, python-format
-msgid ""
-"If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in "
-"meson.build. Required locales at %(level)s: %(locales)s (source language "
-"%(source)s)."
-msgstr ""
-"หากแปลแอปแล้ว ให้เพิ่ม po/ พร้อม LINGUAS + *.po และ i18n.gettext() ใน "
-"meson.build โลแคลที่ต้องมีที่ %(level)s: %(locales)s (ภาษาต้นทาง %(source)s)"
+msgid "If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in meson.build. Required locales at %(level)s: %(locales)s (source language %(source)s)."
+msgstr "หากแปลแอปแล้ว ให้เพิ่ม po/ พร้อม LINGUAS + *.po และ i18n.gettext() ใน meson.build โลแคลที่ต้องมีที่ %(level)s: %(locales)s (ภาษาต้นทาง %(source)s)"
 
 #: src/zfr_lib/lint/i18n_check.py:103
 msgid "po/ exists but po/LINGUAS is missing or empty"
@@ -1824,12 +1519,8 @@ msgstr "po/LINGUAS ขาดโลแคล %(level)s: %(locales)s"
 
 #: src/zfr_lib/lint/i18n_check.py:127
 #, python-format
-msgid ""
-"Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy "
-"es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
-msgstr ""
-"Cấp %(level)s cần ngôn ngữ chính: %(locales)s (nguồn %(source)s; cũ "
-"es→es_MX, pt→pt_BR). Chạy `zfr i18n -b` để tự tạo locale con."
+msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
+msgstr "Cấp %(level)s cần ngôn ngữ chính: %(locales)s (nguồn %(source)s; cũ es→es_MX, pt→pt_BR). Chạy `zfr i18n -b` để tự tạo locale con."
 
 #: src/zfr_lib/lint/i18n_check.py:142
 #, python-format
@@ -1842,12 +1533,8 @@ msgid "LINGUAS entries without po/<locale>.po: %s"
 msgstr "รายการ LINGUAS ที่ไม่มี po/<locale>.po: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:161
-msgid ""
-"For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-"
-"translator && msgmerge -U --no-wrap po/<locale>.po <domain>.pot"
-msgstr ""
-"สำหรับแต่ละโลแคล: msginit -i <domain>.pot -o po/<locale>.po -l <locale> "
-"--no-translator && msgmerge -U po/<locale>.po <domain>.pot"
+msgid "For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U --no-wrap po/<locale>.po <domain>.pot"
+msgstr "สำหรับแต่ละโลแคล: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
 
 #: src/zfr_lib/lint/i18n_check.py:177
 #, python-format
@@ -1862,17 +1549,17 @@ msgid ""
 "  ...\n"
 "  EOT\n"
 "For whole-document README/man (adoc), `googletranslator` with http-proxy http://localhost:8118 can help; do not use it for gettext."
-msgstr ""
+msgstr "โปรดใช้ `poedit` สําหรับการอัปเดตแคตตาล็อก (ไม่รองรับสคริปต์แพตช์แบบกําหนดเอง)แปลข้อความใหม่ด้วยตัวเอง จากนั้นจึงสมัครแบบกลุ่ม: \\n  poedit -l ab,de,fg <<EOT\\n  <msgid>\\t<ab>\\t<de>\\t<fg>\\n  ... \\n  EOT\\nสําหรับ README/man ทั้งเอกสาร (adoc) `googletranslator` กับ http-proxy http://localhost:8118 จะช่วยได้;ห้ามใช้กับ gettext"
 
 #: src/zfr_lib/lint/i18n_check.py:238
 #, python-format
 msgid "%d empty"
-msgstr ""
+msgstr "%d ว่าง"
 
 #: src/zfr_lib/lint/i18n_check.py:240
 #, python-format
 msgid "%d omitted msgid-copy"
-msgstr ""
+msgstr "%d ข้อความที่ละเว้น msgid-copy"
 
 #: src/zfr_lib/lint/i18n_check.py:254
 #, python-format
@@ -1881,12 +1568,8 @@ msgstr "gettext คาทาลิกใช้การกระจายเส�
 
 #: src/zfr_lib/lint/i18n_check.py:256
 #, fuzzy
-msgid ""
-"Run `zfr ize` (ZI0016) or `msgcat --no-wrap -o file.po file.po` on each "
-"catalog; use msgmerge --no-wrap when updating from .pot."
-msgstr ""
-"เรียก `zfr ize` (ZI016) หรือ `msgcat --no-wrap -o file.po file.po` "
-"บนแต๊ทอลิกลอกทุกอย่าง; ใช้ msgmerge --no-wrap เมื่อปรับปรับปรับจาก .pot"
+msgid "Run `zfr ize` (ZI0016) or `msgcat --no-wrap -o file.po file.po` on each catalog; use msgmerge --no-wrap when updating from .pot."
+msgstr "เรียก `zfr ize` (ZI016) หรือ `msgcat --no-wrap -o file.po file.po` บนแต๊ทอลิกลอกทุกอย่าง; ใช้ msgmerge --no-wrap เมื่อปรับปรับปรับจาก .pot"
 
 #: src/zfr_lib/lint/i18n_check.py:265
 msgid "gettext catalogs use --no-wrap (no line wrapping)"
@@ -1895,34 +1578,27 @@ msgstr "gettext คาทาลิกใช้ --no-wrap (ไม่มีกา�
 #: src/zfr_lib/lint/i18n_check.py:274
 #, python-format
 msgid " (%d packaging field/snippet msgids are keep-English and not counted)"
-msgstr ""
+msgstr "(%d ข้อความตัวอย่าง/สนามบรรจุภัณฑ์ msgids ยังคงเป็นภาษาอังกฤษและไม่ถูกนับ)"
 
 #: src/zfr_lib/lint/i18n_check.py:284
 #, python-format
 msgid "gettext catalog(s) have empty msgstr or omitted translations: %s"
-msgstr ""
+msgstr "แคตตาล็อก gettext มี msgstr ว่างหรือการแปลถูกละไว้: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:293
 #, python-format
-msgid ""
-"Empty msgstr and msgstr identical to msgid are omissions when a primary "
-"locale (zh_CN) translated the same msgid. Packaging field literals and code "
-"snippets that zh_CN also leaves in English do not need translation. "
-"%(poedit)s"
-msgstr ""
+msgid "Empty msgstr and msgstr identical to msgid are omissions when a primary locale (zh_CN) translated the same msgid. Packaging field literals and code snippets that zh_CN also leaves in English do not need translation. %(poedit)s"
+msgstr "ข้อความ msgstr ว่างและ msgstr ที่เหมือนกับ msgid เป็นการละเว้นเมื่อภาษาหลัก (zh_CN) แปล msgid เดียวกัน ข้อความตัดตอนในฟิลด์แพ็กเกจและรหัสโปรแกรมที่ zh_CN ก็ยังคงเป็นภาษาอังกฤษไม่จำเป็นต้องแปล %(poedit)s"
 
 #: src/zfr_lib/lint/i18n_check.py:306
 #, python-format
 msgid "gettext catalog(s) effectively untranslated (≤20%%): %s"
-msgstr ""
+msgstr "แคตตาล็อก gettext ยังไม่ได้แปลอย่างมีประสิทธิภาพ (≤20%%): %s"
 
 #: src/zfr_lib/lint/i18n_check.py:309
 #, python-format
-msgid ""
-"Empty msgstr and msgid→msgstr copies count as untranslated (English variants"
-" en_AU/en_GB/… are exempt when msgid is English). At ≤20%% completion, "
-"rewrite the whole .po by hand — do not write patch/sed scripts. %(poedit)s"
-msgstr ""
+msgid "Empty msgstr and msgid→msgstr copies count as untranslated (English variants en_AU/en_GB/… are exempt when msgid is English). At ≤20%% completion, rewrite the whole .po by hand — do not write patch/sed scripts. %(poedit)s"
+msgstr "ช่อง msgstr ว่างและการคัดลอก msgid→msgstr ถือว่าไม่ได้แปล (รูปแบบภาษาอังกฤษ en_AU/en_GB/… ยกเว้นเมื่อ msgid เป็นภาษาอังกฤษ) เมื่อการทำงานเสร็จ ≤20%% ให้เขียน .po ทั้งหมดด้วยมือ — อย่าเขียนสคริปต์ patch/sed %(poedit)s"
 
 #: src/zfr_lib/lint/i18n_check.py:321
 #, fuzzy, python-format
@@ -1941,12 +1617,8 @@ msgstr "ขาดคำแปล man ทั้งเอกสารสำหร�
 
 #: src/zfr_lib/lint/i18n_check.py:385
 #, python-format
-msgid ""
-"Hand-translate man/<locale>/<name>.adoc (full document, not po4a). %(level)s"
-" requires: %(locales)s."
-msgstr ""
-"แปลด้วยมือ docs/<locale>/<name>.adoc (ทั้งเอกสาร ไม่ใช่ po4a) %(level)s "
-"ต้องการ: %(locales)s"
+msgid "Hand-translate man/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
+msgstr "แปลด้วยมือ docs/<locale>/<name>.adoc (ทั้งเอกสาร ไม่ใช่ po4a) %(level)s ต้องการ: %(locales)s"
 
 #: src/zfr_lib/lint/i18n_check.py:395
 #, python-format
@@ -1959,11 +1631,8 @@ msgid "man translation still contains the English Name line: %s"
 msgstr "คำแปล man ยังมีบรรทัด Name ภาษาอังกฤษ: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:407
-msgid ""
-"Translate the Name line; do not leave the English wording. For long adoc, "
-"googletranslator with http-proxy http://localhost:8118 can help (not for "
-"gettext)."
-msgstr ""
+msgid "Translate the Name line; do not leave the English wording. For long adoc, googletranslator with http-proxy http://localhost:8118 can help (not for gettext)."
+msgstr "แปลบรรทัดชื่อ; อย่าทิ้งคำภาษาอังกฤษ สำหรับ adoc ยาว googletranslator กับ http-proxy http://localhost:8118 สามารถช่วยได้ (ไม่ใช้สำหรับ gettext)"
 
 #: src/zfr_lib/lint/i18n_check.py:417
 msgid "no po/: man locale translations not required"
@@ -1976,12 +1645,8 @@ msgstr "%(label)s คือ %(val)r คาดหวัง %(expected)r (ชื�
 
 #: src/zfr_lib/lint/identity.py:60
 #, python-format
-msgid ""
-"Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename "
-"%(expected)s` if leftover template names remain."
-msgstr ""
-"ตั้ง %(label)s เป็น %(expected)r หรือเปลี่ยนชื่อไดเรกทอรี "
-"ถ้ายังมีชื่อจากเทมเพลต ให้ใช้ `zfr rename %(expected)s`"
+msgid "Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename %(expected)s` if leftover template names remain."
+msgstr "ตั้ง %(label)s เป็น %(expected)r หรือเปลี่ยนชื่อไดเรกทอรี ถ้ายังมีชื่อจากเทมเพลต ให้ใช้ `zfr rename %(expected)s`"
 
 #: src/zfr_lib/lint/identity.py:66
 #, python-format
@@ -2027,17 +1692,8 @@ msgid "validate project packaging and zephyr layout (walks parents from cwd)"
 msgstr "ตรวจสอบการแพ็กเกจโปรเจกต์และเลย์เอาต์ zephyr (เดินขึ้นไปจาก cwd)"
 
 #: src/zfr_lib/lint/__init__.py:138
-msgid ""
-"Check the current zephyr project for missing files and packaging/style "
-"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
-"is a TTY. Style-contract blurbs default on for non-interactive stdout and "
-"AI-integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain "
-"interactive shell. Override with -i/-I."
-msgstr ""
-"Kiểm tra dự án zephyr hiện tại (thiếu tệp, đóng gói/phong cách). Đi từ cwd "
-"lên thư mục cha. Màu CSR trên TTY. Khối hợp đồng phong cách mặc định bật cho"
-" stdout không tương tác và terminal AI; tắt trên shell tương tác thường. Ghi"
-" đè bằng -i/-I."
+msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain interactive shell. Override with -i/-I."
+msgstr "Kiểm tra dự án zephyr hiện tại (thiếu tệp, đóng gói/phong cách). Đi từ cwd lên thư mục cha. Màu CSR trên TTY. Khối hợp đồng phong cách mặc định bật cho stdout không tương tác và terminal AI; tắt trên shell tương tác thường. Ghi đè bằng -i/-I."
 
 #: src/zfr_lib/lint/__init__.py:149
 msgid "show passing checks too"
@@ -2048,26 +1704,20 @@ msgid "only print errors"
 msgstr "พิมพ์เฉพาะข้อผิดพลาด"
 
 #: src/zfr_lib/lint/__init__.py:156
-msgid ""
-"open a local web UI with maximum-verbosity lint results, locale switcher, "
-"and per-finding [ize] actions"
-msgstr ""
+msgid "open a local web UI with maximum-verbosity lint results, locale switcher, and per-finding [ize] actions"
+msgstr "เปิดเว็บ UI ภายในเครื่องพร้อมผลการตรวจสอบแบบละเอียดสูงสุด ตัวสลับภาษาท้องถิ่น และการดำเนินการต่อการค้นหาแต่ละรายการ [ize]"
 
 #: src/zfr_lib/lint/__init__.py:170
-msgid ""
-"treat LEVEL as warning (LEVEL=note|warn|error; default note: note→warn; "
-"warn=no-op; error→warn)"
-msgstr ""
+msgid "treat LEVEL as warning (LEVEL=note|warn|error; default note: note→warn; warn=no-op; error→warn)"
+msgstr "ถือว่า LEVEL เป็นคำเตือน (LEVEL=note|warn|error; ค่าเริ่มต้น note: note→warn; warn=ไม่มีการทำงาน; error→warn)"
 
 #: src/zfr_lib/lint/__init__.py:184
-msgid ""
-"treat LEVEL as error (LEVEL=note|warn|error; default warn: warn→error; "
-"note→note+warn→error; error=no-op)"
-msgstr ""
+msgid "treat LEVEL as error (LEVEL=note|warn|error; default warn: warn→error; note→note+warn→error; error=no-op)"
+msgstr "จัดการ LEVEL เป็นข้อผิดพลาด (LEVEL=note|warn|error; ค่าเริ่มต้น warn: warn→error; note→note+warn→error; error=ไม่ทำอะไร)"
 
 #: src/zfr_lib/lint/__init__.py:193
 msgid "alias for -e/--error=warn (treat warnings as errors)"
-msgstr ""
+msgstr "ชื่อแทนของ -e/--error=warn (จัดการคำเตือนเป็นข้อผิดพลาด)"
 
 #: src/zfr_lib/lint/__init__.py:199
 msgid "list numbered lint standards (ZL*) as a table and exit"
@@ -2079,28 +1729,16 @@ msgid "show details for lint standard NUM (e.g. ZL0026, 26) and exit"
 msgstr "แสดงข้อมูลสําหรับ lint มาตรฐาน NUM (เช่น ZL026, 26) และออกออก"
 
 #: src/zfr_lib/lint/__init__.py:213
-msgid ""
-"required gettext/manpage locale coverage L0–L3 (default: L1; project file "
-"may override)"
-msgstr ""
-"ความครอบคลุม gettext/คู่มือที่ต้องการ L0–L3 (ค่าเริ่มต้น L1; "
-"ไฟล์โปรเจกต์อาจแทนที่ได้)"
+msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
+msgstr "ความครอบคลุม gettext/คู่มือที่ต้องการ L0–L3 (ค่าเริ่มต้น L1; ไฟล์โปรเจกต์อาจแทนที่ได้)"
 
 #: src/zfr_lib/lint/__init__.py:221
-msgid ""
-"show zephyr style-contract / next-steps blurbs (default for pipes and AI "
-"terminals)"
-msgstr ""
-"hiển thị khối hợp đồng phong cách / bước tiếp theo (mặc định cho pipe và "
-"terminal AI)"
+msgid "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
+msgstr "hiển thị khối hợp đồng phong cách / bước tiếp theo (mặc định cho pipe và terminal AI)"
 
 #: src/zfr_lib/lint/__init__.py:228
-msgid ""
-"hide zephyr style-contract / next-steps blurbs (default for plain "
-"interactive shell)"
-msgstr ""
-"ẩn khối hợp đồng phong cách / bước tiếp theo (mặc định cho shell tương tác "
-"thường)"
+msgid "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
+msgstr "ẩn khối hợp đồng phong cách / bước tiếp theo (mặc định cho shell tương tác thường)"
 
 #: src/zfr_lib/lint/__init__.py:238
 msgid "suppress rule ID(s) or code(s), comma-separated (repeatable)"
@@ -2122,11 +1760,8 @@ msgid "legacy example module %s; use commons or a specific name"
 msgstr "มอดูลตัวอย่างรุ่นเก่า %s ใช้ commons หรือชื่อที่เจาะจง"
 
 #: src/zfr_lib/lint/lang_bits.py:33
-msgid ""
-"Rename to src/commons.* (template convention) or a project-specific module "
-"name."
-msgstr ""
-"เปลี่ยนชื่อเป็น src/commons.* (ธรรมเนียมเทมเพลต) หรือชื่อมอดูลเฉพาะโปรเจกต์"
+msgid "Rename to src/commons.* (template convention) or a project-specific module name."
+msgstr "เปลี่ยนชื่อเป็น src/commons.* (ธรรมเนียมเทมเพลต) หรือชื่อมอดูลเฉพาะโปรเจกต์"
 
 #: src/zfr_lib/lint/lang_bits.py:44
 #, python-format
@@ -2134,24 +1769,16 @@ msgid "%s is only a template example; can be removed if unnecessary"
 msgstr "%s เป็นเพียงตัวอย่างเทมเพลตสำหรับตัวช่วยที่ใช้ร่วมกัน"
 
 #: src/zfr_lib/lint/lang_bits.py:46
-msgid ""
-"commons.* is only a template example for shared helpers and can be removed "
-"if unnecessary. Prefer a concrete module name in real projects (e.g. "
-"stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared "
-"library entry."
-msgstr ""
-"common_lib / commons หมายถึง “แยกชิ้นส่วนที่ใช้ซ้ำได้” แต่ชื่อไฟล์ควรเจาะจง "
-"ในโปรเจกต์จริงให้เปลี่ยนเป็นมอดูลเฉพาะ (เช่น stream_copy.py, bulk.h) "
-"clib/cpplib คง lib.c/lib.cpp เป็นทางเข้าไลบรารีที่ใช้ร่วมกัน"
+msgid "commons.* is only a template example for shared helpers and can be removed if unnecessary. Prefer a concrete module name in real projects (e.g. stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
+msgstr "common_lib / commons หมายถึง “แยกชิ้นส่วนที่ใช้ซ้ำได้” แต่ชื่อไฟล์ควรเจาะจง ในโปรเจกต์จริงให้เปลี่ยนเป็นมอดูลเฉพาะ (เช่น stream_copy.py, bulk.h) clib/cpplib คง lib.c/lib.cpp เป็นทางเข้าไลบรารีที่ใช้ร่วมกัน"
 
 #: src/zfr_lib/lint/layout.py:35
 msgid "Add a top-level meson.build with project(...)."
 msgstr "เพิ่ม meson.build ระดับบนสุดที่มี project(...)"
 
 #: src/zfr_lib/lint/layout.py:36
-msgid ""
-"Run `zfr ize` (or `zfr create`) to install the standard AGPL-3.0 LICENSE."
-msgstr ""
+msgid "Run `zfr ize` (or `zfr create`) to install the standard AGPL-3.0 LICENSE."
+msgstr "เรียกใช้ `zfr ize` (หรือ `zfr create`) เพื่อติดตั้งใบอนุญาต AGPL-3.0 มาตรฐาน"
 
 #: src/zfr_lib/lint/layout.py:37
 msgid "Add README.md describing this project."
@@ -2170,11 +1797,8 @@ msgid "Add debian/copyright in machine-readable format, License: AGPL-3+."
 msgstr "เพิ่ม debian/copyright ในรูปแบบที่เครื่องอ่านได้ License: AGPL-3+"
 
 #: src/zfr_lib/lint/layout.py:41
-msgid ""
-"Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
-msgstr ""
-"เพิ่ม debian/rules โดยใช้ dh --buildsystem=meson "
-"--builddirectory=debian/build"
+msgid "Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
+msgstr "เพิ่ม debian/rules โดยใช้ dh --buildsystem=meson --builddirectory=debian/build"
 
 #: src/zfr_lib/lint/layout.py:42
 msgid "Add debian/source/format (typically '3.0 (native)')."
@@ -2192,9 +1816,7 @@ msgstr "ไม่มี %s"
 
 #: src/zfr_lib/lint/layout.py:65
 #, fuzzy
-msgid ""
-"Add README-zh_CN.md (Simplified Chinese summary), matching other zephyr "
-"templates (legacy README-zh.md was renamed)."
+msgid "Add README-zh_CN.md (Simplified Chinese summary), matching other zephyr templates (legacy README-zh.md was renamed)."
 msgstr "เพิ่ม README-zh.md (สรุปภาษาจีน) ให้สอดคล้องกับเทมเพลต zephyr อื่น"
 
 #: src/zfr_lib/lint/layout.py:74
@@ -2207,12 +1829,8 @@ msgid "no man/*.adoc man page source"
 msgstr "ไม่มีต้นฉบับหน้า man docs/*.adoc"
 
 #: src/zfr_lib/lint/layout.py:83
-msgid ""
-"Add man/<puff>.adoc and a meson custom_target with asciidoctor -b manpage "
-"(see any language template)."
-msgstr ""
-"เพิ่ม docs/<puff>.adoc และ meson custom_target ที่ใช้ asciidoctor -b manpage"
-" (ดูเทมเพลตภาษาใดก็ได้)"
+msgid "Add man/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
+msgstr "เพิ่ม docs/<puff>.adoc และ meson custom_target ที่ใช้ asciidoctor -b manpage (ดูเทมเพลตภาษาใดก็ได้)"
 
 #: src/zfr_lib/lint/layout.py:108
 #, python-format
@@ -2224,13 +1842,8 @@ msgid "no *.bash bash-completion script at project root"
 msgstr "ไม่มีสคริปต์ bash-completion แบบ *.bash ที่รากโปรเจกต์"
 
 #: src/zfr_lib/lint/layout.py:121
-msgid ""
-"Add <puff>.bash (or completions/<puff>.in) and install it to datadir/bash-"
-"completion/completions renamed to the command name (see meson.build in the "
-"template)."
-msgstr ""
-"เพิ่ม <puff>.bash แล้วติดตั้งไปที่ datadir/bash-completion/completions "
-"โดยเปลี่ยนชื่อเป็นชื่อคำสั่ง (ดู meson.build ในเทมเพลต)"
+msgid "Add <puff>.bash (or completions/<puff>.in) and install it to datadir/bash-completion/completions renamed to the command name (see meson.build in the template)."
+msgstr "เพิ่ม <puff>.bash แล้วติดตั้งไปที่ datadir/bash-completion/completions โดยเปลี่ยนชื่อเป็นชื่อคำสั่ง (ดู meson.build ในเทมเพลต)"
 
 #: src/zfr_lib/lint/layout.py:129
 msgid "VERSION file present"
@@ -2242,24 +1855,16 @@ msgstr "ไม่มีไฟล์ VERSION (ภาพนิ่ง changelog ส
 
 #: src/zfr_lib/lint/layout.py:137
 #, fuzzy
-msgid ""
-"Create VERSION with the latest debian/changelog version (one line). Run `zfr"
-" ize` for `.githooks/pre-commit`, then `git config core.hooksPath "
-".githooks`."
-msgstr ""
-"สร้าง VERSION ด้วยรุ่นล่าสุดจาก debian/changelog (บรรทัดเดียว) เปิดใช้ "
-".githooks/pre-commit: git config core.hooksPath .githooks"
+msgid "Create VERSION with the latest debian/changelog version (one line). Run `zfr ize` for `.githooks/pre-commit`, then `git config core.hooksPath .githooks`."
+msgstr "สร้าง VERSION ด้วยรุ่นล่าสุดจาก debian/changelog (บรรทัดเดียว) เปิดใช้ .githooks/pre-commit: git config core.hooksPath .githooks"
 
 #: src/zfr_lib/lint/layout.py:232
 msgid "no .githooks/pre-commit to sync VERSION from debian/changelog"
 msgstr "ไม่มี .githooks/pre-commit เพื่อซิงก์ VERSION จาก debian/changelog"
 
 #: src/zfr_lib/lint/layout.py:234
-msgid ""
-"Run `zfr ize` (or `zfr create`) to install `.githooks/pre-commit` and set "
-"`git config core.hooksPath .githooks`. The hook syncs VERSION from "
-"debian/changelog."
-msgstr ""
+msgid "Run `zfr ize` (or `zfr create`) to install `.githooks/pre-commit` and set `git config core.hooksPath .githooks`. The hook syncs VERSION from debian/changelog."
+msgstr "เรียกใช้ `zfr ize` (หรือ `zfr create`) เพื่อติดตั้ง `.githooks/pre-commit` และตั้งค่า `git config core.hooksPath .githooks` ฮุกจะซิงค์ VERSION จาก debian/changelog"
 
 #: src/zfr_lib/lint/layout.py:246
 #, python-format
@@ -2272,10 +1877,8 @@ msgid "%s exists but does not sync VERSION from debian/changelog"
 msgstr "มี %s แต่ไม่ได้ซิงก์ VERSION จาก debian/changelog"
 
 #: src/zfr_lib/lint/layout.py:256
-msgid ""
-"Run `zfr ize` to reset the standard pre-commit hook (reads debian/changelog,"
-" writes VERSION)."
-msgstr ""
+msgid "Run `zfr ize` to reset the standard pre-commit hook (reads debian/changelog, writes VERSION)."
+msgstr "รัน `zfr ize` เพื่อตั้งค่าใหม่ pre-commit hook มาตรฐาน (อ่าน debian/changelog, เขียน VERSION)"
 
 #: src/zfr_lib/lint/leftovers.py:49
 #, python-format
@@ -2283,12 +1886,8 @@ msgid "%s keeps the template placeholder banner (apps must rewrite it)"
 msgstr "%s ยังคงแบนเนอร์ตัวยึดของเทมเพลตไว้ (แอปต้องเขียนใหม่)"
 
 #: src/zfr_lib/lint/leftovers.py:52
-msgid ""
-"After `zfr create`/`zfr rename`, rewrite this README and remove the "
-"generated-from-template banner. Templates should keep this banner."
-msgstr ""
-"หลัง `zfr create`/`zfr rename` ให้เขียน README นี้ใหม่และลบแบนเนอร์ "
-"generated-from-template เทมเพลตควรเก็บแบนเนอร์นี้ไว้"
+msgid "After `zfr create`/`zfr rename`, rewrite this README and remove the generated-from-template banner. Templates should keep this banner."
+msgstr "หลัง `zfr create`/`zfr rename` ให้เขียน README นี้ใหม่และลบแบนเนอร์ generated-from-template เทมเพลตควรเก็บแบนเนอร์นี้ไว้"
 
 #: src/zfr_lib/lint/leftovers.py:61
 #, python-format
@@ -2297,12 +1896,8 @@ msgstr "%s ยังมีแบนเนอร์ตัวยึดของเ
 
 #: src/zfr_lib/lint/leftovers.py:64
 #, python-format
-msgid ""
-"Rewrite %s for this project. Remove the generated-from-template banner and "
-"describe the real commands, build, and license."
-msgstr ""
-"เขียน %s ใหม่สำหรับโปรเจกต์นี้ ลบแบนเนอร์ generated-from-template "
-"และอธิบายคำสั่งจริง การสร้าง และสัญญาอนุญาต"
+msgid "Rewrite %s for this project. Remove the generated-from-template banner and describe the real commands, build, and license."
+msgstr "เขียน %s ใหม่สำหรับโปรเจกต์นี้ ลบแบนเนอร์ generated-from-template และอธิบายคำสั่งจริง การสร้าง และสัญญาอนุญาต"
 
 #: src/zfr_lib/lint/leftovers.py:69
 #, python-format
@@ -2316,20 +1911,12 @@ msgstr "ทรี %s อาจมีตัวยึด zephyr/some_puff1 (เป
 
 #: src/zfr_lib/lint/leftovers.py:132
 #, python-format
-msgid ""
-"found %(hits)d leftover template token(s) (zephyr/%(token)s): "
-"%(preview)s%(more)s"
-msgstr ""
-"พบโทเค็นเทมเพลตที่เหลือ %(hits)d รายการ (zephyr/%(token)s): "
-"%(preview)s%(more)s"
+msgid "found %(hits)d leftover template token(s) (zephyr/%(token)s): %(preview)s%(more)s"
+msgstr "พบโทเค็นเทมเพลตที่เหลือ %(hits)d รายการ (zephyr/%(token)s): %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/leftovers.py:134
-msgid ""
-"Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1"
-" identifiers. After create, leftover tokens mean instantiation failed."
-msgstr ""
-"รัน `zfr rename <project> [puff ...]` หรือแทนที่ตัวระบุ zephyr/some_puff1 "
-"ที่เหลือ หลัง create หากยังมีโทเค็นเหลือ แปลว่าการสร้างอินสแตนซ์ล้มเหลว"
+msgid "Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 identifiers. After create, leftover tokens mean instantiation failed."
+msgstr "รัน `zfr rename <project> [puff ...]` หรือแทนที่ตัวระบุ zephyr/some_puff1 ที่เหลือ หลัง create หากยังมีโทเค็นเหลือ แปลว่าการสร้างอินสแตนซ์ล้มเหลว"
 
 #: src/zfr_lib/lint/leftovers.py:138
 msgid "no leftover zephyr/some_puff1 tokens"
@@ -2344,9 +1931,7 @@ msgid "meson.build has no project() call"
 msgstr "meson.build ไม่มีการเรียก project()"
 
 #: src/zfr_lib/lint/meson.py:49
-msgid ""
-"project() must be the first Meson call. Copy the header from the language "
-"template."
+msgid "project() must be the first Meson call. Copy the header from the language template."
 msgstr "project() ต้องเป็นการเรียก Meson ครั้งแรก คัดลอกส่วนหัวจากเทมเพลตภาษา"
 
 #: src/zfr_lib/lint/meson.py:54
@@ -2375,12 +1960,8 @@ msgstr "ไม่มี %s (ใช้สำหรับหน้า man)"
 
 #: src/zfr_lib/lint/meson.py:77
 #, python-format
-msgid ""
-"Set %s next to project(), then pass -a project-author/email/year to "
-"asciidoctor."
-msgstr ""
-"ตั้ง %s ไว้ข้าง project() แล้วส่ง -a project-author/email/year ให้ "
-"asciidoctor"
+msgid "Set %s next to project(), then pass -a project-author/email/year to asciidoctor."
+msgstr "ตั้ง %s ไว้ข้าง project() แล้วส่ง -a project-author/email/year ให้ asciidoctor"
 
 #: src/zfr_lib/lint/meson.py:82
 msgid "version uses `zfr version`"
@@ -2431,10 +2012,8 @@ msgid "meson.build does not invoke asciidoctor"
 msgstr "meson.build ไม่ได้เรียก asciidoctor"
 
 #: src/zfr_lib/lint/meson.py:130
-msgid ""
-"find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
-msgstr ""
-"find_program('asciidoctor') และ custom_target(..., '-b', 'manpage', ...)"
+msgid "find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
+msgstr "find_program('asciidoctor') และ custom_target(..., '-b', 'manpage', ...)"
 
 #: src/zfr_lib/lint/meson.py:135
 msgid "run_target look present"
@@ -2445,11 +2024,8 @@ msgid "no run_target('look') DESTDIR preview"
 msgstr "ไม่มีตัวอย่าง DESTDIR ของ run_target('look')"
 
 #: src/zfr_lib/lint/meson.py:143
-msgid ""
-"Add run_target look that meson install's into a tempdir and runs tree (see "
-"templates)."
-msgstr ""
-"เพิ่ม run_target look ที่ meson install ลง tempdir แล้วรัน tree (ดูเทมเพลต)"
+msgid "Add run_target look that meson install's into a tempdir and runs tree (see templates)."
+msgstr "เพิ่ม run_target look ที่ meson install ลง tempdir แล้วรัน tree (ดูเทมเพลต)"
 
 #: src/zfr_lib/lint/meson.py:148
 msgid "installs bash-completion"
@@ -2460,12 +2036,8 @@ msgid "does not install bash-completion"
 msgstr "ไม่ได้ติดตั้ง bash-completion"
 
 #: src/zfr_lib/lint/meson.py:156
-msgid ""
-"install_data(..., install_dir: datadir / 'bash-completion' / 'completions', "
-"rename: command)."
-msgstr ""
-"ใช้ install_data(..., install_dir: datadir / 'bash-completion' / "
-"'completions', rename: command)."
+msgid "install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
+msgstr "ใช้ install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
 
 #: src/zfr_lib/lint/meson.py:168
 #, python-format
@@ -2474,13 +2046,8 @@ msgstr "meson.build มี %s สําหรับแต่แต่ลุป�
 
 #: src/zfr_lib/lint/meson.py:170
 #, fuzzy
-msgid ""
-"Merge into a single `foreach puff : puffs` (or apps.keys()) loop. `zfr ize` "
-"consolidates duplicate puffs foreach blocks (legacy man_puffs is rewritten "
-"to puffs)."
-msgstr ""
-"รวมเข้าไปใน `foreach puff : man_puffs` (หรือ apps.keys()) ลูปเดียว ๆ ๆ ๆ \\ "
-"`zfr ize` เสริม man_puffs สําหรับทุกบล็อค"
+msgid "Merge into a single `foreach puff : puffs` (or apps.keys()) loop. `zfr ize` consolidates duplicate puffs foreach blocks (legacy man_puffs is rewritten to puffs)."
+msgstr "รวมเข้าไปใน `foreach puff : man_puffs` (หรือ apps.keys()) ลูปเดียว ๆ ๆ ๆ \\ `zfr ize` เสริม man_puffs สําหรับทุกบล็อค"
 
 #: src/zfr_lib/lint/meson.py:180
 msgid "single foreach puff man loop"
@@ -2518,18 +2085,12 @@ msgid "zephyr meta-repo (templates + CLI tools)"
 msgstr "เมตา-รีโป zephyr (เทมเพลต + เครื่องมือ CLI)"
 
 #: src/zfr_lib/lint/report.py:128
-msgid ""
-"language template inside the meta-repo (placeholders like zephyr/some_puff1 "
-"are expected)"
+msgid "language template inside the meta-repo (placeholders like zephyr/some_puff1 are expected)"
 msgstr "เทมเพลตภาษาในเมตา-รีโป (ตัวแทนอย่าง zephyr/some_puff1 เป็นเรื่องปกติ)"
 
 #: src/zfr_lib/lint/report.py:129
-msgid ""
-"project instantiated from a language template (directory name must match "
-"meson/debian; no leftover zephyr/some_puff1 tokens)"
-msgstr ""
-"โครงการที่สร้างจากเทมเพลตภาษา (ชื่อไดเรกทอรีต้องตรงกับ meson/debian; "
-"ห้ามเหลือโทเค็น zephyr/some_puff1)"
+msgid "project instantiated from a language template (directory name must match meson/debian; no leftover zephyr/some_puff1 tokens)"
+msgstr "โครงการที่สร้างจากเทมเพลตภาษา (ชื่อไดเรกทอรีต้องตรงกับ meson/debian; ห้ามเหลือโทเค็น zephyr/some_puff1)"
 
 #: src/zfr_lib/lint/report.py:131
 #, python-format
@@ -2541,67 +2102,33 @@ msgid "Zephyr style (finish the project to this contract)"
 msgstr "สไตล์ Zephyr (ทำโครงการให้ครบตามสัญญานี้)"
 
 #: src/zfr_lib/lint/report.py:135
-msgid ""
-"License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
-"License)."
-msgstr ""
-"สัญญาอนุญาต AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
-"License)"
+msgid "License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
+msgstr "สัญญาอนุญาต AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)"
 
 #: src/zfr_lib/lint/report.py:136
-msgid ""
-"Build with Meson; debian/rules uses dh --buildsystem=meson "
-"--builddirectory=debian/build."
-msgstr ""
-"สร้างด้วย Meson; debian/rules ใช้ dh --buildsystem=meson "
-"--builddirectory=debian/build"
+msgid "Build with Meson; debian/rules uses dh --buildsystem=meson --builddirectory=debian/build."
+msgstr "สร้างด้วย Meson; debian/rules ใช้ dh --buildsystem=meson --builddirectory=debian/build"
 
 #: src/zfr_lib/lint/report.py:137
-msgid ""
-"project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO "
-"0.0.0, DO NOT MODIFY."
-msgstr ""
-"เวอร์ชัน project() จาก `zfr version`; คงค่าสำรอง v=\"0.0.0\" # FIXED TO "
-"0.0.0, DO NOT MODIFY."
+msgid "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
+msgstr "เวอร์ชัน project() จาก `zfr version`; คงค่าสำรอง v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 
 #: src/zfr_lib/lint/report.py:138
-msgid ""
-"Man pages: man/*.adoc + asciidoctor -b manpage; translated pages under "
-"share/man/<locale>/man1 (whole-document adoc, not po4a)."
-msgstr ""
-"หน้าแมน: docs/*.adoc + asciidoctor -b manpage; หน้าที่แปลไว้ที่ "
-"share/man/<locale>/man1 (adoc ทั้งเอกสาร ไม่ใช่ po4a)"
+msgid "Man pages: man/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
+msgstr "หน้าแมน: docs/*.adoc + asciidoctor -b manpage; หน้าที่แปลไว้ที่ share/man/<locale>/man1 (adoc ทั้งเอกสาร ไม่ใช่ po4a)"
 
 #: src/zfr_lib/lint/report.py:139
-msgid ""
-"Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; "
-"optional packaging/ aligned with debian."
-msgstr ""
-"บรรจุภัณฑ์: debian/control Build-Depends meson, ninja-build, asciidoctor; "
-"rpm/ ที่เลือกได้ให้สอดคล้องกับ debian"
+msgid "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional packaging/ aligned with debian."
+msgstr "บรรจุภัณฑ์: debian/control Build-Depends meson, ninja-build, asciidoctor; rpm/ ที่เลือกได้ให้สอดคล้องกับ debian"
 
 #: src/zfr_lib/lint/report.py:140
 #, fuzzy
-msgid ""
-"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I"
-" primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-"
-"derive via zfr i18n -b. List rule IDs with `zfr lint -L`; details via `zfr "
-"lint -H NUM`; suppress with -u/--uncheck or `.config/zfr/lint.options` "
-"(interactive: `zfr-lintsel`). Rules tagged `ize` on -L can be fixed with "
-"`zfr ize`."
-msgstr ""
-"i18n: nguồn tiếng Anh; zfr lint -l/--l10n-level L0–L3 (mặc định L1). "
-"L1=chính tầng I (8), L2=+tầng II (17), L3=+tầng III (35). Locale con tự tạo "
-"qua zfr i18n -b. ID quy tắc trong docs/lint-std.md; ẩn bằng -u/--uncheck "
-"hoặc .config/zfr/lint.options."
+msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr i18n -b. List rule IDs with `zfr lint -L`; details via `zfr lint -H NUM`; suppress with -u/--uncheck or `.config/zfr/lint.options` (interactive: `zfr-lintsel`). Rules tagged `ize` on -L can be fixed with `zfr ize`."
+msgstr "i18n: nguồn tiếng Anh; zfr lint -l/--l10n-level L0–L3 (mặc định L1). L1=chính tầng I (8), L2=+tầng II (17), L3=+tầng III (35). Locale con tự tạo qua zfr i18n -b. ID quy tắc trong docs/lint-std.md; ẩn bằng -u/--uncheck hoặc .config/zfr/lint.options."
 
 #: src/zfr_lib/lint/report.py:147
-msgid ""
-"Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches "
-"debian/changelog (git describe may differ)."
-msgstr ""
-"แอป: `zfr rename <dir>` แล้ว `zfr add <puff>`; VERSION ตรงกับ "
-"debian/changelog (git describe อาจต่างกัน)"
+msgid "Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ)."
+msgstr "แอป: `zfr rename <dir>` แล้ว `zfr add <puff>`; VERSION ตรงกับ debian/changelog (git describe อาจต่างกัน)"
 
 #: src/zfr_lib/lint/report.py:160
 msgid "error"
@@ -2624,48 +2151,24 @@ msgid "Next steps (zephyr style)"
 msgstr "ขั้นตอนถัดไป (สไตล์ zephyr)"
 
 #: src/zfr_lib/lint/report.py:190
-msgid ""
-"Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). "
-"`zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr "
-"version`. `zfr ize` applies missing debian/packaging/meson/man/version-subst"
-" upgrades."
-msgstr ""
-"คำใบ้: หลังแก้ไข ให้รัน `zfr lint` อีกครั้งจากโครงการ (หรือไดเรกทอรีย่อย) "
-"`zfr about -d -r` แสดงฟิลด์บรรจุภัณฑ์ เวอร์ชันสำหรับ Meson/RPM คือ `zfr "
-"version` `zfr ize` ใส่การอัปเกรด debian/rpm/meson/man/version-subst ที่ขาด"
+msgid "Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). `zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. `zfr ize` applies missing debian/packaging/meson/man/version-subst upgrades."
+msgstr "คำใบ้: หลังแก้ไข ให้รัน `zfr lint` อีกครั้งจากโครงการ (หรือไดเรกทอรีย่อย) `zfr about -d -r` แสดงฟิลด์บรรจุภัณฑ์ เวอร์ชันสำหรับ Meson/RPM คือ `zfr version` `zfr ize` ใส่การอัปเกรด debian/rpm/meson/man/version-subst ที่ขาด"
 
 #: src/zfr_lib/lint/report.py:207
-msgid ""
-"AI hint: if the user requested this lint, also update debian/changelog and "
-"create verbose commits for the dirty working tree."
-msgstr ""
-"AI ชี้: ถ้าผู้ใช้ขอ ลินต์นี้, ก็ปรับปรับปรับ debian/changelog "
-"และสร้างการสร้างผลสําหรับต้นไม้ที่ทํางานที่บ้าง"
+msgid "AI hint: if the user requested this lint, also update debian/changelog and create verbose commits for the dirty working tree."
+msgstr "AI ชี้: ถ้าผู้ใช้ขอ ลินต์นี้, ก็ปรับปรับปรับ debian/changelog และสร้างการสร้างผลสําหรับต้นไม้ที่ทํางานที่บ้าง"
 
 #: src/zfr_lib/lint/rpm.py:26
-msgid ""
-"no packaging/rpm/*.spec (optional, but zephyr style includes RPM next to "
-"debian/)"
+msgid "no packaging/rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
 msgstr "ไม่มี rpm/*.spec (เลือกได้ แต่สไตล์ zephyr ใส่ RPM ไว้ข้าง debian/)"
 
 #: src/zfr_lib/lint/rpm.py:31
-msgid ""
-"Copy packaging/rpm/ from a language template; name the spec after the "
-"package (packaging/rpm/<Source>.spec, not zephyr.spec) and keep a Makefile "
-"using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or"
-" run `zfr ize`."
-msgstr ""
-"คัดลอก rpm/ จากเทมเพลตภาษา ตั้งชื่อ spec ตามแพ็กเกจ (rpm/<Source>.spec "
-"ไม่ใช่ zephyr.spec) และคง Makefile ที่ใช้ `zfr version` ให้ "
-"Name/Summary/Requires/URL สอดคล้องกับ debian/control หรือรัน `zfr ize`"
+msgid "Copy packaging/rpm/ from a language template; name the spec after the package (packaging/rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
+msgstr "คัดลอก rpm/ จากเทมเพลตภาษา ตั้งชื่อ spec ตามแพ็กเกจ (rpm/<Source>.spec ไม่ใช่ zephyr.spec) และคง Makefile ที่ใช้ `zfr version` ให้ Name/Summary/Requires/URL สอดคล้องกับ debian/control หรือรัน `zfr ize`"
 
 #: src/zfr_lib/lint/rpm.py:72
-msgid ""
-"packaging/rpm/Makefile uses project-local <project>/rpmbuild; zephyr style "
-"uses %_topdir ($HOME/rpmbuild, override via ~/.rpmmacros)"
-msgstr ""
-"packaging/rpm/Makefile ใช้โครงการ-local <project>/rpmbuild; รูปแบบ zephyr "
-"ใช้ %_topdir ($HOME/rpmbuild, ข้อมูลโดยใช้ ~/.rpmmacros)"
+msgid "packaging/rpm/Makefile uses project-local <project>/rpmbuild; zephyr style uses %_topdir ($HOME/rpmbuild, override via ~/.rpmmacros)"
+msgstr "packaging/rpm/Makefile ใช้โครงการ-local <project>/rpmbuild; รูปแบบ zephyr ใช้ %_topdir ($HOME/rpmbuild, ข้อมูลโดยใช้ ~/.rpmmacros)"
 
 #: src/zfr_lib/lint/rpm.py:80
 #, python-brace-format
@@ -2675,11 +2178,7 @@ msgid ""
 "TOPDIR := $(HOME)/rpmbuild\n"
 "endif\n"
 "And make clean remove only this package's artifacts (not rm -rf $(TOPDIR)). Or run `zfr ize`."
-msgstr ""
-"TOPDIR ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null) ifeq ($(strip "
-"$(TOPDIR)), TOPDIR := $(HOME)/rpmbuild endif "
-"และทําให้ลบเพียงสัญญาณของแผนโพกเกจนี้ (ไม่ใช่ rm -rf $(TOPDIR)). หรือเรียก "
-"`zfr ize`"
+msgstr "TOPDIR ?= $(shell rpm --eval '%{_topdir}' 2>/dev/null) ifeq ($(strip $(TOPDIR)), TOPDIR := $(HOME)/rpmbuild endif และทําให้ลบเพียงสัญญาณของแผนโพกเกจนี้ (ไม่ใช่ rm -rf $(TOPDIR)). หรือเรียก `zfr ize`"
 
 #: src/zfr_lib/lint/rpm.py:95
 #, no-python-format
@@ -2687,28 +2186,16 @@ msgid "packaging/rpm/Makefile TOPDIR uses %_topdir / $HOME/rpmbuild"
 msgstr "packaging/rpm/Makefile TOPDIR ใช้ %_topdir / $HOME/rpmbuild"
 
 #: src/zfr_lib/lint/rpm.py:105
-msgid ""
-"packaging/rpm/Makefile `clean` does rm -rf $(TOPDIR); unsafe when TOPDIR is "
-"$HOME/rpmbuild"
-msgstr ""
-"packaging/rpm/Makefile `clean` ทําให้ rm -rf $(TOPDIR) ปลอดภัย เมื่อ TOPDIR "
-"คือ $HOME/rpmbuild"
+msgid "packaging/rpm/Makefile `clean` does rm -rf $(TOPDIR); unsafe when TOPDIR is $HOME/rpmbuild"
+msgstr "packaging/rpm/Makefile `clean` ทําให้ rm -rf $(TOPDIR) ปลอดภัย เมื่อ TOPDIR คือ $HOME/rpmbuild"
 
 #: src/zfr_lib/lint/rpm.py:111
-msgid ""
-"Remove only this package's SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT entries "
-"under $(TOPDIR). Or run `zfr ize`."
-msgstr ""
-"ลบเหลือของแพกเกจนี้ เพียง SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT ใต้ "
-"$(TOPDIR) หรือเรียก `zfr ize`"
+msgid "Remove only this package's SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT entries under $(TOPDIR). Or run `zfr ize`."
+msgstr "ลบเหลือของแพกเกจนี้ เพียง SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT ใต้ $(TOPDIR) หรือเรียก `zfr ize`"
 
 #: src/zfr_lib/lint/rpm.py:124
-msgid ""
-"project-local rpmbuild/ directory present; builds should use %_topdir "
-"($HOME/rpmbuild)"
-msgstr ""
-"โครงการ-local rpmbuild/ มีโดรกเตอร์ที่อยู่; สร้างควรใช้ %_topdir "
-"($HOME/rpmbuild)"
+msgid "project-local rpmbuild/ directory present; builds should use %_topdir ($HOME/rpmbuild)"
+msgstr "โครงการ-local rpmbuild/ มีโดรกเตอร์ที่อยู่; สร้างควรใช้ %_topdir ($HOME/rpmbuild)"
 
 #: src/zfr_lib/lint/rpm.py:128
 msgid "Remove rpmbuild/ after migrating; safe to delete."
@@ -2724,12 +2211,8 @@ msgid "spec Version is hardcoded; zephyr style injects `zfr version`"
 msgstr "Version ของ spec ถูกเขียนตายตัว; สไตล์ zephyr จะใส่ `zfr version`"
 
 #: src/zfr_lib/lint/rpm.py:153
-msgid ""
-"Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze "
-"via packaging/rpm/Makefile (`zfr version` / `zfr version -r`)."
-msgstr ""
-"ใช้ Version: %{version} คู่กับ %{!?version:%global version 0.0.0} "
-"แล้วตรึงด้วย rpm/Makefile (`zfr version` / `zfr version -r`)"
+msgid "Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze via packaging/rpm/Makefile (`zfr version` / `zfr version -r`)."
+msgstr "ใช้ Version: %{version} คู่กับ %{!?version:%global version 0.0.0} แล้วตรึงด้วย rpm/Makefile (`zfr version` / `zfr version -r`)"
 
 #: src/zfr_lib/lint/rpm.py:161
 msgid "License {}"
@@ -2809,41 +2292,26 @@ msgid "Requires:       bash-shlib  (same as debian Depends)"
 msgstr "Requires:       bash-shlib  (เหมือน debian Depends)"
 
 #: src/zfr_lib/lint/rpm.py:284
-msgid ""
-"{} still contains Debian ${{…}} substvars (rpmbuild treats them as literal "
-"deps)"
-msgstr ""
-"{} ยังมีเบอร์สบาทของเดบีน ${{…}} (rpmbuild คุยพวกเขาเป็นกิจการแต่ตัวชัด)"
+msgid "{} still contains Debian ${{…}} substvars (rpmbuild treats them as literal deps)"
+msgstr "{} ยังมีเบอร์สบาทของเดบีน ${{…}} (rpmbuild คุยพวกเขาเป็นกิจการแต่ตัวชัด)"
 
 #: src/zfr_lib/lint/rpm.py:290
 msgid "Strip ${misc:Depends} / ${shlibs:Depends} etc. (or run `zfr ize`)."
 msgstr "ไฟริป ${misc:Depends} / ${shlibs:Depends} ลด (หรือเรียก `zfr ize`)"
 
 #: src/zfr_lib/lint/rpm.py:305
-msgid ""
-"BuildArch: noarch but Meson has executable(); rpmbuild rejects arch-"
-"dependent binaries in a noarch package"
-msgstr ""
-"BuildArch: noarch แต่ Meson มี executable(); rpmbuild ปฏิเสธแฟ้ม-dependent "
-"บินรีนในแพกเกจ noarch"
+msgid "BuildArch: noarch but Meson has executable(); rpmbuild rejects arch-dependent binaries in a noarch package"
+msgstr "BuildArch: noarch แต่ Meson มี executable(); rpmbuild ปฏิเสธแฟ้ม-dependent บินรีนในแพกเกจ noarch"
 
 #: src/zfr_lib/lint/rpm.py:312
 #, python-brace-format
-msgid ""
-"Remove BuildArch: noarch (and %global debug_package %{nil} if present). Or "
-"run `zfr ize`."
-msgstr ""
-"ลบ BuildArch: noarch (และ %global debug_package %{nil} ถ้ามี) หรือเรียกร้อง "
-"`zfr ize`"
+msgid "Remove BuildArch: noarch (and %global debug_package %{nil} if present). Or run `zfr ize`."
+msgstr "ลบ BuildArch: noarch (และ %global debug_package %{nil} ถ้ามี) หรือเรียกร้อง `zfr ize`"
 
 #: src/zfr_lib/lint/rpm.py:326
 #, python-brace-format
-msgid ""
-"%global debug_package %{nil} on a package with Meson executable() — "
-"debuginfo would be useful"
-msgstr ""
-"%global debug_package %{nil} บนแพกเกจที่มี Meson executable() - debuginfo "
-"จะเป็นประโยชน์"
+msgid "%global debug_package %{nil} on a package with Meson executable() — debuginfo would be useful"
+msgstr "%global debug_package %{nil} บนแพกเกจที่มี Meson executable() - debuginfo จะเป็นประโยชน์"
 
 #: src/zfr_lib/lint/rpm.py:331
 #, no-python-format, python-brace-format
@@ -2852,21 +2320,13 @@ msgstr "ลบ %global debug_package %{nil} สําหรับปัญหา
 
 #: src/zfr_lib/lint/rpm.py:344
 #, python-format
-msgid ""
-"script-only package lacks BuildArch: noarch; rpmbuild then builds an empty "
-"debuginfo and fails (Empty %files file debugfiles.list)"
-msgstr ""
-"ปัญหาสคริปต์-only ไม่มี BuildArch: noarch; rpmbuild แล้วสร้าง debuginfo "
-"เปลี่ยนแปลง และล้มเหลว (เอ้ย %files ไฟล์แฟ้ม debugfiles.list)"
+msgid "script-only package lacks BuildArch: noarch; rpmbuild then builds an empty debuginfo and fails (Empty %files file debugfiles.list)"
+msgstr "ปัญหาสคริปต์-only ไม่มี BuildArch: noarch; rpmbuild แล้วสร้าง debuginfo เปลี่ยนแปลง และล้มเหลว (เอ้ย %files ไฟล์แฟ้ม debugfiles.list)"
 
 #: src/zfr_lib/lint/rpm.py:352
 #, python-brace-format
-msgid ""
-"Add `BuildArch: noarch` and `%global debug_package %{nil}` (or run `zfr "
-"ize`)."
-msgstr ""
-"เพิ่ม `BuildArch: noarch` และ `%global debug_package %{nil}` (หรือเรียก `zfr"
-" ize`)"
+msgid "Add `BuildArch: noarch` and `%global debug_package %{nil}` (or run `zfr ize`)."
+msgstr "เพิ่ม `BuildArch: noarch` และ `%global debug_package %{nil}` (หรือเรียก `zfr ize`)"
 
 #: src/zfr_lib/lint/rpm.py:364
 #, python-format
@@ -2884,21 +2344,13 @@ msgstr "%files คุม gettext .mo คาทาลิก Meson ตั้งต
 
 #: src/zfr_lib/lint/rpm.py:394
 #, python-format
-msgid ""
-"%files omits gettext .mo; rpmbuild will reject unpackaged "
-"locale/*/LC_MESSAGES/*.mo after meson install"
-msgstr ""
-"%files ลบ gettext .mo; rpmbuild จะปฏิเสธการลบออกจาก "
-"locale/*/LC_MESSAGES/*.mo หลังจากการติดตั้ง meson"
+msgid "%files omits gettext .mo; rpmbuild will reject unpackaged locale/*/LC_MESSAGES/*.mo after meson install"
+msgstr "%files ลบ gettext .mo; rpmbuild จะปฏิเสธการลบออกจาก locale/*/LC_MESSAGES/*.mo หลังจากการติดตั้ง meson"
 
 #: src/zfr_lib/lint/rpm.py:401
 #, python-brace-format
-msgid ""
-"%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo  (i18n.gettext domain, not "
-"always the project name). Or run `zfr ize`."
-msgstr ""
-"%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo (i18n.gettext ดอเมน "
-"ไม่ใช่ชื่อโครงการตลอดไป) หรือเรียกร้อง `zfr ize`"
+msgid "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo  (i18n.gettext domain, not always the project name). Or run `zfr ize`."
+msgstr "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo (i18n.gettext ดอเมน ไม่ใช่ชื่อโครงการตลอดไป) หรือเรียกร้อง `zfr ize`"
 
 #: src/zfr_lib/lint/rpm.py:417
 #, no-python-format
@@ -2907,18 +2359,13 @@ msgstr "%files คลุมหน้ามนุษย์แล็กซีล M
 
 #: src/zfr_lib/lint/rpm.py:428
 #, python-format
-msgid ""
-"%files omits locale mans; rpmbuild will reject unpackaged "
-"$mandir/<locale>/manN pages after meson install"
-msgstr ""
-"%files ลบมนุษย์ที่แลกเซ็กลายเป็นมนุษย์; rpmbuild จะปฏิเสธการแตกแตก "
-"$mandir/<locale>/manN หลังจากการติดตั้ง meson"
+msgid "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale>/manN pages after meson install"
+msgstr "%files ลบมนุษย์ที่แลกเซ็กลายเป็นมนุษย์; rpmbuild จะปฏิเสธการแตกแตก $mandir/<locale>/manN หลังจากการติดตั้ง meson"
 
 #: src/zfr_lib/lint/rpm.py:435
 #, fuzzy, python-brace-format
 msgid "%{_mandir}/*/man1/<cmd>.1*  (man/<lang>/*.adoc). Or run `zfr ize`."
-msgstr ""
-"%{_mandir}/*/man1/<cmd>.1* (docs/<lang>/*.adoc). หรือเรียกร้อง `zfr ize`"
+msgstr "%{_mandir}/*/man1/<cmd>.1* (docs/<lang>/*.adoc). หรือเรียกร้อง `zfr ize`"
 
 #: src/zfr_lib/lint/rpm.py:457
 #, no-python-format
@@ -2927,11 +2374,8 @@ msgstr "%files ควบคุม datadir/setup สคริปต์ Meson ต�
 
 #: src/zfr_lib/lint/rpm.py:468
 #, python-format
-msgid ""
-"%files omits datadir/setup/*; rpmbuild will reject unpackaged postinst/prerm"
-" after meson install"
-msgstr ""
-"%filesลบdatadir/setup/*;rpmbuildจะปฏิเสธการแต่งออกpostinst/prermหลังจากmesonตั้งแต่ง"
+msgid "%files omits datadir/setup/*; rpmbuild will reject unpackaged postinst/prerm after meson install"
+msgstr "%filesลบdatadir/setup/*;rpmbuildจะปฏิเสธการแต่งออกpostinst/prermหลังจากmesonตั้งแต่ง"
 
 #: src/zfr_lib/lint/rpm.py:474
 #, no-python-format, python-brace-format
@@ -2940,21 +2384,13 @@ msgstr "%{_datadir}/setup/%{name}/ (หรือเรียก `zfr ize`)"
 
 #: src/zfr_lib/lint/rpm.py:509
 #, python-format, python-brace-format
-msgid ""
-"%files is missing paths Meson installs: {preview}{more} (rpmbuild will fail "
-"with unpackaged or File not found)"
-msgstr ""
-"%files หาทางที่หายไป Meson ตั้งตั้ง: {preview}{more} (rpmbuild "
-"จะล้มเหลวด้วยการแตกเลือกหรือแฟ้มไม่พบ)"
+msgid "%files is missing paths Meson installs: {preview}{more} (rpmbuild will fail with unpackaged or File not found)"
+msgstr "%files หาทางที่หายไป Meson ตั้งตั้ง: {preview}{more} (rpmbuild จะล้มเหลวด้วยการแตกเลือกหรือแฟ้มไม่พบ)"
 
 #: src/zfr_lib/lint/rpm.py:516
 #, python-format
-msgid ""
-"Rewrite %files from Meson install rules (bindir, completions, manN, pkgdata,"
-" perl5, includedir, sysconfdir, shlib.d, setup/). Or run `zfr ize`."
-msgstr ""
-"เขียน %files จาก Meson ตั้งกฎ (bindir, จุดสัมพันธ์, manN, pkgdata, perl5, "
-"includedir, sysconfdir, shlib.d, setup/) หรือเรียกร้อง `zfr ize`"
+msgid "Rewrite %files from Meson install rules (bindir, completions, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/). Or run `zfr ize`."
+msgstr "เขียน %files จาก Meson ตั้งกฎ (bindir, จุดสัมพันธ์, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/) หรือเรียกร้อง `zfr ize`"
 
 #: src/zfr_lib/lint/rpm.py:530
 #, python-format
@@ -2963,26 +2399,17 @@ msgstr "%files คุมค่าการตั้งสัมพันธ์ M
 
 #: src/zfr_lib/lint/rpm.py:548
 #, python-brace-format
-msgid ""
-"%files lists %{_datadir}/%{name}/ but Meson does not install package data "
-"there (Directory not found)"
-msgstr ""
-"%files รายชื่อ %{_datadir}/%{name}/ แต่ Meson ไม่ถูกตั้งข้อมูลแพกเกจที่นั่น "
-"(ไม่มีทางการพบ)"
+msgid "%files lists %{_datadir}/%{name}/ but Meson does not install package data there (Directory not found)"
+msgstr "%files รายชื่อ %{_datadir}/%{name}/ แต่ Meson ไม่ถูกตั้งข้อมูลแพกเกจที่นั่น (ไม่มีทางการพบ)"
 
 #: src/zfr_lib/lint/rpm.py:554
-msgid ""
-"Remove the empty pkgdata line (Java template leftover). Or run `zfr ize`."
-msgstr ""
-"ลบเส้นที่ว่าง pkgdata (แต่แต่งแต่งแต่งของJava เหลือ) หรือเรียก `zfr ize`"
+msgid "Remove the empty pkgdata line (Java template leftover). Or run `zfr ize`."
+msgstr "ลบเส้นที่ว่าง pkgdata (แต่แต่งแต่งแต่งของJava เหลือ) หรือเรียก `zfr ize`"
 
 #: src/zfr_lib/lint/rpm.py:580
 #, python-format
-msgid ""
-"%files lists completion {listed!r} but Meson installs {want!r} (File not "
-"found)"
-msgstr ""
-"%files รายการที่จบเต็มไป {listed!r} แต่ Meson ตั้งค่า {want!r} (แฟ้มไม่พบ)"
+msgid "%files lists completion {listed!r} but Meson installs {want!r} (File not found)"
+msgstr "%files รายการที่จบเต็มไป {listed!r} แต่ Meson ตั้งค่า {want!r} (แฟ้มไม่พบ)"
 
 #: src/zfr_lib/lint/rpm.py:586
 msgid "Use the installed basename ({}). Or run `zfr ize`."
@@ -2991,123 +2418,105 @@ msgstr "ใช้ชื่อมือที่ถูกตั้งค่า ({
 #: src/zfr_lib/lint/scripts_check.py:171
 #, python-format
 msgid "VERSION/PROJECT_VERSION substituted and used in %s"
-msgstr ""
+msgstr "รุ่น/PROJECT_VERSION ถูกแทนที่และใช้ใน %s"
 
 #: src/zfr_lib/lint/scripts_check.py:180
 msgid "meson configures VERSION/PROJECT_VERSION but no source uses it"
-msgstr ""
+msgstr "meson กำหนดค่า VERSION/PROJECT_VERSION แต่ไม่มีซอร์สใดใช้มัน"
 
 #: src/zfr_lib/lint/scripts_check.py:183
-msgid ""
-"Reference @VERSION@ (scripts → *.in + configure_file) or PROJECT_VERSION "
-"from config.h in at least one source. Or run `zfr ize`."
-msgstr ""
+msgid "Reference @VERSION@ (scripts → *.in + configure_file) or PROJECT_VERSION from config.h in at least one source. Or run `zfr ize`."
+msgstr "อ้างอิง @VERSION@ (สคริปต์ → *.in + configure_file) หรือ PROJECT_VERSION จาก config.h อย่างน้อยหนึ่งแหล่งที่มา หรือรัน `zfr ize`"
 
 #: src/zfr_lib/lint/scripts_check.py:194
 msgid "sources use @VERSION@/PROJECT_VERSION but meson does not substitute it"
-msgstr ""
+msgstr "แหล่งที่มาใช้ @VERSION@/PROJECT_VERSION แต่ meson ไม่แทนที่มัน"
 
 #: src/zfr_lib/lint/scripts_check.py:197
-msgid ""
-"Add configuration_data set('VERSION', …) / set_quoted('PROJECT_VERSION', …) "
-"and configure_file. Or run `zfr ize`."
-msgstr ""
+msgid "Add configuration_data set('VERSION', …) / set_quoted('PROJECT_VERSION', …) and configure_file. Or run `zfr ize`."
+msgstr "เพิ่ม configuration_data set('VERSION', …) / set_quoted('PROJECT_VERSION', …) และ configure_fileหรือรัน `zfr ize`"
 
 #: src/zfr_lib/lint/scripts_check.py:208
 msgid "no Meson VERSION/PROJECT_VERSION substitution found"
-msgstr ""
+msgstr "ไม่พบการแทนที่ Meson VERSION/PROJECT_VERSION"
 
 #: src/zfr_lib/lint/scripts_check.py:211
-msgid ""
-"Wire meson configuration_data for VERSION and use it in a source. Or run "
-"`zfr ize`."
-msgstr ""
+msgid "Wire meson configuration_data for VERSION and use it in a source. Or run `zfr ize`."
+msgstr "ต่อสายเมซอน configuration_data สำหรับ VERSION และใช้มันในแหล่งที่มา หรือเรียกใช้งาน `zfr ize`"
 
 #: src/zfr_lib/lint/scripts_check.py:233
 msgid "po/ present but no run_target('posync')"
-msgstr ""
+msgstr "มี/อยู่ แต่ไม่มี run_target('posync')"
 
 #: src/zfr_lib/lint/scripts_check.py:235
 msgid "Add run_target posync calling scripts/posync.sh. Or run `zfr ize`."
-msgstr ""
+msgstr "เพิ่มการเรียก run_target posync scripts/posync.sh. หรือเรียก run `zfr ize`."
 
 #: src/zfr_lib/lint/scripts_check.py:245
 msgid "posync externalized as scripts/posync.sh"
-msgstr ""
+msgstr "posync ถูกแยกออกมาเป็น scripts/posync.sh"
 
 #: src/zfr_lib/lint/scripts_check.py:254
 msgid "scripts/posync.sh exists but meson posync does not call it"
-msgstr ""
+msgstr "scripts/posync.sh มีอยู่แต่ meson posync ไม่ได้เรียกใช้งาน"
 
 #: src/zfr_lib/lint/scripts_check.py:256
 msgid "Point run_target('posync') at scripts/posync.sh. Or run `zfr ize`."
-msgstr ""
+msgstr "ชี้ไปที่ run_target('posync') ที่ scripts/posync.sh. หรือวิ่ง `zfr ize`."
 
 #: src/zfr_lib/lint/scripts_check.py:263
 msgid "posync is inline in meson.build; externalize to scripts/posync.sh"
-msgstr ""
+msgstr "posync อยู่ในบรรทัดใน meson.build; ทำให้เป็นภายนอกไปที่ scripts/posync.sh"
 
 #: src/zfr_lib/lint/scripts_check.py:265
-msgid ""
-"Extract the posync body to scripts/posync.sh and call it from run_target. Or"
-" run `zfr ize`."
-msgstr ""
+msgid "Extract the posync body to scripts/posync.sh and call it from run_target. Or run `zfr ize`."
+msgstr "แยกตัวโค้ด posync ไปที่ scripts/posync.sh แล้วเรียกจาก run_target หรือรัน `zfr ize`"
 
 #: src/zfr_lib/lint/scripts_check.py:291
 #, python-format
 msgid "maintenance script %s should live under scripts/"
-msgstr ""
+msgstr "สคริปต์บำรุงรักษา %s ควรอยู่ภายใต้ scripts/"
 
 #: src/zfr_lib/lint/scripts_check.py:293
 #, fuzzy, python-format
 msgid "Move to scripts/%s and update callers. Or run `zfr ize`."
-msgstr ""
-"ลบเส้นที่ว่าง pkgdata (แต่แต่งแต่งแต่งของJava เหลือ) หรือเรียก `zfr ize`"
+msgstr "ลบเส้นที่ว่าง pkgdata (แต่แต่งแต่งแต่งของJava เหลือ) หรือเรียก `zfr ize`"
 
 #: src/zfr_lib/lint/scripts_check.py:315
 #, python-format
 msgid "run_target('%s') should call scripts/%s.sh"
-msgstr ""
+msgstr "run_target('%s') ควรเรียก scripts/%s.sh"
 
 #: src/zfr_lib/lint/scripts_check.py:318
 #, python-format
-msgid ""
-"Extract the inline script to scripts/%s.sh and reference it from meson. Or "
-"run `zfr ize`."
-msgstr ""
+msgid "Extract the inline script to scripts/%s.sh and reference it from meson. Or run `zfr ize`."
+msgstr "แยกสคริปต์ในบรรทัดไปที่ scripts/%s.sh และอ้างอิงจาก meson หรือรัน `zfr ize`"
 
 #: src/zfr_lib/lint/scripts_check.py:332
 msgid "build/deploy/maintenance scripts under scripts/ (or none)"
-msgstr ""
+msgstr "สคริปต์สำหรับสร้าง/ปรับใช้/บำรุงรักษา ภายใต้ scripts/ (หรือตามที่ไม่มี)"
 
 #: src/zfr_lib/lintsel.py:22
 msgid "interactively select lint rules to ignore or force"
-msgstr ""
+msgstr "เลือกกฎการตรวจสอบโค้ดที่ต้องละเว้นหรือบังคับใช้แบบโต้ตอบ"
 
 #: src/zfr_lib/lintsel.py:24
-msgid ""
-"Open a TUI to toggle lint rule overrides for this project "
-"(.config/zfr/lint.options). Space=default/ignored, Y=always, N/-=ignored, "
-"~=invert, Ctrl+S save, Ctrl+D save&quit, Ctrl+Q quit."
-msgstr ""
+msgid "Open a TUI to toggle lint rule overrides for this project (.config/zfr/lint.options). Space=default/ignored, Y=always, N/-=ignored, ~=invert, Ctrl+S save, Ctrl+D save&quit, Ctrl+Q quit."
+msgstr "เปิด TUI เพื่อสลับการยกเว้นกฎ lint สำหรับโปรเจกต์นี้ (.config/zfr/lint.options). Space=ค่าเริ่มต้น/ละเว้น, Y=เสมอ, N/-=ละเว้น, ~=invert, Ctrl+S บันทึก, Ctrl+D บันทึก&ออก, Ctrl+Q ออก."
 
 #: src/zfr_lib/lintsel.py:153
 msgid "zfr-lintsel requires an interactive TTY"
-msgstr ""
+msgstr "zfr-lintsel ต้องการ TTY แบบโต้ตอบ"
 
 #: src/zfr_lib/lint/severity.py:27
 #, python-format
 msgid "invalid severity level %r (want note, warn, or error)"
-msgstr ""
+msgstr "ระดับความรุนแรงไม่ถูกต้อง %r (ต้องการ note, warn, หรือ error)"
 
 #: src/zfr_lib/lint/source_size.py:85
 #, python-format
-msgid ""
-"Extract cohesive sections into package subdirectory %(subdir)s (e.g. "
-"%(example)s) and keep a thin %(rel)s entry point."
-msgstr ""
-"จัดการส่วนโคเซิวในเฟอร์เดอร์เรียนเหลือ %(subdir)s (เช่น %(example)s) "
-"และรักษาจุดเข้าไปที่ทัน %(rel)s"
+msgid "Extract cohesive sections into package subdirectory %(subdir)s (e.g. %(example)s) and keep a thin %(rel)s entry point."
+msgstr "จัดการส่วนโคเซิวในเฟอร์เดอร์เรียนเหลือ %(subdir)s (เช่น %(example)s) และรักษาจุดเข้าไปที่ทัน %(rel)s"
 
 #: src/zfr_lib/lint/source_size.py:105
 #, python-format
@@ -3133,74 +2542,47 @@ msgstr "มีไฟล์โครงสร้างจากเทมเพล
 
 #: src/zfr_lib/lint/template.py:199
 #, fuzzy, python-format
-msgid ""
-"language template %(lang)s optional scaffolding not in this tree: "
-"%(preview)s%(more)s"
-msgstr ""
-"เทมเพลตภาษา %(lang)s มีโครงเสริมที่ไม่มีในต้นไม้นี้: %(preview)s%(more)s"
+msgid "language template %(lang)s optional scaffolding not in this tree: %(preview)s%(more)s"
+msgstr "เทมเพลตภาษา %(lang)s มีโครงเสริมที่ไม่มีในต้นไม้นี้: %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/template.py:201
-msgid ""
-"Optional only (safe to omit): non-rpm packaging/*, src/Makefile, and "
-"language helpers such as clib src/{bulk.h,c_pch.h,lib.c,lib.h}. Do not copy "
-"build/ or debian leftover stamp files."
-msgstr ""
+msgid "Optional only (safe to omit): non-rpm packaging/*, src/Makefile, and language helpers such as clib src/{bulk.h,c_pch.h,lib.c,lib.h}. Do not copy build/ or debian leftover stamp files."
+msgstr "เป็นทางเลือกเท่านั้น (สามารถละได้โดยปลอดภัย): การจัดแพ็กเกจแบบ non-rpm/*, src/Makefile, และตัวช่วยด้านภาษา เช่น clib src/{bulk.h,c_pch.h,lib.c,lib.h} อย่าคัดลอก build/ หรือไฟล์ตราประทับที่เหลือจาก debian"
 
 #: src/zfr_lib/lint/template.py:213
 #, python-format
 msgid " Also absent (optional, not required): %(opts)s."
-msgstr ""
+msgstr "ก็ไม่อยู่เช่นกัน (ไม่จำเป็น, ไม่บังคับ): %(opts)s."
 
 #: src/zfr_lib/lint/template.py:221
 #, python-format
-msgid ""
-"language template %(lang)s has extra scaffolding not in this tree: "
-"%(preview)s%(more)s"
-msgstr ""
-"เทมเพลตภาษา %(lang)s มีโครงเสริมที่ไม่มีในต้นไม้นี้: %(preview)s%(more)s"
+msgid "language template %(lang)s has extra scaffolding not in this tree: %(preview)s%(more)s"
+msgstr "เทมเพลตภาษา %(lang)s มีโครงเสริมที่ไม่มีในต้นไม้นี้: %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/template.py:224
 #, fuzzy, python-format
-msgid ""
-"Compare with the %(lang)s template under pkgdatadir. Copy missing [required]"
-" debian/man/docs/src/tests/packaging/rpm files (packaging/rpm/ uses "
-"%(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not "
-"zephyr.substvars), or `zfr add` puffs. [optional] items (non-rpm "
-"packaging/*, src/Makefile, clib/cpplib bulk/pch/lib helpers, …) may be "
-"omitted. Do not copy build/ or debian leftover stamp files. Example commons "
-"modules are optional."
-msgstr ""
-"เทียบกับเทมเพลต %(lang)s ใต้ pkgdatadir คัดลอกไฟล์ debian/docs/src/rpm "
-"ที่ขาด (rpm/ ใช้ %(name)s.spec ไม่ใช่ zephyr.spec) หรือ `zfr add` puff "
-"อย่าคัดลอก build/ หรือไฟล์ตราประทับที่เหลือของ debian มอดูล commons "
-"ตัวอย่างเป็นทางเลือก"
+msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing [required] debian/man/docs/src/tests/packaging/rpm files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. [optional] items (non-rpm packaging/*, src/Makefile, clib/cpplib bulk/pch/lib helpers, …) may be omitted. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
+msgstr "เทียบกับเทมเพลต %(lang)s ใต้ pkgdatadir คัดลอกไฟล์ debian/docs/src/rpm ที่ขาด (rpm/ ใช้ %(name)s.spec ไม่ใช่ zephyr.spec) หรือ `zfr add` puff อย่าคัดลอก build/ หรือไฟล์ตราประทับที่เหลือของ debian มอดูล commons ตัวอย่างเป็นทางเลือก"
 
 #: src/zfr_lib/package.py:15
 msgid "detect packaging type and build packages"
-msgstr ""
+msgstr "ตรวจจับประเภทบรรจุภัณฑ์และสร้างแพ็กเกจ"
 
 #: src/zfr_lib/package.py:17
-msgid ""
-"Detect packaging types (deb, rpm, npm/vsix, mingw, …) and build them "
-"sequentially (deb, then rpm, …). -j/--job is a job budget: omit or pass -j "
-"alone for auto (debuild gets bare -j, no number); -j N is split across "
-"concurrent planned workers (sequential plan ⇒ each packager gets full N). "
-"Each packager's stdout/stderr is captured with fdmux into an FDM file; live "
-"status lines show progress. On failure, browse with `zfr lasterror`. Upload "
-"is on by default (-u); use -U/--no-upload to skip."
-msgstr ""
+msgid "Detect packaging types (deb, rpm, npm/vsix, mingw, …) and build them sequentially (deb, then rpm, …). -j/--job is a job budget: omit or pass -j alone for auto (debuild gets bare -j, no number); -j N is split across concurrent planned workers (sequential plan ⇒ each packager gets full N). Each packager's stdout/stderr is captured with fdmux into an FDM file; live status lines show progress. On failure, browse with `zfr lasterror`. Upload is on by default (-u); use -U/--no-upload to skip."
+msgstr "ตรวจจับประเภทแพ็กเกจ (deb, rpm, npm/vsix, mingw, …) และสร้างทีละขั้นตอน (deb, แล้ว rpm, …). -j/--job เป็นงบประมาณงาน: ละเว้นหรือส่ง -j เพียงอย่างเดียวสำหรับอัตโนมัติ (debuild จะได้รับ -j เปล่า ไม่มีตัวเลข); -j N ถูกแบ่งระหว่างผู้ทำงานพร้อมกันตามแผน (แผนลำดับ ⇒ แต่ละแพ็กเกจจะได้ N เต็ม). เอาต์พุต stdout/stderr ของแต่ละแพ็กเกจจะถูกจับด้วย fdmux ลงในไฟล์ FDM; แสดงสถานะสดเพื่อแสดงความคืบหน้า เมื่อเกิดความล้มเหลว ให้เรียกดูด้วย `zfr lasterror` การอัปโหลดเปิดใช้งานโดยค่าเริ่มต้น (-u); ใช้ -U/--no-upload เพื่อข้าม."
 
 #: src/zfr_lib/package.py:35
 msgid "change to DIR before detecting packaging"
-msgstr ""
+msgstr "เปลี่ยนไปที่ DIR ก่อนตรวจสอบบรรจุภัณฑ์"
 
 #: src/zfr_lib/package.py:44
 msgid "upload packages after build (default)"
-msgstr ""
+msgstr "อัปโหลดแพ็กเกจหลังจากสร้าง (ค่าเริ่มต้น)"
 
 #: src/zfr_lib/package.py:51
 msgid "do not upload (skip dput / registry publish)"
-msgstr ""
+msgstr "อย่าอัปโหลด (ข้าม dput / เผยแพร่ในทะเบียน)"
 
 #: src/zfr_lib/package.py:59 src/zfr_lib/release/__init__.py:72
 msgid "dput upload host for .changes (debian)"
@@ -3218,7 +2600,7 @@ msgstr "ข้าม RPM build (rpm/Makefile)"
 
 #: src/zfr_lib/package.py:78
 msgid "only build KIND (deb, rpm, npm, mingw, …); repeatable"
-msgstr ""
+msgstr "สร้างเฉพาะ KIND (deb, rpm, npm, mingw, …); ทำซ้ำได้"
 
 #: src/zfr_lib/package.py:84 src/zfr_lib/release/__init__.py:48
 msgid "Debian binary-only build (no .dsc)"
@@ -3251,34 +2633,27 @@ msgstr "รัน build4 ผ่าน SSH บน SERVER (หมายถึง -
 
 #: src/zfr_lib/package.py:125
 msgid "print detected packaging kinds and exit"
-msgstr ""
+msgstr "พิมพ์ชนิดบรรจุภัณฑ์ที่ตรวจพบแล้วออก"
 
 #: src/zfr_lib/publish.py:23
 msgid "release then publish to marketplaces (npm / VSIX)"
-msgstr ""
+msgstr "ปล่อยออกมาแล้วจึงเผยแพร่ไปยังตลาด (npm / VSIX)"
 
 #: src/zfr_lib/publish.py:25
-msgid ""
-"Run the full zfr release pipeline, then publish to public marketplaces when "
-"defined for this project (currently npm and VSIX). Also available as the "
-"zfr-publish wrapper."
-msgstr ""
+msgid "Run the full zfr release pipeline, then publish to public marketplaces when defined for this project (currently npm and VSIX). Also available as the zfr-publish wrapper."
+msgstr "เรียกใช้งานโพรเซสปล่อยตัวเต็มของ zfr จากนั้นเผยแพร่ไปยังตลาดสาธารณะเมื่อมีการกำหนดสำหรับโครงการนี้ (ปัจจุบันคือ npm และ VSIX) นอกจากนี้ยังสามารถใช้งานได้ในรูปแบบของตัวห่อ zfr-publish"
 
 #: src/zfr_lib/release/__init__.py:25
 msgid "tag, build, package, install, and upload (private cloud)"
-msgstr ""
+msgstr "แท็ก, สร้าง, แพ็กเกจ, ติดตั้ง, และอัปโหลด (คลาวด์ส่วนตัว)"
 
 #: src/zfr_lib/release/__init__.py:27
-msgid ""
-"Detect project type, tag and push, build/package, optionally install local "
-"debs, upload deb/rpm to the private pool, and create a GitHub release. Does "
-"not publish to npm/VSIX marketplaces (see zfr publish). Also available as "
-"the zfr-release wrapper."
-msgstr ""
+msgid "Detect project type, tag and push, build/package, optionally install local debs, upload deb/rpm to the private pool, and create a GitHub release. Does not publish to npm/VSIX marketplaces (see zfr publish). Also available as the zfr-release wrapper."
+msgstr "ตรวจจับประเภทโครงการ ทำแท็กและ push สร้าง/แพ็กเกจ ติดตั้ง deb ภายในเครื่องได้ตามต้องการ อัพโหลด deb/rpm ไปยัง private pool และสร้าง GitHub release ไม่เผยแพร่ไปยังตลาด npm/VSIX (ดูที่ zfr publish) มีให้ใช้งานเป็น wrapper ของ zfr-release ด้วย"
 
 #: src/zfr_lib/release/__init__.py:42
 msgid "change to DIR before detecting the project"
-msgstr ""
+msgstr "เปลี่ยนเป็น DIR ก่อนตรวจสอบโปรเจค"
 
 #: src/zfr_lib/release/__init__.py:54
 msgid "Reuse build cache"
@@ -3375,18 +2750,12 @@ msgid "new example names (each replaces template some_puff1)"
 msgstr "ชื่อตัวอย่างใหม่ (แต่ละชื่อแทนที่ some_puff1 ในเทมเพลต)"
 
 #: src/zfr_lib/shape.py:275
-msgid ""
-"print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
-msgstr ""
-"พิมพ์คะแนนรูปแบบแพ็กเกจ zephyr 0-100 (packagedir vs repodir ใน monorepos)"
+msgid "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
+msgstr "พิมพ์คะแนนรูปแบบแพ็กเกจ zephyr 0-100 (packagedir vs repodir ใน monorepos)"
 
 #: src/zfr_lib/shape.py:277
-msgid ""
-"Score how completely the current directory matches zephyr package style "
-"(0-100). In monorepos, scores the packagedir."
-msgstr ""
-"ให้คะแนนว่าไดเรกทอรีปัจจุบันตรงสไตล์แพ็กเกจ zephyr แค่ไหน (0-100) ใน "
-"monorepos ให้คะแนน packagedir"
+msgid "Score how completely the current directory matches zephyr package style (0-100). In monorepos, scores the packagedir."
+msgstr "ให้คะแนนว่าไดเรกทอรีปัจจุบันตรงสไตล์แพ็กเกจ zephyr แค่ไหน (0-100) ใน monorepos ให้คะแนน packagedir"
 
 #: src/zfr_lib/shape.py:283
 msgid "print 1 if score >= threshold, else 0"
@@ -3402,18 +2771,12 @@ msgid "bool threshold 0-100 (default: %s)"
 msgstr "เกณฑ์ bool 0-100 (ค่าเริ่มต้น: %s)"
 
 #: src/zfr_lib/terminal.py:75
-msgid ""
-"enable AI-oriented hints (default for AI terminals and non-interactive "
-"stdout)"
-msgstr ""
-"เปิดใช้ AI-oriented ข้อมูล (แต่ปปปรุงสําหรับคอมมัติ AI และไม่ใช่-interactive"
-" stdout)"
+msgid "enable AI-oriented hints (default for AI terminals and non-interactive stdout)"
+msgstr "เปิดใช้ AI-oriented ข้อมูล (แต่ปปปรุงสําหรับคอมมัติ AI และไม่ใช่-interactive stdout)"
 
 #: src/zfr_lib/terminal.py:82
 msgid "disable AI-oriented hints (default for a plain interactive shell)"
-msgstr ""
-"ẩn khối hợp đồng phong cách / bước tiếp theo (mặc định cho shell tương tác "
-"thường)"
+msgstr "ẩn khối hợp đồng phong cách / bước tiếp theo (mặc định cho shell tương tác thường)"
 
 #: src/zfr_lib/translate/__init__.py:48
 msgid "poedit not found in PATH"
@@ -3434,12 +2797,8 @@ msgid "query and update gettext message strings"
 msgstr "truy vấn và cập nhật chuỗi thông điệp gettext"
 
 #: src/zfr_lib/translate/__init__.py:143
-msgid ""
-"Look up translations for TEXT across implemented locales, or update a single"
-" locale catalog. Remaining arguments are joined with spaces."
-msgstr ""
-"Tra cứu bản dịch TEXT trong các locale đã triển khai hoặc cập nhật một danh "
-"mục. Các tham số còn lại nối bằng dấu cách."
+msgid "Look up translations for TEXT across implemented locales, or update a single locale catalog. Remaining arguments are joined with spaces."
+msgstr "Tra cứu bản dịch TEXT trong các locale đã triển khai hoặc cập nhật một danh mục. Các tham số còn lại nối bằng dấu cách."
 
 #: src/zfr_lib/translate/__init__.py:155
 msgid "use poedit to import edits from FILE"
@@ -3466,19 +2825,15 @@ msgid "list msgids matching REGEX, case-sensitive (keys only with -k)"
 msgstr "liệt kê msgid khớp REGEX (chỉ khóa với -k)"
 
 #: src/zfr_lib/translate/__init__.py:192
-msgid ""
-"list msgids/translations matching REGEX, case-insensitive (keys only with "
-"-k)"
+msgid "list msgids/translations matching REGEX, case-insensitive (keys only with -k)"
 msgstr "liệt kê msgid/bản dịch khớp REGEX (chỉ khóa với -k)"
 
 #: src/zfr_lib/translate/__init__.py:198
-msgid ""
-"list msgids/translations matching REGEX, case-sensitive (keys only with -k)"
+msgid "list msgids/translations matching REGEX, case-sensitive (keys only with -k)"
 msgstr "liệt kê msgid/bản dịch khớp REGEX (chỉ khóa với -k)"
 
 #: src/zfr_lib/translate/__init__.py:204
-msgid ""
-"with -m/-M/-s/-S, match the full msgid or translation (not a substring)"
+msgid "with -m/-M/-s/-S, match the full msgid or translation (not a substring)"
 msgstr "กับ -m/-M/-s/-S, เท่ากับ msgid หรือ แปลเต็ม (ไม่ใช่สัตรring)"
 
 #: src/zfr_lib/translate/__init__.py:213
@@ -3502,9 +2857,7 @@ msgid "print current project version (walks parents from cwd)"
 msgstr "พิมพ์เวอร์ชันโปรเจกต์ปัจจุบัน (เดินขึ้นไปจาก cwd)"
 
 #: src/zfr_lib/version.py:52
-msgid ""
-"Print the current project version (walks from cwd toward parent "
-"directories)."
+msgid "Print the current project version (walks from cwd toward parent directories)."
 msgstr "พิมพ์เวอร์ชันโปรเจกต์ปัจจุบัน (เดินจาก cwd ไปยังไดเรกทอรีแม่)"
 
 #: src/zfr_lib/version.py:57
@@ -3518,3 +2871,11 @@ msgstr "ใช้ debian/changelog (ค่าเริ่มต้นเมื�
 #: src/zfr_lib/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
 msgstr "พิมพ์ Version ที่เข้ากันได้กับ RPM (ขีดกลางเป็น underscore)"
+
+#: src/zfr:77 src/zfr:114
+msgid "Zephyr template helper (CLI name: zfr). Create projects and manage example puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
+msgstr "ตัวช่วยแม่แบบ Zephyr (ชื่อ CLI: zfr) สร้างโปรเจกต์และจัดการ puff ตัวอย่าง ต้นไม้ที่สร้างแล้วยังเรียก zfr อยู่; zfr ไม่ใช่โทเคนเปลี่ยนชื่อ"
+
+#: src/zfr:93 src/zfr:132
+msgid "show this help"
+msgstr "แสดงความช่วยเหลือนี้"

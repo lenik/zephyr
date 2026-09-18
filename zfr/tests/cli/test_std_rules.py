@@ -79,7 +79,7 @@ class StdRuleCliTests(unittest.TestCase):
             text=True,
         )
         self.assertEqual(proc.returncode, 0, proc.stderr)
-        self.assertRegex(proc.stdout, r"\bZL\d{3}\b")
+        self.assertRegex(proc.stdout, r"\bZL\d{4}\b")
 
     def test_lint_list_std(self) -> None:
         proc = subprocess.run(

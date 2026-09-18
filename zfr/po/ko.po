@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 20:48+0800\n"
+"POT-Creation-Date: 2026-09-18 21:52+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Korean\n"
@@ -33,13 +33,8 @@ msgid "print current project information (walks parents from cwd)"
 msgstr "현재 프로젝트 정보 출력(cwd에서 상위 디렉터리 탐색)"
 
 #: src/zfr_lib/about.py:500
-msgid ""
-"Print information about the current zephyr project (walks from cwd toward "
-"parent directories). CSR colors when stdout is a TTY. Common packaging "
-"fields are parsed from debian or RPM."
-msgstr ""
-"현재 zephyr 프로젝트 정보 출력(cwd에서 상위 디렉터리로 이동). stdout이 TTY일 때 CSR 색상. debian 또는 "
-"RPM에서 일반 패키징 필드 파싱."
+msgid "Print information about the current zephyr project (walks from cwd toward parent directories). CSR colors when stdout is a TTY. Common packaging fields are parsed from debian or RPM."
+msgstr "현재 zephyr 프로젝트 정보 출력(cwd에서 상위 디렉터리로 이동). stdout이 TTY일 때 CSR 색상. debian 또는 RPM에서 일반 패키징 필드 파싱."
 
 #: src/zfr_lib/about.py:507
 msgid "show parsed Debian packaging fields"
@@ -67,17 +62,15 @@ msgstr "새 puff 이름(snake_case 권장)"
 
 #: src/zfr_lib/build.py:15
 msgid "detect build system and compile the project"
-msgstr ""
+msgstr "빌드 시스템을 감지하고 프로젝트를 컴파일합니다"
 
 #: src/zfr_lib/build.py:17
-msgid ""
-"Detect the project build system (meson, cmake, autotools, cargo, go, npm, "
-"make) and run a local compile."
-msgstr ""
+msgid "Detect the project build system (meson, cmake, autotools, cargo, go, npm, make) and run a local compile."
+msgstr "프로젝트 빌드 시스템(meson, cmake, autotools, cargo, go, npm, make)을 감지하고 로컬 컴파일을 실행합니다."
 
 #: src/zfr_lib/build.py:28
 msgid "change to DIR before detecting the build system"
-msgstr ""
+msgstr "빌드 시스템 감지 전에 DIR로 이동합니다"
 
 #: src/zfr_lib/build.py:35
 #, fuzzy
@@ -91,23 +84,19 @@ msgstr "파일을 쓰지 않고 계획된 변경 사항 출력"
 
 #: src/zfr_lib/build.py:48
 msgid "verbose build output where supported"
-msgstr ""
+msgstr "지원되는 경우 상세 빌드 출력을 표시합니다"
 
 #: src/zfr_lib/build.py:53
 msgid "print detected build system and exit"
-msgstr ""
+msgstr "감지된 빌드 시스템을 출력하고 종료합니다"
 
 #: src/zfr_lib/comments_cmd.py:20
 msgid "print or delete project/user lint.comments with an AI work hint"
-msgstr ""
+msgstr "프로젝트/사용자 lint.comments를 출력하거나 삭제하고 AI 작업 힌트를 붙입니다"
 
 #: src/zfr_lib/comments_cmd.py:22
-msgid ""
-"Print lint suggestion comments from .config/zfr/lint.comments (project) and "
-"~/.config/zfr/lint.comments (user), then an AI hint to apply the suggestions"
-" and delete the consumed comments files. Optional ZLxxxx arguments filter "
-"which sections to show. Typical prompt: “do zfr-comments work.”"
-msgstr ""
+msgid "Print lint suggestion comments from .config/zfr/lint.comments (project) and ~/.config/zfr/lint.comments (user), then an AI hint to apply the suggestions and delete the consumed comments files. Optional ZLxxxx arguments filter which sections to show. Typical prompt: “do zfr-comments work.”"
+msgstr ".config/zfr/lint.comments(프로젝트)와 ~/.config/zfr/lint.comments(사용자)의 lint 제안 주석을 출력한 뒤, 제안을 적용하고 소비된 comments 파일을 삭제하라는 AI 힌트를 제공합니다. 선택적 ZLxxxx 인자로 표시할 섹션을 필터링합니다. 일반적인 프롬프트: “do zfr-comments work.”"
 
 #: src/zfr_lib/comments_cmd.py:35
 #, fuzzy
@@ -116,27 +105,27 @@ msgstr "bool 임계값 0-100(기본값: %s)"
 
 #: src/zfr_lib/comments_cmd.py:42 src/zfr_lib/lintsel.py:284
 msgid "project directory (default: walk from cwd)"
-msgstr ""
+msgstr "프로젝트 디렉터리(기본: cwd에서 상위로 탐색)"
 
 #: src/zfr_lib/comments_cmd.py:49
 msgid "user comments only (~/.config/zfr/lint.comments)"
-msgstr ""
+msgstr "사용자 주석만(~/.config/zfr/lint.comments)"
 
 #: src/zfr_lib/comments_cmd.py:55
 msgid "project comments only (.config/zfr/lint.comments)"
-msgstr ""
+msgstr "프로젝트 주석만(.config/zfr/lint.comments)"
 
 #: src/zfr_lib/comments_cmd.py:61
 msgid "delete matching comments (files or selected sections)"
-msgstr ""
+msgstr "일치하는 주석을 삭제합니다(파일 또는 선택한 섹션)"
 
 #: src/zfr_lib/comments_cmd.py:67
 msgid "omit the AI hint trailer"
-msgstr ""
+msgstr "끝의 AI 힌트를 생략합니다"
 
 #: src/zfr_lib/comments_cmd.py:93
 msgid "No matching lint.comments to delete."
-msgstr ""
+msgstr "삭제할 일치하는 lint.comments가 없습니다."
 
 #: src/zfr_lib/comments_cmd.py:96
 #, fuzzy, python-format
@@ -177,43 +166,32 @@ msgid "changelog/git author email (default: %s)"
 msgstr "changelog/git 작성자 이메일(기본값: %s)"
 
 #: src/zfr_lib/create.py:317
-msgid ""
-"do not instantiate a default puff (leave some_puff1 tokens for a later zfr "
-"add)"
-msgstr ""
+msgid "do not instantiate a default puff (leave some_puff1 tokens for a later zfr add)"
+msgstr "기본 puff를 만들지 않습니다(나중에 zfr add용 some_puff1 토큰을 남겨 둠)"
 
 #: src/zfr_lib/create.py:321
 msgid "new project directory name"
 msgstr "새 프로젝트 디렉터리 이름"
 
 #: src/zfr_lib/create.py:325
-msgid ""
-"puff names (default: one puff named like the package; use --no-puff for "
-"none)"
-msgstr ""
+msgid "puff names (default: one puff named like the package; use --no-puff for none)"
+msgstr "puff 이름(기본: 패키지와 같은 이름의 puff 하나; 없으면 --no-puff)"
 
 #: src/zfr_lib/detect.py:15
 msgid "print detected language for the current directory"
 msgstr "현재 디렉터리의 감지된 언어 출력"
 
 #: src/zfr_lib/detect.py:16
-msgid ""
-"Print the detected language of the current project and layout details on "
-"stderr."
+msgid "Print the detected language of the current project and layout details on stderr."
 msgstr "현재 프로젝트의 감지된 언어 및 레이아웃 세부 정보를 stderr에 출력."
 
 #: src/zfr_lib/dist.py:61
 #, fuzzy, python-format
-msgid ""
-"write the archive into DIR (default: meson-dist, or %%_topdir/SOURCES with "
-"--rpm; usually $HOME/rpmbuild)"
-msgstr ""
-"아카이브를 DIR에 기록(기본값: meson-dist 또는 --rpm 시 %_topdir/SOURCES ($HOME/rpmbuild))"
+msgid "write the archive into DIR (default: meson-dist, or %%_topdir/SOURCES with --rpm; usually $HOME/rpmbuild)"
+msgstr "아카이브를 DIR에 기록(기본값: meson-dist 또는 --rpm 시 %_topdir/SOURCES ($HOME/rpmbuild))"
 
 #: src/zfr_lib/dist.py:71
-msgid ""
-"Meson build directory (default: /build when it matches this source tree, "
-"else <project>/build)"
+msgid "Meson build directory (default: /build when it matches this source tree, else <project>/build)"
 msgstr "Meson 빌드 디렉터리(기본값: 이 소스 트리와 일치하면 /build, 아니면 <project>/build)"
 
 #: src/zfr_lib/dist.py:81
@@ -222,12 +200,8 @@ msgstr "아카이브 형식(기본값: xz)"
 
 #: src/zfr_lib/dist.py:87
 #, fuzzy, python-format
-msgid ""
-"name the archive NAME-VERSION.tar.xz and write it to %%_topdir/SOURCES "
-"($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
-msgstr ""
-"아카이브 이름을 NAME-VERSION.tar.xz로 하고 -o가 없으면 %_topdir/SOURCES ($HOME/rpmbuild)에 "
-"기록"
+msgid "name the archive NAME-VERSION.tar.xz and write it to %%_topdir/SOURCES ($HOME/rpmbuild by default; ~/.rpmmacros) unless -o is given"
+msgstr "아카이브 이름을 NAME-VERSION.tar.xz로 하고 -o가 없으면 %_topdir/SOURCES ($HOME/rpmbuild)에 기록"
 
 #: src/zfr_lib/dist.py:96
 msgid "pass --allow-dirty to meson dist (default: allow)"
@@ -243,17 +217,8 @@ msgstr "소스 tarball 빌드(meson dist 또는 이 프로젝트만)"
 
 #: src/zfr_lib/dist.py:420
 #, fuzzy
-msgid ""
-"Build a source archive of the current zephyr project (walks from cwd toward "
-"parent directories). Uses meson dist when this directory is the git project "
-"root; otherwise packs this project only so nested language templates do not "
-"ship the parent meta-repo. When ``.tarignore`` exists (gitignore-style), "
-"always pack the project tree and apply those excludes. Prints the archive "
-"path on stdout."
-msgstr ""
-"현재 zephyr 프로젝트의 소스 아카이브 빌드(cwd에서 상위 디렉터리로 이동). 이 디렉터리가 git 프로젝트 루트이면 meson "
-"dist 사용; 그렇지 않으면 이 프로젝트만 패키징하여 중첩 언어 템플릿이 상위 meta-repo를 포함하지 않도록 함. stdout에 "
-"아카이브 경로 출력."
+msgid "Build a source archive of the current zephyr project (walks from cwd toward parent directories). Uses meson dist when this directory is the git project root; otherwise packs this project only so nested language templates do not ship the parent meta-repo. When ``.tarignore`` exists (gitignore-style), always pack the project tree and apply those excludes. Prints the archive path on stdout."
+msgstr "현재 zephyr 프로젝트의 소스 아카이브 빌드(cwd에서 상위 디렉터리로 이동). 이 디렉터리가 git 프로젝트 루트이면 meson dist 사용; 그렇지 않으면 이 프로젝트만 패키징하여 중첩 언어 템플릿이 상위 meta-repo를 포함하지 않도록 함. stdout에 아카이브 경로 출력."
 
 #: src/zfr_lib/i18n/cmd.py:42
 msgid "no implemented locales (po/LINGUAS + po/*.po)"
@@ -312,9 +277,7 @@ msgid "manage implemented gettext locales"
 msgstr "管理已实现的 gettext 语言环境"
 
 #: src/zfr_lib/i18n/cmd.py:169
-msgid ""
-"List, add, delete, and build derived locales in the current project. Use zfr"
-" translate to query or update message strings."
+msgid "List, add, delete, and build derived locales in the current project. Use zfr translate to query or update message strings."
 msgstr "列出、添加、删除并生成当前项目的派生语言环境。使用 zfr translate 查询或更新消息字符串。"
 
 #: src/zfr_lib/i18n/cmd.py:179
@@ -330,14 +293,11 @@ msgid "add a new locale"
 msgstr "添加新语言环境"
 
 #: src/zfr_lib/i18n/cmd.py:197
-msgid ""
-"build derived locale PO/man files from parents (skip locales in LINGUAS)"
+msgid "build derived locale PO/man files from parents (skip locales in LINGUAS)"
 msgstr "从父语言生成派生 locale 的 PO/man 文件（跳过 LINGUAS 中列出的语言环境）"
 
 #: src/zfr_lib/i18n/cmd.py:202
-msgid ""
-"output directory for derived .po files (default: build/po or "
-"$MESON_BUILD_ROOT/po)"
+msgid "output directory for derived .po files (default: build/po or $MESON_BUILD_ROOT/po)"
 msgstr "추출 .po 파일의 출력 디렉토리 (기본: build/po 또는 $MESON_BUILD_ROOT/po)"
 
 #: src/zfr_lib/i18n/cmd.py:207
@@ -353,17 +313,11 @@ msgid "gettext domain for --compile-mo / --install-derived"
 msgstr "gettext 도메인 --compile-mo / --install-derived"
 
 #: src/zfr_lib/i18n/cmd.py:223
-msgid ""
-"install derived .mo from --po-dir into $MESON_INSTALL_DESTDIR_PREFIX (Meson "
-"add_install_script)"
-msgstr ""
-"--po-dir에서 $MESON_INSTALL_DESTDIR_PREFIX로 추출 .mo을 설치 (Meson "
-"add_install_script)"
+msgid "install derived .mo from --po-dir into $MESON_INSTALL_DESTDIR_PREFIX (Meson add_install_script)"
+msgstr "--po-dir에서 $MESON_INSTALL_DESTDIR_PREFIX로 추출 .mo을 설치 (Meson add_install_script)"
 
 #: src/zfr_lib/i18n/cmd.py:231
-msgid ""
-"with --install-derived, locale subdirectory under prefix (default: "
-"share/locale)"
+msgid "with --install-derived, locale subdirectory under prefix (default: share/locale)"
 msgstr "--install-derived, prefix 아래의 지역 하위 지정 (기본: share/locale)"
 
 #: src/zfr_lib/i18n/cmd.py:233
@@ -384,7 +338,7 @@ msgstr "--install-derived 필요 --po-dir 및 --domain"
 
 #: src/zfr_lib/ize/engine/__init__.py:86
 msgid "not selected via --only"
-msgstr ""
+msgstr "--only로 선택되지 않음"
 
 #: src/zfr_lib/ize/engine/__init__.py:90
 msgid "suppressed via -u/--uncheck"
@@ -393,7 +347,7 @@ msgstr "-u/--uncheck로 억제됨"
 #: src/zfr_lib/ize/engine/scripts.py:171
 #, python-format
 msgid "run_target('%s') → scripts/%s.sh"
-msgstr ""
+msgstr "run_target('%s') → scripts/%s.sh"
 
 #: src/zfr_lib/ize/__init__.py:76
 msgid "refactor this project to current zephyr style"
@@ -401,14 +355,8 @@ msgstr "이 프로젝트를 현재 zephyr 스타일로 리팩터링"
 
 #: src/zfr_lib/ize/__init__.py:77
 #, fuzzy
-msgid ""
-"Refactor the current project to match current zephyr style: missing "
-"debian/rpm files, meson targets, AsciiDoc man pages, Meson version "
-"substitutions, and lint-level gettext coverage (LINGUAS + .po). Does not "
-"scaffold man/<locale> man translations. Walks from cwd toward parents."
-msgstr ""
-"현재 프로젝트를 현재 zephyr 스타일에 맞게 리팩터링: 누락된 debian/rpm 파일, meson 타깃, AsciiDoc man "
-"페이지, Meson 버전 치환. cwd에서 상위로 이동."
+msgid "Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, Meson version substitutions, and lint-level gettext coverage (LINGUAS + .po). Does not scaffold man/<locale> man translations. Walks from cwd toward parents."
+msgstr "현재 프로젝트를 현재 zephyr 스타일에 맞게 리팩터링: 누락된 debian/rpm 파일, meson 타깃, AsciiDoc man 페이지, Meson 버전 치환. cwd에서 상위로 이동."
 
 #: src/zfr_lib/ize/__init__.py:81
 #, python-format
@@ -429,28 +377,19 @@ msgid "show details for ize standard NUM (e.g. ZI0015, 15) and exit"
 msgstr "아이즈 표준 NUM (예 : ZI015, 15) 및 출구에 대한 세부 사항을 표시합니다."
 
 #: src/zfr_lib/ize/__init__.py:100
-msgid ""
-"bump patch version (debian/changelog + VERSION), git add -A, and commit ize "
-"changes with a verbose message"
-msgstr ""
-"bump patch 버전 (debian/changelog + VERSION), git 추가 -A, 그리고 verbose 메시지로 ize "
-"변경을 수행"
+msgid "bump patch version (debian/changelog + VERSION), git add -A, and commit ize changes with a verbose message"
+msgstr "bump patch 버전 (debian/changelog + VERSION), git 추가 -A, 그리고 verbose 메시지로 ize 변경을 수행"
 
 #: src/zfr_lib/ize/__init__.py:109
-msgid ""
-"changelog author for --commit (Name or 'Name <email>'); default: reuse the "
-"previous debian/changelog trailer"
-msgstr ""
-"changelog 저자 --commit (이름 또는 '이름 <email>'); 기본: 이전 debian/changelog 트레일러를 다시"
-" 사용"
+msgid "changelog author for --commit (Name or 'Name <email>'); default: reuse the previous debian/changelog trailer"
+msgstr "changelog 저자 --commit (이름 또는 '이름 <email>'); 기본: 이전 debian/changelog 트레일러를 다시 사용"
 
 #: src/zfr_lib/ize/__init__.py:113
 msgid "also print skipped files"
 msgstr "건너뛴 파일도 출력"
 
 #: src/zfr_lib/ize/__init__.py:119
-msgid ""
-"run 2meson to convert Autotools/CMake to Meson when present (default: on)"
+msgid "run 2meson to convert Autotools/CMake to Meson when present (default: on)"
 msgstr "Autotools/CMake가 있으면 2meson으로 Meson 변환 (기본: 켜짐)"
 
 #: src/zfr_lib/ize/__init__.py:121
@@ -459,8 +398,7 @@ msgstr "groff .1 man 페이지를 docs/*.adoc로 변환하지 않음"
 
 #: src/zfr_lib/ize/__init__.py:122
 #, fuzzy
-msgid ""
-"do not turn hardcoded versions/paths into @VERSION@/@PREFIX@ / config.h"
+msgid "do not turn hardcoded versions/paths into @VERSION@/@PREFIX@ / config.h"
 msgstr "하드코딩된 버전을 @VERSION@ / config.h로 변환하지 않음"
 
 #: src/zfr_lib/ize/__init__.py:129
@@ -483,19 +421,17 @@ msgid "unknown ize standard: %s"
 msgstr "알 수 없는 ize 표준: %s"
 
 #: src/zfr_lib/jobs.py:30
-msgid ""
-"job budget: omit or pass -j alone for auto (debuild/dpkg-buildpackage get "
-"bare -j); -j N pins a total budget split across concurrent planned workers"
-msgstr ""
+msgid "job budget: omit or pass -j alone for auto (debuild/dpkg-buildpackage get bare -j); -j N pins a total budget split across concurrent planned workers"
+msgstr "작업 예산: 생략하거나 -j만 쓰면 자동(debuild/dpkg-buildpackage는 숫자 없는 -j); -j N은 총 예산을 고정해 계획된 동시 worker에 분배"
 
 #: src/zfr_lib/lang/antlr.py:42 src/zfr_lib/lang/as.py:30
 #: src/zfr_lib/lang/bison.py:38 src/zfr_lib/lang/clib.py:37
 #: src/zfr_lib/lang/cobol.py:32 src/zfr_lib/lang/cpplib.py:37
-#: src/zfr_lib/lang/cpp.py:24 src/zfr_lib/lang/c.py:24
-#: src/zfr_lib/lang/d.py:32 src/zfr_lib/lang/fortran.py:32
-#: src/zfr_lib/lang/gcc.py:48 src/zfr_lib/lang/kotlin.py:22
-#: src/zfr_lib/lang/lua.py:22 src/zfr_lib/lang/nim.py:24
-#: src/zfr_lib/lang/pascal.py:32 src/zfr_lib/lang/python.py:21
+#: src/zfr_lib/lang/cpp.py:24 src/zfr_lib/lang/c.py:24 src/zfr_lib/lang/d.py:32
+#: src/zfr_lib/lang/fortran.py:32 src/zfr_lib/lang/gcc.py:48
+#: src/zfr_lib/lang/kotlin.py:22 src/zfr_lib/lang/lua.py:22
+#: src/zfr_lib/lang/nim.py:24 src/zfr_lib/lang/pascal.py:32
+#: src/zfr_lib/lang/python.py:21
 msgid "tests/ present"
 msgstr "tests/ 있음"
 
@@ -542,12 +478,8 @@ msgid "no src/*.in or root *.in scripts"
 msgstr "src/*.in 스크립트가 없습니다"
 
 #: src/zfr_lib/lang/bash.py:124
-msgid ""
-"Keep configured scripts as src/<puff>.in (preferred) or <puff>.in with "
-"@PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
-msgstr ""
-"구성된 스크립트는 @PACKAGE@/@VERSION@가 들어 있는 src/<puff>.in으로 두고 meson configure_file"
-" + install_mode rwxr-xr-x를 사용하세요."
+msgid "Keep configured scripts as src/<puff>.in (preferred) or <puff>.in with @PACKAGE@/@VERSION@ and meson configure_file + install_mode rwxr-xr-x."
+msgstr "구성된 스크립트는 @PACKAGE@/@VERSION@가 들어 있는 src/<puff>.in으로 두고 meson configure_file + install_mode rwxr-xr-x를 사용하세요."
 
 #: src/zfr_lib/lang/bison.py:45
 msgid "Add tests/ with fixture checks for parser dump/format output."
@@ -563,14 +495,8 @@ msgid "main missing bas i18n setup: %s"
 msgstr "주요 실종 바스 i18n 설정: %s"
 
 #: src/zfr_lib/lang/_c_bas.py:211
-msgid ""
-"In main: #include <bas/locale/i18n.h> and <bas/proc/env.h>; const char *exe "
-"= self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR from meson config.h). Run "
-"`zfr ize`."
-msgstr ""
-"주로 주로 :#include <bas/locale/i18n.h>그리고<bas/proc/env.h>self_exe( ) 는 는 는 는 는 "
-"는 는 는 는 는 는 는 는 는 는 는 는 는 는 는 는 는 는init_i18n(이제는LOCALEDIR) ) ) "
-")LOCALEDIR에서meson`zfr ize`는"
+msgid "In main: #include <bas/locale/i18n.h> and <bas/proc/env.h>; const char *exe = self_exe(); init_i18n(LOCALEDIR); (LOCALEDIR from meson config.h). Run `zfr ize`."
+msgstr "주로 주로 :#include <bas/locale/i18n.h>그리고<bas/proc/env.h>self_exe( ) 는 는 는 는 는 는 는 는 는 는 는 는 는 는 는 는 는 는 는 는 는 는 는init_i18n(이제는LOCALEDIR) ) ) )LOCALEDIR에서meson`zfr ize`는"
 
 #: src/zfr_lib/lang/_c_bas.py:222
 msgid "bas i18n main setup (self_exe + init_i18n)"
@@ -581,12 +507,8 @@ msgid "no define_logger() in src/"
 msgstr "src/에 define_logger() 없음"
 
 #: src/zfr_lib/lang/_c_bas.py:236
-msgid ""
-"In one .c/.cpp: #include <bas/log/deflog.h> then define_logger(); libraries "
-"may use __attribute__((weak)) define_logger(); Run `zfr ize`."
-msgstr ""
-"하나 .c/.cpp: #include <bas/log/deflog.h> 다음 define_logger(); 도서관은 "
-"__attribute__((weak)) define_logger(); 실행 `zfr ize`을 사용할 수 있습니다."
+msgid "In one .c/.cpp: #include <bas/log/deflog.h> then define_logger(); libraries may use __attribute__((weak)) define_logger(); Run `zfr ize`."
+msgstr "하나 .c/.cpp: #include <bas/log/deflog.h> 다음 define_logger(); 도서관은 __attribute__((weak)) define_logger(); 실행 `zfr ize`을 사용할 수 있습니다."
 
 #: src/zfr_lib/lang/_c_bas.py:250
 msgid "define_logger() present"
@@ -609,12 +531,8 @@ msgid "meson.build missing LOCALEDIR in config.h"
 msgstr "meson.build missing LOCALEDIR에서 config.h"
 
 #: src/zfr_lib/lang/_c_bas.py:279
-msgid ""
-"localedir = prefix / get_option('localedir'); "
-"config_h.set_quoted('LOCALEDIR', localedir); Run `zfr ize`."
-msgstr ""
-"localedir = prefix / get_option('localedir'); "
-"config_h.set_quoted('LOCALEDIR', localedir); 실행 `zfr ize`."
+msgid "localedir = prefix / get_option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); Run `zfr ize`."
+msgstr "localedir = prefix / get_option('localedir'); config_h.set_quoted('LOCALEDIR', localedir); 실행 `zfr ize`."
 
 #: src/zfr_lib/lang/_c_bas.py:289
 msgid "meson LOCALEDIR present"
@@ -626,9 +544,7 @@ msgid "gettext string has leading/trailing spaces: %r"
 msgstr "gettext 링은 leading/trailing 공간이 있습니다: %r"
 
 #: src/zfr_lib/lang/_c_bas.py:310
-msgid ""
-"Keep padding outside _(): e.g. fputs(\"  -v, --verbose      \", out); "
-"fputs(_(\"repeat for more verbose loggings\\n\"), out);"
+msgid "Keep padding outside _(): e.g. fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\n\"), out);"
 msgstr ""
 "밖에서 을 유지하십시오 _(): 예를 들어 fputs(\"  -v, --verbose      \", out); fputs(_(\"repeat for more verbose loggings\\\n"
 "\"), out);"
@@ -672,12 +588,8 @@ msgid "missing go.mod"
 msgstr "go.mod가 없습니다"
 
 #: src/zfr_lib/lang/go.py:23
-msgid ""
-"Add go.mod; meson should `go build` with -X main.buildVersion from "
-"meson.project_version()."
-msgstr ""
-"go.mod를 추가하고, meson은 meson.project_version()의 -X main.buildVersion으로 `go "
-"build`를 실행해야 합니다."
+msgid "Add go.mod; meson should `go build` with -X main.buildVersion from meson.project_version()."
+msgstr "go.mod를 추가하고, meson은 meson.project_version()의 -X main.buildVersion으로 `go build`를 실행해야 합니다."
 
 #: src/zfr_lib/lang/kotlin.py:23
 msgid "no tests/ (kotlin template uses kotlinc + meson test)"
@@ -692,8 +604,7 @@ msgid "no tests/ (lua template uses lua tests + meson test)"
 msgstr "tests/ 없음 (lua 템플릿은 lua 테스트 + meson test를 사용)"
 
 #: src/zfr_lib/lang/lua.py:24
-msgid ""
-"Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
+msgid "Add tests/test_*.lua and meson test() invoking lua with LUA_PATH=src/?.lua."
 msgstr "LUA_PATH=src/?.lua로 lua를 실행하는 tests/test_*.lua와 meson test()를 추가하세요."
 
 #: src/zfr_lib/lang/nim.py:25
@@ -725,9 +636,7 @@ msgid "missing Cargo.toml"
 msgstr "Cargo.toml이 없습니다"
 
 #: src/zfr_lib/lang/rust.py:23
-msgid ""
-"Rust zephyr projects keep Cargo.toml plus meson custom_target for the "
-"binary."
+msgid "Rust zephyr projects keep Cargo.toml plus meson custom_target for the binary."
 msgstr "Rust zephyr 프로젝트는 바이너리용 Cargo.toml과 meson custom_target을 함께 둡니다."
 
 #: src/zfr_lib/lang/zig.py:23
@@ -740,14 +649,11 @@ msgstr "build.zig을 추가하고, meson은 `zig build -Doptimize=ReleaseFast`�
 
 #: src/zfr_lib/lasterror.py:16
 msgid "browse the last zfr package output interactively"
-msgstr ""
+msgstr "최근 zfr 패키지 출력을 대화형으로 살펴봅니다"
 
 #: src/zfr_lib/lasterror.py:18
-msgid ""
-"Show the last packaging run. Arrow keys select a packager; Tab opens the "
-"captured log in fdmpager; Enter replays that packager's stdout/stderr with "
-"fddemux; q quits."
-msgstr ""
+msgid "Show the last packaging run. Arrow keys select a packager; Tab opens the captured log in fdmpager; Enter replays that packager's stdout/stderr with fddemux; q quits."
+msgstr "최근 패키징 실행을 표시합니다. 화살표 키로 packager를 선택하고, Tab으로 캡처된 로그를 fdmpager에서 열며, Enter로 해당 packager의 stdout/stderr를 fddemux로 재생하고, q로 종료합니다."
 
 #: src/zfr_lib/lasterror.py:29
 #, fuzzy
@@ -756,15 +662,15 @@ msgstr "서명되지 않은 패키지 빌드"
 
 #: src/zfr_lib/lasterror.py:35
 msgid "print a summary and exit (no curses UI)"
-msgstr ""
+msgstr "요약을 출력하고 종료합니다(curses UI 없음)"
 
 #: src/zfr_lib/lasterror.py:41
 msgid "view captured logs with fdmpager (requires fdmux)"
-msgstr ""
+msgstr "캡처된 로그를 fdmpager로 봅니다(fdmux 필요)"
 
 #: src/zfr_lib/lasterror.py:47
 msgid "non-interactively replay KIND (deb, rpm, …) to stdout/stderr"
-msgstr ""
+msgstr "KIND(deb, rpm, …)를 비대화형으로 stdout/stderr에 재생합니다"
 
 #: src/zfr_lib/lint/browse.py:39
 msgid "zfr lint"
@@ -907,7 +813,7 @@ msgstr "새 lint 규칙 제안(무엇을, 왜, 어떻게)…"
 #: src/zfr_lib/lint/browse.py:455
 #, python-format
 msgid "zfr lint browse: %s"
-msgstr "zfr lint browse: %s"
+msgstr "zfr lint 탐색: %s"
 
 #: src/zfr_lib/lint/browse.py:456
 msgid "Press Ctrl+C to stop."
@@ -925,11 +831,8 @@ msgstr "Build-Depends에 %s이(가) 없습니다"
 
 #: src/zfr_lib/lint/debian.py:50
 #, python-format
-msgid ""
-"Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man "
-"pages)."
-msgstr ""
-"Build-Depends에 %s을(를) 추가하세요(zephyr 패키지는 Meson과 AsciiDoc man 페이지로 빌드합니다)."
+msgid "Add %s to Build-Depends (zephyr packages build with Meson + AsciiDoc man pages)."
+msgstr "Build-Depends에 %s을(를) 추가하세요(zephyr 패키지는 Meson과 AsciiDoc man 페이지로 빌드합니다)."
 
 #: src/zfr_lib/lint/debian.py:54
 msgid "debhelper-compat present"
@@ -940,10 +843,8 @@ msgid "Build-Depends missing debhelper-compat (= 13)"
 msgstr "Build-Depends에 debhelper-compat (= 13)이 없습니다"
 
 #: src/zfr_lib/lint/debian.py:62
-msgid ""
-"Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
-msgstr ""
-"Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+msgid "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
+msgstr "Build-Depends: debhelper-compat (= 13), meson, ninja-build, asciidoctor"
 
 #: src/zfr_lib/lint/debian.py:80
 msgid "Package stanza missing Architecture"
@@ -977,12 +878,8 @@ msgid "Architecture: any"
 msgstr "Architecture: any"
 
 #: src/zfr_lib/lint/debian.py:123
-msgid ""
-"Architecture: all but Meson has executable(); ELF binaries need "
-"Architecture: any (same class of bug as RPM BuildArch: noarch)"
-msgstr ""
-"Architecture: 모두 Meson 실행 가능(); ELF 바이너리 필요 Architecture: 모든 (RPM BuildArch과"
-" 같은 오류 클래스: noarch)"
+msgid "Architecture: all but Meson has executable(); ELF binaries need Architecture: any (same class of bug as RPM BuildArch: noarch)"
+msgstr "Architecture: 모두 Meson 실행 가능(); ELF 바이너리 필요 Architecture: 모든 (RPM BuildArch과 같은 오류 클래스: noarch)"
 
 #: src/zfr_lib/lint/debian.py:133
 #, python-format
@@ -1007,10 +904,8 @@ msgid "dh meson debian/build"
 msgstr "dh가 meson과 debian/build를 사용함"
 
 #: src/zfr_lib/lint/debian.py:158
-msgid ""
-"debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
-msgstr ""
-"debian/rules가 dh --buildsystem=meson --builddirectory=debian/build가 아닙니다"
+msgid "debian/rules is not dh --buildsystem=meson --builddirectory=debian/build"
+msgstr "debian/rules가 dh --buildsystem=meson --builddirectory=debian/build가 아닙니다"
 
 #: src/zfr_lib/lint/debian.py:161
 #, no-python-format
@@ -1050,12 +945,8 @@ msgid "VERSION=%(file)r != changelog %(changelog)r"
 msgstr "VERSION=%(file)r != 변경 기록 %(changelog)r"
 
 #: src/zfr_lib/lint/debian.py:192
-msgid ""
-"VERSION should match the latest debian/changelog entry (pre-commit hook "
-"updates it). Git describe may still differ."
-msgstr ""
-"VERSION은 debian/changelog의 최신 항목과 일치해야 합니다(pre-commit 훅이 갱신합니다). Git "
-"describe는 여전히 다를 수 있습니다."
+msgid "VERSION should match the latest debian/changelog entry (pre-commit hook updates it). Git describe may still differ."
+msgstr "VERSION은 debian/changelog의 최신 항목과 일치해야 합니다(pre-commit 훅이 갱신합니다). Git describe는 여전히 다를 수 있습니다."
 
 #: src/zfr_lib/lint/debian.py:198
 #, python-format
@@ -1112,22 +1003,15 @@ msgid "Long files fight ownership"
 msgstr "긴 파일은 소유권을 어렵게 만든다"
 
 #: src/zfr_lib/lint/docs.py:27
-msgid ""
-"Very long source files are hard to review, test, and own. Zephyr prefers "
-"cohesive modules under a package subdirectory with a thin entry-point file —"
-" the same shape create/ize expect."
-msgstr ""
-"매우 긴 소스 파일은 검토·테스트·소유가 어렵습니다. Zephyr는 패키지 하위 디렉터리의 응집된 모듈과 얇은 진입점 파일을 선호합니다 "
-"— create/ize가 기대하는 형태와 같습니다."
+msgid "Very long source files are hard to review, test, and own. Zephyr prefers cohesive modules under a package subdirectory with a thin entry-point file — the same shape create/ize expect."
+msgstr "매우 긴 소스 파일은 검토·테스트·소유가 어렵습니다. Zephyr는 패키지 하위 디렉터리의 응집된 모듈과 얇은 진입점 파일을 선호합니다 — create/ize가 기대하는 형태와 같습니다."
 
 #: src/zfr_lib/lint/docs.py:33
 msgid "What improving it buys you"
 msgstr "개선하면 얻는 것"
 
 #: src/zfr_lib/lint/docs.py:35
-msgid ""
-"Smaller review diffs, clearer module boundaries, easier unit tests, and "
-"fewer merge conflicts on busy files."
+msgid "Smaller review diffs, clearer module boundaries, easier unit tests, and fewer merge conflicts on busy files."
 msgstr "리뷰 diff가 작아지고, 모듈 경계가 명확해지며, 단위 테스트가 쉬워지고, 바쁜 파일의 병합 충돌이 줄어듭니다."
 
 #: src/zfr_lib/lint/docs.py:40
@@ -1135,80 +1019,55 @@ msgid "Thresholds"
 msgstr "임계값"
 
 #: src/zfr_lib/lint/docs.py:42
-msgid ""
-"Lint counts non-empty lines (skipping build/debian/po/…). A note appears "
-"around ~600 lines; a warning around ~1000. Template example modules are "
-"skipped."
-msgstr ""
-"Lint는 비어 있지 않은 줄을 셉니다(build/debian/po/… 제외). 약 600줄 근처에서 note, 약 1000줄 근처에서 "
-"warning이 나타납니다. 템플릿 예제 모듈은 건너뜁니다."
+msgid "Lint counts non-empty lines (skipping build/debian/po/…). A note appears around ~600 lines; a warning around ~1000. Template example modules are skipped."
+msgstr "Lint는 비어 있지 않은 줄을 셉니다(build/debian/po/… 제외). 약 600줄 근처에서 note, 약 1000줄 근처에서 warning이 나타납니다. 템플릿 예제 모듈은 건너뜁니다."
 
 #: src/zfr_lib/lint/docs.py:48
 msgid "Fixing is manual"
 msgstr "수정은 수동입니다"
 
 #: src/zfr_lib/lint/docs.py:50
-msgid ""
-"Split the file and update meson/install/import lists yourself. `zfr ize` "
-"does not auto-split sources."
-msgstr ""
-"파일을 나누고 meson/install/import 목록을 직접 갱신하세요. `zfr ize`는 소스를 자동으로 분할하지 않습니다."
+msgid "Split the file and update meson/install/import lists yourself. `zfr ize` does not auto-split sources."
+msgstr "파일을 나누고 meson/install/import 목록을 직접 갱신하세요. `zfr ize`는 소스를 자동으로 분할하지 않습니다."
 
 #: src/zfr_lib/lint/docs.py:57
 msgid "Hardcoded /usr breaks prefixes"
 msgstr "하드코딩된 /usr는 접두사를 깨뜨린다"
 
 #: src/zfr_lib/lint/docs.py:59
-msgid ""
-"Absolute FHS paths (/usr/share, /usr/bin, …) fail under DESTDIR, non-"
-"standard prefixes, and Meson configure_file staging."
-msgstr ""
-"절대 FHS 경로(/usr/share, /usr/bin, …)는 DESTDIR, 비표준 접두사, Meson configure_file "
-"스테이징에서 실패합니다."
+msgid "Absolute FHS paths (/usr/share, /usr/bin, …) fail under DESTDIR, non-standard prefixes, and Meson configure_file staging."
+msgstr "절대 FHS 경로(/usr/share, /usr/bin, …)는 DESTDIR, 비표준 접두사, Meson configure_file 스테이징에서 실패합니다."
 
 #: src/zfr_lib/lint/docs.py:64
 msgid "Preferred shape"
 msgstr "권장 형태"
 
 #: src/zfr_lib/lint/docs.py:66
-msgid ""
-"Scripts use @PREFIX@ / @DATADIR@ / @LOCALEDIR@ (or equivalent) and are "
-"installed from *.in via Meson."
-msgstr ""
-"스크립트는 @PREFIX@ / @DATADIR@ / @LOCALEDIR@(또는 동등한 것)을 사용하며 Meson을 통해 *.in에서 "
-"설치됩니다."
+msgid "Scripts use @PREFIX@ / @DATADIR@ / @LOCALEDIR@ (or equivalent) and are installed from *.in via Meson."
+msgstr "스크립트는 @PREFIX@ / @DATADIR@ / @LOCALEDIR@(또는 동등한 것)을 사용하며 Meson을 통해 *.in에서 설치됩니다."
 
 #: src/zfr_lib/lint/docs.py:71
 msgid "What Solve does"
 msgstr "Solve가 하는 일"
 
 #: src/zfr_lib/lint/docs.py:73
-msgid ""
-"Ize renames affected scripts to *.in and wires configure_file. Re-check "
-"shebangs and any tests that assumed live paths."
-msgstr ""
-"Ize는 해당 스크립트를 *.in으로 이름 바꾸고 configure_file을 연결합니다. shebang과 실제 경로를 가정한 테스트를 "
-"다시 확인하세요."
+msgid "Ize renames affected scripts to *.in and wires configure_file. Re-check shebangs and any tests that assumed live paths."
+msgstr "Ize는 해당 스크립트를 *.in으로 이름 바꾸고 configure_file을 연결합니다. shebang과 실제 경로를 가정한 테스트를 다시 확인하세요."
 
 #: src/zfr_lib/lint/docs.py:80
 msgid "Version literals drift"
 msgstr "버전 리터럴 불일치"
 
 #: src/zfr_lib/lint/docs.py:82
-msgid ""
-"A hardcoded release string diverges from debian/changelog and Meson "
-"project_version() the moment you bump."
-msgstr ""
-"하드코딩된 릴리스 문자열은 버전을 올리는 순간 debian/changelog 및 Meson project_version()과 어긋납니다."
+msgid "A hardcoded release string diverges from debian/changelog and Meson project_version() the moment you bump."
+msgstr "하드코딩된 릴리스 문자열은 버전을 올리는 순간 debian/changelog 및 Meson project_version()과 어긋납니다."
 
 #: src/zfr_lib/lint/docs.py:87
 msgid "Single source of truth"
 msgstr "단일 진실 소스"
 
 #: src/zfr_lib/lint/docs.py:89
-msgid ""
-"Prefer @VERSION@ / PROJECT_VERSION substituted at build time so `--version`,"
-" wrappers, and packages stay aligned."
+msgid "Prefer @VERSION@ / PROJECT_VERSION substituted at build time so `--version`, wrappers, and packages stay aligned."
 msgstr "빌드 시 치환되는 @VERSION@ / PROJECT_VERSION을 써서 `--version`, 래퍼, 패키지를 맞추세요."
 
 #: src/zfr_lib/lint/docs.py:94
@@ -1216,33 +1075,23 @@ msgid "Risks when converting"
 msgstr "변환 시 위험"
 
 #: src/zfr_lib/lint/docs.py:96
-msgid ""
-"C/C++ usually needs config.h; scripts need *.in. Dry-run ize (`-n`) on large"
-" trees before writing."
-msgstr ""
-"C/C++는 보통 config.h가 필요하고, 스크립트는 *.in이 필요합니다. 큰 트리에서는 쓰기 전에 ize 드라이런(`-n`)을 "
-"하세요."
+msgid "C/C++ usually needs config.h; scripts need *.in. Dry-run ize (`-n`) on large trees before writing."
+msgstr "C/C++는 보통 config.h가 필요하고, 스크립트는 *.in이 필요합니다. 큰 트리에서는 쓰기 전에 ize 드라이런(`-n`)을 하세요."
 
 #: src/zfr_lib/lint/docs.py:103
 msgid "Substitution without a consumer is incomplete"
 msgstr "소비자가 없는 치환은 불완전하다"
 
 #: src/zfr_lib/lint/docs.py:105
-msgid ""
-"Meson must both define VERSION/PROJECT_VERSION and have sources that "
-"actually read it — otherwise packaged binaries still lie."
-msgstr ""
-"Meson은 VERSION/PROJECT_VERSION을 정의하고 실제로 읽는 소스도 있어야 합니다 — 그렇지 않으면 패키지된 바이너리가"
-" 여전히 잘못된 버전을 보고합니다."
+msgid "Meson must both define VERSION/PROJECT_VERSION and have sources that actually read it — otherwise packaged binaries still lie."
+msgstr "Meson은 VERSION/PROJECT_VERSION을 정의하고 실제로 읽는 소스도 있어야 합니다 — 그렇지 않으면 패키지된 바이너리가 여전히 잘못된 버전을 보고합니다."
 
 #: src/zfr_lib/lint/docs.py:110
 msgid "How it is checked"
 msgstr "검사 방법"
 
 #: src/zfr_lib/lint/docs.py:112
-msgid ""
-"Looks for configuration_data keys and for @VERSION@ / PROJECT_VERSION usage "
-"in installed sources."
+msgid "Looks for configuration_data keys and for @VERSION@ / PROJECT_VERSION usage in installed sources."
 msgstr "configuration_data 키와 설치 소스의 @VERSION@ / PROJECT_VERSION 사용을 찾습니다."
 
 #: src/zfr_lib/lint/docs.py:117
@@ -1250,9 +1099,7 @@ msgid "Closing the loop"
 msgstr "고리 닫기"
 
 #: src/zfr_lib/lint/docs.py:119
-msgid ""
-"Add the missing half (subst or consumer). Solve maps to the subst ize steps "
-"when available."
+msgid "Add the missing half (subst or consumer). Solve maps to the subst ize steps when available."
 msgstr "빠진 절반(치환 또는 소비자)을 추가하세요. 가능하면 Solve는 subst ize 단계로 매핑됩니다."
 
 #: src/zfr_lib/lint/docs.py:126
@@ -1260,53 +1107,35 @@ msgid "Inline posync is unmaintainable"
 msgstr "인라인 posync는 유지보수하기 어렵다"
 
 #: src/zfr_lib/lint/docs.py:128
-msgid ""
-"A bash -euc heredoc inside meson.build duplicates across templates and is "
-"painful to debug. The contract is scripts/posync.sh + run_target('posync')."
-msgstr ""
-"meson.build 안의 bash -euc 히어독은 템플릿마다 중복되고 디버깅이 고통스럽습니다. 계약은 scripts/posync.sh"
-" + run_target('posync')입니다."
+msgid "A bash -euc heredoc inside meson.build duplicates across templates and is painful to debug. The contract is scripts/posync.sh + run_target('posync')."
+msgstr "meson.build 안의 bash -euc 히어독은 템플릿마다 중복되고 디버깅이 고통스럽습니다. 계약은 scripts/posync.sh + run_target('posync')입니다."
 
 #: src/zfr_lib/lint/docs.py:134
 msgid "Payoff"
 msgstr "이점"
 
 #: src/zfr_lib/lint/docs.py:136
-msgid ""
-"One script to run msgmerge/xgettext locally; ninja posync stays short; CI "
-"can call the script directly."
-msgstr ""
-"로컬에서 msgmerge/xgettext를 실행하는 스크립트가 하나이고, ninja posync는 짧게 유지되며, CI는 스크립트를 직접"
-" 호출할 수 있습니다."
+msgid "One script to run msgmerge/xgettext locally; ninja posync stays short; CI can call the script directly."
+msgstr "로컬에서 msgmerge/xgettext를 실행하는 스크립트가 하나이고, ninja posync는 짧게 유지되며, CI는 스크립트를 직접 호출할 수 있습니다."
 
 #: src/zfr_lib/lint/docs.py:143
-msgid ""
-"Ize extracts the body to scripts/posync.sh and points the run_target at it. "
-"Verify POTFILES and language flags afterward."
-msgstr ""
-"Ize는 본문을 scripts/posync.sh로 추출하고 run_target을 가리키게 합니다. 이후 POTFILES와 언어 플래그를 "
-"확인하세요."
+msgid "Ize extracts the body to scripts/posync.sh and points the run_target at it. Verify POTFILES and language flags afterward."
+msgstr "Ize는 본문을 scripts/posync.sh로 추출하고 run_target을 가리키게 합니다. 이후 POTFILES와 언어 플래그를 확인하세요."
 
 #: src/zfr_lib/lint/docs.py:150
 msgid "Maintenance scripts belong under scripts/"
 msgstr "유지보수 스크립트는 scripts/ 아래에 둔다"
 
 #: src/zfr_lib/lint/docs.py:152
-msgid ""
-"look / install-symlinks / deploy helpers at the repo root clutter the "
-"packaging surface. Zephyr keeps them under scripts/."
-msgstr ""
-"저장소 루트의 look / install-symlinks / deploy 헬퍼는 패키징 표면을 어지럽힙니다. Zephyr는 이를 "
-"scripts/ 아래에 둡니다."
+msgid "look / install-symlinks / deploy helpers at the repo root clutter the packaging surface. Zephyr keeps them under scripts/."
+msgstr "저장소 루트의 look / install-symlinks / deploy 헬퍼는 패키징 표면을 어지럽힙니다. Zephyr는 이를 scripts/ 아래에 둡니다."
 
 #: src/zfr_lib/lint/docs.py:157
 msgid "Detection"
 msgstr "감지"
 
 #: src/zfr_lib/lint/docs.py:159
-msgid ""
-"Flags root *.sh maintenance names and inline run_target bodies that should "
-"be externalized."
+msgid "Flags root *.sh maintenance names and inline run_target bodies that should be externalized."
 msgstr "루트의 유지보수 *.sh 이름과 외부화해야 할 인라인 run_target 본문에 플래그를 겁니다."
 
 #: src/zfr_lib/lint/docs.py:164
@@ -1314,23 +1143,16 @@ msgid "After moving"
 msgstr "이동 후"
 
 #: src/zfr_lib/lint/docs.py:166
-msgid ""
-"Update docs and any CI that called the old paths. Solve rewrites Meson "
-"run_targets to scripts/…"
-msgstr ""
-"문서와 이전 경로를 호출하던 CI를 갱신하세요. Solve는 Meson run_targets를 scripts/…로 다시 씁니다."
+msgid "Update docs and any CI that called the old paths. Solve rewrites Meson run_targets to scripts/…"
+msgstr "문서와 이전 경로를 호출하던 CI를 갱신하세요. Solve는 Meson run_targets를 scripts/…로 다시 씁니다."
 
 #: src/zfr_lib/lint/docs.py:180
 msgid "No Solve mapping"
 msgstr "Solve 매핑 없음"
 
 #: src/zfr_lib/lint/docs.py:182
-msgid ""
-"This finding has no `zfr ize --only …` shortcut. Follow the fix text (or a "
-"broader `zfr ize` if several related gaps exist), then re-lint."
-msgstr ""
-"이 발견에는 `zfr ize --only …` 단축이 없습니다. 수정 문구를 따르거나(관련 공백이 여러 개면 더 넓은 `zfr "
-"ize`), 그다음 다시 lint하세요."
+msgid "This finding has no `zfr ize --only …` shortcut. Follow the fix text (or a broader `zfr ize` if several related gaps exist), then re-lint."
+msgstr "이 발견에는 `zfr ize --only …` 단축이 없습니다. 수정 문구를 따르거나(관련 공백이 여러 개면 더 넓은 `zfr ize`), 그다음 다시 lint하세요."
 
 #: src/zfr_lib/lint/docs.py:190
 msgid "Solve / ize"
@@ -1361,14 +1183,8 @@ msgid "Debian is the APT contract"
 msgstr "Debian은 APT 계약이다"
 
 #: src/zfr_lib/lint/docs.py:214
-msgid ""
-"control / rules / copyright / source format decide how the package builds "
-"and what users install. Zephyr standardizes on Meson + dh "
-"`--buildsystem=meson --builddirectory=debian/build`."
-msgstr ""
-"control / rules / copyright / source format이 패키지 빌드 방식과 사용자가 설치하는 내용을 결정합니다."
-" Zephyr는 Meson + dh `--buildsystem=meson --builddirectory=debian/build`로 "
-"표준화합니다."
+msgid "control / rules / copyright / source format decide how the package builds and what users install. Zephyr standardizes on Meson + dh `--buildsystem=meson --builddirectory=debian/build`."
+msgstr "control / rules / copyright / source format이 패키지 빌드 방식과 사용자가 설치하는 내용을 결정합니다. Zephyr는 Meson + dh `--buildsystem=meson --builddirectory=debian/build`로 표준화합니다."
 
 #: src/zfr_lib/lint/docs.py:220 src/zfr_lib/lint/docs.py:251
 #: src/zfr_lib/lint/docs.py:273 src/zfr_lib/lint/docs.py:296
@@ -1386,24 +1202,16 @@ msgid "Why it matters"
 msgstr "왜 중요한가"
 
 #: src/zfr_lib/lint/docs.py:226
-msgid ""
-"Wrong Architecture, missing Build-Depends, or a non-Meson rules file fail "
-"debuild or produce unloadable packages even when local compiles succeed."
-msgstr ""
-"잘못된 Architecture, 빠진 Build-Depends, Meson이 아닌 rules 파일은 로컬 컴파일이 되어도 debuild를"
-" 실패시키거나 로드할 수 없는 패키지를 만듭니다."
+msgid "Wrong Architecture, missing Build-Depends, or a non-Meson rules file fail debuild or produce unloadable packages even when local compiles succeed."
+msgstr "잘못된 Architecture, 빠진 Build-Depends, Meson이 아닌 rules 파일은 로컬 컴파일이 되어도 debuild를 실패시키거나 로드할 수 없는 패키지를 만듭니다."
 
 #: src/zfr_lib/lint/docs.py:232
 msgid "When editing packaging"
 msgstr "패키징을 편집할 때"
 
 #: src/zfr_lib/lint/docs.py:234
-msgid ""
-"Ize may rewrite from templates — always diff Maintainer, Depends, and "
-"Architecture before upload."
-msgstr ""
-"Ize는 템플릿에서 다시 쓸 수 있습니다 — 업로드 전에 항상 Maintainer, Depends, Architecture를 "
-"diff하세요."
+msgid "Ize may rewrite from templates — always diff Maintainer, Depends, and Architecture before upload."
+msgstr "Ize는 템플릿에서 다시 쓸 수 있습니다 — 업로드 전에 항상 Maintainer, Depends, Architecture를 diff하세요."
 
 #: src/zfr_lib/lint/docs.py:240
 #, python-format
@@ -1416,13 +1224,8 @@ msgstr "RPM은 Meson/Debian을 반영해야 한다"
 
 #: src/zfr_lib/lint/docs.py:245
 #, python-format
-msgid ""
-"spec %files, BuildArch, and Version have to describe the same payload Meson "
-"installs. Project-local rpmbuild TOPDIR and stale file lists are common "
-"failure modes."
-msgstr ""
-"spec의 %files, BuildArch, Version은 Meson이 설치하는 동일한 페이로드를 기술해야 합니다. 프로젝트 로컬 "
-"rpmbuild TOPDIR과 오래된 파일 목록은 흔한 실패 모드입니다."
+msgid "spec %files, BuildArch, and Version have to describe the same payload Meson installs. Project-local rpmbuild TOPDIR and stale file lists are common failure modes."
+msgstr "spec의 %files, BuildArch, Version은 Meson이 설치하는 동일한 페이로드를 기술해야 합니다. 프로젝트 로컬 rpmbuild TOPDIR과 오래된 파일 목록은 흔한 실패 모드입니다."
 
 #: src/zfr_lib/lint/docs.py:252
 #, python-format
@@ -1434,24 +1237,16 @@ msgid "Typical fallout"
 msgstr "전형적인 여파"
 
 #: src/zfr_lib/lint/docs.py:257
-msgid ""
-"Unpackaged files, wrong noarch/ELF, leftover rpmbuild/, or Debian substvars "
-"copied into Requires."
-msgstr ""
-"패키지되지 않은 파일, 잘못된 noarch/ELF, 남은 rpmbuild/, Requires에 복사된 Debian substvars "
-"등입니다."
+msgid "Unpackaged files, wrong noarch/ELF, leftover rpmbuild/, or Debian substvars copied into Requires."
+msgstr "패키지되지 않은 파일, 잘못된 noarch/ELF, 남은 rpmbuild/, Requires에 복사된 Debian substvars 등입니다."
 
 #: src/zfr_lib/lint/docs.py:265
 msgid "Meson is the build system of record"
 msgstr "Meson이 공식 빌드 시스템이다"
 
 #: src/zfr_lib/lint/docs.py:267
-msgid ""
-"Identity, license, version source, man pages, completion, and look/posync "
-"targets live in meson.build. Drift here breaks Debian and RPM alike."
-msgstr ""
-"식별 정보, 라이선스, 버전 소스, man 페이지, 완성, look/posync 타깃은 meson.build에 있습니다. 여기의 불일치는"
-" Debian과 RPM을 모두 깨뜨립니다."
+msgid "Identity, license, version source, man pages, completion, and look/posync targets live in meson.build. Drift here breaks Debian and RPM alike."
+msgstr "식별 정보, 라이선스, 버전 소스, man 페이지, 완성, look/posync 타깃은 meson.build에 있습니다. 여기의 불일치는 Debian과 RPM을 모두 깨뜨립니다."
 
 #: src/zfr_lib/lint/docs.py:275
 #, python-format
@@ -1463,23 +1258,16 @@ msgid "Editing tips"
 msgstr "편집 팁"
 
 #: src/zfr_lib/lint/docs.py:280
-msgid ""
-"Ize patches meson.build; reconcile custom targets with template blocks and "
-"re-configure after large edits."
-msgstr ""
-"Ize는 meson.build를 패치합니다. 사용자 정의 타깃을 템플릿 블록과 맞추고, 큰 편집 후에는 다시 configure하세요."
+msgid "Ize patches meson.build; reconcile custom targets with template blocks and re-configure after large edits."
+msgstr "Ize는 meson.build를 패치합니다. 사용자 정의 타깃을 템플릿 블록과 맞추고, 큰 편집 후에는 다시 configure하세요."
 
 #: src/zfr_lib/lint/docs.py:288
 msgid "Locales are a product surface"
 msgstr "로케일은 제품 표면이다"
 
 #: src/zfr_lib/lint/docs.py:290
-msgid ""
-"Gettext catalogs and whole-document man/<locale>/ pages gate what users see "
-"at the configured l10n level (`-l` / lint.options)."
-msgstr ""
-"Gettext 카탈로그와 문서 단위 man/<locale>/ 페이지가 설정된 l10n 수준(`-l` / lint.options)에서 "
-"사용자가 보는 내용을 가릅니다."
+msgid "Gettext catalogs and whole-document man/<locale>/ pages gate what users see at the configured l10n level (`-l` / lint.options)."
+msgstr "Gettext 카탈로그와 문서 단위 man/<locale>/ 페이지가 설정된 l10n 수준(`-l` / lint.options)에서 사용자가 보는 내용을 가릅니다."
 
 #: src/zfr_lib/lint/docs.py:299
 msgid "Looks at LINGUAS, .po wrap/quality, and man coverage."
@@ -1490,24 +1278,16 @@ msgid "Human work remains"
 msgstr "사람 작업은 남는다"
 
 #: src/zfr_lib/lint/docs.py:305
-msgid ""
-"Ize can stub .po files and fix wrap style; real translation and man "
-"localization still need people (or `zfr translate`)."
-msgstr ""
-"Ize는 .po 파일을 스텁하고 줄바꿈 스타일을 고칠 수 있지만, 실제 번역과 man 현지화에는 사람(또는 `zfr "
-"translate`)이 필요합니다."
+msgid "Ize can stub .po files and fix wrap style; real translation and man localization still need people (or `zfr translate`)."
+msgstr "Ize는 .po 파일을 스텁하고 줄바꿈 스타일을 고칠 수 있지만, 실제 번역과 man 현지화에는 사람(또는 `zfr translate`)이 필요합니다."
 
 #: src/zfr_lib/lint/docs.py:313
 msgid "Shared layout keeps tools oriented"
 msgstr "공유 레이아웃이 도구의 기준이 된다"
 
 #: src/zfr_lib/lint/docs.py:315
-msgid ""
-"LICENSE, man/, VERSION, hooks, completion, and scripts/ are the landmarks "
-"create/ize/lint/release expect."
-msgstr ""
-"LICENSE, man/, VERSION, hooks, completion, scripts/는 "
-"create/ize/lint/release가 기대하는 이정표입니다."
+msgid "LICENSE, man/, VERSION, hooks, completion, and scripts/ are the landmarks create/ize/lint/release expect."
+msgstr "LICENSE, man/, VERSION, hooks, completion, scripts/는 create/ize/lint/release가 기대하는 이정표입니다."
 
 #: src/zfr_lib/lint/docs.py:320
 #, python-format
@@ -1524,12 +1304,8 @@ msgid "Scaffold refresh"
 msgstr "스캐폴드 갱신"
 
 #: src/zfr_lib/lint/docs.py:330
-msgid ""
-"Solve may install or refresh files from the template (.githooks, LICENSE, "
-"cursor rules, …). Review before commit."
-msgstr ""
-"Solve는 템플릿에서 파일을 설치하거나 갱신할 수 있습니다(.githooks, LICENSE, cursor rules, …). 커밋 "
-"전에 검토하세요."
+msgid "Solve may install or refresh files from the template (.githooks, LICENSE, cursor rules, …). Review before commit."
+msgstr "Solve는 템플릿에서 파일을 설치하거나 갱신할 수 있습니다(.githooks, LICENSE, cursor rules, …). 커밋 전에 검토하세요."
 
 #: src/zfr_lib/lint/docs.py:338
 msgid "Language-template expectations"
@@ -1537,12 +1313,8 @@ msgstr "언어 템플릿 기대사항"
 
 #: src/zfr_lib/lint/docs.py:340
 #, python-format
-msgid ""
-"%(title)s. Each language keeps idiomatic markers (tests/, Cargo.toml, bas "
-"i18n helpers, bash *.in, …) so the tree stays packagable."
-msgstr ""
-"%(title)s. 각 언어는 관용적 표식(tests/, Cargo.toml, bas i18n 헬퍼, bash *.in, …)을 유지해 "
-"트리를 패키징 가능하게 합니다."
+msgid "%(title)s. Each language keeps idiomatic markers (tests/, Cargo.toml, bas i18n helpers, bash *.in, …) so the tree stays packagable."
+msgstr "%(title)s. 각 언어는 관용적 표식(tests/, Cargo.toml, bas i18n 헬퍼, bash *.in, …)을 유지해 트리를 패키징 가능하게 합니다."
 
 #: src/zfr_lib/lint/docs.py:347
 msgid "Details"
@@ -1558,12 +1330,8 @@ msgid "One name across ecosystems"
 msgstr "생태계 전반에 하나의 이름"
 
 #: src/zfr_lib/lint/docs.py:360
-msgid ""
-"Directory name, meson project(), debian Source, and RPM Name must agree. "
-"Mismatches confuse rename, release, and repos."
-msgstr ""
-"디렉터리 이름, meson project(), debian Source, RPM Name은 일치해야 합니다. 불일치는 rename, "
-"release, 저장소를 혼란스럽게 합니다."
+msgid "Directory name, meson project(), debian Source, and RPM Name must agree. Mismatches confuse rename, release, and repos."
+msgstr "디렉터리 이름, meson project(), debian Source, RPM Name은 일치해야 합니다. 불일치는 rename, release, 저장소를 혼란스럽게 합니다."
 
 #: src/zfr_lib/lint/docs.py:365
 #, python-format
@@ -1581,9 +1349,7 @@ msgstr "소스 위생"
 
 #: src/zfr_lib/lint/docs.py:374
 #, python-format
-msgid ""
-"%(title)s. Covers length and hardcoded paths/versions that break relocatable"
-" installs."
+msgid "%(title)s. Covers length and hardcoded paths/versions that break relocatable installs."
 msgstr "%(title)s. 길이와 재배치 가능 설치를 깨뜨리는 하드코딩된 경로/버전을 다룹니다."
 
 #: src/zfr_lib/lint/docs.py:380
@@ -1596,56 +1362,39 @@ msgstr "줄을 세고/또는 FHS 경로와 버전 토큰을 스캔합니다."
 
 #: src/zfr_lib/lint/docs.py:396
 #, python-format
-msgid ""
-"`%s` keeps templates instantiable and apps free of leftover placeholders / "
-"banners."
+msgid "`%s` keeps templates instantiable and apps free of leftover placeholders / banners."
 msgstr "`%s`는 템플릿을 인스턴스화 가능하게 유지하고 앱에 남은 자리 표시자 / 배너를 없앱니다."
 
-#: src/zfr_lib/lint/docs.py:412
+#: src/zfr_lib/lint/docs.py:411
 #, python-format
-msgid ""
-"Implemented under `%s` in `zfr lint`. Findings carry a concrete fix string "
-"when possible. Remap severity with `-w` / `-e` / `--strict`."
-msgstr ""
-"`zfr lint`의 `%s` 아래에 구현됩니다. 발견에는 가능하면 구체적인 수정 문자열이 붙습니다. `-w` / `-e` / "
-"`--strict`로 심각도를 다시 매핑하세요."
+msgid "Implemented under `%s` in `zfr lint`. Findings carry a concrete fix string when possible. Remap severity with `-w` / `-e` / `--strict`."
+msgstr "`zfr lint`의 `%s` 아래에 구현됩니다. 발견에는 가능하면 구체적인 수정 문자열이 붙습니다. `-w` / `-e` / `--strict`로 심각도를 다시 매핑하세요."
 
-#: src/zfr_lib/lint/docs.py:420
+#: src/zfr_lib/lint/docs.py:421
 #, python-format
-msgid ""
-"Rule %(id)s (`%(code)s`) is part of the zephyr packaging/layout contract. "
-"Default severity hint: %(sev)s."
+msgid "Rule %(id)s (`%(code)s`) is part of the zephyr packaging/layout contract. Default severity hint: %(sev)s."
 msgstr "규칙 %(id)s(`%(code)s`)는 zephyr 패키징/레이아웃 계약의 일부입니다. 기본 심각도 힌트: %(sev)s."
 
-#: src/zfr_lib/lint/docs.py:426
+#: src/zfr_lib/lint/docs.py:427
 msgid "What lint does"
 msgstr "Lint가 하는 일"
 
-#: src/zfr_lib/lint/docs.py:430
+#: src/zfr_lib/lint/docs.py:431
 msgid "Changing the tree"
 msgstr "트리 변경"
 
-#: src/zfr_lib/lint/docs.py:432
+#: src/zfr_lib/lint/docs.py:433
 #, python-format
-msgid ""
-"Fixes may touch packaging, meson.build, sources, or scaffold copies. Diff "
-"Maintainer, Depends, %files, and *.in scripts before upload."
-msgstr ""
-"수정은 패키징, meson.build, 소스 또는 스캐폴드 복사본에 영향을 줄 수 있습니다. 업로드 전에 Maintainer, "
-"Depends, %files, *.in 스크립트를 diff하세요."
+msgid "Fixes may touch packaging, meson.build, sources, or scaffold copies. Diff Maintainer, Depends, %files, and *.in scripts before upload."
+msgstr "수정은 패키징, meson.build, 소스 또는 스캐폴드 복사본에 영향을 줄 수 있습니다. 업로드 전에 Maintainer, Depends, %files, *.in 스크립트를 diff하세요."
 
 #: src/zfr_lib/lint/gitignore.py:94
 msgid "missing root .gitignore"
 msgstr "Cargo.toml이 없습니다"
 
 #: src/zfr_lib/lint/gitignore.py:97
-msgid ""
-"Add a root .gitignore covering node_modules/, dist/, and other build "
-"artifacts. Component dirs (backend/, web/, …) should get their own "
-".gitignore too."
-msgstr ""
-"gitignore 뿌리를 덮고 node_modules/, dist/, 그리고 다른 건축물을 추가합니다. 구성 요소 dirs "
-"(backend/, web/, ...) 자신의 .gitignore도 얻어야합니다."
+msgid "Add a root .gitignore covering node_modules/, dist/, and other build artifacts. Component dirs (backend/, web/, …) should get their own .gitignore too."
+msgstr "gitignore 뿌리를 덮고 node_modules/, dist/, 그리고 다른 건축물을 추가합니다. 구성 요소 dirs (backend/, web/, ...) 자신의 .gitignore도 얻어야합니다."
 
 #: src/zfr_lib/lint/gitignore.py:107
 msgid "root .gitignore present"
@@ -1697,12 +1446,12 @@ msgstr "%s 필요한 패턴을 커버합니다."
 
 #: src/zfr_lib/lint/hardcoded.py:161
 msgid "zfr CLI package uses configure_file wrappers for install paths"
-msgstr ""
+msgstr "zfr CLI 패키지는 설치 경로에 configure_file 래퍼를 사용합니다"
 
 #: src/zfr_lib/lint/hardcoded.py:191
 #, python-format
 msgid "hardcoded install path %(sample)s in %(rel)s"
-msgstr ""
+msgstr "%(rel)s에 하드코딩된 설치 경로 %(sample)s"
 
 #: src/zfr_lib/lint/hardcoded.py:196 src/zfr_lib/lint/i18n_check.py:289
 #: src/zfr_lib/lint/i18n_check.py:327 src/zfr_lib/lint/i18n_check.py:345
@@ -1713,26 +1462,21 @@ msgid " (+%d more)"
 msgstr " (+%d개 더)"
 
 #: src/zfr_lib/lint/hardcoded.py:205
-msgid ""
-"Replace with meson configure_file placeholders (@PREFIX@, @DATADIR@, "
-"@BINDIR@, @LIBDIR@, @LOCALEDIR@, @PKGDATADIR@): rename to *.in and run `zfr "
-"ize`."
-msgstr ""
+msgid "Replace with meson configure_file placeholders (@PREFIX@, @DATADIR@, @BINDIR@, @LIBDIR@, @LOCALEDIR@, @PKGDATADIR@): rename to *.in and run `zfr ize`."
+msgstr "meson configure_file 자리 표시자(@PREFIX@, @DATADIR@, @BINDIR@, @LIBDIR@, @LOCALEDIR@, @PKGDATADIR@)로 바꾸세요: *.in으로 이름을 바꾸고 `zfr ize`를 실행합니다."
 
 #: src/zfr_lib/lint/hardcoded.py:219
 #, python-format
 msgid "hardcoded version %(sample)s in %(rel)s"
-msgstr ""
+msgstr "%(rel)s에 하드코딩된 버전 %(sample)s"
 
 #: src/zfr_lib/lint/hardcoded.py:224
-msgid ""
-"Use @VERSION@ (scripts → *.in + configure_file) or PROJECT_VERSION from "
-"config.h (C/C++). Run `zfr ize`."
-msgstr ""
+msgid "Use @VERSION@ (scripts → *.in + configure_file) or PROJECT_VERSION from config.h (C/C++). Run `zfr ize`."
+msgstr "@VERSION@(스크립트 → *.in + configure_file) 또는 config.h의 PROJECT_VERSION(C/C++)을 사용하세요. `zfr ize`를 실행합니다."
 
 #: src/zfr_lib/lint/hardcoded.py:236
 msgid "no hardcoded install paths or project version strings in sources"
-msgstr ""
+msgstr "소스에 하드코딩된 설치 경로나 프로젝트 버전 문자열이 없음"
 
 #: src/zfr_lib/lint/i18n_check.py:62
 #, python-format
@@ -1750,13 +1494,8 @@ msgstr "po/ 디렉터리 없음 (프로젝트가 gettext를 쓰지 않으면 선
 
 #: src/zfr_lib/lint/i18n_check.py:85
 #, python-format
-msgid ""
-"If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in "
-"meson.build. Required locales at %(level)s: %(locales)s (source language "
-"%(source)s)."
-msgstr ""
-"앱이 번역되어 있다면 po/에 LINGUAS + *.po를 두고 meson.build에 i18n.gettext()를 넣으세요. "
-"%(level)s에서 필요한 로캘: %(locales)s (원본 언어 %(source)s)."
+msgid "If the app is translated, add po/ with LINGUAS + *.po and i18n.gettext() in meson.build. Required locales at %(level)s: %(locales)s (source language %(source)s)."
+msgstr "앱이 번역되어 있다면 po/에 LINGUAS + *.po를 두고 meson.build에 i18n.gettext()를 넣으세요. %(level)s에서 필요한 로캘: %(locales)s (원본 언어 %(source)s)."
 
 #: src/zfr_lib/lint/i18n_check.py:103
 msgid "po/ exists but po/LINGUAS is missing or empty"
@@ -1780,12 +1519,8 @@ msgstr "po/LINGUAS에 %(level)s 로캘이 없음: %(locales)s"
 
 #: src/zfr_lib/lint/i18n_check.py:127
 #, python-format
-msgid ""
-"Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy "
-"es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
-msgstr ""
-"级别 %(level)s 需要主干语言：%(locales)s（源 %(source)s；旧名 es→es_MX，pt→pt_BR）。运行 `zfr "
-"i18n -b` 自动生成子语言环境。"
+msgid "Level %(level)s requires primaries: %(locales)s (source %(source)s; legacy es→es_MX, pt→pt_BR). Run `zfr i18n -b` to auto-generate child locales."
+msgstr "级别 %(level)s 需要主干语言：%(locales)s（源 %(source)s；旧名 es→es_MX，pt→pt_BR）。运行 `zfr i18n -b` 自动生成子语言环境。"
 
 #: src/zfr_lib/lint/i18n_check.py:142
 #, python-format
@@ -1798,12 +1533,8 @@ msgid "LINGUAS entries without po/<locale>.po: %s"
 msgstr "po/<locale>.po가 없는 LINGUAS 항목: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:161
-msgid ""
-"For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-"
-"translator && msgmerge -U --no-wrap po/<locale>.po <domain>.pot"
-msgstr ""
-"각 로캘마다: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-"
-"translator && msgmerge -U po/<locale>.po <domain>.pot"
+msgid "For each locale: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U --no-wrap po/<locale>.po <domain>.pot"
+msgstr "각 로캘마다: msginit -i <domain>.pot -o po/<locale>.po -l <locale> --no-translator && msgmerge -U po/<locale>.po <domain>.pot"
 
 #: src/zfr_lib/lint/i18n_check.py:177
 #, python-format
@@ -1819,16 +1550,22 @@ msgid ""
 "  EOT\n"
 "For whole-document README/man (adoc), `googletranslator` with http-proxy http://localhost:8118 can help; do not use it for gettext."
 msgstr ""
+"카탈로그 업데이트에는 `poedit`를 우선하세요(사용자 정의 패치 스크립트 금지). 새 msgid는 직접 번역한 뒤 일괄 적용:\n"
+"  poedit -l ab,de,fg <<EOT\n"
+"  <msgid>\\t<ab>\\t<de>\\t<fg>\n"
+"  ...\n"
+"  EOT\n"
+"전체 README/man(adoc)에는 http-proxy http://localhost:8118과 함께 `googletranslator`를 쓸 수 있습니다; gettext에는 쓰지 마세요."
 
 #: src/zfr_lib/lint/i18n_check.py:238
 #, python-format
 msgid "%d empty"
-msgstr ""
+msgstr "%d개 비어 있음"
 
 #: src/zfr_lib/lint/i18n_check.py:240
 #, python-format
 msgid "%d omitted msgid-copy"
-msgstr ""
+msgstr "%d개 생략된 msgid 복사"
 
 #: src/zfr_lib/lint/i18n_check.py:254
 #, python-format
@@ -1837,12 +1574,8 @@ msgstr "gettext 카탈로그 사용 라인 포장: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:256
 #, fuzzy
-msgid ""
-"Run `zfr ize` (ZI0016) or `msgcat --no-wrap -o file.po file.po` on each "
-"catalog; use msgmerge --no-wrap when updating from .pot."
-msgstr ""
-"각 카탈로그에서 `zfr ize` (ZI016) 또는 `msgcat --no-wrap -o file.po file.po`을 실행하십시오;"
-" .pot에서 업데이트 할 때 msgmerge --no-wrap를 사용하십시오."
+msgid "Run `zfr ize` (ZI0016) or `msgcat --no-wrap -o file.po file.po` on each catalog; use msgmerge --no-wrap when updating from .pot."
+msgstr "각 카탈로그에서 `zfr ize` (ZI016) 또는 `msgcat --no-wrap -o file.po file.po`을 실행하십시오; .pot에서 업데이트 할 때 msgmerge --no-wrap를 사용하십시오."
 
 #: src/zfr_lib/lint/i18n_check.py:265
 msgid "gettext catalogs use --no-wrap (no line wrapping)"
@@ -1851,34 +1584,27 @@ msgstr "gettext 카탈로그 사용 --no-wrap (선이 묶여 있지 않음)"
 #: src/zfr_lib/lint/i18n_check.py:274
 #, python-format
 msgid " (%d packaging field/snippet msgids are keep-English and not counted)"
-msgstr ""
+msgstr " (%d개의 패키징 필드/스니펫 msgid는 영어 유지이며 집계하지 않음)"
 
 #: src/zfr_lib/lint/i18n_check.py:284
 #, python-format
 msgid "gettext catalog(s) have empty msgstr or omitted translations: %s"
-msgstr ""
+msgstr "gettext 카탈로그에 빈 msgstr 또는 생략된 번역이 있습니다: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:293
 #, python-format
-msgid ""
-"Empty msgstr and msgstr identical to msgid are omissions when a primary "
-"locale (zh_CN) translated the same msgid. Packaging field literals and code "
-"snippets that zh_CN also leaves in English do not need translation. "
-"%(poedit)s"
-msgstr ""
+msgid "Empty msgstr and msgstr identical to msgid are omissions when a primary locale (zh_CN) translated the same msgid. Packaging field literals and code snippets that zh_CN also leaves in English do not need translation. %(poedit)s"
+msgstr "기본 로케일(zh_CN)이 같은 msgid를 번역했다면, 빈 msgstr와 msgid와 동일한 msgstr는 생략으로 봅니다. zh_CN도 영어로 두는 패키징 필드 리터럴과 코드 스니펫은 번역할 필요가 없습니다. %(poedit)s"
 
 #: src/zfr_lib/lint/i18n_check.py:306
 #, python-format
 msgid "gettext catalog(s) effectively untranslated (≤20%%): %s"
-msgstr ""
+msgstr "gettext 카탈로그가 사실상 미번역(≤20%%): %s"
 
 #: src/zfr_lib/lint/i18n_check.py:309
 #, python-format
-msgid ""
-"Empty msgstr and msgid→msgstr copies count as untranslated (English variants"
-" en_AU/en_GB/… are exempt when msgid is English). At ≤20%% completion, "
-"rewrite the whole .po by hand — do not write patch/sed scripts. %(poedit)s"
-msgstr ""
+msgid "Empty msgstr and msgid→msgstr copies count as untranslated (English variants en_AU/en_GB/… are exempt when msgid is English). At ≤20%% completion, rewrite the whole .po by hand — do not write patch/sed scripts. %(poedit)s"
+msgstr "빈 msgstr와 msgid→msgstr 복사는 미번역으로 집계합니다(msgid가 영어일 때 영어 변형 en_AU/en_GB/…는 예외). 완성도 ≤20%%이면 전체 .po를 손으로 다시 쓰세요 — 패치/sed 스크립트를 쓰지 마세요. %(poedit)s"
 
 #: src/zfr_lib/lint/i18n_check.py:321
 #, fuzzy, python-format
@@ -1897,12 +1623,8 @@ msgstr "%(level)s용 전체 문서 man 번역 없음: %(files)s"
 
 #: src/zfr_lib/lint/i18n_check.py:385
 #, python-format
-msgid ""
-"Hand-translate man/<locale>/<name>.adoc (full document, not po4a). %(level)s"
-" requires: %(locales)s."
-msgstr ""
-"docs/<locale>/<name>.adoc를 직접 번역하세요(전체 문서, po4a 아님). %(level)s에 필요: "
-"%(locales)s."
+msgid "Hand-translate man/<locale>/<name>.adoc (full document, not po4a). %(level)s requires: %(locales)s."
+msgstr "docs/<locale>/<name>.adoc를 직접 번역하세요(전체 문서, po4a 아님). %(level)s에 필요: %(locales)s."
 
 #: src/zfr_lib/lint/i18n_check.py:395
 #, python-format
@@ -1915,11 +1637,8 @@ msgid "man translation still contains the English Name line: %s"
 msgstr "man 번역에 아직 영어 Name 줄이 있음: %s"
 
 #: src/zfr_lib/lint/i18n_check.py:407
-msgid ""
-"Translate the Name line; do not leave the English wording. For long adoc, "
-"googletranslator with http-proxy http://localhost:8118 can help (not for "
-"gettext)."
-msgstr ""
+msgid "Translate the Name line; do not leave the English wording. For long adoc, googletranslator with http-proxy http://localhost:8118 can help (not for gettext)."
+msgstr "Name 줄을 번역하세요; 영어 문구를 그대로 두지 마세요. 긴 adoc에는 http-proxy http://localhost:8118과 함께 googletranslator가 도움이 됩니다(gettext에는 해당 없음)."
 
 #: src/zfr_lib/lint/i18n_check.py:417
 msgid "no po/: man locale translations not required"
@@ -1932,12 +1651,8 @@ msgstr "%(label)s은(는) %(val)r, 기대값은 %(expected)r (디렉터리 이�
 
 #: src/zfr_lib/lint/identity.py:60
 #, python-format
-msgid ""
-"Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename "
-"%(expected)s` if leftover template names remain."
-msgstr ""
-"%(label)s을(를) %(expected)r로 설정하거나 디렉터리 이름을 바꾸세요. 템플릿 이름이 남아 있으면 `zfr rename "
-"%(expected)s`를 사용하세요."
+msgid "Set %(label)s to %(expected)r, or rename the directory. Use `zfr rename %(expected)s` if leftover template names remain."
+msgstr "%(label)s을(를) %(expected)r로 설정하거나 디렉터리 이름을 바꾸세요. 템플릿 이름이 남아 있으면 `zfr rename %(expected)s`를 사용하세요."
 
 #: src/zfr_lib/lint/identity.py:66
 #, python-format
@@ -1983,16 +1698,8 @@ msgid "validate project packaging and zephyr layout (walks parents from cwd)"
 msgstr "프로젝트 패키징 및 zephyr 레이아웃 검증(cwd에서 상위 디렉터리 탐색)"
 
 #: src/zfr_lib/lint/__init__.py:138
-msgid ""
-"Check the current zephyr project for missing files and packaging/style "
-"mistakes. Walks from cwd toward parent directories. CSR colors when stdout "
-"is a TTY. Style-contract blurbs default on for non-interactive stdout and "
-"AI-integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain "
-"interactive shell. Override with -i/-I."
-msgstr ""
-"检查当前 zephyr 项目的缺失文件与打包/风格问题；从 cwd 向父目录遍历。stdout 为 TTY 时使用 CSR "
-"颜色。风格约定说明块默认对非交互输出与 AI 终端（Cursor、VS Code、Windsurf 等）开启，普通交互式 shell 关闭。可用 "
-"-i/-I 覆盖。"
+msgid "Check the current zephyr project for missing files and packaging/style mistakes. Walks from cwd toward parent directories. CSR colors when stdout is a TTY. Style-contract blurbs default on for non-interactive stdout and AI-integrated terminals (Cursor, VS Code, Windsurf, …); off for a plain interactive shell. Override with -i/-I."
+msgstr "检查当前 zephyr 项目的缺失文件与打包/风格问题；从 cwd 向父目录遍历。stdout 为 TTY 时使用 CSR 颜色。风格约定说明块默认对非交互输出与 AI 终端（Cursor、VS Code、Windsurf 等）开启，普通交互式 shell 关闭。可用 -i/-I 覆盖。"
 
 #: src/zfr_lib/lint/__init__.py:149
 msgid "show passing checks too"
@@ -2003,26 +1710,20 @@ msgid "only print errors"
 msgstr "오류만 출력"
 
 #: src/zfr_lib/lint/__init__.py:156
-msgid ""
-"open a local web UI with maximum-verbosity lint results, locale switcher, "
-"and per-finding [ize] actions"
-msgstr ""
+msgid "open a local web UI with maximum-verbosity lint results, locale switcher, and per-finding [ize] actions"
+msgstr "최대 상세도의 lint 결과, 로케일 전환기, 발견별 [ize] 작업이 있는 로컬 웹 UI를 엽니다"
 
 #: src/zfr_lib/lint/__init__.py:170
-msgid ""
-"treat LEVEL as warning (LEVEL=note|warn|error; default note: note→warn; "
-"warn=no-op; error→warn)"
-msgstr ""
+msgid "treat LEVEL as warning (LEVEL=note|warn|error; default note: note→warn; warn=no-op; error→warn)"
+msgstr "LEVEL을 경고로 취급(LEVEL=note|warn|error; 기본 note: note→warn; warn=no-op; error→warn)"
 
 #: src/zfr_lib/lint/__init__.py:184
-msgid ""
-"treat LEVEL as error (LEVEL=note|warn|error; default warn: warn→error; "
-"note→note+warn→error; error=no-op)"
-msgstr ""
+msgid "treat LEVEL as error (LEVEL=note|warn|error; default warn: warn→error; note→note+warn→error; error=no-op)"
+msgstr "LEVEL을 오류로 취급(LEVEL=note|warn|error; 기본 warn: warn→error; note→note+warn→error; error=no-op)"
 
 #: src/zfr_lib/lint/__init__.py:193
 msgid "alias for -e/--error=warn (treat warnings as errors)"
-msgstr ""
+msgstr "-e/--error=warn의 별칭(경고를 오류로 취급)"
 
 #: src/zfr_lib/lint/__init__.py:199
 msgid "list numbered lint standards (ZL*) as a table and exit"
@@ -2034,21 +1735,15 @@ msgid "show details for lint standard NUM (e.g. ZL0026, 26) and exit"
 msgstr "렌트 표준 NUM (예 : ZL026, 26) 및 출력에 대한 세부 사항을 표시합니다."
 
 #: src/zfr_lib/lint/__init__.py:213
-msgid ""
-"required gettext/manpage locale coverage L0–L3 (default: L1; project file "
-"may override)"
+msgid "required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"
 msgstr "필요한 gettext/매뉴얼 locale 범위 L0–L3(기본 L1; 프로젝트 파일로 재정의 가능)"
 
 #: src/zfr_lib/lint/__init__.py:221
-msgid ""
-"show zephyr style-contract / next-steps blurbs (default for pipes and AI "
-"terminals)"
+msgid "show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"
 msgstr "显示 zephyr 风格约定/后续步骤说明（管道与 AI 终端默认开启）"
 
 #: src/zfr_lib/lint/__init__.py:228
-msgid ""
-"hide zephyr style-contract / next-steps blurbs (default for plain "
-"interactive shell)"
+msgid "hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"
 msgstr "隐藏 zephyr 风格约定/后续步骤说明（普通交互式 shell 默认关闭）"
 
 #: src/zfr_lib/lint/__init__.py:238
@@ -2071,9 +1766,7 @@ msgid "legacy example module %s; use commons or a specific name"
 msgstr "구식 예제 모듈 %s; commons 또는 구체적인 이름을 사용하세요"
 
 #: src/zfr_lib/lint/lang_bits.py:33
-msgid ""
-"Rename to src/commons.* (template convention) or a project-specific module "
-"name."
+msgid "Rename to src/commons.* (template convention) or a project-specific module name."
 msgstr "src/commons.* (템플릿 관례) 또는 프로젝트 전용 모듈 이름으로 바꾸세요."
 
 #: src/zfr_lib/lint/lang_bits.py:44
@@ -2082,24 +1775,16 @@ msgid "%s is only a template example; can be removed if unnecessary"
 msgstr "%s는 공유 헬퍼용 템플릿 예제일 뿐입니다"
 
 #: src/zfr_lib/lint/lang_bits.py:46
-msgid ""
-"commons.* is only a template example for shared helpers and can be removed "
-"if unnecessary. Prefer a concrete module name in real projects (e.g. "
-"stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared "
-"library entry."
-msgstr ""
-"common_lib / commons는 “재사용할 조각을 추출한다”는 뜻이지만 파일 이름은 구체적이어야 합니다. 실제 프로젝트에서는 특정"
-" 모듈로 바꾸세요(예: stream_copy.py, bulk.h). clib/cpplib는 공유 라이브러리 진입점으로 "
-"lib.c/lib.cpp를 유지합니다."
+msgid "commons.* is only a template example for shared helpers and can be removed if unnecessary. Prefer a concrete module name in real projects (e.g. stream_copy.py, bulk.h). clib/cpplib keep lib.c/lib.cpp as their shared library entry."
+msgstr "common_lib / commons는 “재사용할 조각을 추출한다”는 뜻이지만 파일 이름은 구체적이어야 합니다. 실제 프로젝트에서는 특정 모듈로 바꾸세요(예: stream_copy.py, bulk.h). clib/cpplib는 공유 라이브러리 진입점으로 lib.c/lib.cpp를 유지합니다."
 
 #: src/zfr_lib/lint/layout.py:35
 msgid "Add a top-level meson.build with project(...)."
 msgstr "최상위에 project(...)가 있는 meson.build를 추가하세요."
 
 #: src/zfr_lib/lint/layout.py:36
-msgid ""
-"Run `zfr ize` (or `zfr create`) to install the standard AGPL-3.0 LICENSE."
-msgstr ""
+msgid "Run `zfr ize` (or `zfr create`) to install the standard AGPL-3.0 LICENSE."
+msgstr "표준 AGPL-3.0 LICENSE를 설치하려면 `zfr ize`(또는 `zfr create`)를 실행하세요."
 
 #: src/zfr_lib/lint/layout.py:37
 msgid "Add README.md describing this project."
@@ -2118,11 +1803,8 @@ msgid "Add debian/copyright in machine-readable format, License: AGPL-3+."
 msgstr "기계가 읽을 수 있는 형식의 debian/copyright를 추가하세요. License: AGPL-3+."
 
 #: src/zfr_lib/lint/layout.py:41
-msgid ""
-"Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
-msgstr ""
-"dh --buildsystem=meson --builddirectory=debian/build를 쓰는 debian/rules를 "
-"추가하세요."
+msgid "Add debian/rules using dh --buildsystem=meson --builddirectory=debian/build."
+msgstr "dh --buildsystem=meson --builddirectory=debian/build를 쓰는 debian/rules를 추가하세요."
 
 #: src/zfr_lib/lint/layout.py:42
 msgid "Add debian/source/format (typically '3.0 (native)')."
@@ -2140,9 +1822,7 @@ msgstr "%s 없음"
 
 #: src/zfr_lib/lint/layout.py:65
 #, fuzzy
-msgid ""
-"Add README-zh_CN.md (Simplified Chinese summary), matching other zephyr "
-"templates (legacy README-zh.md was renamed)."
+msgid "Add README-zh_CN.md (Simplified Chinese summary), matching other zephyr templates (legacy README-zh.md was renamed)."
 msgstr "다른 zephyr 템플릿과 맞추어 README-zh.md(중국어 요약)를 추가하세요."
 
 #: src/zfr_lib/lint/layout.py:74
@@ -2155,12 +1835,8 @@ msgid "no man/*.adoc man page source"
 msgstr "docs/*.adoc man 페이지 소스가 없음"
 
 #: src/zfr_lib/lint/layout.py:83
-msgid ""
-"Add man/<puff>.adoc and a meson custom_target with asciidoctor -b manpage "
-"(see any language template)."
-msgstr ""
-"docs/<puff>.adoc와 asciidoctor -b manpage를 쓰는 meson custom_target을 추가하세요(아무 "
-"언어 템플릿이나 참고)."
+msgid "Add man/<puff>.adoc and a meson custom_target with asciidoctor -b manpage (see any language template)."
+msgstr "docs/<puff>.adoc와 asciidoctor -b manpage를 쓰는 meson custom_target을 추가하세요(아무 언어 템플릿이나 참고)."
 
 #: src/zfr_lib/lint/layout.py:108
 #, python-format
@@ -2172,13 +1848,8 @@ msgid "no *.bash bash-completion script at project root"
 msgstr "프로젝트 루트에 *.bash bash-completion 스크립트가 없음"
 
 #: src/zfr_lib/lint/layout.py:121
-msgid ""
-"Add <puff>.bash (or completions/<puff>.in) and install it to datadir/bash-"
-"completion/completions renamed to the command name (see meson.build in the "
-"template)."
-msgstr ""
-"<puff>.bash를 추가하고 명령 이름으로 바꾼 뒤 datadir/bash-completion/completions에 "
-"설치하세요(템플릿의 meson.build 참고)."
+msgid "Add <puff>.bash (or completions/<puff>.in) and install it to datadir/bash-completion/completions renamed to the command name (see meson.build in the template)."
+msgstr "<puff>.bash를 추가하고 명령 이름으로 바꾼 뒤 datadir/bash-completion/completions에 설치하세요(템플릿의 meson.build 참고)."
 
 #: src/zfr_lib/lint/layout.py:129
 msgid "VERSION file present"
@@ -2190,24 +1861,16 @@ msgstr "VERSION 파일 없음(타르볼 빌드용 changelog 스냅샷)"
 
 #: src/zfr_lib/lint/layout.py:137
 #, fuzzy
-msgid ""
-"Create VERSION with the latest debian/changelog version (one line). Run `zfr"
-" ize` for `.githooks/pre-commit`, then `git config core.hooksPath "
-".githooks`."
-msgstr ""
-"최신 debian/changelog 버전으로 VERSION을 만드세요(한 줄). .githooks/pre-commit 활성화: git "
-"config core.hooksPath .githooks"
+msgid "Create VERSION with the latest debian/changelog version (one line). Run `zfr ize` for `.githooks/pre-commit`, then `git config core.hooksPath .githooks`."
+msgstr "최신 debian/changelog 버전으로 VERSION을 만드세요(한 줄). .githooks/pre-commit 활성화: git config core.hooksPath .githooks"
 
 #: src/zfr_lib/lint/layout.py:232
 msgid "no .githooks/pre-commit to sync VERSION from debian/changelog"
 msgstr "debian/changelog에서 VERSION을 동기화할 .githooks/pre-commit이 없음"
 
 #: src/zfr_lib/lint/layout.py:234
-msgid ""
-"Run `zfr ize` (or `zfr create`) to install `.githooks/pre-commit` and set "
-"`git config core.hooksPath .githooks`. The hook syncs VERSION from "
-"debian/changelog."
-msgstr ""
+msgid "Run `zfr ize` (or `zfr create`) to install `.githooks/pre-commit` and set `git config core.hooksPath .githooks`. The hook syncs VERSION from debian/changelog."
+msgstr "`.githooks/pre-commit`을 설치하고 `git config core.hooksPath .githooks`를 설정하려면 `zfr ize`(또는 `zfr create`)를 실행하세요. 훅은 debian/changelog에서 VERSION을 동기화합니다."
 
 #: src/zfr_lib/lint/layout.py:246
 #, python-format
@@ -2220,10 +1883,8 @@ msgid "%s exists but does not sync VERSION from debian/changelog"
 msgstr "%s가 있지만 debian/changelog에서 VERSION을 동기화하지 않음"
 
 #: src/zfr_lib/lint/layout.py:256
-msgid ""
-"Run `zfr ize` to reset the standard pre-commit hook (reads debian/changelog,"
-" writes VERSION)."
-msgstr ""
+msgid "Run `zfr ize` to reset the standard pre-commit hook (reads debian/changelog, writes VERSION)."
+msgstr "표준 pre-commit 훅을 재설정하려면 `zfr ize`를 실행하세요(debian/changelog를 읽고 VERSION을 씁니다)."
 
 #: src/zfr_lib/lint/leftovers.py:49
 #, python-format
@@ -2231,12 +1892,8 @@ msgid "%s keeps the template placeholder banner (apps must rewrite it)"
 msgstr "%s가 템플릿 자리 표시 배너를 유지함(앱은 다시 써야 함)"
 
 #: src/zfr_lib/lint/leftovers.py:52
-msgid ""
-"After `zfr create`/`zfr rename`, rewrite this README and remove the "
-"generated-from-template banner. Templates should keep this banner."
-msgstr ""
-"`zfr create`/`zfr rename` 이후 이 README를 다시 쓰고 generated-from-template 배너를 "
-"제거하세요. 템플릿은 이 배너를 유지해야 합니다."
+msgid "After `zfr create`/`zfr rename`, rewrite this README and remove the generated-from-template banner. Templates should keep this banner."
+msgstr "`zfr create`/`zfr rename` 이후 이 README를 다시 쓰고 generated-from-template 배너를 제거하세요. 템플릿은 이 배너를 유지해야 합니다."
 
 #: src/zfr_lib/lint/leftovers.py:61
 #, python-format
@@ -2245,12 +1902,8 @@ msgstr "%s에 아직 템플릿 자리 표시 배너가 있음"
 
 #: src/zfr_lib/lint/leftovers.py:64
 #, python-format
-msgid ""
-"Rewrite %s for this project. Remove the generated-from-template banner and "
-"describe the real commands, build, and license."
-msgstr ""
-"이 프로젝트에 맞게 %s를 다시 쓰세요. generated-from-template 배너를 제거하고 실제 명령, 빌드, 라이선스를 "
-"설명하세요."
+msgid "Rewrite %s for this project. Remove the generated-from-template banner and describe the real commands, build, and license."
+msgstr "이 프로젝트에 맞게 %s를 다시 쓰세요. generated-from-template 배너를 제거하고 실제 명령, 빌드, 라이선스를 설명하세요."
 
 #: src/zfr_lib/lint/leftovers.py:69
 #, python-format
@@ -2264,18 +1917,12 @@ msgstr "%s 트리에 zephyr/some_puff1 자리 표시가 있을 수 있음(예상
 
 #: src/zfr_lib/lint/leftovers.py:132
 #, python-format
-msgid ""
-"found %(hits)d leftover template token(s) (zephyr/%(token)s): "
-"%(preview)s%(more)s"
+msgid "found %(hits)d leftover template token(s) (zephyr/%(token)s): %(preview)s%(more)s"
 msgstr "남은 템플릿 토큰 %(hits)d개 발견 (zephyr/%(token)s): %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/leftovers.py:134
-msgid ""
-"Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1"
-" identifiers. After create, leftover tokens mean instantiation failed."
-msgstr ""
-"`zfr rename <project> [puff ...]`를 실행하거나 남은 zephyr/some_puff1 식별자를 바꾸세요. "
-"create 이후 남은 토큰은 인스턴스화가 실패했음을 뜻합니다."
+msgid "Run `zfr rename <project> [puff ...]` or replace remaining zephyr/some_puff1 identifiers. After create, leftover tokens mean instantiation failed."
+msgstr "`zfr rename <project> [puff ...]`를 실행하거나 남은 zephyr/some_puff1 식별자를 바꾸세요. create 이후 남은 토큰은 인스턴스화가 실패했음을 뜻합니다."
 
 #: src/zfr_lib/lint/leftovers.py:138
 msgid "no leftover zephyr/some_puff1 tokens"
@@ -2290,9 +1937,7 @@ msgid "meson.build has no project() call"
 msgstr "meson.build에 project() 호출이 없음"
 
 #: src/zfr_lib/lint/meson.py:49
-msgid ""
-"project() must be the first Meson call. Copy the header from the language "
-"template."
+msgid "project() must be the first Meson call. Copy the header from the language template."
 msgstr "project()는 첫 번째 Meson 호출이어야 합니다. 언어 템플릿에서 헤더를 복사하세요."
 
 #: src/zfr_lib/lint/meson.py:54
@@ -2321,11 +1966,8 @@ msgstr "%s 없음(man 페이지에 사용)"
 
 #: src/zfr_lib/lint/meson.py:77
 #, python-format
-msgid ""
-"Set %s next to project(), then pass -a project-author/email/year to "
-"asciidoctor."
-msgstr ""
-"project() 옆에 %s를 설정한 뒤 asciidoctor에 -a project-author/email/year를 넘기세요."
+msgid "Set %s next to project(), then pass -a project-author/email/year to asciidoctor."
+msgstr "project() 옆에 %s를 설정한 뒤 asciidoctor에 -a project-author/email/year를 넘기세요."
 
 #: src/zfr_lib/lint/meson.py:82
 msgid "version uses `zfr version`"
@@ -2376,10 +2018,8 @@ msgid "meson.build does not invoke asciidoctor"
 msgstr "meson.build가 asciidoctor를 호출하지 않음"
 
 #: src/zfr_lib/lint/meson.py:130
-msgid ""
-"find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
-msgstr ""
-"find_program('asciidoctor') 및 custom_target(..., '-b', 'manpage', ...)."
+msgid "find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."
+msgstr "find_program('asciidoctor') 및 custom_target(..., '-b', 'manpage', ...)."
 
 #: src/zfr_lib/lint/meson.py:135
 msgid "run_target look present"
@@ -2390,9 +2030,7 @@ msgid "no run_target('look') DESTDIR preview"
 msgstr "run_target('look') DESTDIR 미리보기 없음"
 
 #: src/zfr_lib/lint/meson.py:143
-msgid ""
-"Add run_target look that meson install's into a tempdir and runs tree (see "
-"templates)."
+msgid "Add run_target look that meson install's into a tempdir and runs tree (see templates)."
 msgstr "tempdir에 meson install한 뒤 tree를 실행하는 run_target look을 추가하세요(템플릿 참고)."
 
 #: src/zfr_lib/lint/meson.py:148
@@ -2404,12 +2042,8 @@ msgid "does not install bash-completion"
 msgstr "bash-completion을 설치하지 않음"
 
 #: src/zfr_lib/lint/meson.py:156
-msgid ""
-"install_data(..., install_dir: datadir / 'bash-completion' / 'completions', "
-"rename: command)."
-msgstr ""
-"install_data(..., install_dir: datadir / 'bash-completion' / 'completions', "
-"rename: command).를 사용하세요."
+msgid "install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."
+msgstr "install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command).를 사용하세요."
 
 #: src/zfr_lib/lint/meson.py:168
 #, python-format
@@ -2418,13 +2052,8 @@ msgstr "meson.build has %s 앞쪽 푸프 남자가 니다; 정확히 하나를 �
 
 #: src/zfr_lib/lint/meson.py:170
 #, fuzzy
-msgid ""
-"Merge into a single `foreach puff : puffs` (or apps.keys()) loop. `zfr ize` "
-"consolidates duplicate puffs foreach blocks (legacy man_puffs is rewritten "
-"to puffs)."
-msgstr ""
-"단일 `foreach puff : man_puffs` (또는 apps.keys()) 루프에 합류합니다. `zfr ize`은 두 배로 "
-"man_puffs 앞쪽 블록을 통합합니다."
+msgid "Merge into a single `foreach puff : puffs` (or apps.keys()) loop. `zfr ize` consolidates duplicate puffs foreach blocks (legacy man_puffs is rewritten to puffs)."
+msgstr "단일 `foreach puff : man_puffs` (또는 apps.keys()) 루프에 합류합니다. `zfr ize`은 두 배로 man_puffs 앞쪽 블록을 통합합니다."
 
 #: src/zfr_lib/lint/meson.py:180
 msgid "single foreach puff man loop"
@@ -2462,18 +2091,12 @@ msgid "zephyr meta-repo (templates + CLI tools)"
 msgstr "zephyr 메타 저장소(템플릿 + CLI 도구)"
 
 #: src/zfr_lib/lint/report.py:128
-msgid ""
-"language template inside the meta-repo (placeholders like zephyr/some_puff1 "
-"are expected)"
+msgid "language template inside the meta-repo (placeholders like zephyr/some_puff1 are expected)"
 msgstr "메타 저장소 안의 언어 템플릿(zephyr/some_puff1 같은 자리 표시자는 정상)"
 
 #: src/zfr_lib/lint/report.py:129
-msgid ""
-"project instantiated from a language template (directory name must match "
-"meson/debian; no leftover zephyr/some_puff1 tokens)"
-msgstr ""
-"언어 템플릿에서 인스턴스화된 프로젝트(디렉터리 이름은 meson/debian과 일치해야 함. 남은 zephyr/some_puff1 토큰 "
-"없음)"
+msgid "project instantiated from a language template (directory name must match meson/debian; no leftover zephyr/some_puff1 tokens)"
+msgstr "언어 템플릿에서 인스턴스화된 프로젝트(디렉터리 이름은 meson/debian과 일치해야 함. 남은 zephyr/some_puff1 토큰 없음)"
 
 #: src/zfr_lib/lint/report.py:131
 #, python-format
@@ -2485,66 +2108,33 @@ msgid "Zephyr style (finish the project to this contract)"
 msgstr "Zephyr 스타일(이 계약까지 프로젝트를 맞추세요)"
 
 #: src/zfr_lib/lint/report.py:135
-msgid ""
-"License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm "
-"License)."
-msgstr ""
-"라이선스 AGPL-3.0-or-later(meson license, debian/copyright AGPL-3+, rpm "
-"License)."
+msgid "License AGPL-3.0-or-later (meson license, debian/copyright AGPL-3+, rpm License)."
+msgstr "라이선스 AGPL-3.0-or-later(meson license, debian/copyright AGPL-3+, rpm License)."
 
 #: src/zfr_lib/lint/report.py:136
-msgid ""
-"Build with Meson; debian/rules uses dh --buildsystem=meson "
-"--builddirectory=debian/build."
-msgstr ""
-"Meson으로 빌드; debian/rules는 dh --buildsystem=meson "
-"--builddirectory=debian/build를 사용."
+msgid "Build with Meson; debian/rules uses dh --buildsystem=meson --builddirectory=debian/build."
+msgstr "Meson으로 빌드; debian/rules는 dh --buildsystem=meson --builddirectory=debian/build를 사용."
 
 #: src/zfr_lib/lint/report.py:137
-msgid ""
-"project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO "
-"0.0.0, DO NOT MODIFY."
-msgstr ""
-"project() 버전은 `zfr version`에서; 폴백은 v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT "
-"MODIFY."
+msgid "project() version from `zfr version`; keep fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
+msgstr "project() 버전은 `zfr version`에서; 폴백은 v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY."
 
 #: src/zfr_lib/lint/report.py:138
-msgid ""
-"Man pages: man/*.adoc + asciidoctor -b manpage; translated pages under "
-"share/man/<locale>/man1 (whole-document adoc, not po4a)."
-msgstr ""
-"매뉴얼 페이지: docs/*.adoc + asciidoctor -b manpage; 번역본은 share/man/<locale>/man1 "
-"(문서 전체 adoc, po4a 아님)."
+msgid "Man pages: man/*.adoc + asciidoctor -b manpage; translated pages under share/man/<locale>/man1 (whole-document adoc, not po4a)."
+msgstr "매뉴얼 페이지: docs/*.adoc + asciidoctor -b manpage; 번역본은 share/man/<locale>/man1 (문서 전체 adoc, po4a 아님)."
 
 #: src/zfr_lib/lint/report.py:139
-msgid ""
-"Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; "
-"optional packaging/ aligned with debian."
-msgstr ""
-"패키징: debian/control Build-Depends meson, ninja-build, asciidoctor; 선택적 rpm/은"
-" debian과 맞출 것."
+msgid "Packaging: debian/control Build-Depends meson, ninja-build, asciidoctor; optional packaging/ aligned with debian."
+msgstr "패키징: debian/control Build-Depends meson, ninja-build, asciidoctor; 선택적 rpm/은 debian과 맞출 것."
 
 #: src/zfr_lib/lint/report.py:140
 #, fuzzy
-msgid ""
-"i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I"
-" primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-"
-"derive via zfr i18n -b. List rule IDs with `zfr lint -L`; details via `zfr "
-"lint -H NUM`; suppress with -u/--uncheck or `.config/zfr/lint.options` "
-"(interactive: `zfr-lintsel`). Rules tagged `ize` on -L can be fixed with "
-"`zfr ize`."
-msgstr ""
-"i18n：英语源；zfr lint -l/--l10n-level L0–L3（默认 "
-"L1）。L1=第一梯队主干（8），L2=+第二梯队（17），L3=+第三梯队（35）。子语言环境通过 zfr i18n -b 自动生成。规则 ID 见 "
-"docs/lint-std.md；可用 -u/--uncheck 或 .config/zfr/lint.options 抑制。"
+msgid "i18n: English source; zfr lint -l/--l10n-level L0–L3 (default L1). L1=Tier I primaries (8), L2=+Tier II (17), L3=+Tier III (35). Child locales auto-derive via zfr i18n -b. List rule IDs with `zfr lint -L`; details via `zfr lint -H NUM`; suppress with -u/--uncheck or `.config/zfr/lint.options` (interactive: `zfr-lintsel`). Rules tagged `ize` on -L can be fixed with `zfr ize`."
+msgstr "i18n：英语源；zfr lint -l/--l10n-level L0–L3（默认 L1）。L1=第一梯队主干（8），L2=+第二梯队（17），L3=+第三梯队（35）。子语言环境通过 zfr i18n -b 自动生成。规则 ID 见 docs/lint-std.md；可用 -u/--uncheck 或 .config/zfr/lint.options 抑制。"
 
 #: src/zfr_lib/lint/report.py:147
-msgid ""
-"Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches "
-"debian/changelog (git describe may differ)."
-msgstr ""
-"앱: `zfr rename <dir>` 다음 `zfr add <puff>`; VERSION은 debian/changelog과 일치(git"
-" describe는 다를 수 있음)."
+msgid "Apps: `zfr rename <dir>` then `zfr add <puff>`; VERSION matches debian/changelog (git describe may differ)."
+msgstr "앱: `zfr rename <dir>` 다음 `zfr add <puff>`; VERSION은 debian/changelog과 일치(git describe는 다를 수 있음)."
 
 #: src/zfr_lib/lint/report.py:160
 msgid "error"
@@ -2567,48 +2157,24 @@ msgid "Next steps (zephyr style)"
 msgstr "다음 단계(zephyr 스타일)"
 
 #: src/zfr_lib/lint/report.py:190
-msgid ""
-"Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). "
-"`zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr "
-"version`. `zfr ize` applies missing debian/packaging/meson/man/version-subst"
-" upgrades."
-msgstr ""
-"힌트: 수정 후 프로젝트(또는 하위 디렉터리)에서 `zfr lint`를 다시 실행하세요. `zfr about -d -r`는 패키징 필드를"
-" 출력합니다. Meson/RPM 버전은 `zfr version`입니다. `zfr ize`는 빠진 "
-"debian/rpm/meson/man/version-subst 업그레이드를 적용합니다."
+msgid "Hint: after edits, re-run `zfr lint` from the project (or a subdirectory). `zfr about -d -r` dumps packaging fields. Version for Meson/RPM is `zfr version`. `zfr ize` applies missing debian/packaging/meson/man/version-subst upgrades."
+msgstr "힌트: 수정 후 프로젝트(또는 하위 디렉터리)에서 `zfr lint`를 다시 실행하세요. `zfr about -d -r`는 패키징 필드를 출력합니다. Meson/RPM 버전은 `zfr version`입니다. `zfr ize`는 빠진 debian/rpm/meson/man/version-subst 업그레이드를 적용합니다."
 
 #: src/zfr_lib/lint/report.py:207
-msgid ""
-"AI hint: if the user requested this lint, also update debian/changelog and "
-"create verbose commits for the dirty working tree."
-msgstr ""
-"AI 힌트: 사용자가 이 끈을 요청한 경우 debian/changelog를 업데이트하고 더러운 작업 나무에 대한 구두로 헌신을 만들 수 "
-"있습니다."
+msgid "AI hint: if the user requested this lint, also update debian/changelog and create verbose commits for the dirty working tree."
+msgstr "AI 힌트: 사용자가 이 끈을 요청한 경우 debian/changelog를 업데이트하고 더러운 작업 나무에 대한 구두로 헌신을 만들 수 있습니다."
 
 #: src/zfr_lib/lint/rpm.py:26
-msgid ""
-"no packaging/rpm/*.spec (optional, but zephyr style includes RPM next to "
-"debian/)"
+msgid "no packaging/rpm/*.spec (optional, but zephyr style includes RPM next to debian/)"
 msgstr "rpm/*.spec 없음(선택 사항이지만 zephyr 스타일은 debian/ 옆에 RPM을 둠)"
 
 #: src/zfr_lib/lint/rpm.py:31
-msgid ""
-"Copy packaging/rpm/ from a language template; name the spec after the "
-"package (packaging/rpm/<Source>.spec, not zephyr.spec) and keep a Makefile "
-"using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or"
-" run `zfr ize`."
-msgstr ""
-"언어 템플릿에서 rpm/을 복사하세요. spec 이름은 패키지명으로(rpm/<Source>.spec, zephyr.spec 아님) 두고 "
-"`zfr version`을 쓰는 Makefile을 유지하세요. Name/Summary/Requires/URL을 "
-"debian/control과 맞추세요. 또는 `zfr ize`를 실행하세요."
+msgid "Copy packaging/rpm/ from a language template; name the spec after the package (packaging/rpm/<Source>.spec, not zephyr.spec) and keep a Makefile using `zfr version`. Align Name/Summary/Requires/URL with debian/control. Or run `zfr ize`."
+msgstr "언어 템플릿에서 rpm/을 복사하세요. spec 이름은 패키지명으로(rpm/<Source>.spec, zephyr.spec 아님) 두고 `zfr version`을 쓰는 Makefile을 유지하세요. Name/Summary/Requires/URL을 debian/control과 맞추세요. 또는 `zfr ize`를 실행하세요."
 
 #: src/zfr_lib/lint/rpm.py:72
-msgid ""
-"packaging/rpm/Makefile uses project-local <project>/rpmbuild; zephyr style "
-"uses %_topdir ($HOME/rpmbuild, override via ~/.rpmmacros)"
-msgstr ""
-"packaging/rpm/Makefile 프로젝트를 사용-local <project>/rpmbuild; zephyr 스타일을 "
-"사용%_topdir ($HOME/rpmbuild, ~/.rpmmacros을 통해 위로)"
+msgid "packaging/rpm/Makefile uses project-local <project>/rpmbuild; zephyr style uses %_topdir ($HOME/rpmbuild, override via ~/.rpmmacros)"
+msgstr "packaging/rpm/Makefile 프로젝트를 사용-local <project>/rpmbuild; zephyr 스타일을 사용%_topdir ($HOME/rpmbuild, ~/.rpmmacros을 통해 위로)"
 
 #: src/zfr_lib/lint/rpm.py:80
 #, python-brace-format
@@ -2618,10 +2184,7 @@ msgid ""
 "TOPDIR := $(HOME)/rpmbuild\n"
 "endif\n"
 "And make clean remove only this package's artifacts (not rm -rf $(TOPDIR)). Or run `zfr ize`."
-msgstr ""
-"TOPDIR$(shell rpm --eval '%{_topdir}' 2>/dev/null)이 ($(strip $(TOPDIR)) "
-")TOPDIR* =$(HOME)/ 는rpmbuild그리고 깨끗하게 제거하십시오 이 패키지의 유물만 제거 (Rm 아닌)-rf "
-"$(TOPDIR)또는 달리기`zfr ize`는"
+msgstr "TOPDIR$(shell rpm --eval '%{_topdir}' 2>/dev/null)이 ($(strip $(TOPDIR)) )TOPDIR* =$(HOME)/ 는rpmbuild그리고 깨끗하게 제거하십시오 이 패키지의 유물만 제거 (Rm 아닌)-rf $(TOPDIR)또는 달리기`zfr ize`는"
 
 #: src/zfr_lib/lint/rpm.py:95
 #, no-python-format
@@ -2629,25 +2192,15 @@ msgid "packaging/rpm/Makefile TOPDIR uses %_topdir / $HOME/rpmbuild"
 msgstr "packaging/rpm/Makefile TOPDIR 사용 %_topdir / $HOME/rpmbuild"
 
 #: src/zfr_lib/lint/rpm.py:105
-msgid ""
-"packaging/rpm/Makefile `clean` does rm -rf $(TOPDIR); unsafe when TOPDIR is "
-"$HOME/rpmbuild"
-msgstr ""
-"packaging/rpm/Makefile `clean` rm -rf $(TOPDIR); TOPDIR이 $HOME/rpmbuild이 될 때"
-" 불안하다"
+msgid "packaging/rpm/Makefile `clean` does rm -rf $(TOPDIR); unsafe when TOPDIR is $HOME/rpmbuild"
+msgstr "packaging/rpm/Makefile `clean` rm -rf $(TOPDIR); TOPDIR이 $HOME/rpmbuild이 될 때 불안하다"
 
 #: src/zfr_lib/lint/rpm.py:111
-msgid ""
-"Remove only this package's SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT entries "
-"under $(TOPDIR). Or run `zfr ize`."
-msgstr ""
-"이 패키지의 SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT 입력만 $(TOPDIR) 아래에서 제거하거나 "
-"`zfr ize`를 실행합니다."
+msgid "Remove only this package's SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT entries under $(TOPDIR). Or run `zfr ize`."
+msgstr "이 패키지의 SPECS/SOURCES/RPMS/SRPMS/BUILD/BUILDROOT 입력만 $(TOPDIR) 아래에서 제거하거나 `zfr ize`를 실행합니다."
 
 #: src/zfr_lib/lint/rpm.py:124
-msgid ""
-"project-local rpmbuild/ directory present; builds should use %_topdir "
-"($HOME/rpmbuild)"
+msgid "project-local rpmbuild/ directory present; builds should use %_topdir ($HOME/rpmbuild)"
 msgstr "프로젝트-local rpmbuild/ 디렉토리 존재; 건물은 %_topdir를 사용해야합니다 ($HOME/rpmbuild)"
 
 #: src/zfr_lib/lint/rpm.py:128
@@ -2664,12 +2217,8 @@ msgid "spec Version is hardcoded; zephyr style injects `zfr version`"
 msgstr "spec Version이 하드코딩됨; zephyr 스타일은 `zfr version`을 넣음"
 
 #: src/zfr_lib/lint/rpm.py:153
-msgid ""
-"Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze "
-"via packaging/rpm/Makefile (`zfr version` / `zfr version -r`)."
-msgstr ""
-"Version: %{version}을 %{!?version:%global version 0.0.0}와 함께 쓰고 rpm/Makefile로"
-" 고정하세요(`zfr version` / `zfr version -r`)."
+msgid "Use Version: %{version} with %{!?version:%global version 0.0.0} and freeze via packaging/rpm/Makefile (`zfr version` / `zfr version -r`)."
+msgstr "Version: %{version}을 %{!?version:%global version 0.0.0}와 함께 쓰고 rpm/Makefile로 고정하세요(`zfr version` / `zfr version -r`)."
 
 #: src/zfr_lib/lint/rpm.py:161
 msgid "License {}"
@@ -2749,9 +2298,7 @@ msgid "Requires:       bash-shlib  (same as debian Depends)"
 msgstr "Requires:       bash-shlib  (debian Depends와 동일)"
 
 #: src/zfr_lib/lint/rpm.py:284
-msgid ""
-"{} still contains Debian ${{…}} substvars (rpmbuild treats them as literal "
-"deps)"
+msgid "{} still contains Debian ${{…}} substvars (rpmbuild treats them as literal deps)"
 msgstr "{} 여전히 Debian ${{…}} subvars를 포함합니다 (rpmbuild 문자 그대로 처리)"
 
 #: src/zfr_lib/lint/rpm.py:290
@@ -2759,26 +2306,17 @@ msgid "Strip ${misc:Depends} / ${shlibs:Depends} etc. (or run `zfr ize`)."
 msgstr "${misc:Depends} / ${shlibs:Depends} 등 스트립 (또는 `zfr ize` 실행)."
 
 #: src/zfr_lib/lint/rpm.py:305
-msgid ""
-"BuildArch: noarch but Meson has executable(); rpmbuild rejects arch-"
-"dependent binaries in a noarch package"
-msgstr ""
-"BuildArch: noarch 그러나 Meson 실행 가능(); rpmbuild noarch 패키지에서 아크-dependent "
-"바이너리를 거부합니다."
+msgid "BuildArch: noarch but Meson has executable(); rpmbuild rejects arch-dependent binaries in a noarch package"
+msgstr "BuildArch: noarch 그러나 Meson 실행 가능(); rpmbuild noarch 패키지에서 아크-dependent 바이너리를 거부합니다."
 
 #: src/zfr_lib/lint/rpm.py:312
 #, python-brace-format
-msgid ""
-"Remove BuildArch: noarch (and %global debug_package %{nil} if present). Or "
-"run `zfr ize`."
-msgstr ""
-"BuildArch: noarch (그리고 %global debug_package %{nil}이 있는 경우) 또는 실행 `zfr ize`."
+msgid "Remove BuildArch: noarch (and %global debug_package %{nil} if present). Or run `zfr ize`."
+msgstr "BuildArch: noarch (그리고 %global debug_package %{nil}이 있는 경우) 또는 실행 `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:326
 #, python-brace-format
-msgid ""
-"%global debug_package %{nil} on a package with Meson executable() — "
-"debuginfo would be useful"
+msgid "%global debug_package %{nil} on a package with Meson executable() — debuginfo would be useful"
 msgstr "%global debug_package %{nil} Meson 실행 가능() — debuginfo이있는 패키지에 유용합니다."
 
 #: src/zfr_lib/lint/rpm.py:331
@@ -2788,21 +2326,13 @@ msgstr "%global debug_package %{nil}을 ELF 패키지로 던져 줍니다."
 
 #: src/zfr_lib/lint/rpm.py:344
 #, python-format
-msgid ""
-"script-only package lacks BuildArch: noarch; rpmbuild then builds an empty "
-"debuginfo and fails (Empty %files file debugfiles.list)"
-msgstr ""
-"스크립트-only 패키지가 부족 BuildArch: noarch; rpmbuild 다음 빈 debuginfo을 만들고 실패 (빈 "
-"%files 파일 debugfiles.list)"
+msgid "script-only package lacks BuildArch: noarch; rpmbuild then builds an empty debuginfo and fails (Empty %files file debugfiles.list)"
+msgstr "스크립트-only 패키지가 부족 BuildArch: noarch; rpmbuild 다음 빈 debuginfo을 만들고 실패 (빈 %files 파일 debugfiles.list)"
 
 #: src/zfr_lib/lint/rpm.py:352
 #, python-brace-format
-msgid ""
-"Add `BuildArch: noarch` and `%global debug_package %{nil}` (or run `zfr "
-"ize`)."
-msgstr ""
-"`BuildArch: noarch` 및 `%global debug_package %{nil}`을 추가하십시오 (또는 `zfr ize`을 "
-"실행하십시오)."
+msgid "Add `BuildArch: noarch` and `%global debug_package %{nil}` (or run `zfr ize`)."
+msgstr "`BuildArch: noarch` 및 `%global debug_package %{nil}`을 추가하십시오 (또는 `zfr ize`을 실행하십시오)."
 
 #: src/zfr_lib/lint/rpm.py:364
 #, python-format
@@ -2820,21 +2350,13 @@ msgstr "%files 덮개 gettext .mo 카탈로그 Meson 설치"
 
 #: src/zfr_lib/lint/rpm.py:394
 #, python-format
-msgid ""
-"%files omits gettext .mo; rpmbuild will reject unpackaged "
-"locale/*/LC_MESSAGES/*.mo after meson install"
-msgstr ""
-"%files gettext .mo를 놓치고 rpmbuild meson 설치 후 포장되지 않은 "
-"locale/*/LC_MESSAGES/*.mo을 거부합니다."
+msgid "%files omits gettext .mo; rpmbuild will reject unpackaged locale/*/LC_MESSAGES/*.mo after meson install"
+msgstr "%files gettext .mo를 놓치고 rpmbuild meson 설치 후 포장되지 않은 locale/*/LC_MESSAGES/*.mo을 거부합니다."
 
 #: src/zfr_lib/lint/rpm.py:401
 #, python-brace-format
-msgid ""
-"%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo  (i18n.gettext domain, not "
-"always the project name). Or run `zfr ize`."
-msgstr ""
-"%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo (i18n.gettext 도메인, 항상 프로젝트 이름이 "
-"아닙니다). 또는 실행 `zfr ize`."
+msgid "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo  (i18n.gettext domain, not always the project name). Or run `zfr ize`."
+msgstr "%{_datadir}/locale/*/LC_MESSAGES/<domain>.mo (i18n.gettext 도메인, 항상 프로젝트 이름이 아닙니다). 또는 실행 `zfr ize`."
 
 #: src/zfr_lib/lint/rpm.py:417
 #, no-python-format
@@ -2843,12 +2365,8 @@ msgstr "%files 지역 남성 페이지를 커버 Meson 설치"
 
 #: src/zfr_lib/lint/rpm.py:428
 #, python-format
-msgid ""
-"%files omits locale mans; rpmbuild will reject unpackaged "
-"$mandir/<locale>/manN pages after meson install"
-msgstr ""
-"%files 지역 맨을 놓치고; rpmbuild은 포장되지 않은 $mandir/<locale>/manN 페이지를 거부합니다 meson "
-"설치 후"
+msgid "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale>/manN pages after meson install"
+msgstr "%files 지역 맨을 놓치고; rpmbuild은 포장되지 않은 $mandir/<locale>/manN 페이지를 거부합니다 meson 설치 후"
 
 #: src/zfr_lib/lint/rpm.py:435
 #, fuzzy, python-brace-format
@@ -2862,12 +2380,8 @@ msgstr "%files 덮개 datadir/setup 스크립트 Meson 설치"
 
 #: src/zfr_lib/lint/rpm.py:468
 #, python-format
-msgid ""
-"%files omits datadir/setup/*; rpmbuild will reject unpackaged postinst/prerm"
-" after meson install"
-msgstr ""
-"%files datadir/setup/*을 놓치고 rpmbuild은 meson 설치 후 포장되지 않은 postinst/prerm을 "
-"거부합니다."
+msgid "%files omits datadir/setup/*; rpmbuild will reject unpackaged postinst/prerm after meson install"
+msgstr "%files datadir/setup/*을 놓치고 rpmbuild은 meson 설치 후 포장되지 않은 postinst/prerm을 거부합니다."
 
 #: src/zfr_lib/lint/rpm.py:474
 #, no-python-format, python-brace-format
@@ -2876,21 +2390,13 @@ msgstr "%{_datadir}/setup/%{name}/ (또는 실행 `zfr ize`)"
 
 #: src/zfr_lib/lint/rpm.py:509
 #, python-format, python-brace-format
-msgid ""
-"%files is missing paths Meson installs: {preview}{more} (rpmbuild will fail "
-"with unpackaged or File not found)"
-msgstr ""
-"%files가 실종된 경로 Meson 설치: {preview}{more} (rpmbuild가 실패 하 고 불 포장 하 고 파일 찾을 수 "
-"없음)"
+msgid "%files is missing paths Meson installs: {preview}{more} (rpmbuild will fail with unpackaged or File not found)"
+msgstr "%files가 실종된 경로 Meson 설치: {preview}{more} (rpmbuild가 실패 하 고 불 포장 하 고 파일 찾을 수 없음)"
 
 #: src/zfr_lib/lint/rpm.py:516
 #, python-format
-msgid ""
-"Rewrite %files from Meson install rules (bindir, completions, manN, pkgdata,"
-" perl5, includedir, sysconfdir, shlib.d, setup/). Or run `zfr ize`."
-msgstr ""
-"Meson에서 %files을 다시 작성하십시오 설치 규칙 (bindir, 완성, manN, pkgdata, perl5, "
-"includedir, sysconfdir, shlib.d, setup/). 또는 `zfr ize`을 실행합니다."
+msgid "Rewrite %files from Meson install rules (bindir, completions, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/). Or run `zfr ize`."
+msgstr "Meson에서 %files을 다시 작성하십시오 설치 규칙 (bindir, 완성, manN, pkgdata, perl5, includedir, sysconfdir, shlib.d, setup/). 또는 `zfr ize`을 실행합니다."
 
 #: src/zfr_lib/lint/rpm.py:530
 #, python-format
@@ -2899,22 +2405,16 @@ msgstr "%files 덮개 Meson 설치 세트 ({} 입력)"
 
 #: src/zfr_lib/lint/rpm.py:548
 #, python-brace-format
-msgid ""
-"%files lists %{_datadir}/%{name}/ but Meson does not install package data "
-"there (Directory not found)"
-msgstr ""
-"%files 목록 %{_datadir}/%{name}/ 하지만 Meson은 패키지 데이터를 설치하지 않습니다 (지도 찾을 수 없습니다)"
+msgid "%files lists %{_datadir}/%{name}/ but Meson does not install package data there (Directory not found)"
+msgstr "%files 목록 %{_datadir}/%{name}/ 하지만 Meson은 패키지 데이터를 설치하지 않습니다 (지도 찾을 수 없습니다)"
 
 #: src/zfr_lib/lint/rpm.py:554
-msgid ""
-"Remove the empty pkgdata line (Java template leftover). Or run `zfr ize`."
+msgid "Remove the empty pkgdata line (Java template leftover). Or run `zfr ize`."
 msgstr "빈 pkgdata 라인을 제거하십시오 (왼쪽에 Java 템플릿). 또는 `zfr ize`을 실행합니다."
 
 #: src/zfr_lib/lint/rpm.py:580
 #, python-format
-msgid ""
-"%files lists completion {listed!r} but Meson installs {want!r} (File not "
-"found)"
+msgid "%files lists completion {listed!r} but Meson installs {want!r} (File not found)"
 msgstr "%files 완성 목록 {listed!r} 그러나 Meson 설치 {want!r} (파일 찾을 수 없음)"
 
 #: src/zfr_lib/lint/rpm.py:586
@@ -2924,72 +2424,64 @@ msgstr "설치된 기본 이름({})을 사용하거나 `zfr ize`을 실행합니
 #: src/zfr_lib/lint/scripts_check.py:171
 #, python-format
 msgid "VERSION/PROJECT_VERSION substituted and used in %s"
-msgstr ""
+msgstr "VERSION/PROJECT_VERSION이 치환되어 %s에서 사용됨"
 
 #: src/zfr_lib/lint/scripts_check.py:180
 msgid "meson configures VERSION/PROJECT_VERSION but no source uses it"
-msgstr ""
+msgstr "meson이 VERSION/PROJECT_VERSION을 구성하지만 사용하는 소스가 없습니다"
 
 #: src/zfr_lib/lint/scripts_check.py:183
-msgid ""
-"Reference @VERSION@ (scripts → *.in + configure_file) or PROJECT_VERSION "
-"from config.h in at least one source. Or run `zfr ize`."
-msgstr ""
+msgid "Reference @VERSION@ (scripts → *.in + configure_file) or PROJECT_VERSION from config.h in at least one source. Or run `zfr ize`."
+msgstr "적어도 하나의 소스에서 @VERSION@(스크립트 → *.in + configure_file) 또는 config.h의 PROJECT_VERSION을 참조하세요. 또는 `zfr ize`를 실행합니다."
 
 #: src/zfr_lib/lint/scripts_check.py:194
 msgid "sources use @VERSION@/PROJECT_VERSION but meson does not substitute it"
-msgstr ""
+msgstr "소스는 @VERSION@/PROJECT_VERSION을 사용하지만 meson이 치환하지 않습니다"
 
 #: src/zfr_lib/lint/scripts_check.py:197
-msgid ""
-"Add configuration_data set('VERSION', …) / set_quoted('PROJECT_VERSION', …) "
-"and configure_file. Or run `zfr ize`."
-msgstr ""
+msgid "Add configuration_data set('VERSION', …) / set_quoted('PROJECT_VERSION', …) and configure_file. Or run `zfr ize`."
+msgstr "configuration_data의 set('VERSION', …) / set_quoted('PROJECT_VERSION', …)와 configure_file을 추가하세요. 또는 `zfr ize`를 실행합니다."
 
 #: src/zfr_lib/lint/scripts_check.py:208
 msgid "no Meson VERSION/PROJECT_VERSION substitution found"
-msgstr ""
+msgstr "Meson VERSION/PROJECT_VERSION 치환을 찾지 못함"
 
 #: src/zfr_lib/lint/scripts_check.py:211
-msgid ""
-"Wire meson configuration_data for VERSION and use it in a source. Or run "
-"`zfr ize`."
-msgstr ""
+msgid "Wire meson configuration_data for VERSION and use it in a source. Or run `zfr ize`."
+msgstr "VERSION용 meson configuration_data를 연결하고 소스에서 사용하세요. 또는 `zfr ize`를 실행합니다."
 
 #: src/zfr_lib/lint/scripts_check.py:233
 msgid "po/ present but no run_target('posync')"
-msgstr ""
+msgstr "po/는 있지만 run_target('posync')가 없음"
 
 #: src/zfr_lib/lint/scripts_check.py:235
 msgid "Add run_target posync calling scripts/posync.sh. Or run `zfr ize`."
-msgstr ""
+msgstr "scripts/posync.sh를 호출하는 run_target posync를 추가하세요. 또는 `zfr ize`를 실행합니다."
 
 #: src/zfr_lib/lint/scripts_check.py:245
 msgid "posync externalized as scripts/posync.sh"
-msgstr ""
+msgstr "posync가 scripts/posync.sh로 외부화됨"
 
 #: src/zfr_lib/lint/scripts_check.py:254
 msgid "scripts/posync.sh exists but meson posync does not call it"
-msgstr ""
+msgstr "scripts/posync.sh는 있지만 meson posync가 호출하지 않습니다"
 
 #: src/zfr_lib/lint/scripts_check.py:256
 msgid "Point run_target('posync') at scripts/posync.sh. Or run `zfr ize`."
-msgstr ""
+msgstr "run_target('posync')가 scripts/posync.sh를 가리키게 하세요. 또는 `zfr ize`를 실행합니다."
 
 #: src/zfr_lib/lint/scripts_check.py:263
 msgid "posync is inline in meson.build; externalize to scripts/posync.sh"
-msgstr ""
+msgstr "posync가 meson.build에 인라인되어 있습니다; scripts/posync.sh로 외부화하세요"
 
 #: src/zfr_lib/lint/scripts_check.py:265
-msgid ""
-"Extract the posync body to scripts/posync.sh and call it from run_target. Or"
-" run `zfr ize`."
-msgstr ""
+msgid "Extract the posync body to scripts/posync.sh and call it from run_target. Or run `zfr ize`."
+msgstr "posync 본문을 scripts/posync.sh로 추출하고 run_target에서 호출하세요. 또는 `zfr ize`를 실행합니다."
 
 #: src/zfr_lib/lint/scripts_check.py:291
 #, python-format
 msgid "maintenance script %s should live under scripts/"
-msgstr ""
+msgstr "유지보수 스크립트 %s는 scripts/ 아래에 있어야 합니다"
 
 #: src/zfr_lib/lint/scripts_check.py:293
 #, fuzzy, python-format
@@ -2999,47 +2491,38 @@ msgstr "빈 pkgdata 라인을 제거하십시오 (왼쪽에 Java 템플릿). 또
 #: src/zfr_lib/lint/scripts_check.py:315
 #, python-format
 msgid "run_target('%s') should call scripts/%s.sh"
-msgstr ""
+msgstr "run_target('%s')는 scripts/%s.sh를 호출해야 합니다"
 
 #: src/zfr_lib/lint/scripts_check.py:318
 #, python-format
-msgid ""
-"Extract the inline script to scripts/%s.sh and reference it from meson. Or "
-"run `zfr ize`."
-msgstr ""
+msgid "Extract the inline script to scripts/%s.sh and reference it from meson. Or run `zfr ize`."
+msgstr "인라인 스크립트를 scripts/%s.sh로 추출하고 meson에서 참조하세요. 또는 `zfr ize`를 실행합니다."
 
 #: src/zfr_lib/lint/scripts_check.py:332
 msgid "build/deploy/maintenance scripts under scripts/ (or none)"
-msgstr ""
+msgstr "빌드/배포/유지보수 스크립트가 scripts/ 아래에 있음(또는 없음)"
 
 #: src/zfr_lib/lintsel.py:22
 msgid "interactively select lint rules to ignore or force"
-msgstr ""
+msgstr "무시하거나 강제할 lint 규칙을 대화형으로 선택합니다"
 
 #: src/zfr_lib/lintsel.py:24
-msgid ""
-"Open a TUI to toggle lint rule overrides for this project "
-"(.config/zfr/lint.options). Space=default/ignored, Y=always, N/-=ignored, "
-"~=invert, Ctrl+S save, Ctrl+D save&quit, Ctrl+Q quit."
-msgstr ""
+msgid "Open a TUI to toggle lint rule overrides for this project (.config/zfr/lint.options). Space=default/ignored, Y=always, N/-=ignored, ~=invert, Ctrl+S save, Ctrl+D save&quit, Ctrl+Q quit."
+msgstr "이 프로젝트의 lint 규칙 재정의를 전환하는 TUI를 엽니다(.config/zfr/lint.options). Space=기본/무시, Y=항상, N/-=무시, ~=반전, Ctrl+S 저장, Ctrl+D 저장 후 종료, Ctrl+Q 종료."
 
 #: src/zfr_lib/lintsel.py:153
 msgid "zfr-lintsel requires an interactive TTY"
-msgstr ""
+msgstr "zfr-lintsel에는 대화형 TTY가 필요합니다"
 
 #: src/zfr_lib/lint/severity.py:27
 #, python-format
 msgid "invalid severity level %r (want note, warn, or error)"
-msgstr ""
+msgstr "잘못된 심각도 수준 %r(note, warn 또는 error 필요)"
 
 #: src/zfr_lib/lint/source_size.py:85
 #, python-format
-msgid ""
-"Extract cohesive sections into package subdirectory %(subdir)s (e.g. "
-"%(example)s) and keep a thin %(rel)s entry point."
-msgstr ""
-"일관된 섹션을 패키지 하위 지점 %(subdir)s (예 : %(example)s)에 추출하고 얇은 %(rel)s 입력 지점을 "
-"유지합니다."
+msgid "Extract cohesive sections into package subdirectory %(subdir)s (e.g. %(example)s) and keep a thin %(rel)s entry point."
+msgstr "일관된 섹션을 패키지 하위 지점 %(subdir)s (예 : %(example)s)에 추출하고 얇은 %(rel)s 입력 지점을 유지합니다."
 
 #: src/zfr_lib/lint/source_size.py:105
 #, python-format
@@ -3065,71 +2548,47 @@ msgstr "언어 템플릿의 구조 파일이 있음"
 
 #: src/zfr_lib/lint/template.py:199
 #, fuzzy, python-format
-msgid ""
-"language template %(lang)s optional scaffolding not in this tree: "
-"%(preview)s%(more)s"
+msgid "language template %(lang)s optional scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "언어 템플릿 %(lang)s에 이 트리에 없는 추가 골격이 있음: %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/template.py:201
-msgid ""
-"Optional only (safe to omit): non-rpm packaging/*, src/Makefile, and "
-"language helpers such as clib src/{bulk.h,c_pch.h,lib.c,lib.h}. Do not copy "
-"build/ or debian leftover stamp files."
-msgstr ""
+msgid "Optional only (safe to omit): non-rpm packaging/*, src/Makefile, and language helpers such as clib src/{bulk.h,c_pch.h,lib.c,lib.h}. Do not copy build/ or debian leftover stamp files."
+msgstr "선택 사항만(생략해도 안전): non-rpm packaging/*, src/Makefile, 그리고 clib의 src/{bulk.h,c_pch.h,lib.c,lib.h} 같은 언어 헬퍼. build/나 debian 잔여 stamp 파일은 복사하지 마세요."
 
 #: src/zfr_lib/lint/template.py:213
 #, python-format
 msgid " Also absent (optional, not required): %(opts)s."
-msgstr ""
+msgstr " 또한 없음(선택, 필수 아님): %(opts)s."
 
 #: src/zfr_lib/lint/template.py:221
 #, python-format
-msgid ""
-"language template %(lang)s has extra scaffolding not in this tree: "
-"%(preview)s%(more)s"
+msgid "language template %(lang)s has extra scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "언어 템플릿 %(lang)s에 이 트리에 없는 추가 골격이 있음: %(preview)s%(more)s"
 
 #: src/zfr_lib/lint/template.py:224
 #, fuzzy, python-format
-msgid ""
-"Compare with the %(lang)s template under pkgdatadir. Copy missing [required]"
-" debian/man/docs/src/tests/packaging/rpm files (packaging/rpm/ uses "
-"%(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not "
-"zephyr.substvars), or `zfr add` puffs. [optional] items (non-rpm "
-"packaging/*, src/Makefile, clib/cpplib bulk/pch/lib helpers, …) may be "
-"omitted. Do not copy build/ or debian leftover stamp files. Example commons "
-"modules are optional."
-msgstr ""
-"pkgdatadir 아래 %(lang)s 템플릿과 비교하세요. 빠진 debian/docs/src/rpm 파일을 복사하세요(rpm/은 "
-"%(name)s.spec, zephyr.spec 아님). 또는 `zfr add`로 puff를 넣으세요. build/나 debian 잔여 "
-"스탬프 파일은 복사하지 마세요. 예시 commons 모듈은 선택 사항입니다."
+msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing [required] debian/man/docs/src/tests/packaging/rpm files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. [optional] items (non-rpm packaging/*, src/Makefile, clib/cpplib bulk/pch/lib helpers, …) may be omitted. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
+msgstr "pkgdatadir 아래 %(lang)s 템플릿과 비교하세요. 빠진 debian/docs/src/rpm 파일을 복사하세요(rpm/은 %(name)s.spec, zephyr.spec 아님). 또는 `zfr add`로 puff를 넣으세요. build/나 debian 잔여 스탬프 파일은 복사하지 마세요. 예시 commons 모듈은 선택 사항입니다."
 
 #: src/zfr_lib/package.py:15
 msgid "detect packaging type and build packages"
-msgstr ""
+msgstr "패키징 유형을 감지하고 패키지를 빌드합니다"
 
 #: src/zfr_lib/package.py:17
-msgid ""
-"Detect packaging types (deb, rpm, npm/vsix, mingw, …) and build them "
-"sequentially (deb, then rpm, …). -j/--job is a job budget: omit or pass -j "
-"alone for auto (debuild gets bare -j, no number); -j N is split across "
-"concurrent planned workers (sequential plan ⇒ each packager gets full N). "
-"Each packager's stdout/stderr is captured with fdmux into an FDM file; live "
-"status lines show progress. On failure, browse with `zfr lasterror`. Upload "
-"is on by default (-u); use -U/--no-upload to skip."
-msgstr ""
+msgid "Detect packaging types (deb, rpm, npm/vsix, mingw, …) and build them sequentially (deb, then rpm, …). -j/--job is a job budget: omit or pass -j alone for auto (debuild gets bare -j, no number); -j N is split across concurrent planned workers (sequential plan ⇒ each packager gets full N). Each packager's stdout/stderr is captured with fdmux into an FDM file; live status lines show progress. On failure, browse with `zfr lasterror`. Upload is on by default (-u); use -U/--no-upload to skip."
+msgstr "패키징 유형(deb, rpm, npm/vsix, mingw, …)을 감지하고 순차적으로 빌드합니다(deb 다음 rpm, …). -j/--job은 작업 예산입니다: 생략하거나 -j만 쓰면 자동(debuild는 숫자 없는 -j); -j N은 계획된 동시 worker에 분배(순차 계획 ⇒ 각 packager가 N 전체를 받음). 각 packager의 stdout/stderr는 fdmux로 FDM 파일에 캡처되며, 실시간 상태 줄이 진행을 보여 줍니다. 실패 시 `zfr lasterror`로 살펴보세요. 업로드는 기본 켜짐(-u); -U/--no-upload로 건너뜁니다."
 
 #: src/zfr_lib/package.py:35
 msgid "change to DIR before detecting packaging"
-msgstr ""
+msgstr "패키징 감지 전에 DIR로 이동합니다"
 
 #: src/zfr_lib/package.py:44
 msgid "upload packages after build (default)"
-msgstr ""
+msgstr "빌드 후 패키지를 업로드합니다(기본)"
 
 #: src/zfr_lib/package.py:51
 msgid "do not upload (skip dput / registry publish)"
-msgstr ""
+msgstr "업로드하지 않음(dput / 레지스트리 게시 건너뛰기)"
 
 #: src/zfr_lib/package.py:59 src/zfr_lib/release/__init__.py:72
 msgid "dput upload host for .changes (debian)"
@@ -3147,7 +2606,7 @@ msgstr "RPM 빌드 건너뛰기(rpm/Makefile)"
 
 #: src/zfr_lib/package.py:78
 msgid "only build KIND (deb, rpm, npm, mingw, …); repeatable"
-msgstr ""
+msgstr "KIND만 빌드(deb, rpm, npm, mingw, …); 반복 가능"
 
 #: src/zfr_lib/package.py:84 src/zfr_lib/release/__init__.py:48
 msgid "Debian binary-only build (no .dsc)"
@@ -3180,34 +2639,27 @@ msgstr "SERVER에서 SSH로 build4 실행(-d 포함)"
 
 #: src/zfr_lib/package.py:125
 msgid "print detected packaging kinds and exit"
-msgstr ""
+msgstr "감지된 패키징 종류를 출력하고 종료합니다"
 
 #: src/zfr_lib/publish.py:23
 msgid "release then publish to marketplaces (npm / VSIX)"
-msgstr ""
+msgstr "릴리스한 뒤 마켓플레이스에 게시(npm / VSIX)"
 
 #: src/zfr_lib/publish.py:25
-msgid ""
-"Run the full zfr release pipeline, then publish to public marketplaces when "
-"defined for this project (currently npm and VSIX). Also available as the "
-"zfr-publish wrapper."
-msgstr ""
+msgid "Run the full zfr release pipeline, then publish to public marketplaces when defined for this project (currently npm and VSIX). Also available as the zfr-publish wrapper."
+msgstr "전체 zfr release 파이프라인을 실행한 뒤, 이 프로젝트에 정의된 경우 공개 마켓플레이스에 게시합니다(현재 npm 및 VSIX). zfr-publish 래퍼로도 사용할 수 있습니다."
 
 #: src/zfr_lib/release/__init__.py:25
 msgid "tag, build, package, install, and upload (private cloud)"
-msgstr ""
+msgstr "태그, 빌드, 패키지, 설치 및 업로드(프라이빗 클라우드)"
 
 #: src/zfr_lib/release/__init__.py:27
-msgid ""
-"Detect project type, tag and push, build/package, optionally install local "
-"debs, upload deb/rpm to the private pool, and create a GitHub release. Does "
-"not publish to npm/VSIX marketplaces (see zfr publish). Also available as "
-"the zfr-release wrapper."
-msgstr ""
+msgid "Detect project type, tag and push, build/package, optionally install local debs, upload deb/rpm to the private pool, and create a GitHub release. Does not publish to npm/VSIX marketplaces (see zfr publish). Also available as the zfr-release wrapper."
+msgstr "프로젝트 유형을 감지하고, 태그 후 푸시하며, 빌드/패키지하고, 선택적으로 로컬 deb를 설치하며, deb/rpm을 프라이빗 풀에 업로드하고 GitHub release를 만듭니다. npm/VSIX 마켓플레이스에는 게시하지 않습니다(zfr publish 참조). zfr-release 래퍼로도 사용할 수 있습니다."
 
 #: src/zfr_lib/release/__init__.py:42
 msgid "change to DIR before detecting the project"
-msgstr ""
+msgstr "프로젝트 감지 전에 DIR로 이동합니다"
 
 #: src/zfr_lib/release/__init__.py:54
 msgid "Reuse build cache"
@@ -3304,16 +2756,12 @@ msgid "new example names (each replaces template some_puff1)"
 msgstr "새 예제 이름(각각 템플릿 some_puff1 대체)"
 
 #: src/zfr_lib/shape.py:275
-msgid ""
-"print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
+msgid "print zephyr package shape score 0-100 (packagedir vs repodir in monorepos)"
 msgstr "zephyr 패키지 형태 점수 0-100 출력(monorepos에서 packagedir vs repodir)"
 
 #: src/zfr_lib/shape.py:277
-msgid ""
-"Score how completely the current directory matches zephyr package style "
-"(0-100). In monorepos, scores the packagedir."
-msgstr ""
-"현재 디렉터리가 zephyr 패키지 스타일과 얼마나 일치하는지 점수(0-100). monorepos에서는 packagedir 점수."
+msgid "Score how completely the current directory matches zephyr package style (0-100). In monorepos, scores the packagedir."
+msgstr "현재 디렉터리가 zephyr 패키지 스타일과 얼마나 일치하는지 점수(0-100). monorepos에서는 packagedir 점수."
 
 #: src/zfr_lib/shape.py:283
 msgid "print 1 if score >= threshold, else 0"
@@ -3329,9 +2777,7 @@ msgid "bool threshold 0-100 (default: %s)"
 msgstr "bool 임계값 0-100(기본값: %s)"
 
 #: src/zfr_lib/terminal.py:75
-msgid ""
-"enable AI-oriented hints (default for AI terminals and non-interactive "
-"stdout)"
+msgid "enable AI-oriented hints (default for AI terminals and non-interactive stdout)"
 msgstr "AI-oriented 지표를 활성화 (기본 AI 터미널 및 non-interactive stdout)"
 
 #: src/zfr_lib/terminal.py:82
@@ -3357,9 +2803,7 @@ msgid "query and update gettext message strings"
 msgstr "查询并更新 gettext 消息字符串"
 
 #: src/zfr_lib/translate/__init__.py:143
-msgid ""
-"Look up translations for TEXT across implemented locales, or update a single"
-" locale catalog. Remaining arguments are joined with spaces."
+msgid "Look up translations for TEXT across implemented locales, or update a single locale catalog. Remaining arguments are joined with spaces."
 msgstr "在已实现语言环境中查找 TEXT 的翻译，或更新单个目录。其余参数以空格连接。"
 
 #: src/zfr_lib/translate/__init__.py:155
@@ -3387,19 +2831,15 @@ msgid "list msgids matching REGEX, case-sensitive (keys only with -k)"
 msgstr "列出匹配 REGEX 的 msgid（-k 时仅键）"
 
 #: src/zfr_lib/translate/__init__.py:192
-msgid ""
-"list msgids/translations matching REGEX, case-insensitive (keys only with "
-"-k)"
+msgid "list msgids/translations matching REGEX, case-insensitive (keys only with -k)"
 msgstr "列出匹配 REGEX 的 msgid/译文（-k 时仅键）"
 
 #: src/zfr_lib/translate/__init__.py:198
-msgid ""
-"list msgids/translations matching REGEX, case-sensitive (keys only with -k)"
+msgid "list msgids/translations matching REGEX, case-sensitive (keys only with -k)"
 msgstr "列出匹配 REGEX 的 msgid/译文（-k 时仅键）"
 
 #: src/zfr_lib/translate/__init__.py:204
-msgid ""
-"with -m/-M/-s/-S, match the full msgid or translation (not a substring)"
+msgid "with -m/-M/-s/-S, match the full msgid or translation (not a substring)"
 msgstr "-m/-M/-s/-S, 전체 msgid 또는 번역과 일치합니다 (주문이 아닌)"
 
 #: src/zfr_lib/translate/__init__.py:213
@@ -3423,9 +2863,7 @@ msgid "print current project version (walks parents from cwd)"
 msgstr "현재 프로젝트 버전 출력(cwd에서 상위 디렉터리 탐색)"
 
 #: src/zfr_lib/version.py:52
-msgid ""
-"Print the current project version (walks from cwd toward parent "
-"directories)."
+msgid "Print the current project version (walks from cwd toward parent directories)."
 msgstr "현재 프로젝트 버전 출력(cwd에서 상위 디렉터리로 이동)."
 
 #: src/zfr_lib/version.py:57
@@ -3439,3 +2877,11 @@ msgstr "debian/changelog 사용(git 또는 .git 사용 불가 시 기본값)"
 #: src/zfr_lib/version.py:59
 msgid "print an RPM-compatible Version (hyphens mapped to underscores)"
 msgstr "RPM 호환 Version 출력(하이픈을 밑줄로)"
+
+#: src/zfr:77 src/zfr:114
+msgid "Zephyr template helper (CLI name: zfr). Create projects and manage example puffs. Instantiated trees keep calling zfr; zfr is not a rename token."
+msgstr "Zephyr 템플릿 도우미(CLI 이름: zfr). 프로젝트를 만들고 예제 puff를 관리합니다. 인스턴스화된 트리는 계속 zfr을 호출합니다. zfr은 이름 바꾸기 토큰이 아닙니다."
+
+#: src/zfr:93 src/zfr:132
+msgid "show this help"
+msgstr "이 도움말 표시"
