@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 00:16+0800\n"
+"POT-Creation-Date: 2026-09-19 01:03+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Hungarian\n"
@@ -121,6 +121,7 @@ msgid "No matching lint.comments to delete."
 msgstr "Nincs egyező lint.comments törlésre."
 
 #: src/comments_cmd.py:96
+#, python-format
 msgid "Deleted: %s"
 msgstr "megvan: %s"
 
@@ -402,6 +403,7 @@ msgid "suppressed via -u/--uncheck"
 msgstr "elnyomva -u/--uncheck-kel"
 
 #: src/ize/engine/scripts.py:178
+#, python-format
 msgid "run_target('%s') → %s"
 msgstr "run_target('%s') → scripts/%s.sh"
 
@@ -853,12 +855,21 @@ msgstr "Új kérése"
 msgid "Suggest a new lint rule (what to check, why, how)…"
 msgstr "Javasoljon új lint szabályt (mit, miért, hogyan)…"
 
-#: src/lint/browse.py:552
+#: src/lint/browse.py:80
+#, python-format
+msgid "First file: %s …"
+msgstr "Első fájl: %s …"
+
+#: src/lint/browse.py:81
+msgid "Related files"
+msgstr "Kapcsolódó fájlok"
+
+#: src/lint/browse.py:554
 #, python-format
 msgid "zfr lint browse: %s"
 msgstr "zfr lint böngészés: %s"
 
-#: src/lint/browse.py:553
+#: src/lint/browse.py:555
 msgid "Press Ctrl+C to stop."
 msgstr "Leállításhoz nyomja meg a Ctrl+C-t."
 
@@ -1284,10 +1295,12 @@ msgid "Empty msgstr and msgid→msgstr copies count as untranslated (English var
 msgstr "Az üres msgstr és az msgid→msgstr másolatok nem lefordítottnak számítanak (az angol változatok en_AU/en_GB/… kivételek, ha az msgid angol). ≤20%%-os készültségnél írja át az egész .po fájlt kézzel — ne készítsen patch/sed scripteket. %(poedit)s"
 
 #: src/lint/i18n_check.py:321
+#, python-format
 msgid "gettext catalogs have usable translation coverage (%s)"
 msgstr "gettext katalógus használt felszerelést: %s"
 
 #: src/lint/i18n_check.py:339
+#, python-format
 msgid "gettext catalogs above 20%% completion (%s)"
 msgstr "gettext katalógus használt felszerelést: %s"
 
@@ -1973,6 +1986,7 @@ msgid "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale
 msgstr "%files elhagyja a locale mans; rpmbuild elfogadja a választott $mandir/<locale>/manN oldal után meson instalálás után"
 
 #: src/lint/rpm.py:435
+#, python-brace-format
 msgid "%{_mandir}/*/man1/<cmd>.1*  (man/<lang>/*.adoc). Or run `zfr ize`."
 msgstr "%{_mandir}/*/man1/<cmd>.1* (docs/<lang>/*.adoc). Vagy fut `zfr ize`."
 
@@ -2153,6 +2167,7 @@ msgid "structural files from the language template are present"
 msgstr "a nyelvi sablon szerkezeti fájljai megvannak"
 
 #: src/lint/template.py:199
+#, python-format
 msgid "language template %(lang)s optional scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "a(z) %(lang)s nyelvi sablonnak extra állványa van, ami ebben a fában nincs: %(preview)s%(more)s"
 
@@ -2171,6 +2186,7 @@ msgid "language template %(lang)s has extra scaffolding not in this tree: %(prev
 msgstr "a(z) %(lang)s nyelvi sablonnak extra állványa van, ami ebben a fában nincs: %(preview)s%(more)s"
 
 #: src/lint/template.py:224
+#, python-format
 msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing [required] debian/man/docs/src/tests/packaging/rpm files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. [optional] items (non-rpm packaging/*, src/Makefile, clib/cpplib bulk/pch/lib helpers, …) may be omitted. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
 msgstr "Hasonlítsa össze a pkgdatadir alatti %(lang)s sablonnal. Másolja a hiányzó debian/docs/src/rpm fájlokat (az rpm/ %(name)s.spec-et használ, nem zephyr.spec-et), vagy `zfr add` puffokat. Ne másolja a build/ könyvtárat vagy a debian maradék pecsétfájljait. A példa commons modulok opcionálisak."
 
@@ -2637,6 +2653,7 @@ msgid "noarch RPM with Meson executable()"
 msgstr "Architecture: %s (bash + Meson eredményes)"
 
 #: src/std/lint_rules.py:52
+#, python-brace-format
 msgid "debug_package %{nil} on ELF package"
 msgstr "Dobja %global debug_package %{nil} ELF csomagolások esetében."
 
@@ -2645,22 +2662,27 @@ msgid "Script-only RPM needs BuildArch: noarch"
 msgstr "A csak szkriptes RPM-hez BuildArch: noarch kell"
 
 #: src/std/lint_rules.py:54
+#, python-format
 msgid "RPM %files lists template puff placeholder"
 msgstr "RPM %files még mindig listák a vávád {}"
 
 #: src/std/lint_rules.py:55
+#, python-format
 msgid "RPM %files covers gettext .mo catalogs"
 msgstr "%files megfoglalt gettext .mo katalog Meson installációk"
 
 #: src/std/lint_rules.py:56
+#, python-format
 msgid "RPM %files covers locale man pages"
 msgstr "%files állásban a man oldal Meson installációk"
 
 #: src/std/lint_rules.py:57
+#, python-format
 msgid "RPM %files covers datadir/setup scripts"
 msgstr "%files besorolja datadir/setup skriptokat Meson intézkedéseket"
 
 #: src/std/lint_rules.py:58
+#, python-format
 msgid "RPM %files covers Meson install paths"
 msgstr "%files besorolás Meson betegség ({} bejegyzés)"
 

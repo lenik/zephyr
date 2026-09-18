@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 00:16+0800\n"
+"POT-Creation-Date: 2026-09-19 01:03+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Urdu\n"
@@ -122,6 +122,7 @@ msgid "No matching lint.comments to delete."
 msgstr "حذف کرنے کے لیے کوئی مماثل lint.comments نہیں۔"
 
 #: src/comments_cmd.py:96
+#, python-format
 msgid "Deleted: %s"
 msgstr "موجود ہے: %s"
 
@@ -402,6 +403,7 @@ msgid "suppressed via -u/--uncheck"
 msgstr "-u/--uncheck سے ضبط ہوگیا"
 
 #: src/ize/engine/scripts.py:178
+#, python-format
 msgid "run_target('%s') → %s"
 msgstr "run_target('%s') → scripts/%s.sh"
 
@@ -853,12 +855,21 @@ msgstr "نئی کی درخواست"
 msgid "Suggest a new lint rule (what to check, why, how)…"
 msgstr "نیا lint قاعدہ تجویز کریں (کیا، کیوں، کیسے)…"
 
-#: src/lint/browse.py:552
+#: src/lint/browse.py:80
+#, python-format
+msgid "First file: %s …"
+msgstr "پہلی فائل: %s …"
+
+#: src/lint/browse.py:81
+msgid "Related files"
+msgstr "متعلقہ فائلیں"
+
+#: src/lint/browse.py:554
 #, python-format
 msgid "zfr lint browse: %s"
 msgstr "zfr lint براؤز: %s"
 
-#: src/lint/browse.py:553
+#: src/lint/browse.py:555
 msgid "Press Ctrl+C to stop."
 msgstr "روکنے کے لیے Ctrl+C دبائیں۔"
 
@@ -2648,6 +2659,7 @@ msgid "noarch RPM with Meson executable()"
 msgstr "Architecture: %s (باش + Meson اسجراب)"
 
 #: src/std/lint_rules.py:52
+#, python-brace-format
 msgid "debug_package %{nil} on ELF package"
 msgstr "ELF پیکج کے لیے %global debug_package %{nil} فروخت کریں."
 
@@ -2656,22 +2668,27 @@ msgid "Script-only RPM needs BuildArch: noarch"
 msgstr "صرف اسکرپٹ RPM کو BuildArch: noarch درکار ہے"
 
 #: src/std/lint_rules.py:54
+#, python-format
 msgid "RPM %files lists template puff placeholder"
 msgstr "RPM %files ابھی بھی ٹمپٹ لکھے ہوئے افف {}"
 
 #: src/std/lint_rules.py:55
+#, python-format
 msgid "RPM %files covers gettext .mo catalogs"
 msgstr "%files کورس gettext .mo کلطولا Meson انسٹال"
 
 #: src/std/lint_rules.py:56
+#, python-format
 msgid "RPM %files covers locale man pages"
 msgstr "%files کورپے لگلی من صفحات Meson انسٹال"
 
 #: src/std/lint_rules.py:57
+#, python-format
 msgid "RPM %files covers datadir/setup scripts"
 msgstr "%files نسبت نصب کرتی ہے datadir/setup سترپٹ Meson"
 
 #: src/std/lint_rules.py:58
+#, python-format
 msgid "RPM %files covers Meson install paths"
 msgstr "%files کورس Meson نصب ٹھیک ({} انگلیاں)"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 00:16+0800\n"
+"POT-Creation-Date: 2026-09-19 01:03+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Telugu\n"
@@ -122,6 +122,7 @@ msgid "No matching lint.comments to delete."
 msgstr "తొలగించడానికి సరిపోయే lint.comments ఏవీ లేవు."
 
 #: src/comments_cmd.py:96
+#, python-format
 msgid "Deleted: %s"
 msgstr "ఉంది: %s"
 
@@ -402,6 +403,7 @@ msgid "suppressed via -u/--uncheck"
 msgstr "-u/--uncheck ద్వారా ముద్రించబడింది"
 
 #: src/ize/engine/scripts.py:178
+#, python-format
 msgid "run_target('%s') → %s"
 msgstr "run_target('%s') → scripts/%s.sh"
 
@@ -853,12 +855,21 @@ msgstr "కొత్త అభ్యర్థన"
 msgid "Suggest a new lint rule (what to check, why, how)…"
 msgstr "కొత్త lint నియమం సూచించండి (ఏమి, ఎందుకు, ఎలా)…"
 
-#: src/lint/browse.py:552
+#: src/lint/browse.py:80
+#, python-format
+msgid "First file: %s …"
+msgstr "మొదటి ఫైల్: %s …"
+
+#: src/lint/browse.py:81
+msgid "Related files"
+msgstr "సంబంధిత ఫైల్‌లు"
+
+#: src/lint/browse.py:554
 #, python-format
 msgid "zfr lint browse: %s"
 msgstr "zfr lint బ్రౌజ్: %s"
 
-#: src/lint/browse.py:553
+#: src/lint/browse.py:555
 msgid "Press Ctrl+C to stop."
 msgstr "ఆపడానికి Ctrl+C నొక్కండి."
 
@@ -1284,10 +1295,12 @@ msgid "Empty msgstr and msgid→msgstr copies count as untranslated (English var
 msgstr "ఖాళీ msgstr మరియు msgid→msgstr నకలులు అనువదించబడని వంటివిగా పరిగణించబడతాయి (msgid ఆంగ్లంలో ఉన్నపుడు ఆంగ్ల వేరియంట్లు en_AU/en_GB/… మినహితంగా ఉంటాయి). ≤20%% పూర్తి స్థాయిలో, మొత్తం .po ఫైల్‌ని చేతితో తిరిగి రాయండి — patch/sed స్క్రిప్టులు రాయవద్దు. %(poedit)s"
 
 #: src/lint/i18n_check.py:321
+#, python-format
 msgid "gettext catalogs have usable translation coverage (%s)"
 msgstr "gettext క్యాటోగ్స్ వరుస వైపును వుపయోగించుము: %s"
 
 #: src/lint/i18n_check.py:339
+#, python-format
 msgid "gettext catalogs above 20%% completion (%s)"
 msgstr "gettext క్యాటోగ్స్ వరుస వైపును వుపయోగించుము: %s"
 
@@ -1973,6 +1986,7 @@ msgid "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale
 msgstr "%files లోకెల్ మాన్స్ ను విడిచిపెట్టుము; rpmbuild పాపద్రోయబడిన $mandir/<locale>/manN పేజీలు meson స్థాపించబడిన తర్వాత తిరిగి తీసుకుంటుంది"
 
 #: src/lint/rpm.py:435
+#, python-brace-format
 msgid "%{_mandir}/*/man1/<cmd>.1*  (man/<lang>/*.adoc). Or run `zfr ize`."
 msgstr "%{_mandir}/*/man1/<cmd>.1* (docs/<lang>/*.adoc) లేదా `zfr ize` నడుపుము."
 
@@ -2153,6 +2167,7 @@ msgid "structural files from the language template are present"
 msgstr "భాషా టెంప్లేట్ నిర్మాణ ఫైల్స్ ఉన్నాయి"
 
 #: src/lint/template.py:199
+#, python-format
 msgid "language template %(lang)s optional scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "భాషా టెంప్లేట్ %(lang)sలో ఈ ట్రీలో లేని అదనపు స్కాఫోల్డింగ్ ఉంది: %(preview)s%(more)s"
 
@@ -2171,6 +2186,7 @@ msgid "language template %(lang)s has extra scaffolding not in this tree: %(prev
 msgstr "భాషా టెంప్లేట్ %(lang)sలో ఈ ట్రీలో లేని అదనపు స్కాఫోల్డింగ్ ఉంది: %(preview)s%(more)s"
 
 #: src/lint/template.py:224
+#, python-format
 msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing [required] debian/man/docs/src/tests/packaging/rpm files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. [optional] items (non-rpm packaging/*, src/Makefile, clib/cpplib bulk/pch/lib helpers, …) may be omitted. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
 msgstr "pkgdatadir కింద %(lang)s టెంప్లేట్‌తో పోల్చండి. లేని debian/docs/src/rpm ఫైల్స్ కాపీ చేయండి (rpm/ %(name)s.spec వాడుతుంది, zephyr.spec కాదు), లేదా `zfr add` puffs. build/ లేదా debian మిగిలిన స్టాంప్ ఫైల్స్ కాపీ చేయవద్దు. ఉదాహరణ commons మాడ్యూల్స్ ఐచ్ఛికం."
 
@@ -2637,6 +2653,7 @@ msgid "noarch RPM with Meson executable()"
 msgstr "Architecture: %s (బష్ + Meson క్రియాశీల)"
 
 #: src/std/lint_rules.py:52
+#, python-brace-format
 msgid "debug_package %{nil} on ELF package"
 msgstr "ELF ప్యాకేజీల కొరకు %global debug_package %{nil} డ్లాప్ చేయుము."
 
@@ -2645,22 +2662,27 @@ msgid "Script-only RPM needs BuildArch: noarch"
 msgstr "స్క్రిప్ట్-మాత్రమే RPMకు BuildArch: noarch అవసరం"
 
 #: src/std/lint_rules.py:54
+#, python-format
 msgid "RPM %files lists template puff placeholder"
 msgstr "RPM %files ఇప్పటికీ పుఫ్ {} జాబితాలు జాబితాలు"
 
 #: src/std/lint_rules.py:55
+#, python-format
 msgid "RPM %files covers gettext .mo catalogs"
 msgstr "%files gettext .mo క్యాటాల్గల్ Meson స్థాపించబడుతుంది"
 
 #: src/std/lint_rules.py:56
+#, python-format
 msgid "RPM %files covers locale man pages"
 msgstr "%files లోకె మాన్ పేజీలు Meson స్థాపించబడుతుంది"
 
 #: src/std/lint_rules.py:57
+#, python-format
 msgid "RPM %files covers datadir/setup scripts"
 msgstr "%files datadir/setup స్క్రిప్ట్లు Meson స్థాపించబడుతుంది"
 
 #: src/std/lint_rules.py:58
+#, python-format
 msgid "RPM %files covers Meson install paths"
 msgstr "%files Meson అమరికను కవర్చుతుంది ({} ప్రవేశములు)"
 

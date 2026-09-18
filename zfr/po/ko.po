@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 00:16+0800\n"
+"POT-Creation-Date: 2026-09-19 01:03+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Korean\n"
@@ -133,6 +133,7 @@ msgid "No matching lint.comments to delete."
 msgstr "삭제할 일치하는 lint.comments가 없습니다."
 
 #: src/comments_cmd.py:96
+#, python-format
 msgid "Deleted: %s"
 msgstr "있음: %s"
 
@@ -413,6 +414,7 @@ msgid "suppressed via -u/--uncheck"
 msgstr "-u/--uncheck로 억제됨"
 
 #: src/ize/engine/scripts.py:178
+#, python-format
 msgid "run_target('%s') → %s"
 msgstr "run_target('%s') → scripts/%s.sh"
 
@@ -864,12 +866,21 @@ msgstr "새 규칙 요청"
 msgid "Suggest a new lint rule (what to check, why, how)…"
 msgstr "새 lint 규칙 제안(무엇을, 왜, 어떻게)…"
 
-#: src/lint/browse.py:552
+#: src/lint/browse.py:80
+#, python-format
+msgid "First file: %s …"
+msgstr "첫 파일: %s …"
+
+#: src/lint/browse.py:81
+msgid "Related files"
+msgstr "관련 파일"
+
+#: src/lint/browse.py:554
 #, python-format
 msgid "zfr lint browse: %s"
 msgstr "zfr lint 탐색: %s"
 
-#: src/lint/browse.py:553
+#: src/lint/browse.py:555
 msgid "Press Ctrl+C to stop."
 msgstr "중지하려면 Ctrl+C를 누르세요."
 
@@ -1301,10 +1312,12 @@ msgid "Empty msgstr and msgid→msgstr copies count as untranslated (English var
 msgstr "빈 msgstr와 msgid→msgstr 복사는 미번역으로 집계합니다(msgid가 영어일 때 영어 변형 en_AU/en_GB/…는 예외). 완성도 ≤20%%이면 전체 .po를 손으로 다시 쓰세요 — 패치/sed 스크립트를 쓰지 마세요. %(poedit)s"
 
 #: src/lint/i18n_check.py:321
+#, python-format
 msgid "gettext catalogs have usable translation coverage (%s)"
 msgstr "gettext 카탈로그 사용 라인 포장: %s"
 
 #: src/lint/i18n_check.py:339
+#, python-format
 msgid "gettext catalogs above 20%% completion (%s)"
 msgstr "gettext 카탈로그 사용 라인 포장: %s"
 
@@ -1990,6 +2003,7 @@ msgid "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale
 msgstr "%files 지역 맨을 놓치고; rpmbuild은 포장되지 않은 $mandir/<locale>/manN 페이지를 거부합니다 meson 설치 후"
 
 #: src/lint/rpm.py:435
+#, python-brace-format
 msgid "%{_mandir}/*/man1/<cmd>.1*  (man/<lang>/*.adoc). Or run `zfr ize`."
 msgstr "%{_mandir}/*/man1/<cmd>.1* (docs/<lang>/*.adoc) 또는 실행 `zfr ize`."
 
@@ -2170,6 +2184,7 @@ msgid "structural files from the language template are present"
 msgstr "언어 템플릿의 구조 파일이 있음"
 
 #: src/lint/template.py:199
+#, python-format
 msgid "language template %(lang)s optional scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "언어 템플릿 %(lang)s에 이 트리에 없는 추가 골격이 있음: %(preview)s%(more)s"
 
@@ -2188,6 +2203,7 @@ msgid "language template %(lang)s has extra scaffolding not in this tree: %(prev
 msgstr "언어 템플릿 %(lang)s에 이 트리에 없는 추가 골격이 있음: %(preview)s%(more)s"
 
 #: src/lint/template.py:224
+#, python-format
 msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing [required] debian/man/docs/src/tests/packaging/rpm files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. [optional] items (non-rpm packaging/*, src/Makefile, clib/cpplib bulk/pch/lib helpers, …) may be omitted. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
 msgstr "pkgdatadir 아래 %(lang)s 템플릿과 비교하세요. 빠진 debian/docs/src/rpm 파일을 복사하세요(rpm/은 %(name)s.spec, zephyr.spec 아님). 또는 `zfr add`로 puff를 넣으세요. build/나 debian 잔여 스탬프 파일은 복사하지 마세요. 예시 commons 모듈은 선택 사항입니다."
 
@@ -2654,6 +2670,7 @@ msgid "noarch RPM with Meson executable()"
 msgstr "Architecture: %s (바쉬 + Meson 실행 가능)"
 
 #: src/std/lint_rules.py:52
+#, python-brace-format
 msgid "debug_package %{nil} on ELF package"
 msgstr "%global debug_package %{nil}을 ELF 패키지로 던져 줍니다."
 
@@ -2662,22 +2679,27 @@ msgid "Script-only RPM needs BuildArch: noarch"
 msgstr "스크립트 전용 RPM에는 BuildArch: noarch 필요"
 
 #: src/std/lint_rules.py:54
+#, python-format
 msgid "RPM %files lists template puff placeholder"
 msgstr "RPM %files 여전히 템플릿 푸프 {} 목록을 나열합니다."
 
 #: src/std/lint_rules.py:55
+#, python-format
 msgid "RPM %files covers gettext .mo catalogs"
 msgstr "%files 덮개 gettext .mo 카탈로그 Meson 설치"
 
 #: src/std/lint_rules.py:56
+#, python-format
 msgid "RPM %files covers locale man pages"
 msgstr "%files 지역 남성 페이지를 커버 Meson 설치"
 
 #: src/std/lint_rules.py:57
+#, python-format
 msgid "RPM %files covers datadir/setup scripts"
 msgstr "%files 덮개 datadir/setup 스크립트 Meson 설치"
 
 #: src/std/lint_rules.py:58
+#, python-format
 msgid "RPM %files covers Meson install paths"
 msgstr "%files 덮개 Meson 설치 세트 ({} 입력)"
 

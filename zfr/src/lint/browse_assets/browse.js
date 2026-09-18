@@ -137,6 +137,19 @@ function applyChrome() {
   updateStatusbar();
 }
 
+function worstSeverity(members) {
+  let best = 'ok';
+  let bestOrd = SEV_ORDER.ok;
+  for (const f of members) {
+    const ord = SEV_ORDER[f.severity] ?? 9;
+    if (ord < bestOrd) {
+      bestOrd = ord;
+      best = f.severity;
+    }
+  }
+  return best;
+}
+
 function sortedFindings() {
   const list = STATE.findings.slice();
   const byId = (a, b) =>
@@ -156,9 +169,39 @@ function sortedFindings() {
   return list;
 }
 
+/** One card per rule_id; related findings collapse under First file… */
+function groupedFindings() {
+  const sorted = sortedFindings();
+  const order = [];
+  const byRid = new Map();
+  for (const f of sorted) {
+    const rid = f.rule_id;
+    if (!byRid.has(rid)) {
+      byRid.set(rid, []);
+      order.push(rid);
+    }
+    byRid.get(rid).push(f);
+  }
+  return order.map(rid => {
+    const members = byRid.get(rid);
+    const primary = members[0];
+    return {
+      rule_id: rid,
+      severity: worstSeverity(members),
+      members,
+      primary,
+      rule_state: primary.rule_state || 'default',
+      docs: primary.docs,
+      comments: primary.comments,
+      izeable: members.some(m => m.izeable),
+      solveCode: (members.find(m => m.izeable) || primary).code,
+    };
+  });
+}
+
 function renderCards() {
   const main = document.getElementById('main');
-  main.innerHTML = sortedFindings().map((f, i) => cardHtml(f, i)).join('');
+  main.innerHTML = groupedFindings().map(g => cardHtml(g)).join('');
   applyShowAll();
   bindCards();
 }
@@ -171,43 +214,93 @@ function docsHtml(docs) {
   ).join('');
 }
 
-function cardHtml(f, i) {
-  const loc = f.file ? (f.line ? f.file + ':' + f.line : f.file) : '';
-  const st = f.rule_state || 'default';
+function memberLoc(f) {
+  if (!f.file) return '';
+  return f.line ? f.file + ':' + f.line : f.file;
+}
+
+function relatedFilesHtml(members) {
+  if (members.length < 2) return '';
+  const items = members.map(m => {
+    const loc = memberLoc(m);
+    const cached = izeCache[m.code];
+    let act = '';
+    if (m.izeable) {
+      act = '<a href="#" class="act solve" data-code="' + esc(m.code) + '">' + esc(UI.solve) + '</a>';
+      if (cached) {
+        const showCls = cached.ok ? 'act show' : 'act bad show';
+        act += ' <a href="#" class="' + showCls + '" data-code="' + esc(m.code) + '">' +
+          esc(UI.show) + '</a>' +
+          (cached.ok
+            ? '<span class="tick" title="ok">✓</span>'
+            : '<span class="cross" title="err">✗</span>');
+      }
+    }
+    return '<li class="related-item">' +
+      '<div class="related-head">' +
+      '<span class="sev-' + esc(m.severity) + '">' + esc(m.severity) + '</span> ' +
+      '<span class="code">' + esc(m.code) + '</span>' +
+      (loc ? ' <span class="loc">' + esc(loc) + '</span>' : '') +
+      (act ? ' <span class="related-act">' + act + '</span>' : '') +
+      '</div>' +
+      '<div class="msg">' + esc(m.message) + '</div>' +
+      (m.fix
+        ? '<div class="fix"><strong>' + esc(UI.fix) + ':</strong> ' + esc(m.fix) + '</div>'
+        : '') +
+      '</li>';
+  }).join('');
+  return '<div class="related">' +
+    '<h4>' + esc(UI.related_files || 'Related files') + '</h4>' +
+    '<ul class="related-list">' + items + '</ul></div>';
+}
+
+function cardHtml(g) {
+  const f = g.primary;
+  const members = g.members;
+  const multi = members.length > 1;
+  const firstLoc = memberLoc(f) || f.code || '';
+  const loc = multi
+    ? (firstLoc
+      ? String(UI.first_file || 'First file: %s …').replace('%s', firstLoc)
+      : '')
+    : firstLoc;
+  const st = g.rule_state || 'default';
   const mark = MARK[st] ?? ' ';
-  const rid = f.rule_id;
+  const rid = g.rule_id;
   const open = expanded.has(rid);
   const cmtOpen = commenting.has(rid);
-  const cached = izeCache[f.code];
+  const solveCode = g.solveCode || f.code;
+  const cached = izeCache[solveCode];
   const result = cached
     ? (cached.ok ? '<span class="tick" title="ok">✓</span>' : '<span class="cross" title="err">✗</span>')
     : '';
   let actions = '';
-  if (f.izeable) {
-    actions = '<a href="#" class="act solve" data-code="' + esc(f.code) + '">' + esc(UI.solve) + '</a>';
+  if (g.izeable) {
+    actions = '<a href="#" class="act solve" data-code="' + esc(solveCode) + '">' + esc(UI.solve) + '</a>';
     if (cached) {
       const showCls = cached.ok ? 'act show' : 'act bad show';
-      actions += '<a href="#" class="' + showCls + '" data-code="' + esc(f.code) + '">' + esc(UI.show) + '</a>' + result;
+      actions += '<a href="#" class="' + showCls + '" data-code="' + esc(solveCode) + '">' + esc(UI.show) + '</a>' + result;
     }
   }
-  const fix = f.fix
+  const fix = (!multi && f.fix)
     ? '<div class="fix"><strong>' + esc(UI.fix) + ':</strong> ' + esc(f.fix) + '</div>'
     : '';
   const existing =
-    (f.comments && f.comments.project
-      ? '<div><strong>project:</strong>\\n' + esc(f.comments.project) + '</div>' : '') +
-    (f.comments && f.comments.user
-      ? '<div><strong>user:</strong>\\n' + esc(f.comments.user) + '</div>' : '');
+    (g.comments && g.comments.project
+      ? '<div><strong>project:</strong>\\n' + esc(g.comments.project) + '</div>' : '') +
+    (g.comments && g.comments.user
+      ? '<div><strong>user:</strong>\\n' + esc(g.comments.user) + '</div>' : '');
 
-  const hide = (f.severity === 'ok' && !document.getElementById('show-all').checked)
+  const hide = (g.severity === 'ok' && !document.getElementById('show-all').checked)
     ? ' hidden' : '';
 
   let panel = '';
   if (open) {
     panel =
-      '<tr class="panel-row' + hide + '" data-ok="' + (f.severity === 'ok' ? '1' : '0') +
+      '<tr class="panel-row' + hide + '" data-ok="' + (g.severity === 'ok' ? '1' : '0') +
       '" data-rid="' + esc(rid) + '"><td colspan="3">' +
-      '<div class="docs">' + docsHtml(f.docs) + '</div>' +
+      '<div class="docs">' + docsHtml(g.docs) + '</div>' +
+      relatedFilesHtml(members) +
       (existing && !cmtOpen ? '<div class="existing">' + existing + '</div>' : '') +
       (cmtOpen
         ? '<div class="comment-box">' +
@@ -226,24 +319,30 @@ function cardHtml(f, i) {
       '</td></tr>';
   }
 
-  return '<tr class="head' + hide + '" data-ok="' + (f.severity === 'ok' ? '1' : '0') +
+  // Multi: header shows short title + First file…; codes/paths live in Related files.
+  const codeSpan = multi
+    ? ''
+    : '<span class="code">' + esc(f.code) + '</span>';
+  const msg = multi ? '' : (f.message || '');
+
+  return '<tr class="head' + hide + '" data-ok="' + (g.severity === 'ok' ? '1' : '0') +
     '" data-rid="' + esc(rid) + '">' +
     '<td class="col-main toggle-exp" data-rid="' + esc(rid) + '"><div class="head-left">' +
     '<span class="mark ' + esc(st) + '" data-rid="' + esc(rid) + '" title="' + esc(UI.rule_state) +
     '">[' + esc(mark) + ']</span>' +
-    '<span class="sev-' + esc(f.severity) + '">' + esc(f.severity) + '</span>' +
+    '<span class="sev-' + esc(g.severity) + '">' + esc(g.severity) + '</span>' +
     '<span class="rid">' + esc(rid) + '</span>' +
-    '<span class="code">' + esc(f.code) + '</span>' +
-    (f.docs && f.docs.title
-      ? '<span class="short-title">' + esc(f.docs.title) + '</span>' : '') +
+    codeSpan +
+    (g.docs && g.docs.title
+      ? '<span class="short-title">' + esc(g.docs.title) + '</span>' : '') +
     (loc ? '<span class="loc">' + esc(loc) + '</span>' : '') +
     '</div></td>' +
     '<td class="col-act"><div class="head-right">' + actions + '</div></td>' +
     '<td class="col-exp"></td></tr>' +
-    '<tr class="msg' + hide + '" data-ok="' + (f.severity === 'ok' ? '1' : '0') +
+    '<tr class="msg' + hide + '" data-ok="' + (g.severity === 'ok' ? '1' : '0') +
     '" data-rid="' + esc(rid) + '">' +
     '<td class="col-main toggle-exp" data-rid="' + esc(rid) + '"><div class="msg">' +
-    esc(f.message) + '</div>' + fix + '</td>' +
+    esc(msg) + '</div>' + fix + '</td>' +
     '<td class="col-act"></td>' +
     '<td class="col-exp"><button type="button" class="expand-btn" data-rid="' + esc(rid) +
     '" title="' + esc(UI.docs) + '">' + (open ? '▾' : '▸') + '</button></td></tr>' +

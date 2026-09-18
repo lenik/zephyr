@@ -84,6 +84,32 @@ class ZephyrDispatcherTests(unittest.TestCase):
         banner = format_cli_version_banner()
         self.assertIn(cli_version(), banner)
         self.assertIn("Python ", banner)
+        # Never the meson fallback alone for a real tree.
+        self.assertNotEqual(cli_version(), "0.0.0")
+
+    def test_cli_root_source_layout(self) -> None:
+        from versioning import cli_root
+
+        root = cli_root()
+        self.assertEqual(root.name, "zfr")
+        self.assertTrue((root / "VERSION").is_file() or (root / "debian" / "changelog").is_file())
+
+    def test_cli_version_installed_layout_without_git(self) -> None:
+        """Installed share/zephyr/zfr has VERSION + paths_config, no .git."""
+        from versioning import apply_version_modifiers, version_file_version
+
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root / "VERSION").write_text("9.8.7\n", encoding="utf-8")
+            (root / "paths_config.py").write_text(
+                'VERSION = "9.8.7"\nRELEASE_DATE = "2026-01-02"\nPKGDATADIR = "/x"\n',
+                encoding="utf-8",
+            )
+            self.assertEqual(version_file_version(root), "9.8.7")
+            # Mimic installed cli_version fallbacks (no git describe).
+            v = version_file_version(root)
+            self.assertEqual(apply_version_modifiers(v or ""), "9.8.7")
+            self.assertNotEqual(v, "0.0.0")
 
     def test_every_subcommand_help(self) -> None:
         for name in SUBCOMMANDS:

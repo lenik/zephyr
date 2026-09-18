@@ -86,7 +86,7 @@ def changelog_date(root: Path) -> str | None:
 def _paths_config_str(name: str) -> str | None:
     """Read a Meson-substituted string from paths_config (installed builds)."""
     try:
-        from lib import paths_config  # type: ignore
+        import paths_config  # type: ignore
     except Exception:
         return None
     value = getattr(paths_config, name, None)
@@ -159,12 +159,13 @@ def project_version(
 
 
 def cli_root() -> Path:
-    """Install prefix of this zfr tree (source: zfr/, installed: share/zephyr/zfr)."""
+    """Root of this zfr tree (source: ``zfr/``; installed: ``share/zephyr/zfr``)."""
     libdir = Path(__file__).resolve().parent
-    parent = libdir.parent
-    if parent.name == "src":
-        return parent.parent
-    return parent
+    # Checkout: zfr/src/versioning.py → zfr/
+    if libdir.name == "src":
+        return libdir.parent
+    # Installed flat layout: share/zephyr/zfr/versioning.py
+    return libdir
 
 
 def cli_version(*, rpm: bool = False) -> str:

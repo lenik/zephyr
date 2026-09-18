@@ -1,3 +1,14 @@
+zephyr (2.9.2) testing; urgency=medium
+
+  * lint --browse: group findings that share a ZL/ZI rule id into one
+    card; show First file… until expanded, then the related file list.
+  * i18n: fix source localedir after flatten (po/ is parents[2], not
+    parents[3]).
+  * zfr -V: fix cli_root and paths_config import after flatten (was
+    always 0.0.0 when installed).
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sat, 19 Sep 2026 01:03:11 +0800
+
 zephyr (2.9.1) testing; urgency=medium
 
   * lint --browse: drop the head-row expand chevron; show gettext short

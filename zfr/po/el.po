@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 00:16+0800\n"
+"POT-Creation-Date: 2026-09-19 01:03+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Greek\n"
@@ -121,6 +121,7 @@ msgid "No matching lint.comments to delete."
 msgstr "Δεν βρέθηκαν αντίστοιχα lint.comments για διαγραφή."
 
 #: src/comments_cmd.py:96
+#, python-format
 msgid "Deleted: %s"
 msgstr "υπάρχει: %s"
 
@@ -401,6 +402,7 @@ msgid "suppressed via -u/--uncheck"
 msgstr "απενεργοποιήθηκε μέσω -u/--uncheck"
 
 #: src/ize/engine/scripts.py:178
+#, python-format
 msgid "run_target('%s') → %s"
 msgstr "run_target('%s') → scripts/%s.sh"
 
@@ -852,12 +854,21 @@ msgstr "Αίτημα για νέο"
 msgid "Suggest a new lint rule (what to check, why, how)…"
 msgstr "Προτείνετε νέο κανόνα lint (τι, γιατί, πώς)…"
 
-#: src/lint/browse.py:552
+#: src/lint/browse.py:80
+#, python-format
+msgid "First file: %s …"
+msgstr "Πρώτο αρχείο: %s …"
+
+#: src/lint/browse.py:81
+msgid "Related files"
+msgstr "Σχετικά αρχεία"
+
+#: src/lint/browse.py:554
 #, python-format
 msgid "zfr lint browse: %s"
 msgstr "zfr lint περιήγηση: %s"
 
-#: src/lint/browse.py:553
+#: src/lint/browse.py:555
 msgid "Press Ctrl+C to stop."
 msgstr "Πατήστε Ctrl+C για διακοπή."
 
@@ -1283,10 +1294,12 @@ msgid "Empty msgstr and msgid→msgstr copies count as untranslated (English var
 msgstr "Κενό msgstr και αντίγραφα msgid→msgstr θεωρούνται αμετάφραστα (Οι αγγλικές παραλλαγές en_AU/en_GB/… εξαιρούνται όταν το msgid είναι στα Αγγλικά). Σε ολοκλήρωση ≤20%%, ξαναγράψτε ολόκληρο το αρχείο .po με το χέρι — μην γράφετε scripts patch/sed. %(poedit)s"
 
 #: src/lint/i18n_check.py:321
+#, python-format
 msgid "gettext catalogs have usable translation coverage (%s)"
 msgstr "gettext Καταγωνισμός χρησιμοποιώντας καταβολή γραμμών: %s"
 
 #: src/lint/i18n_check.py:339
+#, python-format
 msgid "gettext catalogs above 20%% completion (%s)"
 msgstr "gettext Καταγωνισμός χρησιμοποιώντας καταβολή γραμμών: %s"
 
@@ -1972,6 +1985,7 @@ msgid "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale
 msgstr "%files απορρίπτει το locale mans; rpmbuild θα απορρίψει τα χορηγμένα $mandir/<locale>/manN σελίδες μετά την εγκαταστάσπιση meson"
 
 #: src/lint/rpm.py:435
+#, python-brace-format
 msgid "%{_mandir}/*/man1/<cmd>.1*  (man/<lang>/*.adoc). Or run `zfr ize`."
 msgstr "%{_mandir}/*/man1/<cmd>.1* (docs/<lang>/*.adoc). Ή ξεκινήστε `zfr ize`."
 
@@ -2152,6 +2166,7 @@ msgid "structural files from the language template are present"
 msgstr "τα δομικά αρχεία του προτύπου γλώσσας υπάρχουν"
 
 #: src/lint/template.py:199
+#, python-format
 msgid "language template %(lang)s optional scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "το πρότυπο γλώσσας %(lang)s έχει επιπλέον ικρίωμα που δεν υπάρχει σε αυτό το δέντρο: %(preview)s%(more)s"
 
@@ -2170,6 +2185,7 @@ msgid "language template %(lang)s has extra scaffolding not in this tree: %(prev
 msgstr "το πρότυπο γλώσσας %(lang)s έχει επιπλέον ικρίωμα που δεν υπάρχει σε αυτό το δέντρο: %(preview)s%(more)s"
 
 #: src/lint/template.py:224
+#, python-format
 msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing [required] debian/man/docs/src/tests/packaging/rpm files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. [optional] items (non-rpm packaging/*, src/Makefile, clib/cpplib bulk/pch/lib helpers, …) may be omitted. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
 msgstr "Συγκρίνετε με το πρότυπο %(lang)s στο pkgdatadir. Αντιγράψτε τα ελλείποντα αρχεία debian/docs/src/rpm (το rpm/ χρησιμοποιεί %(name)s.spec, όχι zephyr.spec), ή `zfr add` puffs. Μην αντιγράψετε build/ ή υπολειπόμενα stamp αρχεία debian. Τα παραδείγματα commons είναι προαιρετικά."
 
@@ -2636,6 +2652,7 @@ msgid "noarch RPM with Meson executable()"
 msgstr "Architecture: %s (βάσος + Meson εκτελεστικό)"
 
 #: src/std/lint_rules.py:52
+#, python-brace-format
 msgid "debug_package %{nil} on ELF package"
 msgstr "Φύγε %global debug_package %{nil} για τα πακέτη ELF."
 
@@ -2644,22 +2661,27 @@ msgid "Script-only RPM needs BuildArch: noarch"
 msgstr "RPM μόνο με σενάρια απαιτεί BuildArch: noarch"
 
 #: src/std/lint_rules.py:54
+#, python-format
 msgid "RPM %files lists template puff placeholder"
 msgstr "ΡΠΜ %files ακόμη λίστας τύπου ζημίζει {}"
 
 #: src/std/lint_rules.py:55
+#, python-format
 msgid "RPM %files covers gettext .mo catalogs"
 msgstr "%files καλύπτει gettext .mo catalogues Meson εγκαταστάσεις"
 
 #: src/std/lint_rules.py:56
+#, python-format
 msgid "RPM %files covers locale man pages"
 msgstr "%files καλύπτει το locale man σελίδες Meson εγκαταστάσεις"
 
 #: src/std/lint_rules.py:57
+#, python-format
 msgid "RPM %files covers datadir/setup scripts"
 msgstr "%files καλύπτει datadir/setup γραπτές Meson εγκαταστάσεις"
 
 #: src/std/lint_rules.py:58
+#, python-format
 msgid "RPM %files covers Meson install paths"
 msgstr "%files καλύπτει σχεδιά εγκαταστάσεις Meson ({} εισόδους)"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 00:16+0800\n"
+"POT-Creation-Date: 2026-09-19 01:03+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Chinese (Traditional)\n"
@@ -133,6 +133,7 @@ msgid "No matching lint.comments to delete."
 msgstr "沒有可刪除的相符 lint.comments。"
 
 #: src/comments_cmd.py:96
+#, python-format
 msgid "Deleted: %s"
 msgstr "已存在: %s"
 
@@ -413,6 +414,7 @@ msgid "suppressed via -u/--uncheck"
 msgstr "已通過 -u/--uncheck 抑制"
 
 #: src/ize/engine/scripts.py:178
+#, python-format
 msgid "run_target('%s') → %s"
 msgstr "run_target('%s') → scripts/%s.sh"
 
@@ -862,12 +864,21 @@ msgstr "申請新增規則"
 msgid "Suggest a new lint rule (what to check, why, how)…"
 msgstr "建議新增 lint 規則（查什麼、為何、如何檢）…"
 
-#: src/lint/browse.py:552
+#: src/lint/browse.py:80
+#, python-format
+msgid "First file: %s …"
+msgstr "首個檔案：%s …"
+
+#: src/lint/browse.py:81
+msgid "Related files"
+msgstr "相關檔案"
+
+#: src/lint/browse.py:554
 #, python-format
 msgid "zfr lint browse: %s"
 msgstr "zfr lint 瀏覽：%s"
 
-#: src/lint/browse.py:553
+#: src/lint/browse.py:555
 msgid "Press Ctrl+C to stop."
 msgstr "按 Ctrl+C 停止。"
 
@@ -2662,6 +2673,7 @@ msgid "noarch RPM with Meson executable()"
 msgstr "noarch RPM 卻有 Meson executable()"
 
 #: src/std/lint_rules.py:52
+#, python-brace-format
 msgid "debug_package %{nil} on ELF package"
 msgstr "ELF 包上的 debug_package %{nil}"
 
@@ -2670,22 +2682,27 @@ msgid "Script-only RPM needs BuildArch: noarch"
 msgstr "純腳本 RPM 需要 BuildArch: noarch"
 
 #: src/std/lint_rules.py:54
+#, python-format
 msgid "RPM %files lists template puff placeholder"
 msgstr "RPM %files 含模板 puff 佔位符"
 
 #: src/std/lint_rules.py:55
+#, python-format
 msgid "RPM %files covers gettext .mo catalogs"
 msgstr "RPM %files 覆蓋 gettext .mo"
 
 #: src/std/lint_rules.py:56
+#, python-format
 msgid "RPM %files covers locale man pages"
 msgstr "RPM %files 覆蓋本地化手冊"
 
 #: src/std/lint_rules.py:57
+#, python-format
 msgid "RPM %files covers datadir/setup scripts"
 msgstr "RPM %files 覆蓋 datadir/setup 腳本"
 
 #: src/std/lint_rules.py:58
+#, python-format
 msgid "RPM %files covers Meson install paths"
 msgstr "RPM %files 覆蓋 Meson 安裝路徑"
 

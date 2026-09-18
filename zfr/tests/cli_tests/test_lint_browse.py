@@ -73,6 +73,10 @@ class BrowseUiTests(unittest.TestCase):
         self.assertIn("patchRuleState", html)
         self.assertIn("data-theme", html)
         self.assertIn("short-title", html)
+        self.assertIn("groupedFindings", html)
+        self.assertIn("relatedFilesHtml", html)
+        self.assertIn("First file:", html)
+        self.assertIn("Related files", html)
         # Expand chevron only on the message row (head row has empty col-exp).
         self.assertIn('col-exp"></td></tr>', html)
         self.assertIn("expand-btn", html)
@@ -88,6 +92,8 @@ class BrowseUiTests(unittest.TestCase):
         self.assertEqual(ui["project_only"], "仅本项目")
         en = _ui("en")
         self.assertEqual(en["add_comment"], "Add Comment")
+        self.assertEqual(en["first_file"], "First file: %s …")
+        self.assertEqual(en["related_files"], "Related files")
 
     def test_docs_cover_rules(self) -> None:
         from lint.docs import rule_doc_dict

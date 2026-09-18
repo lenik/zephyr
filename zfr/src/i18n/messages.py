@@ -110,7 +110,8 @@ def _locale_dirs() -> list[Path]:
         dirs.append(Path(env))
 
     here = Path(__file__).resolve()
-    zfr_root = here.parents[3]
+    # zfr/src/i18n/messages.py → zfr/ (same as _source_root)
+    zfr_root = here.parents[2]
     repo = zfr_root.parent
     # Prefer catalogs compiled from the source po/ tree so uninstalled
     # `zfr -h` tracks the current strings (not a stale meson builddir).
@@ -129,7 +130,7 @@ def _locale_dirs() -> list[Path]:
         ]
     )
     try:
-        from . import paths_config  # type: ignore
+        import paths_config  # type: ignore
 
         pkg = Path(paths_config.PKGDATADIR)
         dirs.append(pkg / "locale")

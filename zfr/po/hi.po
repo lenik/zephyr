@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 00:16+0800\n"
+"POT-Creation-Date: 2026-09-19 01:03+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Hindi\n"
@@ -133,6 +133,7 @@ msgid "No matching lint.comments to delete."
 msgstr "मिटाने के लिए कोई मेल खाने वाली lint.comments नहीं हैं।"
 
 #: src/comments_cmd.py:96
+#, python-format
 msgid "Deleted: %s"
 msgstr "मौजूद: %s"
 
@@ -413,6 +414,7 @@ msgid "suppressed via -u/--uncheck"
 msgstr "-u/--uncheck से दबाया गया"
 
 #: src/ize/engine/scripts.py:178
+#, python-format
 msgid "run_target('%s') → %s"
 msgstr "run_target('%s') → scripts/%s.sh"
 
@@ -864,12 +866,21 @@ msgstr "नए के लिए अनुरोध"
 msgid "Suggest a new lint rule (what to check, why, how)…"
 msgstr "नया लिंट नियम सुझाएँ (क्या, क्यों, कैसे)…"
 
-#: src/lint/browse.py:552
+#: src/lint/browse.py:80
+#, python-format
+msgid "First file: %s …"
+msgstr "पहली फ़ाइल: %s …"
+
+#: src/lint/browse.py:81
+msgid "Related files"
+msgstr "संबंधित फ़ाइलें"
+
+#: src/lint/browse.py:554
 #, python-format
 msgid "zfr lint browse: %s"
 msgstr "zfr lint ब्राउज़: %s"
 
-#: src/lint/browse.py:553
+#: src/lint/browse.py:555
 msgid "Press Ctrl+C to stop."
 msgstr "रोकने के लिए Ctrl+C दबाएँ।"
 
@@ -1295,10 +1306,12 @@ msgid "Empty msgstr and msgid→msgstr copies count as untranslated (English var
 msgstr "खाली msgstr और msgid→msgstr की प्रतियाँ अनुवादित नहीं मानी जाती हैं (अंग्रेज़ी विकल्प en_AU/en_GB/… छूट के साथ हैं जब msgid अंग्रेज़ी में हो)। ≤20%% पूर्णता पर, पूरे .po को हाथ से फिर से लिखें — पैच/sed स्क्रिप्ट्स न लिखें। %(poedit)s"
 
 #: src/lint/i18n_check.py:321
+#, python-format
 msgid "gettext catalogs have usable translation coverage (%s)"
 msgstr "gettext कैटलॉग पंक्ति टिकाएँ का उपयोग कर रहा है: %s"
 
 #: src/lint/i18n_check.py:339
+#, python-format
 msgid "gettext catalogs above 20%% completion (%s)"
 msgstr "gettext कैटलॉग पंक्ति टिकाएँ का उपयोग कर रहा है: %s"
 
@@ -1984,6 +1997,7 @@ msgid "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale
 msgstr "%files स्थानीय mans छोड़ देगा; rpmbuild स्पैक्लेक किया जाता है $mandir/<locale>/manN पृष्ठ meson संस्थापित के बाद"
 
 #: src/lint/rpm.py:435
+#, python-brace-format
 msgid "%{_mandir}/*/man1/<cmd>.1*  (man/<lang>/*.adoc). Or run `zfr ize`."
 msgstr "%{_mandir}/*/man1/<cmd>.1* (docs/<lang>/*.adoc). या चलाएँ `zfr ize`."
 
@@ -2164,6 +2178,7 @@ msgid "structural files from the language template are present"
 msgstr "भाषा टेम्पलेट की संरचनात्मक फ़ाइलें मौजूद हैं"
 
 #: src/lint/template.py:199
+#, python-format
 msgid "language template %(lang)s optional scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "भाषा टेम्पलेट %(lang)s में इस ट्री में नहीं वाला अतिरिक्त ढाँचा है: %(preview)s%(more)s"
 
@@ -2182,6 +2197,7 @@ msgid "language template %(lang)s has extra scaffolding not in this tree: %(prev
 msgstr "भाषा टेम्पलेट %(lang)s में इस ट्री में नहीं वाला अतिरिक्त ढाँचा है: %(preview)s%(more)s"
 
 #: src/lint/template.py:224
+#, python-format
 msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing [required] debian/man/docs/src/tests/packaging/rpm files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. [optional] items (non-rpm packaging/*, src/Makefile, clib/cpplib bulk/pch/lib helpers, …) may be omitted. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
 msgstr "pkgdatadir के अंतर्गत %(lang)s टेम्पलेट से तुलना करें। गायब debian/docs/src/rpm फ़ाइलें कॉपी करें (rpm/ %(name)s.spec इस्तेमाल करता है, zephyr.spec नहीं), या `zfr add` puffs। build/ या debian के बचे स्टैम्प फ़ाइलें न कॉपी करें। उदाहरण commons मॉड्यूल वैकल्पिक हैं।"
 
@@ -2648,6 +2664,7 @@ msgid "noarch RPM with Meson executable()"
 msgstr "Architecture: %s (बश + Meson चलाने वाली)"
 
 #: src/std/lint_rules.py:52
+#, python-brace-format
 msgid "debug_package %{nil} on ELF package"
 msgstr "ELF पैकेज के लिए %global debug_package %{nil} छोड़ें."
 
@@ -2656,22 +2673,27 @@ msgid "Script-only RPM needs BuildArch: noarch"
 msgstr "केवल स्क्रिप्ट RPM को BuildArch: noarch चाहिए"
 
 #: src/std/lint_rules.py:54
+#, python-format
 msgid "RPM %files lists template puff placeholder"
 msgstr "RPM %files अभी भी टेम्पलेट सूची पीफ {}"
 
 #: src/std/lint_rules.py:55
+#, python-format
 msgid "RPM %files covers gettext .mo catalogs"
 msgstr "%files को प्रदर्शित gettext .mo कैटलॉग Meson संस्थापित कर रहा है"
 
 #: src/std/lint_rules.py:56
+#, python-format
 msgid "RPM %files covers locale man pages"
 msgstr "%files स्थानीय man पृष्ठ Meson संस्थापित कर रहा है"
 
 #: src/std/lint_rules.py:57
+#, python-format
 msgid "RPM %files covers datadir/setup scripts"
 msgstr "%files स्क्रिप्ट datadir/setup Meson संस्थापित कर रहा है"
 
 #: src/std/lint_rules.py:58
+#, python-format
 msgid "RPM %files covers Meson install paths"
 msgstr "%files को प्रविष्ट Meson संस्थापित सेट ({} प्रविष्टि)"
 

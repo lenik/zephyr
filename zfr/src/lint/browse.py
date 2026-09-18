@@ -77,6 +77,8 @@ def _browse_ui_msgids() -> dict[str, str]:
         "request_hint": _(
             "Suggest a new lint rule (what to check, why, how)…"
         ),
+        "first_file": _("First file: %s …"),
+        "related_files": _("Related files"),
     }
 
 

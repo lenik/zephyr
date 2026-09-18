@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 00:16+0800\n"
+"POT-Creation-Date: 2026-09-19 01:03+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Ukrainian\n"
@@ -133,6 +133,7 @@ msgid "No matching lint.comments to delete."
 msgstr "Не знайдено відповідних lint.comments для видалення."
 
 #: src/comments_cmd.py:96
+#, python-format
 msgid "Deleted: %s"
 msgstr "наявний: %s"
 
@@ -413,6 +414,7 @@ msgid "suppressed via -u/--uncheck"
 msgstr "придушено через -u/--uncheck"
 
 #: src/ize/engine/scripts.py:178
+#, python-format
 msgid "run_target('%s') → %s"
 msgstr "run_target('%s') → scripts/%s.sh"
 
@@ -864,12 +866,21 @@ msgstr "Запит на нову"
 msgid "Suggest a new lint rule (what to check, why, how)…"
 msgstr "Запропонуйте нове правило lint (що, навіщо, як)…"
 
-#: src/lint/browse.py:552
+#: src/lint/browse.py:80
+#, python-format
+msgid "First file: %s …"
+msgstr "Перший файл: %s …"
+
+#: src/lint/browse.py:81
+msgid "Related files"
+msgstr "Пов’язані файли"
+
+#: src/lint/browse.py:554
 #, python-format
 msgid "zfr lint browse: %s"
 msgstr "zfr lint перегляд: %s"
 
-#: src/lint/browse.py:553
+#: src/lint/browse.py:555
 msgid "Press Ctrl+C to stop."
 msgstr "Натисніть Ctrl+C, щоб зупинити."
 
@@ -1295,10 +1306,12 @@ msgid "Empty msgstr and msgid→msgstr copies count as untranslated (English var
 msgstr "Порожній msgstr і копії msgid→msgstr вважаються неперекладеними (англійські варіанти en_AU/en_GB/… не враховуються, якщо msgid англійською). При завершенні ≤20%% перепишіть увесь файл .po вручну — не використовуйте скрипти patch/sed. %(poedit)s"
 
 #: src/lint/i18n_check.py:321
+#, python-format
 msgid "gettext catalogs have usable translation coverage (%s)"
 msgstr "gettext каталоги використовують перемикання рядка: %s"
 
 #: src/lint/i18n_check.py:339
+#, python-format
 msgid "gettext catalogs above 20%% completion (%s)"
 msgstr "gettext каталоги використовують перемикання рядка: %s"
 
@@ -1984,6 +1997,7 @@ msgid "%files omits locale mans; rpmbuild will reject unpackaged $mandir/<locale
 msgstr "%files викидає локальні персоналі; rpmbuild відкинуть розпаковані $mandir/<locale>/manN сторінки після встановлення meson"
 
 #: src/lint/rpm.py:435
+#, python-brace-format
 msgid "%{_mandir}/*/man1/<cmd>.1*  (man/<lang>/*.adoc). Or run `zfr ize`."
 msgstr "%{_mandir}/*/man1/<cmd>.1* (docs/<lang>/*.adoc). або запустити `zfr ize`."
 
@@ -2164,6 +2178,7 @@ msgid "structural files from the language template are present"
 msgstr "структурні файли мовного шаблону наявні"
 
 #: src/lint/template.py:199
+#, python-format
 msgid "language template %(lang)s optional scaffolding not in this tree: %(preview)s%(more)s"
 msgstr "мовний шаблон %(lang)s має додатковий каркас, якого немає в цьому дереві: %(preview)s%(more)s"
 
@@ -2182,6 +2197,7 @@ msgid "language template %(lang)s has extra scaffolding not in this tree: %(prev
 msgstr "мовний шаблон %(lang)s має додатковий каркас, якого немає в цьому дереві: %(preview)s%(more)s"
 
 #: src/lint/template.py:224
+#, python-format
 msgid "Compare with the %(lang)s template under pkgdatadir. Copy missing [required] debian/man/docs/src/tests/packaging/rpm files (packaging/rpm/ uses %(name)s.spec, not zephyr.spec; debian/%(name)s.substvars not zephyr.substvars), or `zfr add` puffs. [optional] items (non-rpm packaging/*, src/Makefile, clib/cpplib bulk/pch/lib helpers, …) may be omitted. Do not copy build/ or debian leftover stamp files. Example commons modules are optional."
 msgstr "Порівняйте з шаблоном %(lang)s у pkgdatadir. Скопіюйте відсутні файли debian/docs/src/rpm (rpm/ використовує %(name)s.spec, не zephyr.spec) або `zfr add` puff. Не копіюйте build/ чи залишкові stamp-файли debian. Прикладові модулі commons необов’язкові."
 
@@ -2648,6 +2664,7 @@ msgid "noarch RPM with Meson executable()"
 msgstr "Architecture: %s (баш + Meson виконання)"
 
 #: src/std/lint_rules.py:52
+#, python-brace-format
 msgid "debug_package %{nil} on ELF package"
 msgstr "Відпустити %global debug_package %{nil} для пакунків ELF."
 
@@ -2656,22 +2673,27 @@ msgid "Script-only RPM needs BuildArch: noarch"
 msgstr "RPM лише зі скриптами потребує BuildArch: noarch"
 
 #: src/std/lint_rules.py:54
+#, python-format
 msgid "RPM %files lists template puff placeholder"
 msgstr "RPM %files ще спискує шаблон зуфф {}"
 
 #: src/std/lint_rules.py:55
+#, python-format
 msgid "RPM %files covers gettext .mo catalogs"
 msgstr "%files записує gettext .mo каталоги Meson встановлення"
 
 #: src/std/lint_rules.py:56
+#, python-format
 msgid "RPM %files covers locale man pages"
 msgstr "%files записує локальні сторінки MAN Meson встановлення"
 
 #: src/std/lint_rules.py:57
+#, python-format
 msgid "RPM %files covers datadir/setup scripts"
 msgstr "%files записує datadir/setup скрипти Meson встановлення"
 
 #: src/std/lint_rules.py:58
+#, python-format
 msgid "RPM %files covers Meson install paths"
 msgstr "%files записи запису встановлення Meson ({} записи)"
 

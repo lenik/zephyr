@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zephyr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 00:16+0800\n"
+"POT-Creation-Date: 2026-09-19 01:03+0800\n"
 "PO-Revision-Date: 2026-08-25 18:13+0800\n"
 "Last-Translator: Cursor Agent\n"
 "Language-Team: Vietnamese\n"
@@ -133,6 +133,7 @@ msgid "No matching lint.comments to delete."
 msgstr "Không có lint.comments nào phù hợp để xóa."
 
 #: src/comments_cmd.py:96
+#, python-format
 msgid "Deleted: %s"
 msgstr "có: %s"
 
@@ -413,6 +414,7 @@ msgid "suppressed via -u/--uncheck"
 msgstr "đã tắt qua -u/--uncheck"
 
 #: src/ize/engine/scripts.py:178
+#, python-format
 msgid "run_target('%s') → %s"
 msgstr "run_target('%s') → scripts/%s.sh"
 
@@ -864,12 +866,21 @@ msgstr "Đề xuất mới"
 msgid "Suggest a new lint rule (what to check, why, how)…"
 msgstr "Đề xuất quy tắc lint mới (kiểm gì, vì sao, thế nào)…"
 
-#: src/lint/browse.py:552
+#: src/lint/browse.py:80
+#, python-format
+msgid "First file: %s …"
+msgstr "Tệp đầu: %s …"
+
+#: src/lint/browse.py:81
+msgid "Related files"
+msgstr "Tệp liên quan"
+
+#: src/lint/browse.py:554
 #, python-format
 msgid "zfr lint browse: %s"
 msgstr "zfr lint duyệt: %s"
 
-#: src/lint/browse.py:553
+#: src/lint/browse.py:555
 msgid "Press Ctrl+C to stop."
 msgstr "Nhấn Ctrl+C để dừng."
 
@@ -2653,6 +2664,7 @@ msgid "noarch RPM with Meson executable()"
 msgstr "Architecture: %s (bash + Meson khả năng)"
 
 #: src/std/lint_rules.py:52
+#, python-brace-format
 msgid "debug_package %{nil} on ELF package"
 msgstr "Bỏ %global debug_package %{nil} cho ELF gói."
 
@@ -2661,22 +2673,27 @@ msgid "Script-only RPM needs BuildArch: noarch"
 msgstr "RPM chỉ chứa script cần BuildArch: noarch"
 
 #: src/std/lint_rules.py:54
+#, python-format
 msgid "RPM %files lists template puff placeholder"
 msgstr "RPM %files vẫn còn danh sách mẫu phạm {}"
 
 #: src/std/lint_rules.py:55
+#, python-format
 msgid "RPM %files covers gettext .mo catalogs"
 msgstr "%files phục gettext .mo catalog Meson đặt"
 
 #: src/std/lint_rules.py:56
+#, python-format
 msgid "RPM %files covers locale man pages"
 msgstr "%files phục trang man nơi tài Meson"
 
 #: src/std/lint_rules.py:57
+#, python-format
 msgid "RPM %files covers datadir/setup scripts"
 msgstr "%files phát hiện datadir/setup số Meson"
 
 #: src/std/lint_rules.py:58
+#, python-format
 msgid "RPM %files covers Meson install paths"
 msgstr "%files cho Meson đặt nổi ({} tập tin)"
 
