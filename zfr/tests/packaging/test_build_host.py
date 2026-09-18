@@ -13,7 +13,7 @@ from support import add_src_to_path
 
 add_src_to_path()
 
-from zfr_lib.packaging_host import (  # noqa: E402
+from packaging_host import (  # noqa: E402
     find_build_host_file,
     last_build_dir,
     last_preserved,

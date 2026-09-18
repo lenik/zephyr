@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REPO = ROOT.parent
 TOOLS = ROOT / "src"
 ZEPHYR = TOOLS / "zfr"
+BUILD = ROOT / "build"
 
 
 def _env() -> dict[str, str]:
@@ -39,6 +40,33 @@ def run_zephyr(*args: str, cwd: Path | None = None, check: bool = True) -> subpr
     if check and proc.returncode != 0:
         raise AssertionError(
             f"zfr {' '.join(args)} failed ({proc.returncode})\n"
+            f"stdout:\n{proc.stdout}\nstderr:\n{proc.stderr}"
+        )
+    return proc
+
+
+def run_wrapper(
+    name: str, *args: str, cwd: Path | None = None, check: bool = True
+) -> subprocess.CompletedProcess[str]:
+    """Run a PATH wrapper (*zfr-lint*) via builddir shell or ``zfr <cmd>``."""
+    cmd = name[4:] if name.startswith("zfr-") else name
+    wrapper = BUILD / name
+    if wrapper.is_file():
+        argv = [str(wrapper), *args]
+        if not os.access(wrapper, os.X_OK):
+            argv = ["bash", *argv]
+        proc = subprocess.run(
+            argv,
+            cwd=cwd or ROOT,
+            env=_env(),
+            capture_output=True,
+            text=True,
+        )
+    else:
+        proc = run_zephyr(cmd, *args, cwd=cwd, check=False)
+    if check and proc.returncode != 0:
+        raise AssertionError(
+            f"{name} {' '.join(args)} failed ({proc.returncode})\n"
             f"stdout:\n{proc.stdout}\nstderr:\n{proc.stderr}"
         )
     return proc

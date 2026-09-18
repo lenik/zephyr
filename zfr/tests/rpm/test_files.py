@@ -13,7 +13,7 @@ from support import add_src_to_path
 
 add_src_to_path()
 
-from zfr_lib.ize.rpm_files import meson_rpm_files
+from ize.rpm_files import meson_rpm_files
 
 
 class MesonRpmFilesPythonTests(unittest.TestCase):

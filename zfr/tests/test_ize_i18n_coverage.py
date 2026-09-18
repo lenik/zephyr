@@ -6,7 +6,7 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
-from zfr_lib.ize.engine import Ize
+from ize.engine import Ize
 
 
 class IzeI18nCoverageTests(unittest.TestCase):
