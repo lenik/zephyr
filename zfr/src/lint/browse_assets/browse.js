@@ -234,11 +234,12 @@ function cardHtml(f, i) {
     '<span class="sev-' + esc(f.severity) + '">' + esc(f.severity) + '</span>' +
     '<span class="rid">' + esc(rid) + '</span>' +
     '<span class="code">' + esc(f.code) + '</span>' +
+    (f.docs && f.docs.title
+      ? '<span class="short-title">' + esc(f.docs.title) + '</span>' : '') +
     (loc ? '<span class="loc">' + esc(loc) + '</span>' : '') +
     '</div></td>' +
     '<td class="col-act"><div class="head-right">' + actions + '</div></td>' +
-    '<td class="col-exp"><button type="button" class="expand-btn" data-rid="' + esc(rid) +
-    '" title="' + esc(UI.docs) + '">' + (open ? '▾' : '▸') + '</button></td></tr>' +
+    '<td class="col-exp"></td></tr>' +
     '<tr class="msg' + hide + '" data-ok="' + (f.severity === 'ok' ? '1' : '0') +
     '" data-rid="' + esc(rid) + '">' +
     '<td class="col-main toggle-exp" data-rid="' + esc(rid) + '"><div class="msg">' +

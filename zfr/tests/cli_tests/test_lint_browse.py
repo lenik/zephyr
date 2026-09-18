@@ -72,6 +72,10 @@ class BrowseUiTests(unittest.TestCase):
         self.assertIn("setUiLang", html)
         self.assertIn("patchRuleState", html)
         self.assertIn("data-theme", html)
+        self.assertIn("short-title", html)
+        # Expand chevron only on the message row (head row has empty col-exp).
+        self.assertIn('col-exp"></td></tr>', html)
+        self.assertIn("expand-btn", html)
         self.assertIn("/api/data", html)
         self.assertIn("/api/comment", html)
         self.assertIn("/api/rule-state", html)
