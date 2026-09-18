@@ -41,7 +41,8 @@ zfr - multi-language CLI project templates and helper tools
 *zfr* [*--chat*|*--no-chat*] *dist* [*-o* _DIR_] [*-b* _DIR_] [*-f* _FMT_] [*--rpm*]
             [*--allow-dirty*|*--no-allow-dirty*] [*--tests*]
 
-*zfr* [*--chat*|*--no-chat*] *build* [*-C* _DIR_] [*-b* _DIR_] [*-j* _N_] [*-n*] [*-v*] [*--detect-only*]
+*zfr* [*--chat*|*--no-chat*] *build* [*-C* _DIR_] [*-b* _DIR_] [*-j* _N_] [*-n*] [*-v*]
+            [*--detect-only*] [*--look*] [*-L* _N_]
 
 *zfr* [*--chat*|*--no-chat*] *package* [*-C* _DIR_] [*-j* [_N_]] [*-u*|*-U*] [*-p* _HOST_] [*-D*] [*-Y*] [_OPTIONS_]
 
@@ -184,14 +185,16 @@ Commands that walk from the current directory resolve *packagedir* first.
   *\-a* / *--always* force-enables rules; *\-u* suppresses them.
   *zfr-lintsel* edits those overrides in a TUI.
   *\-b* / *--browse* opens a local web UI: compact findings
-  (*[ ]* severity *ZLxxx* code · *[Solve]* *[Show]*; message with ▸/▾
-  expand for rule documentation; *[Add Comment]* for suggestions),
+  (rule mark · severity · *ZLxxx* · code · *Solve* / *Show*; message
+  with ▸/▾ expand for rule documentation; *Add Comment* for suggestions),
   lintsel-style rule toggles, comments to *.config/zfr/lint.comments*
-  (This project only) or *~/.config/zfr/lint.comments* (unchecked),
-  locale switch without reload, and a status bar (zfr version,
-  pass/warn/error bar, author). *Solve* runs *zfr ize --only …* via
-  *fdmux*; *Show* opens the captured output (red when errors).
-  A toggle shows passed checks (default off).
+  (This project only) or *~/.config/zfr/lint.comments* (unchecked).
+  Top-right: theme toggle and language selector (initial locale follows
+  *LANGUAGE* / *LANG*); toolbar has “show all rules” then *Re-lint*.
+  Language switches update chrome and docs without re-linting; *Re-lint*
+  refreshes findings. Status bar: pass/warn/error bar, zfr version, author.
+  *Solve* runs *zfr ize --only …* via *fdmux*; *Show* opens the captured
+  output (red when errors). A toggle shows passed checks (default off).
 
 *lintsel*::
   Interactive TUI (also *zfr-lintsel*) to toggle lint rule overrides in
@@ -232,7 +235,10 @@ Commands that walk from the current directory resolve *packagedir* first.
   Detect the project build system (*meson*, *cmake*, *autotools*, *cargo*,
   *go*, *npm*, or *make*) and compile locally. *\-j* / *--job* _N_ sets
   parallel jobs (default: number of CPU cores). *--detect-only* prints the
-  detected system name. Used by *zfr-release*(1) / *zfr release* before packaging.
+  detected system name. *--look* installs into a temporary *DESTDIR* and
+  prints the resulting tree (unlimited depth; Meson *run_target look* uses
+  this). *\-L* / *--look-level* _N_ limits the tree depth and implies
+  *--look*. Used by *zfr-release*(1) / *zfr release* before packaging.
 
 *package*::
   Detect packaging types (*deb*, *rpm*, *npm*/*vsix*, *mingw*, …) and build
@@ -256,10 +262,13 @@ Commands that walk from the current directory resolve *packagedir* first.
   Native release pipeline (also *zfr-release*): detect project type, create and
   push a git tag, build and package via the same APIs as *zfr build* /
   *zfr package*, optionally install local _.deb_ files, upload deb/rpm to the
-  private pool (*dput*), and create a GitHub release with *gh*(1). Does **not**
-  publish to npm / VSIX marketplaces — use *publish* for that. Defaults may be
-  loaded from *~/.config/zfr-release.options* (legacy *gh-makerelease.options*
-  still accepted). See *Options for release* below.
+  private pool (*dput*), and create a GitHub release with *gh*(1). Release
+  notes aggregate every *debian/changelog* stanza since the previous GitHub
+  release (heading *Release* for the version being shipped, then
+  *Internal Version* for skipped intermediates). Does **not** publish to npm
+  / VSIX marketplaces — use *publish* for that. Defaults may be loaded from
+  *~/.config/zfr-release.options* (legacy *gh-makerelease.options* still
+  accepted). See *Options for release* below.
 
 *publish*::
   Same as *release*, then publish to public marketplaces when defined for the
@@ -538,8 +547,9 @@ Options for *ize*:
   highlighting in *--color auto* mode.
 
 *PYTHONPATH*::
-  Must include the directory that contains the *zfr_lib* package when
-  running the tools from a non-default install layout.
+  Must include the directory that contains the *zfr* Python modules (the
+  directory with the *zfr* script, *lib.py*, and packages such as *lint/*)
+  when running the tools from a non-default install layout.
 
 == Tests
 

@@ -1,3 +1,29 @@
+zephyr (2.9.0) testing; urgency=medium
+
+  * Flatten src: drop zfr_lib layer; PATH wrappers are *.in only
+    (dispatch via zfr). Shared helpers live in lib.py; packaging helpers
+    renamed to pkgfields.py to avoid shadowing PyPI packaging.
+  * lint_rules*.md locale docs for browse with fallback
+    lang_REGION → lang → English; short titles stay in gettext.
+  * lint --browse: theme|lang top-right; Re-lint after “all rules”;
+    button labels without literal “[…]”; default locale from
+    LANG/LANGUAGE; prewarm + cache so lang switch does not re-lint;
+    emit ok finding for source.long (ZL0001) when clean.
+  * zfr release: GitHub notes aggregate debian/changelog stanzas since
+    the last published GitHub release (Release + Internal Version).
+  * lint_rules: ship lint_rules-zh.md only (zh_CN falls back to zh); drop
+    redundant lint_rules-zh_CN.md.
+  * zfr build --look: unlimited tree by default; -L/--look-level N
+    limits depth and implies --look; print install counts; install all
+    src/*.py dynamically; drop empty translate_cmd.
+  * translations.mdc: if MT is slow, hand-translate; document lint_rules
+    MD (not gettext essays); do not use Google Translate for gettext.
+  * zfr translate --sync and zfr build --look replace posync/look scripts.
+  * Templates and worldman meson posync/look call zfr translate --sync /
+    build --look.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Fri, 18 Sep 2026 22:36:27 +0800
+
 zephyr (2.8.20) testing; urgency=medium
 
   * Lint rule IDs use 4 digits (ZL0001+ / ZI0001+).
