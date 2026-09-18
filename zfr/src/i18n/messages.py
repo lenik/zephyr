@@ -184,3 +184,8 @@ def _(message: str) -> str:
     init_i18n()
     assert _translation is not None
     return _translation.gettext(message)
+
+
+def N_(message: str) -> str:
+    """Mark *message* for xgettext; return it unchanged (translate at use site)."""
+    return message

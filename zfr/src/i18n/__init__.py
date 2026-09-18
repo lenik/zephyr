@@ -3,6 +3,6 @@
 
 from __future__ import annotations
 
-from .messages import _, init_i18n
+from .messages import _, N_, init_i18n
 
-__all__ = ["_", "init_i18n"]
+__all__ = ["_", "N_", "init_i18n"]

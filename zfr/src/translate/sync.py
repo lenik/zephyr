@@ -90,6 +90,7 @@ def sync_catalogs(root: Path | None = None) -> int:
             xgettext,
             "--from-code=UTF-8",
             "--keyword=_",
+            "--keyword=N_",
             "--language=Python",
             f"--directory={root}",
             f"--output={pot.name}",
