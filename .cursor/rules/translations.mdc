@@ -6,14 +6,21 @@ alwaysApply: false
 
 # Updating translations
 
-## gettext (`.po`)
+## gettext (`.po`) — never machine-translate
 
+These rules exist because agents keep reaching for Google/`trans`/batch MT
+on catalogs and then shipping msgid copies or half-broken msgstrs.
+
+- **Forbidden for `.po` / `.pot`:** Google Translate, `trans`,
+  `googletranslator`, or any other MT pipeline. Gettext is short UI strings;
+  translate them yourself (or with **`poedit`** as below).
 - **msgid-copy is not a translation** (exception: `msgid ""`). Empty `msgstr`
   or `msgstr == msgid` counts as untranslated.
-- **≤20% completion** ⇒ treat the catalog as missing. Rewrite the whole `.po` by hand.
-  Do **not** write patch/sed/Python scripts to “fix” a mostly-empty catalog.
-- **Incremental updates** (a few new msgids): translate them yourself, then batch-apply
-  with **`poedit`** — usually no other tooling is needed:
+- **≤20% completion** ⇒ treat the catalog as missing. Rewrite the whole `.po`
+  by hand. Do **not** write patch/sed/Python scripts to “fix” a mostly-empty
+  catalog.
+- **Incremental updates** (a few new msgids): translate them yourself, then
+  batch-apply with **`poedit`**:
 
 ```bash
 poedit -l ab,de,fg <<EOT
@@ -23,10 +30,15 @@ EOT
 ```
 
   Tabs separate fields. Do not feed poedit msgid copies or placeholders.
+- **If any helper is slow, stop** — hand-translate (or pause and resume). Never
+  block the task waiting on MT for gettext.
 
-## README / man (AsciiDoc)
+## README / man (AsciiDoc) — MT allowed with proxy
 
 - Whole-document locale files under `man/<locale>/`. Prefer hand translation.
-- **`googletranslator`** can help for long adoc/README text — use the local
-  HTTP proxy (`http://localhost:8118`; see **proxy.mdc**). **Do not** use Google
-  Translate for gettext catalogs.
+- For **long adoc/README only**, `googletranslator` may help — set the local
+  HTTP proxy (`http://localhost:8118`; see **proxy.mdc**).
+- That permission does **not** extend to gettext: if you are editing `.po`,
+  go back to the section above and hand-translate.
+- If `googletranslator` is too slow on adoc/README, **stop waiting and
+  hand-translate** instead of leaving the job hung on MT.
