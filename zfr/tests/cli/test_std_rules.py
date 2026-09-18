@@ -23,27 +23,27 @@ from zfr_lib.std.ize_rules import IZE_RULES
 
 class StdRuleTests(unittest.TestCase):
     def test_lint_rule_lookup_exact(self) -> None:
-        self.assertEqual(lint_rule_id("rpm.missing"), "ZL026")
+        self.assertEqual(lint_rule_id("rpm.missing"), "ZL0026")
 
     def test_lint_rule_lookup_pattern(self) -> None:
-        self.assertEqual(lint_rule_id("layout.meson.build"), "ZL003")
-        self.assertEqual(lint_rule_id("layout.gitignore.backend"), "ZL083")
-        self.assertEqual(lint_rule_id("debian.build-depends.meson"), "ZL008")
-        self.assertEqual(lint_rule_id("readme.placeholder.README.md"), "ZL080")
+        self.assertEqual(lint_rule_id("layout.meson.build"), "ZL0003")
+        self.assertEqual(lint_rule_id("layout.gitignore.backend"), "ZL0083")
+        self.assertEqual(lint_rule_id("debian.build-depends.meson"), "ZL0008")
+        self.assertEqual(lint_rule_id("readme.placeholder.README.md"), "ZL0080")
 
     def test_ize_rule_lookup(self) -> None:
-        self.assertEqual(IZE_RULES.rule_id("ize.rpm"), "ZI013")
+        self.assertEqual(IZE_RULES.rule_id("ize.rpm"), "ZI0013")
 
     def test_by_id_accepts_numeric(self) -> None:
-        self.assertEqual(LINT_RULES.by_id("26").id, "ZL026")
-        self.assertEqual(IZE_RULES.by_id("15").id, "ZI015")
+        self.assertEqual(LINT_RULES.by_id("26").id, "ZL0026")
+        self.assertEqual(IZE_RULES.by_id("15").id, "ZI0015")
 
     def test_filter_uncheck_by_id(self) -> None:
         findings = [
             Finding("note", "rpm.missing", "no spec", "rpm/"),
             Finding("ok", "source.size", "fine"),
         ]
-        out = filter_findings(findings, ["ZL026"])
+        out = filter_findings(findings, ["ZL0026"])
         self.assertEqual(len(out), 1)
         self.assertEqual(out[0].code, "source.size")
 
@@ -61,12 +61,12 @@ class StdRuleTests(unittest.TestCase):
             self.assertIn(rule.id, ize_tbl)
 
     def test_help_std_text(self) -> None:
-        rule = LINT_RULES.by_id("ZL026")
+        rule = LINT_RULES.by_id("ZL0026")
         assert rule is not None
         text = render_std_help(rule, command="lint")
-        self.assertIn("ZL026", text)
+        self.assertIn("ZL0026", text)
         self.assertIn("rpm.missing", text)
-        self.assertIn("zfr lint -u ZL026", text)
+        self.assertIn("zfr lint -u ZL0026", text)
 
 
 class StdRuleCliTests(unittest.TestCase):
@@ -90,7 +90,7 @@ class StdRuleCliTests(unittest.TestCase):
             text=True,
         )
         self.assertEqual(proc.returncode, 0, proc.stderr)
-        self.assertIn("ZL001", proc.stdout)
+        self.assertIn("ZL0001", proc.stdout)
         self.assertIn("source.long", proc.stdout)
 
     def test_ize_help_std(self) -> None:
@@ -102,7 +102,7 @@ class StdRuleCliTests(unittest.TestCase):
             text=True,
         )
         self.assertEqual(proc.returncode, 0, proc.stderr)
-        self.assertIn("ZI015", proc.stdout)
+        self.assertIn("ZI0015", proc.stdout)
         self.assertIn("ize.i18n.derive", proc.stdout)
 
     def test_lint_uncheck_hides_rule(self) -> None:
@@ -125,14 +125,14 @@ class StdRuleCliTests(unittest.TestCase):
                 capture_output=True,
                 text=True,
             )
-            self.assertIn("ZL026", base.stdout)
+            self.assertIn("ZL0026", base.stdout)
             suppressed = subprocess.run(
                 [
                     sys.executable,
                     str(ZEPHYR),
                     "lint",
                     "-u",
-                    "ZL026",
+                    "ZL0026",
                     "--color",
                     "never",
                 ],
