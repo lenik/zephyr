@@ -1,0 +1,184 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""Meson build checks."""
+
+from __future__ import annotations
+
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+from lib import (
+    LANGS,
+    RECOMMENDED_I18N_LINGUAS,
+    RECOMMENDED_I18N_SOURCE,
+    TEMPLATE_PUFF,
+    _is_zfr_cli_package,
+    _is_zfr_meta_repo,
+    changelog_version,
+    detect_lang,
+    find_project_dir,
+    is_probably_text,
+    iter_files,
+    template_dir,
+    version_file_version,
+)
+from csr import Csr
+from pkgfields import _meson_project_fields, _parse_control_stanzas
+from .finding import Finding
+from .util import *  # noqa: F403
+
+def check_meson(root: Path, lang: str) -> list[Finding]:
+    out: list[Finding] = []
+    path = root / "meson.build"
+    if not path.is_file():
+        return out
+    text = _read(path)
+    rel = "meson.build"
+
+    if re.search(r"^\s*project\s*\(", text, re.M):
+        out.append(Finding("ok", "meson.project", _("project() present"), rel))
+    else:
+        out.append(
+            Finding(
+                "error",
+                "meson.project",
+                _("meson.build has no project() call"),
+                rel,
+                fix=_("project() must be the first Meson call. Copy the header from the language template."),
+            )
+        )
+
+    if _AGPL in text:
+        out.append(Finding("ok", "meson.license", _("license %s") % _AGPL, rel))
+    else:
+        out.append(
+            Finding(
+                "warn",
+                "meson.license",
+                _("meson license is not AGPL-3.0-or-later"),
+                rel,
+                line=_line_of(text, "license"),
+                fix=_("Set license: '%s' in project().") % _AGPL,
+            )
+        )
+
+    for var in ("project_author", "project_email", "project_year"):
+        if var in text:
+            out.append(Finding("ok", f"meson.{var}", _("%s set") % var, rel))
+        else:
+            out.append(
+                Finding(
+                    "warn",
+                    f"meson.{var}",
+                    _("missing %s (used for man pages)") % var,
+                    rel,
+                    fix=_("Set %s next to project(), then pass -a project-author/email/year to asciidoctor.") % var,
+                )
+            )
+
+    if "zfr version" in text:
+        out.append(Finding("ok", "meson.version_source", _("version uses `zfr version`"), rel))
+    elif "git describe" in text:
+        out.append(
+            Finding(
+                "warn",
+                "meson.version_source",
+                _("version still uses inline git describe; zephyr style is `zfr version`"),
+                rel,
+                line=_line_of(text, "git describe"),
+                fix=_("In project(version: run_command(...)), prefer:\n"
+                "  v=$(zfr version 2>/dev/null || true)\n"
+                "  with fallback v=\"0.0.0\" # FIXED TO 0.0.0, DO NOT MODIFY\n"
+                "See bash/meson.build in the zephyr tree."),
+            )
+        )
+    else:
+        out.append(
+            Finding(
+                "warn",
+                "meson.version_source",
+                _("could not find `zfr version` or git describe in project version"),
+                rel,
+                fix=_("Use `zfr version` for project() version (see bash/meson.build)."),
+            )
+        )
+
+    if 'FIXED TO 0.0.0' in text or 'v="0.0.0"' in text:
+        out.append(Finding("ok", "meson.version_fallback", _("0.0.0 fallback present"), rel))
+    else:
+        out.append(
+            Finding(
+                "note",
+                "meson.version_fallback",
+                _("no explicit 0.0.0 fallback for missing git/VERSION"),
+                rel,
+                fix=_('Keep fallback v="0.0.0" # FIXED TO 0.0.0, DO NOT MODIFY'),
+            )
+        )
+
+    if "asciidoctor" in text:
+        out.append(Finding("ok", "meson.asciidoctor", _("asciidoctor man pages"), rel))
+    else:
+        out.append(
+            Finding(
+                "error",
+                "meson.asciidoctor",
+                _("meson.build does not invoke asciidoctor"),
+                rel,
+                fix=_("find_program('asciidoctor') and custom_target(..., '-b', 'manpage', ...)."),
+            )
+        )
+
+    if re.search(r"run_target\s*\(\s*['\"]look['\"]", text):
+        out.append(Finding("ok", "meson.look", _("run_target look present"), rel))
+    else:
+        out.append(
+            Finding(
+                "note",
+                "meson.look",
+                _("no run_target('look') DESTDIR preview"),
+                rel,
+                fix=_("Add run_target look that meson install's into a tempdir and runs tree (see templates)."),
+            )
+        )
+
+    if "bash-completion" in text:
+        out.append(Finding("ok", "meson.completion_install", _("installs bash-completion"), rel))
+    else:
+        out.append(
+            Finding(
+                "warn",
+                "meson.completion_install",
+                _("does not install bash-completion"),
+                rel,
+                fix=_("install_data(..., install_dir: datadir / 'bash-completion' / 'completions', rename: command)."),
+            )
+        )
+
+    from ize.man import count_foreach_puff_man_loops
+
+    n_foreach = count_foreach_puff_man_loops(text)
+    if n_foreach > 1:
+        out.append(
+            Finding(
+                "warn",
+                "meson.foreach_puff",
+                _("meson.build has %s foreach puff man loops; keep exactly one") % n_foreach,
+                rel,
+                fix=_("Merge into a single `foreach puff : puffs` (or apps.keys()) loop. "
+                "`zfr ize` consolidates duplicate puffs foreach blocks "
+                "(legacy man_puffs is rewritten to puffs)."),
+            )
+        )
+    elif n_foreach == 1:
+        out.append(
+            Finding(
+                "ok",
+                "meson.foreach_puff",
+                _("single foreach puff man loop"),
+                rel,
+            )
+        )
+    return out

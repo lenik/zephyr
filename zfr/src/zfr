@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """zfr — multi-language CLI project template helper.
 
-Subcommands are defined in zfr_lib.<cmd> (argparse + implementation).
+Subcommands are defined in <cmd> (argparse + implementation).
 This dispatcher only registers them and forwards to args._run.
 """
 
@@ -16,8 +16,8 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
-from zfr_lib.i18n import _, init_i18n  # noqa: E402
-from zfr_lib.registry import (  # noqa: E402
+from i18n import _, init_i18n  # noqa: E402
+from registry import (  # noqa: E402
     COMMAND_SPECS,
     command_names,
     get_spec,
@@ -67,8 +67,8 @@ def _split_globals(argv: list[str]) -> tuple[list[str], list[str]]:
 
 def _print_top_help() -> None:
     """Fast path for ``zfr -h`` / ``zfr help`` — no command module imports."""
-    from zfr_lib.cli import SubcommandHelpFormatter, VersionBannerAction
-    from zfr_lib.terminal import add_for_ai_purpose_arguments
+    from cli import SubcommandHelpFormatter, VersionBannerAction
+    from terminal import add_for_ai_purpose_arguments
 
     init_i18n()
     p = argparse.ArgumentParser(
@@ -104,8 +104,8 @@ def build_parser(*, commands: list[str] | None = None) -> argparse.ArgumentParse
     When *commands* is set, only those modules are imported and registered
     (used for a single-command dispatch). ``None`` registers every command.
     """
-    from zfr_lib.cli import SubcommandHelpFormatter, VersionBannerAction
-    from zfr_lib.terminal import add_for_ai_purpose_arguments
+    from cli import SubcommandHelpFormatter, VersionBannerAction
+    from terminal import add_for_ai_purpose_arguments
 
     init_i18n()
     p = argparse.ArgumentParser(
@@ -142,7 +142,7 @@ def main(argv: list[str] | None = None) -> int:
         _print_top_help()
         return 0
     if argv[0] in ("-V", "--version"):
-        from zfr_lib.versioning import format_cli_version_banner
+        from versioning import format_cli_version_banner
 
         print(format_cli_version_banner(), flush=True)
         return 0
@@ -152,7 +152,7 @@ def main(argv: list[str] | None = None) -> int:
         _print_top_help()
         return 0
     if rest[0] in ("-V", "--version"):
-        from zfr_lib.versioning import format_cli_version_banner
+        from versioning import format_cli_version_banner
 
         print(format_cli_version_banner(), flush=True)
         return 0

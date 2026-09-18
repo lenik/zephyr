@@ -1,0 +1,291 @@
+
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""zfr lint — validate a project against zephyr packaging and layout style."""
+
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+from lib import _is_zfr_cli_package, find_project_dir
+from cli import register_command
+from finding import Finding
+from i18n import _
+from l10n import apply_lint_option_file, parse_l10n_level
+from pkgfields import _meson_project_fields
+from .filtering import filter_findings
+from .report import format_report
+from .severity import parse_severity_level, remap_severities
+from .util import _control, _role
+
+# collect_findings / cmd_lint live below if not imported from util
+def _resolve_lint_root(root: Path) -> Path:
+    """Lint the zfr CLI package when cwd is the zephyr meta-repo root."""
+    if _role(root) == "meta":
+        cli = root / "zfr"
+        if _is_zfr_cli_package(cli):
+            return cli
+    return root
+
+
+def collect_findings(
+    root: Path, *, l10n_level: str = "L1"
+) -> tuple[str, str, str, list[Finding]]:
+    from .debian import check_debian
+    from .gitignore import check_gitignore
+    from .i18n_check import check_i18n
+    from .identity import check_identity
+    from .lang_bits import check_lang_bits
+    from .layout import check_layout
+    from .leftovers import check_leftovers, check_readme
+    from .meson import check_meson
+    from .rpm import check_rpm
+    from .source_size import check_source_size
+    from .template import check_template_gaps
+
+    root = _resolve_lint_root(root)
+    role = _role(root)
+    if role == "meta":
+        lang = "meta"
+    else:
+        try:
+            from lib import detect_lang
+
+            lang = detect_lang(root)
+        except SystemExit:
+            lang = "unknown"
+    meson = _meson_project_fields(root)
+    src, _pkg, _ctl = _control(root)
+    name = src.get("Source") or meson.get("name") or root.name
+    findings: list[Finding] = []
+    findings.extend(check_layout(root, lang, role))
+    findings.extend(check_gitignore(root, role))
+    findings.extend(check_identity(root, lang, role))
+    findings.extend(check_meson(root, lang))
+    findings.extend(check_debian(root, lang, role))
+    findings.extend(check_rpm(root, lang))
+    findings.extend(check_readme(root, role))
+    findings.extend(check_i18n(root, role, l10n_level=l10n_level))
+    findings.extend(check_leftovers(root, role))
+    findings.extend(check_lang_bits(root, lang))
+    findings.extend(check_source_size(root, role))
+    from .hardcoded import check_hardcoded
+
+    findings.extend(check_hardcoded(root, role))
+    findings.extend(check_template_gaps(root, lang, role))
+    from .scripts_check import check_scripts_and_version
+
+    findings.extend(check_scripts_and_version(root, role))
+    return name, lang, role, findings
+
+def cmd_lint(
+    *,
+    verbose: bool = False,
+    quiet: bool = False,
+    color: str = "auto",
+    warning_level: str | None = None,
+    error_level: str | None = None,
+    l10n_level: str = "L1",
+    style_info: bool | None = None,
+    for_ai_purpose: bool | None = None,
+    workdir: Path | None = None,
+    uncheck: list[str] | None = None,
+    always: list[str] | None = None,
+    browse: bool = False,
+) -> int:
+    from terminal import resolve_for_ai_purpose
+
+    root = _resolve_lint_root(find_project_dir(workdir))
+    if browse:
+        from .browse import browse_lint
+
+        return browse_lint(
+            root,
+            l10n_level=l10n_level,
+            uncheck=uncheck,
+            always=always,
+            warning_level=warning_level,
+            error_level=error_level,
+        )
+    name, lang, role, findings = collect_findings(root, l10n_level=l10n_level)
+    findings = filter_findings(findings, uncheck, always)
+    remap_severities(findings, as_warning=warning_level, as_error=error_level)
+    ai = resolve_for_ai_purpose(for_ai_purpose)
+    sys.stdout.write(
+        format_report(
+            root,
+            name,
+            lang,
+            role,
+            findings,
+            verbose=verbose,
+            quiet=quiet,
+            color=color,
+            style_info=style_info,
+            for_ai_purpose=ai,
+        )
+    )
+    sys.stdout.flush()
+    if any(f.severity == "error" for f in findings):
+        return 1
+    return 0
+
+
+NAME = "lint"
+HELP = _('validate project packaging and zephyr layout (walks parents from cwd)')
+DESCRIPTION = _(
+    "Check the current zephyr project for missing files and packaging/style mistakes. "
+    "Walks from cwd toward parent directories. CSR colors when stdout is a TTY. "
+    "Style-contract blurbs default on for non-interactive stdout and AI-integrated "
+    "terminals (Cursor, VS Code, Windsurf, …); off for a plain interactive shell. "
+    "Override with -i/-I."
+)
+
+
+def add_arguments(p: argparse.ArgumentParser) -> None:
+    from terminal import add_for_ai_purpose_arguments
+
+    p.add_argument("-v", "--verbose", action="store_true", help=_("show passing checks too"))
+    p.add_argument("-q", "--quiet", action="store_true", help=_("only print errors"))
+    p.add_argument(
+        "-b",
+        "--browse",
+        action="store_true",
+        help=_(
+            "open a local web UI with maximum-verbosity lint results, "
+            "locale switcher, and per-finding [ize] actions"
+        ),
+    )
+    p.add_argument(
+        "-w",
+        "--warning",
+        nargs="?",
+        const="note",
+        default=None,
+        type=parse_severity_level,
+        metavar="LEVEL",
+        dest="warning_level",
+        help=_(
+            "treat LEVEL as warning (LEVEL=note|warn|error; default note: "
+            "note→warn; warn=no-op; error→warn)"
+        ),
+    )
+    p.add_argument(
+        "-e",
+        "--error",
+        nargs="?",
+        const="warn",
+        default=None,
+        type=parse_severity_level,
+        metavar="LEVEL",
+        dest="error_level",
+        help=_(
+            "treat LEVEL as error (LEVEL=note|warn|error; default warn: "
+            "warn→error; note→note+warn→error; error=no-op)"
+        ),
+    )
+    p.add_argument(
+        "--strict",
+        action="store_const",
+        const="warn",
+        dest="error_level",
+        help=_("alias for -e/--error=warn (treat warnings as errors)"),
+    )
+    p.add_argument(
+        "-L",
+        "--list-std",
+        action="store_true",
+        help=_("list numbered lint standards (ZL*) as a table and exit"),
+    )
+    p.add_argument(
+        "-H",
+        "--help-std",
+        metavar="NUM",
+        help=_("show details for lint standard NUM (e.g. ZL0026, 26) and exit"),
+    )
+    p.add_argument(
+        "-l",
+        "--l10n-level",
+        metavar="LEVEL",
+        type=parse_l10n_level,
+        default=None,
+        help=_("required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"),
+    )
+    info = p.add_mutually_exclusive_group()
+    info.add_argument(
+        "-i",
+        "--info",
+        dest="style_info",
+        action="store_true",
+        help=_("show zephyr style-contract / next-steps blurbs (default for pipes and AI terminals)"),
+    )
+    info.add_argument(
+        "-I",
+        "--no-info",
+        dest="style_info",
+        action="store_false",
+        help=_("hide zephyr style-contract / next-steps blurbs (default for plain interactive shell)"),
+    )
+    p.set_defaults(style_info=None)
+    add_for_ai_purpose_arguments(p)
+    p.add_argument(
+        "-u",
+        "--uncheck",
+        action="append",
+        metavar="CODE",
+        default=[],
+        help=_("suppress rule ID(s) or code(s), comma-separated (repeatable)"),
+    )
+    p.add_argument(
+        "-a",
+        "--always",
+        action="append",
+        metavar="CODE",
+        default=[],
+        help=_("force-enable rule ID(s) or code(s) even if unchecked (repeatable)"),
+    )
+    p.add_argument("--color", choices=("auto", "always", "never"), default="auto", help=_("CSR (console SGR) highlighting (default: auto)"))
+
+
+def run(args: argparse.Namespace) -> int:
+    from std import LINT_RULES, render_std_help, render_std_table
+
+    if args.list_std:
+        sys.stdout.write(render_std_table(LINT_RULES.all_rules()))
+        return 0
+    if args.help_std:
+        rule = LINT_RULES.by_id(args.help_std)
+        if rule is None:
+            print(_("unknown lint standard: %s") % args.help_std, file=sys.stderr)
+            return 2
+        sys.stdout.write(render_std_help(rule, command="lint"))
+        return 0
+    root = _resolve_lint_root(find_project_dir())
+    parser = argparse.ArgumentParser(add_help=False)
+    add_arguments(parser)
+    args = apply_lint_option_file(root, parser, args)
+    return cmd_lint(
+        verbose=args.verbose,
+        quiet=args.quiet,
+        color=args.color,
+        warning_level=getattr(args, "warning_level", None),
+        error_level=getattr(args, "error_level", None),
+        l10n_level=args.l10n_level or "L1",
+        style_info=args.style_info,
+        for_ai_purpose=getattr(args, "for_ai_purpose", None),
+        uncheck=args.uncheck,
+        always=getattr(args, "always", None),
+        browse=bool(getattr(args, "browse", False)),
+    )
+
+
+def register(sub: argparse._SubParsersAction) -> None:
+    register_command(
+        sub,
+        NAME,
+        help=HELP,
+        description=DESCRIPTION,
+        add_arguments=add_arguments,
+        run=run,
+    )
