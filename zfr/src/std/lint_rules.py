@@ -219,6 +219,49 @@ _LINT_RULES: tuple[StdRule, ...] = (
         "varies",
         izeable=True,
     ),
+    StdRule(
+        "ZL0099",
+        "ci.release_workflow",
+        N_("GitHub Actions release-packages workflow (Docker matrix, no nested deps)"),
+        "varies",
+        izeable=True,
+        detail=(
+            "Expect .github/workflows/release-packages.yml triggered on release "
+            "published, plus scripts/ci helpers. Peer deps use scripts/ci/deps.conf "
+            "and install-only fetch (never nested-build). Apt component is main."
+        ),
+    ),
+    StdRule(
+        "ZL0100",
+        "ci.release_scripts",
+        N_("scripts/ci helpers for multi-distro package builds"),
+        "varies",
+        izeable=True,
+    ),
+    StdRule(
+        "ZL0101",
+        "ci.matrix_arch",
+        N_("CI matrix arch policy (raspi armhf/v6; uos/kylin loong64-only)"),
+        "varies",
+        izeable=True,
+        detail=(
+            "armhf only for raspi_* with platform linux/arm/v6 (not Debian armhf "
+            "ARMv7). loong64 only for uos_*/kylin_*. Debian/Ubuntu use "
+            "amd64/arm64/riscv64."
+        ),
+    ),
+    StdRule(
+        "ZL0102",
+        "ci.rpm_deb_deps",
+        N_("RPM CI maps Debian Build-Depends (bash-builtins → bash)"),
+        "varies",
+        izeable=True,
+        detail=(
+            "When translating debian/control Build-Depends into rpmbuild, apply "
+            "experiential mappings: bash-builtins is provided by bash (bash.pc "
+            "aliased to bash-builtins.pc); libglib2.0-dev → glib2-devel; etc."
+        ),
+    ),
 )
 
 LINT_RULES = RuleRegistry(_LINT_RULES)

@@ -59,6 +59,9 @@ def ize_targets_for_lint(code: str) -> list[str]:
     if code.startswith("identity.rpm"):
         return ["ize.rpm"]
 
+    if code.startswith("ci."):
+        return ["ize.stdfiles"]
+
     return []
 
 

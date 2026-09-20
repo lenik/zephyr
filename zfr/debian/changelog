@@ -1,3 +1,22 @@
+zephyr (2.9.3) testing; urgency=medium
+
+  * share/ci: component main; matrix uos/kylin loong64-only,
+    raspi_bookworm armhf ARMv6; drop debian/ubuntu armhf/loong64.
+  * lint ZL0101/ZL0102: matrix arch policy + RPM bash-builtins←bash.
+  * share/ci build-rpm: deb→rpm Build-Depends heuristics (bash-builtins).
+  * Share GitHub Actions release-packages CI scaffold (share/ci);
+    create/ize/stdfiles install it.
+  * lint: ZL0099/ZL0100 check release workflow + scripts/ci helpers (no
+    build4/zfr in YAML).
+  * zfr package: upload RPMs to private repo via RPM_REPO_URL HTTP PUT +
+    rescan.
+  * zfr package: upload/publish via
+    ~/.config/zfr/scripts/{upload,publish}_{deb,rpm,npm,vsix}; warn if
+    missing.
+  * Ship share/zfr-scripts examples (dput s1 / curl reporpm).
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Sun, 20 Sep 2026 13:15:10 +0800
+
 zephyr (2.9.2) testing; urgency=medium
 
   * lint --browse: group findings that share a ZL/ZI rule id into one

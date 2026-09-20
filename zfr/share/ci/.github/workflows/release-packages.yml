@@ -1,0 +1,194 @@
+# Build Debian/RPM packages for each supported distro×arch on release,
+# attach zips to the GitHub Release, and optionally publish to the private
+# apt/yum repos (s1). Uses stock ubuntu-latest + Docker only.
+#
+# Optional peer package deps (install-only, never nested-build):
+#   create scripts/ci/deps.conf with one "owner/repo" per line (e.g. lenik/bas-c).
+name: release-packages
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing release tag to upload into (default: latest)"
+        required: false
+        type: string
+      dep_tag:
+        description: "Dependency release tag to install (default: latest)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-packages-${{ github.event.release.tag_name || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      deb: ${{ steps.gen.outputs.deb }}
+      rpm: ${{ steps.gen.outputs.rpm }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: gen
+        run: |
+          chmod +x scripts/ci/*.sh
+          {
+            echo "deb<<EOF"
+            ./scripts/ci/matrix-from-json.sh deb
+            echo "EOF"
+            echo "rpm<<EOF"
+            ./scripts/ci/matrix-from-json.sh rpm
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+  deb:
+    needs: matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.deb) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - name: Install tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq zip unzip
+      - name: Fetch peer package deps (install-only)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEP_TAG: ${{ inputs.dep_tag }}
+          REPODEB_URL: ${{ secrets.REPODEB_URL }}
+        run: |
+          chmod +x scripts/ci/*.sh
+          mkdir -p ci-deps
+          # Prefer repodeb_aptly (apt) when configured — skip GH asset download.
+          if [ -n "${REPODEB_URL:-}" ]; then
+            echo "Using REPODEB_URL=$REPODEB_URL for Build-Depends (no nested build)"
+            exit 0
+          fi
+          if [ -f scripts/ci/deps.conf ]; then
+            while read -r repo || [ -n "$repo" ]; do
+              repo=${repo%%#*}
+              repo=$(echo "$repo" | tr -d '[:space:]')
+              [ -z "$repo" ] && continue
+              ./scripts/ci/fetch-dep.sh \
+                "$repo" debian "${{ matrix.release }}" "${{ matrix.arch }}" \
+                "$PWD/ci-deps"
+            done < scripts/ci/deps.conf
+          fi
+      - name: Build deb
+        env:
+          CI_DEPS_DIR: ${{ github.workspace }}/ci-deps
+          REPODEB_URL: ${{ secrets.REPODEB_URL }}
+          REPODEB_SUITE: ${{ matrix.release }}
+          REPODEB_COMPONENT: main
+        run: |
+          ./scripts/ci/build-deb.sh \
+            "${{ matrix.image }}" \
+            "${{ matrix.platform }}" \
+            "${{ matrix.release }}" \
+            "${{ matrix.arch }}"
+      - name: Upload to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG=$(gh release list -L 1 --json tagName -q '.[0].tagName')
+          fi
+          test -n "$TAG"
+          gh release upload "$TAG" \
+            "dist/debian-${{ matrix.release }}-${{ matrix.arch }}"/*.zip \
+            --clobber
+
+  rpm:
+    needs: matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.rpm) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - name: Install tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq zip unzip
+      - name: Fetch peer package deps (install-only)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEP_TAG: ${{ inputs.dep_tag }}
+        run: |
+          chmod +x scripts/ci/*.sh
+          mkdir -p ci-deps
+          if [ -f scripts/ci/deps.conf ]; then
+            while read -r repo || [ -n "$repo" ]; do
+              repo=${repo%%#*}
+              repo=$(echo "$repo" | tr -d '[:space:]')
+              [ -z "$repo" ] && continue
+              ./scripts/ci/fetch-dep.sh \
+                "$repo" el "${{ matrix.release }}" "${{ matrix.arch }}" \
+                "$PWD/ci-deps"
+            done < scripts/ci/deps.conf
+          fi
+      - name: Build rpm
+        env:
+          CI_DEPS_DIR: ${{ github.workspace }}/ci-deps
+        run: |
+          ./scripts/ci/build-rpm.sh \
+            "${{ matrix.image }}" \
+            "${{ matrix.platform }}" \
+            "${{ matrix.release }}" \
+            "${{ matrix.arch }}"
+      - name: Upload to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG=$(gh release list -L 1 --json tagName -q '.[0].tagName')
+          fi
+          test -n "$TAG"
+          gh release upload "$TAG" \
+            "dist/el-${{ matrix.release }}-${{ matrix.arch }}"/*.zip \
+            --clobber
+
+  publish-private:
+    needs: [deb, rpm]
+    if: always() && (needs.deb.result == 'success' || needs.rpm.result == 'success')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download release assets for private publish
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG=$(gh release list -L 1 --json tagName -q '.[0].tagName')
+          fi
+          mkdir -p dist
+          gh release download "$TAG" -D dist -p '*.zip' || true
+      - name: Publish to private repos
+        env:
+          S1_HOST: ${{ secrets.S1_HOST }}
+          DPUT_SSH_KEY: ${{ secrets.DPUT_SSH_KEY }}
+          DPUT_SSH_USER: ${{ secrets.DPUT_SSH_USER }}
+          REPODEB_URL: ${{ secrets.REPODEB_URL }}
+          REPORPM_URL: ${{ secrets.REPORPM_URL }}
+          REPORPM_USER: ${{ secrets.REPORPM_USER }}
+          REPORPM_PASS: ${{ secrets.REPORPM_PASS }}
+          # legacy aliases
+          RPM_REPO_URL: ${{ secrets.REPORPM_URL || secrets.RPM_REPO_URL }}
+          RPM_REPO_USER: ${{ secrets.REPORPM_USER || secrets.RPM_REPO_USER }}
+          RPM_REPO_PASS: ${{ secrets.REPORPM_PASS || secrets.RPM_REPO_PASS }}
+        run: |
+          chmod +x scripts/ci/*.sh
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq dput openssh-client curl unzip
+          ./scripts/ci/publish-private.sh dist

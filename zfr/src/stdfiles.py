@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""Canonical standard files: LICENSE, .githooks, .cursor/rules.
+"""Canonical standard files: LICENSE, .githooks, .cursor/rules, CI scaffold.
 
 Installed by ``zfr create`` and reset by ``zfr ize``. Not part of language
-templates.
+templates. CI lives under ``share/ci`` (``.github/workflows`` + ``scripts/ci``).
 """
 
 from __future__ import annotations
@@ -76,8 +76,51 @@ def install_githooks(dest: Path) -> Path | None:
     return dest_hook
 
 
+def ci_scaffold_src() -> Path | None:
+    """Root of the shared GitHub Actions CI scaffold (share/ci)."""
+    candidates: list[Path] = [
+        pkgdatadir() / "ci",
+        pkgdatadir() / "zfr" / "share" / "ci",
+    ]
+    here = Path(__file__).resolve()
+    if here.parent.name == "src" and (here.parent / "zfr").is_file():
+        candidates.append(here.parents[1] / "share" / "ci")
+    for path in candidates:
+        if (path / ".github" / "workflows" / "release-packages.yml").is_file():
+            return path
+    return None
+
+
+def install_ci_scaffold(dest: Path) -> list[Path]:
+    """Install/overwrite .github/workflows + scripts/ci from the zfr share."""
+    src_root = ci_scaffold_src()
+    if src_root is None:
+        return []
+    installed: list[Path] = []
+    mapping = [
+        (".github/workflows/release-packages.yml", 0o644),
+        ("scripts/ci/matrix.json", 0o644),
+        ("scripts/ci/matrix-from-json.sh", 0o755),
+        ("scripts/ci/build-deb.sh", 0o755),
+        ("scripts/ci/build-rpm.sh", 0o755),
+        ("scripts/ci/publish-private.sh", 0o755),
+        ("scripts/ci/fetch-dep.sh", 0o755),
+        ("scripts/ci/deps.conf.example", 0o644),
+    ]
+    for rel, mode in mapping:
+        src = src_root / rel
+        if not src.is_file():
+            continue
+        out = dest / rel
+        out.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, out)
+        out.chmod(out.stat().st_mode | (0o111 if mode & 0o111 else 0))
+        installed.append(out)
+    return installed
+
+
 def install_std_files(dest: Path, *, project: str | None = None) -> list[Path]:
-    """Install/overwrite LICENSE, .githooks/pre-commit, and cursor rules."""
+    """Install/overwrite LICENSE, .githooks/pre-commit, cursor rules, and CI scaffold."""
     installed: list[Path] = []
     lic = install_license(dest, project=project or dest.name)
     if lic is not None:
@@ -86,6 +129,7 @@ def install_std_files(dest: Path, *, project: str | None = None) -> list[Path]:
         path = fn(dest)
         if path is not None:
             installed.append(path)
+    installed.extend(install_ci_scaffold(dest))
     return installed
 
 
@@ -102,4 +146,19 @@ def std_file_sources() -> dict[str, Path]:
         rule = cursor_rule_src(name)
         if rule is not None:
             out[f".cursor/rules/{name}"] = rule
+    ci = ci_scaffold_src()
+    if ci is not None:
+        for rel in (
+            ".github/workflows/release-packages.yml",
+            "scripts/ci/matrix.json",
+            "scripts/ci/matrix-from-json.sh",
+            "scripts/ci/build-deb.sh",
+            "scripts/ci/build-rpm.sh",
+            "scripts/ci/publish-private.sh",
+            "scripts/ci/fetch-dep.sh",
+            "scripts/ci/deps.conf.example",
+        ):
+            src = ci / rel
+            if src.is_file():
+                out[rel] = src
     return out

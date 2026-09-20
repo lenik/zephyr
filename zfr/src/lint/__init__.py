@@ -33,6 +33,7 @@ def collect_findings(
     root: Path, *, l10n_level: str = "L1"
 ) -> tuple[str, str, str, list[Finding]]:
     from .debian import check_debian
+    from .ci import check_ci
     from .gitignore import check_gitignore
     from .i18n_check import check_i18n
     from .identity import check_identity
@@ -77,6 +78,7 @@ def collect_findings(
     from .scripts_check import check_scripts_and_version
 
     findings.extend(check_scripts_and_version(root, role))
+    findings.extend(check_ci(root))
     return name, lang, role, findings
 
 def cmd_lint(
