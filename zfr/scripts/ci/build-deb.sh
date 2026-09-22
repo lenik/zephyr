@@ -204,7 +204,7 @@ if [ -f debian/control ]; then
          meson ninja-build python3 asciidoctor gettext debhelper \
     || true
 fi
-# Bullseye's apt meson (0.56) is below project requirement (>=0.61); use pip.
+# Bullseye apt meson (0.56) is below project requirement (>=0.61); use pip.
 if [ "${BUILD_SUITE:-}" = "bullseye" ]; then
   apt-get install -y -qq --no-install-recommends --fix-missing \
     "${_apt_extra[@]}" python3-pip python3-setuptools ninja-build 2>/dev/null || true
