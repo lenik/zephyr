@@ -162,6 +162,14 @@ $PM -y install rpm-build rpmdevtools pkgconf gcc gcc-c++ make \
 # meson/ninja: distro packages (EPEL/CRB) or pip fallback.
 $PM -y install meson ninja-build 2>/dev/null \
   || pip3 install --no-cache-dir meson ninja
+# EL8 ships meson 0.58; project needs >=0.61.
+if [[ "${EL}" == "8" ]]; then
+  pip3 install --no-cache-dir "meson>=0.61,<1.5" || \
+    python3 -m pip install --no-cache-dir "meson>=0.61,<1.5"
+  export PATH="/usr/local/bin:$PATH"
+  hash -r 2>/dev/null || true
+fi
+meson --version || true
 
 # Map Debian Build-Depends → RPM packages (experiential heuristics).
 map_deb_to_rpm() {
