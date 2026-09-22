@@ -188,8 +188,21 @@ if ls /work/deps/*.deb >/dev/null 2>&1; then
   apt-get -y -f install --no-install-recommends --fix-missing || true
 fi
 # Peer -dev packages often Requires: glib/curl/zlib via .pc but omit -dev Depends.
-apt-get install -y -qq --no-install-recommends --fix-missing \
-  "${_apt_extra[@]}" \
+_apt_retry_install() {
+  # snapshot.debian.org occasionally returns 503; retry a few times.
+  local n=0
+  while [ "$n" -lt 5 ]; do
+    if apt-get install -y -qq --no-install-recommends --fix-missing \
+      "${_apt_extra[@]}" "$@"; then
+      return 0
+    fi
+    n=$((n + 1))
+    sleep $((n * 5))
+    apt-get update -qq || apt-get update || true
+  done
+  return 1
+}
+_apt_retry_install \
   libglib2.0-dev libcurl4-openssl-dev zlib1g-dev libicu-dev bash-builtins \
   pkg-config 2>/dev/null || true
 # Drop Build-Depends that apt cannot resolve on this suite (e.g. private
@@ -199,8 +212,7 @@ if [ -f debian/control ]; then
     python3 /work/zfr/scripts/ci/filter-build-depends.py debian/control
   fi
   mk-build-deps -i -r -t "apt-get -y --no-install-recommends --fix-missing ${_apt_extra[*]}" \
-    || apt-get install -y --no-install-recommends --fix-missing \
-         "${_apt_extra[@]}" \
+    || _apt_retry_install \
          meson ninja-build python3 asciidoctor gettext debhelper \
     || true
 fi
