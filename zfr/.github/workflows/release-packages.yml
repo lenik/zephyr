@@ -1,0 +1,311 @@
+# Build Debian/RPM/MinGW/UCRT packages for each supported distro×arch on
+# release, attach zips to the GitHub Release, and optionally publish to the
+# private apt/yum/nuget repos (s1). Deb/RPM use ubuntu-latest + Docker;
+# MinGW/UCRT use windows runners.
+#
+# Optional peer package deps (install-only, never nested-build):
+#   create scripts/ci/deps.conf with one "owner/repo" per line (e.g. lenik/bas-c).
+name: release-packages
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing release tag to upload into (default: latest)"
+        required: false
+        type: string
+      dep_tag:
+        description: "Dependency release tag to install (default: latest)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-packages-${{ github.event.release.tag_name || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      deb: ${{ steps.gen.outputs.deb }}
+      rpm: ${{ steps.gen.outputs.rpm }}
+      mingw: ${{ steps.gen.outputs.mingw }}
+      ucrt: ${{ steps.gen.outputs.ucrt }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: gen
+        run: |
+          chmod +x scripts/ci/*.sh
+          {
+            echo "deb<<EOF"
+            ./scripts/ci/matrix-from-json.sh deb
+            echo "EOF"
+            echo "rpm<<EOF"
+            ./scripts/ci/matrix-from-json.sh rpm
+            echo "EOF"
+            echo "mingw<<EOF"
+            ./scripts/ci/matrix-from-json.sh mingw
+            echo "EOF"
+            echo "ucrt<<EOF"
+            ./scripts/ci/matrix-from-json.sh ucrt
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+  deb:
+    needs: matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.deb) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - name: Install tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq zip unzip
+      - name: Fetch peer package deps (install-only)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEP_TAG: ${{ inputs.dep_tag }}
+          REPODEB_URL: ${{ secrets.REPODEB_URL }}
+        run: |
+          chmod +x scripts/ci/*.sh
+          mkdir -p ci-deps
+          if [ -n "${REPODEB_URL:-}" ]; then
+            echo "Using REPODEB_URL=$REPODEB_URL for Build-Depends (no nested build)"
+            exit 0
+          fi
+          if [ -f scripts/ci/deps.conf ]; then
+            while read -r repo || [ -n "$repo" ]; do
+              repo=${repo%%#*}
+              repo=$(echo "$repo" | tr -d '[:space:]')
+              [ -z "$repo" ] && continue
+              ./scripts/ci/fetch-dep.sh \
+                "$repo" debian "${{ matrix.release }}" "${{ matrix.arch }}" \
+                "$PWD/ci-deps"
+            done < scripts/ci/deps.conf
+          fi
+      - name: Build deb
+        env:
+          CI_DEPS_DIR: ${{ github.workspace }}/ci-deps
+          REPODEB_URL: ${{ secrets.REPODEB_URL }}
+          REPODEB_SUITE: ${{ matrix.release }}
+          REPODEB_COMPONENT: main
+        run: |
+          ./scripts/ci/build-deb.sh \
+            "${{ matrix.image }}" \
+            "${{ matrix.platform }}" \
+            "${{ matrix.release }}" \
+            "${{ matrix.arch }}"
+      - name: Upload to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG=$(gh release list -L 1 --json tagName -q '.[0].tagName')
+          fi
+          test -n "$TAG"
+          gh release upload "$TAG" \
+            "dist/debian-${{ matrix.release }}-${{ matrix.arch }}"/*.zip \
+            --clobber
+
+  rpm:
+    needs: matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.rpm) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - name: Install tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq zip unzip
+      - name: Fetch peer package deps (install-only)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEP_TAG: ${{ inputs.dep_tag }}
+        run: |
+          chmod +x scripts/ci/*.sh
+          mkdir -p ci-deps
+          if [ -f scripts/ci/deps.conf ]; then
+            while read -r repo || [ -n "$repo" ]; do
+              repo=${repo%%#*}
+              repo=$(echo "$repo" | tr -d '[:space:]')
+              [ -z "$repo" ] && continue
+              ./scripts/ci/fetch-dep.sh \
+                "$repo" el "${{ matrix.release }}" "${{ matrix.arch }}" \
+                "$PWD/ci-deps"
+            done < scripts/ci/deps.conf
+          fi
+      - name: Build rpm
+        env:
+          CI_DEPS_DIR: ${{ github.workspace }}/ci-deps
+        run: |
+          ./scripts/ci/build-rpm.sh \
+            "${{ matrix.image }}" \
+            "${{ matrix.platform }}" \
+            "${{ matrix.release }}" \
+            "${{ matrix.arch }}"
+      - name: Upload to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG=$(gh release list -L 1 --json tagName -q '.[0].tagName')
+          fi
+          test -n "$TAG"
+          gh release upload "$TAG" \
+            "dist/el-${{ matrix.release }}-${{ matrix.arch }}"/*.zip \
+            --clobber
+
+  mingw:
+    needs: matrix
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.mingw) }}
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{ matrix.msystem }}
+          update: true
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-meson
+            mingw-w64-x86_64-ninja
+            mingw-w64-x86_64-pkgconf
+            mingw-w64-x86_64-glib2
+            mingw-w64-x86_64-curl
+            mingw-w64-x86_64-openssl
+            mingw-w64-x86_64-zlib
+            mingw-w64-x86_64-icu
+            mingw-w64-x86_64-gettext
+            python
+            zip
+            make
+            tar
+      - name: Build mingw + nuget (.gnu)
+        run: |
+          chmod +x scripts/ci/*.sh scripts/ci/pack-nuget.py || true
+          ./scripts/ci/build-mingw.sh "dist/mingw-${{ matrix.arch }}"
+      - name: Upload to GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG=$(gh release list -L 1 --json tagName -q '.[0].tagName')
+          fi
+          test -n "$TAG"
+          gh release upload "$TAG" \
+            "dist/mingw-${{ matrix.arch }}"/*.zip \
+            "dist/mingw-${{ matrix.arch }}"/*.nupkg \
+            --clobber
+
+  ucrt:
+    needs: matrix
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.ucrt) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.arch }}
+      - name: Install Meson/Ninja
+        shell: bash
+        run: |
+          choco install -y python3 zip 2>/dev/null || true
+          python -m pip install --upgrade pip meson ninja
+      - name: Build ucrt + nuget
+        shell: bash
+        run: |
+          chmod +x scripts/ci/*.sh scripts/ci/pack-nuget.py || true
+          ./scripts/ci/build-ucrt.sh "${{ matrix.arch }}" "dist/ucrt-${{ matrix.arch }}"
+      - name: Upload to GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG=$(gh release list -L 1 --json tagName -q '.[0].tagName')
+          fi
+          test -n "$TAG"
+          gh release upload "$TAG" \
+            "dist/ucrt-${{ matrix.arch }}"/*.zip \
+            "dist/ucrt-${{ matrix.arch }}"/*.nupkg \
+            --clobber
+
+  publish-private:
+    needs: [deb, rpm, mingw, ucrt]
+    if: always() && !cancelled() && (contains(fromJSON('["success","failure"]'), needs.deb.result) || contains(fromJSON('["success","failure"]'), needs.rpm.result) || contains(fromJSON('["success","failure"]'), needs.mingw.result) || contains(fromJSON('["success","failure"]'), needs.ucrt.result))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download release assets for private publish
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG=$(gh release list -L 1 --json tagName -q '.[0].tagName')
+          fi
+          mkdir -p dist
+          gh release download "$TAG" -D dist -p '*.zip' || true
+          gh release download "$TAG" -D dist -p '*.nupkg' || true
+      - name: Publish to private repos
+        env:
+          S1_HOST: ${{ secrets.S1_HOST }}
+          DPUT_SSH_KEY: ${{ secrets.DPUT_SSH_KEY }}
+          DPUT_SSH_USER: ${{ secrets.DPUT_SSH_USER }}
+          REPODEB_URL: ${{ secrets.REPODEB_URL }}
+          REPORPM_URL: ${{ secrets.REPORPM_URL }}
+          REPORPM_USER: ${{ secrets.REPORPM_USER }}
+          REPORPM_PASS: ${{ secrets.REPORPM_PASS }}
+          REPONUPKG_URL: ${{ secrets.REPONUPKG_URL }}
+          REPONUPKG_TOKEN: ${{ secrets.REPONUPKG_TOKEN }}
+          REPONUPKG_OWNER: ${{ secrets.REPONUPKG_OWNER }}
+          REPONUGET_URL: ${{ secrets.REPONUPKG_URL || secrets.REPONUGET_URL }}
+          REPONUGET_API_KEY: ${{ secrets.REPONUPKG_TOKEN || secrets.REPONUGET_API_KEY }}
+          RPM_REPO_URL: ${{ secrets.REPORPM_URL || secrets.RPM_REPO_URL }}
+          RPM_REPO_USER: ${{ secrets.REPORPM_USER || secrets.RPM_REPO_USER }}
+          RPM_REPO_PASS: ${{ secrets.REPORPM_PASS || secrets.RPM_REPO_PASS }}
+        run: |
+          chmod +x scripts/ci/*.sh
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq dput openssh-client curl unzip
+          ./scripts/ci/publish-private.sh dist
+      - name: WinGet / Scoop / Choco manifests
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WINGET_SUBMIT: ${{ secrets.WINGET_SUBMIT }}
+          SCOOP_BUCKET_REPO: ${{ secrets.SCOOP_BUCKET_REPO }}
+          CHOCO_API_KEY: ${{ secrets.CHOCO_API_KEY }}
+          WINGET_PUBLISHER: ${{ secrets.WINGET_PUBLISHER }}
+        run: |
+          chmod +x scripts/ci/submit-windows-packages.sh
+          VER=$(head -n1 VERSION | tr -d '[:space:]' | sed 's/^v//')
+          ./scripts/ci/submit-windows-packages.sh dist "$VER" || true
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG=$(gh release list -L 1 --json tagName -q '.[0].tagName')
+          fi
+          if [ -d dist/windows-manifests ]; then
+            ( cd dist && zip -qr windows-manifests.zip windows-manifests )
+            gh release upload "$TAG" dist/windows-manifests.zip --clobber || true
+          fi

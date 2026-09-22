@@ -19,7 +19,9 @@ def _ensure_engine(session: Session):
     eng = Ize(
         session.root,
         lang=session.lang,
-        dry_run=True,  # never write; we capture via patched write_text
+        # Honour session dry-run so 2meson / side-effect steps match CLI -n.
+        # File writes still go through the patched write_text → EditList path.
+        dry_run=session.dry_run,
         do_man=session.do_man,
         do_subst=session.do_subst,
         do_mesonize=session.do_mesonize,

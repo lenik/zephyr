@@ -12,6 +12,18 @@ from lib import _is_zfr_meta_repo, find_project_dir
 from lint.util import _role
 
 
+def _run_rules(scheduled, session, merged, *, dry_run: bool) -> None:
+    """Run scheduled rules; apply each EditList immediately so later rules see writes."""
+    for spec, files in scheduled:
+        result = spec.ize(files, session)
+        if result is None:
+            continue
+        merged.merge(result)
+        # Flush per-rule so the next step reads updated meson/control/etc. from disk
+        # (engine helpers still use Path.read_text, not an overlay).
+        result.apply(session.root, dry_run=dry_run)
+
+
 def cmd_ize(
     *,
     lang: str | None = None,
@@ -34,7 +46,6 @@ def cmd_ize(
     from lint.scanner import scan_project, select_scheduled
     from lint.session import Session
     from csr import Csr
-    from ize.util import Change
 
     if commit and dry_run:
         raise SystemExit("zfr ize: --commit cannot be combined with --dry-run")
@@ -96,32 +107,39 @@ def cmd_ize(
             continue
         gated.append(r)
 
-    _ftor, rule_to_files = scan_project(root, gated, session)
-    scheduled = select_scheduled(gated, rule_to_files, require_files=True)
-
     merged = EditList()
-    changes: list[Change] = []
-    for spec, files in scheduled:
-        result = spec.ize(files, session)
-        if result is None:
-            continue
-        merged.merge(result)
-        for ed in result.edits:
-            kind = ed.kind if ed.kind in ("add", "update", "delete", "convert") else "update"
-            changes.append(Change(kind, ed.path, ed.detail, rule=ed.rule or spec.code))
 
-    merged.merge(session.flush_meson())
-    merged.apply(root, dry_run=dry_run)
+    # Pass 1: ize.mesonize may create meson.build; apply before the main scan so
+    # meson.* / subst rules can match the new file.
+    mz = [r for r in gated if r.code == "ize.mesonize"]
+    rest = [r for r in gated if r.code != "ize.mesonize"]
+    if mz:
+        _ftor, rule_to_files = scan_project(root, mz, session)
+        scheduled_mz = select_scheduled(mz, rule_to_files, require_files=True)
+        _run_rules(scheduled_mz, session, merged, dry_run=dry_run)
 
-    csr = Csr(color)
-    if not changes and not merged.edits:
+    _ftor, rule_to_files = scan_project(root, rest, session)
+    scheduled = select_scheduled(rest, rule_to_files, require_files=True)
+    _run_rules(scheduled, session, merged, dry_run=dry_run)
+
+    meson_edits = session.flush_meson()
+    merged.merge(meson_edits)
+    meson_edits.apply(root, dry_run=dry_run)
+
+    eng = session.options.get("_ize_engine")
+    if eng is not None:
+        eng.dry_run = dry_run
+        eng.report()
+    elif not merged.edits:
         print(_("No changes."))
     else:
-        for ch in changes:
-            rid = ize_rule_id(ch.rule) if ch.rule else ""
+        csr = Csr(color)
+        for ed in merged.edits:
+            kind = ed.kind if ed.kind in ("add", "update", "delete", "convert") else "update"
+            rid = ize_rule_id(ed.rule) if ed.rule else ""
             tag = f"[{rid}] " if rid and rid != "ZI????" else ""
             print(
-                f"{csr.wrap(ch.kind, 'green' if ch.kind == 'add' else 'yellow')}: "
-                f"{tag}{ch.path} — {ch.detail}"
+                f"{csr.wrap(kind, 'green' if kind == 'add' else 'yellow')}: "
+                f"{tag}{ed.path} — {ed.detail}"
             )
     return 0

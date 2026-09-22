@@ -76,6 +76,11 @@ def _should_skip_file(path: Path, root: Path) -> bool:
         rel = path.relative_to(root)
     except ValueError:
         return True
+    # Shared zfr CI scaffold (copied into every create) must not bias toward bash.
+    if len(rel.parts) >= 2 and rel.parts[0] == "scripts" and rel.parts[1] == "ci":
+        return True
+    if rel.parts and rel.parts[0] == ".github":
+        return True
     parts = {p.lower() for p in rel.parts[:-1]}
     if parts & {n.lower() for n in _SCORE_SKIP_DIRS}:
         return True
@@ -86,11 +91,28 @@ def _should_skip_file(path: Path, root: Path) -> bool:
     return False
 
 
+def _meson_project_args(text: str) -> str:
+    """Return the argument blob of the top-level ``project(…)`` (nested-paren safe)."""
+    m = re.search(r"project\s*\(", text[:8000])
+    if not m:
+        return ""
+    i = m.end()
+    depth = 1
+    start = i
+    while i < len(text) and depth:
+        c = text[i]
+        if c == "(":
+            depth += 1
+        elif c == ")":
+            depth -= 1
+        i += 1
+    return text[start : i - 1] if depth == 0 else text[start : start + 2500]
+
+
 def score_meson(scores: dict[str, float], specs: dict[str, LangSpec], text: str) -> None:
-    head = text[:2500]
-    m = re.search(r"project\s*\((.*?)\)", head, re.S)
-    if m:
-        tokens = [x.lower() for x in re.findall(r"['\"]([A-Za-z+#]+)['\"]", m.group(1))]
+    args = _meson_project_args(text)
+    if args:
+        tokens = [x.lower() for x in re.findall(r"['\"]([A-Za-z+#]+)['\"]", args)]
         for tok in tokens[1:]:
             if tok == "c":
                 _add(scores, {"c": 40.0, "clib": 12.0})
@@ -110,7 +132,6 @@ def score_meson(scores: dict[str, float], specs: dict[str, LangSpec], text: str)
         for hint, weight in spec.meson_hints:
             if hint in text:
                 _add(scores, {spec.name: weight})
-
 
 def score_depends(scores: dict[str, float], specs: dict[str, LangSpec], depends: str) -> None:
     if not depends:

@@ -112,7 +112,7 @@ class BrowseUiTests(unittest.TestCase):
         clear_doc_cache()
         doc = rule_doc_dict("ZL0001", "source.long", lang="zh_CN")
         titles = [s["title"] for s in doc["sections"]]
-        self.assertIn("长文件不利于归属", titles)
+        self.assertIn("过长文件难于归属", titles)
         fam = rule_doc_dict("ZL0002", "source.size", lang="zh_CN")
         self.assertEqual(fam["sections"][0]["title"], "源码卫生")
 
