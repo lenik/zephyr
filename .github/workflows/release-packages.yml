@@ -43,8 +43,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # Build the release tag (or dispatch input); fall back to workflow ref.
+          # Package the release tag (or dispatch input); fall back to workflow ref.
           ref: ${{ github.event.release.tag_name || inputs.tag || github.ref }}
+      - name: Overlay CI scripts from workflow commit
+        # Tag trees may predate script fixes; always refresh scripts/ci from the
+        # commit that carries this workflow YAML (github.sha).
+        if: ${{ github.event.release.tag_name || inputs.tag }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          sparse-checkout: |
+            zfr/scripts/ci
+          sparse-checkout-cone-mode: false
+          path: _ci_scripts
+      - name: Apply CI script overlay
+        if: ${{ github.event.release.tag_name || inputs.tag }}
+        working-directory: ${{ github.workspace }}
+        run: |
+          if [ -d _ci_scripts/zfr/scripts/ci ]; then
+            cp -a _ci_scripts/zfr/scripts/ci/. zfr/scripts/ci/
+            chmod +x zfr/scripts/ci/*.sh zfr/scripts/ci/pack-nuget.py || true
+          fi
       - id: gen
         run: |
           chmod +x scripts/ci/*.sh
@@ -72,8 +91,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # Build the release tag (or dispatch input); fall back to workflow ref.
+          # Package the release tag (or dispatch input); fall back to workflow ref.
           ref: ${{ github.event.release.tag_name || inputs.tag || github.ref }}
+      - name: Overlay CI scripts from workflow commit
+        # Tag trees may predate script fixes; always refresh scripts/ci from the
+        # commit that carries this workflow YAML (github.sha).
+        if: ${{ github.event.release.tag_name || inputs.tag }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          sparse-checkout: |
+            zfr/scripts/ci
+          sparse-checkout-cone-mode: false
+          path: _ci_scripts
+      - name: Apply CI script overlay
+        if: ${{ github.event.release.tag_name || inputs.tag }}
+        working-directory: ${{ github.workspace }}
+        run: |
+          if [ -d _ci_scripts/zfr/scripts/ci ]; then
+            cp -a _ci_scripts/zfr/scripts/ci/. zfr/scripts/ci/
+            chmod +x zfr/scripts/ci/*.sh zfr/scripts/ci/pack-nuget.py || true
+          fi
       - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
       - name: Install tools
@@ -121,9 +159,13 @@ jobs:
             TAG=$(gh release list -L 1 --json tagName -q '.[0].tagName')
           fi
           test -n "$TAG"
-          gh release upload "$TAG" \
-            "dist/debian-${{ matrix.release }}-${{ matrix.arch }}"/*.zip \
-            --clobber
+          shopt -s nullglob
+          files=( "dist/debian-${{ matrix.release }}-${{ matrix.arch }}"/*.zip )
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "upload: no artifacts — skip"
+            exit 0
+          fi
+          gh release upload "$TAG" "${files[@]}" --clobber
 
   rpm:
     needs: matrix
@@ -134,8 +176,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # Build the release tag (or dispatch input); fall back to workflow ref.
+          # Package the release tag (or dispatch input); fall back to workflow ref.
           ref: ${{ github.event.release.tag_name || inputs.tag || github.ref }}
+      - name: Overlay CI scripts from workflow commit
+        # Tag trees may predate script fixes; always refresh scripts/ci from the
+        # commit that carries this workflow YAML (github.sha).
+        if: ${{ github.event.release.tag_name || inputs.tag }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          sparse-checkout: |
+            zfr/scripts/ci
+          sparse-checkout-cone-mode: false
+          path: _ci_scripts
+      - name: Apply CI script overlay
+        if: ${{ github.event.release.tag_name || inputs.tag }}
+        working-directory: ${{ github.workspace }}
+        run: |
+          if [ -d _ci_scripts/zfr/scripts/ci ]; then
+            cp -a _ci_scripts/zfr/scripts/ci/. zfr/scripts/ci/
+            chmod +x zfr/scripts/ci/*.sh zfr/scripts/ci/pack-nuget.py || true
+          fi
       - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
       - name: Install tools
@@ -175,9 +236,13 @@ jobs:
             TAG=$(gh release list -L 1 --json tagName -q '.[0].tagName')
           fi
           test -n "$TAG"
-          gh release upload "$TAG" \
-            "dist/el-${{ matrix.release }}-${{ matrix.arch }}"/*.zip \
-            --clobber
+          shopt -s nullglob
+          files=( "dist/el-${{ matrix.release }}-${{ matrix.arch }}"/*.zip )
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "upload: no artifacts — skip"
+            exit 0
+          fi
+          gh release upload "$TAG" "${files[@]}" --clobber
 
   mingw:
     needs: matrix
@@ -192,8 +257,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # Build the release tag (or dispatch input); fall back to workflow ref.
+          # Package the release tag (or dispatch input); fall back to workflow ref.
           ref: ${{ github.event.release.tag_name || inputs.tag || github.ref }}
+      - name: Overlay CI scripts from workflow commit
+        # Tag trees may predate script fixes; always refresh scripts/ci from the
+        # commit that carries this workflow YAML (github.sha).
+        if: ${{ github.event.release.tag_name || inputs.tag }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          sparse-checkout: |
+            zfr/scripts/ci
+          sparse-checkout-cone-mode: false
+          path: _ci_scripts
+      - name: Apply CI script overlay
+        if: ${{ github.event.release.tag_name || inputs.tag }}
+        working-directory: ${{ github.workspace }}
+        run: |
+          if [ -d _ci_scripts/zfr/scripts/ci ]; then
+            cp -a _ci_scripts/zfr/scripts/ci/. zfr/scripts/ci/
+            chmod +x zfr/scripts/ci/*.sh zfr/scripts/ci/pack-nuget.py || true
+          fi
       - uses: msys2/setup-msys2@v2
         with:
           msystem: ${{ matrix.msystem }}
@@ -210,6 +294,8 @@ jobs:
             mingw-w64-x86_64-icu
             mingw-w64-x86_64-gettext
             python
+            ruby
+            rubygems
             zip
             make
             tar
@@ -227,13 +313,17 @@ jobs:
             TAG=$(gh release list -L 1 --json tagName -q '.[0].tagName')
           fi
           test -n "$TAG"
-          gh release upload "$TAG" \
-            "dist/mingw-${{ matrix.arch }}"/*.zip \
-            "dist/mingw-${{ matrix.arch }}"/*.nupkg \
-            --clobber
+          shopt -s nullglob
+          files=( "dist/mingw-${{ matrix.arch }}"/*.zip "dist/mingw-${{ matrix.arch }}"/*.nupkg )
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "upload: no artifacts — skip"
+            exit 0
+          fi
+          gh release upload "$TAG" "${files[@]}" --clobber
 
   ucrt:
     needs: matrix
+    if: needs.matrix.outputs.ucrt != '{"include":[]}'
     runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
@@ -241,8 +331,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # Build the release tag (or dispatch input); fall back to workflow ref.
+          # Package the release tag (or dispatch input); fall back to workflow ref.
           ref: ${{ github.event.release.tag_name || inputs.tag || github.ref }}
+      - name: Overlay CI scripts from workflow commit
+        # Tag trees may predate script fixes; always refresh scripts/ci from the
+        # commit that carries this workflow YAML (github.sha).
+        if: ${{ github.event.release.tag_name || inputs.tag }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          sparse-checkout: |
+            zfr/scripts/ci
+          sparse-checkout-cone-mode: false
+          path: _ci_scripts
+      - name: Apply CI script overlay
+        if: ${{ github.event.release.tag_name || inputs.tag }}
+        working-directory: ${{ github.workspace }}
+        run: |
+          if [ -d _ci_scripts/zfr/scripts/ci ]; then
+            cp -a _ci_scripts/zfr/scripts/ci/. zfr/scripts/ci/
+            chmod +x zfr/scripts/ci/*.sh zfr/scripts/ci/pack-nuget.py || true
+          fi
       - uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: ${{ matrix.arch }}
@@ -266,10 +375,13 @@ jobs:
             TAG=$(gh release list -L 1 --json tagName -q '.[0].tagName')
           fi
           test -n "$TAG"
-          gh release upload "$TAG" \
-            "dist/ucrt-${{ matrix.arch }}"/*.zip \
-            "dist/ucrt-${{ matrix.arch }}"/*.nupkg \
-            --clobber
+          shopt -s nullglob
+          files=( "dist/ucrt-${{ matrix.arch }}"/*.zip "dist/ucrt-${{ matrix.arch }}"/*.nupkg )
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "upload: no artifacts — skip"
+            exit 0
+          fi
+          gh release upload "$TAG" "${files[@]}" --clobber
 
   publish-private:
     needs: [deb, rpm, mingw, ucrt]
@@ -278,8 +390,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # Build the release tag (or dispatch input); fall back to workflow ref.
+          # Package the release tag (or dispatch input); fall back to workflow ref.
           ref: ${{ github.event.release.tag_name || inputs.tag || github.ref }}
+      - name: Overlay CI scripts from workflow commit
+        # Tag trees may predate script fixes; always refresh scripts/ci from the
+        # commit that carries this workflow YAML (github.sha).
+        if: ${{ github.event.release.tag_name || inputs.tag }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          sparse-checkout: |
+            zfr/scripts/ci
+          sparse-checkout-cone-mode: false
+          path: _ci_scripts
+      - name: Apply CI script overlay
+        if: ${{ github.event.release.tag_name || inputs.tag }}
+        working-directory: ${{ github.workspace }}
+        run: |
+          if [ -d _ci_scripts/zfr/scripts/ci ]; then
+            cp -a _ci_scripts/zfr/scripts/ci/. zfr/scripts/ci/
+            chmod +x zfr/scripts/ci/*.sh zfr/scripts/ci/pack-nuget.py || true
+          fi
       - name: Download release assets for private publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -11,6 +11,10 @@ OUTDIR=${5:-"dist/debian-${RELEASE}-${ARCH}"}
 
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 NAME=$(basename "$ROOT")
+if [ -f "$ROOT/debian/control" ]; then
+  src=$(sed -n 's/^Source:[[:space:]]*//p' "$ROOT/debian/control" | head -n1 | tr -d '[:space:]')
+  [ -n "$src" ] && NAME=$src
+fi
 STAGE=$(mktemp -d)
 _cleanup_stage() {
   # Build runs as root inside Docker; clear root-owned files via a container.
@@ -99,7 +103,7 @@ case "$suite" in
       > /etc/apt/apt.conf.d/99archive
     ;;
   bullseye)
-    # Image often still lists bullseye/updates with superseded pool filenames.
+    # Image apt indexes often point at superseded security pool filenames.
     printf "%s\n" \
       "deb http://deb.debian.org/debian bullseye main contrib non-free" \
       "deb http://deb.debian.org/debian-security bullseye-security main contrib non-free" \
@@ -108,11 +112,17 @@ case "$suite" in
     rm -f /etc/apt/sources.list.d/*
     apt-get clean
     rm -rf /var/lib/apt/lists/*
+    # Prefer Acquire::Retries and ignore Valid-Until skew on old images.
+    printf "%s\n" \
+      "Acquire::Retries \"5\";" \
+      "Acquire::http::Timeout \"30\";" \
+      "Acquire::Check-Valid-Until \"false\";" \
+      > /etc/apt/apt.conf.d/99ci-retry
     ;;
 esac
-apt-get update -qq
+apt-get update -qq || apt-get update
 apt-get install -y -qq --no-install-recommends --fix-missing \
-  build-essential debhelper devscripts dpkg-dev fakeroot equivs ca-certificates
+  build-essential debhelper devscripts dpkg-dev fakeroot equivs ca-certificates python3
 # Prefer private apt (repodeb_aptly) for peer Build-Depends — never nested-build.
 # Suite comes from the CI matrix release (trixie/bookworm/…), not changelog
 # "stable".
@@ -132,8 +142,48 @@ fi
 apt-get install -y -qq --no-install-recommends --fix-missing \
   libglib2.0-dev libcurl4-openssl-dev zlib1g-dev libicu-dev bash-builtins \
   pkg-config 2>/dev/null || true
+# Drop Build-Depends that apt cannot resolve on this suite (e.g. private
+# python3-mesondoc when REPODEB_URL is unset). Build still needs meson tools.
 if [ -f debian/control ]; then
-  mk-build-deps -i -r -t "apt-get -y -qq --no-install-recommends --fix-missing"
+  python3 -c "
+from pathlib import Path
+import re, subprocess
+path = Path(\"debian/control\")
+text = path.read_text(encoding=\"utf-8\", errors=\"replace\")
+m = re.search(r\"(?ms)^(Build-Depends:\\s*)(.*?)(?=\\n\\S|\\Z)\", text)
+if not m:
+    raise SystemExit(0)
+prefix, body = m.group(1), m.group(2)
+parts = []
+for raw in re.sub(r\"\\s*\\n\\s*\", \" \", body).split(\",\"):
+    raw = raw.strip()
+    if not raw:
+        continue
+    name = re.split(r\"[(\\s|]\", raw, 1)[0].strip()
+    if not name:
+        continue
+    if name == \"debhelper-compat\":
+        parts.append(raw)
+        continue
+    r = subprocess.run(
+        [\"apt-cache\", \"show\", name],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    if r.returncode == 0:
+        parts.append(raw)
+    else:
+        print(\"build-deb: dropping unavailable Build-Depends:\", name, flush=True)
+if not parts:
+    parts = [\"debhelper-compat (= 13)\", \"meson\", \"ninja-build\", \"python3\"]
+new_body = \", \".join(parts)
+text = text[: m.start()] + prefix + new_body + \"\\n\" + text[m.end() :]
+path.write_text(text, encoding=\"utf-8\")
+"
+  mk-build-deps -i -r -t "apt-get -y --no-install-recommends --fix-missing" \
+    || apt-get install -y --no-install-recommends --fix-missing \
+         meson ninja-build python3 asciidoctor gettext debhelper \
+    || true
 fi
 # Debian ships bash.pc; many projects expect the bash-builtins module name.
 if ! pkg-config --exists bash-builtins 2>/dev/null; then

@@ -20,11 +20,26 @@ ARCH=${4:?arch}
 OUTDIR=${5:-"dist/el-${EL}-${ARCH}"}
 
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)
+# Directory name may be a monorepo leaf (zfr/); prefer Debian Source / RPM spec.
 NAME=$(basename "$ROOT")
+if [ -f "$ROOT/debian/control" ]; then
+  src=$(sed -n 's/^Source:[[:space:]]*//p' "$ROOT/debian/control" | head -n1 | tr -d '[:space:]')
+  [ -n "$src" ] && NAME=$src
+fi
 VERSION=$(head -n1 "$ROOT/VERSION" 2>/dev/null | tr -d '[:space:]' | sed 's/^v//')
 VERSION=${VERSION:-0.0.0}
 RPM_VERSION=${VERSION//-/_}
 SPEC="$ROOT/packaging/rpm/${NAME}.spec"
+if [ ! -f "$SPEC" ]; then
+  # Fall back to the sole *.spec under packaging/rpm/
+  shopt -s nullglob
+  specs=("$ROOT"/packaging/rpm/*.spec)
+  shopt -u nullglob
+  if [ "${#specs[@]}" -eq 1 ]; then
+    SPEC=${specs[0]}
+    NAME=$(basename "$SPEC" .spec)
+  fi
+fi
 
 if [ ! -f "$SPEC" ]; then
   echo "build-rpm: missing $SPEC" >&2

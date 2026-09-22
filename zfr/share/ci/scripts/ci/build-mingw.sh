@@ -6,6 +6,10 @@ set -euo pipefail
 OUTDIR=${1:-"dist/mingw-x64"}
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 NAME=$(basename "$ROOT")
+if [ -f "$ROOT/debian/control" ]; then
+  src=$(sed -n 's/^Source:[[:space:]]*//p' "$ROOT/debian/control" | head -n1 | tr -d '[:space:]')
+  [ -n "$src" ] && NAME=$src
+fi
 MINGW_DIR="$ROOT/packaging/win32/mingw"
 
 mkdir -p "$OUTDIR"
@@ -13,6 +17,17 @@ OUTDIR=$(cd "$OUTDIR" && pwd)
 
 if [ ! -d "$MINGW_DIR" ]; then
   echo "build-mingw: missing $MINGW_DIR" >&2
+  exit 1
+fi
+
+# asciidoctor is required by meson.build; gem fallback when pacman package absent.
+if ! command -v asciidoctor >/dev/null 2>&1; then
+  if command -v gem >/dev/null 2>&1; then
+    gem install --no-document asciidoctor || true
+  fi
+fi
+if ! command -v asciidoctor >/dev/null 2>&1; then
+  echo "build-mingw: asciidoctor not found (install mingw asciidoctor or gem)" >&2
   exit 1
 fi
 

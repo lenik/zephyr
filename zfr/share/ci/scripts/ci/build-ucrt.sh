@@ -8,6 +8,10 @@ ARCH=${1:?arch x64|arm64}
 OUTDIR=${2:-"dist/ucrt-${ARCH}"}
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 NAME=$(basename "$ROOT")
+if [ -f "$ROOT/debian/control" ]; then
+  src=$(sed -n 's/^Source:[[:space:]]*//p' "$ROOT/debian/control" | head -n1 | tr -d '[:space:]')
+  [ -n "$src" ] && NAME=$src
+fi
 UCRT_DIR="$ROOT/packaging/win32/ucrt"
 
 case "$ARCH" in
@@ -20,8 +24,10 @@ mkdir -p "$OUTDIR"
 OUTDIR=$(cd "$OUTDIR" && pwd)
 
 if [ ! -d "$UCRT_DIR" ]; then
-  echo "build-ucrt: missing $UCRT_DIR" >&2
-  exit 1
+  echo "build-ucrt: skip — no $UCRT_DIR (package has no UCRT packaging)" >&2
+  # Write a tiny marker so the upload step can no-op cleanly when empty.
+  : >"$OUTDIR/.skipped"
+  exit 0
 fi
 
 export PATH="$ROOT/scripts/ci:$PATH"
