@@ -54,6 +54,7 @@ jobs:
           ref: ${{ github.sha }}
           sparse-checkout: |
             zfr/scripts/ci
+            zfr/install_templates.py
           sparse-checkout-cone-mode: false
           path: _ci_scripts
       - name: Apply CI script overlay
@@ -64,6 +65,9 @@ jobs:
           if [ -d _ci_scripts/zfr/scripts/ci ]; then
             cp -a _ci_scripts/zfr/scripts/ci/. zfr/scripts/ci/
             chmod +x zfr/scripts/ci/*.sh zfr/scripts/ci/pack-nuget.py || true
+          fi
+          if [ -f _ci_scripts/zfr/install_templates.py ]; then
+            cp -a _ci_scripts/zfr/install_templates.py zfr/install_templates.py
           fi
       - id: gen
         run: |
@@ -103,6 +107,7 @@ jobs:
           ref: ${{ github.sha }}
           sparse-checkout: |
             zfr/scripts/ci
+            zfr/install_templates.py
           sparse-checkout-cone-mode: false
           path: _ci_scripts
       - name: Apply CI script overlay
@@ -113,6 +118,9 @@ jobs:
           if [ -d _ci_scripts/zfr/scripts/ci ]; then
             cp -a _ci_scripts/zfr/scripts/ci/. zfr/scripts/ci/
             chmod +x zfr/scripts/ci/*.sh zfr/scripts/ci/pack-nuget.py || true
+          fi
+          if [ -f _ci_scripts/zfr/install_templates.py ]; then
+            cp -a _ci_scripts/zfr/install_templates.py zfr/install_templates.py
           fi
       - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
@@ -189,6 +197,7 @@ jobs:
           ref: ${{ github.sha }}
           sparse-checkout: |
             zfr/scripts/ci
+            zfr/install_templates.py
           sparse-checkout-cone-mode: false
           path: _ci_scripts
       - name: Apply CI script overlay
@@ -199,6 +208,9 @@ jobs:
           if [ -d _ci_scripts/zfr/scripts/ci ]; then
             cp -a _ci_scripts/zfr/scripts/ci/. zfr/scripts/ci/
             chmod +x zfr/scripts/ci/*.sh zfr/scripts/ci/pack-nuget.py || true
+          fi
+          if [ -f _ci_scripts/zfr/install_templates.py ]; then
+            cp -a _ci_scripts/zfr/install_templates.py zfr/install_templates.py
           fi
       - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
@@ -271,6 +283,7 @@ jobs:
           ref: ${{ github.sha }}
           sparse-checkout: |
             zfr/scripts/ci
+            zfr/install_templates.py
           sparse-checkout-cone-mode: false
           path: _ci_scripts
       - name: Apply CI script overlay
@@ -281,6 +294,9 @@ jobs:
           if [ -d _ci_scripts/zfr/scripts/ci ]; then
             cp -a _ci_scripts/zfr/scripts/ci/. zfr/scripts/ci/
             chmod +x zfr/scripts/ci/*.sh zfr/scripts/ci/pack-nuget.py || true
+          fi
+          if [ -f _ci_scripts/zfr/install_templates.py ]; then
+            cp -a _ci_scripts/zfr/install_templates.py zfr/install_templates.py
           fi
       - uses: msys2/setup-msys2@v2
         with:
@@ -346,6 +362,7 @@ jobs:
           ref: ${{ github.sha }}
           sparse-checkout: |
             zfr/scripts/ci
+            zfr/install_templates.py
           sparse-checkout-cone-mode: false
           path: _ci_scripts
       - name: Apply CI script overlay
@@ -356,6 +373,9 @@ jobs:
           if [ -d _ci_scripts/zfr/scripts/ci ]; then
             cp -a _ci_scripts/zfr/scripts/ci/. zfr/scripts/ci/
             chmod +x zfr/scripts/ci/*.sh zfr/scripts/ci/pack-nuget.py || true
+          fi
+          if [ -f _ci_scripts/zfr/install_templates.py ]; then
+            cp -a _ci_scripts/zfr/install_templates.py zfr/install_templates.py
           fi
       - uses: ilammy/msvc-dev-cmd@v1
         with:
@@ -406,6 +426,7 @@ jobs:
           ref: ${{ github.sha }}
           sparse-checkout: |
             zfr/scripts/ci
+            zfr/install_templates.py
           sparse-checkout-cone-mode: false
           path: _ci_scripts
       - name: Apply CI script overlay
@@ -416,6 +437,9 @@ jobs:
           if [ -d _ci_scripts/zfr/scripts/ci ]; then
             cp -a _ci_scripts/zfr/scripts/ci/. zfr/scripts/ci/
             chmod +x zfr/scripts/ci/*.sh zfr/scripts/ci/pack-nuget.py || true
+          fi
+          if [ -f _ci_scripts/zfr/install_templates.py ]; then
+            cp -a _ci_scripts/zfr/install_templates.py zfr/install_templates.py
           fi
       - name: Download release assets for private publish
         env:

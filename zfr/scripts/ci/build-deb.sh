@@ -28,7 +28,7 @@ trap _cleanup_stage EXIT
 mkdir -p "$OUTDIR"
 OUTDIR=$(cd "$OUTDIR" && pwd)
 
-mkdir -p "$STAGE/src"
+mkdir -p "$STAGE/zfr"
 # Copy the working tree (not git archive) so packaging CI sees local fixes and
 # so a dangling subprojects symlink does not break extraction.
 tar -C "$ROOT" \
@@ -40,7 +40,7 @@ tar -C "$ROOT" \
   --exclude='./debian/*.debhelper*' \
   --exclude='./dist' \
   --exclude='./ci-deps' \
-  -cf - . | tar -C "$STAGE/src" -xf -
+  -cf - . | tar -C "$STAGE/zfr" -xf -
 # Monorepo agent rules live at ../.cursor/rules relative to the package;
 # stage them so meson install can find them inside the container.
 mkdir -p "$STAGE/.cursor/rules"
@@ -54,14 +54,14 @@ done
 if [ -L "$ROOT/subprojects" ]; then
   target=$(readlink -f "$ROOT/subprojects" || true)
   if [ -n "$target" ] && [ -d "$target" ]; then
-    rm -rf "$STAGE/src/subprojects"
-    mkdir -p "$STAGE/src/subprojects"
+    rm -rf "$STAGE/zfr/subprojects"
+    mkdir -p "$STAGE/zfr/subprojects"
     # Copy only shallow, non-git contents needed for Meson subprojects.
     tar -C "$target" \
       --exclude='./.git' \
       --exclude='./boost' \
       --exclude='./zash' \
-      -cf - . | tar -C "$STAGE/src/subprojects" -xf - || true
+      -cf - . | tar -C "$STAGE/zfr/subprojects" -xf - || true
   fi
 fi
 
@@ -83,7 +83,7 @@ HTTPS_PROXY_D=$(_proxy_for_docker "${https_proxy:-${HTTPS_PROXY:-}}")
 
 docker run --rm --platform "$PLATFORM" \
   -v "$STAGE:/work" \
-  -w "/work/src" \
+  -w "/work/zfr" \
   --add-host=host.docker.internal:host-gateway \
   -e DEBIAN_FRONTEND=noninteractive \
   -e "http_proxy=${HTTP_PROXY_D}" \
@@ -157,8 +157,8 @@ apt-get install -y -qq --no-install-recommends --fix-missing \
 # Drop Build-Depends that apt cannot resolve on this suite (e.g. private
 # python3-mesondoc when REPODEB_URL is unset). Build still needs meson tools.
 if [ -f debian/control ]; then
-  if [ -f /work/src/scripts/ci/filter-build-depends.py ]; then
-    python3 /work/src/scripts/ci/filter-build-depends.py debian/control
+  if [ -f /work/zfr/scripts/ci/filter-build-depends.py ]; then
+    python3 /work/zfr/scripts/ci/filter-build-depends.py debian/control
   fi
   mk-build-deps -i -r -t "apt-get -y --no-install-recommends --fix-missing" \
     || apt-get install -y --no-install-recommends --fix-missing \

@@ -56,11 +56,25 @@ def main() -> int:
     rel = Path(sys.argv[2])
     dest = Path(os.environ["MESON_INSTALL_DESTDIR_PREFIX"]) / rel
     dest.mkdir(parents=True, exist_ok=True)
+    destdir_root = Path(os.environ["MESON_INSTALL_DESTDIR_PREFIX"]).resolve()
     for child in sorted(src.iterdir()):
         if not child.is_dir() or child.name in SKIP_TOP or child.name.startswith("."):
             continue
         if not (child / "meson.build").is_file():
             continue
+        child_r = child.resolve()
+        # Never copy a tree that contains (or is) the install destdir — that
+        # recurse into debian/<pkg>/ when packaging the monorepo leaf alone.
+        try:
+            destdir_root.relative_to(child_r)
+            continue
+        except ValueError:
+            pass
+        try:
+            child_r.relative_to(destdir_root)
+            continue
+        except ValueError:
+            pass
         target = dest / child.name
         if target.exists():
             shutil.rmtree(target)
