@@ -1,68 +1,63 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""Upload built packages (dput / optional npm publish)."""
+"""Upload / publish built packages via ~/.config/zfr/scripts/ hooks.
+
+Hooks (executable scripts; missing → warn, do not fail the build):
+
+  upload_deb / publish_deb
+  upload_rpm / publish_rpm
+  upload_npm / publish_npm
+  upload_vsix / publish_vsix
+
+``upload_*`` receives artifact path(s) as argv. ``publish_*`` is called with
+no arguments after a successful upload for that kind (e.g. aptly process /
+createrepo rescan). Working directory is the project root.
+"""
 
 from __future__ import annotations
 
 import os
 import re
-import shutil
-import subprocess
-import time
+import stat
 from pathlib import Path
 
 from cmd_run import run_cmd
 from fdm import log_line
 from .kinds import PackagingKind
 
-_DPUT_ATTEMPTS = 3
-_DPUT_RETRY_DELAY_S = 1.0
+
+def _config_scripts_dir() -> Path:
+    xdg = os.environ.get("XDG_CONFIG_HOME", "").strip()
+    base = Path(xdg) if xdg else Path.home() / ".config"
+    return base / "zfr" / "scripts"
 
 
-def _dput_with_retries(host: str, changes_file: str, *, dry_run: bool = False) -> None:
-    cmd = ["dput", "-f", host, changes_file]
+def _hook_path(name: str) -> Path:
+    return _config_scripts_dir() / name
+
+
+def _warn_missing(name: str, why: str) -> None:
+    log_line(
+        f"zfr package: warn: missing {_hook_path(name)} ({why}); "
+        f"install an executable hook under ~/.config/zfr/scripts/"
+    )
+
+
+def _run_hook(name: str, args: list[str], *, cwd: Path, dry_run: bool) -> bool:
+    """Run a hook script. Return True if invoked, False if missing/skipped."""
+    path = _hook_path(name)
+    if not path.is_file():
+        return False
+    mode = path.stat().st_mode
+    if not (mode & (stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)):
+        log_line(f"zfr package: warn: {path} is not executable; chmod +x it")
+        return False
+    cmd = [str(path), *args]
     if dry_run:
         log_line("+ " + " ".join(cmd))
-        return
-    last: subprocess.CalledProcessError | None = None
-    for attempt in range(1, _DPUT_ATTEMPTS + 1):
-        try:
-            run_cmd(cmd, dry_run=False)
-            return
-        except subprocess.CalledProcessError as exc:
-            last = exc
-            if attempt >= _DPUT_ATTEMPTS:
-                break
-            log_line(
-                f"dput failed (attempt {attempt}/{_DPUT_ATTEMPTS}); "
-                f"retrying in {_DPUT_RETRY_DELAY_S:g}s…"
-            )
-            time.sleep(_DPUT_RETRY_DELAY_S)
-    assert last is not None
-    raise last
-
-
-def _load_dput_host_default() -> str:
-    for base in (
-        Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")),
-        Path.home() / ".config",
-    ):
-        for name in ("zfr-release.options", "gh-makerelease.options"):
-            path = base / name
-            if not path.is_file():
-                continue
-            try:
-                text = path.read_text(encoding="utf-8")
-            except OSError:
-                continue
-            for line in text.splitlines():
-                line = line.split("#", 1)[0].strip()
-                if line.startswith("-p") or line.startswith("--dput-host"):
-                    parts = line.split(None, 1)
-                    if len(parts) == 2:
-                        return parts[1].strip()
-                    if "=" in line:
-                        return line.split("=", 1)[1].strip()
-    return ""
+        return True
+    log_line(f"zfr package: {name} → {' '.join(args) if args else '(no args)'}")
+    run_cmd(cmd, cwd=cwd, dry_run=False)
+    return True
 
 
 def _find_changes(root: Path, version: str) -> Path | None:
@@ -89,6 +84,57 @@ def _project_version(root: Path) -> str:
     return ""
 
 
+def _find_rpms(root: Path) -> list[Path]:
+    name = root.name
+    hits: list[Path] = []
+    search_roots = [root, root.parent]
+    rpm_home = Path.home() / "rpmbuild" / "RPMS"
+    if rpm_home.is_dir():
+        search_roots.append(rpm_home)
+    for base in search_roots:
+        if not base.is_dir():
+            continue
+        hits.extend(sorted(base.rglob(f"{name}*.rpm")))
+        hits.extend(sorted(base.rglob(f"lib{name}*.rpm")))
+    by_name: dict[str, Path] = {}
+    for path in hits:
+        if path.name.endswith(".src.rpm"):
+            continue
+        prev = by_name.get(path.name)
+        if prev is None or path.stat().st_mtime >= prev.stat().st_mtime:
+            by_name[path.name] = path
+    return sorted(by_name.values(), key=lambda p: p.stat().st_mtime)
+
+
+def _upload_then_publish(
+    *,
+    kind: str,
+    artifacts: list[Path],
+    root: Path,
+    dry_run: bool,
+) -> None:
+    upload = f"upload_{kind}"
+    publish = f"publish_{kind}"
+    if not artifacts:
+        log_line(f"zfr package: no {kind} artifacts to upload")
+        return
+    if not _hook_path(upload).is_file():
+        _warn_missing(upload, f"built {kind} packages need uploading")
+        return
+    ok = _run_hook(
+        upload,
+        [str(p) for p in artifacts],
+        cwd=root,
+        dry_run=dry_run,
+    )
+    if not ok:
+        return
+    if not _hook_path(publish).is_file():
+        _warn_missing(publish, f"after upload_{kind}; repo may need a rescan/process")
+        return
+    _run_hook(publish, [], cwd=root, dry_run=dry_run)
+
+
 def upload_artifacts(
     root: Path,
     kinds: list[PackagingKind],
@@ -96,30 +142,63 @@ def upload_artifacts(
     dput_host: str = "",
     dry_run: bool = False,
 ) -> None:
-    """Upload built packages (dput for deb; npm publish when configured)."""
-    names = {k.name for k in kinds}
-    if "deb" in names:
-        host = dput_host or _load_dput_host_default()
-        if not host:
-            log_line("zfr package: upload skipped (no dput host; pass -p/--dput-host)")
-        else:
-            ver = _project_version(root)
-            changes = _find_changes(root, ver) if ver else None
-            if changes is None:
-                candidates = sorted(root.parent.glob("*.changes"), key=lambda p: p.stat().st_mtime)
-                changes = candidates[-1] if candidates else None
-            if changes is None:
-                raise SystemExit("zfr package: no .changes file found for dput upload")
-            log_line(f"zfr package: uploading {changes.name} → {host}")
-            _dput_with_retries(host, str(changes), dry_run=dry_run)
+    """Dispatch to ~/.config/zfr/scripts/ upload_* / publish_* hooks.
 
-    if names & {"npm", "vsix"}:
-        if os.environ.get("ZFR_NPM_PUBLISH", "").strip() in {"1", "true", "yes"}:
-            runner = shutil.which("pnpm") or shutil.which("npm")
-            if runner:
-                run_cmd([runner, "publish"], cwd=root, dry_run=dry_run)
-        else:
-            log_line(
-                "zfr package: npm/vsix registry publish skipped "
-                "(set ZFR_NPM_PUBLISH=1 to enable)"
+    *dput_host* is accepted for CLI compatibility but ignored; configure
+    ``upload_deb`` (e.g. ``dput -f s1``) instead.
+    """
+    if dput_host:
+        log_line(
+            "zfr package: note: --dput-host is deprecated; "
+            "configure ~/.config/zfr/scripts/upload_deb instead"
+        )
+
+    names = {k.name for k in kinds}
+    root = root.resolve()
+
+    if "deb" in names:
+        ver = _project_version(root)
+        changes = _find_changes(root, ver) if ver else None
+        if changes is None:
+            candidates = sorted(
+                root.parent.glob("*.changes"), key=lambda p: p.stat().st_mtime
             )
+            changes = candidates[-1] if candidates else None
+        if changes is None:
+            log_line("zfr package: warn: no .changes file found for deb upload")
+        else:
+            # Pass .changes; upload_deb (dput) pulls sibling files itself.
+            _upload_then_publish(
+                kind="deb",
+                artifacts=[changes],
+                root=root,
+                dry_run=dry_run,
+            )
+
+    if "rpm" in names:
+        _upload_then_publish(
+            kind="rpm",
+            artifacts=_find_rpms(root),
+            root=root,
+            dry_run=dry_run,
+        )
+
+    if "npm" in names:
+        # package.json directory is the artifact root.
+        _upload_then_publish(
+            kind="npm",
+            artifacts=[root],
+            root=root,
+            dry_run=dry_run,
+        )
+
+    if "vsix" in names:
+        vsix = sorted(root.glob("*.vsix"), key=lambda p: p.stat().st_mtime)
+        if not vsix:
+            vsix = sorted(root.rglob("*.vsix"), key=lambda p: p.stat().st_mtime)
+        _upload_then_publish(
+            kind="vsix",
+            artifacts=vsix[-1:] if vsix else [],
+            root=root,
+            dry_run=dry_run,
+        )

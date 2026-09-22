@@ -57,6 +57,20 @@ install_data(
     install_dir: pkgdatadir / 'zfr',
 )
 
+# Shared GitHub Actions release CI scaffold (create/ize/stdfiles).
+install_subdir(
+    'share' / 'ci',
+    install_dir: pkgdatadir,
+    exclude_directories: ['__pycache__'],
+)
+
+# Example ~/.config/zfr/scripts/ upload/publish hooks.
+install_subdir(
+    'share' / 'zfr-scripts',
+    install_dir: pkgdatadir / 'zfr-scripts-examples',
+    exclude_directories: ['__pycache__'],
+)
+
 install_data(
     'src/zfr',
     install_dir: pkgdatadir / 'zfr',

@@ -14,7 +14,7 @@ from ..debian import (
     ensure_rpm_noarch_nodebug,
     strip_rpm_substvars,
 )
-from ..rpm_files import _all_meson_texts, sync_rpm_files
+from ..rpm_files import _all_meson_texts, list_rpm_patches, sync_rpm_files, sync_rpm_patches
 from ..util import *  # noqa: F403
 
 render_spec = _spec.render_spec
@@ -55,15 +55,23 @@ def ensure_rpm_spec(ize: "Ize") -> None:
         if src is not None:
             ize.copy_file(src, makefile_dest, "packaging/rpm/Makefile")
     if makefile_dest.is_file():
-        from pkgfields import migrate_rpm_makefile_topdir
+        from pkgfields import migrate_rpm_makefile_patches, migrate_rpm_makefile_topdir
 
         mk_text = makefile_dest.read_text(encoding="utf-8", errors="ignore")
         migrated = migrate_rpm_makefile_topdir(mk_text)
         if migrated is not None:
+            mk_text = migrated
             ize.write_text(
                 makefile_dest,
                 migrated if migrated.endswith("\n") else migrated + "\n",
                 "packaging/rpm/Makefile TOPDIR -> %_topdir ($HOME/rpmbuild)",
+            )
+        migrated = migrate_rpm_makefile_patches(mk_text)
+        if migrated is not None:
+            ize.write_text(
+                makefile_dest,
+                migrated if migrated.endswith("\n") else migrated + "\n",
+                "packaging/rpm/Makefile copies *.patch to SOURCES",
             )
     specs = _specs(ize.root)
     spec_path = rpm_dir(ize.root) / f"{ize.name}.spec"
@@ -82,6 +90,7 @@ def ensure_rpm_spec(ize: "Ize") -> None:
 
             if project_uses_bash_shlib(ize.root):
                 body, _ = ensure_rpm_bash_shlib(body)
+        body, _ = sync_rpm_patches(body, list_rpm_patches(ize.root))
         ize.write_text(
             dest,
             body,
@@ -140,5 +149,10 @@ def ensure_rpm_spec(ize: "Ize") -> None:
         if file_notes:
             new = synced
             details.extend(file_notes)
+        patches = list_rpm_patches(ize.root)
+        synced, patch_notes = sync_rpm_patches(new, patches)
+        if patch_notes:
+            new = synced
+            details.extend(patch_notes)
         if new != text:
             ize.write_text(specs[0], new, ", ".join(details) or "spec touch-up")

@@ -18,6 +18,10 @@ _REQUIRED_SCRIPTS = (
     "scripts/ci/matrix-from-json.sh",
     "scripts/ci/build-deb.sh",
     "scripts/ci/build-rpm.sh",
+    "scripts/ci/build-mingw.sh",
+    "scripts/ci/build-ucrt.sh",
+    "scripts/ci/submit-windows-packages.sh",
+        "scripts/ci/pack-nuget.py",
     "scripts/ci/publish-private.sh",
 )
 
@@ -142,21 +146,40 @@ def _check_matrix(root: Path) -> list[Finding]:
         arch = str(cell.get("arch") or "")
         platform = str(cell.get("platform") or "")
         label = f"{release}/{arch}"
-        if arch == "armhf" and family != "raspi":
-            bad_armhf.append(label)
-        if arch == "armhf" and family == "raspi" and "arm/v6" not in platform:
-            findings.append(
-                Finding(
-                    "warn",
-                    "ci.matrix_arch",
-                    _("raspi cell %(label)s should use platform linux/arm/v6 (ARMv6+VFPv2)")
-                    % {"label": label},
-                    fix=_(
-                        "Set platform to linux/arm/v6 for raspi_* (not linux/arm/v7 "
-                        "Debian armhf)."
-                    ),
-                )
-            )
+        if arch == "armhf":
+            if family == "raspi":
+                if "arm/v6" not in platform:
+                    findings.append(
+                        Finding(
+                            "warn",
+                            "ci.matrix_arch",
+                            _(
+                                "raspi cell %(label)s should use platform "
+                                "linux/arm/v6 (ARMv6+VFPv2)"
+                            )
+                            % {"label": label},
+                            fix=_(
+                                "Set platform to linux/arm/v6 for raspi_* "
+                                "(not linux/arm/v7 Debian armhf)."
+                            ),
+                        )
+                    )
+            elif family == "debian":
+                if "arm/v7" not in platform and "arm/v6" not in platform:
+                    findings.append(
+                        Finding(
+                            "warn",
+                            "ci.matrix_arch",
+                            _(
+                                "debian armhf cell %(label)s should use "
+                                "linux/arm/v7"
+                            )
+                            % {"label": label},
+                            fix=_("Set platform to linux/arm/v7 for Debian armhf."),
+                        )
+                    )
+            else:
+                bad_armhf.append(label)
         if arch in {"loong64", "loongarch64"} and family not in {"uos", "kylin"}:
             bad_loong.append(label)
 
@@ -165,11 +188,11 @@ def _check_matrix(root: Path) -> list[Finding]:
             Finding(
                 "warn",
                 "ci.matrix_arch",
-                _("armhf is raspi-only; unexpected cells: %(cells)s")
+                _("armhf is debian or raspi only; unexpected cells: %(cells)s")
                 % {"cells": ", ".join(bad_armhf)},
                 fix=_(
-                    "Keep armhf only for raspi_bookworm (linux/arm/v6). "
-                    "Debian/Ubuntu matrix cells must not use armhf."
+                    "Debian armhf uses linux/arm/v7; raspi_bookworm uses "
+                    "linux/arm/v6. Do not add armhf to ubuntu/uos/kylin."
                 ),
             )
         )
@@ -191,7 +214,10 @@ def _check_matrix(root: Path) -> list[Finding]:
             Finding(
                 "ok",
                 "ci.matrix_arch",
-                _("matrix.json arch policy: raspi=armhf/v6, uos/kylin=loong64"),
+                _(
+                    "matrix.json arch policy: debian armhf/v7, raspi armhf/v6, "
+                    "uos/kylin=loong64"
+                ),
             )
         )
     return findings
@@ -203,28 +229,69 @@ def _check_build_rpm(root: Path) -> list[Finding]:
     if not path.is_file():
         return findings
     text = path.read_text(encoding="utf-8", errors="ignore")
-    has_map = "bash-builtins" in text and (
-        "bash.pc" in text or "aliased" in text or "Name: bash-builtins" in text
+    maps_bash = "bash-builtins" in text and re.search(
+        r"bash-builtins\)\s*\)?\s*echo bash\b", text
     )
-    if not has_map:
+    copies_patches = "packaging/rpm/*.patch" in text or (
+        "*.patch" in text and "SOURCES" in text
+    )
+    aliases_pc = (
+        "bash-builtins.pc" in text
+        and ("aliased" in text or "Name: bash-builtins" in text)
+    )
+    if aliases_pc:
         findings.append(
             Finding(
                 "warn",
                 "ci.rpm_deb_deps",
-                _("build-rpm.sh should map Debian bash-builtins → bash + bash.pc"),
+                _(
+                    "build-rpm.sh mutates bash-builtins.pc; use packaging/rpm/"
+                    "*.patch + %%patch / %%autosetup instead"
+                ),
                 fix=_(
-                    "On RPM, bash-builtins is provided by the bash package "
-                    "(bash.pc). Alias bash.pc to bash-builtins.pc before meson; "
-                    "see zfr share/ci/scripts/ci/build-rpm.sh."
+                    "Ship an RPM-only patch under packaging/rpm/ (PatchN + "
+                    "%autosetup -p1). Copy *.patch into SOURCES; do not sed/cp "
+                    "system .pc files in the container."
+                ),
+            )
+        )
+    elif maps_bash and copies_patches:
+        findings.append(
+            Finding(
+                "ok",
+                "ci.rpm_deb_deps",
+                _(
+                    "build-rpm.sh maps bash-builtins→bash and copies "
+                    "packaging/rpm/*.patch for %%patch"
+                ),
+            )
+        )
+    elif maps_bash:
+        findings.append(
+            Finding(
+                "warn",
+                "ci.rpm_deb_deps",
+                _("build-rpm.sh maps bash-builtins→bash but does not copy *.patch"),
+                fix=_(
+                    "Copy packaging/rpm/*.patch into rpmbuild SOURCES so the "
+                    "spec can apply them with %autosetup / %patch."
                 ),
             )
         )
     else:
         findings.append(
             Finding(
-                "ok",
+                "warn",
                 "ci.rpm_deb_deps",
-                _("build-rpm.sh maps bash-builtins via bash (experiential)"),
+                _(
+                    "build-rpm.sh should map Debian bash-builtins → bash and "
+                    "apply RPM-only patches via %%patch"
+                ),
+                fix=_(
+                    "Map bash-builtins to the bash package; put Meson/pkg-config "
+                    "tweaks in packaging/rpm/*.patch and %autosetup -p1. See "
+                    "zfr share/ci/scripts/ci/build-rpm.sh."
+                ),
             )
         )
     return findings

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# publish_rpm — createrepo rescan on reporpm_createrepo-c.
+# See upload_rpm for REPORPM_* / ~/.config/zfr/reporpm.env.
+set -euo pipefail
+
+_env=${XDG_CONFIG_HOME:-$HOME/.config}/zfr/reporpm.env
+# shellcheck disable=SC1090
+[[ -f $_env ]] && . "$_env"
+
+URL=${REPORPM_URL:-http://127.0.0.1:1993}
+SSH_HOST=${REPORPM_SSH-s1}
+USER=${REPORPM_USER:-maintainer}
+PASS=${REPORPM_PASS:?set REPORPM_PASS (or put it in $_env)}
+
+if [[ -n "$SSH_HOST" ]]; then
+  ssh "$SSH_HOST" \
+    "curl -fsS -u $(printf %q "$USER"):$(printf %q "$PASS") \
+       $(printf %q "${URL%/}/rescan?sync=1")"
+else
+  curl -fsS -u "${USER}:${PASS}" "${URL%/}/rescan?sync=1"
+fi
+echo
+echo "publish_rpm: rescan done"

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# publish_deb — optional; dput post_upload_command already runs
+# `make -C …/repodeb_aptly process`. Keep as a no-op so zfr does not warn.
+set -euo pipefail
+echo "publish_deb: nothing to do (dput post_upload_command handles aptly process)"

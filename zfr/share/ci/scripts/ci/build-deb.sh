@@ -82,6 +82,7 @@ docker run --rm --platform "$PLATFORM" \
   -e "REPODEB_SUITE=${REPODEB_SUITE:-$RELEASE}" \
   -e "REPODEB_COMPONENT=${REPODEB_COMPONENT:-main}" \
   -e "BUILD_SUITE=${RELEASE}" \
+  -e "BUILD_ARCH=${ARCH}" \
   "$IMAGE" \
   bash -lc '
 set -euo pipefail
@@ -142,7 +143,16 @@ if ! pkg-config --exists bash-builtins 2>/dev/null; then
     cp "$pc" /usr/share/pkgconfig/bash-builtins.pc
   fi
 fi
-dpkg-buildpackage -us -uc -b
+# Foreign / ISA-variant arches (e.g. amd64v3 on an amd64 image).
+native=$(dpkg --print-architecture 2>/dev/null || true)
+target=${BUILD_ARCH:-$native}
+if [ -n "$target" ] && [ "$target" != "$native" ]; then
+  dpkg --add-architecture "$target" 2>/dev/null || true
+  apt-get update -qq || true
+  dpkg-buildpackage -us -uc -b -a"$target"
+else
+  dpkg-buildpackage -us -uc -b
+fi
 # Changelog says "stable"; aptly must receive the real build suite.
 suite=${BUILD_SUITE:-}
 if [ -n "$suite" ]; then

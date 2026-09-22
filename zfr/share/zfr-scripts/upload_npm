@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# upload_npm — optional npm publish.
+set -euo pipefail
+if [[ "${ZFR_NPM_PUBLISH:-}" == "1" || "${ZFR_NPM_PUBLISH:-}" == "true" ]]; then
+  runner=$(command -v pnpm || command -v npm)
+  exec "$runner" publish
+fi
+echo "upload_npm: skipped (set ZFR_NPM_PUBLISH=1 to enable)" >&2
+exit 0

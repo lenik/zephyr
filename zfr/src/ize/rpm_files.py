@@ -569,3 +569,72 @@ def sync_rpm_files(text: str, *, expected: list[str]) -> tuple[str, list[str]]:
         else "meson installs"
     )
     return text[:start] + new_body + text[end:], [f"%files synced ({why})"]
+
+
+def list_rpm_patches(root: Path) -> list[str]:
+    """Basenames of ``packaging/rpm/*.patch`` (sorted), empty if none."""
+    from pkgfields import resolve_rpm_dir
+
+    d = resolve_rpm_dir(root)
+    if not d.is_dir():
+        return []
+    return sorted(p.name for p in d.glob("*.patch") if p.is_file())
+
+
+def sync_rpm_patches(text: str, patches: list[str]) -> tuple[str, list[str]]:
+    """Align ``PatchN:`` / ``%prep`` with RPM-only ``packaging/rpm/*.patch`` files.
+
+    Patches are applied by rpmbuild via ``%autosetup -p1`` (or ``%patch``),
+    not by mutating the build container.
+    """
+    notes: list[str] = []
+    # Drop existing PatchN: lines (and blank line immediately after a run of them).
+    without = re.sub(r"(?m)^Patch\d+:\s*.*\n", "", text)
+    # Desired Patch block after the last SourceN: line.
+    if patches:
+        patch_lines = "".join(
+            f"Patch{i}:         {name}\n" for i, name in enumerate(patches)
+        )
+        m = None
+        for m in re.finditer(r"(?m)^Source\d+:\s*.*$", without):
+            pass
+        if m is not None:
+            insert_at = m.end()
+            # Skip one trailing newline so we insert before the next blank/content.
+            if insert_at < len(without) and without[insert_at] == "\n":
+                insert_at += 1
+            without = without[:insert_at] + patch_lines + without[insert_at:]
+        else:
+            # No Source line — prepend after Name block is hopeless; append near top.
+            without = patch_lines + without
+        notes.append(f"Patch0..{len(patches) - 1} from packaging/rpm/*.patch")
+    # %prep: %autosetup when patches exist; plain %setup otherwise.
+    prep = re.search(r"(?ms)^%prep\n(.*?)(?=^%(build|install|check|files|package)\b)", without)
+    if prep:
+        body = prep.group(1)
+        if patches:
+            want = "%autosetup -n %{name}-%{srcversion} -p1\n"
+            if "%autosetup" not in body or "-p1" not in body:
+                new_body = want + "\n"
+                # Keep any non-setup/patch lines (rare).
+                extra = [
+                    ln
+                    for ln in body.splitlines()
+                    if ln.strip()
+                    and not re.match(r"^%(auto)?setup\b", ln)
+                    and not re.match(r"^%patch", ln)
+                    and not re.match(r"^%autopatch", ln)
+                ]
+                if extra:
+                    new_body = want + "\n".join(extra) + "\n\n"
+                without = without[: prep.start(1)] + new_body + without[prep.end(1) :]
+                notes.append("%prep uses %autosetup -p1")
+        else:
+            if "%autosetup" in body and not re.search(r"(?m)^Patch\d+:", without):
+                # No patches — prefer classic %setup.
+                new_body = "%setup -q -n %{name}-%{srcversion}\n\n"
+                without = without[: prep.start(1)] + new_body + without[prep.end(1) :]
+                notes.append("%prep uses %setup (no RPM patches)")
+    if without != text:
+        return without, notes
+    return text, []

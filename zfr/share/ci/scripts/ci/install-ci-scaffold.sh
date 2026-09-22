@@ -15,6 +15,8 @@ install -d "$DEST/.github/workflows" "$DEST/scripts/ci"
 install -m 644 "$SHARE/.github/workflows/release-packages.yml" \
   "$DEST/.github/workflows/release-packages.yml"
 for f in matrix.json matrix-from-json.sh build-deb.sh build-rpm.sh \
+         build-mingw.sh build-ucrt.sh pack-nuget.py \
+         submit-windows-packages.sh \
          publish-private.sh fetch-dep.sh deps.conf.example; do
   src="$SHARE/scripts/ci/$f"
   [ -e "$src" ] || continue

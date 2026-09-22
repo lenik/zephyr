@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Emit a GitHub Actions matrix JSON from scripts/ci/matrix.json
-# Usage: matrix-from-json.sh deb|rpm
+# Usage: matrix-from-json.sh deb|rpm|mingw|ucrt
 set -euo pipefail
 KIND=${1:?kind}
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)
@@ -9,6 +9,6 @@ python3 - "$FILE" "$KIND" <<'PY'
 import json, sys
 path, kind = sys.argv[1], sys.argv[2]
 data = json.load(open(path, encoding="utf-8"))
-cells = data[kind]
+cells = data.get(kind) or []
 print(json.dumps({"include": cells}))
 PY

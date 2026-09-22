@@ -3,7 +3,8 @@
 # Usage: build-rpm.sh <image> <platform> <el_release> <arch> [outdir]
 #
 # Debian Build-Depends → RPM package mapping (experiential):
-#   bash-builtins  → bash (ships bash.pc; we alias as bash-builtins.pc)
+#   bash-builtins  → bash (ships bash.pc; prefer packaging/rpm/*.patch + %patch
+#                    so Meson accepts bash.pc — do not mutate the container .pc)
 #   libglib2.0-dev → glib2-devel
 #   libcurl4-*-dev → libcurl-devel
 #   zlib1g-dev     → zlib-devel
@@ -47,6 +48,13 @@ tar -C "$ROOT" \
   --exclude='./ci-deps' \
   --transform "s,^\\./,${NAME}-${VERSION}/," \
   -cJf "$STAGE/SOURCES/${NAME}-${VERSION}.tar.xz" .
+
+# RPM-only patches: live in packaging/rpm/*.patch; applied via %patch/%autosetup.
+shopt -s nullglob
+for p in "$ROOT"/packaging/rpm/*.patch; do
+  cp -a "$p" "$STAGE/SOURCES/"
+done
+shopt -u nullglob
 
 {
   printf '%s\n' "%global version ${RPM_VERSION}" "%global srcversion ${VERSION}" ""
@@ -116,7 +124,7 @@ $PM -y install meson ninja-build 2>/dev/null \
 # Map Debian Build-Depends → RPM packages (experiential heuristics).
 map_deb_to_rpm() {
   case "$1" in
-    bash-builtins) echo bash ;;  # provides bash.pc; alias below
+    bash-builtins) echo bash ;;  # provides bash.pc; RPM-only %patch teaches Meson
     libglib2.0-dev|libglib2.0-0) echo glib2-devel ;;
     libcurl4-openssl-dev|libcurl4-gnutls-dev|libcurl4-nss-dev|libcurl-dev)
       echo libcurl-devel ;;
@@ -154,34 +162,6 @@ if ls /rpmbuild/deps/*.rpm >/dev/null 2>&1; then
 fi
 command -v meson >/dev/null
 command -v ninja >/dev/null || command -v ninja-build >/dev/null
-
-# Debian pkg-config module "bash-builtins" ← RHEL/Rocky package "bash" (bash.pc).
-ensure_bash_builtins_pc() {
-  export PKG_CONFIG_PATH="/usr/share/pkgconfig:/usr/lib64/pkgconfig:/usr/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
-  if pkg-config --exists bash-builtins 2>/dev/null; then
-    return 0
-  fi
-  local pc dest=/usr/share/pkgconfig/bash-builtins.pc
-  mkdir -p /usr/share/pkgconfig
-  pc=$(find /usr -name bash.pc 2>/dev/null | head -n1 || true)
-  if [ -n "${pc:-}" ]; then
-    # Keep Cflags/Libs from bash.pc; rewrite Name so Meson finds bash-builtins.
-    sed "s/^Name:.*/Name: bash-builtins/" "$pc" >"$dest"
-    echo "build-rpm: aliased $pc -> $dest (bash provides bash-builtins)"
-  else
-    printf "%s\n" \
-      "prefix=/usr" \
-      "Name: bash-builtins" \
-      "Description: Bash loadable builtins (provided by bash)" \
-      "Version: 5.0" \
-      "Cflags: -I\${prefix}/include" \
-      >"$dest"
-    echo "build-rpm: wrote stub $dest (no bash.pc found)"
-  fi
-  pkg-config --exists bash-builtins
-}
-ensure_bash_builtins_pc
-export PKG_CONFIG_PATH="/usr/share/pkgconfig:/usr/lib64/pkgconfig:/usr/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
 
 rpmbuild --define "_topdir /rpmbuild" -bb /rpmbuild/SPECS/${NAME}.spec || \
   rpmbuild --define "_topdir /rpmbuild" --nodeps -bb /rpmbuild/SPECS/${NAME}.spec

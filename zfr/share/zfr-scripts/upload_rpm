@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# upload_rpm — PUT RPMs into reporpm_createrepo-c.
+#
+# Direct http://s1:1993 often resets from off-host; default path is SSH to the
+# repo host and curl against 127.0.0.1:1993.
+#
+# Env (or ~/.config/zfr/reporpm.env):
+#   REPORPM_URL    default http://127.0.0.1:1993 (used on REPORPM_SSH host)
+#   REPORPM_SSH    default s1; set empty to curl REPORPM_URL from this host
+#   REPORPM_USER   default maintainer
+#   REPORPM_PASS   required (htpasswd maintainer; see reporpm README)
+#
+# Debian-built RPMs (Release without .elN) land under
+#   repo/_incoming/<arch>/Packages/
+set -euo pipefail
+[[ $# -ge 1 ]] || { echo "usage: upload_rpm <file.rpm>..." >&2; exit 2; }
+
+_env=${XDG_CONFIG_HOME:-$HOME/.config}/zfr/reporpm.env
+# shellcheck disable=SC1090
+[[ -f $_env ]] && . "$_env"
+
+URL=${REPORPM_URL:-http://127.0.0.1:1993}
+SSH_HOST=${REPORPM_SSH-s1}
+USER=${REPORPM_USER:-maintainer}
+PASS=${REPORPM_PASS:?set REPORPM_PASS (or put it in $_env)}
+
+_upload_one() {
+  local rpm=$1 base remote
+  base=$(basename "$rpm")
+  case "$base" in
+    *.src.rpm) echo "upload_rpm: skip $base"; return 0 ;;
+    *-debuginfo-*.rpm|*-debugsource-*.rpm) echo "upload_rpm: skip $base"; return 0 ;;
+  esac
+  if [[ -n "$SSH_HOST" ]]; then
+    remote="/tmp/zfr-upload-$$-$base"
+    scp -q "$rpm" "${SSH_HOST}:${remote}"
+    ssh "$SSH_HOST" \
+      "curl -fsS -u $(printf %q "$USER"):$(printf %q "$PASS") -T $(printf %q "$remote") \
+         $(printf %q "${URL%/}/upload/${base}") && rm -f $(printf %q "$remote")"
+  else
+    curl -fsS -u "${USER}:${PASS}" -T "$rpm" "${URL%/}/upload/${base}"
+  fi
+  echo "upload_rpm: uploaded $base"
+}
+
+for rpm in "$@"; do
+  _upload_one "$rpm"
+done

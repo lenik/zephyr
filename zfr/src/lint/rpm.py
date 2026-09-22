@@ -257,6 +257,83 @@ def check_rpm(root: Path, lang: str) -> list[Finding]:
                 )
             )
 
+        # ---- RPM-only patches (packaging/rpm/*.patch → PatchN + %autosetup) ----
+        from ize.rpm_files import list_rpm_patches
+
+        patches = list_rpm_patches(root)
+        if patches:
+            missing_patch = [
+                name
+                for i, name in enumerate(patches)
+                if not re.search(
+                    rf"(?m)^Patch{i}:\s*{re.escape(name)}\s*$", text
+                )
+            ]
+            uses_autosetup = bool(
+                re.search(r"(?m)^%autosetup\b.*-p1", text)
+            ) or bool(re.search(r"(?m)^%patch\b", text)) or bool(
+                re.search(r"(?m)^%patch\d+\b", text)
+            )
+            mk_copies = makefile.is_file() and (
+                "*.patch" in mk and "SOURCES" in mk
+            )
+            if missing_patch or not uses_autosetup:
+                out.append(
+                    Finding(
+                        "warn",
+                        "rpm.patches",
+                        _(
+                            "RPM-only patches %(names)s need PatchN: + "
+                            "%%autosetup/%%patch in %(spec)s"
+                        )
+                        % {"names": ", ".join(patches), "spec": rel},
+                        rel,
+                        fix=_(
+                            "List each packaging/rpm/*.patch as PatchN: after "
+                            "Source0, and use `%autosetup -n %{name}-%{srcversion} "
+                            "-p1` in %prep (or `%patch -PN -p1`). Run `zfr ize`."
+                        ),
+                    )
+                )
+            elif not mk_copies:
+                out.append(
+                    Finding(
+                        "warn",
+                        "rpm.patches",
+                        _(
+                            "packaging/rpm/Makefile should copy *.patch into "
+                            "%%_topdir/SOURCES for rpmbuild"
+                        ),
+                        "packaging/rpm/Makefile",
+                        fix=_(
+                            "In the dist target, `cp -a *.patch $(TOPDIR)/SOURCES/` "
+                            "so PatchN: files are present beside the tarball."
+                        ),
+                    )
+                )
+            else:
+                out.append(
+                    Finding(
+                        "ok",
+                        "rpm.patches",
+                        _(
+                            "RPM-only patches wired via PatchN + %%autosetup "
+                            "(%(n)d)"
+                        )
+                        % {"n": len(patches)},
+                        rel,
+                    )
+                )
+        else:
+            out.append(
+                Finding(
+                    "ok",
+                    "rpm.patches",
+                    _("no packaging/rpm/*.patch (optional RPM-only diffs)"),
+                    "packaging/rpm/",
+                )
+            )
+
         if lang == "bash":
             from lib import project_uses_bash_shlib
 

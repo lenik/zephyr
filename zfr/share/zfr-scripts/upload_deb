@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# upload_deb — local: dput to s1 (repodeb_aptly incoming via scp).
+# Usage: upload_deb <path-to.changes>
+set -euo pipefail
+CHANGES=${1:?usage: upload_deb <file.changes>}
+HOST=${ZFR_DPUT_HOST:-s1}
+exec dput -f "$HOST" "$CHANGES"

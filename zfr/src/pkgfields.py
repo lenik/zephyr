@@ -43,6 +43,10 @@ _CLEAN_BLOCK = (
     "clean:\n"
     "\trm -f $(TOPDIR)/SPECS/$(NAME).spec\n"
     "\trm -f $(TOPDIR)/SOURCES/$(NAME)-*.tar.*\n"
+    "\t@for p in *.patch; do \\\n"
+    '\t\t[ -f "$$p" ] || continue; \\\n'
+    '\t\trm -f "$(TOPDIR)/SOURCES/$$p"; \\\n'
+    "\tdone\n"
     "\trm -f $(TOPDIR)/SRPMS/$(NAME)-*.src.rpm\n"
     "\trm -f $(TOPDIR)/RPMS/*/$(NAME)-*.rpm\n"
     "\trm -rf $(TOPDIR)/BUILD/$(NAME)-*\n"
@@ -51,6 +55,12 @@ _CLEAN_BLOCK = (
 _OLD_CLEAN_RE = re.compile(
     r"^clean:\n\trm -rf \$\(TOPDIR\)\s*$",
     re.M,
+)
+_PATCH_COPY_BLOCK = (
+    "\t@for p in *.patch; do \\\n"
+    '\t\t[ -f "$$p" ] || continue; \\\n'
+    '\t\tcp -a "$$p" "$(TOPDIR)/SOURCES/"; \\\n'
+    "\tdone\n"
 )
 
 
@@ -87,6 +97,33 @@ def migrate_rpm_makefile_topdir(text: str) -> str | None:
         )
         changed = True
     return new if changed else None
+
+
+def migrate_rpm_makefile_patches(text: str) -> str | None:
+    """Ensure dist copies ``*.patch`` into SOURCES; return new text or None."""
+    if "*.patch" in text and "SOURCES" in text and "cp -a" in text:
+        return None
+    # Insert patch-copy after the dist recipe's closing `fi` (zfr dist / tools/zfr).
+    m = re.search(
+        r"(?ms)^(dist:\n.*?^\tfi\n)",
+        text,
+    )
+    if not m:
+        return None
+    new = text[: m.end()] + _PATCH_COPY_BLOCK + text[m.end() :]
+    # Also refresh clean to remove patch copies when possible.
+    if re.search(r"(?m)^clean:\n\trm -f \$\(TOPDIR\)/SPECS/", new) and (
+        "for p in *.patch" not in new.split("clean:", 1)[-1].split("\n\n", 1)[0]
+    ):
+        new2 = re.sub(
+            r"(?ms)^clean:\n(?:\t[^\n]*\n)+",
+            _CLEAN_BLOCK,
+            new,
+            count=1,
+        )
+        if new2 != new:
+            new = new2
+    return new
 
 
 def rpm_dir(root: Path) -> Path:

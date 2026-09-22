@@ -56,7 +56,7 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         "--dput-host",
         metavar="HOST",
         default="",
-        help=_("dput upload host for .changes (debian)"),
+        help=_("deprecated: configure ~/.config/zfr/scripts/upload_deb instead"),
     )
     p.add_argument(
         "-D",
