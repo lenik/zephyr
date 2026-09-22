@@ -38,6 +38,9 @@ jobs:
       ucrt: ${{ steps.gen.outputs.ucrt }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Build the release tag (or dispatch input); fall back to workflow ref.
+          ref: ${{ github.event.release.tag_name || inputs.tag || github.ref }}
       - id: gen
         run: |
           chmod +x scripts/ci/*.sh
@@ -64,6 +67,9 @@ jobs:
       matrix: ${{ fromJSON(needs.matrix.outputs.deb) }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Build the release tag (or dispatch input); fall back to workflow ref.
+          ref: ${{ github.event.release.tag_name || inputs.tag || github.ref }}
       - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
       - name: Install tools
@@ -123,6 +129,9 @@ jobs:
       matrix: ${{ fromJSON(needs.matrix.outputs.rpm) }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Build the release tag (or dispatch input); fall back to workflow ref.
+          ref: ${{ github.event.release.tag_name || inputs.tag || github.ref }}
       - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
       - name: Install tools
@@ -177,6 +186,9 @@ jobs:
         shell: msys2 {0}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Build the release tag (or dispatch input); fall back to workflow ref.
+          ref: ${{ github.event.release.tag_name || inputs.tag || github.ref }}
       - uses: msys2/setup-msys2@v2
         with:
           msystem: ${{ matrix.msystem }}
@@ -223,6 +235,9 @@ jobs:
       matrix: ${{ fromJSON(needs.matrix.outputs.ucrt) }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Build the release tag (or dispatch input); fall back to workflow ref.
+          ref: ${{ github.event.release.tag_name || inputs.tag || github.ref }}
       - uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: ${{ matrix.arch }}
@@ -257,6 +272,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Build the release tag (or dispatch input); fall back to workflow ref.
+          ref: ${{ github.event.release.tag_name || inputs.tag || github.ref }}
       - name: Download release assets for private publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
