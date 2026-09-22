@@ -234,26 +234,24 @@ fi
 
 # EL8: system python is 3.6; distro meson is 0.58. Install meson with
 # python3.9 so rpmbuild gets a working >=0.61 (pip-on-3.6 cannot run it).
-# NOTE: this block is inside bash -lc SINGLE quotes — no apostrophes allowed.
+# NOTE: inside bash -lc single quotes — no apostrophes in this block.
 if [[ "${EL}" == "8" ]]; then
   $PM -y install python39 python39-pip python39-setuptools 2>/dev/null || true
   python3.9 -m pip install --no-cache-dir "meson>=0.61,<1.5"
   python3.9 -c "
-import pathlib, site
-site_pkg = site.getsitepackages()[0]
-path = pathlib.Path(\"/usr/bin/meson\")
-path.write_text(
-    \"#!/usr/bin/python3.9\\n\"
-    \"import sys\\n\"
-    \"sys.path.insert(0, \" + repr(site_pkg) + \")\\n\"
-    \"from mesonbuild.mesonmain import main\\n\"
-    \"raise SystemExit(main())\\n\"
+import pathlib, mesonbuild
+root = pathlib.Path(mesonbuild.__file__).resolve().parent.parent
+script = pathlib.Path(\"/usr/bin/meson\")
+script.write_text(
+    \"#!/bin/bash\\n\"
+    \"export PYTHONPATH=\" + repr(str(root)) + \"\\\${PYTHONPATH:+:\\\$PYTHONPATH}\\n\"
+    \"exec /usr/bin/python3.9 -m mesonbuild.mesonmain \\\"\\\$@\\\"\\n\"
 )
-path.chmod(0o755)
-print(\"meson wrapper ->\", site_pkg)
+script.chmod(0o755)
+print(\"meson root\", root)
+print(script.read_text())
 "
-  command -v meson
-  meson --version
+  /usr/bin/meson --version
 fi
 
 rpmbuild --define "_topdir /rpmbuild" -bb /rpmbuild/SPECS/${NAME}.spec || \
