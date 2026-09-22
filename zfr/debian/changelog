@@ -1,5 +1,23 @@
 zephyr (2.9.3) testing; urgency=medium
 
+  * Move lint/ize rules under lint/rules/ZL* and ize/rules/ZI*.
+  * .lintignore (any subdir); templates ignore *.css by default.
+  * ZL0001: subdirectory split optional; honour .lintignore.
+  * ZL0016: skip VERSION drift warn when sync githook is configured.
+  * Per-rule README-* locale docs; depend on python3-mesondoc.
+  * Refactor lint/ize into per-rule directories with glob+matches
+    selection, reverse-merge scheduling, and EditList apply.
+  * CI: drop cygwin; UCRT x64/arm64; NuGet via reponupkg_forgejo;
+    WinGet/Scoop (-gnu) + Choco combined manifests.
+  * upload_rpm/publish_rpm + share/ci: REPORPM default :1993;
+    REPONUPKG :2080 (dedicated Forgejo, not git :1544).
+  * CI matrix: debian i386/armhf/ppc64el/s390x; ubuntu i386/amd64v3;
+    mingw + cygwin jobs; mingw→nupkg; publish to reponuget_baget.
+  * lint ZL0101: debian armhf/v7 allowed; require mingw/cygwin CI scripts.
+  * RPM: packaging/rpm/*.patch via PatchN + %autosetup; Makefile/build-rpm
+    copy patches to SOURCES (drop container bash-builtins.pc alias).
+  * lint ZL0103 rpm.patches; ZL0102 teaches %patch over .pc mutation.
+  * ize.rpm: sync PatchN/%autosetup from packaging/rpm/*.patch.
   * share/ci: component main; matrix uos/kylin loong64-only,
     raspi_bookworm armhf ARMv6; drop debian/ubuntu armhf/loong64.
   * lint ZL0101/ZL0102: matrix arch policy + RPM bash-builtins←bash.

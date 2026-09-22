@@ -119,6 +119,11 @@ class Ize:
             dest.chmod(mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
     def run(self) -> int:
+        """Deprecated: orchestration lives in ``ize._cmd.cmd_ize``.
+
+        Kept so callers that construct ``Ize`` directly can still run the
+        legacy ordered steps when needed.
+        """
         self._step("ize.mesonize", self.mesonize)
         self._step("ize.scaffold", self.add_missing_files)
         self._step("ize.debian.control", self.patch_debian_control)

@@ -1,4 +1,3 @@
-
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """zfr ize — bring an existing project up to current zephyr style."""
 
@@ -8,78 +7,36 @@ import argparse
 import sys
 from pathlib import Path
 
-from lib import _is_zfr_meta_repo, find_project_dir
-from cli import register_command
-from cmd_options import IZE_OPTIONS_REL, apply_option_file
 from i18n import _
-from lang import LANGS
-from .engine import Ize
-from .util import _role
-
-def cmd_ize(
-    *,
-    lang: str | None = None,
-    dry_run: bool = False,
-    man: bool = True,
-    subst: bool = True,
-    mesonize: bool = True,
-    commit: bool = False,
-    author: str | None = None,
-    verbose: bool = False,
-    color: str = "auto",
-    uncheck: list[str] | None = None,
-    only: list[str] | None = None,
-    workdir: Path | None = None,
-) -> int:
-    if commit and dry_run:
-        raise SystemExit("zfr ize: --commit cannot be combined with --dry-run")
-    root = find_project_dir(workdir)
-    if _is_zfr_meta_repo(root):
-        raise SystemExit(
-            f"{root} looks like the zephyr meta-repo. "
-            "Run zfr ize from a language project, not the repository root."
-        )
-    role = _role(root)
-    if lang:
-        if lang not in LANGS:
-            raise SystemExit(f"unknown language {lang!r} (one of: {', '.join(LANGS)})")
-        detected = lang
-    else:
-        from lib import detect_lang
-
-        try:
-            detected = detect_lang(root)
-        except SystemExit as e:
-            print(str(e), file=sys.stderr)
-            print("pass -l LANG to ize a project whose language could not be detected", file=sys.stderr)
-            return 2
-    if role == "meta":
-        raise SystemExit("zfr ize does not operate on the meta-repo root")
-    Ize(
-        root,
-        lang=detected,
-        dry_run=dry_run,
-        do_man=man,
-        do_subst=subst,
-        do_mesonize=mesonize,
-        do_commit=commit,
-        author=author,
-        verbose=verbose,
-        color=color,
-        uncheck=uncheck,
-        only=only,
-    ).run()
-    return 0
-
 
 NAME = "ize"
-HELP = _('refactor this project to current zephyr style')
-DESCRIPTION = _('Refactor the current project to match current zephyr style: missing debian/rpm files, meson targets, AsciiDoc man pages, Meson version substitutions, and lint-level gettext coverage (LINGUAS + .po). Does not scaffold man/<locale> man translations. Walks from cwd toward parents.')
+HELP = _("refactor this project to current zephyr style")
+DESCRIPTION = _(
+    "Refactor the current project to match current zephyr style: missing debian/rpm files, "
+    "meson targets, AsciiDoc man pages, Meson version substitutions, and lint-level gettext "
+    "coverage (LINGUAS + .po). Does not scaffold man/<locale> man translations. Walks from cwd toward parents."
+)
+
+
+def cmd_ize(**kwargs) -> int:
+    from ize._cmd import cmd_ize as _cmd
+
+    return _cmd(**kwargs)
 
 
 def add_arguments(p: argparse.ArgumentParser) -> None:
-    p.add_argument("-l", "--lang", metavar="LANG", help=_("language template to align with (default: detect; one of: %s)") % ", ".join(LANGS))
-    p.add_argument("-n", "--dry-run", action="store_true", help=_("print planned changes without writing files"))
+    from lang import LANGS
+
+    p.add_argument(
+        "-l",
+        "--lang",
+        metavar="LANG",
+        help=_("language template to align with (default: detect; one of: %s)")
+        % ", ".join(LANGS),
+    )
+    p.add_argument(
+        "-n", "--dry-run", action="store_true", help=_("print planned changes without writing files")
+    )
     p.add_argument(
         "-L",
         "--list-std",
@@ -118,8 +75,16 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         default=True,
         help=_("run 2meson to convert Autotools/CMake to Meson when present (default: on)"),
     )
-    p.add_argument("--no-man", action="store_true", help=_("do not convert groff .1 man pages to man/*.adoc"))
-    p.add_argument("--no-subst", action="store_true", help=_("do not turn hardcoded versions/paths into @VERSION@/@PREFIX@ / config.h"))
+    p.add_argument(
+        "--no-man",
+        action="store_true",
+        help=_("do not convert groff .1 man pages to man/*.adoc"),
+    )
+    p.add_argument(
+        "--no-subst",
+        action="store_true",
+        help=_("do not turn hardcoded versions/paths into @VERSION@/@PREFIX@ / config.h"),
+    )
     p.add_argument(
         "-u",
         "--uncheck",
@@ -136,11 +101,18 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         default=[],
         help=_("run only these ize rule ID(s) or code(s), comma-separated (repeatable)"),
     )
-    p.add_argument("--color", choices=("auto", "always", "never"), default="auto", help=_("CSR (console SGR) highlighting (default: auto)"))
+    p.add_argument(
+        "--color",
+        choices=("auto", "always", "never"),
+        default="auto",
+        help=_("CSR (console SGR) highlighting (default: auto)"),
+    )
 
 
 def run(args: argparse.Namespace) -> int:
     from std import IZE_RULES, render_std_help, render_std_table
+    from lib import find_project_dir
+    from cmd_options import IZE_OPTIONS_REL, apply_option_file
 
     if args.list_std:
         sys.stdout.write(render_std_table(IZE_RULES.all_rules()))
@@ -155,7 +127,9 @@ def run(args: argparse.Namespace) -> int:
     root = find_project_dir()
     parser = argparse.ArgumentParser(add_help=False)
     add_arguments(parser)
-    args = apply_option_file(root, IZE_OPTIONS_REL, parser, args, merge_flags=("uncheck", "only"))
+    args = apply_option_file(
+        root, IZE_OPTIONS_REL, parser, args, merge_flags=("uncheck", "only")
+    )
     return cmd_ize(
         lang=args.lang,
         dry_run=args.dry_run,
@@ -172,6 +146,8 @@ def run(args: argparse.Namespace) -> int:
 
 
 def register(sub: argparse._SubParsersAction) -> None:
+    from cli import register_command
+
     register_command(
         sub,
         NAME,

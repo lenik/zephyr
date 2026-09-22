@@ -1,0 +1,21 @@
+# debian/rules는 dh meson debian/build를 사용합니다.
+
+### 데비안은 APT 계약입니다
+
+제어 / 규칙 / 저작권 / 소스 형식은 패키지 빌드 방법과 사용자 설치를 결정합니다. Zephyr는 Meson + dh `--buildsystem=meson --builddirectory=debian/build`를 표준화합니다.
+
+
+### 이 수표: {title}
+
+{세부 사항}
+기본 심각도 힌트: {sev}.
+
+
+### 그것이 중요한 이유
+
+잘못된 아키텍처, Build-Depends 누락 또는 Meson이 아닌 규칙 파일이 디빌드에 실패하거나 로컬 컴파일이 성공하더라도 언로드 가능한 패키지를 생성합니다.
+
+
+### 포장 편집 시
+
+Ize는 템플릿에서 다시 작성할 수 있습니다. 업로드하기 전에 항상 유지 관리자, 종속 항목 및 아키텍처를 비교하세요.

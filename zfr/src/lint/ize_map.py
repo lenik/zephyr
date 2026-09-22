@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 from std import LINT_RULES
+from std.lint_rules import all_lint_specs
 
 
 def ize_targets_for_lint(code: str) -> list[str]:
@@ -12,6 +13,36 @@ def ize_targets_for_lint(code: str) -> list[str]:
     if rule is None or not rule.izeable:
         return []
 
+    # Prefer per-rule IZE_TARGETS (ZI ids or ize.* codes)
+    for spec in all_lint_specs():
+        if spec.code == rule.code or (
+            rule.code.endswith("*") and code.startswith(rule.code[:-1])
+        ):
+            if not spec.ize_targets:
+                break
+            out: list[str] = []
+            from std import IZE_RULES
+
+            for t in spec.ize_targets:
+                if t.startswith("ZI"):
+                    sr = IZE_RULES.by_id(t)
+                    out.append(sr.code if sr else t)
+                else:
+                    out.append(t)
+            return out
+        if spec.code.endswith("*") and code.startswith(spec.code[:-1]) and spec.ize_targets:
+            from std import IZE_RULES
+
+            out = []
+            for t in spec.ize_targets:
+                if t.startswith("ZI"):
+                    sr = IZE_RULES.by_id(t)
+                    out.append(sr.code if sr else t)
+                else:
+                    out.append(t)
+            return out
+
+    # Fallback heuristics (legacy)
     if code.startswith("layout.posync") or code == "layout.posync":
         return ["ize.posync"]
     if code.startswith("layout.scripts") or code == "layout.scripts":

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""Per-rule documentation for lint browse — loaded from lint_rules*.md."""
+"""Per-rule documentation for lint browse — loaded from lint/rules/ZL*/README*.md."""
 
 from __future__ import annotations
 
@@ -21,9 +21,9 @@ class RuleDoc:
     sections: tuple[Section, ...]
 
 
-_HEADING_RE = re.compile(r"^##\s+(\S+)\s*$")
-_SUB_RE = re.compile(r"^###\s+(.+?)(?:\s+\{(\w+)\})?\s*$")
 _ID_RE = re.compile(r"^([A-Za-z]+)-?(\d+)$")
+_SUB_RE = re.compile(r"^###\s+(.+?)\s*$")
+_H1_RE = re.compile(r"^#\s+(.+?)\s*$")
 
 
 def _docs_dir() -> Path:
@@ -54,7 +54,10 @@ def locale_fallback_chain(lang: str) -> list[str]:
     chain = [norm]
     if "_" in norm:
         chain.append(norm.split("_", 1)[0])
-    # Deduplicate while preserving order.
+    # zh → also try zh_CN README name
+    if norm == "zh" or norm.startswith("zh_"):
+        if "zh_CN" not in chain:
+            chain.insert(0 if norm == "zh" else len(chain), "zh_CN")
     out: list[str] = []
     for item in chain:
         if item and item not in out:
@@ -62,147 +65,77 @@ def locale_fallback_chain(lang: str) -> list[str]:
     return out
 
 
-def _candidate_paths(lang: str) -> list[Path]:
-    """``lint_rules-zh.md`` (from zh_CN) → ``lint_rules.md``.
+def _rule_dir(rule_id: str) -> Path:
+    return _docs_dir() / "rules" / normalize_rule_heading(rule_id)
 
-    Region tags fall back to the language only — maintain ``lint_rules-zh.md``,
-    not a separate ``lint_rules-zh_CN.md``.
-    """
-    base = _docs_dir()
+
+def _readme_candidates(rule_id: str, lang: str) -> list[Path]:
+    d = _rule_dir(rule_id)
     paths: list[Path] = []
     for loc in locale_fallback_chain(lang):
-        paths.append(base / f"lint_rules-{loc}.md")
-    paths.append(base / "lint_rules.md")
+        paths.append(d / f"README-{loc}.md")
+        # also try language-only alias used historically
+        if "_" in loc:
+            paths.append(d / f"README-{loc.split('_', 1)[0]}.md")
+    paths.append(d / "README.md")
     return paths
 
 
-@dataclass
-class _Block:
-    key: str  # rule id ZL0001, family:debian, ize, ize:none
-    sections: list[Section]
+def _parse_readme(text: str) -> list[Section]:
+    """Split a rule README into sections (### headings; leading # is title)."""
+    lines = text.splitlines()
+    sections: list[Section] = []
+    title = ""
+    current = ""
+    body: list[str] = []
 
+    def flush() -> None:
+        nonlocal current, body
+        b = "\n".join(body).strip()
+        if current or b:
+            sections.append((current or _("Documentation"), b))
+        current = ""
+        body = []
 
-def _parse_markdown(text: str) -> dict[str, list[Section]]:
-    blocks: dict[str, list[Section]] = {}
-    current_key: str | None = None
-    current_title = ""
-    body_lines: list[str] = []
+    i = 0
+    if lines and _H1_RE.match(lines[0]):
+        title = _H1_RE.match(lines[0]).group(1).strip()  # type: ignore[union-attr]
+        i = 1
+        while i < len(lines) and not lines[i].strip():
+            i += 1
 
-    def flush_section() -> None:
-        nonlocal current_title, body_lines
-        if current_key is None:
-            current_title = ""
-            body_lines = []
-            return
-        body = "\n".join(body_lines).strip()
-        title = current_title.strip()
-        if title or body:
-            blocks.setdefault(current_key, []).append(
-                (title or _("Documentation"), body or title)
-            )
-        current_title = ""
-        body_lines = []
-
-    def flush_all() -> None:
-        flush_section()
-
-    for raw in text.splitlines():
-        hm = _HEADING_RE.match(raw)
-        if hm:
-            flush_all()
-            token = hm.group(1)
-            if token.startswith("family:"):
-                current_key = token
-            elif token == "ize":
-                current_key = "ize"
-            else:
-                current_key = normalize_rule_heading(token)
-            continue
+    intro: list[str] = []
+    while i < len(lines):
+        raw = lines[i]
         sm = _SUB_RE.match(raw)
         if sm:
-            flush_section()
-            current_title = sm.group(1).strip()
-            sid = (sm.group(2) or "").strip()
-            if current_key == "ize" and sid:
-                current_key = f"ize:{sid}"
+            if intro and not sections:
+                sections.append((title or _("Overview"), "\n".join(intro).strip()))
+                intro = []
+            flush()
+            current = sm.group(1).strip()
+            i += 1
             continue
-        if current_key is None:
-            continue
-        body_lines.append(raw)
-    flush_all()
-    return blocks
-
-
-@dataclass(frozen=True)
-class _Catalog:
-    rules: dict[str, list[Section]]
-    families: list[tuple[str, list[Section]]]
-    ize_solve: list[Section]
-    ize_none: list[Section]
-
-
-def _blocks_to_catalog(blocks: dict[str, list[Section]]) -> _Catalog:
-    rules: dict[str, list[Section]] = {}
-    fam_map: dict[str, list[Section]] = {}
-    ize_solve: list[Section] = []
-    ize_none: list[Section] = []
-    for key, secs in blocks.items():
-        if key.startswith("family:"):
-            label = key[len("family:") :]
-            prefix = "" if label == "generic" else (label if label.endswith(".") else label + ".")
-            fam_map[prefix] = secs
-        elif key == "ize:none":
-            ize_none = secs
-        elif key == "ize":
-            ize_solve = secs
-        elif key.startswith("ize:"):
-            ize_none = secs if key.endswith("none") else ize_solve
+        if not sections and not current:
+            intro.append(raw)
         else:
-            rules[key] = secs
-    families = sorted(fam_map.items(), key=lambda x: len(x[0]), reverse=True)
-    return _Catalog(rules, families, ize_solve, ize_none)
+            body.append(raw)
+        i += 1
+    if intro and not sections:
+        sections.append((title or _("Overview"), "\n".join(intro).strip()))
+    flush()
+    return [(t, b) for t, b in sections if t.strip() or b.strip()]
 
 
-def _parse_file(path: Path) -> _Catalog | None:
-    if not path.is_file():
-        return None
-    try:
-        text = path.read_text(encoding="utf-8")
-    except OSError:
-        return None
-    return _blocks_to_catalog(_parse_markdown(text))
-
-
-@lru_cache(maxsize=32)
-def _load_merged(lang: str) -> _Catalog:
-    """Merge locale overlays onto English ``lint_rules.md``.
-
-    Lookup order for files: ``lint_rules-<full>.md``, ``lint_rules-<lang>.md``,
-    then English. Later files only fill missing keys (first hit wins per key).
-    """
-    en = _parse_file(_docs_dir() / "lint_rules.md") or _Catalog({}, [], [], [])
-    rules = dict(en.rules)
-    fam_map = {p: list(s) for p, s in en.families}
-    ize_solve = list(en.ize_solve)
-    ize_none = list(en.ize_none)
-
-    # Apply locale files from most specific to language-only; do not re-read English.
-    for path in _candidate_paths(lang):
-        if path.name == "lint_rules.md":
-            continue
-        loc = _parse_file(path)
-        if loc is None:
-            continue
-        for rid, secs in loc.rules.items():
-            rules[rid] = secs
-        for prefix, secs in loc.families:
-            fam_map[prefix] = secs
-        if loc.ize_solve:
-            ize_solve = list(loc.ize_solve)
-        if loc.ize_none:
-            ize_none = list(loc.ize_none)
-    families = sorted(fam_map.items(), key=lambda x: len(x[0]), reverse=True)
-    return _Catalog(rules, families, ize_solve, ize_none)
+@lru_cache(maxsize=256)
+def _load_rule_readme(rule_id: str, lang: str) -> list[Section]:
+    for path in _readme_candidates(rule_id, lang):
+        if path.is_file():
+            try:
+                return _parse_readme(path.read_text(encoding="utf-8"))
+            except OSError:
+                continue
+    return []
 
 
 def _current_lang() -> str:
@@ -216,44 +149,10 @@ def _current_lang() -> str:
     return "en"
 
 
-def _format_sections(sections: list[Section], mapping: dict[str, str]) -> list[Section]:
-    out: list[Section] = []
-    for title, body in sections:
-        try:
-            t = title.format_map(mapping)
-            b = body.format_map(mapping)
-        except (KeyError, ValueError):
-            t, b = title, body
-        out.append((t, b))
-    return out
-
-
-def _family_sections(code: str, rule: StdRule, cat: _Catalog) -> list[Section] | None:
-    # Short title stays gettext; essays come from markdown.
-    title = _(rule.title)
-    detail = _(rule.detail).strip() if rule.detail else ""
-    if not detail:
-        detail = _("Checker `%s` in `zfr lint`.") % rule.code
-    sev = rule.default_severity or _("varies")
-    mapping = {
-        "title": title,
-        "detail": detail,
-        "sev": sev,
-        "code": rule.code,
-        "id": rule.id,
-    }
-    for prefix, sections in cat.families:
-        if prefix == "" or code.startswith(prefix):
-            return _format_sections(sections, mapping)
-    return None
-
-
-def _ize_sections(code: str, cat: _Catalog) -> list[Section]:
+def _ize_sections(code: str) -> list[Section]:
     targets = ize_targets_for_lint(code)
     cmd = ize_command_for_lint(code)
     if not targets:
-        if cat.ize_none:
-            return list(cat.ize_none)
         return [
             (
                 _("No Solve mapping"),
@@ -265,8 +164,6 @@ def _ize_sections(code: str, cat: _Catalog) -> list[Section]:
             )
         ]
     mapping = {"targets": ", ".join(targets), "cmd": cmd or ""}
-    if cat.ize_solve:
-        return _format_sections(list(cat.ize_solve), mapping)
     return [
         (
             _("Solve / ize"),
@@ -286,14 +183,12 @@ def rule_doc_for(rule_id: str, code: str, *, lang: str | None = None) -> RuleDoc
     if rule is None:
         rule = StdRule(rule_id, code, code)
 
-    cat = _load_merged(lang if lang is not None else _current_lang())
-    ov = cat.rules.get(rule.id) or cat.rules.get(normalize_rule_heading(rule_id))
-    if ov:
-        sections = list(ov)
-    else:
-        sections = _family_sections(code, rule, cat) or []
+    loc = lang if lang is not None else _current_lang()
+    sections = list(_load_rule_readme(rule.id, loc))
+    if not sections and rule.detail:
+        sections = [(_("Detail"), rule.detail)]
 
-    ize = _ize_sections(code, cat)
+    ize = _ize_sections(code)
     already = any(
         "olve" in (t + b).lower() or "ize" in (t + b).lower() for t, b in sections
     )
@@ -313,9 +208,8 @@ def rule_doc_dict(
     rule_id: str, code: str, *, lang: str | None = None
 ) -> dict[str, object]:
     d = rule_doc_for(rule_id, code, lang=lang)
-    # Browse chrome: include gettext short title separately from MD essays.
     rule = LINT_RULES.by_id(rule_id) or LINT_RULES.lookup(code)
-    short = _(rule.title) if rule else code
+    short = (rule.title if rule else code) or code
     return {
         "title": short,
         "sections": [{"title": t, "body": b} for t, b in d.sections],
@@ -323,4 +217,4 @@ def rule_doc_dict(
 
 
 def clear_doc_cache() -> None:
-    _load_merged.cache_clear()
+    _load_rule_readme.cache_clear()

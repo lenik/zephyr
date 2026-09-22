@@ -4,7 +4,8 @@
 from __future__ import annotations
 
 from finding import Finding
-from std import is_suppressed, lint_rule_id, parse_uncheck
+from std.registry import is_suppressed, parse_uncheck
+from std.lint_rules import lint_rule_id
 
 
 def filter_findings(

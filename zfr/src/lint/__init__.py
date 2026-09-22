@@ -1,4 +1,3 @@
-
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """zfr lint — validate a project against zephyr packaging and layout style."""
 
@@ -8,134 +7,11 @@ import argparse
 import sys
 from pathlib import Path
 
-from lib import _is_zfr_cli_package, find_project_dir
-from cli import register_command
-from finding import Finding
 from i18n import _
-from l10n import apply_lint_option_file, parse_l10n_level
-from pkgfields import _meson_project_fields
-from .filtering import filter_findings
-from .report import format_report
-from .severity import parse_severity_level, remap_severities
-from .util import _control, _role
-
-# collect_findings / cmd_lint live below if not imported from util
-def _resolve_lint_root(root: Path) -> Path:
-    """Lint the zfr CLI package when cwd is the zephyr meta-repo root."""
-    if _role(root) == "meta":
-        cli = root / "zfr"
-        if _is_zfr_cli_package(cli):
-            return cli
-    return root
-
-
-def collect_findings(
-    root: Path, *, l10n_level: str = "L1"
-) -> tuple[str, str, str, list[Finding]]:
-    from .debian import check_debian
-    from .ci import check_ci
-    from .gitignore import check_gitignore
-    from .i18n_check import check_i18n
-    from .identity import check_identity
-    from .lang_bits import check_lang_bits
-    from .layout import check_layout
-    from .leftovers import check_leftovers, check_readme
-    from .meson import check_meson
-    from .rpm import check_rpm
-    from .source_size import check_source_size
-    from .template import check_template_gaps
-
-    root = _resolve_lint_root(root)
-    role = _role(root)
-    if role == "meta":
-        lang = "meta"
-    else:
-        try:
-            from lib import detect_lang
-
-            lang = detect_lang(root)
-        except SystemExit:
-            lang = "unknown"
-    meson = _meson_project_fields(root)
-    src, _pkg, _ctl = _control(root)
-    name = src.get("Source") or meson.get("name") or root.name
-    findings: list[Finding] = []
-    findings.extend(check_layout(root, lang, role))
-    findings.extend(check_gitignore(root, role))
-    findings.extend(check_identity(root, lang, role))
-    findings.extend(check_meson(root, lang))
-    findings.extend(check_debian(root, lang, role))
-    findings.extend(check_rpm(root, lang))
-    findings.extend(check_readme(root, role))
-    findings.extend(check_i18n(root, role, l10n_level=l10n_level))
-    findings.extend(check_leftovers(root, role))
-    findings.extend(check_lang_bits(root, lang))
-    findings.extend(check_source_size(root, role))
-    from .hardcoded import check_hardcoded
-
-    findings.extend(check_hardcoded(root, role))
-    findings.extend(check_template_gaps(root, lang, role))
-    from .scripts_check import check_scripts_and_version
-
-    findings.extend(check_scripts_and_version(root, role))
-    findings.extend(check_ci(root))
-    return name, lang, role, findings
-
-def cmd_lint(
-    *,
-    verbose: bool = False,
-    quiet: bool = False,
-    color: str = "auto",
-    warning_level: str | None = None,
-    error_level: str | None = None,
-    l10n_level: str = "L1",
-    style_info: bool | None = None,
-    for_ai_purpose: bool | None = None,
-    workdir: Path | None = None,
-    uncheck: list[str] | None = None,
-    always: list[str] | None = None,
-    browse: bool = False,
-) -> int:
-    from terminal import resolve_for_ai_purpose
-
-    root = _resolve_lint_root(find_project_dir(workdir))
-    if browse:
-        from .browse import browse_lint
-
-        return browse_lint(
-            root,
-            l10n_level=l10n_level,
-            uncheck=uncheck,
-            always=always,
-            warning_level=warning_level,
-            error_level=error_level,
-        )
-    name, lang, role, findings = collect_findings(root, l10n_level=l10n_level)
-    findings = filter_findings(findings, uncheck, always)
-    remap_severities(findings, as_warning=warning_level, as_error=error_level)
-    ai = resolve_for_ai_purpose(for_ai_purpose)
-    sys.stdout.write(
-        format_report(
-            root,
-            name,
-            lang,
-            role,
-            findings,
-            verbose=verbose,
-            quiet=quiet,
-            color=color,
-            style_info=style_info,
-            for_ai_purpose=ai,
-        )
-    )
-    sys.stdout.flush()
-    if any(f.severity == "error" for f in findings):
-        return 1
-    return 0
-
+from l10n import parse_l10n_level
 
 NAME = "lint"
-HELP = _('validate project packaging and zephyr layout (walks parents from cwd)')
+HELP = _("validate project packaging and zephyr layout (walks parents from cwd)")
 DESCRIPTION = _(
     "Check the current zephyr project for missing files and packaging/style mistakes. "
     "Walks from cwd toward parent directories. CSR colors when stdout is a TTY. "
@@ -145,8 +21,21 @@ DESCRIPTION = _(
 )
 
 
+def collect_findings(root: Path, *, l10n_level: str = "L1"):
+    from lint._cmd import collect_findings as _cf
+
+    return _cf(root, l10n_level=l10n_level)
+
+
+def cmd_lint(**kwargs) -> int:
+    from lint._cmd import cmd_lint as _cl
+
+    return _cl(**kwargs)
+
+
 def add_arguments(p: argparse.ArgumentParser) -> None:
     from terminal import add_for_ai_purpose_arguments
+    from lint.severity import parse_severity_level
 
     p.add_argument("-v", "--verbose", action="store_true", help=_("show passing checks too"))
     p.add_argument("-q", "--quiet", action="store_true", help=_("only print errors"))
@@ -212,7 +101,10 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         metavar="LEVEL",
         type=parse_l10n_level,
         default=None,
-        help=_("required gettext/manpage locale coverage L0–L3 (default: L1; project file may override)"),
+        help=_(
+            "required gettext/manpage locale coverage L0–L3 "
+            "(default: L1; project file may override)"
+        ),
     )
     info = p.add_mutually_exclusive_group()
     info.add_argument(
@@ -247,11 +139,19 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         default=[],
         help=_("force-enable rule ID(s) or code(s) even if unchecked (repeatable)"),
     )
-    p.add_argument("--color", choices=("auto", "always", "never"), default="auto", help=_("CSR (console SGR) highlighting (default: auto)"))
+    p.add_argument(
+        "--color",
+        choices=("auto", "always", "never"),
+        default="auto",
+        help=_("CSR (console SGR) highlighting (default: auto)"),
+    )
 
 
 def run(args: argparse.Namespace) -> int:
     from std import LINT_RULES, render_std_help, render_std_table
+    from lib import find_project_dir
+    from l10n import apply_lint_option_file
+    from lint._cmd import _resolve_lint_root
 
     if args.list_std:
         sys.stdout.write(render_std_table(LINT_RULES.all_rules()))
@@ -283,6 +183,8 @@ def run(args: argparse.Namespace) -> int:
 
 
 def register(sub: argparse._SubParsersAction) -> None:
+    from cli import register_command
+
     register_command(
         sub,
         NAME,
