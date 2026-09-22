@@ -1,11 +1,15 @@
 zephyr (2.10.0) testing; urgency=medium
 
+  * CI: retry apt installs against snapshot.debian.org 503s.
   * CI: fix Build-Depends filter blank line; MinGW bash overlay;
     RPM Python 3.9 type-alias patch; cli.py Optional[int] alias.
   * CI: overlay scripts onto release tag; resolve RPM Source name;
     strip unavailable Build-Depends; MinGW asciidoctor; skip empty UCRT.
-  * ize -b: tri-state [ ]/[*]/[-] checkbox left of each rule
-    (default / always-override / ignored); drop State button row.
+  * ize -b: real tri-state checkbox left of each ZI rule
+    (default / always=force-enable override / ignored).
+  * CI: fix RPM root-owned stage cleanup; MinGW UTF-8; bullseye apt
+    retry; loong64 debian-ports keyring; amd64v3 via amd64 build;
+    drop Ubuntu i386 (no docker image); s390x arch images.
   * lint: iter_files honours .gitignore (skip debian/pkg + packaging
     stage); speed up source.long.
   * ize -b: hide nop rules unless Show All is checked.
@@ -17,6 +21,7 @@ zephyr (2.10.0) testing; urgency=medium
   * ize --always; wire .config/zfr/ize.options like lint.options.
   * CI: install release-packages.yml at git root with working-directory
     for monorepos (Actions ignores package-local .github).
+  * share/ci: sync matrix arch-specific images; release asset verify.
 
  -- Lenik (谢继雷) <lenik@bodz.net>  Tue, 22 Sep 2026 17:50:55 +0800
 
