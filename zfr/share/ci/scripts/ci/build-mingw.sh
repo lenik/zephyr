@@ -40,6 +40,18 @@ if ! command -v asciidoctor >/dev/null 2>&1; then
   exit 1
 fi
 
+# Prefer MinGW64 python/meson over MSYS usr/bin (avoids broken path mixing).
+export PATH="/mingw64/bin:$PATH"
+if [ -x /mingw64/bin/python3 ]; then
+  export PYTHON=/mingw64/bin/python3
+elif [ -x /mingw64/bin/python ]; then
+  export PYTHON=/mingw64/bin/python
+fi
+# gem install may put asciidoctor outside PATH on MSYS2.
+for d in   "$(ruby -e 'print Gem.bindir' 2>/dev/null || true)"   "$(ruby -e 'print Gem.user_dir' 2>/dev/null || true)/bin"   "$HOME/.local/share/gem/ruby/"*/bin
+do
+  [ -n "$d" ] && [ -d "$d" ] && export PATH="$d:$PATH"
+done
 export PATH="$ROOT/scripts/ci:$PATH"
 make -C "$MINGW_DIR" clean || true
 make -C "$MINGW_DIR" local RID=win-x64
