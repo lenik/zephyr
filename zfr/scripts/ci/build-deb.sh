@@ -123,20 +123,22 @@ case "$suite" in
       > /etc/apt/apt.conf.d/99archive
     ;;
   bullseye)
-    # Image apt indexes often point at superseded security pool filenames.
+    # Live debian-security currently indexes pool files that 404 on every
+    # public mirror; only snapshot still hosts them. Pin a consistent cut.
+    snap=20260809T212255Z
     printf "%s\n" \
-      "deb http://deb.debian.org/debian bullseye main contrib non-free" \
-      "deb http://deb.debian.org/debian-security bullseye-security main contrib non-free" \
-      "deb http://deb.debian.org/debian bullseye-updates main contrib non-free" \
+      "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${snap}/ bullseye main contrib non-free" \
+      "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/${snap}/ bullseye-security main contrib non-free" \
+      "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${snap}/ bullseye-updates main contrib non-free" \
       > /etc/apt/sources.list
     rm -f /etc/apt/sources.list.d/*
     apt-get clean
     rm -rf /var/lib/apt/lists/*
-    # Prefer Acquire::Retries and ignore Valid-Until skew on old images.
     printf "%s\n" \
       "Acquire::Retries \"5\";" \
-      "Acquire::http::Timeout \"30\";" \
+      "Acquire::http::Timeout \"60\";" \
       "Acquire::Check-Valid-Until \"false\";" \
+      "Acquire::Languages \"none\";" \
       > /etc/apt/apt.conf.d/99ci-retry
     ;;
 esac
