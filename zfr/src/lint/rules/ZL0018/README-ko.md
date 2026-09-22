@@ -1,15 +1,15 @@
-# meson.build 프로젝트() 호출
+# meson.build의 project() 호출
 
-### Meson은 기록적인 빌드 시스템입니다.
+### Meson이 공식 빌드 시스템입니다
 
-ID, 라이센스, 버전 소스, 매뉴얼 페이지, 완성 및 Look/posync 대상은 meson.build에 있습니다. 여기서 드리프트는 데비안과 RPM을 모두 손상시킵니다.
+정체성, 라이선스, 버전 원천, man 페이지, 보완, look/posync 타깃은 meson.build에 있습니다. 여기서의 어긋남은 Debian과 RPM을 함께 깨뜨립니다.
 
 
-### 이 수표: {title}
+### 이 검사: {title}
 
-{세부 사항}
+{detail}
 
 
 ### 편집 팁
 
-Ize 패치 meson.build; 템플릿 블록으로 사용자 정의 대상을 조정하고 대규모 편집 후 재구성합니다.
+Ize가 meson.build를 패치합니다; 사용자 정의 타깃을 템플릿 블록과 맞추고 큰 편집 후 다시 configure하세요.

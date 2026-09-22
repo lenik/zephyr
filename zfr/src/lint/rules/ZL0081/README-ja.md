@@ -1,0 +1,5 @@
+# README にテンプレートバナーがない
+
+### {title}
+
+{detail}

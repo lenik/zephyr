@@ -1,15 +1,15 @@
-# zfr バージョンからの中間子バージョン
+# Meson バージョンは zfr version 由来
 
-### Meson は記録的なビルド システムです
+### Meson が正式なビルドシステムです
 
-ID、ライセンス、バージョン ソース、マニュアル ページ、補完、look/posync ターゲットは meson.build に存在します。ここでのドリフトは Debian と RPM を同様に破壊します。
+識別子、ライセンス、バージョン源、man、補完、look/posync ターゲットは meson.build に置きます。ここでのずれは Debian も RPM も壊します。
 
 
-### このチェック: {title}
+### この検査: {title}
 
-{詳細}
+{detail}
 
 
 ### 編集のヒント
 
-Ize パッチ meson.build;カスタム ターゲットとテンプレート ブロックを調整し、大規模な編集後に再構成します。
+Ize は meson.build をパッチします；カスタムターゲットをテンプレートブロックと調停し、大きな編集後は再 configure。

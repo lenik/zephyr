@@ -1,10 +1,10 @@
 # Keine übergroßen Quelldateien
 
-### Quellenhygiene
+### Quellhygiene
 
-{Titel}. Deckt Länge und fest codierte Pfade/Versionen ab, die verschiebbare Installationen unterbrechen.
+{title}. Deckt Länge und hart codierte Pfade/Versionen, die relokierbare Installationen brechen.
 
 
-### Wie Flusen aussehen
+### Wie lint schaut
 
-{Detail}
+{detail}

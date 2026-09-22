@@ -1,15 +1,15 @@
-# Meson 0.0.0-Versions-Fallback
+# Meson-0.0.0-Versions-Fallback
 
-### Meson ist das Build-System der Aufzeichnung
+### Meson ist das maßgebliche Build-System
 
-Identität, Lizenz, Versionsquelle, Manpages, Vervollständigung und Look/Posync-Ziele sind live in meson.build verfügbar. Drift hier bricht Debian und RPM gleichermaßen.
+Identität, Lizenz, Versionsquelle, Manpages, Completion und look/posync-Targets leben in meson.build. Drift hier bricht Debian und RPM gleichermaßen.
 
 
-### Dieser Scheck: {title}
+### Diese Prüfung: {title}
 
-{Detail}
+{detail}
 
 
 ### Bearbeitungstipps
 
-Ize patcht meson.build; Gleichen Sie benutzerdefinierte Ziele mit Vorlagenblöcken ab und konfigurieren Sie sie nach großen Änderungen neu.
+Ize patcht meson.build; gleichen Sie eigene Targets mit Vorlagenblöcken ab und re-konfigurieren Sie nach großen Edits.

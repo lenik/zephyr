@@ -1,10 +1,10 @@
-# Nessun file sorgente di grandi dimensioni
+# Nessun file sorgente di dimensioni eccessive
 
-### Igiene della fonte
+### Igiene dei sorgenti
 
-{titolo}. Copre la lunghezza e i percorsi/versioni codificati che interrompono le installazioni rilocabili.
+{title}. Copre lunghezza e percorsi/versioni cablati che rompono installazioni rilocabili.
 
 
-### Come appaiono i pelucchi
+### Come guarda lint
 
-{dettaglio}
+{detail}

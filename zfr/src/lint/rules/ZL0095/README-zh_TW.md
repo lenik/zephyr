@@ -1,15 +1,17 @@
-# posync run_target is externalized as scripts/posync.sh
+# posync run_target 已外置為 scripts/posync.sh
+
+存在 po/ 時，meson.run_target('posync') 必須呼叫 scripts/posync.sh，而非內聯的 bash -euc heredoc。執行 `zfr ize` 以抽取。
 
 ### 內聯 posync 難以維護
 
-meson.build 裡的 bash -euc heredoc 會在模板間重複，且難調試。約定是由 run_target('posync') 調用 `zfr translate --sync`（Python），而不是內聯 heredoc。
+meson.build 內的 bash -euc heredoc 會在範本間重複且難除錯。約定是由 run_target('posync') 接線的 `zfr translate --sync`（Python），而非內聯 heredoc。
 
 
-### 收益
+### 回報
 
-一條命令在本地同步 xgettext/msgmerge；ninja posync 保持簡短；CI 可調用 `zfr translate --sync`，或在 zfr 內 import `translate.sync`。
+一條指令即可本機同步 xgettext/msgmerge；ninja posync 保持簡短；CI 可呼叫 `zfr translate --sync` 或匯入 `translate.sync`。
 
 
 ### Solve
 
-ize 會把 run_target('posync') 改寫為通過項目 Python 入口調用 translate --sync（zfr 內部優先 import）。之後請核對 POTFILES 與語言標誌。
+Ize 將 run_target('posync') 重寫為透過專案 Python 入口呼叫 translate --sync（在 zfr 內優先 import）。之後請核對 POTFILES 與語言旗標。

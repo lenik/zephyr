@@ -1,15 +1,15 @@
-# Meson 0.0.0 版本回退
+# Meson 的 0.0.0 版本回退
 
-### Meson 是记录构建系统
+### Meson 是权威构建系统
 
-身份、许可证、版本源、手册页、完成和外观/posync 目标位于 meson.build 中。 Drift 这里破坏了 Debian 和 RPM。
-
-
-### 此检查：{title}
-
-{细节}
+身份、许可证、版本来源、手册页、补全以及 look/posync 目标都在 meson.build。此处漂移会同时破坏 Debian 与 RPM。
 
 
-### 编辑技巧
+### 本检查：{title}
 
-Ize 修补 meson.build；将自定义目标与模板块协调起来，并在进行大量编辑后重新配置。
+{detail}
+
+
+### 编辑提示
+
+Ize 会修补 meson.build；将自定义目标与模板块对齐，大改后重新 configure。

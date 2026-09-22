@@ -1,20 +1,20 @@
 # Quelldateilänge; in Unterverzeichnis des Pakets extrahieren
 
-### Lange Dateien kämpfen um Eigentum
+### Lange Dateien erschweren Ownership
 
-Sehr lange Quelldateien sind schwer zu überprüfen, zu testen und zu besitzen. Zephyr bevorzugt zusammenhängende Module – oft unter einem Unterverzeichnis eines Pakets mit einer dünnen Einstiegspunktdatei (die gleiche Struktur, die create/ize erwartet wird). Ein Unterverzeichnis ist optional: Wenn Hilfsfunktionen auf andere Weise ausgelagert werden und das Ergebnis wartbar ist, ist das in Ordnung.
-
-
-### Was die Verbesserung Ihnen bringt
-
-Kleinere Überprüfungsunterschiede, klarere Modulgrenzen, einfachere Unit-Tests und weniger Merge-Konflikte bei stark frequentierten Dateien.
+Sehr lange Quelldateien sind schwer zu reviewen, zu testen und zu verantworten. Zephyr bevorzugt kohäsive Module — oft unter einem Paket-Unterverzeichnis mit einer dünnen Einstiegsdatei (dieselbe Form, die create/ize erwarten). Ein Unterverzeichnis ist optional: wenn Helfer anders ausgelagert werden und das Ergebnis wartbar bleibt, ist das in Ordnung.
 
 
-### Schwellenwerte
+### Was Verbesserung bringt
 
-Lint zählt nicht-leere Zeilen (überspringt build/debian/po/…). Eine Anmerkung erscheint bei etwa 600 Zeilen; eine Warnung bei etwa 1000. Beispiel-Template-Module werden übersprungen. Pfade, die mit einer nahegelegenen `.lintignore` übereinstimmen (gitignore-Stil; kann in jedem Unterverzeichnis liegen), werden übersprungen — Sprach-Templates liefern standardmäßig `*.css`, das ignoriert wird.
+Kleinere Review-Diffs, klarere Modulgrenzen, einfachere Unit-Tests und weniger Merge-Konflikte auf stark bearbeiteten Dateien.
 
 
-### Das Beheben ist manuell
+### Schwellen
 
-Teilen oder extrahieren Sie zusammenhängende Abschnitte und aktualisieren Sie selbst die Listen für Meson/Install/Import. `zfr ize` teilt Quellen nicht automatisch.
+Lint zählt nicht-leere Zeilen (build/debian/po/… ausgelassen). Ein Hinweis erscheint bei ~600 Zeilen; eine Warnung bei ~1000. Template-Beispielmodule werden übersprungen. Pfade, die zu einer nahen `.lintignore` passen (gitignore-Stil; darf in jedem Unterverzeichnis liegen), werden übersprungen — Sprachvorlagen ignorieren `*.css` standardmäßig.
+
+
+### Beheben ist manuell
+
+Teilen oder extrahieren Sie kohäsive Abschnitte und aktualisieren Sie meson-/Install-/Import-Listen selbst. `zfr ize` splittet Quellen nicht automatisch.

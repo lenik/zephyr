@@ -1,15 +1,17 @@
-# Build/deploy/maintenance scripts live under scripts/
+# نصوص البناء/النشر/الصيانة تقع تحت scripts/
+
+مساعدات *.sh على الجذر وأجسام meson run_target لـ look / install-symlinks / uninstall-symlinks / posync / deploy تنتمي إلى scripts/. شغّل `zfr ize` للنقل وإعادة التوصيل.
 
 ### سكربتات الصيانة تحت scripts/
 
-install-symlinks/deploy في جذر المستودع تشوّش سطح التحزيم. المزامنة ومعاينة DESTDIR: `zfr translate --sync` و`zfr build --look`.
+مساعدات install-symlinks / deploy على جذر المستودع تشوّش سطح التعبئة. يبقيها Zephyr تحت scripts/. مزامنة الكتالوج ومعاينة DESTDIR هما `zfr translate --sync` و `zfr build --look` بدل posync.sh/look.sh المخصّصة عند الإمكان.
 
 
 ### الاكتشاف
 
-يعلّم *.sh في الجذر وأجسام run_target المضمّنة التي يجب إخراجها أو استبدالها بأوامر zfr الفرعية.
+يعلّم أسماء *.sh للصيانة على الجذر وأجسام run_target المضمّنة التي يجب إخراجها أو استبدالها بأوامر zfr الفرعية.
 
 
 ### بعد النقل
 
-حدّث الوثائق وCI. يعيد Solve كتابة Meson إلى scripts/… أو zfr.
+حدّث الوثائق وأي CI استدعى المسارات القديمة. Solve يعيد كتابة أهداف Meson run_target إلى scripts/… أو zfr translate/build.

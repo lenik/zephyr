@@ -1,21 +1,21 @@
-# ELF 바이너리 대 아키텍처: 모두
+# ELF 바이너리 vs Architecture: all
 
-### 데비안은 APT 계약입니다
+### Debian은 APT 계약입니다
 
-제어 / 규칙 / 저작권 / 소스 형식은 패키지 빌드 방법과 사용자 설치를 결정합니다. Zephyr는 Meson + dh `--buildsystem=meson --builddirectory=debian/build`를 표준화합니다.
+control / rules / copyright / source format이 패키지 빌드 방식과 사용자가 설치하는 내용을 결정합니다. Zephyr는 Meson + dh `--buildsystem=meson --builddirectory=debian/build`로 표준화합니다.
 
 
-### 이 수표: {title}
+### 이 검사: {title}
 
-{세부 사항}
+{detail}
 기본 심각도 힌트: {sev}.
 
 
-### 그것이 중요한 이유
+### 왜 중요한가
 
-잘못된 아키텍처, Build-Depends 누락 또는 Meson이 아닌 규칙 파일이 디빌드에 실패하거나 로컬 컴파일이 성공하더라도 언로드 가능한 패키지를 생성합니다.
+잘못된 Architecture, 누락된 Build-Depends, 또는 비-Meson rules 파일은 debuild를 실패시키거나, 로컬 컴파일이 되어도 로드할 수 없는 패키지를 만듭니다.
 
 
-### 포장 편집 시
+### 패키징을 편집할 때
 
-Ize는 템플릿에서 다시 작성할 수 있습니다. 업로드하기 전에 항상 유지 관리자, 종속 항목 및 아키텍처를 비교하세요.
+Ize가 템플릿으로 다시 쓸 수 있습니다 — 업로드 전에 항상 Maintainer, Depends, Architecture를 diff하세요.

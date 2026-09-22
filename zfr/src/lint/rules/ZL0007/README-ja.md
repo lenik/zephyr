@@ -1,15 +1,15 @@
-# Git のコミット前フック同期バージョン
+# Git pre-commit フックが VERSION を同期
 
-### 共有レイアウトによりツールの方向性を維持
+### 共有レイアウトがツールの指針になる
 
-LICENSE、man/、VERSION、フック、補完、および scripts/ は、create/ize/lint/release が期待するランドマークです。
-
-
-### 欠落または間違っています: {title}
-
-{詳細}
+LICENSE、man/、VERSION、hooks、completion、scripts/ は create/ize/lint/release が期待する目印です。
 
 
-### 足場のリフレッシュ
+### 欠落または誤り: {title}
 
-Solve は、テンプレート (.githooks、LICENSE、カーソル ルールなど) からファイルをインストールまたは更新する場合があります。コミットする前にレビューしてください。
+{detail}
+
+
+### スキャフォールド更新
+
+Solve はテンプレートからファイルをインストールまたは更新することがあります（.githooks、LICENSE、cursor ルールなど）。コミット前に確認してください。

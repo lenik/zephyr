@@ -1,21 +1,21 @@
-# bash パッケージには bash-shlib が含まれています
+# bash パッケージの Depends に bash-shlib を含む
 
-### Debian は APT 契約です
+### Debian は APT の契約です
 
-コントロール / ルール / 著作権 / ソース形式によって、パッケージの構築方法とユーザーが何をインストールするかが決まります。 Zephyr は Meson + dh `--buildsystem=meson --builddirectory=debian/build` を標準化しています。
-
-
-### このチェック: {title}
-
-{詳細}
-デフォルトの重大度ヒント: {sev}。
+control / rules / copyright / source format がパッケージのビルド方法とインストール内容を決めます。Zephyr は Meson + dh `--buildsystem=meson --builddirectory=debian/build` に標準化しています。
 
 
-### なぜそれが重要なのか
+### この検査: {title}
 
-アーキテクチャが間違っている、Build-Depends が欠落している、または非 Meson ルール ファイルがあると、ローカル コンパイルが成功した場合でも、デビルドに失敗するか、アンロード可能なパッケージが生成されます。
+{detail}
+既定の重大度ヒント: {sev}。
 
 
-### パッケージを編集する場合
+### なぜ重要か
 
-Ize はテンプレートから書き直す可能性があります。アップロードする前に、必ず Maintainer、Depends、Architecture を比較してください。
+誤った Architecture、欠けた Build-Depends、非 Meson の rules は debuild を失敗させたり、ローカルではビルドできても読み込めないパッケージを生み出します。
+
+
+### パッケージングを編集するとき
+
+Ize はテンプレートから書き換えることがあります——アップロード前に必ず Maintainer、Depends、Architecture を diff してください。

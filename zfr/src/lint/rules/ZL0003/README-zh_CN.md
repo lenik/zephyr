@@ -1,15 +1,15 @@
-# 所需的布局文件存在或缺失
+# 所需布局文件存在或缺失
 
-### 共享布局保持工具导向
+### 共享布局让工具有方向
 
-LICENSE、man/、VERSION、hooks、completion 和 script/ 是 create/ize/lint/release 期望的标志。
+LICENSE、man/、VERSION、hooks、completion 与 scripts/ 是 create/ize/lint/release 期望的地标。
 
 
 ### 缺失或错误：{title}
 
-{细节}
+{detail}
 
 
 ### 脚手架刷新
 
-Solve 可以安装或刷新模板中的文件（.githooks、LICENSE、光标规则等）。提交前审查。
+Solve 可能从模板安装或刷新文件（.githooks、LICENSE、cursor 规则等）。提交前请审阅。

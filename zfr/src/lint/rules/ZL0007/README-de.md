@@ -1,15 +1,15 @@
-# Git-Pre-Commit-Hook synchronisiert VERSION
+# Git-pre-commit-Hook synchronisiert VERSION
 
-### Durch das gemeinsame Layout bleiben die Werkzeuge orientiert
+### Gemeinsames Layout hält Werkzeuge orientiert
 
-LICENSE, man/, VERSION, Hooks, Completion und scripts/ sind die Orientierungspunkte, die create/ize/lint/release erwarten.
-
-
-### Fehlt oder ist falsch: {title}
-
-{Detail}
+LICENSE, man/, VERSION, Hooks, Completion und scripts/ sind die Landmarken, die create/ize/lint/release erwarten.
 
 
-### Gerüstaktualisierung
+### Fehlend oder falsch: {title}
 
-Solve kann Dateien aus der Vorlage installieren oder aktualisieren (.githooks, LIZENZ, Cursorregeln, …). Überprüfen Sie es vor dem Festschreiben.
+{detail}
+
+
+### Scaffold-Auffrischung
+
+Solve kann Dateien aus der Vorlage installieren oder auffrischen (.githooks, LICENSE, Cursor-Regeln, …). Vor dem Commit prüfen.

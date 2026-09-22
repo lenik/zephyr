@@ -1,15 +1,15 @@
-# Man/ 아래의 AsciiDoc 매뉴얼 페이지 소스
+# man/ 아래 AsciiDoc man 페이지 소스
 
-### 공유 레이아웃은 도구 중심을 유지합니다.
+### 공유 레이아웃이 도구를 방향 잡습니다
 
-LICENSE, man/, VERSION, 후크, 완성 및 스크립트/는 create/ize/lint/release가 기대하는 랜드마크입니다.
-
-
-### 누락 또는 오류: {제목}
-
-{세부 사항}
+LICENSE, man/, VERSION, hooks, completion, scripts/는 create/ize/lint/release가 기대하는 이정표입니다.
 
 
-### 스캐폴드 새로 고침
+### 누락 또는 오류: {title}
 
-Solve는 템플릿(.githooks, LICENSE, 커서 규칙 등)에서 파일을 설치하거나 새로 고칠 수 있습니다. 커밋하기 전에 검토하세요.
+{detail}
+
+
+### 스캐폴드 갱신
+
+Solve가 템플릿에서 파일을 설치하거나 갱신할 수 있습니다(.githooks, LICENSE, cursor 규칙 등). 커밋 전에 검토하세요.

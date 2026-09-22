@@ -1,15 +1,17 @@
-# posync run_target is externalized as scripts/posync.sh
+# Le run_target posync est externalisé en scripts/posync.sh
 
-### posync en ligne est intenable
+Quand po/ existe, meson.run_target('posync') doit appeler scripts/posync.sh plutôt qu'un heredoc bash -euc en ligne. Lancez `zfr ize` pour extraire.
 
-Un heredoc bash -euc dans meson.build se duplique et se débogue mal. Contrat : `zfr translate --sync` depuis run_target('posync').
+### Un posync en ligne est immaintenable
+
+Un heredoc bash -euc dans meson.build se duplique entre modèles et est pénible à déboguer. Le contrat est `zfr translate --sync` (Python) câblé depuis run_target('posync'), pas un heredoc en ligne.
 
 
 ### Gain
 
-Une commande synchronise xgettext/msgmerge ; ninja posync reste court ; CI appelle `zfr translate --sync` ou importe le module.
+Une commande synchronise xgettext/msgmerge localement ; ninja posync reste court ; la CI peut appeler `zfr translate --sync` ou importer `translate.sync`.
 
 
 ### Solve
 
-Ize rebranche posync sur translate --sync. Vérifiez POTFILES ensuite.
+Ize réécrit run_target('posync') pour invoquer translate --sync via l'entrée Python du projet (import d'abord dans zfr). Vérifiez ensuite POTFILES et les drapeaux de langue.

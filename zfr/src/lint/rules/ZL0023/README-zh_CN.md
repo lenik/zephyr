@@ -1,15 +1,15 @@
+# Meson 调用 asciidoctor 生成手册页
+
+### Meson 是权威构建系统
+
+身份、许可证、版本来源、手册页、补全以及 look/posync 目标都在 meson.build。此处漂移会同时破坏 Debian 与 RPM。
 
 
-### Meson 是记录构建系统
+### 本检查：{title}
 
-身份、许可证、版本源、手册页、完成和外观/posync 目标位于 meson.build 中。 Drift 这里破坏了 Debian 和 RPM。
-
-
+{detail}
 
 
+### 编辑提示
 
-
-
-### 编辑技巧
-
-
+Ize 会修补 meson.build；将自定义目标与模板块对齐，大改后重新 configure。

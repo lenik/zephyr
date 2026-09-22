@@ -1,15 +1,15 @@
-# Sorgenti della pagina man AsciiDoc sotto man/
+# Sorgenti AsciiDoc delle man page sotto man/
 
-### Il layout condiviso mantiene gli strumenti orientati
+### Un layout condiviso orienta gli strumenti
 
-LICENZA, man/, VERSIONE, hook, completamento e script/ sono i punti di riferimento che si aspettano la creazione/ize/lint/rilascio.
-
-
-### Mancante o sbagliato: {titolo}
-
-{dettaglio}
+LICENSE, man/, VERSION, hooks, completion e scripts/ sono i punti di riferimento che create/ize/lint/release si aspettano.
 
 
-### Aggiornamento dell'impalcatura
+### Mancante o errato: {title}
 
-Solve può installare o aggiornare file dal modello (.githooks, LICENZA, regole del cursore, ...). Rivedi prima di impegnarti.
+{detail}
+
+
+### Aggiornamento dello scaffold
+
+Solve può installare o aggiornare file dal modello (.githooks, LICENSE, regole cursor, …). Rivedete prima del commit.

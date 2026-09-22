@@ -1,21 +1,21 @@
-                                     AGPL ﻲﻓ ﺓﺭﻮﻛﺬﻣ ﺮﺸﻨﻟﺍﻭ ﻊﺒﻄﻟﺍ ﻕﻮﻘﺣ/ﻥﺎﻴﺒﻳﺩ #
+# debian/copyright يذكر AGPL
 
-                                                          APT ﺪﻘﻋ ﻮﻫ ﻥﺎﻴﺑﺩ ###
+### Debian هو عقد APT
 
-.`Meson + dh `--buildsystem=meson --builddirectory=debian/build ﺪﻴﺣﻮﺘﺑ Zephyr 
-
-
-                                                      {title} :ﺭﺎﻴﺘﺧﻻ﻿ﺍ ﺍﺬﻫ ###
-
-                                                                    {ﻞﻴﺻﺎﻔﺘﻟﺍ}
-                                                .{sev} :ﻲﺿﺍﺮﺘﻓﻻ﻿ﺍ ﺓﺭﻮﻄﺨﻟﺍ ﺢﻴﻤﻠﺗ
+تحدد control / rules / copyright / source format كيف يُبنى الحزمة وما الذي يثبّته المستخدمون. يوحّد Zephyr على Meson + dh `--buildsystem=meson --builddirectory=debian/build`.
 
 
-                                                                 ﻢﻬﻳ ﺍﺫﺎﻤﻟ ###
+### هذا الفحص: {title}
 
-.ﺔﻴﻠﺤﻤﻟﺍ ﺔﻴﺠﻣﺮﺒﻟﺍ ﺕﻼ﻿ﻳﻮﺤﺘﻟﺍ ﺡﺎﺠﻧ ﺪﻨﻋ ﻰﺘﺣ ﻞﻴﻤﺤﺘﻠﻟ ﺔﻠﺑﺎﻗ ﺮﻴﻏ ﻡﺰﺣ ﺝﺎﺘﻧﺇ ﻭﺃ ءﺎﺸﻧﻹ﻿ﺍ 
+{detail}
+تلميح الشدة الافتراضي: {sev}.
 
 
-                                                          ﺓﻮﺒﻌﻟﺍ ﺮﻳﺮﺤﺗ ﺪﻨﻋ ###
+### لماذا يهم
 
-.ﻞﻴﻤﺤﺘﻟﺍ ﻞﺒﻗ ﺔﻳﺭﺎﻤﻌﻤﻟﺍ ﺔﺳﺪﻨﻬﻟﺍﻭ ،ﺩﺎﻤﺘﻋﻻ﻿ﺍﻭ ،ﻑﺮﺸﻤﻟﺍ ﺰﻴﻴﻤﺘﺑ ﺎﻤًﺋﺍﺩ ﻢﻗ — ﺐﻟﺍﻮﻘﻟﺍ ﻦﻣ
+Architecture خاطئة أو Build-Depends ناقصة أو ملف rules غير Meson تفشل debuild أو تنتج حزمًا غير قابلة للتحميل حتى إن نجح التجميع المحلي.
+
+
+### عند تحرير التعبئة
+
+قد يعيد Ize الكتابة من القوالب — قارن دائمًا Maintainer و Depends و Architecture قبل الرفع.

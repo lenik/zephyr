@@ -1,15 +1,15 @@
-# Fichier de mise en page requis présent ou manquant
+# Fichier de disposition requis présent ou manquant
 
-### La mise en page partagée permet d'orienter les outils
+### Une disposition partagée oriente les outils
 
-LICENCE, man/, VERSION, hooks, complètement et scripts/ sont les repères attendus par create/ize/lint/release.
-
-
-### Manquant ou erroné : {title}
-
-{détail}
+LICENSE, man/, VERSION, hooks, completion et scripts/ sont les repères que create/ize/lint/release attendent.
 
 
-### Actualisation de l'échafaudage
+### Manquant ou incorrect : {title}
 
-Solve peut installer ou actualiser des fichiers à partir du modèle (.githooks, LICENSE, règles de curseur,…). Révisez avant de valider.
+{detail}
+
+
+### Rafraîchissement d'échafaudage
+
+Solve peut installer ou rafraîchir des fichiers depuis le modèle (.githooks, LICENSE, règles cursor, …). Relisez avant de committer.

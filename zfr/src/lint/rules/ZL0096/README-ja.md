@@ -1,15 +1,17 @@
-# Build/deploy/maintenance scripts live under scripts/
+# ビルド/デプロイ/メンテ用スクリプトは scripts/ 配下
 
-### メンテ脚本は scripts/ へ
+ルートの *.sh ヘルパーと look / install-symlinks / uninstall-symlinks / posync / deploy の meson run_target 本体は scripts/ に置きます。移動と再配線には `zfr ize`。
 
-ルートの install-symlinks/deploy は梱包面を散らかします。同期と DESTDIR プレビューは `zfr translate --sync` / `zfr build --look`。
+### メンテ用スクリプトは scripts/ 配下
+
+リポジトリ根の install-symlinks / deploy ヘルパーはパッケージング表面を散らかします。Zephyr はそれらを scripts/ に置きます。カタログ同期と DESTDIR プレビューは可能なら専用 posync.sh/look.sh ではなく `zfr translate --sync` と `zfr build --look`。
 
 
 ### 検出
 
-ルート *.sh と外出しすべき inline run_target を指摘。
+ルートのメンテ用 *.sh 名と、外出しまたは zfr サブコマンドへの置換が必要なインライン run_target 本体にフラグを立てます。
 
 
 ### 移動後
 
-文書と CI を更新。Solve が Meson を scripts/… か zfr に書き換え。
+ドキュメントと旧パスを呼ぶ CI を更新。Solve は Meson run_target を scripts/… または zfr translate/build へ書き換えます。

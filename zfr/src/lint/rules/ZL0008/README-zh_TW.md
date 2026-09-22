@@ -1,21 +1,21 @@
-# debian/control Build-Depends 條目
+# debian/control 的 Build-Depends 條目
 
-### Debian 是 APT 合約
+### Debian 是 APT 契約
 
-控制/規則/版權/來源格式決定套件如何建置以及使用者安裝什麼。 Zephyr 在 Meson + dh `--buildsystem=meson --builddirectory=debian/build` 上進行標準化。
-
-
-### 此檢查：{title}
-
-{細節}
-預設嚴重性提示：{sev}。
+control / rules / copyright / source format 決定套件如何建置以及使用者安裝到什麼。Zephyr 統一採用 Meson + dh `--buildsystem=meson --builddirectory=debian/build`。
 
 
-### 為什麼這很重要
+### 本檢查：{title}
 
-錯誤的架構、缺少 Build-Depends 或非 Meson 規則檔案即使本機編譯成功，也無法進行反編譯或產生不可載入的套件。
+{detail}
+預設嚴重程度提示：{sev}。
 
 
-### 編輯包裝時
+### 為何重要
 
-Ize 可以從範本重寫 - 在上傳之前始終比較維護者、依賴項和架構。
+錯誤的 Architecture、缺少 Build-Depends，或非 Meson 的 rules 檔會導致 debuild 失敗，或產出無法載入的套件——即便本機編譯成功。
+
+
+### 編輯打包時
+
+Ize 可能依範本重寫——上傳前務必 diff Maintainer、Depends 與 Architecture。

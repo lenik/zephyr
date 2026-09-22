@@ -18,6 +18,8 @@ export HTTP_PROXY=http://localhost:8118
 export HTTPS_PROXY=http://localhost:8118
 ```
 
-- CLI example: `googletranslator` and similar fetchers — pass/configure
-  **`http-proxy http://localhost:8118`** (see also translations.mdc for adoc).
+- For CLIs that take an explicit proxy flag, pass
+  **`http-proxy http://localhost:8118`** (or the tool’s equivalent).
+  Do **not** use this to run external machine-translation tools — see
+  **translations.mdc** (agent hand-translates; no `trans` / Google / etc.).
 - Do not assume raw access to blocked hosts will work; set the proxy first.

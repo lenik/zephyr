@@ -1,15 +1,15 @@
-# 版本檔案與變更日誌同步
+# VERSION 檔案與 changelog 同步
 
-### 共享佈局保持工具導向
+### 共享版面讓工具有方向
 
-LICENSE、man/、VERSION、hooks、completion 和 script/ 是 create/ize/lint/release 期望的標誌。
+LICENSE、man/、VERSION、hooks、completion 與 scripts/ 是 create/ize/lint/release 期望的地標。
 
 
 ### 缺失或錯誤：{title}
 
-{細節}
+{detail}
 
 
 ### 鷹架刷新
 
-Solve 可以安裝或刷新範本中的檔案（.githooks、LICENSE、遊標規則等）。提交前審查。
+Solve 可能從範本安裝或刷新檔案（.githooks、LICENSE、cursor 規則等）。提交前請審閱。

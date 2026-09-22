@@ -1,15 +1,17 @@
-# posync run_target is externalized as scripts/posync.sh
+# posync run_target이 scripts/posync.sh로 외부화됨
 
-### 인라인 posync는 유지보수 불가
+po/가 있으면 meson.run_target('posync')는 인라인 bash -euc heredoc이 아니라 scripts/posync.sh를 호출해야 합니다. 추출하려면 `zfr ize`를 실행하세요.
 
-meson.build의 bash -euc heredoc은 템플릿마다 중복되고 디버그가 어렵습니다. 계약은 run_target('posync')의 `zfr translate --sync`.
+### 인라인 posync는 유지 불가합니다
+
+meson.build 안의 bash -euc heredoc은 템플릿마다 중복되고 디버그가 고통스럽습니다. 계약은 run_target('posync')에서 연결된 `zfr translate --sync`(Python)이며, 인라인 heredoc이 아닙니다.
 
 
-### 이점
+### 이득
 
-한 명령으로 xgettext/msgmerge. ninja posync는 짧게, CI는 `zfr translate --sync` 또는 import.
+한 명령으로 xgettext/msgmerge를 로컬 동기화; ninja posync는 짧게 유지; CI는 `zfr translate --sync`를 호출하거나 `translate.sync`를 import할 수 있습니다.
 
 
 ### Solve
 
-ize가 posync를 translate --sync로 연결. 이후 POTFILES 확인.
+Ize는 run_target('posync')를 프로젝트 Python 진입점을 통해 translate --sync를 호출하도록 다시 씁니다(zfr 안에서는 import 우선). 이후 POTFILES와 언어 플래그를 확인하세요.

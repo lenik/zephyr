@@ -2,9 +2,9 @@
 
 ### Hygiène des sources
 
-{titre}. Couvre la longueur et les chemins/versions codés en dur qui interrompent les installations délocalisables.
+{title}. Couvre la longueur et les chemins/versions en dur qui cassent les installations relocalisables.
 
 
-### À quoi ressemblent les peluches
+### Comment lint regarde
 
-{détail}
+{detail}

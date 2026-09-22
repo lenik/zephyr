@@ -1,15 +1,15 @@
-# 介子專案作者/電子郵件/年份
+# Meson 的 project_author/email/year
 
-### Meson 是記錄建置系統
+### Meson 是權威建置系統
 
-身分、許可證、版本來源、手冊頁、完成和外觀/posync 目標位於 meson.build 中。 Drift 這裡破壞了 Debian 和 RPM。
-
-
-### 此檢查：{title}
-
-{細節}
+身分、授權、版本來源、手冊頁、補全以及 look/posync 目標都在 meson.build。此處漂移會同時破壞 Debian 與 RPM。
 
 
-### 編輯技巧
+### 本檢查：{title}
 
-Ize 修補 meson.build；將自訂目標與模板區塊協調起來，並在進行大量編輯後重新配置。
+{detail}
+
+
+### 編輯提示
+
+Ize 會修補 meson.build；將自訂目標與範本區塊對齊，大改後重新 configure。

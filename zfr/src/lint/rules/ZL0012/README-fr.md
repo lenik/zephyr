@@ -1,21 +1,21 @@
-# champ de la page d'accueil debian/control
+# Champ Homepage de debian/control
 
 ### Debian est le contrat APT
 
-contrôle / règles / droits d'auteur / format source décident de la manière dont le package est construit et de ce que les utilisateurs installent. Zephyr se standardise sur Meson + dh `--buildsystem=meson --builddirectory=debian/build`.
+control / rules / copyright / source format décident comment le paquet se construit et ce que les utilisateurs installent. Zephyr standardise sur Meson + dh `--buildsystem=meson --builddirectory=debian/build`.
 
 
-### Ce chèque : {title}
+### Ce contrôle : {title}
 
-{détail}
-Indice de gravité par défaut : {sev}.
+{detail}
+Indice de sévérité par défaut : {sev}.
 
 
 ### Pourquoi c'est important
 
-Une mauvaise architecture, des Build-Depends manquants ou un fichier de règles non Meson échouent à la déconstruction ou produisent des packages non téléchargeables même lorsque les compilations locales réussissent.
+Une Architecture incorrecte, des Build-Depends manquantes ou un fichier rules non-Meson font échouer debuild ou produisent des paquets inutilisables même si la compilation locale réussit.
 
 
-### Lors de la modification d'un emballage
+### En éditant le packaging
 
-Ize peut réécrire à partir de modèles - toujours différer le responsable, les dépendances et l'architecture avant le téléchargement.
+Ize peut réécrire depuis les modèles — comparez toujours Maintainer, Depends et Architecture avant l'envoi.
