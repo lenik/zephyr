@@ -50,6 +50,14 @@ fi
 for rule in version.mdc author.mdc translations.mdc proxy.mdc; do
   [ -f "$STAGE/.cursor/rules/$rule" ] || printf '# stub for CI packaging\n' >"$STAGE/.cursor/rules/$rule"
 done
+# Monorepo root READMEs installed via meson from ../README*.md
+for doc in README.md README-zh_CN.md; do
+  if [ -f "$ROOT/../$doc" ]; then
+    cp -a "$ROOT/../$doc" "$STAGE/$doc"
+  else
+    printf '# stub for CI packaging\n' >"$STAGE/$doc"
+  fi
+done
 # Materialize subprojects when the checkout uses a symlink outside the tree.
 if [ -L "$ROOT/subprojects" ]; then
   target=$(readlink -f "$ROOT/subprojects" || true)

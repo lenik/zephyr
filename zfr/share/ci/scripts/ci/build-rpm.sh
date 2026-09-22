@@ -82,6 +82,14 @@ fi
 for rule in version.mdc author.mdc translations.mdc proxy.mdc; do
   [ -f "$STAGE/SOURCES/cursor-rules/$rule" ] || printf '# stub for CI packaging\n' >"$STAGE/SOURCES/cursor-rules/$rule"
 done
+mkdir -p "$STAGE/SOURCES/cursor-docs"
+for doc in README.md README-zh_CN.md; do
+  if [ -f "$ROOT/../$doc" ]; then
+    cp -a "$ROOT/../$doc" "$STAGE/SOURCES/cursor-docs/$doc"
+  else
+    printf '# stub for CI packaging\n' >"$STAGE/SOURCES/cursor-docs/$doc"
+  fi
+done
 
 {
   printf '%s\n' "%global version ${RPM_VERSION}" "%global srcversion ${VERSION}" ""
@@ -211,6 +219,10 @@ fi
 mkdir -p /rpmbuild/BUILD/.cursor/rules
 if ls /rpmbuild/SOURCES/cursor-rules/* >/dev/null 2>&1; then
   cp -a /rpmbuild/SOURCES/cursor-rules/. /rpmbuild/BUILD/.cursor/rules/
+fi
+# ../README*.md relative to extracted source
+if ls /rpmbuild/SOURCES/cursor-docs/* >/dev/null 2>&1; then
+  cp -a /rpmbuild/SOURCES/cursor-docs/. /rpmbuild/BUILD/
 fi
 
 rpmbuild --define "_topdir /rpmbuild" -bb /rpmbuild/SPECS/${NAME}.spec || \
