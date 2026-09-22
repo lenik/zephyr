@@ -213,6 +213,10 @@ if [ "${BUILD_SUITE:-}" = "bullseye" ]; then
   export PATH="/usr/local/bin:$PATH"
   hash -r 2>/dev/null || true
   meson --version
+  # Python 3.9: rewrite runtime PEP604 unions (same helper as RPM EL8/EL9).
+  if [ -f /work/zfr/scripts/ci/patch-py39-aliases.py ]; then
+    python3 /work/zfr/scripts/ci/patch-py39-aliases.py /work/zfr || true
+  fi
 fi
 # Debian ships bash.pc; many projects expect the bash-builtins module name.
 if ! pkg-config --exists bash-builtins 2>/dev/null; then
