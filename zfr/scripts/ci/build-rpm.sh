@@ -198,6 +198,21 @@ RPM_EXTRA+=(glib2-devel libcurl-devel libicu-devel gettext asciidoctor bash po4a
 mapfile -t RPM_EXTRA < <(printf "%s\n" "${RPM_EXTRA[@]}" | awk "NF && !seen[\$0]++")
 $PM -y install "${RPM_EXTRA[@]}" 2>/dev/null || true
 
+# asciidoctor: not always packaged for every EL arch (e.g. el9 aarch64).
+if ! command -v asciidoctor >/dev/null 2>&1; then
+  $PM -y install ruby rubygems 2>/dev/null || true
+  if command -v gem >/dev/null 2>&1; then
+    gem install --no-document asciidoctor || true
+    gem_bindir=$(ruby -e 'print Gem.bindir' 2>/dev/null || true)
+    [ -n "${gem_bindir:-}" ] && [ -d "$gem_bindir" ] && export PATH="$gem_bindir:$PATH"
+    user_bindir=$(ruby -e 'print Gem.user_dir' 2>/dev/null || true)
+    [ -n "${user_bindir:-}" ] && [ -d "$user_bindir/bin" ] && export PATH="$user_bindir/bin:$PATH"
+  fi
+fi
+if ! command -v asciidoctor >/dev/null 2>&1; then
+  echo "build-rpm: asciidoctor missing after dnf/gem; meson man pages will fail" >&2
+fi
+
 # Optional prebuilt dependency rpms (never nested-build other projects).
 if ls /rpmbuild/deps/*.rpm >/dev/null 2>&1; then
   $PM -y install /rpmbuild/deps/*.rpm || rpm -Uvh --nodeps /rpmbuild/deps/*.rpm || true
