@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""Rewrite runtime PEP604 unions that break on Python 3.9 (EL8/EL9)."""
+"""Rewrite runtime PEP604 unions that break on Python 3.9 (EL8/EL9).
 
-from __future__ import annotations
+Compatible with Python 3.6+ (EL8 system python).
+"""
 
 import re
 import sys
 from pathlib import Path
 
 
-def patch_cli(path: Path) -> bool:
+def patch_cli(path):
+    # type: (Path) -> bool
     t = path.read_text(encoding="utf-8")
     if "Callable[[argparse.Namespace], int | None]" not in t:
         return False
@@ -30,11 +32,12 @@ def patch_cli(path: Path) -> bool:
     return True
 
 
-def main() -> int:
+def main():
+    # type: () -> int
     root = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
     cli = root / "src" / "cli.py"
     if cli.is_file() and patch_cli(cli):
-        print(f"build-rpm: patched {cli} for Python 3.9", flush=True)
+        print("build-rpm: patched %s for Python 3.9" % (cli,), flush=True)
     return 0
 
 
