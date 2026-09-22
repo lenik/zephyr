@@ -240,15 +240,15 @@ if [[ "${EL}" == "8" ]]; then
   python3.9 -m pip install --no-cache-dir "meson>=0.61,<1.5"
   python3.9 -c "
 import pathlib, mesonbuild
-root = pathlib.Path(mesonbuild.__file__).resolve().parent.parent
+root = str(pathlib.Path(mesonbuild.__file__).resolve().parent.parent)
 script = pathlib.Path(\"/usr/bin/meson\")
 script.write_text(
     \"#!/bin/bash\\n\"
-    \"export PYTHONPATH=\" + repr(str(root)) + \"\\\${PYTHONPATH:+:\\\$PYTHONPATH}\\n\"
+    \"export PYTHONPATH=\" + root + \"\${PYTHONPATH:+:\$PYTHONPATH}\\n\"
     \"exec /usr/bin/python3.9 -m mesonbuild.mesonmain \\\"\\\$@\\\"\\n\"
 )
 script.chmod(0o755)
-print(\"meson root\", root)
+print(\"wrote\", script, \"PYTHONPATH root\", root)
 print(script.read_text())
 "
   /usr/bin/meson --version
