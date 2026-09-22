@@ -208,8 +208,8 @@ fi
 if [ "${BUILD_SUITE:-}" = "bullseye" ]; then
   apt-get install -y -qq --no-install-recommends --fix-missing \
     "${_apt_extra[@]}" python3-pip python3-setuptools ninja-build 2>/dev/null || true
-  pip3 install --no-cache-dir 'meson>=0.61,<1.5' || \
-    python3 -m pip install --no-cache-dir 'meson>=0.61,<1.5'
+  pip3 install --no-cache-dir "meson>=0.61,<1.5" || \
+    python3 -m pip install --no-cache-dir "meson>=0.61,<1.5"
   export PATH="/usr/local/bin:$PATH"
   hash -r 2>/dev/null || true
   meson --version
