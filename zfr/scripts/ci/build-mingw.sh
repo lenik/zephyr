@@ -20,26 +20,6 @@ if [ ! -d "$MINGW_DIR" ]; then
   exit 1
 fi
 
-# asciidoctor is required by meson.build; gem fallback when pacman package absent.
-if ! command -v asciidoctor >/dev/null 2>&1; then
-  if command -v gem >/dev/null 2>&1; then
-    gem install --no-document asciidoctor || true
-    # MSYS2 ruby often installs gems outside PATH.
-    gem_bindir=$(ruby -e 'print Gem.bindir' 2>/dev/null || true)
-    if [ -n "${gem_bindir:-}" ]; then
-      export PATH="$gem_bindir:$PATH"
-    fi
-    user_bindir=$(ruby -e 'print Gem.user_dir' 2>/dev/null || true)
-    if [ -n "${user_bindir:-}" ] && [ -d "$user_bindir/bin" ]; then
-      export PATH="$user_bindir/bin:$PATH"
-    fi
-  fi
-fi
-if ! command -v asciidoctor >/dev/null 2>&1; then
-  echo "build-mingw: asciidoctor not found (install mingw asciidoctor or gem)" >&2
-  exit 1
-fi
-
 # Prefer MinGW64 python/meson over MSYS usr/bin (avoids broken path mixing).
 export PATH="/mingw64/bin:$PATH"
 if [ -x /mingw64/bin/python3 ]; then
@@ -47,11 +27,30 @@ if [ -x /mingw64/bin/python3 ]; then
 elif [ -x /mingw64/bin/python ]; then
   export PYTHON=/mingw64/bin/python
 fi
-# gem install may put asciidoctor outside PATH on MSYS2.
-for d in   "$(ruby -e 'print Gem.bindir' 2>/dev/null || true)"   "$(ruby -e 'print Gem.user_dir' 2>/dev/null || true)/bin"   "$HOME/.local/share/gem/ruby/"*/bin
+# Windows runners default to cp1252; PO/i18n sources are UTF-8.
+export PYTHONUTF8=1
+export PYTHONIOENCODING=utf-8
+export LANG=C.UTF-8
+export LC_ALL=C.UTF-8
+
+# asciidoctor is required by meson.build; gem fallback when pacman package absent.
+if ! command -v asciidoctor >/dev/null 2>&1; then
+  if command -v gem >/dev/null 2>&1; then
+    gem install --no-document asciidoctor || true
+  fi
+fi
+for d in \
+  "$(ruby -e 'print Gem.bindir' 2>/dev/null || true)" \
+  "$(ruby -e 'print Gem.user_dir' 2>/dev/null || true)/bin" \
+  $HOME/.local/share/gem/ruby/*/bin
 do
   [ -n "$d" ] && [ -d "$d" ] && export PATH="$d:$PATH"
 done
+if ! command -v asciidoctor >/dev/null 2>&1; then
+  echo "build-mingw: asciidoctor not found (install mingw asciidoctor or gem)" >&2
+  exit 1
+fi
+
 export PATH="$ROOT/scripts/ci:$PATH"
 make -C "$MINGW_DIR" clean || true
 make -C "$MINGW_DIR" local RID=win-x64

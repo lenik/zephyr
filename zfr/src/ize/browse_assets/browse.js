@@ -1,9 +1,8 @@
-const MARK = { default: ' ', always: '*', ignored: '-' };
-const CYCLE = ['default', 'ignored', 'always'];
+const CYCLE = ['default', 'always', 'ignored'];
 const STATE_TITLE = {
-  default: 'default (use ize.options)',
-  always: 'always — force enable (override -u)',
-  ignored: 'ignored — skip this rule',
+  default: '默认 — 跟随 ize.options',
+  always: '启用 — 强制启用（覆盖 ize.options 中的禁用）',
+  ignored: '忽略 — 跳过此规则',
 };
 
 let STATE = null;
@@ -22,6 +21,15 @@ function visibleRules() {
 function nextState(cur) {
   const i = CYCLE.indexOf(cur);
   return CYCLE[((i < 0 ? 0 : i) + 1) % CYCLE.length];
+}
+
+function applyTriState(cb, st) {
+  cb.checked = st === 'always';
+  cb.indeterminate = st === 'ignored';
+  cb.dataset.state = st;
+  cb.title = STATE_TITLE[st] || st;
+  cb.setAttribute('aria-label', '规则状态: ' + (STATE_TITLE[st] || st));
+  cb.className = 'tri ' + st;
 }
 
 async function loadData(refresh) {
@@ -60,22 +68,27 @@ function renderRules() {
   box.innerHTML = '';
   for (const rule of visibleRules()) {
     const st = rule.state || 'default';
-    const mark = MARK[st] ?? ' ';
     const row = document.createElement('div');
     row.className = 'rule' + (rule.rule_id === currentId ? ' active' : '');
     row.dataset.id = rule.rule_id;
 
-    const tri = document.createElement('button');
-    tri.type = 'button';
-    tri.className = 'mark ' + st;
+    const lab = document.createElement('label');
+    lab.className = 'tri-wrap';
+    lab.title = STATE_TITLE[st] || st;
+    lab.onclick = (ev) => ev.stopPropagation();
+
+    const tri = document.createElement('input');
+    tri.type = 'checkbox';
     tri.dataset.rid = rule.rule_id;
-    tri.title = STATE_TITLE[st] || st;
-    tri.setAttribute('aria-label', 'Rule state: ' + st);
-    tri.textContent = '[' + mark + ']';
+    applyTriState(tri, st);
     tri.onclick = (ev) => {
+      // Prevent native toggle; we cycle ourselves.
+      ev.preventDefault();
       ev.stopPropagation();
       cycleRuleState(rule.rule_id);
     };
+
+    lab.appendChild(tri);
 
     const body = document.createElement('button');
     body.type = 'button';
@@ -86,7 +99,7 @@ function renderRules() {
       '<span class="n">' + (rule.edit_count || 0) + '</span>';
     body.onclick = () => selectRule(rule.rule_id);
 
-    row.appendChild(tri);
+    row.appendChild(lab);
     row.appendChild(body);
     box.appendChild(row);
   }
@@ -128,8 +141,8 @@ function selectRule(id) {
   renderRules();
   const st = rule.state || 'default';
   document.getElementById('title').textContent =
-    '[' + (MARK[st] ?? ' ') + '] ' +
     rule.rule_id + '  ' + rule.code + ' — ' + (rule.title || '');
+  document.getElementById('title').title = STATE_TITLE[st] || st;
   const docs = rule.docs && rule.docs.sections
     ? rule.docs.sections.map(s => '## ' + s.title + '\n' + s.body).join('\n\n')
     : '';

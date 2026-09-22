@@ -47,7 +47,14 @@ if [ ! -f "$SPEC" ]; then
 fi
 
 STAGE=$(mktemp -d)
-trap 'rm -rf "$STAGE"' EXIT
+_cleanup_stage() {
+  # rpmbuild runs as root inside Docker; host rm cannot delete those files.
+  if [ -d "$STAGE" ]; then
+    docker run --rm -v "$STAGE:/work" alpine:3.20 sh -c 'rm -rf /work/*' >/dev/null 2>&1 || true
+    rm -rf "$STAGE" 2>/dev/null || true
+  fi
+}
+trap _cleanup_stage EXIT
 mkdir -p "$OUTDIR"
 OUTDIR=$(cd "$OUTDIR" && pwd)
 

@@ -23,7 +23,7 @@ DESCRIPTION = _(
     "Open a TUI to toggle ize rule overrides for this project "
     "(.config/zfr/ize.options). Lists only rules that match this tree "
     "(plus any already overridden). "
-    "[ ] default  [*] always  [-] ignored. "
+    "States: default / always(enable override) / ignored. "
     "Space=default/ignored, Y=always, N/-=ignored, ~=invert, "
     "Ctrl+S save, Ctrl+D save&quit, Ctrl+Q quit."
 )

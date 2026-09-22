@@ -140,9 +140,35 @@ case "$suite" in
       > /etc/apt/apt.conf.d/99ci-retry
     ;;
 esac
-apt-get update -qq || apt-get update
-apt-get install -y -qq --no-install-recommends --fix-missing \
-  build-essential debhelper devscripts dpkg-dev fakeroot equivs ca-certificates python3
+# debian-ports (loong64 / loongarch64 images): keyring often missing/stale.
+arch_now=$(dpkg --print-architecture 2>/dev/null || true)
+if [ "${BUILD_ARCH:-}" = "loong64" ] || [ "$arch_now" = "loong64" ] || \
+   [ "$arch_now" = "loongarch64" ] || grep -q debian-ports /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+  printf "%s\n" \
+    "Acquire::AllowInsecureRepositories \"true\";" \
+    "Acquire::AllowDowngradeToInsecureRepositories \"true\";" \
+    > /etc/apt/apt.conf.d/99ports-insecure
+  apt-get update -o Acquire::AllowInsecureRepositories=true \
+    -o Acquire::AllowDowngradeToInsecureRepositories=true -qq || true
+  apt-get install -y --allow-unauthenticated --no-install-recommends \
+    debian-ports-archive-keyring ca-certificates 2>/dev/null || true
+  rm -f /etc/apt/apt.conf.d/99ports-insecure
+fi
+# Retry apt update+bootstrap; CDN edges sometimes serve stale Indexes → 404.
+_apt_ok=0
+for _try in 1 2 3 4 5; do
+  apt-get clean
+  rm -rf /var/lib/apt/lists/*
+  if apt-get update -qq || apt-get update; then
+    if apt-get install -y -qq --no-install-recommends --fix-missing \
+      build-essential debhelper devscripts dpkg-dev fakeroot equivs ca-certificates python3; then
+      _apt_ok=1
+      break
+    fi
+  fi
+  sleep $((_try * 3))
+done
+[ "$_apt_ok" = 1 ]
 # Prefer private apt (repodeb_aptly) for peer Build-Depends — never nested-build.
 # Suite comes from the CI matrix release (trixie/bookworm/…), not changelog
 # "stable".
@@ -184,10 +210,13 @@ fi
 # Foreign / ISA-variant arches (e.g. amd64v3 on an amd64 image).
 native=$(dpkg --print-architecture 2>/dev/null || true)
 target=${BUILD_ARCH:-$native}
-if [ -n "$target" ] && [ "$target" != "$native" ]; then
-  dpkg --add-architecture "$target" 2>/dev/null || true
+# amd64v3 is an ISA profile, not a dpkg arch — build amd64 and rename later.
+dpkg_arch=$target
+[ "$target" = "amd64v3" ] && dpkg_arch=amd64
+if [ -n "$dpkg_arch" ] && [ "$dpkg_arch" != "$native" ]; then
+  dpkg --add-architecture "$dpkg_arch" 2>/dev/null || true
   apt-get update -qq || true
-  dpkg-buildpackage -us -uc -b -a"$target"
+  dpkg-buildpackage -us -uc -b -a"$dpkg_arch"
 else
   dpkg-buildpackage -us -uc -b
 fi
@@ -206,6 +235,10 @@ copied=0
 for f in "$STAGE"/*.{deb,changes,buildinfo,ddeb}; do
   [ -f "$f" ] || continue
   base=$(basename "$f")
+  # ISA profile cell: rewrite dpkg arch in the filename (amd64 → amd64v3).
+  if [ "$ARCH" = "amd64v3" ]; then
+    base=${base/_amd64./_amd64v3.}
+  fi
   # name_ver_arch.ext → name_ver_release_arch.ext (release selects the cell)
   if [[ "$base" =~ ^(.+)_([^_]+)_([^_]+)\.(deb|changes|buildinfo|ddeb)$ ]]; then
     dest="${BASH_REMATCH[1]}_${BASH_REMATCH[2]}_${RELEASE}_${BASH_REMATCH[3]}.${BASH_REMATCH[4]}"
