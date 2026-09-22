@@ -15,16 +15,17 @@ def main() -> int:
     if not path.is_file():
         return 0
     text = path.read_text(encoding="utf-8", errors="replace")
+    # Replace only the Build-Depends *value* (group 2), keep surrounding text.
     m = re.search(r"(?ms)^(Build-Depends:\s*)(.*?)(?=\n\S|\Z)", text)
     if not m:
         return 0
-    prefix, body = m.group(1), m.group(2)
+    body = m.group(2)
     parts: list[str] = []
     for raw in re.sub(r"\s*\n\s*", " ", body).split(","):
         raw = raw.strip()
         if not raw:
             continue
-        name = re.split(r"[(\s|]", raw, 1)[0].strip()
+        name = re.split(r"[(\s|]", raw, maxsplit=1)[0].strip()
         if not name:
             continue
         if name == "debhelper-compat":
@@ -43,7 +44,7 @@ def main() -> int:
     if not parts:
         parts = ["debhelper-compat (= 13)", "meson", "ninja-build", "python3"]
     new_body = ", ".join(parts)
-    text = text[: m.start()] + prefix + new_body + "\n" + text[m.end() :]
+    text = text[: m.start(2)] + new_body + text[m.end(2) :]
     path.write_text(text, encoding="utf-8")
     return 0
 

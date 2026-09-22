@@ -5,12 +5,13 @@ from __future__ import annotations
 
 import argparse
 from collections.abc import Callable, Sequence
-from typing import Any
+from typing import Any, Optional
 
 from i18n import init_i18n
 
 AddArguments = Callable[[argparse.ArgumentParser], None]
-RunFn = Callable[[argparse.Namespace], int | None]
+# Optional[] — not `int | None` — so the alias works as a runtime value on Python 3.9.
+RunFn = Callable[[argparse.Namespace], Optional[int]]
 
 
 class SubcommandHelpFormatter(argparse.HelpFormatter):

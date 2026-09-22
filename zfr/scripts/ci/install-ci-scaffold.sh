@@ -16,7 +16,7 @@ fi
 
 install -d "$DEST/scripts/ci"
 for f in matrix.json matrix-from-json.sh build-deb.sh build-rpm.sh \
-         build-mingw.sh build-ucrt.sh pack-nuget.py filter-build-depends.py \
+         build-mingw.sh build-ucrt.sh pack-nuget.py filter-build-depends.py patch-py39-aliases.py \
          submit-windows-packages.sh \
          publish-private.sh fetch-dep.sh deps.conf.example; do
   src="$SHARE/scripts/ci/$f"

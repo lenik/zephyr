@@ -51,6 +51,7 @@ jobs:
           path: _ci_scripts
       - name: Apply CI script overlay
         if: ${{ github.event.release.tag_name || inputs.tag }}
+        shell: bash
         working-directory: ${{ github.workspace }}
         run: |
           if [ -d _ci_scripts/scripts/ci ]; then
@@ -96,6 +97,7 @@ jobs:
           path: _ci_scripts
       - name: Apply CI script overlay
         if: ${{ github.event.release.tag_name || inputs.tag }}
+        shell: bash
         working-directory: ${{ github.workspace }}
         run: |
           if [ -d _ci_scripts/scripts/ci ]; then
@@ -178,6 +180,7 @@ jobs:
           path: _ci_scripts
       - name: Apply CI script overlay
         if: ${{ github.event.release.tag_name || inputs.tag }}
+        shell: bash
         working-directory: ${{ github.workspace }}
         run: |
           if [ -d _ci_scripts/scripts/ci ]; then
@@ -255,6 +258,7 @@ jobs:
           path: _ci_scripts
       - name: Apply CI script overlay
         if: ${{ github.event.release.tag_name || inputs.tag }}
+        shell: bash
         working-directory: ${{ github.workspace }}
         run: |
           if [ -d _ci_scripts/scripts/ci ]; then
@@ -326,6 +330,7 @@ jobs:
           path: _ci_scripts
       - name: Apply CI script overlay
         if: ${{ github.event.release.tag_name || inputs.tag }}
+        shell: bash
         working-directory: ${{ github.workspace }}
         run: |
           if [ -d _ci_scripts/scripts/ci ]; then
@@ -382,6 +387,7 @@ jobs:
           path: _ci_scripts
       - name: Apply CI script overlay
         if: ${{ github.event.release.tag_name || inputs.tag }}
+        shell: bash
         working-directory: ${{ github.workspace }}
         run: |
           if [ -d _ci_scripts/scripts/ci ]; then

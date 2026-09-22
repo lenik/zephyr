@@ -145,41 +145,9 @@ apt-get install -y -qq --no-install-recommends --fix-missing \
 # Drop Build-Depends that apt cannot resolve on this suite (e.g. private
 # python3-mesondoc when REPODEB_URL is unset). Build still needs meson tools.
 if [ -f debian/control ]; then
-  python3 -c "
-from pathlib import Path
-import re, subprocess
-path = Path(\"debian/control\")
-text = path.read_text(encoding=\"utf-8\", errors=\"replace\")
-m = re.search(r\"(?ms)^(Build-Depends:\\s*)(.*?)(?=\\n\\S|\\Z)\", text)
-if not m:
-    raise SystemExit(0)
-prefix, body = m.group(1), m.group(2)
-parts = []
-for raw in re.sub(r\"\\s*\\n\\s*\", \" \", body).split(\",\"):
-    raw = raw.strip()
-    if not raw:
-        continue
-    name = re.split(r\"[(\\s|]\", raw, 1)[0].strip()
-    if not name:
-        continue
-    if name == \"debhelper-compat\":
-        parts.append(raw)
-        continue
-    r = subprocess.run(
-        [\"apt-cache\", \"show\", name],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-    if r.returncode == 0:
-        parts.append(raw)
-    else:
-        print(\"build-deb: dropping unavailable Build-Depends:\", name, flush=True)
-if not parts:
-    parts = [\"debhelper-compat (= 13)\", \"meson\", \"ninja-build\", \"python3\"]
-new_body = \", \".join(parts)
-text = text[: m.start()] + prefix + new_body + \"\\n\" + text[m.end() :]
-path.write_text(text, encoding=\"utf-8\")
-"
+  if [ -f /work/src/scripts/ci/filter-build-depends.py ]; then
+    python3 /work/src/scripts/ci/filter-build-depends.py debian/control
+  fi
   mk-build-deps -i -r -t "apt-get -y --no-install-recommends --fix-missing" \
     || apt-get install -y --no-install-recommends --fix-missing \
          meson ninja-build python3 asciidoctor gettext debhelper \

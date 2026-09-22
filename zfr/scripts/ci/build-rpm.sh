@@ -70,6 +70,10 @@ for p in "$ROOT"/packaging/rpm/*.patch; do
   cp -a "$p" "$STAGE/SOURCES/"
 done
 shopt -u nullglob
+# Python 3.9 alias patch helper (also lives inside the source tarball after overlay).
+if [ -f "$ROOT/scripts/ci/patch-py39-aliases.py" ]; then
+  cp -a "$ROOT/scripts/ci/patch-py39-aliases.py" "$STAGE/SOURCES/"
+fi
 
 {
   printf '%s\n' "%global version ${RPM_VERSION}" "%global srcversion ${VERSION}" ""
@@ -166,7 +170,7 @@ if [[ -f /rpmbuild/debian-build-deps.txt ]]; then
   done < /rpmbuild/debian-build-deps.txt
 fi
 # Always pull common C library -devel packages used by bas-c-like projects.
-RPM_EXTRA+=(glib2-devel libcurl-devel libicu-devel gettext asciidoctor bash)
+RPM_EXTRA+=(glib2-devel libcurl-devel libicu-devel gettext asciidoctor bash po4a)
 # Unique
 mapfile -t RPM_EXTRA < <(printf "%s\n" "${RPM_EXTRA[@]}" | awk "NF && !seen[\$0]++")
 $PM -y install "${RPM_EXTRA[@]}" 2>/dev/null || true
@@ -177,6 +181,23 @@ if ls /rpmbuild/deps/*.rpm >/dev/null 2>&1; then
 fi
 command -v meson >/dev/null
 command -v ninja >/dev/null || command -v ninja-build >/dev/null
+
+# Python 3.9: PEP604 unions used as *runtime* type aliases (not annotations).
+if ls /rpmbuild/SOURCES/${NAME}-*.tar.xz >/dev/null 2>&1; then
+  src_tar=$(ls /rpmbuild/SOURCES/${NAME}-*.tar.xz | head -n1)
+  fixdir=$(mktemp -d)
+  tar -C "$fixdir" -xJf "$src_tar"
+  tree=$(find "$fixdir" -mindepth 1 -maxdepth 1 -type d | head -n1)
+  if [ -n "$tree" ]; then
+    if [ -f /rpmbuild/SOURCES/patch-py39-aliases.py ]; then
+      python3 /rpmbuild/SOURCES/patch-py39-aliases.py "$tree" || true
+    elif [ -f "$tree/scripts/ci/patch-py39-aliases.py" ]; then
+      python3 "$tree/scripts/ci/patch-py39-aliases.py" "$tree" || true
+    fi
+    tar -C "$fixdir" -cJf "$src_tar" "$(basename "$tree")"
+  fi
+  rm -rf "$fixdir"
+fi
 
 rpmbuild --define "_topdir /rpmbuild" -bb /rpmbuild/SPECS/${NAME}.spec || \
   rpmbuild --define "_topdir /rpmbuild" --nodeps -bb /rpmbuild/SPECS/${NAME}.spec
