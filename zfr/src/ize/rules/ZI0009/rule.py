@@ -10,7 +10,7 @@ ID = "ZI0009"
 CODE = 'ize.man.convert'
 PRIORITY = 90.0
 DEPENDENCIES = []
-GLOBS = ['/man/**', '/docs/**']
+GLOBS = ['/man/', '/docs/']
 TITLE = "Convert groff man pages to man/*.adoc"
 
 def ize(files: list[Path], session: Any = None):

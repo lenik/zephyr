@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+from typing import Any
 
 from i18n import _
 from lang import LANGS
@@ -12,19 +13,19 @@ from lib import _is_zfr_meta_repo, find_project_dir
 from lint.util import _role
 
 
-def _run_rules(scheduled, session, merged, *, dry_run: bool) -> None:
-    """Run scheduled rules; apply each EditList immediately so later rules see writes."""
-    for spec, files in scheduled:
-        result = spec.ize(files, session)
-        if result is None:
-            continue
-        merged.merge(result)
-        # Flush per-rule so the next step reads updated meson/control/etc. from disk
-        # (engine helpers still use Path.read_text, not an overlay).
-        result.apply(session.root, dry_run=dry_run)
+def _run_one(spec, files, session, *, dry_run: bool):
+    """Run one rule; return its EditList (applied immediately when not dry_run)."""
+    from lint.editlist import EditList
+
+    result = spec.ize(files, session)
+    if result is None:
+        result = EditList()
+    if not dry_run:
+        result.apply(session.root, dry_run=False)
+    return result
 
 
-def cmd_ize(
+def prepare_ize_session(
     *,
     lang: str | None = None,
     dry_run: bool = False,
@@ -36,16 +37,14 @@ def cmd_ize(
     verbose: bool = False,
     color: str = "auto",
     uncheck: list[str] | None = None,
+    always: list[str] | None = None,
     only: list[str] | None = None,
     workdir: Path | None = None,
-) -> int:
-    """Scan → schedule ZI rules → merge EditLists → flush meson ASTs → apply."""
+) -> tuple[Any, list]:
+    """Build session + gated RuleSpec list (after options / flags)."""
     from std.registry import is_selected, is_suppressed, parse_uncheck
-    from std.ize_rules import all_ize_specs, ize_rule_id
-    from lint.editlist import EditList
-    from lint.scanner import scan_project, select_scheduled
+    from std.ize_rules import all_ize_specs
     from lint.session import Session
-    from csr import Csr
 
     if commit and dry_run:
         raise SystemExit("zfr ize: --commit cannot be combined with --dry-run")
@@ -71,7 +70,7 @@ def cmd_ize(
                 "pass -l LANG to ize a project whose language could not be detected",
                 file=sys.stderr,
             )
-            return 2
+            raise SystemExit(2) from e
     if role == "meta":
         raise SystemExit("zfr ize does not operate on the meta-repo root")
 
@@ -89,6 +88,7 @@ def cmd_ize(
         options={"color": color},
     )
     suppressed = parse_uncheck(uncheck)
+    forced = parse_uncheck(always)
     only_set = parse_uncheck(only)
     rules = all_ize_specs()
     gated = []
@@ -103,28 +103,131 @@ def cmd_ize(
             continue
         if not is_selected(rule_id=r.id, code=r.code, only=only_set):
             continue
+        if r.id in forced or r.code in forced:
+            gated.append(r)
+            continue
         if is_suppressed(rule_id=r.id, code=r.code, suppressed=suppressed):
             continue
         gated.append(r)
+    return session, gated
 
-    merged = EditList()
 
-    # Pass 1: ize.mesonize may create meson.build; apply before the main scan so
-    # meson.* / subst rules can match the new file.
+def plan_ize(
+    session,
+    gated: list,
+    *,
+    dry_run: bool = True,
+) -> list[tuple[Any, Any]]:
+    """Run gated rules (dry-run by default); return ``[(spec, EditList), ...]``.
+
+    When *dry_run* is False, each EditList is applied immediately (chained).
+    """
+    from lint.editlist import EditList
+    from lint.scanner import scan_project, select_scheduled
+
+    root = session.root
+    session.dry_run = dry_run
+    results: list[tuple[Any, Any]] = []
+
     mz = [r for r in gated if r.code == "ize.mesonize"]
     rest = [r for r in gated if r.code != "ize.mesonize"]
     if mz:
         _ftor, rule_to_files = scan_project(root, mz, session)
+        # always-forced rules with empty files still run
         scheduled_mz = select_scheduled(mz, rule_to_files, require_files=True)
-        _run_rules(scheduled_mz, session, merged, dry_run=dry_run)
+        for spec, files in scheduled_mz:
+            ed = _run_one(spec, files, session, dry_run=dry_run)
+            results.append((spec, ed))
 
     _ftor, rule_to_files = scan_project(root, rest, session)
     scheduled = select_scheduled(rest, rule_to_files, require_files=True)
-    _run_rules(scheduled, session, merged, dry_run=dry_run)
+    # Include forced rules that had no file match
+    from std.registry import parse_uncheck
+
+    have = {s.id for s, _ in scheduled}
+    for r in rest:
+        if r.id in have:
+            continue
+        # forced via session? not tracked — skip empty unless GLOBS=['/']
+        if r.globs == ["/"] or (len(r.globs) == 1 and r.globs[0] in ("/", "/**/*")):
+            scheduled.append((r, [root]))
+    # re-sort
+    from lint.scanner import sort_rules
+
+    specs_only = [s for s, _ in scheduled]
+    files_map = {s.id: f for s, f in scheduled}
+    scheduled = [(s, files_map.get(s.id, [root])) for s in sort_rules(specs_only)]
+
+    for spec, files in scheduled:
+        ed = _run_one(spec, files, session, dry_run=dry_run)
+        results.append((spec, ed))
 
     meson_edits = session.flush_meson()
-    merged.merge(meson_edits)
-    meson_edits.apply(root, dry_run=dry_run)
+    if meson_edits.edits:
+        if not dry_run:
+            meson_edits.apply(root, dry_run=False)
+        # attach to a synthetic last bucket — callers merge by path
+        results.append((None, meson_edits))
+    return results
+
+
+def cmd_ize(
+    *,
+    lang: str | None = None,
+    dry_run: bool = False,
+    man: bool = True,
+    subst: bool = True,
+    mesonize: bool = True,
+    commit: bool = False,
+    author: str | None = None,
+    verbose: bool = False,
+    color: str = "auto",
+    uncheck: list[str] | None = None,
+    always: list[str] | None = None,
+    only: list[str] | None = None,
+    workdir: Path | None = None,
+    browse: bool = False,
+) -> int:
+    """Scan → schedule ZI rules → merge EditLists → flush meson ASTs → apply."""
+    from std.ize_rules import ize_rule_id
+    from lint.editlist import EditList
+    from csr import Csr
+
+    if browse:
+        from ize.browse import browse_ize
+
+        return browse_ize(
+            lang=lang,
+            man=man,
+            subst=subst,
+            mesonize=mesonize,
+            uncheck=uncheck,
+            always=always,
+            only=only,
+            workdir=workdir,
+            color=color,
+        )
+
+    session, gated = prepare_ize_session(
+        lang=lang,
+        dry_run=dry_run,
+        man=man,
+        subst=subst,
+        mesonize=mesonize,
+        commit=commit,
+        author=author,
+        verbose=verbose,
+        color=color,
+        uncheck=uncheck,
+        always=always,
+        only=only,
+        workdir=workdir,
+    )
+    results = plan_ize(session, gated, dry_run=dry_run)
+    merged = EditList()
+    for _spec, ed in results:
+        if ed is not None:
+            merged.merge(ed)
 
     eng = session.options.get("_ize_engine")
     if eng is not None:

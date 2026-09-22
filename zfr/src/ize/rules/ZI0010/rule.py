@@ -10,7 +10,7 @@ ID = "ZI0010"
 CODE = 'ize.man.stub'
 PRIORITY = 100.0
 DEPENDENCIES = []
-GLOBS = ['/man/**']
+GLOBS = ['/man/']
 TITLE = "Create AsciiDoc man page stubs"
 
 def ize(files: list[Path], session: Any = None):

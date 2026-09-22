@@ -110,13 +110,20 @@ class LintselIOTests(unittest.TestCase):
             root = Path(tmp)
             (root / ".config" / "zfr").mkdir(parents=True)
             (root / ".config" / "zfr" / "lint.options").write_text("-l 2\n", encoding="utf-8")
+            # Minimal tree so file-scoped rules (e.g. ZL0090) match.
+            (root / "src").mkdir()
+            (root / "src" / "app.py").write_text("x = 1\n", encoding="utf-8")
+            (root / "meson.build").write_text("project('t')\n", encoding="utf-8")
             rows = load_rule_rows(root)
+            self.assertTrue(rows, "expected matching lint rules")
             rows[0].state = RuleState.IGNORED
             # find an izeable rule to mark always
             for r in rows:
                 if r.rule.id == "ZL0090":
                     r.state = RuleState.ALWAYS
                     break
+            else:
+                self.fail("ZL0090 should match src/app.py")
             path = save_rule_rows(root, rows)
             text = path.read_text(encoding="utf-8")
             self.assertIn("-l 2", text)

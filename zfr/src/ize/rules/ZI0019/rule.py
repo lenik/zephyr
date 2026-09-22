@@ -10,7 +10,7 @@ ID = "ZI0019"
 CODE = 'ize.i18n.man-locale'
 PRIORITY = 155.0
 DEPENDENCIES = []
-GLOBS = ['/man/**']
+GLOBS = ['/man/']
 TITLE = "Do not scaffold man/<locale>/*.adoc (missing man translations are lint-only)"
 
 def ize(files: list[Path], session: Any = None):

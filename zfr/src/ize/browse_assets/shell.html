@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$title</title>
+<style>
+$css
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="left" id="meta">zfr ize</div>
+  <div class="right">
+    <label class="show-all"><input type="checkbox" id="show-all"> Show All</label>
+    <button type="button" id="apply-all">Apply All</button>
+    <button type="button" id="apply-one">Apply</button>
+    <button type="button" id="refresh">Refresh</button>
+  </div>
+</header>
+<p class="loading" id="loading" hidden>Running…</p>
+<div class="layout">
+  <aside class="rules" id="rules"></aside>
+  <main class="detail">
+    <h2 id="title"></h2>
+    <div id="docs"></div>
+    <h3>EditList preview</h3>
+    <div id="diffs"></div>
+    <h3>Comments</h3>
+    <textarea id="comment" rows="3" placeholder="Add comment…"></textarea>
+    <div class="row">
+      <label><input type="checkbox" id="proj-only"> This project only</label>
+      <button type="button" id="comment-submit">Submit</button>
+    </div>
+    <pre id="comments"></pre>
+  </main>
+</div>
+<script>
+$js
+</script>
+</body>
+</html>

@@ -162,6 +162,7 @@ wrapper_names = [
     'zfr-version',
     'zfr-lint',
     'zfr-lintsel',
+    'zfr-izesel',
     'zfr-comments',
     'zfr-dist',
     'zfr-ize',
@@ -252,7 +253,7 @@ foreach lang : man_i18n_langs
 endforeach
 
 # Bash completion (same script under several command names)
-foreach completion_name : ['zfr', 'zfr-create', 'zfr-rename', 'zfr-add', 'zfr-remove', 'zfr-about', 'zfr-version', 'zfr-lint', 'zfr-lintsel', 'zfr-comments', 'zfr-dist', 'zfr-ize', 'zfr-i18n', 'zfr-translate', 'zfr-shape', 'zfr-build', 'zfr-package', 'zfr-lasterror', 'zfr-release', 'zfr-publish']
+foreach completion_name : ['zfr', 'zfr-create', 'zfr-rename', 'zfr-add', 'zfr-remove', 'zfr-about', 'zfr-version', 'zfr-lint', 'zfr-lintsel', 'zfr-izesel', 'zfr-comments', 'zfr-dist', 'zfr-ize', 'zfr-i18n', 'zfr-translate', 'zfr-shape', 'zfr-build', 'zfr-package', 'zfr-lasterror', 'zfr-release', 'zfr-publish']
     install_data(
         'zfr.bash',
         install_dir: datadir / 'bash-completion' / 'completions',

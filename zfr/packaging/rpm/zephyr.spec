@@ -76,6 +76,7 @@ meson install -C build --destdir=%{buildroot}
 %{_bindir}/zfr-version
 %{_bindir}/zfr-lint
 %{_bindir}/zfr-lintsel
+%{_bindir}/zfr-izesel
 %{_bindir}/zfr-comments
 %{_bindir}/zfr-dist
 %{_bindir}/zfr-ize
@@ -96,6 +97,7 @@ meson install -C build --destdir=%{buildroot}
 %{_datadir}/bash-completion/completions/zfr-version
 %{_datadir}/bash-completion/completions/zfr-lint
 %{_datadir}/bash-completion/completions/zfr-lintsel
+%{_datadir}/bash-completion/completions/zfr-izesel
 %{_datadir}/bash-completion/completions/zfr-comments
 %{_datadir}/bash-completion/completions/zfr-dist
 %{_datadir}/bash-completion/completions/zfr-ize

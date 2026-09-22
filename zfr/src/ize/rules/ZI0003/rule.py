@@ -10,7 +10,7 @@ ID = "ZI0003"
 CODE = 'ize.debian.control'
 PRIORITY = 30.0
 DEPENDENCIES = []
-GLOBS = ['/debian/**']
+GLOBS = ['/debian/']
 TITLE = "Patch debian/control for zephyr style"
 
 def ize(files: list[Path], session: Any = None):

@@ -28,8 +28,10 @@ _REQUIRED_SCRIPTS = (
 
 def check_ci(root: Path) -> list[Finding]:
     findings: list[Finding] = []
-    wf = root / _WORKFLOW
-    if not wf.is_file():
+    from lint.ci_paths import resolve_workflow_path
+
+    wf = resolve_workflow_path(root)
+    if wf is None:
         findings.append(
             Finding(
                 "note",
@@ -38,7 +40,9 @@ def check_ci(root: Path) -> list[Finding]:
                 % {"path": _WORKFLOW.as_posix()},
                 fix=_(
                     "Run `zfr ize` or `zfr create` to install the shared CI scaffold "
-                    "from zfr share/ci (ubuntu-latest + Docker; no build4/zfr in YAML)."
+                    "from zfr share/ci (ubuntu-latest + Docker; no build4/zfr in YAML). "
+                    "In a monorepo the workflow is installed at the git root "
+                    "with working-directory set to the package."
                 ),
             )
         )

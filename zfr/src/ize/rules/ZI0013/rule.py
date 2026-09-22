@@ -10,7 +10,7 @@ ID = "ZI0013"
 CODE = 'ize.rpm'
 PRIORITY = 130.0
 DEPENDENCIES = []
-GLOBS = ['/packaging/rpm/**', '/debian/**', '/meson.build']
+GLOBS = ['/packaging/rpm/', '/debian/', '/meson.build']
 TITLE = "Align packaging/rpm/Makefile and RPM spec with debian/Meson"
 
 def ize(files: list[Path], session: Any = None):

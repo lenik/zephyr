@@ -10,7 +10,7 @@ ID = "ZI0011"
 CODE = 'ize.meson.man'
 PRIORITY = 110.0
 DEPENDENCIES = ['ZI0008']
-GLOBS = ['/meson.build', '/man/**']
+GLOBS = ['/meson.build', '/man/']
 TITLE = "Add Meson asciidoctor man page targets"
 
 def ize(files: list[Path], session: Any = None):

@@ -10,7 +10,7 @@ ID = "ZI0020"
 CODE = 'ize.rpm.leftover'
 PRIORITY = 135.0
 DEPENDENCIES = []
-GLOBS = ['/rpmbuild/**', '/']
+GLOBS = ['/rpmbuild/', '/']
 TITLE = "Remove project-local rpmbuild/ leftover tree"
 
 def ize(files: list[Path], session: Any = None):

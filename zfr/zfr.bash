@@ -2,7 +2,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 _zfr_langs='antlr as bash bison c clib cobol cpp cpplib csharp d elixir erlang fortran gcc go haskell java kotlin lua nim ocaml pascal perl python ruby rust smalltalk swift typescript zig'
-_zfr_cmds='create rename add remove about version lint lintsel comments shape dist build package lasterror ize i18n translate release publish detect help'
+_zfr_cmds='create rename add remove about version lint lintsel izesel comments shape dist build package lasterror ize i18n translate release publish detect help'
+
 
 _zfr()
 {
@@ -13,7 +14,7 @@ _zfr()
 	local i
 	for ((i = 1; i < cword; i++)); do
 		case "${words[i]}" in
-			create|rename|add|remove|about|version|lint|lintsel|comments|shape|dist|build|package|lasterror|ize|i18n|translate|release|publish|detect|help)
+			create|rename|add|remove|about|version|lint|lintsel|izesel|comments|shape|dist|build|package|lasterror|ize|i18n|translate|release|publish|detect|help)
 				cmd="${words[i]}"
 				break
 				;;
@@ -87,6 +88,8 @@ _zfr()
 			fi
 			;;
 		lintsel)
+			;;
+		izesel)
 			case $prev in
 				-C|--directory)
 					_filedir -d
@@ -356,6 +359,7 @@ complete -F _zfr_about zfr-about
 complete -F _zfr_version zfr-version
 complete -F _zfr_lint zfr-lint
 complete -F _zfr_lintsel zfr-lintsel
+complete -F _zfr_izesel zfr-izesel
 complete -F _zfr_comments zfr-comments
 complete -F _zfr_dist zfr-dist
 

@@ -1,3 +1,21 @@
+zephyr (2.10.0) testing; urgency=medium
+
+  * ize -b: tri-state [ ]/[*]/[-] checkbox left of each rule
+    (default / always-override / ignored); drop State button row.
+  * lint: iter_files honours .gitignore (skip debian/pkg + packaging
+    stage); speed up source.long.
+  * ize -b: hide nop rules unless Show All is checked.
+  * Scan: honour .gitignore, prune dirs no rule can match, dir-scoped
+    GLOBS.
+  * lintsel: list only matching rules (+ overrides); add zfr izesel.
+  * ize -b/--browse: matching rules, EditList diff preview, Apply /
+    Apply All.
+  * ize --always; wire .config/zfr/ize.options like lint.options.
+  * CI: install release-packages.yml at git root with working-directory
+    for monorepos (Actions ignores package-local .github).
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Tue, 22 Sep 2026 17:50:55 +0800
+
 zephyr (2.9.3) testing; urgency=medium
 
   * Hand-translate all lint/ize rule README locales (zh_CN/zh_TW/ja/de/fr/ko/it/ar);

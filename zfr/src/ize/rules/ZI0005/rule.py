@@ -10,7 +10,7 @@ ID = "ZI0005"
 CODE = 'ize.debian.docs'
 PRIORITY = 50.0
 DEPENDENCIES = []
-GLOBS = ['/debian/**', '/man/**']
+GLOBS = ['/debian/', '/man/']
 TITLE = "Sync debian/docs with installed mans"
 
 def ize(files: list[Path], session: Any = None):

@@ -86,12 +86,25 @@ def add_arguments(p: argparse.ArgumentParser) -> None:
         help=_("do not turn hardcoded versions/paths into @VERSION@/@PREFIX@ / config.h"),
     )
     p.add_argument(
+        "-b",
+        "--browse",
+        action="store_true",
+        help=_("open a local browser UI for matching ize rules and EditList diffs"),
+    )
+    p.add_argument(
         "-u",
         "--uncheck",
         action="append",
         metavar="CODE",
         default=[],
         help=_("suppress ize rule ID(s) or code(s), comma-separated (repeatable)"),
+    )
+    p.add_argument(
+        "--always",
+        action="append",
+        metavar="CODE",
+        default=[],
+        help=_("force-enable ize rule ID(s) or code(s) even if unchecked (repeatable)"),
     )
     p.add_argument(
         "-o",
@@ -128,7 +141,7 @@ def run(args: argparse.Namespace) -> int:
     parser = argparse.ArgumentParser(add_help=False)
     add_arguments(parser)
     args = apply_option_file(
-        root, IZE_OPTIONS_REL, parser, args, merge_flags=("uncheck", "only")
+        root, IZE_OPTIONS_REL, parser, args, merge_flags=("uncheck", "always", "only")
     )
     return cmd_ize(
         lang=args.lang,
@@ -141,7 +154,9 @@ def run(args: argparse.Namespace) -> int:
         verbose=args.verbose,
         color=args.color,
         uncheck=args.uncheck,
+        always=getattr(args, "always", None),
         only=getattr(args, "only", None),
+        browse=bool(getattr(args, "browse", False)),
     )
 
 

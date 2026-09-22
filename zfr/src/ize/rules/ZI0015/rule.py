@@ -10,7 +10,7 @@ ID = "ZI0015"
 CODE = 'ize.i18n.derive'
 PRIORITY = 170.0
 DEPENDENCIES = ['ZI0018']
-GLOBS = ['/po/**', '/meson.build']
+GLOBS = ['/po/', '/meson.build']
 TITLE = "Meson build+install derived locale catalogs"
 
 def ize(files: list[Path], session: Any = None):

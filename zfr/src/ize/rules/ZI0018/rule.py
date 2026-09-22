@@ -10,7 +10,7 @@ ID = "ZI0018"
 CODE = 'ize.i18n.coverage'
 PRIORITY = 150.0
 DEPENDENCIES = []
-GLOBS = ['/po/**']
+GLOBS = ['/po/']
 TITLE = "Ensure LINGUAS + .po for lint l10n level"
 
 def ize(files: list[Path], session: Any = None):

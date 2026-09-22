@@ -10,7 +10,7 @@ ID = "ZI0022"
 CODE = 'ize.posync'
 PRIORITY = 180.0
 DEPENDENCIES = ['ZI0008']
-GLOBS = ['/meson.build', '/scripts/**', '/po/**']
+GLOBS = ['/meson.build', '/scripts/', '/po/']
 TITLE = "Externalize posync run_target to scripts/posync.sh"
 
 def ize(files: list[Path], session: Any = None):

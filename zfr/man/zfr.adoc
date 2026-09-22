@@ -34,6 +34,8 @@ zfr - multi-language CLI project templates and helper tools
 
 *zfr* [*--chat*|*--no-chat*] *lintsel* [*-C* _DIR_]
 
+*zfr* [*--chat*|*--no-chat*] *izesel* [*-C* _DIR_]
+
 *zfr* [*--chat*|*--no-chat*] *comments* [*-C* _DIR_] [*-u*|*-p*] [*-d*] [*-q*] [_ZLxxxx_]…
 
 *zfr* [*--chat*|*--no-chat*] *shape* [*-b*] [*-v*] [*--threshold* _N_]
@@ -198,10 +200,17 @@ Commands that walk from the current directory resolve *packagedir* first.
 
 *lintsel*::
   Interactive TUI (also *zfr-lintsel*) to toggle lint rule overrides in
-  *.config/zfr/lint.options*. Marks: space = default (enabled), asterisk =
-  always (force), hyphen = ignored. *SPC* toggles default/ignored; *Y* always;
-  *N* or *-* ignored; *~* inverts default/ignored; mouse click toggles;
-  *Ctrl+S* save; *Ctrl+D* save and quit; *Ctrl+Q* quit.
+  *.config/zfr/lint.options*. Lists only rules that *match* the current
+  project tree (plus any already overridden). Marks: space = default
+  (enabled), asterisk = always (force), hyphen = ignored. *SPC* toggles
+  default/ignored; *Y* always; *N* or *-* ignored; *~* inverts
+  default/ignored; mouse click toggles; *Ctrl+S* save; *Ctrl+D* save and
+  quit; *Ctrl+Q* quit.
+
+*izesel*::
+  Same TUI pattern as *lintsel* for ize rules (also *zfr-izesel*), writing
+  *.config/zfr/ize.options* (*-u* / *--always*). Lists only matching ize
+  rules (plus overrides). Marks: *[ ]* default, *[*]* always, *[-]* ignored.
 
 *comments*::
   Print or delete project and user *lint.comments* files
@@ -295,6 +304,11 @@ Commands that walk from the current directory resolve *packagedir* first.
   unless *--author* is set). Afterward run *zfr lint*.
   *\-o* / *--only* _CODE_ limits work to selected ize rules (used by
   *zfr lint --browse* *[ize]* buttons).
+  *--always* _CODE_ force-enables rules even if unchecked in
+  *.config/zfr/ize.options*.
+  *\-b* / *--browse* opens a local web UI of matching ize rules with
+  documentation, comments, rule state toggles, and an *EditList* unified-diff
+  preview; *Apply* writes one rule; *Apply All* writes every pending edit.
 
 *help*::
   Show command-line help.

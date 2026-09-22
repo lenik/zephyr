@@ -10,7 +10,7 @@ ID = "ZI0008"
 CODE = 'ize.meson.patch'
 PRIORITY = 80.0
 DEPENDENCIES = []
-GLOBS = ['/meson.build', '/**/meson.build']
+GLOBS = ['/meson.build']
 TITLE = "Patch meson.build (version, license, docs, completion)"
 
 def ize(files: list[Path], session: Any = None):

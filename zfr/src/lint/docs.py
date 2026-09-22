@@ -66,7 +66,14 @@ def locale_fallback_chain(lang: str) -> list[str]:
 
 
 def _rule_dir(rule_id: str) -> Path:
-    return _docs_dir() / "rules" / normalize_rule_heading(rule_id)
+    rid = normalize_rule_heading(rule_id)
+    lint_d = Path(__file__).resolve().parent / "rules" / rid
+    if lint_d.is_dir():
+        return lint_d
+    ize_d = Path(__file__).resolve().parent.parent / "ize" / "rules" / rid
+    if ize_d.is_dir():
+        return ize_d
+    return lint_d
 
 
 def _readme_candidates(rule_id: str, lang: str) -> list[Path]:
@@ -208,7 +215,11 @@ def rule_doc_dict(
     rule_id: str, code: str, *, lang: str | None = None
 ) -> dict[str, object]:
     d = rule_doc_for(rule_id, code, lang=lang)
+    from std import IZE_RULES
+
     rule = LINT_RULES.by_id(rule_id) or LINT_RULES.lookup(code)
+    if rule is None:
+        rule = IZE_RULES.by_id(rule_id) or IZE_RULES.lookup(code)
     short = (rule.title if rule else code) or code
     return {
         "title": short,

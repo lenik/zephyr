@@ -95,6 +95,15 @@ def check_source_size(root: Path, role: str) -> list[Finding]:
 
     out: list[Finding] = []
     for path in iter_files(root):
+        try:
+            rel_posix = path.relative_to(root).as_posix()
+        except ValueError:
+            continue
+        # Cheap prefix/doc filters before lintignore / text sniff / line count.
+        if not rel_posix.startswith(_SOURCE_PREFIXES):
+            continue
+        if _is_doc_or_completion(rel_posix, path):
+            continue
         if is_lint_ignored(root, path):
             continue
         if not _is_source_candidate(root, path):

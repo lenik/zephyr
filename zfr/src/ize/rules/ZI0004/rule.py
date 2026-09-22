@@ -10,7 +10,7 @@ ID = "ZI0004"
 CODE = 'ize.debian.rules'
 PRIORITY = 40.0
 DEPENDENCIES = ['ZI0003']
-GLOBS = ['/debian/rules', '/debian/**']
+GLOBS = ['/debian/rules', '/debian/']
 TITLE = "Align debian/rules with Meson dh helper"
 
 def ize(files: list[Path], session: Any = None):

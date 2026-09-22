@@ -10,7 +10,7 @@ ID = "ZI0014"
 CODE = 'ize.subst'
 PRIORITY = 140.0
 DEPENDENCIES = ['ZI0008']
-GLOBS = ['/meson.build', '/src/**', '/apps/**']
+GLOBS = ['/meson.build', '/src/', '/apps/']
 TITLE = "Replace hardcoded versions/paths with @VERSION@/@PREFIX@ / config.h"
 
 def ize(files: list[Path], session: Any = None):

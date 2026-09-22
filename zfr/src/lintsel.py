@@ -22,7 +22,8 @@ NAME = "lintsel"
 HELP = _("interactively select lint rules to ignore or force")
 DESCRIPTION = _(
     "Open a TUI to toggle lint rule overrides for this project "
-    "(.config/zfr/lint.options). "
+    "(.config/zfr/lint.options). Lists only rules that match this tree "
+    "(plus any already overridden). "
     "Space=default/ignored, Y=always, N/-=ignored, ~=invert, "
     "Ctrl+S save, Ctrl+D save&quit, Ctrl+Q quit."
 )
@@ -89,12 +90,38 @@ def _parse_rule_overrides(tokens: list[str]) -> dict[str, RuleState]:
     return out
 
 
+def matching_lint_rule_ids(root: Path) -> set[str]:
+    """Rule IDs that match at least one path under *root* (current scan)."""
+    from lint.scanner import scan_project, select_scheduled
+    from lint.session import Session
+    from lint.util import _role
+    from std.lint_rules import all_lint_specs
+
+    role = _role(root)
+    try:
+        from lib import detect_lang
+
+        lang = detect_lang(root) if role != "meta" else "meta"
+    except SystemExit:
+        lang = "unknown"
+    session = Session(root=root, lang=lang, role=role)
+    specs = all_lint_specs()
+    _f2r, r2f = scan_project(root, specs, session)
+    return {spec.id for spec, _files in select_scheduled(specs, r2f, require_files=True)}
+
+
 def load_rule_rows(root: Path) -> list[RuleRow]:
     overrides = _parse_rule_overrides(load_lint_option_tokens(root))
-    return [
-        RuleRow(rule=rule, state=overrides.get(rule.id, RuleState.DEFAULT))
-        for rule in LINT_RULES.all_rules()
-    ]
+    matched = matching_lint_rule_ids(root)
+    rows: list[RuleRow] = []
+    for rule in LINT_RULES.all_rules():
+        # Only matching rules, plus any that already have an override.
+        if rule.id not in matched and rule.id not in overrides:
+            continue
+        rows.append(
+            RuleRow(rule=rule, state=overrides.get(rule.id, RuleState.DEFAULT))
+        )
+    return rows
 
 
 def _non_rule_option_lines(text: str) -> list[str]:

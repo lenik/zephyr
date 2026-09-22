@@ -180,16 +180,61 @@ def template_dir(lang: str) -> Path:
     return path
 
 
-def iter_files(root: Path) -> Iterable[Path]:
-    for dirpath, dirnames, filenames in os.walk(root):
-        p = Path(dirpath)
-        dirnames[:] = [
-            d
-            for d in dirnames
-            if d not in SKIP_DIR_NAMES and not d.startswith(".")
-        ]
-        for fn in filenames:
-            yield p / fn
+# Dot-directories kept when walking (matches lint.scanner).
+_DOT_KEEP_WALK = frozenset({".githooks", ".github", ".config"})
+
+
+def iter_files(root: Path, *, honour_gitignore: bool = True) -> Iterable[Path]:
+    """Yield files under *root*, skipping noise dirs and (by default) gitignored paths.
+
+    Nested ``.gitignore`` files are honoured the same way as ``lint.scanner`` so
+    collectors do not walk packaging stage trees or ``debian/<pkg>/`` install dirs.
+    Pass ``honour_gitignore=False`` only when a full physical walk is required.
+    """
+    root = root.resolve()
+    gi = None
+    if honour_gitignore:
+        from lint.gitignores import GitIgnoreStack
+
+        gi = GitIgnoreStack(root)
+
+    def visit(abs_dir: Path, rel: str) -> Iterable[Path]:
+        try:
+            names = os.listdir(abs_dir)
+        except OSError:
+            return
+        subdirs: list[tuple[Path, str]] = []
+        for name in names:
+            if name in SKIP_DIR_NAMES:
+                continue
+            if name.startswith(".") and name not in _DOT_KEEP_WALK:
+                continue
+            child = abs_dir / name
+            child_rel = f"{rel}/{name}" if rel else name
+            try:
+                is_dir = child.is_dir() and not child.is_symlink()
+            except OSError:
+                continue
+            if gi is not None and gi.ignored(child_rel, is_dir=is_dir):
+                continue
+            if is_dir:
+                subdirs.append((child, child_rel))
+            else:
+                try:
+                    if child.is_file() or child.is_symlink():
+                        yield child
+                except OSError:
+                    continue
+        for child, child_rel in subdirs:
+            if gi is not None:
+                gi.enter(child, child_rel)
+            try:
+                yield from visit(child, child_rel)
+            finally:
+                if gi is not None:
+                    gi.leave()
+
+    yield from visit(root, "")
 
 
 def is_probably_text(path: Path) -> bool:

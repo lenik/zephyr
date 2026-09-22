@@ -45,6 +45,11 @@ COMMAND_SPECS: tuple[CommandSpec, ...] = (
         "lintsel",
     ),
     CommandSpec(
+        "izesel",
+        "interactively select ize rules to ignore or force",
+        "izesel",
+    ),
+    CommandSpec(
         "comments",
         "print project/user lint.comments with an AI work hint",
         "comments_cmd",

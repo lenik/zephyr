@@ -92,22 +92,37 @@ def ci_scaffold_src() -> Path | None:
 
 
 def install_ci_scaffold(dest: Path) -> list[Path]:
-    """Install/overwrite .github/workflows + scripts/ci from the zfr share."""
+    """Install/overwrite CI scaffold from zfr share/ci.
+
+    Scripts always land under *dest*/scripts/ci. The GitHub Actions workflow
+    is installed at the **git toplevel** (Actions only reads repo-root
+    ``.github/``). When *dest* is nested in a monorepo, the YAML gets
+    ``defaults.run.working-directory`` set to that package path.
+    """
+    from lint.ci_paths import (
+        adapt_workflow_for_package_dir,
+        git_toplevel,
+        package_rel_from_git,
+    )
+
     src_root = ci_scaffold_src()
     if src_root is None:
         return []
     installed: list[Path] = []
-    mapping = [
-        (".github/workflows/release-packages.yml", 0o644),
+    script_files = [
         ("scripts/ci/matrix.json", 0o644),
         ("scripts/ci/matrix-from-json.sh", 0o755),
         ("scripts/ci/build-deb.sh", 0o755),
         ("scripts/ci/build-rpm.sh", 0o755),
+        ("scripts/ci/build-mingw.sh", 0o755),
+        ("scripts/ci/build-ucrt.sh", 0o755),
+        ("scripts/ci/pack-nuget.py", 0o644),
+        ("scripts/ci/submit-windows-packages.sh", 0o755),
         ("scripts/ci/publish-private.sh", 0o755),
         ("scripts/ci/fetch-dep.sh", 0o755),
         ("scripts/ci/deps.conf.example", 0o644),
     ]
-    for rel, mode in mapping:
+    for rel, mode in script_files:
         src = src_root / rel
         if not src.is_file():
             continue
@@ -116,6 +131,32 @@ def install_ci_scaffold(dest: Path) -> list[Path]:
         shutil.copy2(src, out)
         out.chmod(out.stat().st_mode | (0o111 if mode & 0o111 else 0))
         installed.append(out)
+
+    wf_src = src_root / ".github" / "workflows" / "release-packages.yml"
+    if wf_src.is_file():
+        git_root = git_toplevel(dest) or dest.resolve()
+        pkg_rel = package_rel_from_git(dest, git_root)
+        text = wf_src.read_text(encoding="utf-8")
+        text = adapt_workflow_for_package_dir(text, pkg_rel)
+        wf_out = git_root / ".github" / "workflows" / "release-packages.yml"
+        wf_out.parent.mkdir(parents=True, exist_ok=True)
+        wf_out.write_text(text, encoding="utf-8")
+        installed.append(wf_out)
+        # Drop a mistaken package-local .github when the real workflow is at
+        # the git root (Actions would never see the nested copy).
+        if pkg_rel not in (".", ""):
+            nested = dest / ".github" / "workflows" / "release-packages.yml"
+            if nested.is_file() and nested.resolve() != wf_out.resolve():
+                try:
+                    nested.unlink()
+                    # remove empty parents
+                    for parent in (nested.parent, nested.parent.parent):
+                        try:
+                            parent.rmdir()
+                        except OSError:
+                            break
+                except OSError:
+                    pass
     return installed
 
 

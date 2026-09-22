@@ -10,7 +10,7 @@ ID = "ZI0023"
 CODE = 'ize.scripts'
 PRIORITY = 190.0
 DEPENDENCIES = ['ZI0008']
-GLOBS = ['/meson.build', '/scripts/**']
+GLOBS = ['/meson.build', '/scripts/']
 TITLE = "Move build/deploy/maintenance scripts under scripts/"
 
 def ize(files: list[Path], session: Any = None):

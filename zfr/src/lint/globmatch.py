@@ -131,3 +131,82 @@ def path_matches_any(pathname: str, patterns: list[str] | tuple[str, ...]) -> bo
     if not patterns:
         return False
     return any(path_matches_glob(pathname, p) for p in patterns)
+
+
+def _literal_prefix(pattern: str) -> str:
+    """Leading literal path segments of an anchored glob (before first wild)."""
+    p = pattern
+    if p.startswith("/"):
+        p = p[1:]
+    # drop trailing /** or /**
+    out: list[str] = []
+    i = 0
+    n = len(p)
+    while i < n:
+        if p[i] == "*" or p[i] == "?" or p[i] == "[":
+            break
+        if p[i] == "{":
+            break
+        if p[i] == "/":
+            out.append("/")
+            i += 1
+            continue
+        j = i
+        while j < n and p[j] not in "*/?[{":
+            j += 1
+        out.append(p[i:j])
+        i = j
+    s = "".join(out).rstrip("/")
+    return s
+
+
+def glob_can_match_under(dir_pathname: str, pattern: str) -> bool:
+    """True if *pattern* might match *dir_pathname* itself or a descendant.
+
+    Used to prune ``os.walk``: if no rule glob can match under a directory,
+    do not traverse into it.
+    """
+    d = normalize_pathname(dir_pathname)
+    if not d.endswith("/") and d != "/":
+        d = d + "/"
+    # Directory itself matches
+    if path_matches_glob(d, pattern) or path_matches_glob(d.rstrip("/") or "/", pattern):
+        return True
+    for pat in _expand_braces(pattern):
+        anchored = pat.startswith("/")
+        if not anchored:
+            # Suffix patterns (e.g. *.py, meson.build) can appear anywhere
+            return True
+        if "**" in pat or "*" in pat or "?" in pat or "[" in pat or "{" in pat:
+            lit = _literal_prefix(pat)
+            if not lit:
+                # / ** /… or /* — can match under any dir
+                return True
+            # /src/** → lit=src; dir /src/ok, /src/foo/ok, /po/ no
+            want = "/" + lit.strip("/") + "/"
+            if d.startswith(want) or want.startswith(d):
+                return True
+            continue
+        # Fully literal anchored path: /debian/control
+        target = normalize_pathname(pat)
+        # under dir if target is dir or a file inside dir
+        if target.startswith(d) or d.startswith(target.rstrip("/") + "/"):
+            return True
+        if target.rstrip("/") + "/" == d:
+            return True
+    return False
+
+
+def any_glob_can_match_under(
+    dir_pathname: str, patterns: list[str] | tuple[str, ...]
+) -> bool:
+    return any(glob_can_match_under(dir_pathname, p) for p in patterns)
+
+
+def rules_can_match_under(dir_pathname: str, rules: list) -> bool:
+    """True if any *rule* glob might match under *dir_pathname*."""
+    for rule in rules:
+        globs = getattr(rule, "globs", None) or []
+        if any_glob_can_match_under(dir_pathname, globs):
+            return True
+    return False

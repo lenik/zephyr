@@ -10,7 +10,7 @@ ID = "ZI0016"
 CODE = 'ize.i18n.po-nowrap'
 PRIORITY = 160.0
 DEPENDENCIES = []
-GLOBS = ['/po/**']
+GLOBS = ['/po/']
 TITLE = "Rewrite source .po catalogs without line wrapping"
 
 def ize(files: list[Path], session: Any = None):

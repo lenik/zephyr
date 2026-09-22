@@ -10,7 +10,7 @@ ID = "ZI0021"
 CODE = 'ize.c.bas'
 PRIORITY = 145.0
 DEPENDENCIES = []
-GLOBS = ['/src/**', '/meson.build']
+GLOBS = ['/src/', '/meson.build']
 TITLE = "C-family bas i18n/logger/LOCALEDIR and gettext spacing"
 
 def ize(files: list[Path], session: Any = None):
