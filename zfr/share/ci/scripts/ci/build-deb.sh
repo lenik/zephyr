@@ -198,7 +198,7 @@ if [ -f debian/control ]; then
   if [ -f /work/zfr/scripts/ci/filter-build-depends.py ]; then
     python3 /work/zfr/scripts/ci/filter-build-depends.py debian/control
   fi
-  mk-build-deps -i -r -t "apt-get -y --no-install-recommends --fix-missing ${_apt_extra[*]-}" \
+  mk-build-deps -i -r -t "apt-get -y --no-install-recommends --fix-missing ${_apt_extra[*]}" \
     || apt-get install -y --no-install-recommends --fix-missing \
          "${_apt_extra[@]}" \
          meson ninja-build python3 asciidoctor gettext debhelper \
