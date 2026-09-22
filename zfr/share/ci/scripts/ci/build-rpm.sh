@@ -232,15 +232,25 @@ if ls /rpmbuild/SOURCES/cursor-docs/* >/dev/null 2>&1; then
   cp -a /rpmbuild/SOURCES/cursor-docs/. /rpmbuild/BUILD/
 fi
 
-# EL8: distro meson is 0.58; rpm /usr/bin/meson imports distro mesonbuild
-# even after pip. Remove the RPM package, then install >=0.61 via pip.
+# EL8: system python is 3.6; distro meson is 0.58. Install meson with
+# python3.9 so rpmbuild gets a working >=0.61 (pip-on-3.6 cannot run it).
 if [[ "${EL}" == "8" ]]; then
-  $PM -y remove meson 2>/dev/null || rpm -e --nodeps meson 2>/dev/null || true
-  pip3 install --no-cache-dir "meson>=0.61,<1.5" || \
-    python3 -m pip install --no-cache-dir "meson>=0.61,<1.5"
-  # Ensure a meson on PATH for rpmbuild (%build has a clean env).
-  if [ -x /usr/local/bin/meson ] && [ ! -x /usr/bin/meson ]; then
+  $PM -y install python39 python39-pip python39-setuptools 2>/dev/null || true
+  python3.9 -m pip install --no-cache-dir "meson>=0.61,<1.5"
+  # Prefer a real script on PATH; fall back to a tiny wrapper.
+  if [ -x /usr/local/bin/meson ]; then
     ln -sfn /usr/local/bin/meson /usr/bin/meson
+  else
+    printf '%s\n' '#!/usr/bin/python3.9' \
+      'from mesonbuild.mesonmain import main' \
+      'raise SystemExit(main())' > /usr/bin/meson
+    chmod 755 /usr/bin/meson
+  fi
+  # Ensure python3.9 sees pip mesonbuild (rpmbuild may scrub PYTHONPATH).
+  py39_site=$(python3.9 -c 'import site; print(site.getsitepackages()[0])' 2>/dev/null || true)
+  if [ -n "${py39_site:-}" ]; then
+    printf '%s\n' "export PYTHONPATH=\"${py39_site}\${PYTHONPATH:+:\$PYTHONPATH}\"" \
+      > /etc/profile.d/zfr-meson-py39.sh
   fi
   command -v meson
   meson --version
