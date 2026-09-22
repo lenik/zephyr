@@ -232,6 +232,19 @@ if ls /rpmbuild/SOURCES/cursor-docs/* >/dev/null 2>&1; then
   cp -a /rpmbuild/SOURCES/cursor-docs/. /rpmbuild/BUILD/
 fi
 
+# EL8: distro meson is 0.58; install >=0.61 via pip AFTER all dnf installs
+# (RPM_EXTRA may reinstall meson) and force /usr/bin/meson for rpmbuild.
+if [[ "${EL}" == "8" ]]; then
+  pip3 install --no-cache-dir "meson>=0.61,<1.5" || \
+    python3 -m pip install --no-cache-dir "meson>=0.61,<1.5"
+  pip_meson=$(command -v meson || true)
+  [ -x /usr/local/bin/meson ] && pip_meson=/usr/local/bin/meson
+  if [ -n "${pip_meson:-}" ] && [ -x "$pip_meson" ]; then
+    cp -a "$pip_meson" /usr/bin/meson
+  fi
+  meson --version
+fi
+
 rpmbuild --define "_topdir /rpmbuild" -bb /rpmbuild/SPECS/${NAME}.spec || \
   rpmbuild --define "_topdir /rpmbuild" --nodeps -bb /rpmbuild/SPECS/${NAME}.spec
 '
