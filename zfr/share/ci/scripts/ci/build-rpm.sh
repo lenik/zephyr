@@ -233,24 +233,16 @@ if ls /rpmbuild/SOURCES/cursor-docs/* >/dev/null 2>&1; then
 fi
 
 # EL8: system python is 3.6; distro meson is 0.58. Install meson with
-# python3.9 so rpmbuild gets a working >=0.61 (pip-on-3.6 cannot run it).
+# python3.9 and export PYTHONPATH so rpmbuild %build can import mesonbuild.
 # NOTE: inside bash -lc single quotes — no apostrophes in this block.
 if [[ "${EL}" == "8" ]]; then
   $PM -y install python39 python39-pip python39-setuptools 2>/dev/null || true
   python3.9 -m pip install --no-cache-dir "meson>=0.61,<1.5"
-  python3.9 -c "
-import pathlib, mesonbuild
-root = str(pathlib.Path(mesonbuild.__file__).resolve().parent.parent)
-script = pathlib.Path(\"/usr/bin/meson\")
-script.write_text(
-    \"#!/bin/bash\\n\"
-    \"export PYTHONPATH=\" + root + \"\${PYTHONPATH:+:\$PYTHONPATH}\\n\"
-    \"exec /usr/bin/python3.9 -m mesonbuild.mesonmain \\\"\\\$@\\\"\\n\"
-)
-script.chmod(0o755)
-print(\"wrote\", script, \"PYTHONPATH root\", root)
-print(script.read_text())
-"
+  export PYTHONPATH="$(python3.9 -c "import pathlib, mesonbuild; print(pathlib.Path(mesonbuild.__file__).resolve().parent.parent)")"
+  if [ -x /usr/local/bin/meson ]; then
+    ln -sfn /usr/local/bin/meson /usr/bin/meson
+  fi
+  echo "PYTHONPATH=$PYTHONPATH"
   /usr/bin/meson --version
 fi
 
