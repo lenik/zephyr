@@ -105,6 +105,10 @@ def check_leftovers(root: Path, role: str) -> list[Finding]:
     samples: list[str] = []
     token = re.compile(rf"\b({re.escape(TEMPLATE_PUFF)}|zephyr)\b", re.I)
     for path in iter_files(root):
+        from lint.lintignore import is_lint_ignored
+
+        if is_lint_ignored(root, path):
+            continue
         rel = path.relative_to(root)
         parts = {rel.as_posix(), path.name}
         rel_posix = rel.as_posix()

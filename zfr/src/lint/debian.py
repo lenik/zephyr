@@ -183,16 +183,48 @@ def check_debian(root: Path, lang: str, role: str) -> list[Finding]:
     ch_ver = changelog_version(root)
     file_ver = version_file_version(root)
     if ch_ver and file_ver and ch_ver.lstrip("v") != file_ver.lstrip("v"):
-        out.append(
-            Finding(
-                "warn",
-                "debian.VERSION_sync",
-                _("VERSION=%(file)r != changelog %(changelog)r") % {"file": file_ver, "changelog": ch_ver},
-                "VERSION",
-                fix=_("VERSION should match the latest debian/changelog entry "
-                "(pre-commit hook updates it). Git describe may still differ."),
+        # When a VERSION-syncing pre-commit / githook is configured, drift is
+        # expected until the next commit — do not warn (ZL0016).
+        from lint.layout import _find_git_root, _core_hooks_dir, _pre_commit_syncs_version
+
+        hook_ok = False
+        git_root = _find_git_root(root)
+        candidates: list[Path] = []
+        if git_root is not None:
+            candidates.append(_core_hooks_dir(git_root) / "pre-commit")
+            candidates.append(git_root / ".githooks" / "pre-commit")
+        candidates.append(root / ".githooks" / "pre-commit")
+        for hook in candidates:
+            if hook.is_file() and _pre_commit_syncs_version(hook):
+                hook_ok = True
+                break
+        if hook_ok:
+            out.append(
+                Finding(
+                    "ok",
+                    "debian.VERSION_sync",
+                    _(
+                        "VERSION=%(file)r differs from changelog %(changelog)r; "
+                        "githook will sync on next commit"
+                    )
+                    % {"file": file_ver, "changelog": ch_ver},
+                    "VERSION",
+                )
             )
-        )
+        else:
+            out.append(
+                Finding(
+                    "warn",
+                    "debian.VERSION_sync",
+                    _("VERSION=%(file)r != changelog %(changelog)r")
+                    % {"file": file_ver, "changelog": ch_ver},
+                    "VERSION",
+                    fix=_(
+                        "VERSION should match the latest debian/changelog entry "
+                        "(pre-commit hook updates it). Git describe may still differ."
+                    ),
+                )
+            )
     elif ch_ver and file_ver:
         out.append(
             Finding("ok", "debian.VERSION_sync", _("VERSION matches changelog %s") % ch_ver, "VERSION")

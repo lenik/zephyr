@@ -166,6 +166,10 @@ def check_hardcoded(root: Path, role: str) -> list[Finding]:
     path_files: list[str] = []
     ver_files: list[str] = []
     for path in iter_files(root):
+        from lint.lintignore import is_lint_ignored
+
+        if is_lint_ignored(root, path):
+            continue
         if not _is_candidate(root, path):
             continue
         # C/C++: only check version literals (paths stay as lint-optional).

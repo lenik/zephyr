@@ -82,16 +82,21 @@ def _extract_subdir_fix(rel: str) -> str:
     subdir = (path.parent / path.stem).as_posix() + "/"
     example = f"{subdir}{path.stem}_part.py"
     return _(
-        "Extract cohesive sections into package subdirectory %(subdir)s "
-        "(e.g. %(example)s) and keep a thin %(rel)s entry point."
+        "Split or extract cohesive sections (a package subdirectory %(subdir)s "
+        "with a thin %(rel)s entry point is one option, e.g. %(example)s; "
+        "externalizing helpers without a subdirectory is also fine when that fits)."
     ) % {"subdir": subdir, "example": example, "rel": rel}
 
 
 def check_source_size(root: Path, role: str) -> list[Finding]:
     if role == "meta":
         return []
+    from lint.lintignore import is_lint_ignored
+
     out: list[Finding] = []
     for path in iter_files(root):
+        if is_lint_ignored(root, path):
+            continue
         if not _is_source_candidate(root, path):
             continue
         lines = _count_lines(path)
