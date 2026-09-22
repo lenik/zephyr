@@ -123,8 +123,8 @@ case "$suite" in
       > /etc/apt/apt.conf.d/99archive
     ;;
   bullseye)
-    # Live debian-security currently indexes pool files that 404 on every
-    # public mirror; only snapshot still hosts them. Pin a consistent cut.
+    # Live debian-security indexes pool files that 404 on every public
+    # mirror; pin a consistent snapshot. Image may be newer → allow downgrades.
     snap=20260809T212255Z
     printf "%s\n" \
       "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/${snap}/ bullseye main contrib non-free" \
@@ -142,27 +142,28 @@ case "$suite" in
       > /etc/apt/apt.conf.d/99ci-retry
     ;;
 esac
-# debian-ports (loong64 / loongarch64 images): keyring often missing/stale.
+# loong64 graduated out of debian-ports into official Debian; old images still
+# point at ports (which no longer list loong64).
 arch_now=$(dpkg --print-architecture 2>/dev/null || true)
 if [ "${BUILD_ARCH:-}" = "loong64" ] || [ "$arch_now" = "loong64" ] || \
-   [ "$arch_now" = "loongarch64" ] || grep -q debian-ports /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+   [ "$arch_now" = "loongarch64" ]; then
   printf "%s\n" \
-    "Acquire::AllowInsecureRepositories \"true\";" \
-    "Acquire::AllowDowngradeToInsecureRepositories \"true\";" \
-    > /etc/apt/apt.conf.d/99ports-insecure
-  apt-get update -o Acquire::AllowInsecureRepositories=true \
-    -o Acquire::AllowDowngradeToInsecureRepositories=true -qq || true
-  apt-get install -y --allow-unauthenticated --no-install-recommends \
-    debian-ports-archive-keyring ca-certificates 2>/dev/null || true
-  rm -f /etc/apt/apt.conf.d/99ports-insecure
+    "deb http://deb.debian.org/debian sid main contrib non-free non-free-firmware" \
+    > /etc/apt/sources.list
+  rm -f /etc/apt/sources.list.d/*
+  apt-get clean
+  rm -rf /var/lib/apt/lists/*
 fi
 # Retry apt update+bootstrap; CDN edges sometimes serve stale Indexes → 404.
+_apt_extra=()
+[ "${BUILD_SUITE:-}" = "bullseye" ] && _apt_extra+=(--allow-downgrades)
 _apt_ok=0
 for _try in 1 2 3 4 5; do
   apt-get clean
   rm -rf /var/lib/apt/lists/*
   if apt-get update -qq || apt-get update; then
     if apt-get install -y -qq --no-install-recommends --fix-missing \
+      "${_apt_extra[@]}" \
       build-essential debhelper devscripts dpkg-dev fakeroot equivs ca-certificates python3; then
       _apt_ok=1
       break
@@ -188,6 +189,7 @@ if ls /work/deps/*.deb >/dev/null 2>&1; then
 fi
 # Peer -dev packages often Requires: glib/curl/zlib via .pc but omit -dev Depends.
 apt-get install -y -qq --no-install-recommends --fix-missing \
+  "${_apt_extra[@]}" \
   libglib2.0-dev libcurl4-openssl-dev zlib1g-dev libicu-dev bash-builtins \
   pkg-config 2>/dev/null || true
 # Drop Build-Depends that apt cannot resolve on this suite (e.g. private
@@ -196,8 +198,9 @@ if [ -f debian/control ]; then
   if [ -f /work/zfr/scripts/ci/filter-build-depends.py ]; then
     python3 /work/zfr/scripts/ci/filter-build-depends.py debian/control
   fi
-  mk-build-deps -i -r -t "apt-get -y --no-install-recommends --fix-missing" \
+  mk-build-deps -i -r -t "apt-get -y --no-install-recommends --fix-missing ${_apt_extra[*]-}" \
     || apt-get install -y --no-install-recommends --fix-missing \
+         "${_apt_extra[@]}" \
          meson ninja-build python3 asciidoctor gettext debhelper \
     || true
 fi
