@@ -74,6 +74,14 @@ shopt -u nullglob
 if [ -f "$ROOT/scripts/ci/patch-py39-aliases.py" ]; then
   cp -a "$ROOT/scripts/ci/patch-py39-aliases.py" "$STAGE/SOURCES/"
 fi
+# Cursor agent rules (meson install expects ../.cursor/rules from package root).
+mkdir -p "$STAGE/SOURCES/cursor-rules"
+if [ -d "$ROOT/../.cursor/rules" ]; then
+  cp -a "$ROOT/../.cursor/rules/." "$STAGE/SOURCES/cursor-rules/" || true
+fi
+for rule in version.mdc author.mdc translations.mdc proxy.mdc; do
+  [ -f "$STAGE/SOURCES/cursor-rules/$rule" ] || printf '# stub for CI packaging\n' >"$STAGE/SOURCES/cursor-rules/$rule"
+done
 
 {
   printf '%s\n' "%global version ${RPM_VERSION}" "%global srcversion ${VERSION}" ""
@@ -197,6 +205,12 @@ if ls /rpmbuild/SOURCES/${NAME}-*.tar.xz >/dev/null 2>&1; then
     tar -C "$fixdir" -cJf "$src_tar" "$(basename "$tree")"
   fi
   rm -rf "$fixdir"
+fi
+
+# meson install expects ../.cursor/rules next to the extracted source tree.
+mkdir -p /rpmbuild/BUILD/.cursor/rules
+if ls /rpmbuild/SOURCES/cursor-rules/* >/dev/null 2>&1; then
+  cp -a /rpmbuild/SOURCES/cursor-rules/. /rpmbuild/BUILD/.cursor/rules/
 fi
 
 rpmbuild --define "_topdir /rpmbuild" -bb /rpmbuild/SPECS/${NAME}.spec || \

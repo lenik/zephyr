@@ -41,6 +41,15 @@ tar -C "$ROOT" \
   --exclude='./dist' \
   --exclude='./ci-deps' \
   -cf - . | tar -C "$STAGE/src" -xf -
+# Monorepo agent rules live at ../.cursor/rules relative to the package;
+# stage them so meson install can find them inside the container.
+mkdir -p "$STAGE/.cursor/rules"
+if [ -d "$ROOT/../.cursor/rules" ]; then
+  cp -a "$ROOT/../.cursor/rules/." "$STAGE/.cursor/rules/" || true
+fi
+for rule in version.mdc author.mdc translations.mdc proxy.mdc; do
+  [ -f "$STAGE/.cursor/rules/$rule" ] || printf '# stub for CI packaging\n' >"$STAGE/.cursor/rules/$rule"
+done
 # Materialize subprojects when the checkout uses a symlink outside the tree.
 if [ -L "$ROOT/subprojects" ]; then
   target=$(readlink -f "$ROOT/subprojects" || true)
@@ -87,9 +96,12 @@ docker run --rm --platform "$PLATFORM" \
   -e "REPODEB_COMPONENT=${REPODEB_COMPONENT:-main}" \
   -e "BUILD_SUITE=${RELEASE}" \
   -e "BUILD_ARCH=${ARCH}" \
+  -e "DEB_BUILD_OPTIONS=nocheck" \
   "$IMAGE" \
   bash -lc '
 set -euo pipefail
+# CI packaging: skip dh_auto_test (needs private python3-mesondoc / full tree).
+export DEB_BUILD_OPTIONS="${DEB_BUILD_OPTIONS:+$DEB_BUILD_OPTIONS }nocheck"
 suite=${BUILD_SUITE:-}
 # EOL / stale suite apt sources (official mirrors drop or desync Release/pool).
 case "$suite" in

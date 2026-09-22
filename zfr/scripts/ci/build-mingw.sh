@@ -24,6 +24,15 @@ fi
 if ! command -v asciidoctor >/dev/null 2>&1; then
   if command -v gem >/dev/null 2>&1; then
     gem install --no-document asciidoctor || true
+    # MSYS2 ruby often installs gems outside PATH.
+    gem_bindir=$(ruby -e 'print Gem.bindir' 2>/dev/null || true)
+    if [ -n "${gem_bindir:-}" ]; then
+      export PATH="$gem_bindir:$PATH"
+    fi
+    user_bindir=$(ruby -e 'print Gem.user_dir' 2>/dev/null || true)
+    if [ -n "${user_bindir:-}" ] && [ -d "$user_bindir/bin" ]; then
+      export PATH="$user_bindir/bin:$PATH"
+    fi
   fi
 fi
 if ! command -v asciidoctor >/dev/null 2>&1; then
